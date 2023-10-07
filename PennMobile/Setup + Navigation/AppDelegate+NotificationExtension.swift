@@ -51,7 +51,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) async -> UIBackgroundFetchResult {
-        if let (_, _) = try? await URLSession.shared.data(from: URL(string: "https://pennmobile.org/api/")!) {
+        if (try? await URLSession.shared.data(from: URL(string: "https://pennmobile.org/api/")!)) != nil {
             return .newData
         } else {
             return .failed

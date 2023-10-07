@@ -32,14 +32,14 @@ private func getTimeInt(pathAtPennString: String) -> Int? {
 extension Course {
     /// Initializes a course from Path@Penn data.
     init(_ data: PathAtPennNetworkManager.CourseData) {
-        var crn = data.crn
-        var code = data.code
-        var title = data.title
-        var section = data.section
+        let crn = data.crn
+        let code = data.code
+        let title = data.title
+        let section = data.section
 
         let instructorHTML = try? SwiftSoup.parse(data.instructordetail_html)
         let divs = try? instructorHTML?.select("div")
-        var instructors = (try? divs?.map { try $0.text(trimAndNormaliseWhitespace: true) }) ?? []
+        let instructors = (try? divs?.map { try $0.text(trimAndNormaliseWhitespace: true) }) ?? []
 
         let meetingHTML = try? SwiftSoup.parse(data.meeting_html)
         let a = try? meetingHTML?.select("a").first()

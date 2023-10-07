@@ -34,4 +34,3 @@ class PreferencesViewController: GenericViewController {
         self.title = "Preferences"
     }
 }
-

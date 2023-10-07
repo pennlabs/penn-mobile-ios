@@ -10,14 +10,6 @@ import SwiftUI
 import Charts
 import PennMobileShared
 
-/*
-Things we can remove once we switch to only supporting iOS 16:
-    - Everything in PennMobile/Dining/SwiftUI/Views/Insights/PredictionsGraph/ except DiningAnalyticsGraph.swift and DiningAnalyticsGraphBox.swift
-    - Everything in the not iOS 16 else statement in PennMobile/Dining/SwiftUI/DiningAnalyticsView.swift
-    - axisLabels calculations from Shared/Dining/DiningAnalyticsViewModel.swift
-    - getSmoothedData in PennMobile/Dining/SwiftUI/DiningAnalyticsView.swift
-*/
-
 struct AnalyticsGraph: View {
     private let graphHeight: CGFloat = 180.0
     @Binding var data: [DiningAnalyticsBalance]

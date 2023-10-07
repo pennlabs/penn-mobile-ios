@@ -32,7 +32,6 @@ struct DiningVenueDetailView: View {
             ScrollView {
                 GeometryReader { geometry in
                     let minY = geometry.frame(in: .global).minY
-                    let remain = imageHeight + minY
 
                     ZStack(alignment: .bottomLeading) {
                         KFImage(self.venue.image)
@@ -75,7 +74,7 @@ struct DiningVenueDetailView: View {
 
                 VStack(spacing: 10) {
                     Picker("Section", selection: self.$pickerIndex) {
-                        ForEach(0 ..< self.sectionTitle.count) {
+                        ForEach(0 ..< self.sectionTitle.count, id: \.self) {
                             Text(self.sectionTitle[$0])
                         }
                     }

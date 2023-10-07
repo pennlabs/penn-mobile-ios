@@ -62,9 +62,8 @@ class InfoTableViewModel: NSObject {
                 print(str)
 
                 let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ in
-                    print(response)
+                    print(response ?? "")
                     print(String(decoding: data!, as: UTF8.self))
-
                 })
                 task.resume()
             }
