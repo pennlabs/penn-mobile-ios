@@ -47,34 +47,22 @@ struct FitnessRoomRow: View {
                     .clipShape(RoundedRectangle(cornerRadius: 7))
                 
                 VStack(alignment: .leading, spacing: 3) {
+                    Label(isOpen ? "Open" : "Closed", systemImage: isOpen ? "circle.fill" : "xmark.circle.fill")
+                        .labelStyle(VenueStatusLabelStyle())
+                        .foregroundColor(isOpen ? Color.green : Color.gray)
                     Text(room.name)
                         .font(.system(size: 17, weight: .medium))
-                        .minimumScaleFactor(0.2)
                         .lineLimit(1)
-                    
-                    GeometryReader { geo in
-                        HStack(spacing: 6) {
-                            Text(isOpen ? "Open" : "Closed")
-                                .font(.system(size: 14, weight: .light, design: .default))
-                                .padding(.vertical, 3)
-                                .padding(.horizontal, 6)
-                                .foregroundColor(isOpen ? Color.white : Color.labelPrimary)
-                                .background(isOpen ? Color.greenLight : Color.redLight)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .frame(height: geo.frame(in: .global).height)
-                            Text(FitnessRoomRow.formattedHours(open: hours.0, close: hours.1))
-                                .font(.system(size: 14, weight: .light, design: .default))
-                                .padding(.vertical, 3)
-                                .padding(.horizontal, 6)
-                                .foregroundColor(Color.labelPrimary)
-                                .background(Color.grey5)
-                                .clipShape(RoundedRectangle(cornerRadius: 6))
-                                .frame(height: geo.frame(in: .global).height)
-                        }
-                    }
+                    Text(FitnessRoomRow.formattedHours(open: hours.0, close: hours.1))
+                        .font(.system(size: 14, weight: .light, design: .default))
+                        .padding(.vertical, 3)
+                        .padding(.horizontal, 6)
+                        .foregroundColor(Color.labelPrimary)
+                        .background(Color.grey5)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
                 .frame(height: 64)
-                
+                Spacer()
                 Image(systemName: "chevron.right")
                     .rotationEffect(.degrees(isExpanded ? 90 : 0))
                     .frame(width: 28, alignment: .center)
