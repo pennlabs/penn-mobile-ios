@@ -113,7 +113,7 @@
 		426A0B51299034910066C7B7 /* DiningAnalyticsGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */; };
 		426A0B52299034910066C7B7 /* DiningAnalyticsGraphBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */; };
 		42D9237129E0C69200E9E18E /* FitnessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237029E0C69200E9E18E /* FitnessModel.swift */; };
-		42D9237329E0C9AF00E9E18E /* FitnessViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237229E0C9AF00E9E18E /* FitnessViewControllerSwiftUI.swift */; };
+		42D9237329E0C9AF00E9E18E /* FitnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */; };
 		42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237429E0CCFB00E9E18E /* FitnessView.swift */; };
 		56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */; };
 		6C11C08026F842CF00407C04 /* HomeUpdateCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C11C07F26F842CF00407C04 /* HomeUpdateCellItem.swift */; };
@@ -515,7 +515,7 @@
 		426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraph.swift; sourceTree = "<group>"; };
 		426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraphBox.swift; sourceTree = "<group>"; };
 		42D9237029E0C69200E9E18E /* FitnessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessModel.swift; sourceTree = "<group>"; };
-		42D9237229E0C9AF00E9E18E /* FitnessViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewControllerSwiftUI.swift; sourceTree = "<group>"; };
+		42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewController.swift; sourceTree = "<group>"; };
 		42D9237429E0CCFB00E9E18E /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
 		6C11C07F26F842CF00407C04 /* HomeUpdateCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUpdateCellItem.swift; sourceTree = "<group>"; };
 		6C1991BA27B5C73800BBB402 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
@@ -1616,7 +1616,7 @@
 			isa = PBXGroup;
 			children = (
 				421B03C929E22035003AE6DC /* FitnessRoomRow.swift */,
-				42D9237229E0C9AF00E9E18E /* FitnessViewControllerSwiftUI.swift */,
+				42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */,
 				42D9237429E0CCFB00E9E18E /* FitnessView.swift */,
 				421B03CD29E25E92003AE6DC /* FitnessGraph.swift */,
 				42D9237029E0C69200E9E18E /* FitnessModel.swift */,
@@ -2322,7 +2322,7 @@
 				21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */,
 				6C369A1526E39BC100721CA1 /* (null) in Sources */,
 				2119D26922529A2300693CDB /* HomeGSRLocationsCell.swift in Sources */,
-				42D9237329E0C9AF00E9E18E /* FitnessViewControllerSwiftUI.swift in Sources */,
+				42D9237329E0C9AF00E9E18E /* FitnessViewController.swift in Sources */,
 				6C6FE1D327B9B8CB0093FD13 /* ProfilePageTableViewCell.swift in Sources */,
 				F206DDB328D78A85008F572F /* PreferencesView.swift in Sources */,
 				2189C0832027CDB800771C1F /* GSRBookable.swift in Sources */,

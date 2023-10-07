@@ -1,5 +1,5 @@
 //
-//  FitnessViewControllerSwiftUI.swift
+//  FitnessViewController.swift
 //  PennMobile
 //
 //  Created by Jordan H on 4/7/23.

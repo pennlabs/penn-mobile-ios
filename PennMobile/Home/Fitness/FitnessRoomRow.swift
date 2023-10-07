@@ -147,6 +147,9 @@ struct FitnessRoomRow: View {
         let interval = -date.timeIntervalSinceNow
         let hours = Int(interval / 3600)
         let minutes = Int((interval - 3600 * Double(hours)) / 60)
+        if hours == 0 {
+            return "Updated \(minutes)m ago"
+        }
         return "Updated \(hours)h \(minutes)m ago"
     }
     
