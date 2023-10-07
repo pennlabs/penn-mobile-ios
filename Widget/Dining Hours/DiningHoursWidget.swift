@@ -18,14 +18,14 @@ struct DiningHoursWidgetEntryView : View {
         Group {
             switch widgetFamily {
             case .systemLarge:
-                let venues = entries.venues.prefix(4)
                 VStack {
+                    let venues = entries.venues.prefix(4)
                     ForEach(venues) { venue in
                         Spacer()
                         DiningVenueRow(for: venue, isWidget: true)
                         Spacer()
                     }
-                }
+                }.padding()
 
             case .systemMedium:
                 VStack {
@@ -33,12 +33,14 @@ struct DiningHoursWidgetEntryView : View {
                     ForEach(venues) { venue in
                         DiningVenueRow(for: venue, isWidget: true)
                     }
-                }
+                }.padding()
                 
             case .systemSmall:
-                let venue = entries.venues[0]
-                smallWidget(venue: venue)
-
+                let venues = entries.venues.prefix(1)
+                ForEach(venues) { venue in
+                    smallWidget(venue: venue)
+                }
+            
             default:
                 Text("Unsupported")
             }
@@ -46,23 +48,21 @@ struct DiningHoursWidgetEntryView : View {
     }
     
     private func smallWidget(venue: DiningVenue) -> some View {
-        ZStack {
-            KFImage(venue.image)
-                .resizable()
-                .scaledToFill()
-                .background(Color.grey1)
-                .overlay(
-                    LinearGradient(gradient: Gradient(colors: [.clear, Color.grey6]),
-                                   startPoint: .top,
-                                   endPoint: .bottom)
-                )
-        VStack(alignment: .leading) {
-                Spacer()
-                Spacer()
-                Spacer()
-                Spacer()
-                Spacer()
-                Spacer()
+        ZStack () {
+            GeometryReader { geo in
+                KFImage(venue.image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: geo.size.width, height: geo.size.height)
+                    .clipped()
+                    .background(Color.grey1)
+                    .overlay(
+                        LinearGradient(gradient: Gradient(colors: [.clear, Color.grey6]),
+                                       startPoint: .top,
+                                       endPoint: .bottom)
+                    )
+            }
+            VStack (alignment: .leading) {
                 Spacer()
                 Label(venue.statusString, systemImage: venue.statusImageString)
                     .labelStyle(VenueStatusLabelStyle())
@@ -75,10 +75,9 @@ struct DiningHoursWidgetEntryView : View {
                     .font(.system(size: 15, weight: .medium))
                     .minimumScaleFactor(0.2)
                     .lineLimit(1)
-                    .padding(.leading, 10)
-                Spacer()
+                    .padding([.leading, .trailing], 10)
             }
-
+            .padding(.bottom, 10)
         }
     }
 
@@ -110,7 +109,6 @@ struct DiningHoursWidget: Widget {
         .configurationDisplayName("Dining Hours")
         .description("Feast your eyes on feast times.")
         .contentMarginsDisabled()
-        //.supportedFamilies([.systemMedium, .systemLarge])
     }
 }
 #Preview(as: .systemSmall) {

@@ -37,7 +37,7 @@ struct Provider: TimelineProvider {
     }
     
     func getSnapshot(in context: Context, completion: @escaping (DiningEntries<Void>) -> ()) {
-        let entry = DiningEntries(date: .now, venues: [])
+        let entry = DiningEntries(date: .now, venues: DiningAPI.instance.getVenues(with: DiningAPI.defaultVenueIds))
         completion(entry)
     }
     
