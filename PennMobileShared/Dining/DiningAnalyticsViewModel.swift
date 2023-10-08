@@ -108,43 +108,58 @@ public class DiningAnalyticsViewModel: ObservableObject {
 
     func populateAxesAndPredictions() {
         filterData()
+        
+        let last7dollarHistory: [DiningAnalyticsBalance] = dollarHistory.suffix(7)
+        let last7swipeHistory: [DiningAnalyticsBalance] = swipeHistory.suffix(7)
+        
         guard let lastDollarBalance = self.dollarHistory.last,
               let lastSwipeBalance = self.swipeHistory.last else {
             return
         }
-        guard let maxDollarBalance = (self.dollarHistory.max { $0.balance < $1.balance }),
+        guard let last7maxDollarBalance = (last7dollarHistory.max { $0.balance < $1.balance }),
+              let last7maxSwipeBalance = (last7swipeHistory.max { $0.balance < $1.balance }),
+              let maxDollarBalance = (self.dollarHistory.max { $0.balance < $1.balance }),
               let maxSwipeBalance = (self.swipeHistory.max { $0.balance < $1.balance }) else {
             return
         }
         // If no dining plan found, refresh will return, these are just placeholders
         var startDollarBalance = maxDollarBalance
         var startSwipeBalance = maxSwipeBalance
+        var last7startDollarBalance = last7maxDollarBalance
+        var last7startSwipeBalance = last7maxSwipeBalance
         guard let planStartDate else { return }
 
         // If dining plan found, start prediction from the date dining plan started
+        last7startDollarBalance = (last7dollarHistory.first { $0.date == planStartDate }) ?? last7startDollarBalance
+        last7startSwipeBalance = (last7swipeHistory.first { $0.date == planStartDate }) ?? last7startSwipeBalance
         startDollarBalance = (self.dollarHistory.first { $0.date == planStartDate }) ?? startDollarBalance
         startSwipeBalance = (self.swipeHistory.first { $0.date == planStartDate }) ?? startSwipeBalance
         // However, it's possible that people recharged dining dollars (swipes maybe?), and if so, predict from this date (most recent increase)
         for (i, day) in self.dollarHistory.enumerated() {
             if i != 0 && day.date > planStartDate && day.balance > self.dollarHistory[i - 1].balance {
                 startDollarBalance = day
+                last7startDollarBalance = day
             }
         }
         for (i, day) in self.swipeHistory.enumerated() {
             if i != 0 && day.date > planStartDate && day.balance > self.swipeHistory[i - 1].balance {
                 startSwipeBalance = day
+                last7startSwipeBalance = day
             }
         }
 
         let dollarPredictions = self.getPredictions(firstBalance: startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
-        self.dollarSlope = dollarPredictions.slope
-        self.dollarPredictedZeroDate = dollarPredictions.predictedZeroDate
-        self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance
+        let last7dollarPredictions = self.getPredictions(firstBalance: last7startDollarBalance, lastBalance: lastDollarBalance, maxBalance: last7maxDollarBalance)
+        self.dollarSlope = (dollarPredictions.slope + last7dollarPredictions.slope) / 2
+        self.dollarPredictedZeroDate = self.predictZeroDate(firstBalance: startDollarBalance, lastBalance: lastDollarBalance, slope: self.dollarSlope)
+        self.predictedDollarSemesterEndBalance = (dollarPredictions.predictedEndBalance + last7dollarPredictions.predictedEndBalance) / 2
         self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)
+        
         let swipePredictions = self.getPredictions(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: maxSwipeBalance)
-        self.swipeSlope = swipePredictions.slope
-        self.swipesPredictedZeroDate = swipePredictions.predictedZeroDate
-        self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
+        let last7swipePredictions = self.getPredictions(firstBalance: last7startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: last7maxSwipeBalance)
+        self.swipeSlope = (swipePredictions.slope + last7swipePredictions.slope) / 2
+        self.swipesPredictedZeroDate = self.predictZeroDate(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance, slope: self.swipeSlope)
+        self.predictedSwipesSemesterEndBalance = (swipePredictions.predictedEndBalance + last7swipePredictions.predictedEndBalance) / 2
         self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
     }
     
