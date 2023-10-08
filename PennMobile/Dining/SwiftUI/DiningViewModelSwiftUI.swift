@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 import PennMobileShared
 
+@MainActor
 class DiningViewModelSwiftUI: ObservableObject {
     static let instance = DiningViewModelSwiftUI()
 
