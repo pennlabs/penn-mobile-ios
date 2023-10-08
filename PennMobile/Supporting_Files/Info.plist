@@ -60,6 +60,8 @@
 		<string>ConfigureCoursesDayWidgetIntent</string>
 		<string>ConfigureDiningAnalyticsHomeWidgetIntent</string>
 	</array>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
