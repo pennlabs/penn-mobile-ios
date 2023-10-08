@@ -18,6 +18,7 @@ enum FeatureIdentifier: String, Hashable {
     case courseSchedule = "Course Schedule"
     case pennCourseAlert = "Penn Course Alert"
     case events = "Events"
+    case pac = "PAC Code"
     case about = "About"
 }
 
@@ -45,11 +46,9 @@ struct AppFeature: Identifiable {
     
     init<ViewController: UIViewController>(_ id: FeatureIdentifier, shortName: LocalizedStringKey, longName: LocalizedStringKey, color: Color, image: FeatureImage, controller: ViewController.Type) {
         self.init(id, shortName: shortName, longName: longName, color: color, image: image) {
-            NavigationStack {
-                ViewControllerView<ViewController>()
-                    .navigationBarTitleDisplayMode(.inline)
-                    .navigationTitle(Text(longName))
-            }
+            ViewControllerView<ViewController>()
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle(Text(longName))
         }
     }
     
@@ -83,10 +82,8 @@ extension AppFeature.FeatureImage: View {
 
 let features: [AppFeature] = [
     AppFeature(.dining, name: "Dining", color: .baseOrange, image: .app("Dining_Grey")) {
-        NavigationStack {
-            DiningView()
-                .navigationTitle(Text("Dining"))
-        }
+        DiningView()
+            .navigationTitle(Text("Dining"))
     },
     AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey"), controller: GSRTabController.self),
     AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey"), controller: LaundryTableViewController.self),
@@ -98,5 +95,6 @@ let features: [AppFeature] = [
     AppFeature(.pennCourseAlert, shortName: "PCA", longName: "Penn Course Alert", color: .baseLabsBlue, image: .system("bell.fill"), controller: CourseAlertController.self),
     AppFeature(.events, shortName: "Events", longName: "Penn Events", color: .baseGreen, image: .system("ticket"), controller: PennEventsTableViewController.self),
     AppFeature(.fitness, name: "Fitness", color: .baseRed, image: .system("dumbbell.fill"), controller: FitnessViewController.self),
+    AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),
     AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]

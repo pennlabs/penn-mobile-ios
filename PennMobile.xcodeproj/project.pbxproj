@@ -228,6 +228,7 @@
 		895C75E628FA165100A329A0 /* LabsLoginSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */; };
 		895D98B02ACF312300F8C5DF /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D98AF2ACF312300F8C5DF /* MoreView.swift */; };
 		89B454DF28E1161B00BC918B /* PathAtPennNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */; };
+		89CA5FBF2AD315E400B7D3EF /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */; };
 		89CA728D291721D200CF72FE /* KeychainAccessible+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA728C291721D200CF72FE /* KeychainAccessible+Extensions.swift */; };
 		89CA729029173CDE00CF72FE /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA728F29173CDE00CF72FE /* UserDefaults + Helpers.swift */; };
 		89CA729129174CF900CF72FE /* DiningAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA727229171E3900CF72FE /* DiningAnalyticsProvider.swift */; };
@@ -634,6 +635,7 @@
 		895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginSwiftUI.swift; sourceTree = "<group>"; };
 		895D98AF2ACF312300F8C5DF /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAtPennNetworkManager.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
 		89CA727229171E3900CF72FE /* DiningAnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsProvider.swift; sourceTree = "<group>"; };
 		89CA728C291721D200CF72FE /* KeychainAccessible+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainAccessible+Extensions.swift"; sourceTree = "<group>"; };
 		89CA728F29173CDE00CF72FE /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
@@ -1307,6 +1309,7 @@
 				6C6FE1B827B9B8CB0093FD13 /* MoreCell.swift */,
 				6C6FE1B927B9B8CB0093FD13 /* MoreViewController.swift */,
 				895D98AF2ACF312300F8C5DF /* MoreView.swift */,
+				89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */,
 				6C6FE1BA27B9B8CB0093FD13 /* PAC Code */,
 				6C6FE1BD27B9B8CB0093FD13 /* MoreHeaderView.swift */,
 				6C6FE1BE27B9B8CB0093FD13 /* Profile Page */,
@@ -2367,6 +2370,7 @@
 				6CAA4B5427A763A400473CC6 /* HomePollsCellFooter.swift in Sources */,
 				97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */,
 				F2DD593D259817EC0085CC22 /* SearchResultsCell.swift in Sources */,
+				89CA5FBF2AD315E400B7D3EF /* ProfileRowView.swift in Sources */,
 				89CA728D291721D200CF72FE /* KeychainAccessible+Extensions.swift in Sources */,
 				97E79E052100DA1200D3D606 /* BuildingSectionHeader.swift in Sources */,
 				217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */,
@@ -2806,6 +2810,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = navigation;
 				CF_BUNDLE_SHORT_VERSION_STRING = 7.3.4;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
@@ -2847,6 +2852,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = navigation;
 				CF_BUNDLE_SHORT_VERSION_STRING = 7.3.4;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;

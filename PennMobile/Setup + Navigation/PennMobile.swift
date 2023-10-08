@@ -43,6 +43,7 @@ struct PennMobile: App {
         WindowGroup {
             RootView()
                 .environmentObject(authManager)
+                .accentColor(.accentColor)
         }
     }
 }

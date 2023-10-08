@@ -75,4 +75,9 @@ class AuthManager: ObservableObject {
 
         state = .guest
     }
+    
+    func logOut() {
+        state = .loggedOut
+        AuthManager.clearAccountData()
+    }
 }
