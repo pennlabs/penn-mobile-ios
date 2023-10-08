@@ -209,7 +209,10 @@ public class DiningAnalyticsViewModel: ObservableObject {
         return balanceDiff / timeDiff
     }
     func predictZeroDate(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance, slope: Double) -> Date {
-        let offset = -firstBalance.balance / slope
+        var offset = -firstBalance.balance / slope
+        if slope == 0 {
+            return Date.distantFuture
+        }
         let zeroDate = Calendar.current.date(byAdding: .day, value: Int(offset), to: firstBalance.date)!
         return zeroDate
     }
