@@ -148,8 +148,8 @@ extension FitnessViewController: TabBarShowable {
 
 extension PollsViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "Fitness_Grey")
-        let selectedImage = UIImage(named: "Fitness_Blue")
+        let normalImage = UIImage(named: "Polls_Grey")
+        let selectedImage = UIImage(named: "Polls_Blue")
         return UITabBarItem(title: "Poll History", image: normalImage, selectedImage: selectedImage)
     }
 }

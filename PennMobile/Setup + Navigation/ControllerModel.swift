@@ -44,7 +44,7 @@ class ControllerModel: NSObject {
     // Features that can be added to the tab bar
     var dynamicFeatures: [Feature] = [.dining, .studyRoomBooking, .laundry, .news, .contacts, .courseSchedule, .events, .fitness, .polls]
 
-    var featureIcons: [Feature: UIImage]! = [.dining: #imageLiteral(resourceName: "Dining"), .studyRoomBooking: #imageLiteral(resourceName: "GSR"), .laundry: #imageLiteral(resourceName: "Laundry"), .news: #imageLiteral(resourceName: "News"), .contacts: #imageLiteral(resourceName: "Contacts"), .courseSchedule: #imageLiteral(resourceName: "Calendar Light"), .events: #imageLiteral(resourceName: "Event"), .fitness: #imageLiteral(resourceName: "Fitness"), .polls: #imageLiteral(resourceName: "Fitness"), .courseAlerts: #imageLiteral(resourceName: "PCA"), .about: #imageLiteral(resourceName: "logo-small")]
+    var featureIcons: [Feature: UIImage]! = [.dining: #imageLiteral(resourceName: "Dining"), .studyRoomBooking: #imageLiteral(resourceName: "GSR"), .laundry: #imageLiteral(resourceName: "Laundry"), .news: #imageLiteral(resourceName: "News"), .contacts: #imageLiteral(resourceName: "Contacts"), .courseSchedule: #imageLiteral(resourceName: "Calendar Light"), .events: #imageLiteral(resourceName: "Event"), .fitness: #imageLiteral(resourceName: "Fitness"), .polls: #imageLiteral(resourceName: "Polls"), .courseAlerts: #imageLiteral(resourceName: "PCA"), .about: #imageLiteral(resourceName: "logo-small")]
 
     var vcDictionary: [Feature: UIViewController]!
 
