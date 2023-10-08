@@ -12,10 +12,30 @@ struct PollsView: View {
     @State var polls: [PollPost] = []
     
     var body: some View {
-        ScrollView {
-            VStack {
-                ForEach(polls, id: \.self.id) { poll in
-                    PollWrapper(pollQuestion: poll.poll, chosenId: poll.pollOptions[0].id)
+        GeometryReader { geo in
+            ScrollView {
+                if polls.isEmpty {
+                    VStack {
+                        Image(systemName: "list.bullet.clipboard")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 120, height: 120)
+                            .foregroundColor(.secondary)
+                        Text("You have not voted on any polls yet! Keep your eye out for them on the home page!")
+                            .font(.system(size: 16, design: .rounded))
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding([.leading, .trailing], 70)
+                            .padding(.top)
+                    }
+                    .padding(.top, -120)
+                    .frame(minHeight: geo.size.height, alignment: .center)
+                } else {
+                    VStack {
+                        ForEach(polls, id: \.self.id) { poll in
+                            PollWrapper(pollQuestion: poll.poll, chosenId: poll.pollOptions[0].id)
+                        }
+                    }
                 }
             }
         }
