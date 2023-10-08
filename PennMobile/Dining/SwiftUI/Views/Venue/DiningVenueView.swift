@@ -106,7 +106,7 @@ struct DiningVenueView: View {
                         VStack(alignment: .leading) {
                             Text(diningVM.favoriteVenues.isEmpty ? "Add venues to favorites" : "Edit favorites")
                                 .foregroundStyle(.blue)
-                            Text(diningVM.favoriteVenues.isEmpty ? "Tap, or swipe left on a venue" : "Tap, or swipe left on a venue")
+                            Text(diningVM.favoriteVenues.isEmpty ? "Tap here, or swipe left on a venue" : "Tap here, or swipe left on a venue")
                                 .foregroundStyle(.secondary)
                                 .font(.caption)
                         }
