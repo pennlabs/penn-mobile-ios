@@ -106,7 +106,7 @@ struct DiningVenueView: View {
                         VStack(alignment: .leading) {
                             Text(diningVM.favoriteVenues.isEmpty ? "Add venues to favorites" : "Edit favorites")
                                 .foregroundStyle(.blue)
-                            Text(diningVM.favoriteVenues.isEmpty ? "Tap to add venues to favorites" : "Tap to edit your favorite venues")
+                            Text(diningVM.favoriteVenues.isEmpty ? "Tap to add venues to favorites, or swipe left on a venue" : "Tap to edit your favorite venues, or swipe left on a venue")
                                 .foregroundStyle(.secondary)
                                 .font(.caption)
                         }
@@ -117,7 +117,6 @@ struct DiningVenueView: View {
             }
             .environment(\.editMode, $favoritesEditMode)
             
-
             ForEach(diningVM.ordering, id: \.self) { venueType in
                 Section(header: CustomHeader(name: venueType.fullDisplayName).environmentObject(diningAnalyticsViewModel)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
@@ -134,6 +133,12 @@ struct DiningVenueView: View {
                             NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM)) {
                                 DiningVenueRow(for: venue)
                                     .padding(.vertical, 4)
+                            }
+                            .swipeActions(edge: .trailing) {
+                                Button(action: { diningVM.addVenueToFavorites(venue: venue) }) {
+                                    Image(systemName: "star.fill")
+                                }
+                                .tint(.blue)
                             }
                         }
                     }

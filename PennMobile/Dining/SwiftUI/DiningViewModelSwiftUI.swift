@@ -12,7 +12,7 @@ import SwiftUI
 class DiningViewModelSwiftUI: ObservableObject {
     static let instance = DiningViewModelSwiftUI()
 
-    @Published var diningVenues: [VenueType: [DiningVenue]] = DiningAPI.instance.getSectionedVenues()
+    @Published var diningVenues: [VenueType: [DiningVenue]]
     @Published var favoriteVenues: [DiningVenue] = []
     
     @Published var diningMenus = DiningAPI.instance.getMenus()
@@ -21,6 +21,13 @@ class DiningViewModelSwiftUI: ObservableObject {
     @Published var alertType: NetworkingError?
 
     @Published var diningBalance = (try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)) ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
+    
+    init() {
+        let (diningVenues, favoriteVenues) = DiningAPI.instance.getSectionedVenuesAndFavorites()
+        self.favoriteVenues = favoriteVenues
+        self.diningVenues = diningVenues
+    }
+    
     // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
@@ -30,17 +37,18 @@ class DiningViewModelSwiftUI: ObservableObject {
         if lastRequest == nil || !lastRequest!.isToday || diningVenues.isEmpty {
             self.diningVenuesIsLoading = true
             let diningResult = await DiningAPI.instance.fetchDiningHours()
-//            let favoritesResult = await UserDBManager.shared.fetchDiningPreferences()
+            let favoritesResult = await UserDBManager.shared.fetchDiningPreferences()
             
-            switch diningResult {
-            case .success(let diningVenues):
+            switch (diningResult, favoritesResult) {
+            case (.success(let diningVenues), .success(let favorites)):
                 UserDefaults.standard.setLastDiningHoursRequest()
+                let favoritesIDs = favorites.map(\.id)
+                Storage.store(favoritesIDs, to: .caches, as: DiningVenue.favoritesDirectory)
                 var venuesDict = [VenueType: [DiningVenue]]()
                 for type in VenueType.allCases {
                     venuesDict[type] = diningVenues.filter({ $0.venueType == type })// && !favoritesResult.contains($0) })
                 }
                 
-                let favoritesIDs = UserDefaults(suiteName: Storage.appGroupID)?.array(forKey: "diningFavorites") as? [Int] ?? []
                 var favorites: [DiningVenue?] = []
                 for id in favoritesIDs {
                     favorites.append(venuesDict[.dining]?.first(where: { $0.id == id }) ?? venuesDict[.retail]?.first(where: { $0.id == id }) ?? nil)
@@ -53,7 +61,13 @@ class DiningViewModelSwiftUI: ObservableObject {
                 }
                 self.diningVenues = venuesDict
                 
-            case .failure(let error):
+            case (.failure(let error), .success):
+                self.alertType = error
+                
+            case (.success, .failure(let error)):
+                self.alertType = error
+            
+            case (.failure(let error), .failure):
                 self.alertType = error
             }
             
@@ -109,7 +123,7 @@ class DiningViewModelSwiftUI: ObservableObject {
             self.favoriteVenues.append(venue)
             self.diningVenues[venue.venueType]?.removeAll { $0.id == venue.id }
         }
-        UserDefaults(suiteName: Storage.appGroupID)?.set(self.favoriteVenues.map(\.id), forKey: "diningFavorites")
+        Storage.store(favoriteVenues.map(\.id), to: .caches, as: DiningVenue.favoritesDirectory)
         UserDBManager.shared.saveDiningPreference(for: self.favoriteVenues.map(\.id) + [venue.id])
     }
     
@@ -117,7 +131,7 @@ class DiningViewModelSwiftUI: ObservableObject {
         if let index = self.favoriteVenues.firstIndex(where: { $0.id == venue.id }) {
             self.favoriteVenues.remove(at: index)
             self.diningVenues[venue.venueType] = [venue] + self.diningVenues[venue.venueType]!
-            UserDefaults(suiteName: Storage.appGroupID)?.set(self.favoriteVenues.map(\.id), forKey: "diningFavorites")
+            Storage.store(favoriteVenues.map(\.id), to: .caches, as: DiningVenue.favoritesDirectory)
             UserDBManager.shared.saveDiningPreference(for: self.favoriteVenues.map(\.id))
         }
     }
@@ -129,14 +143,14 @@ class DiningViewModelSwiftUI: ObservableObject {
                 self.favoriteVenues.remove(atOffsets: indexSet)
                 self.diningVenues[venue.venueType] = [venue] + self.diningVenues[venue.venueType]!
             }
-            UserDefaults(suiteName: Storage.appGroupID)?.set(self.favoriteVenues.map(\.id), forKey: "diningFavorites")
+            Storage.store(favoriteVenues.map(\.id), to: .caches, as: DiningVenue.favoritesDirectory)
             UserDBManager.shared.saveDiningPreference(for: self.favoriteVenues.map(\.id))
         }
     }
     
     func moveFavorite(fromOffsets source: IndexSet, toOffset destination: Int) {
         self.favoriteVenues.move(fromOffsets: source, toOffset: destination)
-        UserDefaults(suiteName: Storage.appGroupID)?.set(self.favoriteVenues.map(\.id), forKey: "diningFavorites")
+        Storage.store(favoriteVenues.map(\.id), to: .caches, as: DiningVenue.favoritesDirectory)
         UserDBManager.shared.saveDiningPreference(for: self.favoriteVenues.map(\.id))
     }
 }
