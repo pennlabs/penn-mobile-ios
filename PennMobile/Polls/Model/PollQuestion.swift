@@ -39,7 +39,7 @@ struct PollQuestion: Codable {
 
 struct PollPost: Codable {
     let id: Int
-    let idHash: UUID
+    let idHash: String
     let poll: PollQuestion
     let pollOptions: [PollOption]
     //let createdDate: Date

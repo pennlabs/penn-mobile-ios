@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 import PennMobileShared
 
-class PollsNetworkManager: NSObject, Requestable {
+class PollsNetworkManager: NSObject, Requestable, SHA256Hashable {
     static let id = UIDevice.current.identifierForVendor?.uuidString ?? ""
     static let instance = PollsNetworkManager()
     let pollURL = URL(string: "https://pennmobile.org/api/portal/polls/browse/")
@@ -22,7 +22,7 @@ class PollsNetworkManager: NSObject, Requestable {
         if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
             var request = URLRequest(url: self.allVotesURL!, accessToken: token)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": PollsNetworkManager.id])
+            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: PollsNetworkManager.id, encoding: .base64)])
             request.httpBody = jsonData
             request.httpMethod = "POST"
             
@@ -44,7 +44,7 @@ class PollsNetworkManager: NSObject, Requestable {
         if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
             var request = URLRequest(url: self.pollURL!, accessToken: token)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": PollsNetworkManager.id])
+            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: PollsNetworkManager.id, encoding: .base64)])
             request.httpBody = jsonData
             request.httpMethod = "POST"
             
@@ -66,7 +66,7 @@ class PollsNetworkManager: NSObject, Requestable {
         if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
             var request = URLRequest(url: self.recentsURL!, accessToken: token)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": PollsNetworkManager.id])
+            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: PollsNetworkManager.id, encoding: .base64)])
             request.httpBody = jsonData
             request.httpMethod = "POST"
             
@@ -88,7 +88,7 @@ class PollsNetworkManager: NSObject, Requestable {
         if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
             var request = URLRequest(url: self.votesURL!, accessToken: token)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": id, "poll_options": [response]] as [String: Any])
+            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: id, encoding: .base64), "poll_options": [response]] as [String: Any])
             request.httpBody = jsonData
             request.httpMethod = "POST"
 

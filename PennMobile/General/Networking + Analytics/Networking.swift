@@ -93,8 +93,6 @@ extension Requestable {
         let request = NSMutableURLRequest(url: url)
         request.cachePolicy = .reloadIgnoringCacheData
 
-        let deviceID = getDeviceID()
-        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         if let accountID = UserDefaults.standard.getAccountID() {
             request.setValue(accountID, forHTTPHeaderField: "X-Account-ID")
         }
@@ -136,8 +134,6 @@ extension Requestable {
     internal func getAnalyticsRequest(url: String) -> NSMutableURLRequest {
         let url = URL(string: url)!
         let request = NSMutableURLRequest(url: url)
-        let deviceID = getDeviceID()
-        request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
         if let accountID = UserDefaults.standard.getAccountID() {
             request.setValue(accountID, forHTTPHeaderField: "X-Account-ID")
         }

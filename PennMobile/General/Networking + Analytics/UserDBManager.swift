@@ -10,15 +10,6 @@ import UIKit
 import SwiftyJSON
 import PennMobileShared
 
-func getDeviceID() -> String {
-    let deviceID = UIDevice.current.identifierForVendor!.uuidString
-    #if DEBUG
-       return "test"
-    #else
-        return deviceID
-    #endif
-}
-
 class UserDBManager: NSObject, Requestable, SHA256Hashable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
@@ -153,9 +144,6 @@ extension UserDBManager {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = try? JSON(params).rawData()
 
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-
             let task = URLSession.shared.dataTask(with: request)
             task.resume()
         }
@@ -166,9 +154,6 @@ extension UserDBManager {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             let url = URL(string: url)!
             var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
-
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
 
             let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
                 if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
@@ -600,9 +585,6 @@ extension UserDBManager {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = try? JSON(params).rawData()
 
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-
             let task = URLSession.shared.dataTask(with: request)
             task.resume()
         }
@@ -613,9 +595,6 @@ extension UserDBManager {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             let url = URL(string: url)!
             var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
-
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
 
             let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
                 if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
