@@ -111,6 +111,8 @@
 		423B7EF52ACC67B900D30504 /* MeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B7EF42ACC67B900D30504 /* MeterView.swift */; };
 		426A0B51299034910066C7B7 /* DiningAnalyticsGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */; };
 		426A0B52299034910066C7B7 /* DiningAnalyticsGraphBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */; };
+		42CC49D02AAE38C6008C41EE /* PollsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */; };
+		42CC49D22AAE3904008C41EE /* PollsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49D12AAE3904008C41EE /* PollsView.swift */; };
 		42D9237129E0C69200E9E18E /* FitnessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237029E0C69200E9E18E /* FitnessModel.swift */; };
 		42D9237329E0C9AF00E9E18E /* FitnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */; };
 		42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237429E0CCFB00E9E18E /* FitnessView.swift */; };
@@ -514,6 +516,8 @@
 		425E281A28FF5EE200218F50 /* DiningPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningPlan.swift; sourceTree = "<group>"; };
 		426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraph.swift; sourceTree = "<group>"; };
 		426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraphBox.swift; sourceTree = "<group>"; };
+		42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsViewController.swift; sourceTree = "<group>"; };
+		42CC49D12AAE3904008C41EE /* PollsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsView.swift; sourceTree = "<group>"; };
 		42D9237029E0C69200E9E18E /* FitnessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessModel.swift; sourceTree = "<group>"; };
 		42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewController.swift; sourceTree = "<group>"; };
 		42D9237429E0CCFB00E9E18E /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
@@ -1333,6 +1337,8 @@
 			children = (
 				6CAA4B4827A7639600473CC6 /* Networking */,
 				6CAA4B4A27A7639600473CC6 /* Model */,
+				42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */,
+				42CC49D12AAE3904008C41EE /* PollsView.swift */,
 			);
 			path = Polls;
 			sourceTree = "<group>";
@@ -2435,6 +2441,7 @@
 				6CC88D6027B1BF51006896F6 /* CardHeaderView.swift in Sources */,
 				EF6329A22409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift in Sources */,
 				6CC88D7627B1BF51006896F6 /* DiningLoginNavigationView.swift in Sources */,
+				42CC49D22AAE3904008C41EE /* PollsView.swift in Sources */,
 				6C23AF9526E57903002F60F0 /* (null) in Sources */,
 				F2D416C528E9F8C800F50CAB /* NotificationViewModel.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
@@ -2462,6 +2469,7 @@
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
+				42CC49D02AAE38C6008C41EE /* PollsViewController.swift in Sources */,
 				6CC88D6B27B1BF51006896F6 /* DiningVenueView.swift in Sources */,
 				42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */,
 				6C11C08026F842CF00407C04 /* HomeUpdateCellItem.swift in Sources */,
