@@ -39,6 +39,8 @@ public struct DiningVenue: Codable, Equatable, Identifiable {
             return .retail
         }
     }
+    
+    public var localImageURL: URL?
 }
 
 public struct Day: Codable, Equatable {

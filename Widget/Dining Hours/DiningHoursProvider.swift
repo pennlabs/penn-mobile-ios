@@ -42,8 +42,33 @@ struct Provider: TimelineProvider {
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<DiningEntries<Void>>) -> ()) {
-        let venues: [DiningVenue] = getDiningPreferences()
-        let timeline = Timeline(entries: [DiningEntries(date: .now, venues: venues, configuration: ())], policy: .atEnd)
-        completion(timeline)
+        var venues: [DiningVenue] = getDiningPreferences()
+
+        let dispatchGroup = DispatchGroup()
+
+            for (index, venue) in venues.enumerated() {
+                dispatchGroup.enter()
+                if let imageURL = venue.image {
+                    let task = URLSession.shared.dataTask(with: imageURL) { (data, _, _) in
+                        if let data = data, let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                            let filename = directory.appendingPathComponent(UUID().uuidString)
+                            try? data.write(to: filename)
+                            venues[index].localImageURL = filename
+                        }
+                        dispatchGroup.leave()
+                    }
+                    task.resume()
+                } else {
+                    dispatchGroup.leave()
+                }
+            }
+
+            dispatchGroup.notify(queue: .main) {
+                let timeline = Timeline(entries: [DiningEntries(date: .now, venues: venues, configuration: ())], policy: .atEnd)
+                completion(timeline)
+            }
+//        let venues: [DiningVenue] = getDiningPreferences()
+//        let timeline = Timeline(entries: [DiningEntries(date: .now, venues: venues, configuration: ())], policy: .atEnd)
+//        completion(timeline)
     }
 }

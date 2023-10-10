@@ -49,35 +49,44 @@ struct DiningHoursWidgetEntryView : View {
     
     private func smallWidget(venue: DiningVenue) -> some View {
         ZStack () {
-            GeometryReader { geo in
-                KFImage(venue.image)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: geo.size.width, height: geo.size.height)
-                    .clipped()
-                    .background(Color.grey1)
-                    .overlay(
-                        LinearGradient(gradient: Gradient(colors: [.clear, Color.grey6]),
-                                       startPoint: .top,
-                                       endPoint: .bottom)
-                    )
+            
+            if let localImageURL = venue.localImageURL, let uiImage = UIImage(contentsOfFile: localImageURL.path) {
+                GeometryReader { geo in
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
+                        .background(Color.grey1)
+                        .overlay(
+                            LinearGradient(gradient: Gradient(colors: [.clear, Color.grey6]),
+                                           startPoint: .top,
+                                           endPoint: .bottom)
+                        )
+                }
             }
-            VStack (alignment: .leading) {
-                Spacer()
-                Label(venue.statusString, systemImage: venue.statusImageString)
-                    .labelStyle(VenueStatusLabelStyle())
-                    .modifier(StatusColorModifier(for: venue))
-                    .minimumScaleFactor(0.2)
-                    .lineLimit(1)
-                    .padding(.leading, 10)
+            HStack {
+                VStack (alignment: .leading) {
+                    Spacer()
+                    Label(venue.statusString, systemImage: venue.statusImageString)
+                        .labelStyle(VenueStatusLabelStyle())
+                        .modifier(StatusColorModifier(for: venue))
+                        .minimumScaleFactor(0.2)
+                        .lineLimit(1)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 5)
+                    
+                    Text(venue.name)
+                        .font(.system(size: 15, weight: .medium))
+                        .minimumScaleFactor(0.2)
+                        .lineLimit(1)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 5)
+                }
+                .padding(.bottom, 10)
                 
-                Text(venue.name)
-                    .font(.system(size: 15, weight: .medium))
-                    .minimumScaleFactor(0.2)
-                    .lineLimit(1)
-                    .padding([.leading, .trailing], 10)
+                Spacer()
             }
-            .padding(.bottom, 10)
         }
     }
 

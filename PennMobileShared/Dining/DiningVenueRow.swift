@@ -21,13 +21,26 @@ public struct DiningVenueRow: View {
 
     public var body: some View {
         HStack(spacing: 13) {
-            KFImage(venue.image)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 100, height: 64)
-                .background(Color.grey1)
-                .clipShape(RoundedRectangle(cornerRadius: 7))
-
+            if isWidget {
+                if let localImageURL = venue.localImageURL, let uiImage = UIImage(contentsOfFile: localImageURL.path) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 100, height: 64)
+                        .background(Color.grey1)
+                        .clipShape(RoundedRectangle(cornerRadius: 7))
+                }
+            } else {
+                KFImage(venue.image)
+                    .setProcessor(
+                            DownsamplingImageProcessor(size: CGSize(width: 200, height: 128)))
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 64)
+                    .background(Color.grey1)
+                    .clipShape(RoundedRectangle(cornerRadius: 7))
+            }
+ 
             VStack(alignment: .leading, spacing: 3) {
                 Label(venue.statusString, systemImage: venue.statusImageString)
                     .labelStyle(VenueStatusLabelStyle())
