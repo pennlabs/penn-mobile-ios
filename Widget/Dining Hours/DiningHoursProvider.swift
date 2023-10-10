@@ -64,11 +64,10 @@ struct Provider: TimelineProvider {
             }
 
             dispatchGroup.notify(queue: .main) {
-                let timeline = Timeline(entries: [DiningEntries(date: .now, venues: venues, configuration: ())], policy: .atEnd)
-                completion(timeline)
+                if let nextDate = Calendar.current.date(byAdding: .minute, value: 15, to: Date()) {
+                    let timeline = Timeline(entries: [DiningEntries(date: .now, venues: venues, configuration: ())], policy: .after (nextDate))
+                    completion(timeline)
+                }
             }
-//        let venues: [DiningVenue] = getDiningPreferences()
-//        let timeline = Timeline(entries: [DiningEntries(date: .now, venues: venues, configuration: ())], policy: .atEnd)
-//        completion(timeline)
     }
 }
