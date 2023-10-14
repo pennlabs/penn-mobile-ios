@@ -12,7 +12,9 @@ jobs:
     steps:
       - name: Select Xcode 15
         # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
-        run: sudo xcode-select -s '/Applications/Xcode_15.0.app/Contents/Developer'
+        run: |
+          ls /Applications/
+          sudo xcode-select -s '/Applications/Xcode_15.0.app/Contents/Developer'
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Create Config File
@@ -90,3 +92,6 @@ jobs:
           cp $PP_WIDGET_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: Build app
         run: bundle exec fastlane ci_beta
+      - name: Show logs
+        if: always()
+        run: cat /Users/runner/Library/Logs/gym/PennMobile-PennMobile.log
