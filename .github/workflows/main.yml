@@ -12,9 +12,7 @@ jobs:
     steps:
       - name: Select Xcode 15
         # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
-        run: |
-          ls /Applications/
-          sudo xcode-select -s '/Applications/Xcode_15.0.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_15.0.app/Contents/Developer'
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Create Config File
@@ -56,6 +54,9 @@ jobs:
           bundler-cache: true
       - name: Download pods
         run: bundle exec pod install
+      - name: Fix pod script
+        # https://stackoverflow.com/questions/63533819/rsync-error-some-files-could-not-be-transferred-code-23-command-phasescriptex
+        run: find Pods/Target\ Support\ Files/Pods-PennMobile -name '*-frameworks.sh' -exec sed -i '' 's|source="\$(readlink "\${source}")"|source="\$(readlink -f "\${source}")"|g' {} +
       - name: Linter
         run: Pods/SwiftLint/swiftlint PennMobile/*
       - name: Install the Apple certificate and provisioning profile
@@ -94,4 +95,4 @@ jobs:
         run: bundle exec fastlane ci_beta
       - name: Show logs
         if: always()
-        run: cat /Users/runner/Library/Logs/gym/PennMobile-PennMobile.log
+        run: tail -n 500 /Users/runner/Library/Logs/gym/PennMobile-PennMobile.log
