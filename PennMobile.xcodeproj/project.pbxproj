@@ -208,7 +208,6 @@
 		6E5159F12AC8C9D5004B3F41 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5159DF2AC8C9D5004B3F41 /* Storage.swift */; };
 		6E5159F22AC8C9D5004B3F41 /* DiningToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5159E02AC8C9D5004B3F41 /* DiningToken.swift */; };
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
-		6E5159F42AC8CA1B004B3F41 /* PennMobileShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6E903D382AC9C67000F2D384 /* ImageNetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E903D372AC9C67000F2D384 /* ImageNetworkingManager.swift */; };
 		8766844128CBE907005CAD32 /* NativeNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8766844028CBE907005CAD32 /* NativeNewsViewController.swift */; };
@@ -374,17 +373,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				6E4D821D2AC8C91C009AB78E /* PennMobileShared.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6E5159F72AC8CA1B004B3F41 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6E5159F42AC8CA1B004B3F41 /* PennMobileShared.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2032,7 +2020,6 @@
 				8932692F28FC75A5003D4BF9 /* Sources */,
 				8932693028FC75A5003D4BF9 /* Frameworks */,
 				8932693128FC75A5003D4BF9 /* Resources */,
-				6E5159F72AC8CA1B004B3F41 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
