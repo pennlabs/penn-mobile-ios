@@ -93,6 +93,3 @@ jobs:
           cp $PP_WIDGET_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: Build app
         run: bundle exec fastlane ci_beta
-      - name: Show logs
-        if: always()
-        run: tail -n 500 /Users/runner/Library/Logs/gym/PennMobile-PennMobile.log
