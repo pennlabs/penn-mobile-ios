@@ -16,7 +16,7 @@ class PreferencesViewController: GenericViewController {
         let hostingView = UIHostingController(rootView: PreferencesView())
 
         view.backgroundColor = .uiBackground
-        self.screenName = "Preferences SwiftUI"
+        self.screenName = "Select Features"
 
         addChild(hostingView)
         view.addSubview(hostingView.view)
@@ -31,7 +31,7 @@ class PreferencesViewController: GenericViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.title = "Preferences"
+        self.title = "Select Features"
     }
 }
 
