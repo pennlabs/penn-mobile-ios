@@ -59,6 +59,7 @@
 	<array>
 		<string>ConfigureCoursesDayWidgetIntent</string>
 		<string>ConfigureDiningAnalyticsHomeWidgetIntent</string>
+		<string>ConfigureFitnessWidgetIntent</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
