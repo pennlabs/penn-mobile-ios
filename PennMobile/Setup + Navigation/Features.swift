@@ -20,6 +20,7 @@ enum FeatureIdentifier: String, Hashable {
     case events = "Events"
     case pac = "PAC Code"
     case about = "About"
+    case polls = "Poll History"
 }
 
 struct AppFeature: Identifiable {
@@ -94,7 +95,11 @@ let features: [AppFeature] = [
     },
     AppFeature(.pennCourseAlert, shortName: "PCA", longName: "Penn Course Alert", color: .baseLabsBlue, image: .system("bell.fill"), controller: CourseAlertController.self),
     AppFeature(.events, shortName: "Events", longName: "Penn Events", color: .baseGreen, image: .system("ticket"), controller: PennEventsTableViewController.self),
-    AppFeature(.fitness, name: "Fitness", color: .baseRed, image: .system("dumbbell.fill"), controller: FitnessViewController.self),
+    AppFeature(.fitness, name: "Fitness", color: .baseRed, image: .system("dumbbell.fill")) {
+        FitnessView()
+            .navigationTitle(Text("Fitness"))
+    },
+    AppFeature(.polls, shortName: "Polls", longName: "Polls History", color: .blueDark, image: .app("Polls_Grey"), controller: PollsViewController.self),
     AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),
     AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]
