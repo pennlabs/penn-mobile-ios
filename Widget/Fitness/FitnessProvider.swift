@@ -39,8 +39,13 @@ private func refresh(roomID: Int) async {
                 room.id == roomID
             }
             if(selectedRoom.count > 0) {
-                cachedRoomData = selectedRoom
-                return selectedRoom
+                switch await FitnessAPI.instance.fetchFitnessRoomsWithData(rooms: selectedRoom) {
+                case .failure:
+                    return selectedRoom
+                case .success(let updatedRooms):
+                    cachedRoomData = updatedRooms
+                    return updatedRooms
+                }
             } else {
                 return cachedRoomData ?? []
             }
