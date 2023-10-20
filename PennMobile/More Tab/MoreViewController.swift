@@ -91,7 +91,7 @@ extension MoreViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Notification and privacy tabs aren't shown for users that aren't logged in
-        let rows = [Account.isLoggedIn ? 4 : 3, ControllerModel.shared.moreOrder.count, pennLinks.count]
+        let rows = [Account.isLoggedIn ? 5 : 4, ControllerModel.shared.moreFeatures.count, pennLinks.count]
         return rows[section]
     }
 
@@ -118,9 +118,16 @@ extension MoreViewController {
                     cell.accessoryType = .disclosureIndicator
                     return cell
                 }
-            } else if indexPath.row <= 3 {
+            } else if indexPath.row == 2 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
-                    cell.setUpView(with: indexPath.row == 2 ? "Notifications" : "Privacy")
+                    cell.setUpView(with: "Select Features")
+                    cell.backgroundColor = .uiGroupedBackgroundSecondary
+                    cell.accessoryType = .disclosureIndicator
+                    return cell
+                }
+            } else if indexPath.row <= 4 {
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
+                    cell.setUpView(with: indexPath.row == 3 ? "Notifications" : "Privacy")
                     cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.accessoryType = .disclosureIndicator
                     return cell
@@ -128,7 +135,7 @@ extension MoreViewController {
             }
         } else if indexPath.section == 1 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "more-with-icon") as? MoreCell {
-                cell.setUpView(with: ControllerModel.shared.moreOrder[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
+                cell.setUpView(with: ControllerModel.shared.moreFeatures[indexPath.row], icon: ControllerModel.shared.moreIcons[indexPath.row])
                 cell.backgroundColor = .uiGroupedBackgroundSecondary
                 cell.accessoryType = .disclosureIndicator
                 return cell
@@ -153,12 +160,15 @@ extension MoreViewController {
             } else if indexPath.row == 1 {
                 let targetController = ControllerModel.shared.viewController(for: .pacCode)
                 navigationController?.pushViewController(targetController, animated: true)
-            } else if indexPath.row <= 3 {
-                let targetController = ControllerModel.shared.viewController(for: indexPath.row == 2 ? .notifications : .privacy)
+            } else if indexPath.row == 2 {
+                let targetController = ControllerModel.shared.viewController(for: .preferences)
+                navigationController?.pushViewController(targetController, animated: true)
+            } else if indexPath.row <= 4 {
+                let targetController = ControllerModel.shared.viewController(for: indexPath.row == 3 ? .notifications : .privacy)
                 navigationController?.pushViewController(targetController, animated: true)
             }
         } else if indexPath.section == 1 {
-            let targetController = ControllerModel.shared.viewController(for: ControllerModel.shared.moreOrder[indexPath.row])
+            let targetController = ControllerModel.shared.viewController(for: ControllerModel.shared.moreFeatures[indexPath.row])
             navigationController?.pushViewController(targetController, animated: true)
         } else if indexPath.section == 2 {
             if let url = URL(string: pennLinks[indexPath.row].url) {

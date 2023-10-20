@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import PennMobileShared
 
 // MARK: UserDefaultsKeys
 extension UserDefaults {
@@ -18,6 +19,7 @@ extension UserDefaults {
         case controllerSettings
         case sessionCount
         case laundryPreferences
+        case fitnessPreferences
         case isOnboarded
         case appVersion
         case cookies
@@ -42,6 +44,7 @@ extension UserDefaults {
         case nextAnalyticsStartDate
         case firstDollarsBalance
         case firstSwipesBalance
+        case tabPreferences
     }
 
     func clearAll() {
@@ -128,6 +131,18 @@ extension UserDefaults {
 
     func getLaundryPreferences() -> [Int]? {
         return array(forKey: UserDefaultsKeys.laundryPreferences.rawValue) as? [Int]
+    }
+}
+
+// MARK: Fitness Preferences
+extension UserDefaults {
+    func setFitnessPreferences(to ids: [Int]) {
+        set(ids, forKey: UserDefaultsKeys.fitnessPreferences.rawValue)
+        synchronize()
+    }
+
+    func getFitnessPreferences() -> [Int]? {
+        return array(forKey: UserDefaultsKeys.fitnessPreferences.rawValue) as? [Int]
     }
 }
 
@@ -590,5 +605,19 @@ extension UserDefaults {
 
     func clearFirstSwipesBalance() {
         removeObject(forKey: UserDefaultsKeys.firstSwipesBalance.rawValue)
+    }
+}
+
+// MARK: - Tab Preferences
+extension UserDefaults {
+    func setTabPreferences(_ tabs: [Feature]) {
+        UserDefaults.standard.set(tabs.map { $0.rawValue }, forKey: UserDefaultsKeys.tabPreferences.rawValue)
+    }
+
+    func getTabPreferences() -> [Feature] {
+        if let tabPreferenceTitles = UserDefaults.standard.value(forKey: UserDefaultsKeys.tabPreferences.rawValue) as? [String] {
+            return tabPreferenceTitles.map { Feature(rawValue: $0)! }
+        }
+        return [.home, .dining, .studyRoomBooking, .laundry, .more]
     }
 }

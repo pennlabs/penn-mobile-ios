@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import PennMobileShared
 
 final class HomePollsCell: UITableViewCell, HomeCellConformable {
     var delegate: ModularTableViewCellDelegate!
@@ -33,6 +34,16 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
         }
 
         return CGFloat(totalHeight)
+    }
+    
+    static func getPollHeight(for pollQuestion: PollQuestion) -> CGFloat {
+        var totalHeight: CGFloat = 63 + HomePollsCellFooter.height + 28 + 8
+
+        for i in 0..<pollQuestion.options.count {
+            totalHeight += HomePollsCell.height(forOption: pollQuestion.options[i])
+        }
+
+        return totalHeight + HomeViewController.cellSpacing
     }
 
     var pollQuestion: PollQuestion! {
@@ -152,25 +163,26 @@ extension HomePollsCell: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: false)
         tableView.isUserInteractionEnabled = false
         let pollOptionId = self.pollQuestion.options[indexPath.row].id
-        PollsNetworkManager.instance.answerPoll(withId: PollsNetworkManager.id, response: pollOptionId) { success in
+        Task {
+            let success = await PollsNetworkManager.instance.answerPoll(withId: PollsNetworkManager.id, response: pollOptionId)
             if success {
                 DispatchQueue.main.async {
                     self.pollQuestion.options[indexPath.row].voteCount += 1
-                // Change selected cell to chosen
+                    // Change selected cell to chosen
                     let chosenCell = (tableView.cellForRow(at: indexPath) as! PollOptionCell)
                     chosenCell.pollOption.voteCount += 1
                     chosenCell.chosen = true
-
+                    
                     // Update cells to reflect question answered
                     for cell in tableView.visibleCells as! [PollOptionCell] {
                         cell.totalResponses += 1
                         cell.answered = true
                     }
-
+                    
                     // Update model
                     self.pollQuestion.optionChosenId = self.pollQuestion.options[indexPath.row].id
                 }
-
+                
                 // TODO: Send Network Request to reflect changes
             } else {
                 print("not changing chosen")

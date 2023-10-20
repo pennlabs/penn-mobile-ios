@@ -23,6 +23,11 @@ class NewsViewController: GenericViewController {
         setupSegmentedController()
         setupWebview()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.title = "News"
+    }
 
     func setupSegmentedController() {
         newsSwitcher = UISegmentedControl(items: ["theDP", "UTB", "34th Street"])

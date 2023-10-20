@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 class GSRNetworkManager: NSObject, Requestable {
 
@@ -98,9 +99,6 @@ class GSRNetworkManager: NSObject, Requestable {
             var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
 
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "en_US_POSIX")

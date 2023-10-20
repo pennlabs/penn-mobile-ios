@@ -7,6 +7,7 @@
 //
 //
 import Foundation
+import PennMobileShared
 
 struct Account: Codable, Hashable {
     var pennid: Int

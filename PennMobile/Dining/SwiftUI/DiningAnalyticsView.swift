@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct DiningAnalyticsView: View {
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel

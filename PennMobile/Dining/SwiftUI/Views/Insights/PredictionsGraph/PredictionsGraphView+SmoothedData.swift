@@ -9,6 +9,7 @@
 import Foundation
 #if canImport(SwiftUI)
 import SwiftUI
+import PennMobileShared
 #endif
 
 extension PredictionsGraphView {

@@ -9,6 +9,7 @@
 import Combine
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 final class HomeDiningCellItem: HomeCellItem {
 

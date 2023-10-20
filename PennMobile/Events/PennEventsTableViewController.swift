@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftSoup
+import PennMobileShared
 
 class PennEventsTableViewController: GenericTableViewController, IndicatorEnabled {
 
@@ -38,6 +39,11 @@ class PennEventsTableViewController: GenericTableViewController, IndicatorEnable
         self.title = "Events"
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.title = "Events"
     }
 }
 

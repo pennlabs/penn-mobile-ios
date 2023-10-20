@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 struct AccessToken: Codable {
     let value: String
@@ -91,6 +92,14 @@ extension OAuth2NetworkManager {
             } else {
                 self.currentAccessToken = nil
                 self.refreshAccessToken(callback)
+            }
+        }
+    }
+    
+    func getAccessTokenAsync() async -> AccessToken? {
+        return await withCheckedContinuation { continuation in
+            getAccessToken { accessToken in
+                continuation.resume(returning: accessToken)
             }
         }
     }
