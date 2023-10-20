@@ -32,3 +32,5 @@ fastlane
 #Config
 Config/*
 !Config/.gitkeep
+
+*.mobileprovision
