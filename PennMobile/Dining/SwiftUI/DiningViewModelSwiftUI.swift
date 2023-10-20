@@ -21,13 +21,20 @@ class DiningViewModelSwiftUI: ObservableObject {
     @Published var alertType: NetworkingError?
 
     @Published var diningBalance = (try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)) ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
+
+    var areAllVenuesEmpty: Bool {
+        return diningVenues.allSatisfy { _, venues in
+            venues.isEmpty
+        }
+    }
+
     // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
     func refreshVenues() async {
         let lastRequest = UserDefaults.standard.getLastDiningHoursRequest()
         // Sometimes when building the app, dining venue list is empty, but because it has refreshed within the day, it does not refresh again. Now, refreshes if the list of venues is completely empty
-        if lastRequest == nil || !lastRequest!.isToday || areAllVenuesEmpty(diningVenues: diningVenues) {
+        if lastRequest == nil || !lastRequest!.isToday || areAllVenuesEmpty {
             self.diningVenuesIsLoading = true
             let result = await DiningAPI.instance.fetchDiningHours()
             switch result {
@@ -43,12 +50,6 @@ class DiningViewModelSwiftUI: ObservableObject {
             }
 
             self.diningVenuesIsLoading = false
-        }
-    }
-
-    func areAllVenuesEmpty(diningVenues: [VenueType: [DiningVenue]]) -> Bool {
-        return diningVenues.allSatisfy { _, venues in
-            venues.isEmpty
         }
     }
 
