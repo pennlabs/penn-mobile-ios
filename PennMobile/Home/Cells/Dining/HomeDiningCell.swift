@@ -10,7 +10,6 @@ import UIKit
 
 protocol DiningCellSelectable {
     func handleVenueSelected(_ venue: DiningVenue)
-    func handleSettingsTapped(venues: [DiningVenue])
 }
 
 final class HomeDiningCell: UITableViewCell, HomeCellConformable {
@@ -35,7 +34,6 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomeCellHeader = HomeCellHeader()
 
-    fileprivate var settingsButton: UIButton!
     fileprivate var venueTableView: UITableView!
 
     // MARK: - Init
@@ -47,16 +45,6 @@ final class HomeDiningCell: UITableViewCell, HomeCellConformable {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    @objc fileprivate func settingsButtonTapped() {
-        guard let delegate = delegate as? DiningCellSelectable else { return }
-        guard let venues = venues else {
-            delegate.handleSettingsTapped(venues: [])
-            return
-        }
-
-        delegate.handleSettingsTapped(venues: venues)
     }
 
     @objc fileprivate func transitionButtonTapped() {}
@@ -109,7 +97,6 @@ extension HomeDiningCell {
     fileprivate func prepareUI() {
         prepareSafeArea()
         prepareHeader()
-        prepareSettingsButton()
         prepareTableView()
     }
 
@@ -122,17 +109,6 @@ extension HomeDiningCell {
     fileprivate func prepareHeader() {
         safeArea.addSubview(header)
         header.prepare()
-    }
-
-    // MARK: Settings Button
-    fileprivate func prepareSettingsButton() {
-        settingsButton = getSettingsButton()
-        header.addSubview(settingsButton)
-        settingsButton.snp.makeConstraints { (make) in
-            make.size.equalTo(21)
-            make.centerY.equalTo(header)
-            make.trailing.equalTo(header)
-        }
     }
 
     // MARK: TableView
@@ -151,14 +127,6 @@ extension HomeDiningCell {
 
 // MARK: - Define UI Elements
 extension HomeDiningCell {
-    fileprivate func getSettingsButton() -> UIButton {
-        let button = UIButton()
-        button.tintColor = .labelSecondary
-        button.setImage(#imageLiteral(resourceName: "settings").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
-        return button
-    }
-
     fileprivate func getVenueTableView() -> UITableView {
         let tableView = UITableView()
         tableView.backgroundColor = .clear

@@ -214,6 +214,10 @@ extension HomeViewController {
             self.tableView.refreshControl?.endRefreshing()
         }
     }
+    
+    // Just for notification selector
+    @objc
+    func refreshWithForceRefresh() { self.refreshTableView(forceRefresh: true) }
 }
 
 extension HomeViewController: DiningCellSettingsDelegate {
@@ -270,5 +274,6 @@ extension HomeViewController {
 extension HomeViewController {
     func registerForNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateLaundryItemForPreferences(_:)), name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWithForceRefresh), name: Notification.Name(rawValue: "favoritesUpdated"), object: nil)
     }
 }
