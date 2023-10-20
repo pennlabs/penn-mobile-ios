@@ -120,7 +120,7 @@ extension MoreViewController {
                 }
             } else if indexPath.row == 2 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: "more") as? MoreCell {
-                    cell.setUpView(with: "Preferences")
+                    cell.setUpView(with: "Select Features")
                     cell.backgroundColor = .uiGroupedBackgroundSecondary
                     cell.accessoryType = .disclosureIndicator
                     return cell
