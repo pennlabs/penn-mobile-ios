@@ -24,10 +24,11 @@ struct HomeViewData {
             
             NewsCardView(article: NewsArticle(data: .init(labsArticle: .init(slug: "a", headline: "AAAAAAAA", abstract: "AAAAAAAAAAAAAA", published_at: "1d ago", authors: [], dominantMedia: .init(imageUrl: "https://www.upenn.edu/sites/default/files/styles/default/public/2020-11/p-100297-master-v1-075a-1600x800.jpg?itok=apAkEATX", authors: []), tag: "", content: "AAAAAAAAAAAA"))))
             
-            HomeCardView {
-                Text("Events")
-                    .frame(height: 200)
-            }
+            CalendarCardView(events: [
+                .init(event: "Test Event 1", date: "October 21"),
+                .init(event: "Test Event 2", date: "October 27-29 (Other University)"),
+                .init(event: "Test Event With A Really Long Name", date: "Really Really Really Long Date Wow It's So Long!")
+            ])
         }
     }
 }

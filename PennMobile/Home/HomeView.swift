@@ -60,6 +60,7 @@ struct HomeView<Model: HomeViewModel>: View {
                                     }
                                 }
                                 .padding(.bottom)
+                                .multilineTextAlignment(.center)
                                 
                                 data.content(for: context.date)
                             }
