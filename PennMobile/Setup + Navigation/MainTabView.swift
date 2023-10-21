@@ -10,10 +10,12 @@ import SwiftUI
 
 struct MainTabView: View {
     @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
+    @StateObject var homeViewModel = MockHomeViewModel(HomeViewData())
     
     var body: some View {
         TabView {
-            Text("Home")
+            HomeView<MockHomeViewModel>()
+                .environmentObject(homeViewModel)
                 .tabItem {
                     Label("Home", image: "Home_Grey")
                 }
