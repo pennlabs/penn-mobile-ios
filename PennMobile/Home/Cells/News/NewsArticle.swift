@@ -8,6 +8,7 @@
 
 import Foundation
 
+@dynamicMemberLookup
 struct NewsArticle: Codable {
     let data: ArticleDataWrapper
     struct ArticleDataWrapper: Codable {
@@ -29,5 +30,9 @@ struct NewsArticle: Codable {
                 let name: String
             }
         }
+    }
+    
+    subscript<T>(dynamicMember dynamicMember: KeyPath<ArticleDataWrapper.ArticleContents, T>) -> T {
+        data.labsArticle[keyPath: dynamicMember]
     }
 }
