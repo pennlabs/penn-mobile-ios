@@ -22,7 +22,7 @@ public class DiningAPI {
         guard let (data, _) = try? await URLSession.shared.data(from: URL(string: diningUrl)!) else {
             return .failure(.serverError)
         }
-
+        
         let decoder = JSONDecoder()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -72,6 +72,27 @@ public extension DiningAPI {
             venuesDict[type] = getVenues().filter({ $0.venueType == type })
         }
         return venuesDict
+    }
+    
+    func getSectionedVenuesAndFavorites() -> ([VenueType: [DiningVenue]], [DiningVenue]) {
+        var sectionedVenues = getSectionedVenues()
+        if Storage.fileExists(DiningVenue.favoritesDirectory, in: .caches) {
+            let favoritesIDs = Storage.retrieve(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self)
+            var favorites: [DiningVenue?] = []
+            for id in favoritesIDs {
+                favorites.append(sectionedVenues[.dining]?.first(where: { $0.id == id }) ?? sectionedVenues[.retail]?.first(where: { $0.id == id }) ?? nil)
+            }
+            let favoritesResult = favorites.compactMap { $0 }
+            
+            for type in VenueType.allCases {
+                sectionedVenues[type] = sectionedVenues[type]!.filter { !favoritesIDs.contains($0.id) }
+            }
+            
+            return (sectionedVenues, favoritesResult)
+        } else {
+            Storage.store(Array<Int>(), to: .caches, as: DiningVenue.favoritesDirectory)
+            return (sectionedVenues, [])
+        }
     }
 
     func getVenues<T: Collection>(with ids: T) -> [DiningVenue] where T.Element == Int {

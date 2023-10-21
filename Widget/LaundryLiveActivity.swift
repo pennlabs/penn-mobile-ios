@@ -72,6 +72,7 @@ struct LaundryLiveActivity: Widget {
     var body: some WidgetConfiguration {
         return ActivityConfiguration(for: LaundryAttributes.self) { context in
             LaundryLiveActivityView(attributes: context.attributes)
+                .environment(\.colorScheme, .dark)
                 .padding(24)
                 .activityBackgroundTint(Color("liveActivityBackground"))
                 .activitySystemActionForegroundColor(context.attributes.machine.iconColor)
