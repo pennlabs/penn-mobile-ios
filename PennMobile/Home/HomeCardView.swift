@@ -20,8 +20,8 @@ struct HomeCardView<Content: View>: View {
         content
             .frame(maxWidth: .infinity)
             .background(Material.regular)
-            .clipShape(.rect(cornerRadius: 8))
-            .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+            .clipShape(.rect(cornerRadius: 14))
+            .shadow(color: Color.black.opacity(0.2), radius: 4, x: 2, y: 2)
             .padding(.horizontal)
     }
 }
