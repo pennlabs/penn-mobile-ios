@@ -13,6 +13,14 @@ enum AuthState: Equatable {
     case loggedOut
     case guest
     case loggedIn(Account)
+    
+    var isLoggedIn: Bool {
+        if case .loggedIn(_) = self {
+            return true
+        }
+        
+        return false
+    }
 }
 
 class AuthManager: ObservableObject {

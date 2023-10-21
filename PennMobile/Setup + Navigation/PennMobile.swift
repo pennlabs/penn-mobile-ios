@@ -13,6 +13,11 @@ import SwiftUI
 struct PennMobile: App {
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
     @ObservedObject var authManager = AuthManager()
+    @ObservedObject var homeViewModel = StandardHomeViewModel()
+    
+    #if DEBUG
+    @ObservedObject var mockHomeViewModel = MockHomeViewModel()
+    #endif
 
     init() {
         UserDefaults.standard.set(gsrGroupsEnabled: false)
@@ -43,7 +48,14 @@ struct PennMobile: App {
         WindowGroup {
             RootView()
                 .environmentObject(authManager)
-                .accentColor(.accentColor)
+                .environmentObject(homeViewModel)
+            #if DEBUG
+                .environmentObject(mockHomeViewModel)
+            #endif
+                .accentColor(Color("navigation"))
+        }
+        .onChange(of: authManager.state.isLoggedIn) { _ in
+            homeViewModel.clearData()
         }
     }
 }

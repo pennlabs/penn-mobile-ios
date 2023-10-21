@@ -68,6 +68,17 @@ struct HomeView<Model: HomeViewModel>: View {
                             // Hack for forcing the navbar to always render
                             .navigationTitle(Text(showTitle ? "\(context.date, format: dateFormatStyle)" : "\u{200C}"))
                             .navigationBarTitleDisplayMode(.inline)
+                            #if DEBUG
+                            .toolbar {
+                                if (!(viewModel is MockHomeViewModel)) {
+                                    ToolbarItem(placement: .primaryAction) {
+                                        NavigationLink("Debug") {
+                                            HomeView<MockHomeViewModel>()
+                                        }
+                                    }
+                                }
+                            }
+                            #endif
                             .onAppear {
                                 chooseSplashText(data: data, for: context.date)
                             }
@@ -125,5 +136,5 @@ struct HomeView<Model: HomeViewModel>: View {
 
 #Preview {
     HomeView<MockHomeViewModel>()
-        .environmentObject(MockHomeViewModel(HomeViewData()))
+        .environmentObject(MockHomeViewModel())
 }

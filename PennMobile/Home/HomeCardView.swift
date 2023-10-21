@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Kingfisher
+import SwiftSoup
 
 struct HomeCardView<Content: View>: View {
     let content: Content
@@ -83,7 +84,7 @@ struct GenericPostCardView: View {
                             .mask(alignment: .center) {
                                 VStack(spacing: 0) {
                                     Rectangle().fill(.black).frame(height: 93)
-                                    LinearGradient(colors: [.black, .black.opacity(0.7), .clear], startPoint: .top, endPoint: .bottom).frame(height: 64)
+                                    LinearGradient(colors: [.black, .clear], startPoint: .top, endPoint: .bottom).frame(height: 64)
                                     Rectangle().fill(.clear)
                                 }
                             }
@@ -132,6 +133,10 @@ struct PostCardView: View {
 struct NewsCardView: View {
     var article: NewsArticle
     
+    var abstract: String? {
+        try? SwiftSoup.parse(article.abstract).text()
+    }
+    
     var body: some View {
         NavigationLink {
             NewsDetailView(article: article)
@@ -141,7 +146,7 @@ struct NewsCardView: View {
                 icon: Image(systemName: "newspaper"),
                 source: "The Daily Pennsylvanian",
                 title: article.headline,
-                description: article.abstract,
+                description: abstract,
                 imageURL: URL(string: article.dominantMedia.imageUrl),
                 dateLabel: "\(article.published_at)"
             )
