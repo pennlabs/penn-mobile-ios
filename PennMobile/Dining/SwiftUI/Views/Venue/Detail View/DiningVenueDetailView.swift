@@ -33,7 +33,6 @@ struct DiningVenueDetailView: View {
             ScrollView {
                 GeometryReader { geometry in
                     let minY = geometry.frame(in: .global).minY
-                    let maxY = geometry.frame(in: .global).maxY
                     let remain = imageHeight + minY
 
                     ZStack(alignment: .bottomLeading) {
@@ -46,18 +45,21 @@ struct DiningVenueDetailView: View {
                             .clipped()
 
                         LinearGradient(gradient: Gradient(colors: [.black.opacity(0.6), .black.opacity(0.2), .clear, .black.opacity(0.3), .black]), startPoint: .init(x: 0.5, y: 0.2), endPoint: .init(x: 0.5, y: 1))
-                        
+
                         Text(venue.name)
                             .padding()
                             .foregroundColor(.white)
                             .font(.system(size: 40, weight: .bold))
                             .minimumScaleFactor(0.2)
                             .lineLimit(1)
+                            .background(GeometryReader { geometry in
+                                let minY = geometry.frame(in: .global).minY
+                                Color.clear.onChange(of: minY) { minY in
+                                    showTitle = minY <= 64
+                                }
+                            })
                     }
                     .offset(y: -max(0, minY))
-                    .onChange(of: maxY) { maxY in
-                        showTitle = maxY <= 64
-                    }
                 }
                 .edgesIgnoringSafeArea(.all)
                 .frame(height: imageHeight)
