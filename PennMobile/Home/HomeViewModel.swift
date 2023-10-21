@@ -14,14 +14,26 @@ struct HomeViewData {
     }
     
     func content(for date: Date) -> some View {
-        ForEach(1..<20) { i in
-            Text("\(i)")
-                .frame(height: 200)
-                .frame(maxWidth: .infinity)
-                .background(Material.regular)
-                .clipShape(.rect(cornerRadius: 8))
-                .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
-                .padding(.horizontal)
+        Group {
+            HomeCardView {
+                Text("Poll")
+                    .frame(height: 200)
+            }
+            
+            HomeCardView {
+                Text("Portal Post")
+                    .frame(height: 200)
+            }
+            
+            HomeCardView {
+                Text("News")
+                    .frame(height: 200)
+            }
+            
+            HomeCardView {
+                Text("Events")
+                    .frame(height: 200)
+            }
         }
     }
 }

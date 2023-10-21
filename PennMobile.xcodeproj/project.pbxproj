@@ -244,6 +244,7 @@
 		89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCBEC528E791B70029F784 /* CoursesViewController.swift */; };
 		89E0DE682AE38A8800E918FF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE672AE38A8800E918FF /* HomeView.swift */; };
 		89E0DE6A2AE396E200E918FF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE692AE396E200E918FF /* HomeViewModel.swift */; };
+		89E0DE6C2AE415A800E918FF /* HomeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE6B2AE415A800E918FF /* HomeCardView.swift */; };
 		89EA261E290EDFA7008F26CF /* CoursesDayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */; };
 		89EA2622290EE3FD008F26CF /* CoursesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2620290EE3E9008F26CF /* CoursesProvider.swift */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
@@ -644,6 +645,7 @@
 		89DCBEC528E791B70029F784 /* CoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
 		89E0DE672AE38A8800E918FF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		89E0DE692AE396E200E918FF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		89E0DE6B2AE415A800E918FF /* HomeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCardView.swift; sourceTree = "<group>"; };
 		89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayWidget.swift; sourceTree = "<group>"; };
 		89EA2620290EE3E9008F26CF /* CoursesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesProvider.swift; sourceTree = "<group>"; };
 		89EA262C290F2667008F26CF /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -852,6 +854,7 @@
 				21640D4320103E9F002F33CA /* Controllers */,
 				89E0DE672AE38A8800E918FF /* HomeView.swift */,
 				89E0DE692AE396E200E918FF /* HomeViewModel.swift */,
+				89E0DE6B2AE415A800E918FF /* HomeCardView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -2328,6 +2331,7 @@
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
+				89E0DE6C2AE415A800E918FF /* HomeCardView.swift in Sources */,
 				EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */,
 				6C6FE1CA27B9B8CB0093FD13 /* MoreViewController.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
