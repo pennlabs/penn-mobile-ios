@@ -77,7 +77,7 @@ struct GenericPostCardView: View {
                         KFImage(imageURL)
                             .resizable()
                             .scaledToFill()
-                        Rectangle().fill(Material.thin)
+                        Rectangle().fill(Material.ultraThin)
                         KFImage(imageURL)
                             .resizable()
                             .scaledToFill()
@@ -89,6 +89,7 @@ struct GenericPostCardView: View {
                                 }
                             }
                     })
+                    .environment(\.colorScheme, .dark)
             } else {
                 content
             }

@@ -22,7 +22,8 @@ struct MainTabView: View {
                 let feature = features.first(where: { $0.id == identifier })!
                 NavigationStack {
                     feature.content
-                }.tabItem {
+                }
+                .tabItem {
                     switch feature.image {
                     case .app(let image):
                         Label(feature.shortName, image: image)
@@ -30,6 +31,8 @@ struct MainTabView: View {
                         Label(feature.shortName, systemImage: image)
                     }
                 }
+                .id(identifier)
+                .tag(identifier)
             }
             
             MoreView(features: features.filter { !tabBarFeatures.contains($0.id) })
