@@ -10,15 +10,6 @@ import UIKit
 import SwiftyJSON
 import PennMobileShared
 
-func getDeviceID() -> String {
-    let deviceID = UIDevice.current.identifierForVendor!.uuidString
-    #if DEBUG
-       return "test"
-    #else
-        return deviceID
-    #endif
-}
-
 class UserDBManager: NSObject, Requestable, SHA256Hashable {
     static let shared = UserDBManager()
     fileprivate let baseUrl = "https://api.pennlabs.org"
@@ -117,8 +108,18 @@ extension UserDBManager {
             task.resume()
         }
     }
+        
+    // Returns result because function that uses this isn't throwing
+    func fetchDiningPreferences() async -> Result<[DiningVenue], NetworkingError> {
+        return await withCheckedContinuation { continuation in
+            self.fetchDiningPreferences { result in
+                continuation.resume(returning: result)
+            }
+        }
+    }
 
     func saveDiningPreference(for venueIds: [Int]) {
+        NotificationCenter.default.post(name: NSNotification.Name("favoritesUpdated"), object: nil)
         let url = "https://pennmobile.org/api/dining/preferences/"
 
         OAuth2NetworkManager.instance.getAccessToken { (token) in
@@ -153,9 +154,6 @@ extension UserDBManager {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = try? JSON(params).rawData()
 
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
-
             let task = URLSession.shared.dataTask(with: request)
             task.resume()
         }
@@ -166,9 +164,6 @@ extension UserDBManager {
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             let url = URL(string: url)!
             var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
-
-            let deviceID = getDeviceID()
-            request.setValue(deviceID, forHTTPHeaderField: "X-Device-ID")
 
             let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
                 if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
@@ -574,6 +569,49 @@ extension UserDBManager {
                 } else {
                     completion?(false)
                 }
+            }
+            task.resume()
+        }
+    }
+}
+
+// MARK: - Fitness
+extension UserDBManager {
+    
+    func saveFitnessPreferences(for rooms: [FitnessRoom]) {
+        let ids = rooms.map { $0.id }
+        saveFitnessPreferences(for: ids)
+    }
+
+    func saveFitnessPreferences(for ids: [Int]) {
+        let url = "https://pennmobile.org/api/fitness/preferences/"
+        let params = ["rooms": ids]
+
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            let url = URL(string: url)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            request.httpMethod = "POST"
+
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSON(params).rawData()
+
+            let task = URLSession.shared.dataTask(with: request)
+            task.resume()
+        }
+    }
+
+    func getFitnessPreferences(_ callback: @escaping (_ rooms: [Int]?) -> Void) {
+        let url = "https://pennmobile.org/api/fitness/preferences/"
+        OAuth2NetworkManager.instance.getAccessToken { (token) in
+            let url = URL(string: url)!
+            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+
+            let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
+                if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
+                    callback(rooms.compactMap { $0 as? Int })
+                    return
+                }
+                callback(nil)
             }
             task.resume()
         }

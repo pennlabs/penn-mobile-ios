@@ -1,23 +1,23 @@
 //
-//  NotificationsViewControllerSwiftUI.swift
+//  PollsViewController.swift
 //  PennMobile
 //
-//  Created by Raunaq Singh on 9/25/22.
-//  Copyright © 2022 PennLabs. All rights reserved.
+//  Created by Jordan H on 9/10/23.
+//  Copyright © 2023 PennLabs. All rights reserved.
 //
 
 import SwiftUI
 
-class NotificationsViewControllerSwiftUI: GenericViewController {
+class PollsViewController: GenericViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let hostingView = UIHostingController(rootView: NotificationsView())
+        let hostingView = UIHostingController(rootView: PollsView())
 
         view.backgroundColor = .uiBackground
-        self.screenName = "Notifications"
-        self.title = "Notifications"
+        self.screenName = "Poll History"
+        self.title = "Poll History"
 
         addChild(hostingView)
         view.addSubview(hostingView.view)
@@ -28,10 +28,11 @@ class NotificationsViewControllerSwiftUI: GenericViewController {
         hostingView.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         hostingView.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         hostingView.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.tabBarController?.title = "Notificaions"
+        self.tabBarController?.title = "Poll History"
     }
 }

@@ -8,14 +8,14 @@
 
 import SwiftUI
 
-struct MeterView<S: ShapeStyle, Content: View>: View {
-    var current: Double
-    var maximum: Double
-    var style: S
-    var lineWidth: CGFloat
-    var content: Content
+public struct MeterView<S: ShapeStyle, Content: View>: View {
+    public var current: Double
+    public var maximum: Double
+    public var style: S
+    public var lineWidth: CGFloat
+    public var content: Content
 
-    init(current: Double, maximum: Double, style: S = Color.primary, lineWidth: CGFloat = 4, @ViewBuilder content: () -> Content) {
+    public init(current: Double, maximum: Double, style: S = Color.primary, lineWidth: CGFloat = 4, @ViewBuilder content: () -> Content) {
         self.current = current
         self.maximum = maximum
         self.style = style
@@ -23,7 +23,7 @@ struct MeterView<S: ShapeStyle, Content: View>: View {
         self.content = content()
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             GeometryReader { _ in
                 Rectangle()

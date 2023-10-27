@@ -11,12 +11,17 @@ import SwiftyJSON
 
 final class HomePollsCellItem: HomeCellItem {
     static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
-
-        PollsNetworkManager.instance.getActivePolls { polls in
-            if let polls = polls, polls.count > 0 {
-                completion([HomePollsCellItem(pollQuestion: polls[0])])
-            } else {
+        Task {
+            let pollsResult = await PollsNetworkManager.instance.getActivePolls()
+            switch pollsResult {
+            case .failure:
                 completion([])
+            case .success(let polls):
+                if polls.count > 0 {
+                    completion([HomePollsCellItem(pollQuestion: polls[0])])
+                } else {
+                    completion([])
+                }
             }
         }
     }
