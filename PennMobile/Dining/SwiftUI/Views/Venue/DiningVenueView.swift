@@ -78,6 +78,9 @@ struct DiningVenueView: View {
                     }
                 }
             }
+            Section(header: CustomHeader(name: "Pick what I eat").environmentObject(diningAnalyticsViewModel)) {
+                DiningDiffusionView(for: diningVM.diningVenues[VenueType.dining] ?? [])
+            }
         }
         .onAppear {
             triggerRefresh()

@@ -281,6 +281,8 @@
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
+		D02DBDFE2AD0B73700B39682 /* Replicate in Frameworks */ = {isa = PBXBuildFile; productRef = D02DBDFD2AD0B73700B39682 /* Replicate */; };
+		D02DBE002AD0B76800B39682 /* DiningDiffusionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02DBDFF2AD0B76800B39682 /* DiningDiffusionView.swift */; };
 		E50676EA27EE1C73009A776E /* PastDiningBalances.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50676E927EE1C73009A776E /* PastDiningBalances.swift */; };
 		E50676EC27F0CA39009A776E /* DiningAnalyticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50676EB27F0CA39009A776E /* DiningAnalyticsViewModel.swift */; };
 		E515B36327C2B97500AAE0D8 /* DiningBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515B36227C2B97500AAE0D8 /* DiningBalance.swift */; };
@@ -640,6 +642,7 @@
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
+		D02DBDFF2AD0B76800B39682 /* DiningDiffusionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningDiffusionView.swift; sourceTree = "<group>"; };
 		E50676E927EE1C73009A776E /* PastDiningBalances.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastDiningBalances.swift; sourceTree = "<group>"; };
 		E50676EB27F0CA39009A776E /* DiningAnalyticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsViewModel.swift; sourceTree = "<group>"; };
 		E515B36227C2B97500AAE0D8 /* DiningBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalance.swift; sourceTree = "<group>"; };
@@ -711,6 +714,7 @@
 			files = (
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
+				D02DBDFE2AD0B73700B39682 /* Replicate in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
 				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
 				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
@@ -1348,6 +1352,7 @@
 				6CC88D3627B1BF50006896F6 /* Insights */,
 				6CC88D4827B1BF50006896F6 /* DiningViewHeader.swift */,
 				6CC88D4927B1BF50006896F6 /* DiningView.swift */,
+				D02DBDFF2AD0B76800B39682 /* DiningDiffusionView.swift */,
 				6CC88D4A27B1BF50006896F6 /* Venue */,
 			);
 			path = Views;
@@ -1940,6 +1945,7 @@
 				6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */,
 				6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */,
 				6CA1ACDA271D2D5000EDB967 /* Kingfisher */,
+				D02DBDFD2AD0B73700B39682 /* Replicate */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -2033,6 +2039,7 @@
 				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D02DBDFC2AD0B73700B39682 /* XCRemoteSwiftPackageReference "replicate-swift" */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -2419,6 +2426,7 @@
 				C15C4B4E223EB16F00E443FD /* HomeReservationsCell.swift in Sources */,
 				B62875F92118F95300FB2873 /* BuildingProtocol.swift in Sources */,
 				F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */,
+				D02DBE002AD0B76800B39682 /* DiningDiffusionView.swift in Sources */,
 				426A0B51299034910066C7B7 /* DiningAnalyticsGraph.swift in Sources */,
 				97AA806C23D26BC700C23488 /* DiningCell.swift in Sources */,
 				6C6FE1CC27B9B8CB0093FD13 /* PacCodeNetworkManager.swift in Sources */,
@@ -2929,6 +2937,14 @@
 				minimumVersion = 8.6.1;
 			};
 		};
+		D02DBDFC2AD0B73700B39682 /* XCRemoteSwiftPackageReference "replicate-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/replicate/replicate-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.17.0;
+			};
+		};
 		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
@@ -2980,6 +2996,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		D02DBDFD2AD0B73700B39682 /* Replicate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D02DBDFC2AD0B73700B39682 /* XCRemoteSwiftPackageReference "replicate-swift" */;
+			productName = Replicate;
 		};
 		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
