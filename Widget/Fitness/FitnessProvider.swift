@@ -11,27 +11,27 @@ import WidgetKit
 import Intents
 import PennMobileShared
 
-let intentIDToRoomID = [0:0,1:7,2:3,3:2,4:1,5:4,6:6,7:5,8:9,9:8]
-
 struct FitnessEntry<Configuration>: TimelineEntry {
     let date: Date
-    let rooms: [FitnessRoom]?
+    let room: FitnessRoom?
     let configuration: Configuration
 }
 
 extension FitnessEntry where Configuration == Void {
-    init(date: Date, rooms: [FitnessRoom]?) {
-        self.init(date: date, rooms: rooms, configuration: ())
+    init(date: Date, room: FitnessRoom?) {
+        self.init(date: date, room: room, configuration: ())
     }
 }
 
-private var cachedRoomData: [FitnessRoom]?
+private var cachedRoomData: FitnessRoom?
+private var placeHolderRoom: FitnessRoom?
+
 private let cacheAge: TimeInterval = 10 * 60
 private var lastFetchDate: Date?
 private var refreshTask: Task<Void, Never>?
 
-private func refresh(roomID: Int) async {
-    let modelRefreshTask = Task {
+private func getRoom(roomID: Int) async -> FitnessRoom? {
+    let modelRefreshTask : Task<FitnessRoom?, Never> = Task {
         do {
             let fitnessData = await FitnessAPI.instance.fetchFitnessRooms()
             let fitnessRooms = try fitnessData.get()
@@ -41,36 +41,46 @@ private func refresh(roomID: Int) async {
             if(selectedRoom.count > 0) {
                 switch await FitnessAPI.instance.fetchFitnessRoomsWithData(rooms: selectedRoom) {
                 case .failure:
-                    return selectedRoom
+                    return nil
                 case .success(let updatedRooms):
-                    cachedRoomData = updatedRooms
-                    return updatedRooms
+                    return updatedRooms[0]
                 }
             } else {
-                return cachedRoomData ?? []
+                return nil
             }
         } catch let error {
             print("Couldn't fetch fitness data: \(error)")
-            return cachedRoomData ?? []
+            return nil
         }
     }
-    let fitnessData : [FitnessRoom] = await modelRefreshTask.value
-    cachedRoomData = fitnessData
+    let fitnessData : FitnessRoom? = await modelRefreshTask.value
+    return fitnessData
 }
+
+private func refresh(roomID: Int) async {
+    let fitnessData : FitnessRoom? = await getRoom(roomID: roomID)
+    cachedRoomData = fitnessData ?? nil
+}
+
+private func updatePlaceHolder(roomID: Int) async {
+    let fitnessData : FitnessRoom? = await getRoom(roomID: roomID)
+    placeHolderRoom = fitnessData ?? nil
+}
+
+
 
 private func snapshot<ConfigureFitnessWidgetIntent>(configuration: ConfigureFitnessWidgetIntent, roomID: Int) async -> FitnessEntry<ConfigureFitnessWidgetIntent> {
     if refreshTask == nil
-        || cachedRoomData == nil || (cachedRoomData!).count == 0
+        || cachedRoomData == nil
         || (lastFetchDate != nil && Date().timeIntervalSince(lastFetchDate!) > cacheAge)
-        || (cachedRoomData!)[0].id != roomID {
+        || (cachedRoomData!).id != roomID {
         refreshTask = Task {
             lastFetchDate = Date()
             await refresh(roomID: roomID)
         }
     }
     await refreshTask?.value
-    
-    return FitnessEntry(date: Date(), rooms: cachedRoomData, configuration: configuration)
+    return FitnessEntry(date: Date(), room: cachedRoomData, configuration: configuration)
 }
 
 private func timeline<Configuration>(configuration: Configuration, roomID: Int) async -> Timeline<FitnessEntry<Configuration>> {
@@ -95,6 +105,6 @@ struct IntentFitnessProvider<Intent: ConfigureFitnessWidgetIntent>: IntentTimeli
     }
     
     func placeholder(in context: Context) -> FitnessEntry<Intent.Configuration> {
-        FitnessEntry(date: Date(), rooms: nil, configuration: placeholderConfiguration)
+        return FitnessEntry(date: Date(), room: placeHolderRoom, configuration: placeholderConfiguration)
     }
 }

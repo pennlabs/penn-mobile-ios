@@ -27,6 +27,9 @@ private func lastUpdatedFormattedTime (date: Date) -> String {
     let interval = -date.timeIntervalSinceNow
     let hours = Int(interval / 3600)
     let minutes = Int((interval - 3600 * Double(hours)) / 60)
+    if hours == 0 {
+        return "Updated \(minutes)m ago"
+    }
     return "Updated \(hours)h \(minutes)m ago"
 }
 
@@ -91,91 +94,92 @@ private func isOpen (room: FitnessRoom) -> Bool {
 
 
 private struct FitnessWidgetSmallView: View {
-    var rooms: [FitnessRoom]
+    var room: FitnessRoom
     var configuration: ConfigureFitnessWidgetIntent.Configuration
     
     
     var body: some View {
         VStack {
-            Text(rooms[0].name)
+            Text(room.name)
                 .font(.system(size: 13, weight: .semibold))
                 .padding(.top)
-            Text(getOpenString(room: rooms[0], showbusystring: false))
+                .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
+            Text(getOpenString(room: room, showbusystring: false))
                 .font(.system(size: 11))
-                .foregroundStyle(isOpen(room: rooms[0]) ? .green : .blue)
+                .foregroundStyle(configuration.background.prefersGrayscaleContent ? Color.primary : (isOpen(room: room) ? .green : .blue))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-            MeterView(current: isOpen(room: rooms[0]) ? rooms[0].capacity : 0, maximum: 100.0, style: Color.blue, lineWidth: 6) {
+            MeterView(current: isOpen(room: room) ? room.capacity : 0, maximum: 100.0, style: (configuration.background.prefersGrayscaleContent  ? Color.primary : .blue), lineWidth: 6) {
                 VStack {
-                    Text("\(isOpen(room: rooms[0]) ? rooms[0].capacity : 0, specifier: "%.2f")%")
+                    Text("\(isOpen(room: room) ? room.capacity : 0, specifier: "%.2f")%")
                         .fontWeight(.bold)
+                        .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
                     Text("capacity")
-                        .font(.system(size: 10, weight: .light, design: .default))
+                        .font(.system(size: (configuration.background.prefersGrayscaleContent ? 13 : 10), weight: .light, design: .default))
+                        .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
                     
                 }
             }
             .frame(width: 90, height: 90)
             
-            Text(lastUpdatedFormattedTime(date: rooms[0].last_updated))
+            Text(lastUpdatedFormattedTime(date: room.last_updated))
                 .font(.system(size: 9))
-                .foregroundStyle(.gray)
+                .foregroundStyle(.secondary)
+                .padding(.bottom)
             
-            Spacer()
-        }.widgetPadding()
+            
+        }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
 }
 
+
 private struct FitnessWidgetMediumView: View {
-    var rooms: [FitnessRoom]
+    var room: FitnessRoom
     var configuration: ConfigureFitnessWidgetIntent.Configuration
     
     var body: some View {
-        VStack {
-            HStack {
-                Text(rooms[0].name)
+        HStack {
+            VStack {
+                Text(room.name)
                     .font(.system(size: 12, weight: .semibold))
                     .padding(.top)
-                
-                Text("")
-                
-                Text(getOpenString(room: rooms[0], showbusystring: true))
-                    .font(.system(size: 12))
-                    .foregroundStyle(isOpen(room: rooms[0]) ? .green : .blue)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top)
-            }
-            .padding([.trailing, .leading], 10)
-            HStack {
+                    .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
                 VStack {
-                    MeterView(current: isOpen(room: rooms[0]) ? rooms[0].capacity : 0, maximum: 100.0, style: Color.blue, lineWidth: 6) {
+                    MeterView(current: isOpen(room: room) ? room.capacity : 0, maximum: 100.0, style: configuration.background.prefersGrayscaleContent  ? Color.primary : .blue, lineWidth: 6) {
                         VStack {
-                            Text("\(isOpen(room: rooms[0]) ? rooms[0].capacity : 0, specifier: "%.2f")%")
+                            Text("\(isOpen(room: room) ? room.capacity : 0, specifier: "%.2f")%")
                                 .fontWeight(.bold)
+                                .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
                             Text("capacity")
-                                .font(.system(size: 10, weight: .light, design: .default))
+                                .font(.system(size: (configuration.background.prefersGrayscaleContent ? 13 : 10), weight: .light, design: .default))
+                                .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
                             
                         }
                     }
                     .frame(width: 90, height: 90)
                     
-                    Text(lastUpdatedFormattedTime(date: rooms[0].last_updated))
+                    Text(lastUpdatedFormattedTime(date: room.last_updated))
                         .font(.system(size: 9))
-                        .foregroundStyle(.gray)
-                    
-
-                    
-                    Spacer()
+                        .foregroundStyle(.secondary)
                 }
-                .padding(.trailing, 7)
-                
-                FitnessGraph(room: rooms[0])
-                
-                Spacer()
+                .padding(.bottom)
+            
             }
             .padding([.trailing, .leading], 10)
+            
+            VStack {
+                Text(getOpenString(room: room, showbusystring: true))
+                    .font(.system(size: 12))
+                    .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : (isOpen(room: room) ? .green : .blue))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top)
+                
+                FitnessGraph(room: room)
+                    .padding(.bottom)
+            }.padding([.trailing], 10)
         }.widgetPadding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -200,7 +204,7 @@ private struct FitnessHomeWidgetView: View {
                 .padding()
                 .font(.system(size: 12))
             }
-            else if (entry.rooms == nil || entry.rooms?.count == 0) {
+            else if (entry.room == nil) {
                 Text("Error fetching fitness room data.")
                     .multilineTextAlignment(.center).widgetPadding()
                     .fixedSize(horizontal: false, vertical: true)
@@ -208,11 +212,11 @@ private struct FitnessHomeWidgetView: View {
                     .font(.system(size: 15))
             }
             else {
-                let rooms = entry.rooms!
+                let room = entry.room!
                 switch widgetFamily {
-                    case .systemSmall: FitnessWidgetSmallView(rooms: rooms, configuration: entry.configuration)
-                    case .systemMedium: FitnessWidgetMediumView(rooms: rooms, configuration: entry.configuration)
-                    default: FitnessWidgetSmallView(rooms: rooms, configuration: entry.configuration)
+                    case .systemSmall: FitnessWidgetSmallView(room: room, configuration: entry.configuration)
+                    case .systemMedium: FitnessWidgetMediumView(room: room, configuration: entry.configuration)
+                    default: FitnessWidgetSmallView(room: room, configuration: entry.configuration)
                 }
             }
         }

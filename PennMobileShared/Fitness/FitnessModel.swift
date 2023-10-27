@@ -14,7 +14,7 @@ public struct FitnessRoom: Codable, Equatable, Identifiable {
     public let image_url: URL?
     public let last_updated: Date // "2023-04-07T12:32:34-04:00"
     public let count: Int
-    public let capacity: Double
+    public var capacity: Double
     public let open: [String]
     public let close: [String]
     public var data: FitnessRoomData?
