@@ -14,12 +14,13 @@ import PennMobileShared
 struct FitnessEntry<Configuration>: TimelineEntry {
     let date: Date
     let room: FitnessRoom?
+    let roomID: Int
     let configuration: Configuration
 }
 
 extension FitnessEntry where Configuration == Void {
-    init(date: Date, room: FitnessRoom?) {
-        self.init(date: date, room: room, configuration: ())
+    init(date: Date, roomID: Int, room: FitnessRoom?) {
+        self.init(date: date, room: room, roomID: roomID, configuration: ())
     }
 }
 
@@ -80,7 +81,7 @@ private func snapshot<ConfigureFitnessWidgetIntent>(configuration: ConfigureFitn
         }
     }
     await refreshTask?.value
-    return FitnessEntry(date: Date(), room: cachedRoomData, configuration: configuration)
+    return FitnessEntry(date: Date(), room: cachedRoomData, roomID: roomID, configuration: configuration)
 }
 
 private func timeline<Configuration>(configuration: Configuration, roomID: Int) async -> Timeline<FitnessEntry<Configuration>> {
@@ -92,19 +93,19 @@ struct IntentFitnessProvider<Intent: ConfigureFitnessWidgetIntent>: IntentTimeli
     
     func getSnapshot(for intent: Intent, in context: Context, completion: @escaping (FitnessEntry<Intent.Configuration>) -> Void) {
         Task {
-            let roomID = intent.configuration.complex.rawValue //ID of Fitness Complex in backend should match "Index" field of Fitness Complex in Intents Enum
-            completion(await snapshot(configuration: intent.configuration, roomID: roomID))
+            let roomID = intent.configuration.complex.rawValue
+            completion(await snapshot(configuration: intent.configuration, roomID: 7)) //getSnapshot is only called when widget is in drawer, and not when in home screen. Therefore, when in the drawer, set roomID to 7, which corresponds to 1st floor Fitness, to show a 'preview' of what the widget looks like. Then when the widget is actually placed on the home screen, it shows the instructions, because roomID is now set from getTimeline, where it defaults to 0 (which is the ID to show the instructions)
         }
     }
     
     func getTimeline(for intent: Intent, in context: Context, completion: @escaping (Timeline<FitnessEntry<Intent.Configuration>>) -> Void) {
         Task {
-            let roomID = intent.configuration.complex.rawValue
+            let roomID = intent.configuration.complex.rawValue //ID of Fitness Complex in backend should match "Index" field of Fitness Complex in Intents Enum
             completion(await timeline(configuration: intent.configuration, roomID: roomID))
         }
     }
     
     func placeholder(in context: Context) -> FitnessEntry<Intent.Configuration> {
-        return FitnessEntry(date: Date(), room: placeHolderRoom, configuration: placeholderConfiguration)
+        return FitnessEntry(date: Date(), room: placeHolderRoom, roomID: 0, configuration: placeholderConfiguration)
     }
 }

@@ -177,7 +177,7 @@ private struct FitnessWidgetMediumView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top)
                 
-                FitnessGraph(room: room)
+                FitnessGraph(room: room, color: configuration.background.prefersGrayscaleContent ? Color.primary : .blue)
                     .padding(.bottom)
             }.padding([.trailing], 10)
         }.widgetPadding()
@@ -192,17 +192,12 @@ private struct FitnessHomeWidgetView: View {
     
     var body: some View {
         Group {
-            if (entry.configuration.complex.rawValue == 0) {
-                (Text("To use this widget, choose a room by ") +
-                Text("touching and holding the widget")
-                    .fontWeight(.bold)
-                + Text(", then clicking ") +
-                 Text("Edit Widget.   ")
-                    .fontWeight(.bold)
-                ).multilineTextAlignment(.center).widgetPadding()
-                .fixedSize(horizontal: false, vertical: true)
-                .padding()
-                .font(.system(size: 12))
+            if (entry.roomID == 0) {
+                Text("To use this widget, choose a room by **touching and holding the widget**, then choosing **Edit Widget**.")
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding()
+                    .font(.system(size: 12))
             }
             else if (entry.room == nil) {
                 Text("Error fetching fitness room data.")

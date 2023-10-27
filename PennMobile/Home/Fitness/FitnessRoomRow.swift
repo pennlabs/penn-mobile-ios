@@ -96,7 +96,7 @@ struct FitnessRoomRow: View {
                                     .foregroundColor(Color.labelSecondary)
                                     .lineLimit(1)
                             }
-                            FitnessGraph(room: room)
+                            FitnessGraph(room: room, color: .blue)
                         }
                         .padding()
                     }
