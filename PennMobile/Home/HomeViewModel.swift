@@ -28,7 +28,7 @@ struct HomeViewData {
     }
     
     func content(for date: Date) -> some View {
-        Group {
+        VStack(spacing: 16) {
             if hasPoll {
                 HomeCardView {
                     Text("Poll")

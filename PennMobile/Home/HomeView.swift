@@ -39,7 +39,7 @@ struct HomeView<Model: HomeViewModel>: View {
                 NavigationStack {
                     ScrollView {
                         TimelineView(.periodic(from: Date.midnightYesterday, by: 24 * 60 * 60)) { context in
-                            VStack(spacing: 16) {
+                            VStack(spacing: 0) {
                                 VStack {
                                     Text("\(context.date, format: dateFormatStyle)")
                                         .font(.largeTitle)
@@ -59,7 +59,7 @@ struct HomeView<Model: HomeViewModel>: View {
                                         .foregroundStyle(.secondary)
                                     }
                                 }
-                                .padding(.bottom)
+                                .offset(y: -24)
                                 .multilineTextAlignment(.center)
                                 
                                 data.content(for: context.date)

@@ -37,7 +37,7 @@ struct GenericPostCardView: View {
     var dateLabel: LocalizedStringKey?
     
     var content: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 4) {
             HStack {
                 Text("\(icon) \(source)")
                     .textCase(.uppercase)
@@ -51,17 +51,17 @@ struct GenericPostCardView: View {
             .font(.caption)
             .padding(.bottom, 2)
             
-            VStack(alignment: .leading) {
-                if let title {
-                    Text(title)
-                        .fontWeight(.semibold)
-                        .font(.headline)
-                }
-                
-                if let description {
-                    Text(description)
-                        .font(.subheadline)
-                }
+            if let title {
+                Text(title)
+                    .fontWeight(.semibold)
+                    .font(.subheadline)
+                    .lineLimit(3)
+            }
+            
+            if let description {
+                Text(description)
+                    .font(.caption)
+                    .lineLimit(3)
             }
         }
         .padding()
