@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PennMobileShared
 
 protocol LaundryMachineCellTappable: NotificationRequestable {
     var allowMachineNotifications: Bool { get }

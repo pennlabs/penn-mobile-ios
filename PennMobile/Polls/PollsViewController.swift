@@ -1,23 +1,23 @@
 //
-//  FitnessViewControllerSwiftUI.swift
+//  PollsViewController.swift
 //  PennMobile
 //
-//  Created by Jordan H on 4/7/23.
+//  Created by Jordan H on 9/10/23.
 //  Copyright © 2023 PennLabs. All rights reserved.
 //
 
 import SwiftUI
 
-class FitnessViewController: GenericViewController {
+class PollsViewController: GenericViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let hostingView = UIHostingController(rootView: FitnessView())
+        let hostingView = UIHostingController(rootView: PollsView())
 
         view.backgroundColor = .uiBackground
-        self.screenName = "Fitness"
-        self.title = "Fitness"
+        self.screenName = "Poll History"
+        self.title = "Poll History"
 
         addChild(hostingView)
         view.addSubview(hostingView.view)
@@ -33,6 +33,6 @@ class FitnessViewController: GenericViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.tabBarController?.title = "Fitness"
+        self.tabBarController?.title = "Poll History"
     }
 }

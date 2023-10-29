@@ -9,9 +9,9 @@
 import Foundation
 import SwiftyJSON
 
-class LaundryMachine: Hashable {
+public class LaundryMachine: Hashable, Codable {
 
-    enum Status: String {
+    public enum Status: String, Codable {
         case open
         case running
         case offline
@@ -30,40 +30,43 @@ class LaundryMachine: Hashable {
         }
     }
 
-    let id: Int
-    let isWasher: Bool
-    let roomName: String
-    var status: Status
-    var timeRemaining: Int
-
-    init(json: JSON, roomName: String) {
+    public let id: Int
+    public let isWasher: Bool
+    public let roomName: String
+    public var status: Status
+    public var timeRemaining: Int
+    
+    public init(id: Int, isWasher: Bool, roomName: String, status: Status, timeRemaining: Int) {
+        self.id = id
+        self.isWasher = isWasher
         self.roomName = roomName
-        id = json["id"].intValue
-        let statusStr = json["status"].stringValue
-        status = Status(rawValue: statusStr) ?? Status.parseStatus(for: statusStr)
-        timeRemaining = json["time_remaining"].intValue
-        isWasher = json["type"].stringValue == "washer"
+        self.status = status
+        self.timeRemaining = timeRemaining
+    }
 
+    public convenience init(json: JSON, roomName: String) {
+        let statusStr = json["status"].stringValue
+        let status = Status(rawValue: statusStr) ?? Status.parseStatus(for: statusStr)
+        var timeRemaining = json["time_remaining"].intValue
+        
         // Flag if website does not provide a time remaining
         if status == .running && timeRemaining == 0 {
             timeRemaining = -1
         }
+        
+        self.init(id: json["id"].intValue, isWasher: json["type"].stringValue == "washer", roomName: roomName, status: status, timeRemaining: timeRemaining)
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(roomName)
         hasher.combine(isWasher)
         hasher.combine(id)
-    }
-
-    func isUnderNotification() -> Bool {
-        return LaundryNotificationCenter.shared.isUnderNotification(for: self)
     }
 }
 
 // MARK: - Comparable
 extension LaundryMachine: Comparable {
-    static func < (lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
+    public static func < (lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
         switch (lhs.status, rhs.status) {
         case (.running, .open):
             return true
@@ -80,7 +83,7 @@ extension LaundryMachine: Comparable {
         }
     }
 
-    static func == (lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
+    public static func == (lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
         return lhs.roomName == rhs.roomName
             && lhs.id == rhs.id
             && lhs.isWasher == rhs.isWasher
@@ -88,7 +91,7 @@ extension LaundryMachine: Comparable {
 }
 
 // MARK: - Array Extensions
-extension Array where Element == LaundryMachine {
+public extension Array where Element == LaundryMachine {
     func containsRunningMachine() -> Bool {
         if self.count == 0 { return false }
         return self[0].status == .running

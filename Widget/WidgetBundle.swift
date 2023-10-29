@@ -15,5 +15,8 @@ struct LabsWidgetBundle: WidgetBundle {
         DiningAnalyticsHomeWidget()
         CoursesDayWidget()
         FitnessHomeWidget()
+        if #available(iOS 16.1, *) {
+            LaundryLiveActivity()
+        }
     }
 }

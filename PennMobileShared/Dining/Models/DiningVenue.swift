@@ -10,6 +10,7 @@ import Foundation
 
 public struct DiningVenue: Codable, Equatable, Identifiable {
     public static let directory = "diningVenue-v2.json"
+    public static let favoritesDirectory = "diningVenue-v2-favorites.json"
     public static let menuUrlDict: [Int: String] = [593: "https://university-of-pennsylvania.cafebonappetit.com/cafe/1920-commons/",
                                            636: "https://university-of-pennsylvania.cafebonappetit.com/cafe/hill-house/",
                                            637: "https://university-of-pennsylvania.cafebonappetit.com/cafe/kings-court-english-house/",

@@ -35,6 +35,7 @@ struct PreferencesView: View {
                     Text("Choose which features appear in the tab bar. The remaining ones can still be found on the More tab.")
                 }
             }
+            .id(UUID())
             .environment(\.editMode, Binding.constant(EditMode.active))
         }
         .onAppear {

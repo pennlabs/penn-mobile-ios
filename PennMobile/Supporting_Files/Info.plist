@@ -61,6 +61,8 @@
 		<string>ConfigureDiningAnalyticsHomeWidgetIntent</string>
 		<string>ConfigureFitnessWidgetIntent</string>
 	</array>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
