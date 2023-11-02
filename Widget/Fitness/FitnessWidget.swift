@@ -92,7 +92,6 @@ private func isOpen (room: FitnessRoom) -> Bool {
 }
 
 
-
 private struct FitnessWidgetSmallView: View {
     var room: FitnessRoom
     var configuration: ConfigureFitnessWidgetIntent.Configuration
@@ -103,7 +102,7 @@ private struct FitnessWidgetSmallView: View {
             Text(room.name)
                 .font(.system(size: 13, weight: .semibold))
                 .padding(.top)
-                .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
+                .foregroundStyle(Color.primary)
             Text(getOpenString(room: room, showbusystring: false))
                 .font(.system(size: 11))
                 .foregroundStyle(configuration.background.prefersGrayscaleContent ? Color.primary : (isOpen(room: room) ? .green : .blue))
@@ -113,10 +112,10 @@ private struct FitnessWidgetSmallView: View {
                 VStack {
                     Text("\(isOpen(room: room) ? room.capacity : 0, specifier: "%.2f")%")
                         .fontWeight(.bold)
-                        .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
+                        .foregroundStyle(Color.primary)
                     Text("capacity")
                         .font(.system(size: (configuration.background.prefersGrayscaleContent ? 13 : 10), weight: .light, design: .default))
-                        .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
+                        .foregroundStyle(Color.primary)
                     
                 }
             }
@@ -145,16 +144,16 @@ private struct FitnessWidgetMediumView: View {
                 Text(room.name)
                     .font(.system(size: 12, weight: .semibold))
                     .padding(.top)
-                    .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
+                    .foregroundStyle(Color.primary)
                 VStack {
                     MeterView(current: isOpen(room: room) ? room.capacity : 0, maximum: 100.0, style: configuration.background.prefersGrayscaleContent  ? Color.primary : .blue, lineWidth: 6) {
                         VStack {
                             Text("\(isOpen(room: room) ? room.capacity : 0, specifier: "%.2f")%")
                                 .fontWeight(.bold)
-                                .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
+                                .foregroundStyle(Color.primary)
                             Text("capacity")
                                 .font(.system(size: (configuration.background.prefersGrayscaleContent ? 13 : 10), weight: .light, design: .default))
-                                .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : .black)
+                                .foregroundStyle(Color.primary)
                             
                         }
                     }
@@ -172,7 +171,7 @@ private struct FitnessWidgetMediumView: View {
             VStack {
                 Text(getOpenString(room: room, showbusystring: true))
                     .font(.system(size: 12))
-                    .foregroundStyle(configuration.background.prefersGrayscaleContent  ? Color.primary : (isOpen(room: room) ? .green : .blue))
+                    .foregroundStyle(configuration.background.prefersGrayscaleContent ? Color.primary : (isOpen(room: room) ? .green : .blue))
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.top)
