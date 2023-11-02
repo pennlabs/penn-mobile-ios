@@ -9,10 +9,18 @@
 import SwiftUI
 import Charts
 
-struct FitnessGraph: View {
+public struct FitnessGraph: View {
+    
     private let graphHeight: CGFloat = 100.0
     private let padding: CGFloat = 10.0
-    var room: FitnessRoom
+    public var room: FitnessRoom
+    public var color: Color
+    
+    public init(room: FitnessRoom, color: Color) {
+        self.room = room
+        self.color = color
+    }
+    
     var hours: (Date, Date) {
         let calendar = Calendar.current
         let currentDate = Date()
@@ -30,7 +38,7 @@ struct FitnessGraph: View {
         return (openDate, closeDate)
     }
     
-    var body: some View {
+    public var body: some View {
         if #available(iOS 16.0, *) {
             Chart {
                 ForEach(room.data?.usageHours ?? []) {
@@ -38,7 +46,7 @@ struct FitnessGraph: View {
                         x: .value("Hour", $0.date, unit: .hour),
                         y: .value("Value", $0.value)
                     )
-                    .foregroundStyle(Date().hour == $0.date.hour ? Color.blue.gradient : Color.blue.opacity(0.5).gradient)
+                    .foregroundStyle(Date().hour == $0.date.hour ? color.gradient : color.opacity(0.5).gradient)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .offset(x: -padding)
                 }

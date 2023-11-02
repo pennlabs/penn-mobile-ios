@@ -8,16 +8,15 @@
 
 import Foundation
 import SwiftyJSON
-import PennMobileShared
 
-class FitnessAPI: Requestable {
+public class FitnessAPI {
 
-    static let instance = FitnessAPI()
+    public static let instance = FitnessAPI()
 
-    let fitnessRoomsUrl = "https://pennmobile.org/api/penndata/fitness/rooms/"
-    let fitnessDetailUrl = "https://pennmobile.org/api/penndata/fitness/usage/" // + room ID
+    public let fitnessRoomsUrl = "https://pennmobile.org/api/penndata/fitness/rooms/"
+    public let fitnessDetailUrl = "https://pennmobile.org/api/penndata/fitness/usage/" // + room ID
     
-    func fetchFitnessRooms() async -> Result<[FitnessRoom], NetworkingError> {
+    public func fetchFitnessRooms() async -> Result<[FitnessRoom], NetworkingError> {
         guard let (data, _) = try? await URLSession.shared.data(from: URL(string: fitnessRoomsUrl)!) else {
             return .failure(.serverError)
         }
@@ -33,7 +32,7 @@ class FitnessAPI: Requestable {
         }
     }
     
-    func fetchFitnessPastData(roomID: Int, date: Date = Date(), num_samples: Int = 3, group_by: String = "week", field: String = "count") async -> Result<FitnessRoomData, NetworkingError> {
+    public func fetchFitnessPastData(roomID: Int, date: Date = Date(), num_samples: Int = 3, group_by: String = "week", field: String = "count") async -> Result<FitnessRoomData, NetworkingError> {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: date)
@@ -51,7 +50,7 @@ class FitnessAPI: Requestable {
         }
     }
 
-    func fetchFitnessRoomsWithData(rooms: [FitnessRoom]) async -> Result<[FitnessRoom], NetworkingError> {
+    public func fetchFitnessRoomsWithData(rooms: [FitnessRoom]) async -> Result<[FitnessRoom], NetworkingError> {
         return await withTaskGroup(of: FitnessRoom.self) { group in
             var updatedRooms = [FitnessRoom]()
             updatedRooms.reserveCapacity(rooms.count)
