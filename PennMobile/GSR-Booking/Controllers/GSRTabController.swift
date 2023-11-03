@@ -24,7 +24,7 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         settings.style.buttonBarLeftContentInset = 0
         settings.style.buttonBarRightContentInset = 0
         settings.style.selectedBarHeight = 0
-        edgesForExtendedLayout = []
+        // edgesForExtendedLayout = []
 
 //        let barView = ButtonBarView(frame: CGRect(x: 0.0, y: (88 + 0.0), width: self.view.bounds.width, height: 50.0), collectionViewLayout: UICollectionViewFlowLayout())
 //        self.barView = barView
@@ -49,6 +49,9 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         self.view.addSubview(ownContainerView)
         self.buttonBarView = self.barView
         self.containerView = containerView
+        self.title = "Study Room Booking"
+        self.tabBarController?.title = "GSR"
+        self.tabBarItem.title = "GSR"
 
         _ = barView.anchor(self.view.safeAreaLayoutGuide.topAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 50)
         _ = separatorLine.anchor(barView.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 1)

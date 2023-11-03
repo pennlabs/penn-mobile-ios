@@ -8,6 +8,8 @@
 
 import Foundation
 import UserNotifications
+import ActivityKit
+import PennMobileShared
 
 class LaundryNotificationCenter {
 
@@ -22,6 +24,21 @@ class LaundryNotificationCenter {
     func notifyWithMessage(for machine: LaundryMachine, title: String?, message: String?, completion: @escaping (_ success: Bool) -> Void) {
         let center = UNUserNotificationCenter.current()
         let minutes = machine.timeRemaining
+        let now = Date()
+        
+        if #available(iOS 16.1, *) {
+            // Dismiss any existing laundry live activities that have ended
+            Activity<LaundryAttributes>.activities.forEach { activity in
+                if activity.attributes.dateComplete <= now {
+                    Task {
+                        await activity.end(using: nil, dismissalPolicy: .immediate)
+                    }
+                }
+            }
+            
+            _ = try? Activity.request(attributes: LaundryAttributes(machine: machine, dateComplete: now.add(minutes: minutes)), contentState: LaundryAttributes.ContentState())
+        }
+        
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             if error != nil {
                 completion(false)
@@ -76,9 +93,25 @@ class LaundryNotificationCenter {
         guard let identifier = identifiers[machine] else { return }
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         identifiers.removeValue(forKey: machine)
+        
+        if #available(iOS 16.1, *) {
+            Activity<LaundryAttributes>.activities.forEach { activity in
+                if activity.attributes.machine.id == machine.id {
+                    Task {
+                        await activity.end(using: nil, dismissalPolicy: .immediate)
+                    }
+                }
+            }
+        }
     }
 
     func isUnderNotification(for machine: LaundryMachine) -> Bool {
         return identifiers[machine] != nil
+    }
+}
+
+extension LaundryMachine {
+    func isUnderNotification() -> Bool {
+        return LaundryNotificationCenter.shared.isUnderNotification(for: self)
     }
 }

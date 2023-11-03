@@ -40,6 +40,11 @@ class PennEventsTableViewController: GenericTableViewController, IndicatorEnable
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 100
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.title = "Events"
+    }
 }
 
 // MARK: - Networking to retrieve events

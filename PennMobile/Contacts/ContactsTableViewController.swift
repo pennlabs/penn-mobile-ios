@@ -39,6 +39,11 @@ class ContactsTableViewController: GenericTableViewController, ShowsAlert {
         tableView.delegate = self
         tableView.register(ContactCell.self, forCellReuseIdentifier: cellId)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.title = "Contacts"
+    }
 }
 
 // MARK: - TableView Datasource

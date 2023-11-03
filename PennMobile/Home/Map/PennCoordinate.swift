@@ -30,22 +30,31 @@ class PennCoordinate {
         return MKCoordinateRegion.init(center: getDefault(), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
     }
 
-    func getCoordinates(for facility: FitnessFacilityName) -> CLLocationCoordinate2D {
-        switch facility {
-        case .pottruck:     return CLLocationCoordinate2D(latitude: 39.953562, longitude: -75.197002)
-        case .fox:          return CLLocationCoordinate2D(latitude: 39.950343, longitude: -75.189154)
-        case .climbing:     return CLLocationCoordinate2D(latitude: 39.954034, longitude: -75.196960)
-        case .membership:   return CLLocationCoordinate2D(latitude: 39.954057, longitude: -75.197188)
-        case .ringe:        return CLLocationCoordinate2D(latitude: 39.950450, longitude: -75.188642)
-        case .rockwell:     return CLLocationCoordinate2D(latitude: 39.953859, longitude: -75.196868)
-        case .sheerr:       return CLLocationCoordinate2D(latitude: 39.953859, longitude: -75.196868)
-        case .unknown:      return getDefault()
-        }
-    }
-
-    func getRegion(for facility: FitnessFacilityName, at scale: PennCoordinateScale) -> MKCoordinateRegion {
-        return MKCoordinateRegion.init(center: getCoordinates(for: facility), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
-    }
+    // Keeping for future reference!
+//    func getCoordinates(for facility: FitnessFacilityName) -> CLLocationCoordinate2D {
+//        switch facility {
+//        case .pottruck:     return CLLocationCoordinate2D(latitude: 39.953562, longitude: -75.197002)
+//        case .fox:          return CLLocationCoordinate2D(latitude: 39.950343, longitude: -75.189154)
+//        case .climbing:     return CLLocationCoordinate2D(latitude: 39.954034, longitude: -75.196960)
+//        case .membership:   return CLLocationCoordinate2D(latitude: 39.954057, longitude: -75.197188)
+//        case .ringe:        return CLLocationCoordinate2D(latitude: 39.950450, longitude: -75.188642)
+//        case .rockwell:     return CLLocationCoordinate2D(latitude: 39.953859, longitude: -75.196868)
+//        case .sheerr:       return CLLocationCoordinate2D(latitude: 39.953859, longitude: -75.196868)
+//        case .unknown:      return getDefault()
+//        }
+//    }
+//    
+//    func getAnnotation(for facility: FitnessFacilityName) -> MKAnnotation {
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = getCoordinates(for: facility)
+//        annotation.title = facility.getFacilityName()
+//        annotation.subtitle = "Penn Recreation"
+//        return annotation
+//    }
+//
+//    func getRegion(for facility: FitnessFacilityName, at scale: PennCoordinateScale) -> MKCoordinateRegion {
+//        return MKCoordinateRegion.init(center: getCoordinates(for: facility), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
+//    }
 
     func getCoordinates(for dining: DiningVenue) -> CLLocationCoordinate2D {
         switch dining.id {
@@ -97,17 +106,5 @@ class PennCoordinate {
 
     func getRegion(for dining: DiningVenue, at scale: PennCoordinateScale) -> MKCoordinateRegion {
         return MKCoordinateRegion.init(center: getCoordinates(for: dining), latitudinalMeters: scale.rawValue, longitudinalMeters: scale.rawValue)
-    }
-}
-
-// MARK: - Placemarks
-extension PennCoordinate {
-
-    func getAnnotation(for facility: FitnessFacilityName) -> MKAnnotation {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = getCoordinates(for: facility)
-        annotation.title = facility.getFacilityName()
-        annotation.subtitle = "Penn Recreation"
-        return annotation
     }
 }
