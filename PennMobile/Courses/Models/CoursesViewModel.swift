@@ -32,25 +32,25 @@ private func getTimeInt(pathAtPennString: String) -> Int? {
 extension Course {
     /// Initializes a course from Path@Penn data.
     init(_ data: PathAtPennNetworkManager.CourseData) {
-        var crn = data.crn
-        var code = data.code
-        var title = data.title
-        var section = data.section
+        let crn = data.crn
+        let code = data.code
+        let title = data.title
+        let section = data.section
 
         let instructorHTML = try? SwiftSoup.parse(data.instructordetail_html)
         let divs = try? instructorHTML?.select("div")
-        var instructors = (try? divs?.map { try $0.text(trimAndNormaliseWhitespace: true) }) ?? []
+        let instructors = (try? divs?.map { try $0.text(trimAndNormaliseWhitespace: true) }) ?? []
 
         let meetingHTML = try? SwiftSoup.parse(data.meeting_html)
         let a = try? meetingHTML?.select("a").first()
-        var location = try? a?.text(trimAndNormaliseWhitespace: true)
+        let location = try? a?.text(trimAndNormaliseWhitespace: true)
 
         struct PathAtPennMeetingTime: Decodable {
             var meet_day: String
             var start_time: String
             var end_time: String
         }
-        
+
         var meetingTimes: [MeetingTime]?
         var startDate: Date?
         var endDate: Date?
@@ -87,7 +87,7 @@ extension Course {
             endDate = nil
             meetingTimes = nil
         }
-        
+
         self.init(crn: crn, code: code, title: title, section: section, instructors: instructors, startDate: startDate, endDate: endDate, meetingTimes: meetingTimes)
     }
 }
