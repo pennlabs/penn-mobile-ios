@@ -1553,7 +1553,7 @@
 				6ECB4C332ACA6FE200F7379A /* DiningHoursWidget.swift */,
 			);
 			path = "Dining Hours";
-    };
+		};
 		890C4EC52ACBA486009650CA /* Laundry */ = {
 			isa = PBXGroup;
 			children = (
