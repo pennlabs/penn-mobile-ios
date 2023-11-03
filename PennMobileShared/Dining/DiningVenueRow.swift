@@ -112,8 +112,10 @@ public struct StatusColorModifier: ViewModifier {
     }
 }
 
-struct VenueStatusLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
+public struct VenueStatusLabelStyle: LabelStyle {
+    public init() {}
+    
+    public func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 4) {
             configuration.icon.font(.system(size: 9, weight: .semibold))
             configuration.title.font(.system(size: 11, weight: .semibold))
