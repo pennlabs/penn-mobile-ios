@@ -23,7 +23,7 @@ extension DiningEntries where Configuration == Void {
 
 private func getDiningPreferences() -> [DiningVenue] {
     do {
-        return try Storage.retrieveThrowing(DiningAPI.cacheFileName, from: .groupCaches, as: [DiningVenue].self)
+        return try Storage.retrieveThrowing(DiningAPI.favoritesCacheFileName, from: .groupCaches, as: [DiningVenue].self)
         
     } catch let error {
         print("Couldn't load dining preferences: \(error)")
@@ -33,41 +33,63 @@ private func getDiningPreferences() -> [DiningVenue] {
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> DiningEntries<Void> {
+        
         DiningEntries(date: .now, venues: [])
     }
     
     func getSnapshot(in context: Context, completion: @escaping (DiningEntries<Void>) -> ()) {
-        let entry = DiningEntries(date: .now, venues: DiningAPI.instance.getVenues(with: DiningAPI.defaultVenueIds))
-        completion(entry)
-    }
-    
-    func getTimeline(in context: Context, completion: @escaping (Timeline<DiningEntries<Void>>) -> ()) {
-        var venues: [DiningVenue] = getDiningPreferences()
-
-        let dispatchGroup = DispatchGroup()
-
+        Task {
+            let _ = await DiningAPI.instance.fetchDiningHours()
+            
+            var venues: [DiningVenue] = getDiningPreferences()
+            
+            if venues.isEmpty {
+                venues = DiningAPI.instance.getVenues(with: DiningAPI.defaultVenueIds)
+            }
+            
             for (index, venue) in venues.enumerated() {
-                dispatchGroup.enter()
                 if let imageURL = venue.image {
-                    let task = URLSession.shared.dataTask(with: imageURL) { (data, _, _) in
-                        if let data = data, let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                    if let (data, _) = try? await URLSession.shared.data(from: imageURL) {
+                        if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                             let filename = directory.appendingPathComponent(UUID().uuidString)
                             try? data.write(to: filename)
                             venues[index].localImageURL = filename
                         }
-                        dispatchGroup.leave()
                     }
-                    task.resume()
-                } else {
-                    dispatchGroup.leave()
                 }
             }
-
-            dispatchGroup.notify(queue: .main) {
-                if let nextDate = Calendar.current.date(byAdding: .minute, value: 15, to: Date()) {
-                    let timeline = Timeline(entries: [DiningEntries(date: .now, venues: venues, configuration: ())], policy: .after (nextDate))
-                    completion(timeline)
+                
+            let entry = DiningEntries(date: .now, venues: venues, configuration: ())
+            completion(entry)
+        }
+    }
+    
+    func getTimeline(in context: Context, completion: @escaping (Timeline<DiningEntries<Void>>) -> ()) {
+        Task {
+            let _ = await DiningAPI.instance.fetchDiningHours()
+            
+            var venues: [DiningVenue] = getDiningPreferences()
+            
+            if venues.isEmpty {
+                venues = DiningAPI.instance.getVenues(with: DiningAPI.defaultVenueIds)
+            }
+            
+            for (index, venue) in venues.enumerated() {
+                if let imageURL = venue.image {
+                    if let (data, _) = try? await URLSession.shared.data(from: imageURL) {
+                        if let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                            let filename = directory.appendingPathComponent(UUID().uuidString)
+                            try? data.write(to: filename)
+                            venues[index].localImageURL = filename
+                        }
+                    }
                 }
             }
+            
+            if let nextDate = Calendar.current.date(byAdding: .minute, value: 15, to: Date()) {
+                let timeline = Timeline(entries: [DiningEntries(date: .now, venues: venues, configuration: ())], policy: .after (nextDate))
+                completion(timeline)
+            }
+        }
     }
 }

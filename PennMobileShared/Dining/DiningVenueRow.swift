@@ -66,13 +66,6 @@ public struct DiningVenueRow: View {
                         }
                     } else {
                         hoursDisplay(in: geo, fontSize: 10.5, horizontalPadding: 4)
-                        // Vertical pipe separator view
-//                        Text(venue.humanFormattedHoursStringForToday)
-//                            .font(.system(size: 12, weight: .light, design: .default))
-//                            .foregroundColor(Color.gray)
-//                            .scaledToFit()
-//                            .minimumScaleFactor(0.01)
-//                            .lineLimit(1)
                     }
                 }
             }

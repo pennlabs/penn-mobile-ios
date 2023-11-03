@@ -131,7 +131,7 @@ extension UserDBManager {
 
             // Cache a user's favorite dining halls for use by dining hours widget.
             let diningVenues = DiningAPI.instance.getVenues(with: venueIds)
-            Storage.store(diningVenues, to: .groupCaches, as: DiningAPI.cacheFileName)
+            Storage.store(diningVenues, to: .groupCaches, as: DiningAPI.favoritesCacheFileName)
             WidgetKind.diningHoursWidgets.forEach {
                 WidgetCenter.shared.reloadTimelines(ofKind: $0)
             }

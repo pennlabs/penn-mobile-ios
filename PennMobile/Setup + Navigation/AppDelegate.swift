@@ -123,7 +123,7 @@ func migrateDataToGroupContainer() {
         }
     }
 
-    if Storage.migrate(fileName: DiningAPI.directory, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
+    if Storage.migrate(fileName: DiningVenue.directory, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
         print("Migrated course data.")
     }
 
@@ -134,7 +134,7 @@ func migrateDataToGroupContainer() {
         }
     }
 
-    if Storage.migrate(fileName: DiningAPI.cacheFileName, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
+    if Storage.migrate(fileName: DiningAPI.favoritesCacheFileName, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
        print("Migrated dining favorites data.")
         WidgetKind.diningHoursWidgets.forEach {
             WidgetCenter.shared.reloadTimelines(ofKind: $0)

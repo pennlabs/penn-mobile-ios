@@ -10,8 +10,6 @@ import SwiftyJSON
 import Foundation
 
 public class DiningAPI {
-    
-    public static let directory = "diningVenue-v2.json"
     public static let defaultVenueIds: [Int] = [593, 636, 1442, 639]
 
     public static let instance = DiningAPI()
@@ -19,7 +17,7 @@ public class DiningAPI {
     let diningUrl = "https://pennmobile.org/api/dining/venues/"
     let diningMenuUrl = "https://pennmobile.org/api/dining/menus/"
     
-    public static let cacheFileName = "diningFavoritesCache"
+    public static let favoritesCacheFileName = "diningFavoritesCache"
 
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
 
@@ -64,8 +62,8 @@ public class DiningAPI {
 public extension DiningAPI {
     // MARK: - Get Methods
     func getVenues() -> [DiningVenue] {
-        if Storage.fileExists(DiningAPI.directory, in: .groupCaches) {
-            return Storage.retrieve(DiningAPI.directory, from: .groupCaches, as: [DiningVenue].self)
+        if Storage.fileExists(DiningVenue.directory, in: .groupCaches) {
+            return Storage.retrieve(DiningVenue.directory, from: .groupCaches, as: [DiningVenue].self)
         } else {
             return []
         }
@@ -93,7 +91,7 @@ public extension DiningAPI {
 
     // MARK: - Cache Methods
     func saveToCache(_ venues: [DiningVenue]) {
-        Storage.store(venues, to: .groupCaches, as: DiningAPI.directory)
+        Storage.store(venues, to: .groupCaches, as: DiningVenue.directory)
     }
 
     func saveMenuToCache(id: Int, _ menu: MenuList) {
