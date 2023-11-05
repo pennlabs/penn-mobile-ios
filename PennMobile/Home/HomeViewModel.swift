@@ -70,6 +70,7 @@ protocol HomeViewModel: ObservableObject {
 class StandardHomeViewModel: HomeViewModel {
     @Published private(set) var data: Result<HomeViewData, Error>?
     var isFetching = false
+    var lastFetch: Date?
     
     func clearData() {
         data = nil
@@ -81,7 +82,7 @@ class StandardHomeViewModel: HomeViewModel {
                 return
             }
             
-            if case .success(_) = data {
+            if case .success = data, let lastFetch, lastFetch.timeIntervalSinceNow > -60 * 60 {
                 return
             }
         }
@@ -133,6 +134,8 @@ class StandardHomeViewModel: HomeViewModel {
             newsArticles: (try? await newsArticles) ?? [],
             events: await events
         ))
+        
+        lastFetch = Date()
     }
 }
 

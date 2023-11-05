@@ -71,25 +71,30 @@ struct GenericPostCardView: View {
     var body: some View {
         HomeCardView {
             if let imageURL {
-                content
-                    .padding(.top, 150)
-                    .background(ZStack(alignment: .bottom) {
-                        KFImage(imageURL)
-                            .resizable()
-                            .scaledToFill()
-                        Rectangle().fill(Material.ultraThin)
-                        KFImage(imageURL)
-                            .resizable()
-                            .scaledToFill()
-                            .mask(alignment: .center) {
-                                VStack(spacing: 0) {
-                                    Rectangle().fill(.black).frame(height: 93)
-                                    LinearGradient(colors: [.black, .clear], startPoint: .top, endPoint: .bottom).frame(height: 64)
-                                    Rectangle().fill(.clear)
-                                }
+                ZStack(alignment: .bottom) {
+                    Rectangle().fill(Material.ultraThin)
+                        .background(
+                            KFImage(imageURL)
+                                .resizable()
+                                .scaledToFill()
+                        )
+                    
+                    Rectangle().fill(.clear)
+                        .overlay(
+                            KFImage(imageURL)
+                                .resizable()
+                                .scaledToFill()
+                        )
+                        .mask(alignment: .top) {
+                            VStack(spacing: 0) {
+                                Rectangle().fill(.white).frame(height: 93)
+                                LinearGradient(colors: [.white, .clear], startPoint: .top, endPoint: .bottom).frame(height: 64)
                             }
-                    })
-                    .environment(\.colorScheme, .dark)
+                        }
+                    
+                    content.padding(.top, 150)
+                }
+                .environment(\.colorScheme, .dark)
             } else {
                 content
             }
