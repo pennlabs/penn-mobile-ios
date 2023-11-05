@@ -14,6 +14,7 @@ struct DiningAnalyticsView: View {
     @State var showMissingDiningTokenAlert = false
     @State var showDiningLoginView = false
     @State var notLoggedInAlertShowing = false
+    @State var showSettingsSheet = false
     @Environment(\.presentationMode) var presentationMode
     func showCorrectAlert () -> Alert {
         if !Account.isLoggedIn {
@@ -30,6 +31,17 @@ struct DiningAnalyticsView: View {
             let dollarHistory = $diningAnalyticsViewModel.dollarHistory
             let swipeHistory = $diningAnalyticsViewModel.swipeHistory
             HStack {
+                Spacer()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showSettingsSheet.toggle()
+                        }) {
+                            Image(systemName: "gear")
+                                .imageScale(.large)
+                        }
+                    }
+                }
                 if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
                     if dollarHistory.wrappedValue.isEmpty && swipeHistory.wrappedValue.isEmpty {
                         ZStack {
@@ -45,12 +57,12 @@ struct DiningAnalyticsView: View {
                     } else {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 20) {
-                                HStack() {
-                                    Text("Dining Analytics")
-                                        .font(.system(size: 32))
-                                        .bold()
-                                    
-                                }
+//                                HStack() {
+//                                    Text("Dining Analytics")
+//                                        .font(.system(size: 32))
+//                                        .bold()
+//                                    
+//                                }
                                 // Only show dollar history view if there is data for the graph
                                 if !dollarHistory.wrappedValue.isEmpty {
                                     CardView {
@@ -83,6 +95,10 @@ struct DiningAnalyticsView: View {
                 DiningLoginNavigationView()
                     .environmentObject(diningAnalyticsViewModel)
             }
+            .navigationTitle("Analytics")
+            .sheet(isPresented: $showSettingsSheet) {
+                DiningSettingsView() // Replace with your settings view
+            }
         } else {
             let dollarXYHistory = Binding(
                 get: {
@@ -112,9 +128,9 @@ struct DiningAnalyticsView: View {
                     } else {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 20) {
-                                Text("Dining Analytics")
-                                    .font(.system(size: 32))
-                                    .bold()
+//                                Text("Dining Analytics")
+//                                    .font(.system(size: 32))
+//                                    .bold()
                                 // Only show dollar history view if there is data for the graph
                                 if !dollarXYHistory.wrappedValue.isEmpty {
                                     CardView {
@@ -146,6 +162,21 @@ struct DiningAnalyticsView: View {
             .sheet(isPresented: $showDiningLoginView) {
                 DiningLoginNavigationView()
                     .environmentObject(diningAnalyticsViewModel)
+            }
+            .navigationTitle("Analytics")
+            .sheet(isPresented: $showSettingsSheet) {
+                DiningSettingsView()
+                    
+//                    .toolbar {
+//                        ToolbarItem(placement: .navigationBarTrailing) {
+//                            Button(action: {
+//                                isPresentingDiningAnalyticsView.toggle()
+//                            }) {
+//                                Text("Done")
+//                            }
+//                        }
+//                    }
+                
             }
         }
     }
