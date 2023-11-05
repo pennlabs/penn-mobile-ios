@@ -59,7 +59,8 @@ struct HomeView<Model: HomeViewModel>: View {
                                         .foregroundStyle(.secondary)
                                     }
                                 }
-                                .offset(y: -24)
+                                .offset(y: -16)
+                                .padding(.bottom)
                                 .multilineTextAlignment(.center)
                                 
                                 data.content(for: context.date)
@@ -88,7 +89,7 @@ struct HomeView<Model: HomeViewModel>: View {
                         }
                     }
                     .refreshable {
-                        try? await viewModel.fetchData()
+                        try? await viewModel.fetchData(force: true)
                     }
                     .background(backgroundGradient.ignoresSafeArea(edges: .all))
                 }
@@ -111,7 +112,7 @@ struct HomeView<Model: HomeViewModel>: View {
                     Button("Retry") {
                         Task {
                             viewModel.clearData()
-                            try? await viewModel.fetchData()
+                            try? await viewModel.fetchData(force: true)
                         }
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
@@ -124,7 +125,7 @@ struct HomeView<Model: HomeViewModel>: View {
             }
         }.onAppear {
             Task {
-                try? await viewModel.fetchData()
+                try? await viewModel.fetchData(force: false)
             }
         }
     }

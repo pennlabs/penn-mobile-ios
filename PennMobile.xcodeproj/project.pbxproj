@@ -233,6 +233,7 @@
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9B28E799AA00CE1638 /* CoursesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */; };
 		89459B9D28E7E8A600CE1638 /* CoursesDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9C28E7E8A600CE1638 /* CoursesDayView.swift */; };
+		89534BA22AEEC8AB003ABB70 /* PollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89534BA12AEEC8AB003ABB70 /* PollView.swift */; };
 		895C75E628FA165100A329A0 /* LabsLoginSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */; };
 		895D98B02ACF312300F8C5DF /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D98AF2ACF312300F8C5DF /* MoreView.swift */; };
 		89913EAD2AE44FCE00AE30C9 /* CalendarCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */; };
@@ -634,6 +635,7 @@
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewModel.swift; sourceTree = "<group>"; };
 		89459B9C28E7E8A600CE1638 /* CoursesDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayView.swift; sourceTree = "<group>"; };
+		89534BA12AEEC8AB003ABB70 /* PollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollView.swift; sourceTree = "<group>"; };
 		895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginSwiftUI.swift; sourceTree = "<group>"; };
 		895D98AF2ACF312300F8C5DF /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCardView.swift; sourceTree = "<group>"; };
@@ -1359,6 +1361,7 @@
 				6CAA4B4827A7639600473CC6 /* Networking */,
 				6CAA4B4A27A7639600473CC6 /* Model */,
 				42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */,
+				89534BA12AEEC8AB003ABB70 /* PollView.swift */,
 				42CC49D12AAE3904008C41EE /* PollsView.swift */,
 			);
 			path = Polls;
@@ -2492,6 +2495,7 @@
 				212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */,
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
+				89534BA22AEEC8AB003ABB70 /* PollView.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,

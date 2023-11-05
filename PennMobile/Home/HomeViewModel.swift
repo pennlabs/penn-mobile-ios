@@ -11,9 +11,7 @@ import SwiftUI
 struct HomeViewData {
     var firstName: String?
     
-    // TODO: Replace with actual poll data
-    var hasPoll: Bool
-    
+    var polls: [PollQuestion]
     var posts: [Post]
     var newsArticles: [NewsArticle]
     var events: [CalendarEvent]
@@ -29,11 +27,8 @@ struct HomeViewData {
     
     func content(for date: Date) -> some View {
         VStack(spacing: 16) {
-            if hasPoll {
-                HomeCardView {
-                    Text("Poll")
-                        .frame(height: 200)
-                }
+            ForEach(polls) { poll in
+                PollView(poll: poll)
             }
             
             ForEach(posts) { post in
@@ -52,7 +47,7 @@ struct HomeViewData {
     
     static let mock = HomeViewData(
         firstName: "TEST",
-        hasPoll: true,
+        polls: [.mock],
         posts: [
             Post(id: 1, title: "Congratulations!", subtitle: "You are our lucky winner", postUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", imageUrl: "https://www.nps.gov/common/uploads/cropped_image/primary/D1721D51-A497-281A-72B8C06573F9327A.jpg?width=1600&quality=90&mode=crop", createdDate: Date(), startDate: Date.midnightYesterday, expireDate: Date.midnightToday, source: "Totally Legit Source")
         ],
@@ -69,17 +64,35 @@ struct HomeViewData {
 protocol HomeViewModel: ObservableObject {
     var data: Result<HomeViewData, Error>? { get }
     func clearData()
-    func fetchData() async throws
+    func fetchData(force: Bool) async throws
 }
 
 class StandardHomeViewModel: HomeViewModel {
     @Published private(set) var data: Result<HomeViewData, Error>?
+    var isFetching = false
     
     func clearData() {
         data = nil
     }
     
-    func fetchData() async throws {
+    func fetchData(force: Bool) async throws {
+        if !force {
+            if isFetching {
+                return
+            }
+            
+            if case .success(_) = data {
+                return
+            }
+        }
+        
+        isFetching = true
+        defer { isFetching = false }
+        
+        print("Fetching HomeViewModel (force = \(force), isFetching = \(isFetching))")
+        
+        async let polls = (try? PollsNetworkManager.instance.getActivePolls().get()) ?? []
+        
         async let posts = withCheckedThrowingContinuation { continuation in
             OAuth2NetworkManager.instance.getAccessToken { token in
                 guard let token = token else { continuation.resume(returning: [Post]()); return }
@@ -115,7 +128,7 @@ class StandardHomeViewModel: HomeViewModel {
         
         data = .success(HomeViewData(
             firstName: Account.getAccount()?.firstName,
-            hasPoll: false,
+            polls: await polls,
             posts: (try? await posts) ?? [],
             newsArticles: (try? await newsArticles) ?? [],
             events: await events
@@ -130,7 +143,7 @@ class MockHomeViewModel: HomeViewModel {
         data = nil
     }
     
-    func fetchData() async throws {
+    func fetchData(force: Bool) async throws {
         self.data = .success(.mock)
     }
 }
