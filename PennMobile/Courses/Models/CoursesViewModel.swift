@@ -88,7 +88,7 @@ extension Course {
             meetingTimes = nil
         }
 
-        self.init(crn: crn, code: code, title: title, section: section, instructors: instructors, startDate: startDate, endDate: endDate, meetingTimes: meetingTimes)
+        self.init(crn: crn, code: code, title: title, section: section, instructors: instructors, location: location, startDate: startDate, endDate: endDate, meetingTimes: meetingTimes)
     }
 }
 
