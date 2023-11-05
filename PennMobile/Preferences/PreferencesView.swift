@@ -37,6 +37,7 @@ struct PreferencesView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
+            .id(UUID())
             .environment(\.editMode, Binding.constant(EditMode.active))
             .navigationTitle("Edit Features")
             .navigationBarTitleDisplayMode(.inline)

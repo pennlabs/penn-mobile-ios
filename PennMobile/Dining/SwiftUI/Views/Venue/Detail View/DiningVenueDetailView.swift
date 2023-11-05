@@ -28,12 +28,11 @@ struct DiningVenueDetailView: View {
     var body: some View {
         GeometryReader { fullGeo in
             let imageHeight = fullGeo.size.height * 4/9
-            let statusBarHeight = fullGeo.safeAreaInsets.top
+            let isFavorite = diningVM.favoriteVenues.contains { $0.id == venue.id }
 
             ScrollView {
                 GeometryReader { geometry in
                     let minY = geometry.frame(in: .global).minY
-                    let remain = imageHeight + minY
 
                     ZStack(alignment: .bottomLeading) {
                         KFImage(self.venue.image)
@@ -90,6 +89,15 @@ struct DiningVenueDetailView: View {
             }
             .navigationTitle(Text(showTitle ? venue.name : ""))
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem {
+                    Button(action: isFavorite ? { diningVM.removeVenueFromFavorites(venue: venue) } : { diningVM.addVenueToFavorites(venue: venue) }) {
+                        Image(systemName: isFavorite ? "star.fill" : "star")
+                            .font(.system(size: 20, weight: .light))
+                    }
+                    .tint(.yellow)
+                }
+            }
             .onAppear {
                 FirebaseAnalyticsManager.shared.trackScreen("Venue Detail View")
             }

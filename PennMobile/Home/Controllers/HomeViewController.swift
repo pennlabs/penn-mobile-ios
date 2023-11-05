@@ -215,19 +215,24 @@ extension HomeViewController {
             self.tableView.refreshControl?.endRefreshing()
         }
     }
+    
+    // Just for notification selector
+    @objc
+    func refreshWithForceRefresh() { self.refreshTableView(forceRefresh: true) }
 }
 
 extension HomeViewController: DiningCellSettingsDelegate {
     func saveSelection(for venueIds: [Int]) {
         guard let diningItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.dining]).first as? HomeDiningCellItem else { return }
         if venueIds.count == 0 {
-            diningItem.venues = DiningAPI.instance.getVenues(with: DiningVenue.defaultVenueIds)
+            diningItem.venues = DiningAPI.instance.getVenues(with: DiningAPI.defaultVenueIds)
+            UserDBManager.shared.saveDiningPreference(for: DiningAPI.defaultVenueIds)
         } else {
             diningItem.venues = DiningAPI.instance.getVenues(with: venueIds)
+            UserDBManager.shared.saveDiningPreference(for: venueIds)
         }
 
         reloadItem(diningItem)
-        UserDBManager.shared.saveDiningPreference(for: venueIds)
     }
 }
 
@@ -271,5 +276,6 @@ extension HomeViewController {
 extension HomeViewController {
     func registerForNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateLaundryItemForPreferences(_:)), name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshWithForceRefresh), name: Notification.Name(rawValue: "favoritesUpdated"), object: nil)
     }
 }

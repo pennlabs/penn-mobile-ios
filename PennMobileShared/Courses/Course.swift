@@ -86,10 +86,10 @@ public struct Course: Codable {
         self.code = code
         self.title = title
         self.section = section
-        self.instructors = []
+        self.instructors = instructors
         self.location = location
-        self.startDate = Date.distantPast
-        self.endDate = Date.distantFuture
+        self.startDate = startDate
+        self.endDate = endDate
         self.meetingTimes = meetingTimes
     }
 }

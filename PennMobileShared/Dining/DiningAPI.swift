@@ -10,11 +10,14 @@ import SwiftyJSON
 import Foundation
 
 public class DiningAPI {
+    public static let defaultVenueIds: [Int] = [593, 636, 1442, 639]
 
     public static let instance = DiningAPI()
 
     let diningUrl = "https://pennmobile.org/api/dining/venues/"
     let diningMenuUrl = "https://pennmobile.org/api/dining/menus/"
+    
+    public static let favoritesCacheFileName = "diningFavoritesCache"
 
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
 
@@ -22,7 +25,7 @@ public class DiningAPI {
         guard let (data, _) = try? await URLSession.shared.data(from: URL(string: diningUrl)!) else {
             return .failure(.serverError)
         }
-
+        
         let decoder = JSONDecoder()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
@@ -59,8 +62,8 @@ public class DiningAPI {
 public extension DiningAPI {
     // MARK: - Get Methods
     func getVenues() -> [DiningVenue] {
-        if Storage.fileExists(DiningVenue.directory, in: .caches) {
-            return Storage.retrieve(DiningVenue.directory, from: .caches, as: [DiningVenue].self)
+        if Storage.fileExists(DiningVenue.directory, in: .groupCaches) {
+            return Storage.retrieve(DiningVenue.directory, from: .groupCaches, as: [DiningVenue].self)
         } else {
             return []
         }
@@ -72,6 +75,27 @@ public extension DiningAPI {
             venuesDict[type] = getVenues().filter({ $0.venueType == type })
         }
         return venuesDict
+    }
+    
+    func getSectionedVenuesAndFavorites() -> ([VenueType: [DiningVenue]], [DiningVenue]) {
+        var sectionedVenues = getSectionedVenues()
+        if Storage.fileExists(DiningVenue.favoritesDirectory, in: .caches) {
+            let favoritesIDs = Storage.retrieve(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self)
+            var favorites: [DiningVenue?] = []
+            for id in favoritesIDs {
+                favorites.append(sectionedVenues[.dining]?.first(where: { $0.id == id }) ?? sectionedVenues[.retail]?.first(where: { $0.id == id }) ?? nil)
+            }
+            let favoritesResult = favorites.compactMap { $0 }
+            
+            for type in VenueType.allCases {
+                sectionedVenues[type] = sectionedVenues[type]!.filter { !favoritesIDs.contains($0.id) }
+            }
+            
+            return (sectionedVenues, favoritesResult)
+        } else {
+            Storage.store(Array<Int>(), to: .caches, as: DiningVenue.favoritesDirectory)
+            return (sectionedVenues, [])
+        }
     }
 
     func getVenues<T: Collection>(with ids: T) -> [DiningVenue] where T.Element == Int {
@@ -88,7 +112,7 @@ public extension DiningAPI {
 
     // MARK: - Cache Methods
     func saveToCache(_ venues: [DiningVenue]) {
-        Storage.store(venues, to: .caches, as: DiningVenue.directory)
+        Storage.store(venues, to: .groupCaches, as: DiningVenue.directory)
     }
 
     func saveMenuToCache(id: Int, _ menu: MenuList) {
