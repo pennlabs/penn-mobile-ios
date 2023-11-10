@@ -35,6 +35,8 @@ class OAuth2NetworkManager: NSObject {
     private var clientID = InfoPlistEnvironment.labsOauthClientId
 
     private var currentAccessToken: AccessToken?
+    var isRefreshingToken = false
+    var accessTokenCallbacks = [(AccessToken?) -> Void]()
 
     static let authQueue = DispatchQueue(label: "org.pennlabs.PennMobile.authqueue")
 }
@@ -90,8 +92,11 @@ extension OAuth2NetworkManager {
             if let accessToken = self.currentAccessToken, Date() < accessToken.expiration {
                 callback(accessToken)
             } else {
-                self.currentAccessToken = nil
-                self.refreshAccessToken(callback)
+                self.accessTokenCallbacks.append(callback)
+                if !self.isRefreshingToken {
+                    self.currentAccessToken = nil
+                    self.refreshAccessToken()
+                }
             }
         }
     }
@@ -110,7 +115,12 @@ extension OAuth2NetworkManager {
         }
     }
 
-    fileprivate func refreshAccessToken(_ callback: @escaping (_ accessToken: AccessToken?) -> Void ) {
+    fileprivate func refreshAccessToken() {
+        func callback(_ token: AccessToken?) {
+            accessTokenCallbacks.forEach { $0(token) }
+            accessTokenCallbacks.removeAll()
+        }
+        
         guard let refreshToken = self.getRefreshToken() else {
             callback(nil)
             return
@@ -127,9 +137,12 @@ extension OAuth2NetworkManager {
 
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
+        
+        isRefreshingToken = true
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
             OAuth2NetworkManager.authQueue.async {
+                self.isRefreshingToken = false
                 if let httpResponse = response as? HTTPURLResponse, let data = data {
                     if httpResponse.statusCode == 200 {
                         let json = JSON(data)

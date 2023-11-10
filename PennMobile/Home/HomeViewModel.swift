@@ -86,22 +86,26 @@ class StandardHomeViewModel: HomeViewModel {
     @Published private(set) var data: Result<HomeViewData, Error>?
     var isFetching = false
     var lastFetch: Date?
+    var account: Account?
     
     func clearData() {
         data = nil
     }
     
     func fetchData(force: Bool) async throws {
+        let account = Account.getAccount()
+        
         if !force {
             if isFetching {
                 return
             }
             
-            if case .success = data, let lastFetch, lastFetch.timeIntervalSinceNow > -60 * 60 {
+            if case .success = data, let lastFetch, lastFetch.timeIntervalSinceNow > -60 * 60, account == self.account {
                 return
             }
         }
         
+        self.account = account
         isFetching = true
         defer { isFetching = false }
         

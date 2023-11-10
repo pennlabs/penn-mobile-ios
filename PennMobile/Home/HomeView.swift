@@ -64,6 +64,8 @@ struct HomeView<Model: HomeViewModel>: View {
                                 .multilineTextAlignment(.center)
                                 
                                 data.content(for: context.date)
+                                    .frame(maxWidth: 480)
+                                    .frame(maxWidth: .infinity)
                             }
                             .padding(.bottom)
                             // Hack for forcing the navbar to always render
