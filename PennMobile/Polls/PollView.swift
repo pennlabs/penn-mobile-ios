@@ -101,6 +101,7 @@ struct PollOptionView: View {
 struct PollView: View {
     var poll: PollQuestion
     var showPrivacyStatement = true
+    var onResponse: ((Int) -> Void)?
     
     var icon: Image {
         Image(systemName: "chart.bar.fill")
@@ -139,9 +140,22 @@ struct PollView: View {
                     .font(.subheadline)
                     .fontWeight(.semibold)
                 
+                Text("^[\(poll.totalVoteCount) vote](inflect: true)")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                
                 VStack(spacing: 4) {
                     ForEach(poll.options) { option in
-                        PollOptionView(option: option, chosenId: poll.optionChosenId, totalVoteCount: poll.totalVoteCount)
+                        if let onResponse, poll.optionChosenId == nil {
+                            Button {
+                                onResponse(option.id)
+                            } label: {
+                                PollOptionView(option: option, chosenId: poll.optionChosenId, totalVoteCount: poll.totalVoteCount)
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            PollOptionView(option: option, chosenId: poll.optionChosenId, totalVoteCount: poll.totalVoteCount)
+                        }
                     }
                 }
                 

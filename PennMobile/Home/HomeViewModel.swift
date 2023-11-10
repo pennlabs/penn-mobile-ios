@@ -16,6 +16,8 @@ struct HomeViewData {
     var newsArticles: [NewsArticle]
     var events: [CalendarEvent]
     
+    var onPollResponse: ((Int, Int) -> Void)?
+    
     func splashText(for date: Date) -> String {
         let intro = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"].randomElement()!
         if let firstName {
@@ -28,7 +30,7 @@ struct HomeViewData {
     func content(for date: Date) -> some View {
         VStack(spacing: 16) {
             ForEach(polls) { poll in
-                PollView(poll: poll)
+                PollView(poll: poll, onResponse: onPollResponse.map { callback in { callback(poll.id, $0) } })
             }
             
             ForEach(posts) { post in
@@ -59,6 +61,19 @@ struct HomeViewData {
             .init(event: "Test Event With A Really Long Name", date: "Really Really Really Long Date Wow It's So Long!")
         ]
     )
+    
+    mutating func markPollResponse(questionId: Int, optionId: Int) {
+        if let pollIndex = polls.firstIndex(where: { $0.id == questionId }) {
+            var poll = polls[pollIndex]
+            poll.optionChosenId = optionId
+            
+            if let optionIndex = poll.options.firstIndex(where: { $0.id == optionId }) {
+                poll.options[optionIndex].voteCount += 1
+            }
+            
+            polls[pollIndex] = poll
+        }
+    }
 }
 
 protocol HomeViewModel: ObservableObject {
@@ -132,10 +147,24 @@ class StandardHomeViewModel: HomeViewModel {
             polls: await polls,
             posts: (try? await posts) ?? [],
             newsArticles: (try? await newsArticles) ?? [],
-            events: await events
+            events: await events,
+            onPollResponse: { [weak self] question, option in
+                self?.respondToPoll(questionId: question, optionId: option)
+            }
         ))
         
         lastFetch = Date()
+    }
+    
+    func respondToPoll(questionId: Int, optionId: Int) {
+        guard case .success(var data) = data else { return }
+        
+        data.markPollResponse(questionId: questionId, optionId: optionId)
+        self.data = .success(data)
+        
+        Task {
+            await PollsNetworkManager.instance.answerPoll(withId: PollsNetworkManager.id, response: optionId)
+        }
     }
 }
 
