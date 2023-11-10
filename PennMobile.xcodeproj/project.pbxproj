@@ -2578,7 +2578,6 @@
 				F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */,
 				C312D4B92AD4DC8900EDB893 /* Networking.swift in Sources */,
 				426A0B51299034910066C7B7 /* DiningAnalyticsGraph.swift in Sources */,
-				97AA806C23D26BC700C23488 /* DiningCell.swift in Sources */,
 				890D15042AB75E4300672FFE /* Features.swift in Sources */,
 				6C6FE1CC27B9B8CB0093FD13 /* PacCodeNetworkManager.swift in Sources */,
 				6CC88D5927B1BF51006896F6 /* DiningLoginViewSwiftUI.swift in Sources */,
