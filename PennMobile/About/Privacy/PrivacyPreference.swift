@@ -43,10 +43,10 @@ enum PrivacyOption: String, CaseIterable {
 
     var cellTitle: String {
         switch self {
-        case .anonymizedCourseSchedule: return "Anonymized course schedule"
-        case .diningBalanceAndHistory: return "Dining balance & transaction history"
-        case .collegeHouse: return "College house"
-        case .academicIdentity: return "Academic identity"
+        case .anonymizedCourseSchedule: return "Anonymized Course Schedule"
+        case .diningBalanceAndHistory: return "Dining Balance & Transaction History"
+        case .collegeHouse: return "College House"
+        case .academicIdentity: return "Academic Identity"
         }
     }
 

@@ -48,11 +48,11 @@ enum NotificationOption: String, Codable {
     var cellTitle: String? {
         switch self {
         case .pennCourseAlerts: return "Penn Course Alerts"
-        case .upcomingStudyRoomReminder: return "GSR booking notifications"
-        case .diningBalanceSummary: return "Dining balance notifications"
-        case .laundryMachineCycleComplete: return "Laundry notifications"
-        case .universityEventAnnouncement: return "University notifications"
-        case .pennMobileUpdateAnnouncement: return "App update notifications"
+        case .upcomingStudyRoomReminder: return "GSR Booking Notifications"
+        case .diningBalanceSummary: return "Dining Balance Notifications"
+        case .laundryMachineCycleComplete: return "Laundry Notifications"
+        case .universityEventAnnouncement: return "University Notifications"
+        case .pennMobileUpdateAnnouncement: return "App Update notifications"
         default: return nil
         }
     }
