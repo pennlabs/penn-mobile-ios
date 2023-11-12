@@ -153,11 +153,3 @@ extension PollsViewController: TabBarShowable {
         return UITabBarItem(title: "Poll History", image: normalImage, selectedImage: selectedImage)
     }
 }
-
-extension MoreViewController: TabBarShowable {
-    func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "More_Grey")
-        let selectedImage = UIImage(named: "More_Blue")
-        return UITabBarItem(title: "More", image: normalImage, selectedImage: selectedImage)
-    }
-}

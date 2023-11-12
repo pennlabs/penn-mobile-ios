@@ -54,7 +54,6 @@ class ControllerModel: NSObject {
         vcDictionary[.dining] = DiningViewControllerSwiftUI()
         vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
-        vcDictionary[.more] = MoreViewController()
         vcDictionary[.map] = MapViewController()
         vcDictionary[.news] = NewsViewController()
         vcDictionary[.contacts] = ContactsTableViewController()
