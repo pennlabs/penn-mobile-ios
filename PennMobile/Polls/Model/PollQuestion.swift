@@ -48,7 +48,7 @@ struct PollQuestion: Codable, Identifiable {
         options: [
             .init(id: 1, poll: 234, choice: "Answer 1", voteCount: 1),
             .init(id: 2, poll: 234, choice: "Answer 2", voteCount: 200),
-            .init(id: 3, poll: 234, choice: "This is a really long answer that is meant to test the limits of line wrapping with polls. Hopefully there are no bugs that come from this.", voteCount: 300),
+            .init(id: 3, poll: 234, choice: "This is a really long answer that is meant to test the limits of line wrapping with polls. Hopefully there are no bugs that come from this.", voteCount: 300)
         ],
         optionChosenId: 3
     )
@@ -59,5 +59,5 @@ struct PollPost: Codable {
     let idHash: String
     let poll: PollQuestion
     let pollOptions: [PollOption]
-    //let createdDate: Date
+    // let createdDate: Date
 }

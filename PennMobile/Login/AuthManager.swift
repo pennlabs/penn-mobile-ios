@@ -15,7 +15,7 @@ enum AuthState: Equatable {
     case loggedIn(Account)
     
     var isLoggedIn: Bool {
-        if case .loggedIn(_) = self {
+        if case .loggedIn = self {
             return true
         }
         

@@ -46,13 +46,13 @@ extension PennInTouchNetworkManager {
 // MARK: - Degree Parsing
 extension PennInTouchNetworkManager {
     fileprivate func parseDegrees(from html: String) throws -> Set<Degree> {
-        let doc: Document = try SwiftSoup.parse(html)
+        // let doc: Document = try SwiftSoup.parse(html)
 //        guard let element: Element = try doc.getElementsByClass("data").first() else {
 //            throw NetworkingError.parsingError
 //        }
         // TODO: - Fix parsing for new types
 //        let subElements = try element.select("li")
-        var degrees = Set<Degree>()
+        let degrees = Set<Degree>()
 //        for element in subElements {
 //            let text = try element.text()
 //            guard let schoolStr = text.getMatches(for: "Division: (.*?)\\) ").first,

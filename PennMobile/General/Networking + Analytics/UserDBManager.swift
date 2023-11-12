@@ -171,7 +171,7 @@ extension UserDBManager {
         let url = "https://pennmobile.org/api/laundry/preferences/"
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             let url = URL(string: url)!
-            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            let request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
 
             let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
                 if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
@@ -612,7 +612,7 @@ extension UserDBManager {
         let url = "https://pennmobile.org/api/fitness/preferences/"
         OAuth2NetworkManager.instance.getAccessToken { (token) in
             let url = URL(string: url)!
-            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+            let request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
 
             let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
                 if let data = data, let rooms = JSON(data)["rooms"].arrayObject {

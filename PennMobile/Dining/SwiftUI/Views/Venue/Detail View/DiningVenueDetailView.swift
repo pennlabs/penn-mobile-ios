@@ -66,7 +66,7 @@ struct DiningVenueDetailView: View {
 
                 VStack(spacing: 10) {
                     Picker("Section", selection: self.$pickerIndex) {
-                        ForEach(0 ..< self.sectionTitle.count) {
+                        ForEach(0 ..< self.sectionTitle.count, id: \.self) {
                             Text(self.sectionTitle[$0])
                         }
                     }

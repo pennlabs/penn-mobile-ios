@@ -139,7 +139,9 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         // This code will ONLY present the review if we're not running Fastlane UI Automation (for screenshots)
         if !UIApplication.isRunningFastlaneTest {
             if sessionCount == 3 {
-                SKStoreReviewController.requestReview()
+                if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                    SKStoreReviewController.requestReview(in: scene)
+                }
             }
         }
     }

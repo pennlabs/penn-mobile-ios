@@ -50,7 +50,7 @@ class MapViewController: UIViewController {
         self.navigationController?.navigationItem.backBarButtonItem?.title = "Back"
 
         if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
+            switch CLLocationManager().authorizationStatus {
             case .notDetermined, .denied:
                 // Do nothing, handle in didChangeAuthorization delegate function
                 self.locationManager.requestWhenInUseAuthorization()

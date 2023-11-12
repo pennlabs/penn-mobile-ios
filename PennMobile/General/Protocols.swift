@@ -193,7 +193,7 @@ protocol LocationPermissionRequestable: CLLocationManagerDelegate {}
 extension LocationPermissionRequestable {
     func hasLocationPermission() -> Bool {
         if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
+            switch CLLocationManager().authorizationStatus {
             case .notDetermined, .restricted, .denied:
                 return false
             case .authorizedAlways, .authorizedWhenInUse:

@@ -146,7 +146,11 @@ class NativeNewsViewController: UIViewController {
                         case "img":
                             let imageView = UIImageView()
                             // Need to check how the source of the image is stored
-                            try? imageView.kf.setImage(with: URL(string: subelement.attr("src")))
+                            do {
+                                try imageView.kf.setImage(with: URL(string: subelement.attr("src")))
+                            } catch {
+                                print("Error loading image: \(error)")
+                            }
                             imageView.clipsToBounds = true
                             imageView.contentMode = .scaleAspectFill
                             imageView.translatesAutoresizingMaskIntoConstraints = false

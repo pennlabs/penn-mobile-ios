@@ -58,7 +58,7 @@ struct AlertModifier: ViewModifier {
 
             if let type = type {
                 AlertBanner(for: type)
-                    .animation(.easeInOut(duration: 1.0))
+                    .animation(.easeInOut(duration: 1.0), value: true)
                     .transition(AnyTransition.move(edge: .top))
                     .onAppear {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
