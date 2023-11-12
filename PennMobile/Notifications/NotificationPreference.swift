@@ -52,7 +52,7 @@ enum NotificationOption: String, Codable {
         case .diningBalanceSummary: return "Dining Balance Notifications"
         case .laundryMachineCycleComplete: return "Laundry Notifications"
         case .universityEventAnnouncement: return "University Notifications"
-        case .pennMobileUpdateAnnouncement: return "App Update notifications"
+        case .pennMobileUpdateAnnouncement: return "App Update Notifications"
         default: return nil
         }
     }
