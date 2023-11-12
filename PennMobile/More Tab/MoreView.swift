@@ -100,6 +100,7 @@ struct MoreView: View {
                                             .padding(12)
                                             .background(feature.color)
                                             .clipShape(.rect(cornerRadius: 8))
+                                            .environment(\.colorScheme, .dark)
                                         (
                                             Text(feature.longName) +
                                             Text("\u{00a0}\(Image(systemName: "chevron.forward"))").foregroundColor(.secondary)

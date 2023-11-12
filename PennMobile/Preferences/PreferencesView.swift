@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct  PreferencesView: View {
+struct PreferencesView: View {
     @State private var allFeatures = ControllerModel.shared.dynamicFeatures
     
     @EnvironmentObject var mainTabViewCoordinator: MainTabViewCoordinator
