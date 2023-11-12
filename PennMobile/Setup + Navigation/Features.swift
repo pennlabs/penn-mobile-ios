@@ -17,7 +17,7 @@ enum FeatureIdentifier: String, Hashable {
     case contacts = "Penn Contacts"
     case courseSchedule = "Course Schedule"
     case pennCourseAlert = "Penn Course Alert"
-    case events = "Events"
+    case events = "Penn Events"
     case pac = "PAC Code"
     case about = "About"
     case polls = "Poll History"
