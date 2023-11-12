@@ -34,11 +34,3 @@ struct RootView: View {
         .animation(.default, value: isOnLogoutScreen)
     }
 }
-
-struct TabBarControllerView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> TabBarController {
-        return TabBarController()
-    }
-
-    func updateUIViewController(_ uiViewController: TabBarController, context: Context) {}
-}

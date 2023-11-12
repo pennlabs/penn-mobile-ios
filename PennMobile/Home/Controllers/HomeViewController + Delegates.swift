@@ -129,13 +129,7 @@ extension HomeViewController: NewsArticleSelectable {
 }
 
 extension HomeViewController: FeatureNavigatable {
-    func navigateToFeature(feature: Feature, item: ModularTableViewItem) {
-        let vc = ControllerModel.shared.viewController(for: feature)
-        vc.title = feature.rawValue
-        self.navigationController?.pushViewController(vc, animated: true)
-
-        logInteraction(item: item)
-    }
+    func navigateToFeature(feature: Feature, item: ModularTableViewItem) {}
 }
 
 // MARK: - Interaction Logging
