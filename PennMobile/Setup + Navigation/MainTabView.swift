@@ -9,20 +9,25 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @ObservedObject var mainTabViewCoordinator = MainTabViewCoordinator()
     @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
+    @State var currentTab = "Home"
     
     var body: some View {
-        TabView {
+        TabView(selection: $currentTab) {
             HomeView<StandardHomeViewModel>()
                 .tabItem {
                     Label("Home", image: "Home_Grey")
                 }
+                .tag("Home")
             
             ForEach(tabBarFeatures, id: \.self) { identifier in
                 let feature = features.first(where: { $0.id == identifier })!
+                
                 NavigationStack {
                     feature.content
                 }
+                .id(identifier)
                 .tabItem {
                     switch feature.image {
                     case .app(let image):
@@ -31,15 +36,22 @@ struct MainTabView: View {
                         Label(feature.shortName, systemImage: image)
                     }
                 }
-                .id(identifier)
-                .tag(identifier)
+                .tag(identifier.rawValue)
             }
             
             MoreView(features: features.filter { !tabBarFeatures.contains($0.id) })
                 .tabItem {
                     Label("More", image: "More_Grey")
                 }
-        }.onAppear {
+                .tag("More")
+        }
+        .id(tabBarFeatures)
+        .sheet(isPresented: $mainTabViewCoordinator.isConfiguringTabs, content: {
+            PreferencesView()
+                .presentationDetents([.fraction(0.7)])
+                .presentationDragIndicator(.visible)
+        })
+        .onAppear {
             UserDefaults.standard.restoreCookies()
             
             // Fetch transaction data at least once a week, starting on Sundays
@@ -64,9 +76,11 @@ struct MainTabView: View {
 
             // Send saved unsent events
             FeedAnalyticsManager.shared.sendSavedEvents()
-        }.onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
             tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
         }
+        .environmentObject(mainTabViewCoordinator)
     }
     
     func shouldFetchTransactions() -> Bool {

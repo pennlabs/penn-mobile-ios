@@ -8,8 +8,10 @@
 
 import SwiftUI
 
-struct PreferencesView: View {
+struct  PreferencesView: View {
     @State private var allFeatures = ControllerModel.shared.dynamicFeatures
+    
+    @EnvironmentObject var mainTabViewCoordinator: MainTabViewCoordinator
 
     var body: some View {
         NavigationStack {
@@ -45,6 +47,10 @@ struct PreferencesView: View {
         .onAppear {
             let currentTabFeatures = Array(UserDefaults.standard.getTabPreferences()[1...3])
             allFeatures = currentTabFeatures + ControllerModel.shared.dynamicFeatures.filter { !currentTabFeatures.contains($0) }
+            mainTabViewCoordinator.isConfiguringTabs = true
+        }
+        .onDisappear {
+            mainTabViewCoordinator.isConfiguringTabs = false
         }
     }
 
@@ -63,5 +69,6 @@ extension PreferencesView {
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
         PreferencesView()
+            .environmentObject(MainTabViewCoordinator())
     }
 }

@@ -39,9 +39,9 @@ struct MoreView: View {
     var features: [AppFeature]
     
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var mainTabViewCoordinator: MainTabViewCoordinator
     
     @State var path = NavigationPath()
-    @State var isShowingPreferences = false
     @State var isPresentingLoginSheet = false
     @State var isLoggingOut = false
     
@@ -114,7 +114,7 @@ struct MoreView: View {
                     .padding(.vertical, 16)
                     
                     Button("Edit Tab Bar...") {
-                        isShowingPreferences = true
+                        mainTabViewCoordinator.isConfiguringTabs = true
                     }
                 } header: {
                     Text("Features")
@@ -133,11 +133,6 @@ struct MoreView: View {
             .navigationDestination(for: FeatureIdentifier.self) { id in
                 AnyView(features.first { $0.id == id }!.content)
             }
-            .sheet(isPresented: $isShowingPreferences, content: {
-                PreferencesView()
-                    .presentationDetents([.fraction(0.7)])
-                    .presentationDragIndicator(.visible)
-            })
             .sheet(isPresented: $isPresentingLoginSheet) {
                 LabsLoginView { success in
                     if success {

@@ -253,6 +253,7 @@
 		89EA2622290EE3FD008F26CF /* CoursesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2620290EE3E9008F26CF /* CoursesProvider.swift */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
 		89EA262F290F958B008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
+		89EECCC92B014CA300E73EEB /* MainTabViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EECCC82B014CA300E73EEB /* MainTabViewCoordinator.swift */; };
 		97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
 		97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */; };
@@ -662,6 +663,7 @@
 		89EA2620290EE3E9008F26CF /* CoursesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesProvider.swift; sourceTree = "<group>"; };
 		89EA262C290F2667008F26CF /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
 		89EA262D290F9411008F26CF /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		89EECCC82B014CA300E73EEB /* MainTabViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewCoordinator.swift; sourceTree = "<group>"; };
 		97AA806723D26BC700C23488 /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupIconView.swift; sourceTree = "<group>"; };
 		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
@@ -1004,6 +1006,7 @@
 				F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */,
 				890D14FF2AB74D6000672FFE /* RootView.swift */,
 				890D15052AB76C3600672FFE /* MainTabView.swift */,
+				89EECCC82B014CA300E73EEB /* MainTabViewCoordinator.swift */,
 				890D15032AB75E4300672FFE /* Features.swift */,
 				B6665A172071E63800F49A9C /* TabBarController.swift */,
 				EF389EC521861B8500E29C6A /* HomeNavigationController.swift */,
@@ -2520,6 +2523,7 @@
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
 				6CC88D5C27B1BF51006896F6 /* DiningBalanceView.swift in Sources */,
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
+				89EECCC92B014CA300E73EEB /* MainTabViewCoordinator.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				F2562A262551F6D40021C92F /* CourseAlertSettingsController.swift in Sources */,
 				87FE6479290EE4BE00AFADF6 /* NotificationAPIModel.swift in Sources */,
