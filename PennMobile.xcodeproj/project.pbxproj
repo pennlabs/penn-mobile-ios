@@ -150,13 +150,6 @@
 		6CC88D5E27B1BF51006896F6 /* AnalyticsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D3B27B1BF50006896F6 /* AnalyticsCardView.swift */; };
 		6CC88D5F27B1BF51006896F6 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D3D27B1BF50006896F6 /* CardView.swift */; };
 		6CC88D6027B1BF51006896F6 /* CardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D3E27B1BF50006896F6 /* CardHeaderView.swift */; };
-		6CC88D6127B1BF51006896F6 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4027B1BF50006896F6 /* VariableStepLineGraphView+GraphEndpointPath.swift */; };
-		6CC88D6227B1BF51006896F6 /* PredictionsGraphView+SmoothedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4127B1BF50006896F6 /* PredictionsGraphView+SmoothedData.swift */; };
-		6CC88D6327B1BF51006896F6 /* PredictionsGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4227B1BF50006896F6 /* PredictionsGraphView.swift */; };
-		6CC88D6427B1BF51006896F6 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4327B1BF50006896F6 /* VariableStepLineGraphView+PredictionSlopePath.swift */; };
-		6CC88D6527B1BF51006896F6 /* PredictionsGraphView+AxisLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4427B1BF50006896F6 /* PredictionsGraphView+AxisLabels.swift */; };
-		6CC88D6627B1BF51006896F6 /* VariableStepLineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4527B1BF50006896F6 /* VariableStepLineGraphView.swift */; };
-		6CC88D6727B1BF51006896F6 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4627B1BF50006896F6 /* VariableStepLineGraphView+VariableStepGraphPath.swift */; };
 		6CC88D6927B1BF51006896F6 /* DiningViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4827B1BF50006896F6 /* DiningViewHeader.swift */; };
 		6CC88D6A27B1BF51006896F6 /* DiningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4927B1BF50006896F6 /* DiningView.swift */; };
 		6CC88D6B27B1BF51006896F6 /* DiningVenueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4B27B1BF50006896F6 /* DiningVenueView.swift */; };
@@ -562,13 +555,6 @@
 		6CC88D3B27B1BF50006896F6 /* AnalyticsCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsCardView.swift; sourceTree = "<group>"; };
 		6CC88D3D27B1BF50006896F6 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		6CC88D3E27B1BF50006896F6 /* CardHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardHeaderView.swift; sourceTree = "<group>"; };
-		6CC88D4027B1BF50006896F6 /* VariableStepLineGraphView+GraphEndpointPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+GraphEndpointPath.swift"; sourceTree = "<group>"; };
-		6CC88D4127B1BF50006896F6 /* PredictionsGraphView+SmoothedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+SmoothedData.swift"; sourceTree = "<group>"; };
-		6CC88D4227B1BF50006896F6 /* PredictionsGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictionsGraphView.swift; sourceTree = "<group>"; };
-		6CC88D4327B1BF50006896F6 /* VariableStepLineGraphView+PredictionSlopePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+PredictionSlopePath.swift"; sourceTree = "<group>"; };
-		6CC88D4427B1BF50006896F6 /* PredictionsGraphView+AxisLabels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+AxisLabels.swift"; sourceTree = "<group>"; };
-		6CC88D4527B1BF50006896F6 /* VariableStepLineGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableStepLineGraphView.swift; sourceTree = "<group>"; };
-		6CC88D4627B1BF50006896F6 /* VariableStepLineGraphView+VariableStepGraphPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+VariableStepGraphPath.swift"; sourceTree = "<group>"; };
 		6CC88D4827B1BF50006896F6 /* DiningViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningViewHeader.swift; sourceTree = "<group>"; };
 		6CC88D4927B1BF50006896F6 /* DiningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningView.swift; sourceTree = "<group>"; };
 		6CC88D4B27B1BF50006896F6 /* DiningVenueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningVenueView.swift; sourceTree = "<group>"; };
@@ -1457,13 +1443,6 @@
 			children = (
 				426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */,
 				426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */,
-				6CC88D4027B1BF50006896F6 /* VariableStepLineGraphView+GraphEndpointPath.swift */,
-				6CC88D4127B1BF50006896F6 /* PredictionsGraphView+SmoothedData.swift */,
-				6CC88D4227B1BF50006896F6 /* PredictionsGraphView.swift */,
-				6CC88D4327B1BF50006896F6 /* VariableStepLineGraphView+PredictionSlopePath.swift */,
-				6CC88D4427B1BF50006896F6 /* PredictionsGraphView+AxisLabels.swift */,
-				6CC88D4527B1BF50006896F6 /* VariableStepLineGraphView.swift */,
-				6CC88D4627B1BF50006896F6 /* VariableStepLineGraphView+VariableStepGraphPath.swift */,
 			);
 			path = PredictionsGraph;
 			sourceTree = "<group>";
@@ -2346,7 +2325,6 @@
 				895D98B02ACF312300F8C5DF /* MoreView.swift in Sources */,
 				214E254922480818004CB9C4 /* GSRDeletable.swift in Sources */,
 				F2770AEF2545E3B0001EA1DD /* CourseAlertNetworkManager.swift in Sources */,
-				6CC88D6427B1BF51006896F6 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */,
 				890D14FC2AB7469300672FFE /* PennMobile.swift in Sources */,
 				EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */,
 				EFE2D6F8239B120E0020F6BF /* GSRManageGroupViewModel.swift in Sources */,
@@ -2443,7 +2421,6 @@
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
 				6CAA4B5627A763A400473CC6 /* HomePollsCellItem.swift in Sources */,
 				6C6FE1D427B9B8CB0093FD13 /* ProfilePictureTableViewCell.swift in Sources */,
-				6CC88D6327B1BF51006896F6 /* PredictionsGraphView.swift in Sources */,
 				B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
 				6C6035FA26E722E60025FBC7 /* GSRAPIResponse.swift in Sources */,
@@ -2451,10 +2428,8 @@
 				6CAA4B4D27A7639700473CC6 /* PollQuestion.swift in Sources */,
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
 				EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */,
-				6CC88D6227B1BF51006896F6 /* PredictionsGraphView+SmoothedData.swift in Sources */,
 				890D15022AB74F0700672FFE /* LoggedOutView.swift in Sources */,
 				F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */,
-				6CC88D6527B1BF51006896F6 /* PredictionsGraphView+AxisLabels.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
@@ -2462,7 +2437,6 @@
 				F2770AEA2545E39D001EA1DD /* CourseAlertCreateController.swift in Sources */,
 				6CC88D7427B1BF51006896F6 /* DiningViewModelSwiftUI.swift in Sources */,
 				97E79E082100DA1200D3D606 /* BuildingHoursCell.swift in Sources */,
-				6CC88D6727B1BF51006896F6 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */,
 				6CAE4352253370B300BD0200 /* AlertModifier.swift in Sources */,
 				6C1991BB27B5C73800BBB402 /* Environment.swift in Sources */,
 				6CC88D7927B1BF90006896F6 /* DiningLoginController.swift in Sources */,
@@ -2473,7 +2447,6 @@
 				217A7832204D2C7E004F1227 /* HomeCellItem.swift in Sources */,
 				6ECB4C362ACB10D500F7379A /* HomeDiningCell.swift in Sources */,
 				2189C08D2027CE2600771C1F /* RoomCell.swift in Sources */,
-				6CC88D6627B1BF51006896F6 /* VariableStepLineGraphView.swift in Sources */,
 				6C6FE1CF27B9B8CB0093FD13 /* InfoTableViewModel.swift in Sources */,
 				2150816A220D24C4002F7EA1 /* NewsArticle.swift in Sources */,
 				EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */,
@@ -2585,7 +2558,6 @@
 				B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				6CAA4B5527A763A400473CC6 /* PollOptionCell.swift in Sources */,
-				6CC88D6127B1BF51006896F6 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
