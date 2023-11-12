@@ -302,7 +302,7 @@ extension LaundryCell {
         // WashersDryersView
         _ = washersDryersView.anchor(dividerLine.bottomAnchor, left: bgView.leftAnchor,
                                      bottom: nil, right: bgView.rightAnchor,
-                                     topConstant: 16, leftConstant: 0, bottomConstant: 10, rightConstant: 0,
+                                     topConstant: 0, leftConstant: 0, bottomConstant: 10, rightConstant: 0,
                                      widthConstant: 0, heightConstant: 200.0)
 
         dividerLine.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
@@ -326,9 +326,9 @@ extension LaundryCell {
                                          widthConstant: 0, heightConstant: 0)
 
         // Dryer View
-        _ = dryerView.anchor(nil, left: washersDryersView.leftAnchor,
-                             bottom: washersDryersView.bottomAnchor, right: washersDryersView.rightAnchor,
-                             topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
+        _ = dryerView.anchor(washerView.bottomAnchor, left: washersDryersView.leftAnchor,
+                             bottom: nil, right: washersDryersView.rightAnchor,
+                             topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
                              widthConstant: 0, heightConstant: 0)
         dryerView.heightAnchor.constraint(
             equalTo: washersDryersView.heightAnchor,
@@ -343,7 +343,7 @@ extension LaundryCell {
         // Scrollable Graph View
         _ = graphViewContainer.anchor(washersDryersView.bottomAnchor, left: bgView.leftAnchor,
                                       bottom: bgView.bottomAnchor, right: bgView.rightAnchor,
-                                      topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
+                                      topConstant: 14, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
                                       widthConstant: 0, heightConstant: 0)
         _ = scrollableGraphView!.anchor(graphViewContainer.topAnchor, left: graphViewContainer.leftAnchor,
                                         bottom: graphViewContainer.bottomAnchor, right: graphViewContainer.rightAnchor,
