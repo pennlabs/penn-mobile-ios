@@ -34,6 +34,12 @@ extension DiningAnalyticsBalance: Comparable {
 }
 
 public class DiningAnalyticsViewModel: ObservableObject {
+    @Published public var selectedOptionIndex = 0 {
+        didSet {
+            populateAxesAndPredictions()
+        }
+    }
+    
     public static let dollarHistoryDirectory = "diningAnalyticsDollarData"
     public static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
     public static let planStartDateDirectory = "diningAnalyticsPlanStartDate"
@@ -152,18 +158,36 @@ public class DiningAnalyticsViewModel: ObservableObject {
         //  Then average the two.
         let dollarPredictions = self.getPredictions(firstBalance: startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
         let last7dollarPredictions = self.getPredictions(firstBalance: last7startDollarBalance, lastBalance: lastDollarBalance, maxBalance: last7maxDollarBalance)
-        self.dollarSlope = dollarPredictions.slope//(dollarPredictions.slope + last7dollarPredictions.slope) / 2
+        //OPTIONS
+        if (selectedOptionIndex == 0) {
+            self.dollarSlope = dollarPredictions.slope
+        } else if (selectedOptionIndex == 1) {
+            self.dollarSlope = (dollarPredictions.slope + last7dollarPredictions.slope) / 2
+        }
         self.dollarPredictedZeroDate = self.predictZeroDate(firstBalance: startDollarBalance, slope: self.dollarSlope)
-        self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance//(dollarPredictions.predictedEndBalance + last7dollarPredictions.predictedEndBalance) / 2
+        //OPTIONS
+        if (selectedOptionIndex == 0) {
+            self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance
+        } else if (selectedOptionIndex == 1) {
+            self.predictedDollarSemesterEndBalance = (dollarPredictions.predictedEndBalance + last7dollarPredictions.predictedEndBalance) / 2
+        }
         self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)
         
         // Get swipe predictions using data from all dates and swipe predictions using data from the last 7 days.
         //  Then average the two.
         let swipePredictions = self.getPredictions(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: maxSwipeBalance)
         let last7swipePredictions = self.getPredictions(firstBalance: last7startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: last7maxSwipeBalance)
-        self.swipeSlope = swipePredictions.slope//(swipePredictions.slope + last7swipePredictions.slope) / 2
+        if (selectedOptionIndex == 0) {
+            self.swipeSlope = swipePredictions.slope
+        } else if (selectedOptionIndex == 1) {
+            self.swipeSlope = (swipePredictions.slope + last7swipePredictions.slope) / 2
+        }
         self.swipesPredictedZeroDate = self.predictZeroDate(firstBalance: startSwipeBalance, slope: self.swipeSlope)
-        self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance//(swipePredictions.predictedEndBalance + last7swipePredictions.predictedEndBalance) / 2
+        if (selectedOptionIndex == 0) {
+            self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
+        } else if (selectedOptionIndex == 1) {
+            self.predictedSwipesSemesterEndBalance = (swipePredictions.predictedEndBalance + last7swipePredictions.predictedEndBalance) / 2
+        }
         self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
     }
     

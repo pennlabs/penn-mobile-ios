@@ -97,7 +97,7 @@ struct DiningAnalyticsView: View {
             }
             .navigationTitle("Analytics")
             .sheet(isPresented: $showSettingsSheet) {
-                DiningSettingsView() // Replace with your settings view
+                DiningSettingsView(viewModel: diningAnalyticsViewModel) // Replace with your settings view
             }
         } else {
             let dollarXYHistory = Binding(
@@ -165,7 +165,7 @@ struct DiningAnalyticsView: View {
             }
             .navigationTitle("Analytics")
             .sheet(isPresented: $showSettingsSheet) {
-                DiningSettingsView()
+                DiningSettingsView(viewModel: diningAnalyticsViewModel)
                     
 //                    .toolbar {
 //                        ToolbarItem(placement: .navigationBarTrailing) {

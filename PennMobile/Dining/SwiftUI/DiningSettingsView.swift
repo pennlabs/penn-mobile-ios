@@ -7,11 +7,13 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct DiningSettingsView: View {
+    @ObservedObject var viewModel: DiningAnalyticsViewModel
+    
     @Environment(\.presentationMode) var presentationMode
     @State private var totalData = false
-    @State private var selectedOptionIndex = 0
     private let options = ["Total data",
                                "Smart calculation",
                                "Weighted average"]
@@ -20,7 +22,7 @@ struct DiningSettingsView: View {
         NavigationView {
             Form {
                 // Your settings view content here
-                Picker(selection: $selectedOptionIndex, label: Text("Calculate Options")) {
+                Picker(selection: $viewModel.selectedOptionIndex, label: Text("Calculate Options")) {
                                     ForEach(0..<options.count, id: \.self) { index in
                                         Text(options[index]).tag(index)
                                     }
@@ -44,7 +46,7 @@ struct DiningSettingsView: View {
         }
     }
 }
-
-#Preview {
-    DiningSettingsView()
-}
+//
+//#Preview {
+//    DiningSettingsView(viewModel: <#DiningAnalyticsViewModel#>)
+//}
