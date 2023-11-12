@@ -22,7 +22,7 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     fileprivate let fetchTransactionsForUsersWithoutDiningPlan = true
 
     init() {
-        self.current = SplashViewController()
+        self.current = UIViewController()
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -85,7 +85,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
             // Refresh current VC
             UserDefaults.standard.restoreCookies()
             switchToMainScreen()
-            ControllerModel.shared.visibleVC().viewWillAppear(true)
         }
 
         // Fetch transaction data at least once a week, starting on Sundays
@@ -121,16 +120,9 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     }
 
     func showMainScreen() {
-        let tabBarController = TabBarController()
-        let homeNVC = HomeNavigationController(rootViewController: tabBarController)
-        moveto(controller: homeNVC)
     }
 
     func switchToMainScreen() {
-        let tabBarController = TabBarController()
-        let homeNVC = HomeNavigationController(rootViewController: tabBarController)
-        animateFadeTransition(to: homeNVC)
-
         // Keep track locally of app sessions (for app review prompting)
         let sessionCount = UserDefaults.standard.integer(forKey: "launchCount")
         UserDefaults.standard.set(sessionCount+1, forKey: "launchCount")
