@@ -67,7 +67,6 @@ struct PollWrapper: UIViewRepresentable {
         return cell
     }
     
-    @available(iOS 16.0, *)
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: HomePollsCell, context: Context) -> CGSize? {
         return CGSize(width: proposal.width ?? 0, height: HomePollsCell.getPollHeight(for: answeredPollQuestion))
     }
