@@ -48,7 +48,6 @@ struct MainTabView: View {
         .id(tabBarFeatures)
         .sheet(isPresented: $mainTabViewCoordinator.isConfiguringTabs, content: {
             PreferencesView()
-                .presentationDetents([.fraction(0.7)])
                 .presentationDragIndicator(.visible)
         })
         .onAppear {
