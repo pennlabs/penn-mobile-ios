@@ -19,30 +19,61 @@ struct DiningSettingsView: View {
                                "Weighted average"]
         
     var body: some View {
-        NavigationView {
-            Form {
-                // Your settings view content here
-                Picker(selection: $viewModel.selectedOptionIndex, label: Text("Calculate Options")) {
-                                    ForEach(0..<options.count, id: \.self) { index in
-                                        Text(options[index]).tag(index)
-                                    }
-                                }
-                                .pickerStyle(MenuPickerStyle())
-                
-                Toggle("Include guest swipes", isOn: $totalData)
-                
-            }
-            .navigationBarTitle("Dining Analytics Settings")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Text("Done")
+        if #available(iOS 16.0, *) {
+            NavigationView {
+                Form {
+                    // Your settings view content here
+                    Picker(selection: $viewModel.selectedOptionIndex, label: Text("Calculate Options")) {
+                        ForEach(0..<options.count, id: \.self) { index in
+                            Text(options[index]).tag(index)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    
+                    //Toggle("Include guest swipes", isOn: $totalData)
+                    
+                }
+                .navigationBarTitle("Dining Analytics Settings")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Text("Done")
+                        }
                     }
                 }
+                .navigationViewStyle(StackNavigationViewStyle())
+                
             }
-            .navigationViewStyle(StackNavigationViewStyle())
+            .presentationDetents([.medium])
+        } else {
+            NavigationView {
+                Form {
+                    // Your settings view content here
+                    Picker(selection: $viewModel.selectedOptionIndex, label: Text("Calculate Options")) {
+                        ForEach(0..<options.count, id: \.self) { index in
+                            Text(options[index]).tag(index)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    
+                    //Toggle("Include guest swipes", isOn: $totalData)
+                    
+                }
+                .navigationBarTitle("Dining Analytics Settings")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Text("Done")
+                        }
+                    }
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
+                
+            }
         }
     }
 }

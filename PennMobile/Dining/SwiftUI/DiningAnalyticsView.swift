@@ -166,17 +166,6 @@ struct DiningAnalyticsView: View {
             .navigationTitle("Analytics")
             .sheet(isPresented: $showSettingsSheet) {
                 DiningSettingsView(viewModel: diningAnalyticsViewModel)
-                    
-//                    .toolbar {
-//                        ToolbarItem(placement: .navigationBarTrailing) {
-//                            Button(action: {
-//                                isPresentingDiningAnalyticsView.toggle()
-//                            }) {
-//                                Text("Done")
-//                            }
-//                        }
-//                    }
-                
             }
         }
     }
