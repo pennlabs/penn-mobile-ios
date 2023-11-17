@@ -99,7 +99,10 @@ let features: [AppFeature] = [
         FitnessView()
             .navigationTitle(Text("Fitness"))
     },
-    AppFeature(.polls, shortName: "Polls", longName: "Polls History", color: .blueDark, image: .app("Polls_Grey"), controller: PollsViewController.self),
+    AppFeature(.polls, shortName: "Polls", longName: "Poll History", color: .blueDark, image: .app("Polls_Grey")) {
+        PollsView()
+            .navigationTitle(Text("Poll History"))
+    },
     AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),
     AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]

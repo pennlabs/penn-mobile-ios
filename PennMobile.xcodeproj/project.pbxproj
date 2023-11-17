@@ -105,7 +105,6 @@
 		423B7EF52ACC67B900D30504 /* MeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B7EF42ACC67B900D30504 /* MeterView.swift */; };
 		426A0B51299034910066C7B7 /* DiningAnalyticsGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */; };
 		426A0B52299034910066C7B7 /* DiningAnalyticsGraphBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */; };
-		42CC49D02AAE38C6008C41EE /* PollsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */; };
 		42CC49D22AAE3904008C41EE /* PollsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49D12AAE3904008C41EE /* PollsView.swift */; };
 		42D9237329E0C9AF00E9E18E /* FitnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */; };
 		42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237429E0CCFB00E9E18E /* FitnessView.swift */; };
@@ -136,11 +135,6 @@
 		6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6CA1ACDA271D2D5000EDB967 /* Kingfisher */; };
 		6CAA4B4C27A7639700473CC6 /* PollsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA4B4927A7639600473CC6 /* PollsNetworkManager.swift */; };
 		6CAA4B4D27A7639700473CC6 /* PollQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA4B4B27A7639600473CC6 /* PollQuestion.swift */; };
-		6CAA4B5427A763A400473CC6 /* HomePollsCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA4B4F27A763A400473CC6 /* HomePollsCellFooter.swift */; };
-		6CAA4B5527A763A400473CC6 /* PollOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA4B5027A763A400473CC6 /* PollOptionCell.swift */; };
-		6CAA4B5627A763A400473CC6 /* HomePollsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA4B5127A763A400473CC6 /* HomePollsCellItem.swift */; };
-		6CAA4B5727A763A400473CC6 /* HomePollsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA4B5227A763A400473CC6 /* HomePollsCell.swift */; };
-		6CAA4B5827A763A400473CC6 /* HomePollsCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAA4B5327A763A400473CC6 /* HomePollsCellHeader.swift */; };
 		6CAE4351253370B300BD0200 /* FadingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE434E253370B200BD0200 /* FadingScrollView.swift */; };
 		6CAE4352253370B300BD0200 /* AlertModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE434F253370B200BD0200 /* AlertModifier.swift */; };
 		6CC88D5927B1BF51006896F6 /* DiningLoginViewSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D3427B1BF50006896F6 /* DiningLoginViewSwiftUI.swift */; };
@@ -507,7 +501,6 @@
 		425E281A28FF5EE200218F50 /* DiningPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningPlan.swift; sourceTree = "<group>"; };
 		426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraph.swift; sourceTree = "<group>"; };
 		426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraphBox.swift; sourceTree = "<group>"; };
-		42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsViewController.swift; sourceTree = "<group>"; };
 		42CC49D12AAE3904008C41EE /* PollsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsView.swift; sourceTree = "<group>"; };
 		42D9237029E0C69200E9E18E /* FitnessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessModel.swift; sourceTree = "<group>"; };
 		42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewController.swift; sourceTree = "<group>"; };
@@ -539,11 +532,6 @@
 		6C84D9E426293E680039C57F /* UIKit Views.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIKit Views.swift"; sourceTree = "<group>"; };
 		6CAA4B4927A7639600473CC6 /* PollsNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollsNetworkManager.swift; sourceTree = "<group>"; };
 		6CAA4B4B27A7639600473CC6 /* PollQuestion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollQuestion.swift; sourceTree = "<group>"; };
-		6CAA4B4F27A763A400473CC6 /* HomePollsCellFooter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePollsCellFooter.swift; sourceTree = "<group>"; };
-		6CAA4B5027A763A400473CC6 /* PollOptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollOptionCell.swift; sourceTree = "<group>"; };
-		6CAA4B5127A763A400473CC6 /* HomePollsCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePollsCellItem.swift; sourceTree = "<group>"; };
-		6CAA4B5227A763A400473CC6 /* HomePollsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePollsCell.swift; sourceTree = "<group>"; };
-		6CAA4B5327A763A400473CC6 /* HomePollsCellHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePollsCellHeader.swift; sourceTree = "<group>"; };
 		6CAE434E253370B200BD0200 /* FadingScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FadingScrollView.swift; sourceTree = "<group>"; };
 		6CAE434F253370B200BD0200 /* AlertModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertModifier.swift; sourceTree = "<group>"; };
 		6CC88D3427B1BF50006896F6 /* DiningLoginViewSwiftUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningLoginViewSwiftUI.swift; sourceTree = "<group>"; };
@@ -873,7 +861,6 @@
 				6C11C07E26F841CB00407C04 /* Update */,
 				B98CA5F723E73631004B3218 /* Group Invites */,
 				212B835A222A37BD00F835D6 /* Feature */,
-				6CAA4B4E27A763A400473CC6 /* Polls */,
 				212B8353222A319200F835D6 /* Post */,
 				C13F9E93219284E9000B866A /* Calendar */,
 				21508164220D2481002F7EA1 /* News */,
@@ -1343,7 +1330,6 @@
 			children = (
 				6CAA4B4827A7639600473CC6 /* Networking */,
 				6CAA4B4A27A7639600473CC6 /* Model */,
-				42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */,
 				89534BA12AEEC8AB003ABB70 /* PollView.swift */,
 				42CC49D12AAE3904008C41EE /* PollsView.swift */,
 			);
@@ -1364,18 +1350,6 @@
 				6CAA4B4B27A7639600473CC6 /* PollQuestion.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		6CAA4B4E27A763A400473CC6 /* Polls */ = {
-			isa = PBXGroup;
-			children = (
-				6CAA4B4F27A763A400473CC6 /* HomePollsCellFooter.swift */,
-				6CAA4B5027A763A400473CC6 /* PollOptionCell.swift */,
-				6CAA4B5127A763A400473CC6 /* HomePollsCellItem.swift */,
-				6CAA4B5227A763A400473CC6 /* HomePollsCell.swift */,
-				6CAA4B5327A763A400473CC6 /* HomePollsCellHeader.swift */,
-			);
-			path = Polls;
 			sourceTree = "<group>";
 		};
 		6CAE434D253370B200BD0200 /* SwiftUI Views */ = {
@@ -2345,7 +2319,6 @@
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
 				2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */,
 				89459B9B28E799AA00CE1638 /* CoursesViewModel.swift in Sources */,
-				6CAA4B5427A763A400473CC6 /* HomePollsCellFooter.swift in Sources */,
 				97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */,
 				F2DD593D259817EC0085CC22 /* SearchResultsCell.swift in Sources */,
 				89CA5FBF2AD315E400B7D3EF /* ProfileRowView.swift in Sources */,
@@ -2384,7 +2357,6 @@
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				6CC88D6E27B1BF51006896F6 /* DiningVenueDetailLocationView.swift in Sources */,
-				6CAA4B5827A763A400473CC6 /* HomePollsCellHeader.swift in Sources */,
 				F2B8C40C252C58E600922D08 /* GSRClosedView.swift in Sources */,
 				6ECB4C382ACB11FA00F7379A /* DiningCell.swift in Sources */,
 				F2568A7824135B6500561295 /* HomeCellHeader.swift in Sources */,
@@ -2413,7 +2385,6 @@
 				F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
-				6CAA4B5627A763A400473CC6 /* HomePollsCellItem.swift in Sources */,
 				6C6FE1D427B9B8CB0093FD13 /* ProfilePictureTableViewCell.swift in Sources */,
 				B9F8423123DDFD6700814975 /* GroupInviteUserCell.swift in Sources */,
 				2189C09D2027CE4100771C1F /* GSRLocationModel.swift in Sources */,
@@ -2498,7 +2469,6 @@
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
-				42CC49D02AAE38C6008C41EE /* PollsViewController.swift in Sources */,
 				6CC88D6B27B1BF51006896F6 /* DiningVenueView.swift in Sources */,
 				42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */,
 				6C11C08026F842CF00407C04 /* HomeUpdateCellItem.swift in Sources */,
@@ -2523,7 +2493,6 @@
 				2138D55522598AA800D67CA2 /* GSRTabController.swift in Sources */,
 				6CFA06F826E8355400944B8E /* HomeFeatureCellItem.swift in Sources */,
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
-				6CAA4B5727A763A400473CC6 /* HomePollsCell.swift in Sources */,
 				F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */,
 				F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */,
 				422C896E2A0FE8C000A7135C /* FitnessSettingsView.swift in Sources */,
@@ -2549,7 +2518,6 @@
 				EFE2D6FB239B12270020F6BF /* GSRGroupNewIntialController.swift in Sources */,
 				B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
-				6CAA4B5527A763A400473CC6 /* PollOptionCell.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
 				2189C08E2027CE2600771C1F /* GSRRangeSlider.swift in Sources */,
