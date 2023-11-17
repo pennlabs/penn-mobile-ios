@@ -1328,28 +1328,12 @@
 		6CAA4B4727A7639600473CC6 /* Polls */ = {
 			isa = PBXGroup;
 			children = (
-				6CAA4B4827A7639600473CC6 /* Networking */,
-				6CAA4B4A27A7639600473CC6 /* Model */,
+				6CAA4B4B27A7639600473CC6 /* PollQuestion.swift */,
+				6CAA4B4927A7639600473CC6 /* PollsNetworkManager.swift */,
 				89534BA12AEEC8AB003ABB70 /* PollView.swift */,
 				42CC49D12AAE3904008C41EE /* PollsView.swift */,
 			);
 			path = Polls;
-			sourceTree = "<group>";
-		};
-		6CAA4B4827A7639600473CC6 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				6CAA4B4927A7639600473CC6 /* PollsNetworkManager.swift */,
-			);
-			path = Networking;
-			sourceTree = "<group>";
-		};
-		6CAA4B4A27A7639600473CC6 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				6CAA4B4B27A7639600473CC6 /* PollQuestion.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		6CAE434D253370B200BD0200 /* SwiftUI Views */ = {
