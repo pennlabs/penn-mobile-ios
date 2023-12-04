@@ -25,6 +25,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
     let settingsURL = "https://penncoursealert.com/accounts/me/"
     let coursesURL = "https://penncoursealert.com/api/base/"
     let registrationsURL = "https://penncoursealert.com/api/alert/registrations/"
+    let pathRegistrationURL = "https://penncourseplan.com/api/plan/schedules/path/"
 
     func getSearchedCourses(searchText: String, _ callback: @escaping (_ results: [CourseSection]?) -> Void) {
 
@@ -144,6 +145,29 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         }
 
         makeAuthenticatedRequest(url: "\(registrationsURL)\(id)/", requestType: RequestType.PUT, params: params) { (data, status, error) in
+            guard let status = status as? HTTPURLResponse else {
+                callback(false, error)
+                return
+            }
+
+            guard data != nil else {
+                callback(false, error)
+                return
+            }
+
+            callback(status.statusCode == 200, error)
+        }
+    }
+
+    func updatePathRegistration(srcdb: String, crns: [String], callback: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+        struct Section: Encodable {
+            var id: String // crn
+        }
+
+        let sections = crns.map { Section(id: $0) } 
+        let params: [String: Any] = ["semester": srcdb, "sections": sections]
+
+        makeAuthenticatedRequest(url: pathRegistrationURL, requestType: RequestType.PUT, params: params) { (data, status, error) in
             guard let status = status as? HTTPURLResponse else {
                 callback(false, error)
                 return

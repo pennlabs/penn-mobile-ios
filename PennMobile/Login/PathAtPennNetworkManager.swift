@@ -149,6 +149,20 @@ extension PathAtPennNetworkManager {
                 $0.split(separator: "|").first
             }
 
+            // Side effect: update Penn Course Plan Path Registration
+            try await withCheckedThrowingContinuation { continuation in
+                CourseAlertNetworkManager.instance.updatePathRegistration(srcdb: srcdb, crns: crns) { success, error in
+                    if let error = error {
+                        continuation.resume(throwing: error)
+                    } else if success {
+                        continuation.resume(returning: ())
+                    } else {
+                        // Handle the case where success is false and there's no error
+                        continuation.resume(throwing: NSError(domain: "UpdatePathRegistrationError", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unknown error occurred"]))
+                    }
+                }
+            }
+
             return try await crns.asyncMap { crn in
                 try await self.fetchCourse(srcdb: srcdb, crn: String(crn))
             }.compactMap { $0 }
