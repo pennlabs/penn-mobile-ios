@@ -11,6 +11,12 @@ import SwiftSoup
 import PennMobileShared
 
 enum PathAtPennError: Error {
+    /// The user's pennkey/password are not stored on the keychain
+    case pennkeyCredentialsNotStored
+
+    /// Unable to construct getToken request body
+    case invalidRequestBody
+
     /// The data was a malformed string.
     case corruptString
 
@@ -44,6 +50,49 @@ extension PathAtPennNetworkManager {
         let token = try matches.first.unwrap(orThrow: PathAtPennError.noTokenFound)
 
         return token
+    }
+
+    func getToken() async throws -> String {
+        do {
+            guard let pennkey = KeychainAccessible.instance.getPennKey(),
+                let password = KeychainAccessible.instance.getPassword() else {
+                throw PathAtPennError.pennkeyCredentialsNotStored
+            }
+
+            var urlComponents = URLComponents()
+            urlComponents.queryItems = [
+                URLQueryItem(name: "j_username", value: pennkey),
+                URLQueryItem(name: "j_password", value: password),
+                URLQueryItem(name: "_eventId_proceed", value: "")
+            ]
+
+            guard let requestBody = urlComponents.percentEncodedQuery?.data(using: .utf8) else {
+                throw PathAtPennError.invalidRequestBody
+            }
+
+            var request = URLRequest(url: URL(string: "https://weblogin.pennkey.upenn.edu/idp/profile/oidc/authorize?execution=e1s1&eventTag=password")!)
+            request.httpMethod = "POST"
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpBody = requestBody
+
+            // TODO: set cookies from PennLoginController?
+
+            let (data, response) = try await URLSession.shared.data(for: request)
+
+            // Extract token from the response
+            let str = try String(data: data, encoding: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
+            let matches = str.getMatches(for: “value: \“(.*)\“”)
+            let token = try matches.first.unwrap(orThrow: PathAtPennError.noTokenFound)
+
+            return token
+        } catch {
+            // Logout
+            DispatchQueue.main.async {
+                AppDelegate.shared.rootViewController.clearAccountData()
+                AppDelegate.shared.rootViewController.switchToLogout()
+            }
+            throw error
+        }
     }
 }
 
