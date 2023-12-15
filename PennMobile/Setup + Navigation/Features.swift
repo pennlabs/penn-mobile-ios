@@ -62,11 +62,19 @@ struct AppFeature: Identifiable {
     }
     
     struct ViewControllerView<ViewController: UIViewController>: UIViewControllerRepresentable {
+        @Environment(\.presentToast) var presentToast
+        
         func makeUIViewController(context: Context) -> ViewController {
-            ViewController()
+            let vc = ViewController()
+            updateUIViewController(vc, context: context)
+            return vc
         }
         
-        func updateUIViewController(_ uiViewController: ViewController, context: Context) {}
+        func updateUIViewController(_ uiViewController: ViewController, context: Context) {
+            if var toastPresenting = uiViewController as? LegacyToastPresentingViewController {
+                toastPresenting.presentToast = presentToast
+            }
+        }
     }
 }
 

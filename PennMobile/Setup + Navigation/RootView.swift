@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var authManager: AuthManager
+    @State var toast: ToastConfiguration?
 
     var isOnLogoutScreen: Bool {
         switch authManager.state {
@@ -32,6 +33,28 @@ struct RootView: View {
             }
         }
         .animation(.default, value: isOnLogoutScreen)
+        .overlay(alignment: .top) {
+            if let toast {
+                ToastView(configuration: toast)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                    .padding(.top)
+            }
+        }
+        .environment(\.presentToast) { configuration in
+            withAnimation {
+                toast = configuration
+            }
+        }
+        .task(id: toast?.id) {
+            if toast != nil {
+                try? await Task.sleep(for: .seconds(5))
+                if !Task.isCancelled {
+                    withAnimation {
+                        toast = nil
+                    }
+                }
+            }
+        }
     }
 }
 

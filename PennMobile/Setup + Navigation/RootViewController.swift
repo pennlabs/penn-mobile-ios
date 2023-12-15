@@ -122,13 +122,13 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
 
     func showMainScreen() {
         let tabBarController = TabBarController()
-        let homeNVC = HomeNavigationController(rootViewController: tabBarController)
+        let homeNVC = UINavigationController(rootViewController: tabBarController)
         moveto(controller: homeNVC)
     }
 
     func switchToMainScreen() {
         let tabBarController = TabBarController()
-        let homeNVC = HomeNavigationController(rootViewController: tabBarController)
+        let homeNVC = UINavigationController(rootViewController: tabBarController)
         animateFadeTransition(to: homeNVC)
 
         // Keep track locally of app sessions (for app review prompting)

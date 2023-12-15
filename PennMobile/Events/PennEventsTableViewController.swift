@@ -9,9 +9,12 @@
 import Foundation
 import SwiftSoup
 import PennMobileShared
+import SwiftUI
 
-class PennEventsTableViewController: GenericTableViewController, IndicatorEnabled {
+class PennEventsTableViewController: GenericTableViewController, IndicatorEnabled, LegacyToastPresentingViewController {
 
+    var presentToast: ToastPresentationCallback?
+    
     var events: [PennEvents] = []
     let dateKey = "dateKey"
 
@@ -57,9 +60,9 @@ extension PennEventsTableViewController {
                     self.events = events
                     Storage.store(events, to: .documents, as: PennEvents.directory)
                 case .failure(.serverError):
-                    self.navigationVC?.addStatusBar(text: .apiError)
+                    self.present(toast: .apiError)
                 default:
-                    self.navigationVC?.addStatusBar(text: .noInternet)
+                    self.present(toast: .noInternet)
                 }
                 self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()

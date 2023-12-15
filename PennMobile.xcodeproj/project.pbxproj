@@ -238,6 +238,7 @@
 		89534BA22AEEC8AB003ABB70 /* PollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89534BA12AEEC8AB003ABB70 /* PollView.swift */; };
 		895C75E628FA165100A329A0 /* LabsLoginSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */; };
 		895D98B02ACF312300F8C5DF /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D98AF2ACF312300F8C5DF /* MoreView.swift */; };
+		897F0A932B08256C0060583A /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897F0A922B08256C0060583A /* Toasts.swift */; };
 		89913EAD2AE44FCE00AE30C9 /* CalendarCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */; };
 		89B454DF28E1161B00BC918B /* PathAtPennNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */; };
 		89CA5FBF2AD315E400B7D3EF /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */; };
@@ -299,8 +300,6 @@
 		EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */; };
 		EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */; };
 		EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */; };
-		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
-		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
 		EF6329A22409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6329A12409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
 		EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */; };
@@ -647,6 +646,7 @@
 		89534BA12AEEC8AB003ABB70 /* PollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollView.swift; sourceTree = "<group>"; };
 		895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginSwiftUI.swift; sourceTree = "<group>"; };
 		895D98AF2ACF312300F8C5DF /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		897F0A922B08256C0060583A /* Toasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toasts.swift; sourceTree = "<group>"; };
 		89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCardView.swift; sourceTree = "<group>"; };
 		89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAtPennNetworkManager.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
@@ -708,8 +708,6 @@
 		EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteCell.swift; sourceTree = "<group>"; };
 		EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCellItem.swift; sourceTree = "<group>"; };
 		EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCell.swift; sourceTree = "<group>"; };
-		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
-		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		EF6329A12409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupConfirmBookingController.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
 		EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupIndividualSettingView.swift; sourceTree = "<group>"; };
@@ -1009,11 +1007,11 @@
 				89EECCC82B014CA300E73EEB /* MainTabViewCoordinator.swift */,
 				890D15032AB75E4300672FFE /* Features.swift */,
 				B6665A172071E63800F49A9C /* TabBarController.swift */,
-				EF389EC521861B8500E29C6A /* HomeNavigationController.swift */,
 				21B556162224FDC500D80F61 /* RootViewController.swift */,
 				21B556182224FDF700D80F61 /* SplashViewController.swift */,
 				21640D6120114A28002F33CA /* ControllerModel.swift */,
 				6C1991BA27B5C73800BBB402 /* Environment.swift */,
+				897F0A922B08256C0060583A /* Toasts.swift */,
 			);
 			path = "Setup + Navigation";
 			sourceTree = "<group>";
@@ -1042,7 +1040,6 @@
 				212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */,
 				2196D5E21F5263AC002058A0 /* AnnouncementHeaderView.swift */,
 				216640C11EBADC9300746B8E /* GenericControllers.swift */,
-				EF389EC321860B7000E29C6A /* StatusBar.swift */,
 			);
 			path = Generics;
 			sourceTree = "<group>";
@@ -2371,7 +2368,6 @@
 				2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */,
 				6C6FE1CB27B9B8CB0093FD13 /* PacCodeViewController.swift in Sources */,
 				6CC88D6927B1BF51006896F6 /* DiningViewHeader.swift in Sources */,
-				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
@@ -2395,7 +2391,6 @@
 				217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */,
 				2138D559225998A300D67CA2 /* GSRGroupController.swift in Sources */,
 				217A783D204D97B6004F1227 /* ModularTableViewModel.swift in Sources */,
-				EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */,
 				6C44198F27B9A0E400993028 /* EventsAPI.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				6C6FE1CE27B9B8CB0093FD13 /* ProfilePageViewController.swift in Sources */,
@@ -2536,6 +2531,7 @@
 				C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
+				897F0A932B08256C0060583A /* Toasts.swift in Sources */,
 				212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */,
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
