@@ -120,6 +120,8 @@ struct DiningHoursWidget: Widget {
         .contentMarginsDisabled()
     }
 }
+
+@available(iOS 17.0, *)
 #Preview(as: .systemSmall) {
     DiningHoursWidget()
 } timeline: {
