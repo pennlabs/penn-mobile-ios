@@ -7,6 +7,7 @@
 //
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 struct Response: Decodable {
     let message: String
@@ -159,26 +160,23 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         }
     }
 
-    func updatePathRegistration(srcdb: String, crns: [String], callback: @escaping (_ success: Bool, _ error: Error?) -> Void) {
-        struct Section: Encodable {
-            var id: String // crn
-        }
+    func updatePathRegistration(srcdb: String, crns: [String]) async throws {
+        let params: [String: Any] = ["semester": srcdb, "sections": crns.map { ["id": $0] }]
 
-        let sections = crns.map { Section(id: $0) } 
-        let params: [String: Any] = ["semester": srcdb, "sections": sections]
-
-        makeAuthenticatedRequest(url: pathRegistrationURL, requestType: RequestType.PUT, params: params) { (data, status, error) in
-            guard let status = status as? HTTPURLResponse else {
-                callback(false, error)
-                return
+        return try await withCheckedThrowingContinuation { continuation in
+            makeAuthenticatedRequest(url: pathRegistrationURL, requestType: RequestType.PUT, params: params) { (data, response, error) in
+                if let error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    continuation.resume(throwing: NetworkingError.serverError)
+                    return
+                }
+                
+                continuation.resume(returning: ())
             }
-
-            guard data != nil else {
-                callback(false, error)
-                return
-            }
-
-            callback(status.statusCode == 200, error)
         }
     }
 
@@ -257,10 +255,10 @@ extension CourseAlertNetworkManager {
         if let CSRFDict = (UserDefaults.standard.dictionary(forKey: "cookies"))?["csrftokenplatform.pennlabs.org"] as? [String: Any] {
             if let csrfToken = CSRFDict["Value"] as? String {
                 callback(csrfToken)
-            } else {
-                callback(nil)
+                return
             }
         }
+        
         callback(nil)
     }
 

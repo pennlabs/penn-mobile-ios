@@ -117,7 +117,7 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
 
         if url.absoluteString.contains("https://weblogin.pennkey.upenn.edu/") {
             guard let pennkey = KeychainAccessible.instance.getPennKey(), let password = KeychainAccessible.instance.getPassword() else { return }
-            webView.evaluateJavaScript("document.getElementById('pennname').value = '\(pennkey)'") { (_, _) in
+            webView.evaluateJavaScript("document.getElementById('username').value = '\(pennkey)'") { (_, _) in
                 webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_, _) in
                 }
             }
