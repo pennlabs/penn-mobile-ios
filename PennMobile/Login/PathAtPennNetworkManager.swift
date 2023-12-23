@@ -232,16 +232,6 @@ extension PathAtPennNetworkManager {
                 $0.split(separator: "|").first.map { String($0) }
             }
 
-            // Side effect: update Penn Course Plan Path Registration
-            // TODO: Add a guard here to ensure privacy
-            Task {
-                do {
-                    try await CourseAlertNetworkManager.instance.updatePathRegistration(srcdb: srcdb, crns: crns)
-                } catch {
-                    self.logger.error("Couldn't update PCP registration: \(error)")
-                }
-            }
-
             return try await crns.asyncMap { crn in
                 try await self.fetchCourse(srcdb: srcdb, crn: crn)
             }.compactMap { $0 }
