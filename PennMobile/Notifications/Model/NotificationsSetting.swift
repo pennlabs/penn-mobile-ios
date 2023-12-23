@@ -33,11 +33,11 @@ enum NotificationPreference: String, Codable {
 
     var title: String {
         switch self {
-        case .LAUNDRY: return "Laundry notifications"
-        case .UNIVERSITY: return "University notifications"
-        case .DINING: return "Dining balance notifications"
-        case .GSR_BOOKING: return "GSR booking notifications"
-        case .PENN_MOBILE: return "App update notifications"
+        case .LAUNDRY: return "Laundry Notifications"
+        case .UNIVERSITY: return "University Notifications"
+        case .DINING: return "Dining Balance Notifications"
+        case .GSR_BOOKING: return "GSR Booking Notifications"
+        case .PENN_MOBILE: return "App Update Notifications"
         default:
             return "N/A"
         }

@@ -29,6 +29,7 @@ class GSRLocationsController: GenericViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.locations = GSRLocationModel.shared.getLocations()
         tableView.reloadData()
     }
 }

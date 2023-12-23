@@ -23,17 +23,16 @@ struct DiningVenueDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @State private var pickerIndex = 0
+    @State var showTitle = false
 
     var body: some View {
         GeometryReader { fullGeo in
             let imageHeight = fullGeo.size.height * 4/9
-            let statusBarHeight = fullGeo.safeAreaInsets.top
+            let isFavorite = diningVM.favoriteVenues.contains { $0.id == venue.id }
 
             ScrollView {
                 GeometryReader { geometry in
                     let minY = geometry.frame(in: .global).minY
-                    let remain = imageHeight + minY
-                    let isFavorite = diningVM.favoriteVenues.contains { $0.id == venue.id }
 
                     ZStack(alignment: .bottomLeading) {
                         KFImage(self.venue.image)
@@ -44,53 +43,30 @@ struct DiningVenueDetailView: View {
                             .allowsHitTesting(false)
                             .clipped()
 
-                        LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .center, endPoint: .bottom)
+                        LinearGradient(gradient: Gradient(colors: [.black.opacity(0.6), .black.opacity(0.2), .clear, .black.opacity(0.3), .black]), startPoint: .init(x: 0.5, y: 0.2), endPoint: .init(x: 0.5, y: 1))
 
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Button(action: {
-                                    presentationMode.wrappedValue.dismiss()
-                                }) {
-                                    Image(systemName: "chevron.left")
-                                        .font(.system(size: 20, weight: .light))
+                        Text(venue.name)
+                            .padding()
+                            .foregroundColor(.white)
+                            .font(.system(size: 40, weight: .bold))
+                            .minimumScaleFactor(0.2)
+                            .lineLimit(1)
+                            .background(GeometryReader { geometry in
+                                let minY = geometry.frame(in: .global).minY
+                                Color.clear.onChange(of: minY) { minY in
+                                    showTitle = minY <= 64
                                 }
-                                .foregroundColor(.white)
-                                .padding(10)
-                                .background(Circle().opacity(0.8).foregroundColor(.black))
-                                .position(x: 40, y: statusBarHeight + 22)
-                                .offset(y: -min(0, minY))
-                                
-                                Spacer()
-                                
-                                Button(action: isFavorite ? { diningVM.removeVenueFromFavorites(venue: venue) } : { diningVM.addVenueToFavorites(venue: venue) }) {
-                                    Image(systemName: isFavorite ? "star.fill" : "star")
-                                        .font(.system(size: 20, weight: .light))
-                                }
-                                .foregroundColor(.yellow)
-                                .padding(8)
-                                .background(Circle().opacity(0.8).foregroundColor(.black))
-                                .position(x: 150, y: statusBarHeight + 22)
-                                .offset(y: -min(0, minY))
-                            }
-
-                            Spacer()
-
-                            Text(venue.name)
-                                .padding()
-                                .foregroundColor(.white)
-                                .font(.system(size: 40, weight: .bold))
-                                .minimumScaleFactor(0.2)
-                                .lineLimit(1)
-                        }.opacity(1 - Double(minY)/60)
+                            })
                     }
                     .offset(y: -max(0, minY))
                 }
+                .edgesIgnoringSafeArea(.all)
                 .frame(height: imageHeight)
                 .zIndex(2)
 
                 VStack(spacing: 10) {
                     Picker("Section", selection: self.$pickerIndex) {
-                        ForEach(0 ..< self.sectionTitle.count) {
+                        ForEach(0 ..< self.sectionTitle.count, id: \.self) {
                             Text(self.sectionTitle[$0])
                         }
                     }
@@ -111,8 +87,17 @@ struct DiningVenueDetailView: View {
                     }.frame(minHeight: fullGeo.size.height - 80)
                 }.padding(.horizontal)
             }
-            .edgesIgnoringSafeArea(.all)
-            .navigationBarHidden(true)
+            .navigationTitle(Text(showTitle ? venue.name : ""))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem {
+                    Button(action: isFavorite ? { diningVM.removeVenueFromFavorites(venue: venue) } : { diningVM.addVenueToFavorites(venue: venue) }) {
+                        Image(systemName: isFavorite ? "star.fill" : "star")
+                            .font(.system(size: 20, weight: .light))
+                    }
+                    .tint(.yellow)
+                }
+            }
             .onAppear {
                 FirebaseAnalyticsManager.shared.trackScreen("Venue Detail View")
             }

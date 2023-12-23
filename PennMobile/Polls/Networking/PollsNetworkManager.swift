@@ -10,8 +10,18 @@ import Foundation
 import SwiftyJSON
 import PennMobileShared
 
+private func getPollsNetworkManagerId() -> String {
+    #if DEBUG
+    if ProcessInfo.processInfo.environment["RANDOMIZE_POLL_ID"] != nil {
+        return "fake-\(UUID().uuidString)"
+    }
+    #endif
+    
+    return UIDevice.current.identifierForVendor?.uuidString ?? ""
+}
+
 class PollsNetworkManager: NSObject, Requestable, SHA256Hashable {
-    static let id = UIDevice.current.identifierForVendor?.uuidString ?? ""
+    static let id = getPollsNetworkManagerId()
     static let instance = PollsNetworkManager()
     let pollURL = URL(string: "https://pennmobile.org/api/portal/polls/browse/")
     let votesURL = URL(string: "https://pennmobile.org/api/portal/votes/")

@@ -55,14 +55,14 @@
 	<string>Enable to show your current location on the map</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Give Penn Mobile access to your photos to change your profile picutre</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>ConfigureCoursesDayWidgetIntent</string>
 		<string>ConfigureDiningAnalyticsHomeWidgetIntent</string>
 		<string>ConfigureFitnessWidgetIntent</string>
 	</array>
-	<key>NSSupportsLiveActivities</key>
-	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -73,8 +73,6 @@
 	<array>
 		<string>armv7</string>
 	</array>
-	<key>UIRequiresFullScreen</key>
-	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -45,9 +45,6 @@ struct DiningAnalyticsView: View {
                     } else {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 20) {
-                                Text("Dining Analytics")
-                                    .font(.system(size: 32))
-                                    .bold()
                                 // Only show dollar history view if there is data for the graph
                                 if !dollarHistory.wrappedValue.isEmpty {
                                     CardView {
@@ -80,6 +77,7 @@ struct DiningAnalyticsView: View {
                 DiningLoginNavigationView()
                     .environmentObject(diningAnalyticsViewModel)
             }
+            .navigationTitle(Text("Dining Analytics"))
         } else {
             let dollarXYHistory = Binding(
                 get: {
@@ -109,9 +107,6 @@ struct DiningAnalyticsView: View {
                     } else {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 20) {
-                                Text("Dining Analytics")
-                                    .font(.system(size: 32))
-                                    .bold()
                                 // Only show dollar history view if there is data for the graph
                                 if !dollarXYHistory.wrappedValue.isEmpty {
                                     CardView {
