@@ -237,4 +237,23 @@ extension PathAtPennNetworkManager {
             }.compactMap { $0 }
         }.flatMap { $0 }
     }
+    
+    struct PCASyncData {
+        var srcdb: String
+        var crns: [String]
+    }
+    
+    func fetchPCASyncData() async throws -> [PCASyncData] {
+        let reg = try await fetchStudentData().reg
+        
+        return reg.map {
+            let (srcdb, descriptors) = $0
+            
+            let crns = descriptors.compactMap {
+                $0.split(separator: "|").first.map { String($0) }
+            }
+            
+            return PCASyncData(srcdb: srcdb, crns: crns)
+        }
+    }
 }

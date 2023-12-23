@@ -231,6 +231,7 @@
 		8932694028FC75A6003D4BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8932693F28FC75A6003D4BF9 /* Assets.xcassets */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
+		8944C1FE2B36790800D68567 /* CourseScheduleSharingSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8944C1FD2B36790800D68567 /* CourseScheduleSharingSheet.swift */; };
 		89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9328E7935E00CE1638 /* CoursesView.swift */; };
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9B28E799AA00CE1638 /* CoursesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */; };
@@ -640,6 +641,7 @@
 		8932693B28FC75A5003D4BF9 /* LaundryLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryLiveActivity.swift; sourceTree = "<group>"; };
 		8932693F28FC75A6003D4BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8932694128FC75A6003D4BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8944C1FD2B36790800D68567 /* CourseScheduleSharingSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseScheduleSharingSheet.swift; sourceTree = "<group>"; };
 		89459B9328E7935E00CE1638 /* CoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesView.swift; sourceTree = "<group>"; };
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewModel.swift; sourceTree = "<group>"; };
@@ -1660,6 +1662,7 @@
 				89459B9C28E7E8A600CE1638 /* CoursesDayView.swift */,
 				89459B9328E7935E00CE1638 /* CoursesView.swift */,
 				89DCBEC528E791B70029F784 /* CoursesViewController.swift */,
+				8944C1FD2B36790800D68567 /* CourseScheduleSharingSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2471,6 +2474,7 @@
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
 				212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */,
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
+				8944C1FE2B36790800D68567 /* CourseScheduleSharingSheet.swift in Sources */,
 				6CC88D7727B1BF51006896F6 /* DiningAnalyticsView.swift in Sources */,
 				F2770AEA2545E39D001EA1DD /* CourseAlertCreateController.swift in Sources */,
 				6CC88D7427B1BF51006896F6 /* DiningViewModelSwiftUI.swift in Sources */,

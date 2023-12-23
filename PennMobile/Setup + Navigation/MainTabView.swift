@@ -12,6 +12,7 @@ struct MainTabView: View {
     @ObservedObject var mainTabViewCoordinator = MainTabViewCoordinator()
     @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
     @State var currentTab = "Home"
+    @State var isShowingCourseScheduleSharingSheet = false
     
     var body: some View {
         TabView(selection: $currentTab) {
@@ -80,6 +81,20 @@ struct MainTabView: View {
             tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
         }
         .environmentObject(mainTabViewCoordinator)
+        .sheet(isPresented: $isShowingCourseScheduleSharingSheet) {
+            CourseScheduleSharingSheet()
+                .interactiveDismissDisabled()
+        }
+        .onAppear {
+            guard Account.isLoggedIn else {
+                return
+            }
+            
+            let preferences = UserDefaults.standard.getAllPrivacyPreferences()
+            if !preferences.keys.contains(PrivacyOption.courseSchedule.rawValue) {
+                isShowingCourseScheduleSharingSheet = true
+            }
+        }
     }
     
     func shouldFetchTransactions() -> Bool {

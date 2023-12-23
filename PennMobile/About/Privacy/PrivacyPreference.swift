@@ -27,13 +27,14 @@ typealias PrivacyPreferences = [String: Bool]
 
 enum PrivacyOption: String, CaseIterable {
     case anonymizedCourseSchedule
+    case courseSchedule
     case diningBalanceAndHistory
     case collegeHouse
     case academicIdentity
 
     // Options to be actually shown to the user
     static let visibleOptions: [PrivacyOption] = [
-        .anonymizedCourseSchedule, .collegeHouse, .academicIdentity
+        .courseSchedule, .collegeHouse, .academicIdentity
     ]
 
     // Options that required the use of anonymized data
@@ -43,7 +44,8 @@ enum PrivacyOption: String, CaseIterable {
 
     var cellTitle: String {
         switch self {
-        case .anonymizedCourseSchedule: return "Anonymized Course Schedule"
+        case .anonymizedCourseSchedule: return "Course Schedule"
+        case .courseSchedule: return "Course Schedule"
         case .diningBalanceAndHistory: return "Dining Balance & Transaction History"
         case .collegeHouse: return "College House"
         case .academicIdentity: return "Academic Identity"
@@ -53,6 +55,7 @@ enum PrivacyOption: String, CaseIterable {
     var cellFooterDescription: String {
         switch self {
         case .anonymizedCourseSchedule: return "Other Penn Labs products aggregate past schedules to provide course recommendations to students. Your data is anonymized before entering our dataset."
+        case .courseSchedule: return "Periodically upload your course schedule to view your classes on Penn Course Plan."
         case .diningBalanceAndHistory:
             return "Dining balance data is used to provide you with your dining dollar and swipe balance. We track changes over time, which we use to provide monthly summaries and to predict how many you swipes you will have left over.\n\nNOTE: Disabling this setting will disable all dining balance features."
         case .collegeHouse: return "College house information is used to recommend laundry rooms and dining halls. College houses may also post announcements and upcoming events on Penn Mobile."
@@ -71,7 +74,7 @@ enum PrivacyOption: String, CaseIterable {
 
     var requiresAuth: Bool {
         switch self {
-        case .anonymizedCourseSchedule: return true
+        case .courseSchedule: return true
         case .academicIdentity: return true
         case .collegeHouse: return true
         default: return false
@@ -116,6 +119,17 @@ extension PrivacyOption {
             }
 
             switch self {
+            case .courseSchedule:
+                Task {
+                    do {
+                        let syncData = try await PathAtPennNetworkManager.instance.fetchPCASyncData()
+                        _ = try await syncData.asyncMap { data in
+                            try await CourseAlertNetworkManager.instance.updatePathRegistration(srcdb: data.srcdb, crns: data.crns)
+                        }
+                    } catch {
+                        PathAtPennNetworkManager.instance.logger.error("Unable to sync Path courses with PCA: \(error)")
+                    }
+                }
             case .collegeHouse:
                 // Save the current semester and then save previous semesters stored in UserDefaults
                 CampusExpressNetworkManager.instance.updateHousingData { _ in
@@ -147,7 +161,7 @@ extension PrivacyOption {
             }
 
             switch self {
-            case .anonymizedCourseSchedule:
+            case .courseSchedule:
                 UserDefaults.standard.removeObject(forKey: self.didShareKey)
                 UserDBManager.shared.deleteAnonymousCourses(completion)
             case .collegeHouse:
