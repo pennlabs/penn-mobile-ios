@@ -80,7 +80,7 @@ class MoreViewController: GenericTableViewController, ShowsAlert {
         PennLink(title: "Canvas", url: "https://canvas.upenn.edu"),
         PennLink(title: "Path@Penn", url: "https://path.at.upenn.edu"),
         PennLink(title: "PennPortal", url: "https://portal.apps.upenn.edu/penn_portal"),
-        PennLink(title: "Share Your Feedback", url: "https://airtable.com/shrS98E3rj5Nw1wy6")]
+        PennLink(title: "Share Your Feedback", url: "https://pennlabs.org/feedback/ios")]
 
 }
 
