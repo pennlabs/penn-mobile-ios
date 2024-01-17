@@ -72,6 +72,7 @@ extension GSRLocationsController: UITableViewDataSource, UITableViewDelegate {
         gc.group = group
         gc.startingLocation = location
         gc.title = "Tap to book"
+        gc.toastPresentingController = resolveToastPresentingController()
         navigationController?.pushViewController(gc, animated: true)
     }
 }

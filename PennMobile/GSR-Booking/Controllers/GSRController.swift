@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import PennMobileShared
 
-class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
+class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert, LegacyToastPresentingViewController {
 
     // MARK: UI Elements
     fileprivate var tableView: UITableView!
@@ -30,7 +30,18 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
     fileprivate var viewModel: GSRViewModel!
 
     var startingLocation: GSRLocation!
-
+    
+    var toastPresentingController: LegacyToastPresentingViewController?
+    var presentToast: ToastPresentationCallback? {
+        get {
+            toastPresentingController?.presentToast
+        }
+        
+        set {
+            toastPresentingController?.presentToast = newValue
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareViewModel()
@@ -164,7 +175,7 @@ extension GSRController: GSRViewModelDelegate {
                         self.rangeSlider.reload()
                         self.refreshBarButton()
                     case .failure:
-                        self.navigationVC?.addStatusBar(text: .apiError)
+                        self.present(toast: .apiError)
                     }
                 }
             }

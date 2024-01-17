@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 class GSRReservationsController: GenericTableViewController, ShowsAlert, IndicatorEnabled {
 
@@ -47,7 +48,7 @@ class GSRReservationsController: GenericTableViewController, ShowsAlert, Indicat
                     self.tableView.dataSource = self
                     self.tableView.reloadData()
                 } else {
-                    self.navigationVC?.addStatusBar(text: .apiError)
+                    self.present(toast: .apiError)
                 }
             }
         }

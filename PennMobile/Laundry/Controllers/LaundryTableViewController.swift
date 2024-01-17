@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import SwiftUI
 
-class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, ShowsAlert, NotificationRequestable {
+class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, ShowsAlert, NotificationRequestable, LegacyToastPresentingViewController {
+    
+    var presentToast: ToastPresentationCallback?
 
     internal var rooms = [LaundryRoom]()
 
@@ -55,7 +58,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
                 DispatchQueue.main.async {
                     if let isWorking = isWorking, !isWorking {
                         self.tableView.tableHeaderView = self.getHeaderViewForTable()
-                        self.navigationVC?.addPermanentStatusBar(text: .laundryDown)
+                        self.present(toast: .laundryDown)
                     }
                 }
             }
