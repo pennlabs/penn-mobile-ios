@@ -48,11 +48,16 @@ struct DiningAnalyticsView: View {
                             Image("DiningAnalyticsBackground")
                                 .resizable()
                                 .ignoresSafeArea()
-                            Text("No Dining\nPlan Found\n ")
-                                .multilineTextAlignment(.center)
-                                .font(.system(size: 48, weight: .regular))
-                                .foregroundColor(.black)
-                                .opacity(0.6)
+                            VStack(spacing: 24) {
+                                Text("No Dining Plan Found")
+                                    .font(.system(size: 48, weight: .regular))
+                                Text("Dining Analytics may not appear until the day after the semester begins.")
+                            }
+                            .frame(maxWidth: 280)
+                            .padding(.bottom, 64)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.black)
+                            .opacity(0.6)
                         }
                     } else {
                         ScrollView {
