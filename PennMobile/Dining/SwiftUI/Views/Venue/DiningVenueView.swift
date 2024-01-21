@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct DiningVenueView: View {
     enum RefreshState {
@@ -19,6 +20,8 @@ struct DiningVenueView: View {
     @State var refreshState = RefreshState.refreshing(nil)
     @State var widgetsNeedRefresh = true
 
+    @State private var favoritesEditMode: EditMode = .inactive
+
     func triggerRefresh() {
         if case .refreshing(let task) = refreshState {
             task?.cancel()
@@ -28,15 +31,15 @@ struct DiningVenueView: View {
             let venueTask = Task {
                 await diningVM.refreshVenues()
             }
-            
+
             let balanceTask = Task {
                 await diningVM.refreshBalance()
             }
-            
+
             let menuTask = Task {
                 await diningVM.refreshMenus(cache: true)
             }
-            
+
             let analyticsTask = Task {
                 // Only refresh widgets once
                 await diningAnalyticsViewModel.refresh(refreshWidgets: widgetsNeedRefresh)
@@ -44,7 +47,7 @@ struct DiningVenueView: View {
                     widgetsNeedRefresh = false
                 }
             }
-            
+
             await venueTask.value
             await balanceTask.value
             await menuTask.value
@@ -68,15 +71,94 @@ struct DiningVenueView: View {
                 Section(header: DiningViewHeader().environmentObject(diningAnalyticsViewModel), content: {})
             })
 
-            ForEach(diningVM.ordering, id: \.self) { venueType in
-                Section(header: CustomHeader(name: venueType.fullDisplayName).environmentObject(diningAnalyticsViewModel)) {
-                    ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
-                        NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM)) {
+            Section(header: CustomHeader(name: "Favorites")) {
+                ForEach(diningVM.favoriteVenues, id: \.id) { venue in
+                    if favoritesEditMode == .active {
+                        HStack {
+                            Button(action: { diningVM.removeVenuesFromFavorites(indexSet: .init(integer: diningVM.favoriteVenues.firstIndex(where: { $0.id == venue.id })!)) }) {
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundStyle(.red)
+                            }
                             DiningVenueRow(for: venue)
                                 .padding(.vertical, 4)
+                            Spacer()
+                            Image(systemName: "text.justify")
+                                .foregroundStyle(.secondary)
+                            }
+                    } else {
+                        if favoritesEditMode == .active {
+                            DiningVenueRow(for: venue)
+                                .padding(.vertical, 4)
+                        } else {
+                            NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM)) {
+                                DiningVenueRow(for: venue)
+                                    .padding(.vertical, 4)
+                            }
                         }
                     }
                 }
+                .onDelete(perform: diningVM.removeVenuesFromFavorites)
+                .onMove(perform: diningVM.moveFavorite)
+                
+                Button(action: { favoritesEditMode = .active }) {
+                    HStack {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.blue)
+                        VStack(alignment: .leading) {
+                            Text(diningVM.favoriteVenues.isEmpty ? "Add venues to favorites" : "Edit favorites")
+                                .foregroundStyle(.blue)
+                            Text(diningVM.favoriteVenues.isEmpty ? "Tap here, or swipe left on a venue" : "Tap here, or swipe left on a venue")
+                                .foregroundStyle(.secondary)
+                                .font(.caption)
+                        }
+                    }
+                }
+                .listRowSeparator(.hidden)
+                    
+            }
+            .environment(\.editMode, $favoritesEditMode)
+            
+            ForEach(diningVM.ordering, id: \.self) { venueType in
+                Section(header: CustomHeader(name: venueType.fullDisplayName).environmentObject(diningAnalyticsViewModel)) {
+                    ForEach(diningVM.diningVenues[venueType] ?? []) { venue in
+                        if favoritesEditMode == .active {
+                            HStack {
+                                Button(action: { diningVM.addVenueToFavorites(venue: venue) }) {
+                                    Image(systemName: "plus.circle.fill")
+                                        .foregroundStyle(.green)
+                                }
+                                DiningVenueRow(for: venue)
+                                    .padding(.vertical, 4)
+                            }
+                        } else {
+                            NavigationLink(destination: DiningVenueDetailView(for: venue).environmentObject(diningVM)) {
+                                DiningVenueRow(for: venue)
+                                    .padding(.vertical, 4)
+                            }
+                            .swipeActions(edge: .trailing) {
+                                Button(action: { diningVM.addVenueToFavorites(venue: venue) }) {
+                                    Image(systemName: "star.fill")
+                                }
+                                .tint(.blue)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .overlay(alignment: .bottom) {
+            if favoritesEditMode == .active {
+                Button(action: { favoritesEditMode = .inactive }) {
+                    Text("Done")
+                        .bold()
+                        .foregroundStyle(.white)
+                        .padding(.horizontal)
+                }
+                .buttonBorderShape(.capsule)
+                .buttonStyle(.borderedProminent)
+                .tint(.blue)
+                .padding(.bottom)
+                .transition(.move(edge: .bottom))
             }
         }
         .onAppear {

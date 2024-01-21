@@ -7,35 +7,103 @@
 //
 
 import Foundation
+import SwiftyJSON
+import PennMobileShared
 
-class PollsNetworkManager: NSObject, Requestable {
-
+class PollsNetworkManager: NSObject, Requestable, SHA256Hashable {
+    static let id = UIDevice.current.identifierForVendor?.uuidString ?? ""
     static let instance = PollsNetworkManager()
-    let pollsURL = "https://studentlife.pennlabs.org/polls/"
-    let optionsURL = "https://studentlife.pennlabs.org/options/"
-    let votesURL = "https://studentlife.pennlabs.org/votes/"
-
-    func getActivePolls(callback: @escaping ([PollQuestion]?) -> Void) {
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd HH:mm"
-        let ddl = formatter.date(from: "2020/10/20 11:59")
-        let pollOption1 = PollOption(id: 1, optionText: "Wharton Students", votes: 20, votesByYear: nil, votesBySchool: nil)
-        let pollOption2 = PollOption(id: 2, optionText: "M&T Students", votes: 20, votesByYear: nil, votesBySchool: nil)
-        let pollOption3 = PollOption(id: 3, optionText: "CIS Majors who are trying to transfer into Wharton", votes: 40, votesByYear: nil, votesBySchool: nil)
-        let pollOption4 = PollOption(id: 4, optionText: "Armaan going to a Goldman info session!", votes: 300, votesByYear: nil, votesBySchool: nil)
-
-        let pollQuestion = PollQuestion(title: "Who is more of a snake?", source: "The Daily Pennsylvanian", ddl: ddl!, options: [pollOption1, pollOption2, pollOption3, pollOption4], totalVoteCount: 380, optionChosenId: nil)
-
-        callback([pollQuestion])
+    let pollURL = URL(string: "https://pennmobile.org/api/portal/polls/browse/")
+    let votesURL = URL(string: "https://pennmobile.org/api/portal/votes/")
+    let recentsURL = URL(string: "https://pennmobile.org/api/portal/votes/recent/")
+    let allVotesURL = URL(string: "https://pennmobile.org/api/portal/votes/all/")
+    
+    func getPollHistory() async -> Result<[PollPost], NetworkingError> {
+        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+            var request = URLRequest(url: self.allVotesURL!, accessToken: token)
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: PollsNetworkManager.id, encoding: .base64)])
+            request.httpBody = jsonData
+            request.httpMethod = "POST"
+            
+            guard let (data, _) = try? await URLSession.shared.data(for: request) else {
+                return .failure(.serverError)
+            }
+            
+            if let polls = try? JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([PollPost].self, from: data) {
+                return .success(polls)
+            } else {
+                return .failure(.parsingError)
+            }
+        } else {
+            return .failure(.serverError)
+        }
     }
 
-    /// TODO: Implement
-    func getArchivedPolls(callback: @escaping ([PollQuestion]?) -> Void) {
-        return
+    func getActivePolls() async -> Result<[PollQuestion], NetworkingError> {
+        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+            var request = URLRequest(url: self.pollURL!, accessToken: token)
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: PollsNetworkManager.id, encoding: .base64)])
+            request.httpBody = jsonData
+            request.httpMethod = "POST"
+            
+            guard let (data, _) = try? await URLSession.shared.data(for: request) else {
+                return .failure(.serverError)
+            }
+            
+            if let polls = try? JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([PollQuestion].self, from: data) {
+                return .success(polls)
+            } else {
+                return .failure(.parsingError)
+            }
+        } else {
+            return .failure(.serverError)
+        }
     }
 
-    func answerPoll(withId id: String, response: Int, callback: @escaping ( _ success: Bool, _ errorMsg: String?) -> Void) {
-        return
+    func getArchivedPolls() async -> Result<[PollQuestion], NetworkingError> {
+        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+            var request = URLRequest(url: self.recentsURL!, accessToken: token)
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: PollsNetworkManager.id, encoding: .base64)])
+            request.httpBody = jsonData
+            request.httpMethod = "POST"
+            
+            guard let (data, _) = try? await URLSession.shared.data(for: request) else {
+                return .failure(.serverError)
+            }
+            
+            if let polls = try? JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([PollQuestion].self, from: data) {
+                return .success(polls)
+            } else {
+                return .failure(.parsingError)
+            }
+        } else {
+            return .failure(.serverError)
+        }
+    }
+
+    func answerPoll(withId id: String, response: Int) async -> Bool {
+        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+            var request = URLRequest(url: self.votesURL!, accessToken: token)
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: id, encoding: .base64), "poll_options": [response]] as [String: Any])
+            request.httpBody = jsonData
+            request.httpMethod = "POST"
+
+            guard let (data, response) = try? await URLSession.shared.data(for: request) else {
+                return false
+            }
+
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 201 {
+                print(JSON(data))
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
     }
 }

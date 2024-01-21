@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import SwiftUI
+import PennMobileShared
 
 final class HomePollsCell: UITableViewCell, HomeCellConformable {
     var delegate: ModularTableViewCellDelegate!
@@ -16,41 +18,46 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
     var item: ModularTableViewItem! {
         didSet {
             guard let item = item as? HomePollsCellItem else { return }
-            setupCell(with: item)
+            self.isUserInteractionEnabled = true
+            responsesTableView.isUserInteractionEnabled = true
+            self.pollQuestion = item.pollQuestion
         }
     }
 
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomePollsCellItem else { return 0.0 }
-        let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
+//        let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
+        var totalHeight: CGFloat = 63 + HomePollsCellFooter.height + 28 + 8
 
-        var runningHeight = CGFloat(0)
-
-        for i in 1...item.pollQuestion.options.count {
-            let label = UILabel(frame: CGRect(x: 0, y: 0, width: maxWidth, height: CGFloat.greatestFiniteMagnitude))
-            label.lineBreakMode = NSLineBreakMode.byWordWrapping
-            label.text = item.pollQuestion.options[i-1].optionText
-            label.font = .primaryInformationFont
-            label.textColor = .labelPrimary
-            label.textAlignment = .left
-            label.numberOfLines = 0
-            label.sizeToFit()
-            runningHeight += label.frame.height + Padding.pad * 2
+        for i in 0..<item.pollQuestion.options.count {
+            totalHeight += height(forOption: item.pollQuestion.options[i])
         }
 
-        return runningHeight + HomeCellHeader.height + HomePollsCellFooter.height + Padding.pad * 2.5
+        return CGFloat(totalHeight)
+    }
+    
+    static func getPollHeight(for pollQuestion: PollQuestion) -> CGFloat {
+        var totalHeight: CGFloat = 63 + HomePollsCellFooter.height + 28 + 8
+
+        for i in 0..<pollQuestion.options.count {
+            totalHeight += HomePollsCell.height(forOption: pollQuestion.options[i])
+        }
+
+        return totalHeight + HomeViewController.cellSpacing
     }
 
-    var pollQuestion: PollQuestion!
-    var answer: Int?
-
+    var pollQuestion: PollQuestion! {
+        didSet {
+            setupCell(with: pollQuestion)
+            responsesTableView.reloadData()
+        }
+    }
     // MARK: - UI Elements
     var cardView: UIView! = UIView()
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomePollsCellHeader = HomePollsCellHeader()
     fileprivate var footer: HomePollsCellFooter = HomePollsCellFooter()
     fileprivate var responsesTableView: UITableView!
-    fileprivate var voteCountLabel: UILabel!
     fileprivate var ddlLabel: UILabel!
 
     // MARK: - Init
@@ -67,14 +74,13 @@ final class HomePollsCell: UITableViewCell, HomeCellConformable {
 
 // MARK: - Setup UI Elements
 extension HomePollsCell {
-    fileprivate func setupCell(with item: HomePollsCellItem) {
-        pollQuestion = item.pollQuestion
-        responsesTableView.reloadData()
-        header.secondaryTitleLabel.text = "Poll FROM \(pollQuestion.source)"
-        header.primaryTitleLabel.text = item.pollQuestion.title
-        voteCountLabel.text = "\(pollQuestion.totalVoteCount) Votes"
-        setupDdlLabel(with: pollQuestion.ddl)
+    fileprivate func setupCell(with pollQuestion: PollQuestion) {
+        header.secondaryTitleLabel.text = "Poll FROM \(pollQuestion.clubCode)"
+        header.primaryTitleLabel.text = pollQuestion.question
+        header.voteCountLabel.text = "\(pollQuestion.totalVoteCount) Vote\(pollQuestion.totalVoteCount != 1 ? "s" : "")"
+        setupDdlLabel(with: pollQuestion.expireDate)
     }
+
     fileprivate func setupDdlLabel(with ddl: Date) {
         let diffComponents = Calendar.current.dateComponents([.day, .hour, .minute], from: Date(), to: ddl)
         let d = diffComponents.day
@@ -101,7 +107,6 @@ extension HomePollsCell {
         prepareSafeArea()
         prepareHeader()
         prepareFooter()
-        prepareVoteCountLabel()
         prepareDdlLabel()
         prepareTableView()
     }
@@ -122,16 +127,6 @@ extension HomePollsCell {
         footer.prepare()
     }
 
-    // MARK: Vote Count Label
-    fileprivate func prepareVoteCountLabel() {
-        voteCountLabel = getVoteCountLabel()
-        cardView.addSubview(voteCountLabel)
-        voteCountLabel.snp.makeConstraints { (make) in
-            make.leading.equalTo(header.primaryTitleLabel).offset(3)
-            make.top.equalTo(header.primaryTitleLabel.snp.bottom).offset(3)
-        }
-    }
-
     // MARK: DDL Label
     fileprivate func prepareDdlLabel() {
         ddlLabel = getDdlLabel()
@@ -149,67 +144,69 @@ extension HomePollsCell {
     // MARK: TableView
     fileprivate func prepareTableView() {
         responsesTableView = getTableView()
+        responsesTableView.backgroundColor = .uiCardBackground
         responsesTableView.rowHeight = UITableView.automaticDimension
         cardView.addSubview(responsesTableView)
         responsesTableView.snp.makeConstraints { (make) in
             make.leading.equalTo(cardView)
-            make.top.equalTo(header.snp.bottom)
+            make.top.equalTo(header.snp.bottom).offset(5)
             make.trailing.equalTo(cardView)
-            make.bottom.equalTo(footer.snp.top).offset(-pad)
+            make.bottom.equalTo(footer.snp.top).offset(-5)
         }
     }
 }
 
 extension HomePollsCell: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? PollOptionCell {
-            let answer = pollQuestion.options[indexPath.row]
-            cell.question = answer.optionText
-            cell.response = answer.votes
-            cell.totalResponses = pollQuestion.totalVoteCount
-            cell.answered = (pollQuestion.optionChosenId != nil)
-            cell.chosen = pollQuestion.optionChosenId == answer.id
-
-        }
-    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Deselect and prohibit user from selecting another cell
         tableView.deselectRow(at: indexPath, animated: false)
         tableView.isUserInteractionEnabled = false
-
-        // Change selected cell to chosen
-        let chosenCell = (tableView.cellForRow(at: indexPath) as! PollOptionCell)
-        chosenCell.response += 1
-        chosenCell.chosen = true
-
-        // Update cells to reflect question answered
-        for cell in tableView.visibleCells as! [PollOptionCell] {
-            cell.answered = true
-            cell.totalResponses += 1
+        let pollOptionId = self.pollQuestion.options[indexPath.row].id
+        Task {
+            let success = await PollsNetworkManager.instance.answerPoll(withId: PollsNetworkManager.id, response: pollOptionId)
+            if success {
+                DispatchQueue.main.async {
+                    self.pollQuestion.options[indexPath.row].voteCount += 1
+                    // Change selected cell to chosen
+                    let chosenCell = (tableView.cellForRow(at: indexPath) as! PollOptionCell)
+                    chosenCell.pollOption.voteCount += 1
+                    chosenCell.chosen = true
+                    
+                    // Update cells to reflect question answered
+                    for cell in tableView.visibleCells as! [PollOptionCell] {
+                        cell.totalResponses += 1
+                        cell.answered = true
+                    }
+                    
+                    // Update model
+                    self.pollQuestion.optionChosenId = self.pollQuestion.options[indexPath.row].id
+                }
+                
+                // TODO: Send Network Request to reflect changes
+            } else {
+                print("not changing chosen")
+                // TODO: Show error
+            }
         }
-
-        // Update model
-        pollQuestion.optionChosenId = pollQuestion.options[indexPath.row].id
-
-        // TODO: Update UserDefaults to reflect changees
-
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        // return PollOptionCell.cellHeight
-
+    static func height(forOption option: PollOption) -> CGFloat {
         let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: maxWidth, height: CGFloat.greatestFiniteMagnitude))
 
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.text = pollQuestion.options[indexPath.row].optionText
+        label.text = option.choice
         label.font = .primaryInformationFont
         label.textColor = .labelPrimary
         label.textAlignment = .left
         label.numberOfLines = 0
         label.sizeToFit()
-        return label.frame.height + Padding.pad * 2
+        return label.frame.height + Padding.pad * 1 + 22
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        HomePollsCell.height(forOption: pollQuestion.options[indexPath.row])
     }
 }
 
@@ -220,6 +217,13 @@ extension HomePollsCell: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PollOptionCell.identifier, for: indexPath) as! PollOptionCell
+        let pollOption = pollQuestion.options[indexPath.row]
+
+        cell.totalResponses = pollQuestion.totalVoteCount
+        cell.answered = (pollQuestion.optionChosenId != nil)
+        cell.chosen = pollQuestion.optionChosenId == pollOption.id
+
+        cell.pollOption = pollOption
 
         return cell
     }
@@ -228,7 +232,6 @@ extension HomePollsCell: UITableViewDataSource {
 extension HomePollsCell {
     fileprivate func getTableView() -> UITableView {
         let tableView = UITableView()
-        tableView.backgroundColor = .clear
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none

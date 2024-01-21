@@ -8,11 +8,11 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
-      - name: Select Xcode 14.1
+      - name: Select Xcode 15
         # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
-        run: sudo xcode-select -s '/Applications/Xcode_14.1.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_15.0.app/Contents/Developer'
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Create Config File
@@ -54,6 +54,9 @@ jobs:
           bundler-cache: true
       - name: Download pods
         run: bundle exec pod install
+      - name: Fix pod script
+        # https://stackoverflow.com/questions/63533819/rsync-error-some-files-could-not-be-transferred-code-23-command-phasescriptex
+        run: find Pods/Target\ Support\ Files/Pods-PennMobile -name '*-frameworks.sh' -exec sed -i '' 's|source="\$(readlink "\${source}")"|source="\$(readlink -f "\${source}")"|g' {} +
       - name: Linter
         run: Pods/SwiftLint/swiftlint PennMobile/*
       - name: Install the Apple certificate and provisioning profile
@@ -71,9 +74,9 @@ jobs:
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
 
           # import certificate and provisioning profile from secrets
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_WIDGET_BASE64" | base64 --decode --output $PP_WIDGET_PATH
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode > "$PP_PATH"
+          echo -n "$BUILD_PROVISION_PROFILE_WIDGET_BASE64" | base64 --decode > "$PP_WIDGET_PATH"
 
           # create temporary keychain
           security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH

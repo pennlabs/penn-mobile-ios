@@ -14,5 +14,10 @@ struct LabsWidgetBundle: WidgetBundle {
     var body: some Widget {
         DiningAnalyticsHomeWidget()
         CoursesDayWidget()
+        DiningHoursWidget()
+        FitnessHomeWidget()
+        if #available(iOS 16.1, *) {
+            LaundryLiveActivity()
+        }
     }
 }

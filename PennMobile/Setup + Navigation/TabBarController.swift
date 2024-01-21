@@ -21,12 +21,11 @@ final class TabBarController: UITabBarController {
         if #available(iOS 15.0, *) {
             tabBar.scrollEdgeAppearance = appearance
         }
-
-        loadTabs()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadTabs()
     }
 
     func loadTabs() {
@@ -66,6 +65,7 @@ extension HomeViewController: TabBarShowable {
         return UITabBarItem(title: "Fling", image: normalImage, selectedImage: selectedImage)
     }
 }*/
+
 extension DiningViewControllerSwiftUI: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Dining_Grey")
@@ -106,11 +106,51 @@ extension LaundryTableViewController: TabBarShowable {
     }
 }
 
+extension ContactsTableViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Contacts_Grey")
+        let selectedImage = UIImage(named: "Contacts_Blue")
+        return UITabBarItem(title: "Contacts", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension PennEventsTableViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Events_Grey")
+        let selectedImage = UIImage(named: "Events_Blue")
+        return UITabBarItem(title: "Events", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension CoursesViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Calendar_Grey")
+        let selectedImage = UIImage(named: "Calendar_Blue")
+        return UITabBarItem(title: "Schedule", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension NewsViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "News_Grey")
+        let selectedImage = UIImage(named: "News_Blue")
+        return UITabBarItem(title: "News", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
 extension FitnessViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Fitness_Grey")
         let selectedImage = UIImage(named: "Fitness_Blue")
         return UITabBarItem(title: "Fitness", image: normalImage, selectedImage: selectedImage)
+    }
+}
+
+extension PollsViewController: TabBarShowable {
+    func getTabBarItem() -> UITabBarItem {
+        let normalImage = UIImage(named: "Polls_Grey")
+        let selectedImage = UIImage(named: "Polls_Blue")
+        return UITabBarItem(title: "Poll History", image: normalImage, selectedImage: selectedImage)
     }
 }
 

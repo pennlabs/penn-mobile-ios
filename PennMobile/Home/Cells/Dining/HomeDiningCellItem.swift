@@ -6,8 +6,10 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 
+import Combine
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 final class HomeDiningCellItem: HomeCellItem {
 
@@ -31,16 +33,7 @@ final class HomeDiningCellItem: HomeCellItem {
     }
 
     static func getHomeCellItem(_ completion: @escaping((_ items: [HomeCellItem]) -> Void)) {
-        UserDBManager.shared.fetchDiningPreferences { result in
-            if let venues = try? result.get() {
-                if venues.count == 0 {
-                    completion([HomeDiningCellItem(for: DiningAPI.instance.getVenues(with: DiningVenue.defaultVenueIds))])
-                } else {
-                    completion([HomeDiningCellItem(for: venues)])
-                }
-            } else {
-                completion([])
-            }
-        }
+        let (_, favorites) = DiningAPI.instance.getSectionedVenuesAndFavorites()
+        completion([HomeDiningCellItem(for: favorites)])
     }
 }

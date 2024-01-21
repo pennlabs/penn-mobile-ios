@@ -15,6 +15,16 @@ class CoursesViewController: GenericSwiftUIViewController<AnyView> {
     }
 
     override var tabTitle: String? {
-        "Course Schedule"
+        "Schedule"
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = "Schedule"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.title = "Schedule"
     }
 }

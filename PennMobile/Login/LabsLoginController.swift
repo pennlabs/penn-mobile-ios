@@ -13,6 +13,7 @@ import SwiftyJSON
 import CryptoKit
 #endif
 import CommonCrypto
+import PennMobileShared
 
 enum SHA256Encoding {
     case base64
@@ -203,6 +204,7 @@ extension LabsLoginController {
                         }
                         self.getDiningTransactions()
                         self.getAndSaveLaundryPreferences()
+                        self.getAndSaveFitnessPreferences()
                         self.getPacCode()
                     }
                 }
@@ -226,6 +228,14 @@ extension LabsLoginController {
         UserDBManager.shared.getLaundryPreferences { rooms in
             if let rooms = rooms {
                 UserDefaults.standard.setLaundryPreferences(to: rooms)
+            }
+        }
+    }
+    
+    fileprivate func getAndSaveFitnessPreferences() {
+        UserDBManager.shared.getFitnessPreferences { rooms in
+            if let rooms = rooms {
+                UserDefaults.standard.setFitnessPreferences(to: rooms)
             }
         }
     }

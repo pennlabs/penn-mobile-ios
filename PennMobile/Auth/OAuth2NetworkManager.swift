@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 struct AccessToken: Codable {
     let value: String
@@ -34,16 +35,19 @@ class OAuth2NetworkManager: NSObject {
     private var clientID = InfoPlistEnvironment.labsOauthClientId
 
     private var currentAccessToken: AccessToken?
+
+    static let authQueue = DispatchQueue(label: "org.pennlabs.PennMobile.authqueue")
 }
 
 // MARK: - Initiate Authentication
 extension OAuth2NetworkManager {
+    static let tokenURL = URL(string: "https://pennmobile.org/api/accounts/token/")!
+
     /// Input: One-time code from login
     /// Output: Temporary access token
     /// Saves refresh token in keychain for future use
     func initiateAuthentication(code: String, codeVerifier: String, _ callback: @escaping (_ accessToken: AccessToken?) -> Void) {
-        let url = URL(string: "https://platform.pennlabs.org/accounts/token/")!
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: Self.tokenURL)
         request.httpMethod = "POST"
 
         let params = [
@@ -58,18 +62,20 @@ extension OAuth2NetworkManager {
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
-                let json = JSON(data)
-                let expiresIn = json["expires_in"].intValue
-                let expiration = Date().add(seconds: expiresIn)
-                let accessToken = AccessToken(value: json["access_token"].stringValue, expiration: expiration)
-                let refreshToken = json["refresh_token"].stringValue
-                self.saveRefreshToken(token: refreshToken)
-                self.currentAccessToken = accessToken
-                callback(accessToken)
-                return
+            OAuth2NetworkManager.authQueue.async {
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200, let data = data {
+                    let json = JSON(data)
+                    let expiresIn = json["expires_in"].intValue
+                    let expiration = Date().add(seconds: expiresIn)
+                    let accessToken = AccessToken(value: json["access_token"].stringValue, expiration: expiration)
+                    let refreshToken = json["refresh_token"].stringValue
+                    self.saveRefreshToken(token: refreshToken)
+                    self.currentAccessToken = accessToken
+                    callback(accessToken)
+                    return
+                }
+                callback(nil)
             }
-            callback(nil)
         }
         task.resume()
     }
@@ -80,16 +86,28 @@ extension OAuth2NetworkManager {
     func getAccessToken(_ callback: @escaping (_ accessToken: AccessToken?) -> Void) {
         // dev token that expires in a year
         // use until auth is back up
-        if let accessToken = self.currentAccessToken, Date() < accessToken.expiration {
-            callback(accessToken)
-        } else {
-            self.currentAccessToken = nil
-            self.refreshAccessToken(callback)
+        OAuth2NetworkManager.authQueue.async {
+            if let accessToken = self.currentAccessToken, Date() < accessToken.expiration {
+                callback(accessToken)
+            } else {
+                self.currentAccessToken = nil
+                self.refreshAccessToken(callback)
+            }
+        }
+    }
+    
+    func getAccessTokenAsync() async -> AccessToken? {
+        return await withCheckedContinuation { continuation in
+            getAccessToken { accessToken in
+                continuation.resume(returning: accessToken)
+            }
         }
     }
 
     func saveAccessToken(accessToken: AccessToken) {
-        self.currentAccessToken = accessToken
+        OAuth2NetworkManager.authQueue.sync {
+            self.currentAccessToken = accessToken
+        }
     }
 
     fileprivate func refreshAccessToken(_ callback: @escaping (_ accessToken: AccessToken?) -> Void ) {
@@ -98,8 +116,7 @@ extension OAuth2NetworkManager {
             return
         }
 
-        let url = URL(string: "https://platform.pennlabs.org/accounts/token/")!
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: Self.tokenURL)
         request.httpMethod = "POST"
 
         let params = [
@@ -112,7 +129,7 @@ extension OAuth2NetworkManager {
         request.httpBody = String.getPostString(params: params).data(using: String.Encoding.utf8)
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
-            DispatchQueue.global().async {
+            OAuth2NetworkManager.authQueue.async {
                 if let httpResponse = response as? HTTPURLResponse, let data = data {
                     if httpResponse.statusCode == 200 {
                         let json = JSON(data)
@@ -126,7 +143,7 @@ extension OAuth2NetworkManager {
                         return
                     } else if httpResponse.statusCode == 400 {
                         let json = JSON(data)
-                        if json["error"].stringValue == "invalid_grant" {
+                        if json["detail"].stringValue == "Invalid parameters" {
                             // This refresh token is invalid.
                             if let accessToken = self.currentAccessToken, refreshToken != self.getRefreshToken() {
                                 // Access token has been refreshed in another network call while we were waiting and current refresh token is not the same one we used
@@ -213,7 +230,9 @@ extension OAuth2NetworkManager {
     }
 
     func clearCurrentAccessToken() {
-        currentAccessToken = nil
+        OAuth2NetworkManager.authQueue.sync {
+            currentAccessToken = nil
+        }
     }
 
     func hasRefreshToken() -> Bool {

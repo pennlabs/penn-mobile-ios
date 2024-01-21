@@ -16,7 +16,8 @@ class NotificationsViewControllerSwiftUI: GenericViewController {
         let hostingView = UIHostingController(rootView: NotificationsView())
 
         view.backgroundColor = .uiBackground
-        self.screenName = "Notifications SwiftUI"
+        self.screenName = "Notifications"
+        self.title = "Notifications"
 
         addChild(hostingView)
         view.addSubview(hostingView.view)
@@ -31,6 +32,6 @@ class NotificationsViewControllerSwiftUI: GenericViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.title = "Notifications"
+        self.tabBarController?.title = "Notificaions"
     }
 }

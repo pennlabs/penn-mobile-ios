@@ -12,6 +12,7 @@ import Firebase
 import StoreKit
 import SwiftUI
 import WidgetKit
+import PennMobileShared
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -113,11 +114,6 @@ extension AppDelegate {
     }
 }
 
-// Helper function inserted by Swift 4.2 migrator.
-private func convertFromUIBackgroundTaskIdentifier(_ input: UIBackgroundTaskIdentifier) -> Int {
-	return input.rawValue
-}
-
 // Migration of data to group container
 func migrateDataToGroupContainer() {
     if Storage.migrate(fileName: Course.cacheFileName, of: [Course].self, from: .caches, to: .groupCaches) {
@@ -127,12 +123,23 @@ func migrateDataToGroupContainer() {
         }
     }
 
+    if Storage.migrate(fileName: DiningVenue.directory, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
+        print("Migrated course data.")
+    }
+
     if Storage.migrate(fileName: DiningAnalyticsViewModel.dollarHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) || Storage.migrate(fileName: DiningAnalyticsViewModel.swipeHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) {
         print("Migrated dining analytics data.")
         WidgetKind.diningAnalyticsWidgets.forEach {
             WidgetCenter.shared.reloadTimelines(ofKind: $0)
         }
     }
+
+    if Storage.migrate(fileName: DiningAPI.favoritesCacheFileName, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
+       print("Migrated dining favorites data.")
+        WidgetKind.diningHoursWidgets.forEach {
+            WidgetCenter.shared.reloadTimelines(ofKind: $0)
+        }
+   }
 
     // Migrate dining balances if a dining balance file doesn't already exist.
     if let diningBalance = (UserDefaults.standard as SwiftCompilerSilencing).getDiningBalance() {

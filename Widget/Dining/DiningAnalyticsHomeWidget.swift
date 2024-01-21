@@ -8,6 +8,7 @@
 
 import WidgetKit
 import SwiftUI
+import PennMobileShared
 
 extension ConfigureDiningAnalyticsHomeWidgetIntent: ConfigurationRepresenting {
     struct Configuration {
@@ -67,16 +68,24 @@ extension DiningAnalyticsMeterType {
 }
 
 extension DiningAnalyticsAuxiliaryStatistic {
-    func getMetric<Balance: AdditiveArithmetic & Comparable>(in balance: BalanceDetails<Balance>) -> Balance {
+    enum MetricResult<Balance: AdditiveArithmetic & Comparable> {
+        case amount(Balance)
+        case date(Date)
+    }
+    
+    func getMetric<Balance: AdditiveArithmetic & Comparable>(in balance: BalanceDetails<Balance>) -> MetricResult<Balance> {
         switch self {
         case .unknown, .projectedEnd:
-            return balance.projectedEnd
+            if let date = balance.projectedEndDate {
+                return .date(date)
+            }
+            return .amount(balance.projectedEnd)
         case .remaining:
-            return balance.remaining
+            return .amount(balance.remaining)
         case .used:
-            return balance.used
+            return .amount(balance.used)
         case .total:
-            return balance.total
+            return .amount(balance.total)
         }
     }
 
@@ -91,6 +100,33 @@ extension DiningAnalyticsAuxiliaryStatistic {
         case .total:
             return "Total"
         }
+    }
+}
+
+private func formatSwipes(statistic: DiningAnalyticsAuxiliaryStatistic, in balance: BalanceDetails<Int>, includeUnits: Bool = false) -> LocalizedStringKey {
+    switch statistic.getMetric(in: balance) {
+    case .amount(let amount):
+        if includeUnits {
+            // Auto-inflection is genuinely an amazing feature
+            return "^[\(amount) swipe](inflect: true)"
+        } else {
+            return "\(amount)"
+        }
+    case .date(let date):
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("MMM d")
+        return "\(date, formatter: formatter)"
+    }
+}
+
+private func formatDollars(statistic: DiningAnalyticsAuxiliaryStatistic, in balance: BalanceDetails<Double>) -> LocalizedStringKey {
+    switch statistic.getMetric(in: balance) {
+    case .amount(let amount):
+        return "\(amount, format: .currency(code: "USD"))"
+    case .date(let date):
+        let formatter = DateFormatter()
+        formatter.setLocalizedDateFormatFromTemplate("MMM d")
+        return "\(date, formatter: formatter)"
     }
 }
 
@@ -140,7 +176,7 @@ private struct DiningAnalyticsSmall: View {
                                 (
                                     Text("\(Int(metric))").fontWeight(.bold) +
                                     Text(".\(String(format: "%02d", Int(metric * 100) % 100))").fontWeight(.medium).font(.caption2)
-                                ).lineLimit(1).privacySensitive()
+                                ).privacySensitive()
                             } else {
                                 Text("\(Int(metric))").fontWeight(.bold).multilineTextAlignment(.center).privacySensitive()
                             }
@@ -153,9 +189,10 @@ private struct DiningAnalyticsSmall: View {
             .padding(.bottom, 4)
             Text(configuration.auxiliaryStatistic.label).font(.caption2).foregroundColor(.secondary).unredacted()
             HStack(spacing: 5) {
-                let swipes = configuration.auxiliaryStatistic.getMetric(in: swipes)
-                let dollars = configuration.auxiliaryStatistic.getMetric(in: dollars)
-                Text("\(swipes) \(swipes == 1 || swipes == -1 ? "swipe" : "swipes"), \(dollars, format: .currency(code: "USD"))").fontWeight(.medium).font(.caption).privacySensitive()
+                // I hate this but LocalizedStringResource isn't available until iOS 16 🙃
+                let swipes = formatSwipes(statistic: configuration.auxiliaryStatistic, in: swipes, includeUnits: true)
+                let dollars = formatDollars(statistic: configuration.auxiliaryStatistic, in: dollars)
+                (Text(swipes) + Text(", ") + Text(dollars)).fontWeight(.medium).font(.caption).privacySensitive()
             }.multilineTextAlignment(.center)
         }
     }
@@ -187,7 +224,7 @@ private struct DiningAnalyticsSummary: View {
                                 (
                                     Text("\(Int(metric))").fontWeight(.bold).font(.title2) +
                                     Text(".\(String(format: "%02d", Int(metric * 100) % 100))").fontWeight(.medium)
-                                ).lineLimit(1).privacySensitive()
+                                ).privacySensitive()
                             } else {
                                 Text("\(Int(metric))").fontWeight(.bold).font(.title2).multilineTextAlignment(.center).privacySensitive()
                             }
@@ -198,15 +235,15 @@ private struct DiningAnalyticsSummary: View {
             }.layoutPriority(2)
             Spacer(minLength: 16)
             VStack(alignment: .leading, spacing: 10) {
-                Text(configuration.auxiliaryStatistic.label).fontWeight(.medium).foregroundColor(.secondary).font(.caption)
+                Text(configuration.auxiliaryStatistic.label).fontWeight(.medium).foregroundColor(.secondary).font(.caption).lineLimit(2)
                 VStack(alignment: .leading) {
                     Text("Swipes").fontWeight(.medium).font(.caption)
-                    Text("\(configuration.auxiliaryStatistic.getMetric(in: swipes))").fontWeight(.bold)
+                    Text(formatSwipes(statistic: configuration.auxiliaryStatistic, in: swipes, includeUnits: false)).fontWeight(.bold).fixedSize()
                 }
 
                 VStack(alignment: .leading) {
                     Text("Dollars").fontWeight(.medium).font(.caption)
-                    Text("\(configuration.auxiliaryStatistic.getMetric(in: dollars), format: .currency(code: "USD"))").fontWeight(.bold)
+                    Text(formatDollars(statistic: configuration.auxiliaryStatistic, in: dollars)).fontWeight(.bold).fixedSize()
                 }
             }
         }
@@ -225,17 +262,18 @@ struct DiningAnalyticsHomeWidgetView: View {
                 case .systemSmall:
                     DiningAnalyticsSmall(swipes: swipes, dollars: dollars, configuration: entry.configuration)
                 case .systemMedium:
-                    DiningAnalyticsSummary(swipes: swipes, dollars: dollars, configuration: entry.configuration)
-                        .padding(.horizontal, 20)
+                    DiningAnalyticsSummary(swipes: swipes, dollars: dollars, configuration: entry.configuration).widgetPadding(.horizontal, 20)
                 default:
                     Text("Unsupported")
                 }
             } else {
-                (Text("Go to ") + Text("Dining › Analytics").fontWeight(.bold) + Text(" to use this widget.")).multilineTextAlignment(.center).padding()
+                (Text("Go to ") + Text("Dining › Analytics").fontWeight(.bold) + Text(" to use this widget.")).multilineTextAlignment(.center)
+                    .widgetPadding()
             }
         }
+        .lineLimit(1)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(entry.configuration.background)
+        .widgetBackground(entry.configuration.background)
     }
 }
 
