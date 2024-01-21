@@ -9,10 +9,6 @@ target 'PennMobile' do
 
     # Pods for PennMobile
 
-pod 'SCLAlertView'
-pod 'ScrollableGraphView'
-
-pod 'XLPagerTabStrip', '~> 9.0' # Only used for GSR, should be deleted
 pod 'SwiftLint'
 
 end

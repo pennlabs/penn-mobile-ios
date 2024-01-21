@@ -26,7 +26,9 @@ class SelectionCell: UICollectionViewCell, RoomSelectionViewDelegate {
 
         navigationBar = NavigationBar(frame: .zero)
         navigationBar.customHeight = 44 + (window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0)
+        #if !os(visionOS)
         navigationBar.frame.size = navigationBar.sizeThatFits(CGSize(width: UIScreen.main.bounds.size.width, height: navigationBar.customHeight))
+        #endif
 
         selectionView = RoomSelectionView(frame: .zero)
         selectionView?.delegate = self
@@ -80,7 +82,11 @@ class NavigationBar: UINavigationBar {
     var customHeight: CGFloat = 64
 
     override func sizeThatFits(_ size: CGSize) -> CGSize {
+        #if os(visionOS)
+        return size
+        #else
         return CGSize(width: UIScreen.main.bounds.width, height: customHeight)
+        #endif
     }
 
     override func layoutSubviews() {

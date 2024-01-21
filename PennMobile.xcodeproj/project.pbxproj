@@ -41,7 +41,6 @@
 		21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640FD6204A5309008DB6E8 /* LaundryMachineCellTappable.swift */; };
 		216640641EBADADA00746B8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640631EBADADA00746B8E /* AppDelegate.swift */; };
 		216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640C11EBADC9300746B8E /* GenericControllers.swift */; };
-		216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640CA1EBADCA400746B8E /* FirebaseAnalyticsManager.swift */; };
 		216640F31EBB86A300746B8E /* SupportItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 216640F01EBB86A300746B8E /* SupportItem.m */; };
 		216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 216640FD1EBBA5A300746B8E /* NewsViewController.swift */; };
 		21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21737FD623A1DEE7002DCD07 /* LabsLoginController.swift */; };
@@ -111,7 +110,7 @@
 		42CC49D22AAE3904008C41EE /* PollsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49D12AAE3904008C41EE /* PollsView.swift */; };
 		42D9237329E0C9AF00E9E18E /* FitnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */; };
 		42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237429E0CCFB00E9E18E /* FitnessView.swift */; };
-		56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */; };
+		56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */; platformFilter = ios; };
 		6C11C08026F842CF00407C04 /* HomeUpdateCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C11C07F26F842CF00407C04 /* HomeUpdateCellItem.swift */; };
 		6C1991BB27B5C73800BBB402 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1991BA27B5C73800BBB402 /* Environment.swift */; };
 		6C23AF9526E57903002F60F0 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -229,7 +228,7 @@
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932693A28FC75A5003D4BF9 /* WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932693928FC75A5003D4BF9 /* WidgetBundle.swift */; };
 		8932694028FC75A6003D4BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8932693F28FC75A6003D4BF9 /* Assets.xcassets */; };
-		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
 		89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9328E7935E00CE1638 /* CoursesView.swift */; };
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
@@ -240,7 +239,6 @@
 		895D98B02ACF312300F8C5DF /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D98AF2ACF312300F8C5DF /* MoreView.swift */; };
 		897F0A932B08256C0060583A /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897F0A922B08256C0060583A /* Toasts.swift */; };
 		89913EAD2AE44FCE00AE30C9 /* CalendarCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */; };
-		898DB4912B2E7AA20027CC8F /* PennForms in Frameworks */ = {isa = PBXBuildFile; productRef = 898DB4902B2E7AA20027CC8F /* PennForms */; };
 		89B454DF28E1161B00BC918B /* PathAtPennNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */; };
 		89CA5FBF2AD315E400B7D3EF /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */; };
 		89CA728D291721D200CF72FE /* KeychainAccessible+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA728C291721D200CF72FE /* KeychainAccessible+Extensions.swift */; };
@@ -450,7 +448,6 @@
 		216640631EBADADA00746B8E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2166406F1EBADADA00746B8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		216640C11EBADC9300746B8E /* GenericControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericControllers.swift; sourceTree = "<group>"; };
-		216640CA1EBADCA400746B8E /* FirebaseAnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsManager.swift; sourceTree = "<group>"; };
 		216640EF1EBB86A300746B8E /* SupportItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SupportItem.h; sourceTree = "<group>"; };
 		216640F01EBB86A300746B8E /* SupportItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SupportItem.m; sourceTree = "<group>"; };
 		216640FD1EBBA5A300746B8E /* NewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
@@ -772,7 +769,6 @@
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
-				898DB4912B2E7AA20027CC8F /* PennForms in Frameworks */,
 				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
 				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
@@ -1266,7 +1262,6 @@
 			children = (
 				6E903D372AC9C67000F2D384 /* ImageNetworkingManager.swift */,
 				214C23B11F2FEE150004487C /* Networking.swift */,
-				216640CA1EBADCA400746B8E /* FirebaseAnalyticsManager.swift */,
 				21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */,
 				21EB4D2F203D330C0029A460 /* UserDBManager.swift */,
 			);
@@ -2046,9 +2041,7 @@
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
 				6E4D821E2AC8C91C009AB78E /* Embed Frameworks */,
-				CAF133B2272BB899064B2A46 /* [CP] Embed Pods Frameworks */,
 				6C6420B327AAF1130096CBA9 /* Linter */,
-				6CE12F9326E82DED00284D9F /* ShellScript */,
 				F2568A6E2411F20E00561295 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -2065,7 +2058,6 @@
 				6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */,
 				6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */,
 				6CA1ACDA271D2D5000EDB967 /* Kingfisher */,
-				898DB4902B2E7AA20027CC8F /* PennForms */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -2187,7 +2179,6 @@
 				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				898DB48F2B2E7AA20027CC8F /* XCRemoteSwiftPackageReference "PennForms" */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
@@ -2300,46 +2291,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint PennMobile/*\n";
-		};
-		6CE12F9326E82DED00284D9F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${BUILD_DIR%Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
-		};
-		CAF133B2272BB899064B2A46 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
-				"${BUILT_PRODUCTS_DIR}/ScrollableGraphView/ScrollableGraphView.framework",
-				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrollableGraphView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2623,7 +2574,6 @@
 				6C6FE1D227B9B8CB0093FD13 /* ProfilePageViewModel.swift in Sources */,
 				EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */,
 				CF29A1751FB788820067D946 /* Page.swift in Sources */,
-				216640CD1EBADCA400746B8E /* FirebaseAnalyticsManager.swift in Sources */,
 				C13F9E9921928638000B866A /* HomeCalendarCellItem.swift in Sources */,
 				F20D93F328E0B88800930434 /* NotificationsView.swift in Sources */,
 			);
@@ -2706,6 +2656,7 @@
 		};
 		8932694328FC75A6003D4BF9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 8932693228FC75A5003D4BF9 /* WidgetExtension */;
 			targetProxy = 8932694228FC75A6003D4BF9 /* PBXContainerItemProxy */;
 		};
@@ -2870,10 +2821,13 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Penn Mobile - Development";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
 		};
@@ -2911,9 +2865,12 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "Penn Mobile - Distribution";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Penn Mobile - Distribution";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PennMobile/Supporting_Files/PennMobile-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
 		};
@@ -2955,11 +2912,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3002,9 +2962,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,7";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -3216,14 +3179,6 @@
 				minimumVersion = 10.0.0;
 			};
 		};
-		898DB48F2B2E7AA20027CC8F /* XCRemoteSwiftPackageReference "PennForms" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pennlabs/PennForms";
-			requirement = {
-				kind = revision;
-				revision = ee6f12573580aab93920976a1438e28d4bb70f99;
-			};
-		};
 		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
@@ -3290,11 +3245,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
-		};
-		898DB4902B2E7AA20027CC8F /* PennForms */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 898DB48F2B2E7AA20027CC8F /* XCRemoteSwiftPackageReference "PennForms" */;
-			productName = PennForms;
 		};
 		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

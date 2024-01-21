@@ -201,6 +201,7 @@ open class RangeSlider: UIControl {
     }
 
     func setupLayers() {
+        #if !os(visionOS)
         layer.backgroundColor = UIColor.clear.cgColor
 
         trackLayer.rangeSlider = self
@@ -222,6 +223,7 @@ open class RangeSlider: UIControl {
         maxValueDisplayLayer.rangeSlider = self
         maxValueDisplayLayer.contentsScale = UIScreen.main.scale
         layer.addSublayer(maxValueDisplayLayer)
+        #endif
     }
 
     func updateLayerFrames() {

@@ -6,6 +6,8 @@
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
 
+#if canImport(XLPagerTabStrip)
+
 import Foundation
 import XLPagerTabStrip
 
@@ -100,3 +102,5 @@ extension GSRGroupController: IndicatorInfoProvider {
         return IndicatorInfo(title: "Groups")
     }
 }
+
+#endif

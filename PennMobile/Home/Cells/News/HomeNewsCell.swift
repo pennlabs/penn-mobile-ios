@@ -46,7 +46,11 @@ final class HomeNewsCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeNewsCellItem else { return 0 }
         let imageHeight = getImageHeight()
+        #if os(visionOS)
+        let width: CGFloat = 100
+        #else
         let width: CGFloat = UIScreen.main.bounds.width - (2 * HomeViewController.edgeSpacing) - (2 * Padding.pad)
+        #endif
 
         let titleHeight: CGFloat
         if let height = titleHeightDictionary[item.article.data.labsArticle.headline] {
@@ -122,7 +126,6 @@ extension HomeNewsCell {
 
     @objc fileprivate func handleTapped(_ sender: Any) {
         guard let delegate = delegate as? NewsArticleSelectable else { return }
-        FirebaseAnalyticsManager.shared.trackEvent(action: "News Cell Pressed", result: article.data.labsArticle.headline, content: "")
         delegate.handleSelectedArticle(article)
     }
 }
@@ -149,8 +152,12 @@ extension HomeNewsCell {
     }
 
     fileprivate static func getImageHeight() -> CGFloat {
+        #if os(visionOS)
+        return 100
+        #else
         let cardWidth = UIScreen.main.bounds.width - (2 * HomeViewController.edgeSpacing)
         return 0.6 * cardWidth
+        #endif
     }
 
     private func prepareSourceLabel() {

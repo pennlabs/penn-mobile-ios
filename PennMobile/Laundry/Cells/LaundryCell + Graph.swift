@@ -7,10 +7,14 @@
 //
 
 import Foundation
+
+#if canImport(ScrollableGraphView)
 import ScrollableGraphView
+#endif
 
 // MARK: - Scrollable Graph View
 
+#if canImport(ScrollableGraphView)
 extension LaundryCell: ScrollableGraphViewDataSource {
     internal func generateScrollableGraphView(_ frame: CGRect) -> ScrollableGraphView {
         // Compose the graph view by creating a graph, then adding any plots
@@ -186,11 +190,14 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         }
     }
 }
+#endif
 
 // MARK: - UIScrollViewDelegate
 
 extension LaundryCell: UIScrollViewDelegate {
+    #if canImport(ScrollableGraphView)
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         animateGraph()
     }
+    #endif
 }

@@ -89,12 +89,20 @@ extension AppFeature.FeatureImage: View {
     }
 }
 
+#if os(visionOS)
+let gsrFeature = AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey")) {
+    Text("GSR booking is unavailable on Apple Vision Pro.")
+}
+#else
+let gsrFeature = AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey"), controller: GSRTabController.self)
+#endif
+
 let features: [AppFeature] = [
     AppFeature(.dining, name: "Dining", color: .baseOrange, image: .app("Dining_Grey")) {
         DiningView()
             .navigationTitle(Text("Dining"))
     },
-    AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey"), controller: GSRTabController.self),
+    gsrFeature,
     AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey"), controller: LaundryTableViewController.self),
     AppFeature(.news, name: "News", color: .baseRed, image: .app("News_Grey"), controller: NewsViewController.self),
     AppFeature(.contacts, shortName: "Contacts", longName: "Penn Contacts", color: .baseYellow, image: .app("Contacts_Grey"), controller: ContactsTableViewController.self),

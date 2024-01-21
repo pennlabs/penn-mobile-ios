@@ -139,9 +139,11 @@ extension MapViewController {
 }
 
 extension MapViewController: LocationPermissionRequestable {
+    #if !os(visionOS)
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if let searchTerm = searchTerm {
             self.showCoordinates(searchTerm: searchTerm)
         }
     }
+    #endif
 }

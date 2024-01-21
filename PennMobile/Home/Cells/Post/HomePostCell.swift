@@ -43,7 +43,11 @@ final class HomePostCell: UITableViewCell, HomeCellConformable {
         guard let item = item as? HomePostCellItem else { return 0 }
         let sourceHeight: CGFloat = item.post.source == nil ? 0 : 26
         let imageHeight = getImageHeight()
+        #if os(visionOS)
+        let width: CGFloat = 100
+        #else
         let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * titleEdgeOffset
+        #endif
 
         let titleHeight: CGFloat
         if let height = titleHeightDictionary[item.post.id] {
@@ -169,8 +173,12 @@ extension HomePostCell {
     }
 
     fileprivate static func getImageHeight() -> CGFloat {
+        #if os(visionOS)
+        return 100
+        #else
         let cardWidth = UIScreen.main.bounds.width - (2 * HomeViewController.edgeSpacing)
         return 0.6 * cardWidth
+        #endif
     }
 
     private func prepareSourceLabel() {

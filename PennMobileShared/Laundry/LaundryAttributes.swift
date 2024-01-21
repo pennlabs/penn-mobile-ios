@@ -6,6 +6,8 @@
 //  Copyright © 2022 PennLabs. All rights reserved.
 //
 
+#if canImport(ActivityKit)
+
 import ActivityKit
 import Foundation
 
@@ -22,3 +24,5 @@ public struct LaundryAttributes: ActivityAttributes {
         self.dateComplete = dateComplete
     }
 }
+
+#endif

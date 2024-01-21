@@ -76,7 +76,6 @@ extension HomeViewController {
         if let url = URL(string: urlStr) {
             let vc = SFSafariViewController(url: url)
             navigationController?.present(vc, animated: true)
-            FirebaseAnalyticsManager.shared.trackEvent(action: .viewWebsite, result: .none, content: urlStr)
         }
 
         if shouldLog {
@@ -115,7 +114,6 @@ extension HomeViewController: GSRLocationSelectable {
         gc.startingLocation = location
         gc.title = "Study Room Booking"
         navigationController?.pushViewController(gc, animated: true)
-        FirebaseAnalyticsManager.shared.trackEvent(action: "Tap Home GSR Location", result: "Tap Home GSR Location", content: "View \(location.name)")
     }
 }
 

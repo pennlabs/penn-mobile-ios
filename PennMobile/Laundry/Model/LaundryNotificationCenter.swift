@@ -8,7 +8,9 @@
 
 import Foundation
 import UserNotifications
+#if canImport(ActivityKit)
 import ActivityKit
+#endif
 import PennMobileShared
 
 class LaundryNotificationCenter {
@@ -26,6 +28,7 @@ class LaundryNotificationCenter {
         let minutes = machine.timeRemaining
         let now = Date()
         
+        #if canImport(ActivityKit)
         if #available(iOS 16.1, *) {
             // Dismiss any existing laundry live activities that have ended
             Activity<LaundryAttributes>.activities.forEach { activity in
@@ -38,6 +41,7 @@ class LaundryNotificationCenter {
             
             _ = try? Activity.request(attributes: LaundryAttributes(machine: machine, dateComplete: now.add(minutes: minutes)), contentState: LaundryAttributes.ContentState())
         }
+        #endif
         
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             if error != nil {
@@ -94,6 +98,7 @@ class LaundryNotificationCenter {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         identifiers.removeValue(forKey: machine)
         
+        #if canImport(ActivityKit)
         if #available(iOS 16.1, *) {
             Activity<LaundryAttributes>.activities.forEach { activity in
                 if activity.attributes.machine.id == machine.id {
@@ -103,6 +108,7 @@ class LaundryNotificationCenter {
                 }
             }
         }
+        #endif
     }
 
     func isUnderNotification(for machine: LaundryMachine) -> Bool {

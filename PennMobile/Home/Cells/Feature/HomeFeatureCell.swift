@@ -40,7 +40,11 @@ final class HomeFeatureCell: UITableViewCell, HomeCellConformable {
     static func getCellHeight(for item: ModularTableViewItem) -> CGFloat {
         guard let item = item as? HomeFeatureCellItem else { return 0 }
         let imageHeight = getImageHeight()
+        #if os(visionOS)
+        let width: CGFloat = 100
+        #else
         let width: CGFloat = UIScreen.main.bounds.width - 2 * 20 - 2 * titleEdgeOffset
+        #endif
 
         let titleHeight: CGFloat
         if let height = titleHeightDictionary[item.announcement.title] {
@@ -138,8 +142,12 @@ extension HomeFeatureCell {
     }
 
     fileprivate static func getImageHeight() -> CGFloat {
+        #if os(visionOS)
+        return 100
+        #else
         let cardWidth = UIScreen.main.bounds.width - 40
         return 0.5 * cardWidth
+        #endif
     }
 
     private func prepareSourceLabel() {

@@ -73,11 +73,7 @@ extension IndicatorEnabled where Self: UIView {
 protocol Trackable {}
 
 extension Trackable where Self: UIViewController {
-    func trackScreen(_ name: String?) {
-        if let name = name {
-            FirebaseAnalyticsManager.shared.trackScreen(name)
-        }
-    }
+    func trackScreen(_ name: String?) {}
 }
 
 protocol URLOpenable {}

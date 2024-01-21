@@ -280,8 +280,7 @@ extension RoomSelectionView: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: Functions implementing SearchBar
-extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
-
+extension RoomSelectionView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             currentResults = buildings
@@ -321,6 +320,10 @@ extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
     }
 
 }
+
+#if !os(visionOS)
+extension RoomSelectionView: UISearchDisplayDelegate {}
+#endif
 
 // MARK: Functions implementing EmptyView
 extension RoomSelectionView {

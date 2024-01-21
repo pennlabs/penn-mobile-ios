@@ -120,7 +120,9 @@ extension CourseAlertCreateController {
         resultsTableView.delegate = self
         resultsTableView.dataSource = self
 
+        #if os(iOS)
         resultsTableView.keyboardDismissMode = .onDrag
+        #endif
         resultsTableView.register(SearchResultsCell.self, forCellReuseIdentifier: SearchResultsCell.identifier)
 
         view.addSubview(resultsTableView)

@@ -52,7 +52,9 @@ class ControllerModel: NSObject {
         vcDictionary = [Feature: UIViewController]()
         vcDictionary[.home] = HomeViewController()
         vcDictionary[.dining] = DiningViewControllerSwiftUI()
+        #if canImport(XLPagerTabStrip)
         vcDictionary[.studyRoomBooking] = GSRTabController()
+        #endif
         vcDictionary[.laundry] = LaundryTableViewController()
         vcDictionary[.more] = MoreViewController()
         vcDictionary[.map] = MapViewController()

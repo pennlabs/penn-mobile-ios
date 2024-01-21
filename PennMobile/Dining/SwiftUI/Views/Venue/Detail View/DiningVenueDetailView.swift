@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Kingfisher
-import FirebaseAnalytics
+import Firebase
 import PennMobileShared
 
 struct DiningVenueDetailView: View {
@@ -97,9 +97,6 @@ struct DiningVenueDetailView: View {
                     }
                     .tint(.yellow)
                 }
-            }
-            .onAppear {
-                FirebaseAnalyticsManager.shared.trackScreen("Venue Detail View")
             }
         }
     }

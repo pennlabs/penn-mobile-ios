@@ -192,11 +192,7 @@ extension LabsLoginController {
             }
             callback()
 
-            if accountID == nil {
-                FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed Login")
-            } else {
-                FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
-
+            if accountID != nil {
                 if account.isStudent {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                         if UserDefaults.standard.getPreference(for: .collegeHouse) {

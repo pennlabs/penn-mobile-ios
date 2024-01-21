@@ -51,7 +51,9 @@ class InfoTableViewController: UIViewController {
     func setupTableView() {
 
         view.addSubview(tableView)
+        #if os(iOS)
         tableView.keyboardDismissMode = .onDrag
+        #endif
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reuseIdentifier")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsMultipleSelection = true

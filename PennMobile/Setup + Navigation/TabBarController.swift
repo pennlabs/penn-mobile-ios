@@ -90,6 +90,7 @@ extension GSRLocationsController: TabBarShowable {
     }
 }
 
+#if canImport(XLPagerTabStrip)
 extension GSRTabController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "GSR_Grey")
@@ -97,6 +98,7 @@ extension GSRTabController: TabBarShowable {
         return UITabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
     }
 }
+#endif
 
 extension LaundryTableViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {

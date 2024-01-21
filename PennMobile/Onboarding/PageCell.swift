@@ -44,7 +44,11 @@ class PageCell: UICollectionViewCell {
                 imageView.contentMode = .scaleAspectFill
                 imageView.clipsToBounds = true
             } else {
+                #if os(visionOS)
+                let height: CGFloat = 100
+                #else
                 let height = imageView.image!.size.height / imageView.image!.size.width * UIScreen.main.bounds.size.width
+                #endif
                 imageView.heightAnchor.constraint(equalToConstant: height).isActive = true
             }
 

@@ -11,7 +11,11 @@ import UserNotifications
 import Firebase
 import StoreKit
 import SwiftUI
+
+#if canImport(WidgetKit)
 import WidgetKit
+#endif
+
 import PennMobileShared
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -89,9 +93,11 @@ extension AppDelegate {
 func migrateDataToGroupContainer() {
     if Storage.migrate(fileName: Course.cacheFileName, of: [Course].self, from: .caches, to: .groupCaches) {
         print("Migrated course data.")
+        #if canImport(WidgetKit)
         WidgetKind.courseWidgets.forEach {
             WidgetCenter.shared.reloadTimelines(ofKind: $0)
         }
+        #endif
     }
 
     if Storage.migrate(fileName: DiningVenue.directory, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
@@ -100,16 +106,20 @@ func migrateDataToGroupContainer() {
 
     if Storage.migrate(fileName: DiningAnalyticsViewModel.dollarHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) || Storage.migrate(fileName: DiningAnalyticsViewModel.swipeHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) {
         print("Migrated dining analytics data.")
+        #if canImport(WidgetKit)
         WidgetKind.diningAnalyticsWidgets.forEach {
             WidgetCenter.shared.reloadTimelines(ofKind: $0)
         }
+        #endif
     }
 
     if Storage.migrate(fileName: DiningAPI.favoritesCacheFileName, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
        print("Migrated dining favorites data.")
+        #if canImport(WidgetKit)
         WidgetKind.diningHoursWidgets.forEach {
             WidgetCenter.shared.reloadTimelines(ofKind: $0)
         }
+        #endif
    }
 
     // Migrate dining balances if a dining balance file doesn't already exist.

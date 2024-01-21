@@ -49,7 +49,11 @@ extension PollOptionCell {
     fileprivate func setupCell() {
         backgroundColor = .clear
         self.questionLabel.text = self.pollOption.choice
+        #if os(visionOS)
+        let maxWidth: CGFloat = 100
+        #else
         let maxWidth = CGFloat(0.85) * UIScreen.main.bounds.width
+        #endif
 
         if self.answered {
             let frac = CGFloat(pollOption.voteCount) / CGFloat(self.totalResponses)
@@ -149,7 +153,11 @@ extension PollOptionCell {
 
         safeArea.addSubview(percentageShadow)
 
+        #if os(visionOS)
+        let maxWidth: CGFloat = 100
+        #else
         let maxWidth = CGFloat(0.8) * UIScreen.main.bounds.width
+        #endif
 
         percentageShadow.backgroundColor = .greenLighter
         safeArea.addSubview(percentageShadow)

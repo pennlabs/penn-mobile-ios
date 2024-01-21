@@ -60,7 +60,11 @@ class BuildingMapWebviewController: UIViewController, WKUIDelegate, WKNavigation
                 self.webView.evaluateJavaScript("document.getElementById('backButton').remove(); var a = document.getElementById('header').querySelector('.Action'); a.remove(); a = document.getElementById('header').querySelector('.Action'); a.style.marginLeft = '10px'", completionHandler: nil)
                 self.webView.evaluateJavaScript("openDetailsPanel = (function(url) { return; });", completionHandler: nil)
 
+                #if os(visionOS)
+                let width: CGFloat = 100
+                #else
                 let width = UIScreen.main.bounds.width
+                #endif
                 self.webView.evaluateJavaScript("document.getElementById('map_canvas').style.maxWidth = '\(width)px';", completionHandler: nil)
                 self.webView.evaluateJavaScript("document.querySelector('.gm-style').getElementsByTagName('img')[0].style.width = '\(width)px';", completionHandler: nil)
                 return

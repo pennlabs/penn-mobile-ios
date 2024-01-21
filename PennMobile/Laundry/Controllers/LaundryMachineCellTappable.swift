@@ -23,17 +23,13 @@ extension LaundryMachineCellTappable where Self: UIViewController {
             updateCellIfNeeded()
         } else {
             requestNotification { (granted) in
-                var result: FirebaseAnalyticsManager.EventResult = .failed
                 if granted {
                     LaundryNotificationCenter.shared.notifyWithMessage(for: machine, title: "Ready!", message: "The \(machine.roomName) \(machine.isWasher ? "washer" : "dryer") has finished running.", completion: { (success) in
                         if success {
                             updateCellIfNeeded()
-                            result = .success
                         }
                     })
-                    result = .success
                 }
-                FirebaseAnalyticsManager.shared.trackEvent(action: .laundryTapped, result: result, content: machine.roomName)
             }
         }
     }

@@ -1,32 +1,20 @@
 PODS:
-  - SCLAlertView (0.8)
-  - ScrollableGraphView (4.0.6)
   - SimulatorStatusMagic (2.6)
   - SwiftLint (0.46.2)
-  - XLPagerTabStrip (9.0.0)
 
 DEPENDENCIES:
-  - SCLAlertView
-  - ScrollableGraphView
   - SimulatorStatusMagic
   - SwiftLint
-  - XLPagerTabStrip (~> 9.0)
 
 SPEC REPOS:
   trunk:
-    - SCLAlertView
-    - ScrollableGraphView
     - SimulatorStatusMagic
     - SwiftLint
-    - XLPagerTabStrip
 
 SPEC CHECKSUMS:
-  SCLAlertView: 6a77bb2edfc65e04dbe57725546cb4107a506b85
-  ScrollableGraphView: 4af35d4ea9ecdec665d34a74da51da161ddff8ac
   SimulatorStatusMagic: 9f5294c12ca99c6cadb243a60362a66000df540c
   SwiftLint: 6bc52a21f0fd44cab9aa2dc8e534fb9f5e3ec507
-  XLPagerTabStrip: 61c57fd61f611ee5f01ff1495ad6fbee8bf496c5
 
-PODFILE CHECKSUM: 6d8dc007bb6bb126706682f352c74cf12107f577
+PODFILE CHECKSUM: 1ffc1c3cf3662cddaf24e71ee701c8b0f3a001fd
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.14.0

@@ -7,7 +7,10 @@
 //
 
 import UIKit
+
+#if canImport(ScrollableGraphView)
 import ScrollableGraphView
+#endif
 
 // MARK: - Laundry Cell Delegate
 
@@ -27,7 +30,9 @@ class LaundryCell: UITableViewCell {
             roomFloorLabel.text = room.name
             washerCollectionView?.reloadData()
             dryerCollectionView?.reloadData()
+            #if canImport(ScrollableGraphView)
             reloadGraphDataIfNeeded(oldRoom: oldValue, newRoom: room)
+            #endif
         }
     }
 
@@ -49,7 +54,9 @@ class LaundryCell: UITableViewCell {
 
     fileprivate let collectionCellId = "cellId"
 
+    #if canImport(ScrollableGraphView)
     internal var scrollableGraphView: ScrollableGraphView?
+    #endif
     internal var dottedLineShapeLayer: CAShapeLayer?
 
     fileprivate let bgView: UIView = {
@@ -274,8 +281,10 @@ extension LaundryCell {
         bgView.addSubview(dryerCollectionView!)
 
         bgView.addSubview(graphViewContainer)
+        #if canImport(ScrollableGraphView)
         scrollableGraphView = generateScrollableGraphView(graphViewContainer.frame)
         bgView.addSubview(scrollableGraphView!)
+        #endif
 
         bgView.addSubview(graphLabel)
         bgView.addSubview(graphDayLabel)
@@ -345,10 +354,12 @@ extension LaundryCell {
                                       bottom: bgView.bottomAnchor, right: bgView.rightAnchor,
                                       topConstant: 14, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
                                       widthConstant: 0, heightConstant: 0)
+        #if canImport(ScrollableGraphView)
         _ = scrollableGraphView!.anchor(graphViewContainer.topAnchor, left: graphViewContainer.leftAnchor,
                                         bottom: graphViewContainer.bottomAnchor, right: graphViewContainer.rightAnchor,
                                         topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0,
                                         widthConstant: 0, heightConstant: 0)
+        #endif
 
         // Building Floor Label
         roomFloorLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -459,7 +470,9 @@ extension LaundryCell: UICollectionViewDataSource, UICollectionViewDelegateFlowL
     func reloadData() {
         washerCollectionView?.reloadData()
         dryerCollectionView?.reloadData()
+        #if canImport(ScrollableGraphView)
         reloadDottedLineLayer()
+        #endif
     }
 }
 

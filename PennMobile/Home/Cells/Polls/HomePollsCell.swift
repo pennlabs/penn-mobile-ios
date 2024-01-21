@@ -192,7 +192,11 @@ extension HomePollsCell: UITableViewDelegate {
     }
 
     static func height(forOption option: PollOption) -> CGFloat {
+        #if os(visionOS)
+        let maxWidth: CGFloat = 100
+        #else
         let maxWidth = CGFloat(0.6) * UIScreen.main.bounds.width
+        #endif
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: maxWidth, height: CGFloat.greatestFiniteMagnitude))
 
         label.lineBreakMode = NSLineBreakMode.byWordWrapping

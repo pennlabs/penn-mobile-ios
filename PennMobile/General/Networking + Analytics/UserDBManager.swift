@@ -9,7 +9,10 @@
 import UIKit
 import SwiftyJSON
 import PennMobileShared
+
+#if canImport(WidgetKit)
 import WidgetKit
+#endif
 
 class UserDBManager: NSObject, Requestable, SHA256Hashable {
     static let shared = UserDBManager()
@@ -133,9 +136,11 @@ extension UserDBManager {
             // Cache a user's favorite dining halls for use by dining hours widget.
             let diningVenues = DiningAPI.instance.getVenues(with: venueIds)
             Storage.store(diningVenues, to: .groupCaches, as: DiningAPI.favoritesCacheFileName)
+            #if canImport(WidgetKit)
             WidgetKind.diningHoursWidgets.forEach {
                 WidgetCenter.shared.reloadTimelines(ofKind: $0)
             }
+            #endif
 
             let task = URLSession.shared.dataTask(with: request)
             task.resume()

@@ -8,7 +8,10 @@
 
 import Foundation
 import UserNotifications
+
+#if canImport(SCLAlertView)
 import SCLAlertView
+#endif
 
 protocol NotificationRequestable {}
 
@@ -60,6 +63,7 @@ extension NotificationRequestable {
     }
 
     func alertForDecline(_ completion: AuthorizedCompletion?) {
+        #if canImport(SCLAlertView)
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
         let alertView = SCLAlertView(appearance: appearance)
         alertView.addButton("Allow") {
@@ -79,9 +83,11 @@ extension NotificationRequestable {
         let declineStyle = SCLAlertViewStyle.notice
         alertView.addButton("Decline", backgroundColor: UIColorFromRGB(declineStyle.defaultColorInt), action: {  })
         alertView.showSuccess("Turn On Notifications", subTitle: "Go to Settings -> PennMobile -> Notification -> Turn On Notifications")
+        #endif
     }
 
     func alertForDetermination(_ completion: AuthorizedCompletion?) {
+        #if canImport(SCLAlertView)
         let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
         let alertView = SCLAlertView(appearance: appearance)
         alertView.addButton("Turn On") {
@@ -90,6 +96,7 @@ extension NotificationRequestable {
         let declineStyle = SCLAlertViewStyle.notice
         alertView.addButton("Decline", backgroundColor: UIColorFromRGB(declineStyle.defaultColorInt), action: {  })
         alertView.showSuccess("Enable Notifications", subTitle: "Receive monthly dining plan progress updates, laundry alerts, and information about new features.")
+        #endif
     }
 
 }

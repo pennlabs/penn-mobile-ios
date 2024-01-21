@@ -16,20 +16,15 @@ extension GSRBookable where Self: UIViewController {
         GSRNetworkManager.instance.makeBooking(for: booking) { result in
             DispatchQueue.main.async {
                 self.hideActivity()
-                var firebaseResult: FirebaseAnalyticsManager.EventResult
 
                 switch result {
                 case .success:
                     self.showAlert(withMsg: "You booked a space in \(booking.roomName). You should receive a confirmation email in the next few minutes.", title: "Success!", completion: nil)
-                    firebaseResult = .success
                     guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
                     homeVC.clearCache()
                 case .failure:
                     self.showAlert(withMsg: "You seem to have exceeded the booking limit for this venue.", title: "Uh oh!", completion: nil)
-                    firebaseResult = .failed
                 }
-
-                FirebaseAnalyticsManager.shared.trackEvent(action: .attemptBooking, result: firebaseResult, content: booking.roomName)
             }
         }
     }

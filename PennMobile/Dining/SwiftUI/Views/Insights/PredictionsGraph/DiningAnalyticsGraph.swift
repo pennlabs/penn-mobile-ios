@@ -28,7 +28,11 @@ struct AnalyticsGraph: View {
     var yAxisLabelCount: Int = 4
     @Binding var predictedZeroDate: Date
     @Binding var predictedSemesterEndValue: Double
+    
+    #if os(iOS)
     @State var feedbackGenerator: UIImpactFeedbackGenerator?
+    #endif
+    
     var balanceFormat: String
     var displayZeroDate: Bool {
         end >= predictedZeroDate
@@ -160,17 +164,23 @@ struct AnalyticsGraph: View {
                 triggerHaptic()
             }.onChange(of: showInfo) { showInfo in
                 if showInfo {
+                    #if os(iOS)
                     feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+                    #endif
                     triggerHaptic()
                 } else {
+                    #if os(iOS)
                     feedbackGenerator = nil
+                    #endif
                 }
             }
         }
     }
     func triggerHaptic() {
+        #if os(iOS)
         feedbackGenerator?.impactOccurred(intensity: 0.4 + max(0, min(tapBalance / maxY, 1)) * 0.6)
         feedbackGenerator?.prepare()
+        #endif
     }
     func getXLabels(xAxisLabelCount: Int = 5) -> [Date] {
         var xLabels: [Date] = []
@@ -214,7 +224,11 @@ struct ZoomInfo: View {
                     .font(.caption)
             }
         }
+        #if os(visionOS)
+        .position(x: location.x + 25, y: location.y - 25)
+        #else
         .position(x: min(location.x + 25, UIScreen.main.bounds.size.width - 75), y: location.y - 25)
+        #endif
     }
 }
 

@@ -8,7 +8,10 @@
 
 import Foundation
 import SwiftUI
+
+#if canImport(WidgetKit)
 import WidgetKit
+#endif
 
 public struct DiningAnalyticsBalance: Codable, Equatable, Identifiable {
     public let date: Date
@@ -97,11 +100,13 @@ public class DiningAnalyticsViewModel: ObservableObject {
                 self.planStartDate = planStartDate
                 try? Storage.storeThrowing(planStartDate, to: .groupDocuments, as: Self.planStartDateDirectory)
             }
+            #if canImport(WidgetKit)
             if refreshWidgets {
                 WidgetKind.diningAnalyticsWidgets.forEach {
                     WidgetCenter.shared.reloadTimelines(ofKind: $0)
                 }
             }
+            #endif
             populateAxesAndPredictions()
         }
     }

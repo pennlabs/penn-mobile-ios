@@ -8,7 +8,11 @@
 
 import Foundation
 import SwiftSoup
+
+#if canImport(WidgetKit)
 import WidgetKit
+#endif
+
 import PennMobileShared
 
 private func getTimeInt(pathAtPennString: String) -> Int? {
@@ -126,9 +130,11 @@ class CoursesViewModel: ObservableObject {
             let courses = try await fetchCoursesFromNetwork()
             coursesResult = .success(courses)
             Storage.store(courses, to: .groupCaches, as: Course.cacheFileName)
+            #if canImport(WidgetKit)
             WidgetKind.courseWidgets.forEach {
                 WidgetCenter.shared.reloadTimelines(ofKind: $0)
             }
+            #endif
             return courses
         } catch let error {
             coursesResult = .failure(error)

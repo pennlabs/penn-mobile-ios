@@ -7,7 +7,10 @@
 //
 
 import Foundation
+
+#if canImport(ScrollableGraphView)
 import ScrollableGraphView
+#endif
 
 final class LaundryGraphView: UIView {
     fileprivate var usageData: [Double]!
@@ -15,7 +18,9 @@ final class LaundryGraphView: UIView {
 
     fileprivate var graphLabel: UILabel!
     fileprivate var dayLabel: UILabel!
+    #if canImport(ScrollableGraphView)
     fileprivate var scrollableGraphView: ScrollableGraphView!
+    #endif
     fileprivate var dottedLine: CAShapeLayer!
 
     fileprivate let dataPointSpacing = 30
@@ -44,7 +49,9 @@ extension LaundryGraphView {
         if usageData != nil && newUsageData == nil {
             usageData = nil
             graphData = Array(repeating: 0.0, count: graphData.count)
+            #if canImport(ScrollableGraphView)
             scrollableGraphView.reload()
+            #endif
             return
         }
 
@@ -55,6 +62,7 @@ extension LaundryGraphView {
     }
 
     private func scrollGraphToCurrentHour(_ completion: () -> Void) {
+        #if canImport(ScrollableGraphView)
         var currentHour = Calendar.current.component(.hour, from: Date())
         if currentHour > 2 {
             currentHour -= 2
@@ -66,6 +74,7 @@ extension LaundryGraphView {
         } else {
             scrollableGraphView.setContentOffset(CGPoint(x: newXOffset, y: 0), animated: true)
         }
+        #endif
     }
 
     @objc fileprivate func animateGraph() {
@@ -76,10 +85,12 @@ extension LaundryGraphView {
     }
 
     @objc private func executeGraphAnimation() {
+        #if canImport(ScrollableGraphView)
         if let usageData = usageData {
             graphData = usageData
             scrollableGraphView.reload()
         }
+        #endif
     }
 }
 
@@ -91,6 +102,8 @@ extension LaundryGraphView: UIScrollViewDelegate {
 }
 
 // MARK: - ScrollableGraphViewDataSource
+
+#if canImport(ScrollableGraphView)
 extension LaundryGraphView: ScrollableGraphViewDataSource {
     func numberOfPoints() -> Int {
         return graphData.count
@@ -123,6 +136,7 @@ extension LaundryGraphView: ScrollableGraphViewDataSource {
         }
     }
 }
+#endif
 
 // MARK: - Prepare UI
 extension LaundryGraphView {
@@ -163,6 +177,7 @@ extension LaundryGraphView {
     // Compose the graph view by creating a graph, then adding any plots
     // and reference lines before adding the graph to the view hierarchy.
     private func prepareScrollableGraphView() {
+        #if canImport(ScrollableGraphView)
         let graphView = ScrollableGraphView(frame: .zero, dataSource: self)
         let referenceLines = ReferenceLines()
 
@@ -224,9 +239,11 @@ extension LaundryGraphView {
 
         addSubview(scrollableGraphView)
         _ = scrollableGraphView.anchor(graphLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 2, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        #endif
     }
 
     func reloadDottedLineLayer() {
+        #if canImport(ScrollableGraphView)
         dottedLine?.removeFromSuperlayer()
 
         let dottedLineLayer = CAShapeLayer()
@@ -245,5 +262,6 @@ extension LaundryGraphView {
         dottedLineLayer.path = linePath.cgPath
         dottedLine = dottedLineLayer
         scrollableGraphView?.layer.addSublayer(dottedLineLayer)
+        #endif
     }
 }
