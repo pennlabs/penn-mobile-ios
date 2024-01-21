@@ -51,7 +51,7 @@ struct CoursesView: View {
                 .foregroundColor(.red)
                 .padding()
                 .onAppear {
-                    if case PathAtPennError.noTokenFound = error {
+                    if case PathAtPennError.noTokenFound(_) = error {
                         isPresentingLoginSheet = true
                     }
                 }

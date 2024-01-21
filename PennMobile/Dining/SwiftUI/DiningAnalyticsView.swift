@@ -14,6 +14,7 @@ struct DiningAnalyticsView: View {
     @State var showMissingDiningTokenAlert = false
     @State var showDiningLoginView = false
     @State var notLoggedInAlertShowing = false
+    @State var showSettingsSheet = false
     @Environment(\.presentationMode) var presentationMode
     func showCorrectAlert () -> Alert {
         if !Account.isLoggedIn {
@@ -30,17 +31,33 @@ struct DiningAnalyticsView: View {
             let dollarHistory = $diningAnalyticsViewModel.dollarHistory
             let swipeHistory = $diningAnalyticsViewModel.swipeHistory
             HStack {
+                Spacer()
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            showSettingsSheet.toggle()
+                        }) {
+                            Image(systemName: "gear")
+                                .imageScale(.large)
+                        }
+                    }
+                }
                 if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
                     if dollarHistory.wrappedValue.isEmpty && swipeHistory.wrappedValue.isEmpty {
                         ZStack {
                             Image("DiningAnalyticsBackground")
                                 .resizable()
                                 .ignoresSafeArea()
-                            Text("No Dining\nPlan Found\n ")
-                                .multilineTextAlignment(.center)
-                                .font(.system(size: 48, weight: .regular))
-                                .foregroundColor(.black)
-                                .opacity(0.6)
+                            VStack(spacing: 24) {
+                                Text("No Dining Plan Found")
+                                    .font(.system(size: 48, weight: .regular))
+                                Text("Dining Analytics may not appear until the day after the semester begins.")
+                            }
+                            .frame(maxWidth: 280)
+                            .padding(.bottom, 64)
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(.black)
+                            .opacity(0.6)
                         }
                     } else {
                         ScrollView {
@@ -78,6 +95,9 @@ struct DiningAnalyticsView: View {
                     .environmentObject(diningAnalyticsViewModel)
             }
             .navigationTitle(Text("Dining Analytics"))
+            .sheet(isPresented: $showSettingsSheet) {
+                DiningSettingsView(viewModel: diningAnalyticsViewModel) // Replace with your settings view
+            }
         } else {
             let dollarXYHistory = Binding(
                 get: {
@@ -138,6 +158,10 @@ struct DiningAnalyticsView: View {
             .sheet(isPresented: $showDiningLoginView) {
                 DiningLoginNavigationView()
                     .environmentObject(diningAnalyticsViewModel)
+            }
+            .navigationTitle("Analytics")
+            .sheet(isPresented: $showSettingsSheet) {
+                DiningSettingsView(viewModel: diningAnalyticsViewModel)
             }
         }
     }

@@ -9,13 +9,23 @@
 import Foundation
 import SwiftSoup
 import PennMobileShared
+import OSLog
 
 enum PathAtPennError: Error {
+    /// The user's pennkey/password are not stored on the keychain
+    case pennkeyCredentialsNotStored
+
+    /// Unable to construct getToken request body
+    case invalidRequestBody
+
     /// The data was a malformed string.
     case corruptString
+    
+    /// An execution identifier was not found in the login response.
+    case noExecutionFound
 
     /// A token was not found in the Path@Penn authorization response.
-    case noTokenFound
+    case noTokenFound(String)
 
     /// The returned ``URLResponse`` was not an ``HTTPURLResponse``.
     case notHttpResponse
@@ -29,6 +39,7 @@ enum PathAtPennError: Error {
 
 class PathAtPennNetworkManager {
     static let instance = PathAtPennNetworkManager()
+    let logger = Logger(category: "PathAtPennNetworkManager")
 }
 
 // MARK: - Path@Penn Authentication
@@ -36,14 +47,86 @@ class PathAtPennNetworkManager {
 extension PathAtPennNetworkManager {
     static private let oauthURL = URL(string: "https://idp.pennkey.upenn.edu/idp/profile/oidc/authorize?response_type=code&scope=openid+email+profile&client_id=courses.upenn.edu%2Fsam_rMReby8Vl3M1BiyVWMAT&redirect_uri=https%3A%2F%2Fcourses.upenn.edu%2Fsam%2Fcodetotoken")!
 
-    /// Fetches and returns a Path@Penn auth token.
-    func getToken() async throws -> String {
+    private func getTokenWithoutReauthenticating() async throws -> String {
         let (data, _) = try await URLSession.shared.data(from: PathAtPennNetworkManager.oauthURL)
         let str = try String(data: data, encoding: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
         let matches = str.getMatches(for: "value: \"(.*)\"")
-        let token = try matches.first.unwrap(orThrow: PathAtPennError.noTokenFound)
-
+        let token = try matches.first.unwrap(orThrow: PathAtPennError.noTokenFound(str))
+        
         return token
+    }
+    
+    /// Fetches and returns a Path@Penn auth token.
+    func getToken() async throws -> String {
+        // First, attempt to acquire a token without reauthenticating
+        do {
+            return try await getTokenWithoutReauthenticating()
+        } catch PathAtPennError.noTokenFound(let body) {
+            logger.warning("Reauthenticating user for Path@Penn")
+            
+            // Attempt to reauthenticate the user
+            guard let pennkey = KeychainAccessible.instance.getPennKey(),
+                  let password = KeychainAccessible.instance.getPassword() else {
+                throw PathAtPennError.pennkeyCredentialsNotStored
+            }
+            
+            var urlComponents = URLComponents()
+            urlComponents.queryItems = [
+                URLQueryItem(name: "j_username", value: pennkey),
+                URLQueryItem(name: "j_password", value: password),
+                URLQueryItem(name: "_eventId_proceed", value: "")
+            ]
+            
+            guard let requestBody = urlComponents.percentEncodedQuery?.data(using: .utf8) else {
+                throw PathAtPennError.invalidRequestBody
+            }
+            
+            let authorizeDOM = try SwiftSoup.parse(body)
+            guard let form = try authorizeDOM.getElementById("loginform") else {
+                throw PathAtPennError.noExecutionFound
+            }
+            
+            let loginStr = try form.attr("action")
+            guard let loginURL = URL(string: loginStr, relativeTo: URL(string: "https://weblogin.pennkey.upenn.edu")!) else {
+                throw PathAtPennError.noExecutionFound
+            }
+            
+            var request = URLRequest(url: loginURL)
+            request.httpMethod = "POST"
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpBody = requestBody
+            
+            let (data, response) = try await URLSession.shared.data(for: request)
+            let twoFactorStr = try String(data: data, encoding: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
+            let twoFactorDOM = try SwiftSoup.parse(twoFactorStr)
+            let twoFactorURL = try response.url.unwrap(orThrow: PathAtPennError.noExecutionFound)
+            
+            urlComponents = URLComponents()
+            let formFields = ["tx", "parent", "_xsrf"]
+            
+            urlComponents.queryItems = try formFields.map { name in
+                guard let element = try twoFactorDOM.getElementsByAttributeValue("name", name).first() else {
+                    throw PathAtPennError.noExecutionFound
+                }
+                
+                return try URLQueryItem(name: name, value: element.val())
+            }
+            
+            guard let twoFactorRequestBody = urlComponents.percentEncodedQuery?.data(using: .utf8) else {
+                throw PathAtPennError.invalidRequestBody
+            }
+            
+            request = URLRequest(url: twoFactorURL)
+            request.httpMethod = "POST"
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            request.httpBody = twoFactorRequestBody
+            
+            let (postData, postResponse) = try await URLSession.shared.data(for: request)
+            
+            return try await getTokenWithoutReauthenticating()
+        } catch {
+            throw error
+        }
     }
 }
 
@@ -146,11 +229,11 @@ extension PathAtPennNetworkManager {
             let (srcdb, descriptors) = $0
 
             let crns = descriptors.compactMap {
-                $0.split(separator: "|").first
+                $0.split(separator: "|").first.map { String($0) }
             }
 
             return try await crns.asyncMap { crn in
-                try await self.fetchCourse(srcdb: srcdb, crn: String(crn))
+                try await self.fetchCourse(srcdb: srcdb, crn: crn)
             }.compactMap { $0 }
         }.flatMap { $0 }
     }
