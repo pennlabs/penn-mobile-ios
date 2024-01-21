@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 import StoreKit
 import SwiftyJSON
 
@@ -117,19 +118,17 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     }
 
     func showLoginScreen() {
-        let loginController = LoginController()
-        moveto(controller: loginController)
     }
 
     func showMainScreen() {
         let tabBarController = TabBarController()
-        let homeNVC = HomeNavigationController(rootViewController: tabBarController)
+        let homeNVC = UINavigationController(rootViewController: tabBarController)
         moveto(controller: homeNVC)
     }
 
     func switchToMainScreen() {
         let tabBarController = TabBarController()
-        let homeNVC = HomeNavigationController(rootViewController: tabBarController)
+        let homeNVC = UINavigationController(rootViewController: tabBarController)
         animateFadeTransition(to: homeNVC)
 
         // Keep track locally of app sessions (for app review prompting)
@@ -140,20 +139,14 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         // This code will ONLY present the review if we're not running Fastlane UI Automation (for screenshots)
         if !UIApplication.isRunningFastlaneTest {
             if sessionCount == 3 {
-                SKStoreReviewController.requestReview()
+                if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                    SKStoreReviewController.requestReview(in: scene)
+                }
             }
         }
     }
 
     func switchToLogout() {
-        let loginController = LoginController()
-        animateDismissTransition(to: loginController)
-
-        // Clear cache so that home title updates with new first name
-        guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else {
-            return
-        }
-        homeVC.clearCache()
     }
 
     func clearAccountData() {

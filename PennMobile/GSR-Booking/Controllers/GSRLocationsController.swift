@@ -29,6 +29,7 @@ class GSRLocationsController: GenericViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.locations = GSRLocationModel.shared.getLocations()
         tableView.reloadData()
     }
 }
@@ -71,6 +72,7 @@ extension GSRLocationsController: UITableViewDataSource, UITableViewDelegate {
         gc.group = group
         gc.startingLocation = location
         gc.title = "Tap to book"
+        gc.toastPresentingController = resolveToastPresentingController()
         navigationController?.pushViewController(gc, animated: true)
     }
 }

@@ -9,11 +9,12 @@
 import SwiftUI
 
 struct PreferencesView: View {
-    @State private var editMode = EditMode.inactive
     @State private var allFeatures = ControllerModel.shared.dynamicFeatures
+    
+    @EnvironmentObject var mainTabViewCoordinator: MainTabViewCoordinator
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 Section {
                     ForEach(allFeatures.indices, id: \.self) { i in
@@ -26,21 +27,30 @@ struct PreferencesView: View {
                             Text(allFeatures[i].rawValue)
                                 .foregroundColor(i < 3 ? .primary : .secondary)
                         }
-                        .padding(.vertical, 6)
                     }
                     .onMove(perform: move)
                 } header: {
-                    Text("Tab Bar")
-                } footer: {
-                    Text("Choose which features appear in the tab bar. The remaining ones can still be found on the More tab.")
+                    Text("Drag a feature to the top to pin it.")
+                        .foregroundStyle(.primary)
+                        .textCase(nil)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 8)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity)
                 }
             }
             .id(UUID())
             .environment(\.editMode, Binding.constant(EditMode.active))
+            .navigationTitle("Edit Features")
+            .navigationBarTitleDisplayMode(.inline)
         }
         .onAppear {
             let currentTabFeatures = Array(UserDefaults.standard.getTabPreferences()[1...3])
             allFeatures = currentTabFeatures + ControllerModel.shared.dynamicFeatures.filter { !currentTabFeatures.contains($0) }
+            mainTabViewCoordinator.isConfiguringTabs = true
+        }
+        .onDisappear {
+            mainTabViewCoordinator.isConfiguringTabs = false
         }
     }
 
@@ -59,5 +69,6 @@ extension PreferencesView {
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
         PreferencesView()
+            .environmentObject(MainTabViewCoordinator())
     }
 }

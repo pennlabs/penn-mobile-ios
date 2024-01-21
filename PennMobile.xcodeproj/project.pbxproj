@@ -93,7 +93,6 @@
 		21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */; };
 		21B8BBB622231F9F00EBC1D0 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB522231F9F00EBC1D0 /* Account.swift */; };
 		21B8BBB82223963C00EBC1D0 /* Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBB72223963C00EBC1D0 /* Degree.swift */; };
-		21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */; };
 		21D5E06723B68F3100B331CC /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D5E06623B68F3100B331CC /* Model.swift */; };
 		21E6A109224BDFEB00DC457A /* HomeViewController + Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */; };
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
@@ -217,6 +216,12 @@
 		890C4EC82ACBA486009650CA /* LaundryAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C4EC62ACBA486009650CA /* LaundryAttributes.swift */; };
 		890C4EC92ACBA486009650CA /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C4EC72ACBA486009650CA /* LaundryMachine.swift */; };
 		890C4ECA2ACBA4E7009650CA /* LaundryLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932693B28FC75A5003D4BF9 /* LaundryLiveActivity.swift */; };
+		890D14FC2AB7469300672FFE /* PennMobile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D14FB2AB7469300672FFE /* PennMobile.swift */; };
+		890D14FE2AB749BA00672FFE /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D14FD2AB749BA00672FFE /* AuthManager.swift */; };
+		890D15002AB74D6000672FFE /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D14FF2AB74D6000672FFE /* RootView.swift */; };
+		890D15022AB74F0700672FFE /* LoggedOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D15012AB74F0700672FFE /* LoggedOutView.swift */; };
+		890D15042AB75E4300672FFE /* Features.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D15032AB75E4300672FFE /* Features.swift */; };
+		890D15062AB76C3600672FFE /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D15052AB76C3600672FFE /* MainTabView.swift */; };
 		890DDBC62AA2E4B6006815A3 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890DDBC42AA2E499006815A3 /* ViewExtensions.swift */; };
 		89325390290F98E7006EE62C /* ConfigurationRepresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */; };
 		89325393291025A8006EE62C /* WidgetBackgroundTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */; };
@@ -230,18 +235,27 @@
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9B28E799AA00CE1638 /* CoursesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */; };
 		89459B9D28E7E8A600CE1638 /* CoursesDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9C28E7E8A600CE1638 /* CoursesDayView.swift */; };
+		89534BA22AEEC8AB003ABB70 /* PollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89534BA12AEEC8AB003ABB70 /* PollView.swift */; };
 		895C75E628FA165100A329A0 /* LabsLoginSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */; };
+		895D98B02ACF312300F8C5DF /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D98AF2ACF312300F8C5DF /* MoreView.swift */; };
+		897F0A932B08256C0060583A /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897F0A922B08256C0060583A /* Toasts.swift */; };
+		89913EAD2AE44FCE00AE30C9 /* CalendarCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */; };
 		898DB4912B2E7AA20027CC8F /* PennForms in Frameworks */ = {isa = PBXBuildFile; productRef = 898DB4902B2E7AA20027CC8F /* PennForms */; };
 		89B454DF28E1161B00BC918B /* PathAtPennNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */; };
+		89CA5FBF2AD315E400B7D3EF /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */; };
 		89CA728D291721D200CF72FE /* KeychainAccessible+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA728C291721D200CF72FE /* KeychainAccessible+Extensions.swift */; };
 		89CA729029173CDE00CF72FE /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA728F29173CDE00CF72FE /* UserDefaults + Helpers.swift */; };
 		89CA729129174CF900CF72FE /* DiningAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA727229171E3900CF72FE /* DiningAnalyticsProvider.swift */; };
 		89CA72952917541C00CF72FE /* DiningAnalyticsHomeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA7292291753DF00CF72FE /* DiningAnalyticsHomeWidget.swift */; };
 		89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCBEC528E791B70029F784 /* CoursesViewController.swift */; };
+		89E0DE682AE38A8800E918FF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE672AE38A8800E918FF /* HomeView.swift */; };
+		89E0DE6A2AE396E200E918FF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE692AE396E200E918FF /* HomeViewModel.swift */; };
+		89E0DE6C2AE415A800E918FF /* HomeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE6B2AE415A800E918FF /* HomeCardView.swift */; };
 		89EA261E290EDFA7008F26CF /* CoursesDayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */; };
 		89EA2622290EE3FD008F26CF /* CoursesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2620290EE3E9008F26CF /* CoursesProvider.swift */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
 		89EA262F290F958B008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
+		89EECCC92B014CA300E73EEB /* MainTabViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EECCC82B014CA300E73EEB /* MainTabViewCoordinator.swift */; };
 		97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */; };
 		97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFC2100DA1200D3D606 /* BuildingCell.swift */; };
 		97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E79DFD2100DA1200D3D606 /* BuildingHeaderCell.swift */; };
@@ -288,8 +302,6 @@
 		EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */; };
 		EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */; };
 		EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */; };
-		EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC321860B7000E29C6A /* StatusBar.swift */; };
-		EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF389EC521861B8500E29C6A /* HomeNavigationController.swift */; };
 		EF6329A22409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6329A12409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift */; };
 		EFD6F359220E334100382783 /* DiningCellSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD6F358220E334100382783 /* DiningCellSettingsController.swift */; };
 		EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */; };
@@ -492,7 +504,6 @@
 		21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusExpressNetworkManager.swift; sourceTree = "<group>"; };
 		21B8BBB522231F9F00EBC1D0 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		21B8BBB72223963C00EBC1D0 /* Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Degree.swift; sourceTree = "<group>"; };
-		21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		21D5E06623B68F3100B331CC /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		21E6A108224BDFEB00DC457A /* HomeViewController + Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + Delegates.swift"; sourceTree = "<group>"; };
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
@@ -614,6 +625,12 @@
 		87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPIModel.swift; sourceTree = "<group>"; };
 		890C4EC62ACBA486009650CA /* LaundryAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryAttributes.swift; sourceTree = "<group>"; };
 		890C4EC72ACBA486009650CA /* LaundryMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachine.swift; sourceTree = "<group>"; };
+		890D14FB2AB7469300672FFE /* PennMobile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobile.swift; sourceTree = "<group>"; };
+		890D14FD2AB749BA00672FFE /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		890D14FF2AB74D6000672FFE /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		890D15012AB74F0700672FFE /* LoggedOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutView.swift; sourceTree = "<group>"; };
+		890D15032AB75E4300672FFE /* Features.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features.swift; sourceTree = "<group>"; };
+		890D15052AB76C3600672FFE /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		890DDBC42AA2E499006815A3 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationRepresenting.swift; sourceTree = "<group>"; };
 		893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBackgroundTypeExtensions.swift; sourceTree = "<group>"; };
@@ -628,18 +645,27 @@
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewModel.swift; sourceTree = "<group>"; };
 		89459B9C28E7E8A600CE1638 /* CoursesDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayView.swift; sourceTree = "<group>"; };
+		89534BA12AEEC8AB003ABB70 /* PollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollView.swift; sourceTree = "<group>"; };
 		895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginSwiftUI.swift; sourceTree = "<group>"; };
+		895D98AF2ACF312300F8C5DF /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		897F0A922B08256C0060583A /* Toasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toasts.swift; sourceTree = "<group>"; };
+		89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCardView.swift; sourceTree = "<group>"; };
 		89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAtPennNetworkManager.swift; sourceTree = "<group>"; wrapsLines = 0; };
+		89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
 		89CA727229171E3900CF72FE /* DiningAnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsProvider.swift; sourceTree = "<group>"; };
 		89CA728C291721D200CF72FE /* KeychainAccessible+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainAccessible+Extensions.swift"; sourceTree = "<group>"; };
 		89CA728F29173CDE00CF72FE /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
 		89CA7292291753DF00CF72FE /* DiningAnalyticsHomeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsHomeWidget.swift; sourceTree = "<group>"; };
 		89CA72962917584000CF72FE /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 		89DCBEC528E791B70029F784 /* CoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
+		89E0DE672AE38A8800E918FF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		89E0DE692AE396E200E918FF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		89E0DE6B2AE415A800E918FF /* HomeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCardView.swift; sourceTree = "<group>"; };
 		89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayWidget.swift; sourceTree = "<group>"; };
 		89EA2620290EE3E9008F26CF /* CoursesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesProvider.swift; sourceTree = "<group>"; };
 		89EA262C290F2667008F26CF /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
 		89EA262D290F9411008F26CF /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		89EECCC82B014CA300E73EEB /* MainTabViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewCoordinator.swift; sourceTree = "<group>"; };
 		97AA806723D26BC700C23488 /* DiningCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
 		97E6E1EF239D74F500C07D7A /* GSRGroupIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupIconView.swift; sourceTree = "<group>"; };
 		97E79DFC2100DA1200D3D606 /* BuildingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BuildingCell.swift; path = PennMobile/Home/Buildings/Buildings/Cells/BuildingCell.swift; sourceTree = SOURCE_ROOT; };
@@ -685,8 +711,6 @@
 		EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteCell.swift; sourceTree = "<group>"; };
 		EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCellItem.swift; sourceTree = "<group>"; };
 		EF30077323EE139F006C9CF0 /* HomeGroupInvitesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCell.swift; sourceTree = "<group>"; };
-		EF389EC321860B7000E29C6A /* StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBar.swift; sourceTree = "<group>"; };
-		EF389EC521861B8500E29C6A /* HomeNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNavigationController.swift; sourceTree = "<group>"; };
 		EF6329A12409D2CE00E7ED36 /* GSRGroupConfirmBookingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupConfirmBookingController.swift; sourceTree = "<group>"; };
 		EFD6F358220E334100382783 /* DiningCellSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCellSettingsController.swift; sourceTree = "<group>"; };
 		EFE2D6E7239B11050020F6BF /* GroupIndividualSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupIndividualSettingView.swift; sourceTree = "<group>"; };
@@ -848,6 +872,10 @@
 				21640D4E2010501C002F33CA /* Model */,
 				21640D4620104354002F33CA /* Cells */,
 				21640D4320103E9F002F33CA /* Controllers */,
+				89E0DE672AE38A8800E918FF /* HomeView.swift */,
+				89E0DE692AE396E200E918FF /* HomeViewModel.swift */,
+				89E0DE6B2AE415A800E918FF /* HomeCardView.swift */,
+				89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -975,14 +1003,19 @@
 		216640881EBADBA000746B8E /* Setup + Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				890D14FB2AB7469300672FFE /* PennMobile.swift */,
 				216640631EBADADA00746B8E /* AppDelegate.swift */,
 				F299616E23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift */,
+				890D14FF2AB74D6000672FFE /* RootView.swift */,
+				890D15052AB76C3600672FFE /* MainTabView.swift */,
+				89EECCC82B014CA300E73EEB /* MainTabViewCoordinator.swift */,
+				890D15032AB75E4300672FFE /* Features.swift */,
 				B6665A172071E63800F49A9C /* TabBarController.swift */,
-				EF389EC521861B8500E29C6A /* HomeNavigationController.swift */,
 				21B556162224FDC500D80F61 /* RootViewController.swift */,
 				21B556182224FDF700D80F61 /* SplashViewController.swift */,
 				21640D6120114A28002F33CA /* ControllerModel.swift */,
 				6C1991BA27B5C73800BBB402 /* Environment.swift */,
+				897F0A922B08256C0060583A /* Toasts.swift */,
 			);
 			path = "Setup + Navigation";
 			sourceTree = "<group>";
@@ -1011,7 +1044,6 @@
 				212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */,
 				2196D5E21F5263AC002058A0 /* AnnouncementHeaderView.swift */,
 				216640C11EBADC9300746B8E /* GenericControllers.swift */,
-				EF389EC321860B7000E29C6A /* StatusBar.swift */,
 			);
 			path = Generics;
 			sourceTree = "<group>";
@@ -1208,6 +1240,7 @@
 		21B8BBBB2224F98B00EBC1D0 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				890D14FD2AB749BA00672FFE /* AuthManager.swift */,
 				21737FD623A1DEE7002DCD07 /* LabsLoginController.swift */,
 				895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */,
 				21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */,
@@ -1217,7 +1250,7 @@
 				89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */,
 				21B653BA2245FFA3001A97C5 /* CampusExpressNetworkManager.swift */,
 				21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */,
-				21B8BBBC2224F9AA00EBC1D0 /* LoginController.swift */,
+				890D15012AB74F0700672FFE /* LoggedOutView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1296,6 +1329,8 @@
 			children = (
 				6C6FE1B827B9B8CB0093FD13 /* MoreCell.swift */,
 				6C6FE1B927B9B8CB0093FD13 /* MoreViewController.swift */,
+				895D98AF2ACF312300F8C5DF /* MoreView.swift */,
+				89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */,
 				6C6FE1BA27B9B8CB0093FD13 /* PAC Code */,
 				6C6FE1BD27B9B8CB0093FD13 /* MoreHeaderView.swift */,
 				6C6FE1BE27B9B8CB0093FD13 /* Profile Page */,
@@ -1342,6 +1377,7 @@
 				6CAA4B4827A7639600473CC6 /* Networking */,
 				6CAA4B4A27A7639600473CC6 /* Model */,
 				42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */,
+				89534BA12AEEC8AB003ABB70 /* PollView.swift */,
 				42CC49D12AAE3904008C41EE /* PollsView.swift */,
 			);
 			path = Polls;
@@ -2323,9 +2359,11 @@
 				219F01F41FB7CCFA006BBC4E /* SAConfettiView.swift in Sources */,
 				219F01FB1FBE973A006BBC4E /* LaundryNotificationCenter.swift in Sources */,
 				6CC88D5F27B1BF51006896F6 /* CardView.swift in Sources */,
+				895D98B02ACF312300F8C5DF /* MoreView.swift in Sources */,
 				214E254922480818004CB9C4 /* GSRDeletable.swift in Sources */,
 				F2770AEF2545E3B0001EA1DD /* CourseAlertNetworkManager.swift in Sources */,
 				6CC88D6427B1BF51006896F6 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */,
+				890D14FC2AB7469300672FFE /* PennMobile.swift in Sources */,
 				EFE2D6FC239B12270020F6BF /* GSRManageGroupController.swift in Sources */,
 				EFE2D6F8239B120E0020F6BF /* GSRManageGroupViewModel.swift in Sources */,
 				B6665A182071E63800F49A9C /* TabBarController.swift in Sources */,
@@ -2337,7 +2375,6 @@
 				2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */,
 				6C6FE1CB27B9B8CB0093FD13 /* PacCodeViewController.swift in Sources */,
 				6CC88D6927B1BF51006896F6 /* DiningViewHeader.swift in Sources */,
-				EF389EC421860B7000E29C6A /* StatusBar.swift in Sources */,
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
@@ -2346,6 +2383,7 @@
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
+				89E0DE6C2AE415A800E918FF /* HomeCardView.swift in Sources */,
 				EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */,
 				6C6FE1CA27B9B8CB0093FD13 /* MoreViewController.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
@@ -2354,12 +2392,12 @@
 				6CAA4B5427A763A400473CC6 /* HomePollsCellFooter.swift in Sources */,
 				97E79E032100DA1200D3D606 /* BuildingCell.swift in Sources */,
 				F2DD593D259817EC0085CC22 /* SearchResultsCell.swift in Sources */,
+				89CA5FBF2AD315E400B7D3EF /* ProfileRowView.swift in Sources */,
 				89CA728D291721D200CF72FE /* KeychainAccessible+Extensions.swift in Sources */,
 				97E79E052100DA1200D3D606 /* BuildingSectionHeader.swift in Sources */,
 				217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */,
 				2138D559225998A300D67CA2 /* GSRGroupController.swift in Sources */,
 				217A783D204D97B6004F1227 /* ModularTableViewModel.swift in Sources */,
-				EF389EC621861B8500E29C6A /* HomeNavigationController.swift in Sources */,
 				6C44198F27B9A0E400993028 /* EventsAPI.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				6C6FE1CE27B9B8CB0093FD13 /* ProfilePageViewController.swift in Sources */,
@@ -2401,6 +2439,7 @@
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
+				89E0DE6A2AE396E200E918FF /* HomeViewModel.swift in Sources */,
 				F27AA01823BC6CEC00276C4F /* PermissionView.swift in Sources */,
 				2189C0852027CDB800771C1F /* GSRController.swift in Sources */,
 				6C84D9E526293E680039C57F /* UIKit Views.swift in Sources */,
@@ -2412,6 +2451,7 @@
 				EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */,
 				217A7841204D9802004F1227 /* ModularTableViewItemTypes.swift in Sources */,
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
+				890D15002AB74D6000672FFE /* RootView.swift in Sources */,
 				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
 				F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
@@ -2427,6 +2467,7 @@
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
 				EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */,
 				6CC88D6227B1BF51006896F6 /* PredictionsGraphView+SmoothedData.swift in Sources */,
+				890D15022AB74F0700672FFE /* LoggedOutView.swift in Sources */,
 				F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */,
 				6CC88D6527B1BF51006896F6 /* PredictionsGraphView+AxisLabels.swift in Sources */,
 				21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */,
@@ -2479,10 +2520,12 @@
 				42CC49D22AAE3904008C41EE /* PollsView.swift in Sources */,
 				6C23AF9526E57903002F60F0 /* (null) in Sources */,
 				F2D416C528E9F8C800F50CAB /* NotificationViewModel.swift in Sources */,
+				890D14FE2AB749BA00672FFE /* AuthManager.swift in Sources */,
 				B658393B1FABD295009486FC /* LaundryAPIService.swift in Sources */,
 				97E79E042100DA1200D3D606 /* BuildingHeaderCell.swift in Sources */,
 				6CC88D5C27B1BF51006896F6 /* DiningBalanceView.swift in Sources */,
 				B62875EB2115302200FB2873 /* MapViewController.swift in Sources */,
+				89EECCC92B014CA300E73EEB /* MainTabViewCoordinator.swift in Sources */,
 				2189C0A92027CE4B00771C1F /* RangeSlider.swift in Sources */,
 				F2562A262551F6D40021C92F /* CourseAlertSettingsController.swift in Sources */,
 				87FE6479290EE4BE00AFADF6 /* NotificationAPIModel.swift in Sources */,
@@ -2495,9 +2538,11 @@
 				C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
+				897F0A932B08256C0060583A /* Toasts.swift in Sources */,
 				212B835E222A37DD00F835D6 /* HomeFeatureCell.swift in Sources */,
 				21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */,
 				21640D6220114A29002F33CA /* ControllerModel.swift in Sources */,
+				89534BA22AEEC8AB003ABB70 /* PollView.swift in Sources */,
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
@@ -2507,6 +2552,7 @@
 				6CC88D6B27B1BF51006896F6 /* DiningVenueView.swift in Sources */,
 				42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */,
 				6C11C08026F842CF00407C04 /* HomeUpdateCellItem.swift in Sources */,
+				890D15062AB76C3600672FFE /* MainTabView.swift in Sources */,
 				895C75E628FA165100A329A0 /* LabsLoginSwiftUI.swift in Sources */,
 				97E79E072100DA1200D3D606 /* BuildingImageCell.swift in Sources */,
 				217A783F204D97F8004F1227 /* ModularTableViewItem.swift in Sources */,
@@ -2514,10 +2560,12 @@
 				6CAE4351253370B300BD0200 /* FadingScrollView.swift in Sources */,
 				B6040A361F8F24D900E4B783 /* AddLaundryCell.swift in Sources */,
 				219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */,
+				89913EAD2AE44FCE00AE30C9 /* CalendarCardView.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				2189C0A82027CE4B00771C1F /* ThumbLayer.swift in Sources */,
 				E735C9422AF81498000F7376 /* DiningSettingsView.swift in Sources */,
 				21B653B92245EB67001A97C5 /* PennAuthRequestable.swift in Sources */,
+				89E0DE682AE38A8800E918FF /* HomeView.swift in Sources */,
 				421B03CA29E22035003AE6DC /* FitnessRoomRow.swift in Sources */,
 				F2C7E5F5259EE1CA0043A98A /* CourseAlertSettings.swift in Sources */,
 				211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */,
@@ -2538,6 +2586,7 @@
 				F212BE8623B6DA8D00ED46A1 /* PrivacyTableViewCell.swift in Sources */,
 				C312D4B92AD4DC8900EDB893 /* Networking.swift in Sources */,
 				426A0B51299034910066C7B7 /* DiningAnalyticsGraph.swift in Sources */,
+				890D15042AB75E4300672FFE /* Features.swift in Sources */,
 				6C6FE1CC27B9B8CB0093FD13 /* PacCodeNetworkManager.swift in Sources */,
 				6CC88D5927B1BF51006896F6 /* DiningLoginViewSwiftUI.swift in Sources */,
 				89B454DF28E1161B00BC918B /* PathAtPennNetworkManager.swift in Sources */,
@@ -2549,7 +2598,6 @@
 				21B556192224FDF700D80F61 /* SplashViewController.swift in Sources */,
 				B650C5641FA43FC600922E98 /* LaundryRoom.swift in Sources */,
 				EF30077423EE139F006C9CF0 /* HomeGroupInvitesCell.swift in Sources */,
-				21B8BBBD2224F9AA00EBC1D0 /* LoginController.swift in Sources */,
 				6E903D382AC9C67000F2D384 /* ImageNetworkingManager.swift in Sources */,
 				EFE2D6FB239B12270020F6BF /* GSRGroupNewIntialController.swift in Sources */,
 				21B556172224FDC500D80F61 /* RootViewController.swift in Sources */,
@@ -2797,6 +2845,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = navigation;
 				CF_BUNDLE_SHORT_VERSION_STRING = 7.3.9;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
@@ -2810,7 +2859,7 @@
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2838,6 +2887,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = navigation;
 				CF_BUNDLE_SHORT_VERSION_STRING = 7.3.9;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = PennMobile/PennMobile.entitlements;
@@ -2849,7 +2899,7 @@
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

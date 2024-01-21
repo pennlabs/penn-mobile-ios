@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import PennMobileShared
 
-class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
+class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert, LegacyToastPresentingViewController {
 
     // MARK: UI Elements
     fileprivate var tableView: UITableView!
@@ -30,7 +30,18 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
     fileprivate var viewModel: GSRViewModel!
 
     var startingLocation: GSRLocation!
-
+    
+    var toastPresentingController: LegacyToastPresentingViewController?
+    var presentToast: ToastPresentationCallback? {
+        get {
+            toastPresentingController?.presentToast
+        }
+        
+        set {
+            toastPresentingController?.presentToast = newValue
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareViewModel()
@@ -58,14 +69,8 @@ class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert {
         bookingsBarButton = UIBarButtonItem(title: "Bookings", style: .done, target: self, action: #selector(handleBookingsBarButtonPressed(_:)))
         bookingsBarButton.tintColor = UIColor.navigation
 
-        if let tabBarController = tabBarController {
-            tabBarController.title = "Study Room Booking"
-            tabBarController.navigationItem.leftBarButtonItem = bookingsBarButton
-            tabBarController.navigationItem.rightBarButtonItem = barButton
-        } else {
-            self.title = "Tap to book"
-            self.navigationItem.rightBarButtonItem = barButton
-        }
+        title = "Study Room Booking"
+        navigationItem.rightBarButtonItem = barButton
     }
 }
 
@@ -106,7 +111,7 @@ extension GSRController {
         tableView.tableFooterView = UIView()
 
         view.addSubview(tableView)
-        _ = tableView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        _ = tableView.anchor(rangeSlider.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, topConstant: 8, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 
     private func prepareClosedView() {
@@ -170,7 +175,7 @@ extension GSRController: GSRViewModelDelegate {
                         self.rangeSlider.reload()
                         self.refreshBarButton()
                     case .failure:
-                        self.navigationVC?.addStatusBar(text: .apiError)
+                        self.present(toast: .apiError)
                     }
                 }
             }

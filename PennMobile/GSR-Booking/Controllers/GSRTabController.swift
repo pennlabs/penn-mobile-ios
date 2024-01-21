@@ -9,8 +9,10 @@
 import Foundation
 import XLPagerTabStrip
 
-class GSRTabController: ButtonBarPagerTabStripViewController {
+class GSRTabController: ButtonBarPagerTabStripViewController, LegacyToastPresentingViewController {
 
+    var presentToast: ToastPresentationCallback?
+    
     fileprivate var ownContainerView: UIScrollView!
     fileprivate var barView: ButtonBarView!
     fileprivate var separatorLine: UIView!
@@ -57,8 +59,6 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         _ = separatorLine.anchor(barView.bottomAnchor, left: self.view.leftAnchor, bottom: nil, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 1)
         _ = ownContainerView.anchor(separatorLine.bottomAnchor, left: self.view.leftAnchor, bottom: self.view.safeAreaLayoutGuide.bottomAnchor, right: self.view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
 
-        self.ownContainerView.isHidden = true
-
         super.viewDidLoad()
 
         changeCurrentIndexProgressive = { (oldCell: ButtonBarViewCell?, newCell: ButtonBarViewCell?, _: CGFloat, changeCurrentIndex: Bool, _: Bool) -> Void in
@@ -68,15 +68,6 @@ class GSRTabController: ButtonBarPagerTabStripViewController {
         }
 
         view.backgroundColor = .uiBackground
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        let topSpace: CGFloat?
-        topSpace = self.view.safeAreaInsets.top
-        if let topSpace = topSpace, topSpace > 0 {
-            self.ownContainerView.isHidden = false
-        }
     }
 
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {

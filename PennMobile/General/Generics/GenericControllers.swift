@@ -11,17 +11,12 @@ import SwiftUI
 
 class GenericTableViewController: UITableViewController, Trackable {
 
-    var navigationVC: HomeNavigationController?
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationVC?.navigationBar.tintColor = UIColor.navigation
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationVC = self.navigationController as? HomeNavigationController
-        navigationVC?.navigationBar.tintColor = UIColor.navigation
 
         if trackScreen {
             trackScreen(screenName)
@@ -37,7 +32,6 @@ class GenericTableViewController: UITableViewController, Trackable {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        navigationVC?.hideBar(animated: false)
     }
 
     func setupNavBar() {
@@ -58,19 +52,13 @@ class GenericTableViewController: UITableViewController, Trackable {
 
 class GenericViewController: UIViewController, Trackable {
 
-    var navigationVC: HomeNavigationController?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .uiBackground
-        navigationVC = navigationController as? HomeNavigationController
-        navigationVC?.navigationBar.tintColor = UIColor.navigation
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        navigationVC?.navigationBar.tintColor = UIColor.navigation
 
         if trackScreen {
             trackScreen(screenName ?? title)
@@ -86,7 +74,6 @@ class GenericViewController: UIViewController, Trackable {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        navigationVC?.hideBar(animated: false)
     }
 
     func setupNavBar() {

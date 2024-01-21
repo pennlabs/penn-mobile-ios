@@ -94,7 +94,7 @@ struct DiningAnalyticsView: View {
                 DiningLoginNavigationView()
                     .environmentObject(diningAnalyticsViewModel)
             }
-            .navigationTitle("Analytics")
+            .navigationTitle(Text("Dining Analytics"))
             .sheet(isPresented: $showSettingsSheet) {
                 DiningSettingsView(viewModel: diningAnalyticsViewModel) // Replace with your settings view
             }
