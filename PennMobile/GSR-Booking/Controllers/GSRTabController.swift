@@ -9,8 +9,10 @@
 import Foundation
 import XLPagerTabStrip
 
-class GSRTabController: ButtonBarPagerTabStripViewController {
+class GSRTabController: ButtonBarPagerTabStripViewController, LegacyToastPresentingViewController {
 
+    var presentToast: ToastPresentationCallback?
+    
     fileprivate var ownContainerView: UIScrollView!
     fileprivate var barView: ButtonBarView!
     fileprivate var separatorLine: UIView!

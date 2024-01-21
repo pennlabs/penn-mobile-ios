@@ -76,28 +76,24 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
                 // Webview has redirected to desired site.
                 self.handleSuccessfulNavigation(webView, decisionHandler: decisionHandler)
             } else {
-                if url.absoluteString.contains("password") {
-                    webView.evaluateJavaScript("document.getElementById('pennname').value;") { (result, _) in
-                        if let pennkey = result as? String {
-                            webView.evaluateJavaScript("document.getElementById('password').value;") { (result, _) in
-                                if let password = result as? String {
-                                    if !pennkey.isEmpty && !password.isEmpty {
-                                        self.pennkey = pennkey
-                                        self.password = password
-                                        if pennkey == "root" && password == "root" {
-                                            self.handleDefaultLogin(decisionHandler: decisionHandler)
-                                            return
-                                        }
+                webView.evaluateJavaScript("document.querySelector('input[name=j_username]').value;") { (result, _) in
+                    if let pennkey = result as? String {
+                        webView.evaluateJavaScript("document.querySelector('input[name=j_password]').value;") { (result, _) in
+                            if let password = result as? String {
+                                if !pennkey.isEmpty && !password.isEmpty {
+                                    self.pennkey = pennkey
+                                    self.password = password
+                                    if pennkey == "root" && password == "root" {
+                                        self.handleDefaultLogin(decisionHandler: decisionHandler)
+                                        return
                                     }
                                 }
-                                decisionHandler(.allow)
                             }
-                        } else {
                             decisionHandler(.allow)
                         }
+                    } else {
+                        decisionHandler(.allow)
                     }
-                } else {
-                    decisionHandler(.allow)
                 }
             }
         }
@@ -123,7 +119,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             return
         }
 
-        if url.absoluteString.contains("twostep") {
+        if url.absoluteString.contains("prompt") {
             guard let pennkey = pennkey, let password = password else { return }
             if password != KeychainAccessible.instance.getPassword() {
                 UserDBManager.shared.updateAnonymizationKeys()
@@ -138,7 +134,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
 
     func autofillCredentials() {
         guard let pennkey = pennkey else { return }
-        webView.evaluateJavaScript("document.getElementById('pennname').value = '\(pennkey)'") { (_, _) in
+        webView.evaluateJavaScript("document.getElementById('username').value = '\(pennkey)'") { (_, _) in
         }
         guard let password = password else { return }
         webView.evaluateJavaScript("document.getElementById('password').value = '\(password)'") { (_, _) in
