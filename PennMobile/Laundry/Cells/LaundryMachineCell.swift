@@ -34,6 +34,17 @@ class LaundryMachineCell: UICollectionViewCell {
         iv.isHidden = true
         return iv
     }()
+    
+    private let idLabel: UILabel = {
+        let label = UILabel()
+        label.text = ""
+        label.font = .secondaryInformationFont
+        label.textColor = .labelTertiary
+        label.layer.cornerRadius = 4
+        label.layer.masksToBounds = true
+        label.textAlignment = .center
+        return label
+    }()
 
     private let timerLabel: UILabel = {
         let label = UILabel()
@@ -67,6 +78,12 @@ class LaundryMachineCell: UICollectionViewCell {
         self.addSubview(bellView)
         bellView.centerYAnchor.constraint(equalTo: topAnchor).isActive = true
         _ = bellView.anchor(nil, left: nil, bottom: nil, right: rightAnchor, topConstant: -8, leftConstant: 0, bottomConstant: 0, rightConstant: -8, widthConstant: 20, heightConstant: 20)
+        
+        self.addSubview(idLabel)
+        _ = idLabel.anchor(bottomAnchor, left: leftAnchor,
+                               bottom: bottomAnchor, right: rightAnchor,
+                               topConstant: 0, leftConstant: 0, bottomConstant: -20, rightConstant: 0,
+                               widthConstant: 0, heightConstant: 20)
     }
 
     func updateCell(with machine: LaundryMachine) {
@@ -89,6 +106,7 @@ class LaundryMachineCell: UICollectionViewCell {
         } else {
             timerLabel.text = ""
         }
+        idLabel.text = "#\(machine.id)"
 
         bellView.isHidden = !machine.isUnderNotification()
     }

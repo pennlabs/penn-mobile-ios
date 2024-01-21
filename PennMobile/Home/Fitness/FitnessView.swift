@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct FitnessView: View {
     @State var rooms: [FitnessRoom] = []

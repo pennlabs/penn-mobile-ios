@@ -12,10 +12,22 @@ public enum WidgetKind {
     public static let courseWidgets = [
         coursesDay
     ]
+    
+    public static let diningHours = "org.pennlabs.PennMobile.widgets.dininghours"
+    
+    public static let diningHoursWidgets = [
+        diningHours
+    ]
 
     public static let diningAnalyticsHome = "org.pennlabs.PennMobile.widgets.dininganalytics.home"
 
     public static let diningAnalyticsWidgets = [
         diningAnalyticsHome
+    ]
+    
+    public static let fitnessHome = "org.pennlabs.PennMobile.widgets.fitness.home"
+    
+    public static let fitnessHomeWidgets = [
+        fitnessHome
     ]
 }

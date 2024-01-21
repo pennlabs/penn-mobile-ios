@@ -67,20 +67,21 @@ public class LaundryMachine: Hashable, Codable {
 // MARK: - Comparable
 extension LaundryMachine: Comparable {
     public static func < (lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {
-        switch (lhs.status, rhs.status) {
-        case (.running, .open):
-            return true
-        case (.open, .running):
-            return false
-        case (_, .offline),
-             (_, .outOfOrder):
-            return true
-        case (.offline, _),
-             (.outOfOrder, _):
-            return false
-        default:
-            return lhs.timeRemaining < rhs.timeRemaining
-        }
+//        switch (lhs.status, rhs.status) {
+//        case (.running, .open):
+//            return true
+//        case (.open, .running):
+//            return false
+//        case (_, .offline),
+//             (_, .outOfOrder):
+//            return true
+//        case (.offline, _),
+//             (.outOfOrder, _):
+//            return false
+//        default:
+//            return lhs.timeRemaining < rhs.timeRemaining
+//        }
+        return lhs.id < rhs.id
     }
 
     public static func == (lhs: LaundryMachine, rhs: LaundryMachine) -> Bool {

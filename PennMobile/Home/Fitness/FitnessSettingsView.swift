@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Kingfisher
+import PennMobileShared
 
 struct FitnessSelectView: View {
     @Binding var showFitnessSettings: Bool
