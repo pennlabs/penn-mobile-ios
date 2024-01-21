@@ -31,7 +31,7 @@ struct DiningSettingsView: View {
                     
                     // Toggle("Include guest swipes", isOn: $totalData)
                 }
-                .navigationBarTitle("Dining Analytics Settings")
+                .navigationBarTitle("Dining Analytics Settings", displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
@@ -56,7 +56,7 @@ struct DiningSettingsView: View {
                     
                     // Toggle("Include guest swipes", isOn: $totalData)
                 }
-                .navigationBarTitle("Dining Analytics Settings")
+                .navigationBarTitle("Dining Analytics Settings", displayMode: .inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {
