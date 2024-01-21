@@ -57,12 +57,6 @@ struct DiningAnalyticsView: View {
                     } else {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 20) {
-//                                HStack() {
-//                                    Text("Dining Analytics")
-//                                        .font(.system(size: 32))
-//                                        .bold()
-//                                    
-//                                }
                                 // Only show dollar history view if there is data for the graph
                                 if !dollarHistory.wrappedValue.isEmpty {
                                     CardView {
@@ -128,9 +122,6 @@ struct DiningAnalyticsView: View {
                     } else {
                         ScrollView {
                             VStack(alignment: .leading, spacing: 20) {
-//                                Text("Dining Analytics")
-//                                    .font(.system(size: 32))
-//                                    .bold()
                                 // Only show dollar history view if there is data for the graph
                                 if !dollarXYHistory.wrappedValue.isEmpty {
                                     CardView {

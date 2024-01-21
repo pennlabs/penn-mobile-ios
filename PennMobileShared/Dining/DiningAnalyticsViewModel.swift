@@ -34,12 +34,6 @@ extension DiningAnalyticsBalance: Comparable {
 }
 
 public class DiningAnalyticsViewModel: ObservableObject {
-    @Published public var selectedOptionIndex = 0 {
-        didSet {
-            populateAxesAndPredictions()
-        }
-    }
-    
     public static let dollarHistoryDirectory = "diningAnalyticsDollarData"
     public static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
     public static let planStartDateDirectory = "diningAnalyticsPlanStartDate"
@@ -55,6 +49,12 @@ public class DiningAnalyticsViewModel: ObservableObject {
     @Published public var dollarAxisLabel: ([String], [String]) = ([], [])
     @Published public var dollarSlope: Double = 0.0
     @Published public var swipeSlope: Double = 0.0
+    
+    @Published public var selectedOptionIndex = 0 {
+        didSet {
+            populateAxesAndPredictions()
+        }
+    }
 
     var yIntercept = 0.0
     var slope = 0.0
@@ -65,6 +65,7 @@ public class DiningAnalyticsViewModel: ObservableObject {
         clearStorageIfNewSemester()
         populateAxesAndPredictions()
     }
+    
     func clearStorageIfNewSemester() {
         if Storage.fileExists(DiningAnalyticsViewModel.dollarHistoryDirectory, in: .groupDocuments), let nextAnalyticsStartDate = Storage.retrieve(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self).last?.date,
             nextAnalyticsStartDate < Date.startOfSemester {
@@ -76,6 +77,7 @@ public class DiningAnalyticsViewModel: ObservableObject {
             Storage.remove(DiningAnalyticsViewModel.planStartDateDirectory, from: .groupDocuments)
         }
     }
+    
     public func refresh(refreshWidgets: Bool = false) async {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
             return
@@ -128,6 +130,7 @@ public class DiningAnalyticsViewModel: ObservableObject {
               let maxSwipeBalance = (self.swipeHistory.max { $0.balance < $1.balance }) else {
             return
         }
+        
         // If no dining plan found, refresh will return, these are just placeholders
         var startDollarBalance = maxDollarBalance
         var startSwipeBalance = maxSwipeBalance
@@ -158,72 +161,91 @@ public class DiningAnalyticsViewModel: ObservableObject {
             }
         }
 
-        // Get dollar predictions using data from all dates and dollar predictions using data from the last 7 days.
-        //  Then average the two.
-        let dollarPredictions = self.getPredictions(firstBalance: startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
-        let last7dollarPredictions = self.getPredictions(firstBalance: last7startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
+        // Get dollar predictions using data from all dates and dollar predictions using data for the appropriate calculation
+        var selectedDollarSlope = 0.0
+        var selectedSwipeSlope = 0.0
+        if selectedOptionIndex == 0 {
+            (selectedDollarSlope, _) = self.getSlopeAndWeight(firstBalance: startDollarBalance, lastBalance: lastDollarBalance)
+            (selectedSwipeSlope, _) = self.getSlopeAndWeight(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance)
+        } else if selectedOptionIndex == 1 {
+            let (allDollarSlope, _) = self.getSlopeAndWeight(firstBalance: startDollarBalance, lastBalance: lastDollarBalance)
+            let (last7DollarSlope, _) = self.getSlopeAndWeight(firstBalance: last7startDollarBalance, lastBalance: lastDollarBalance)
+            selectedDollarSlope = (allDollarSlope + last7DollarSlope) / 2.0
+            
+            let (allSwipeSlope, _) = self.getSlopeAndWeight(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance)
+            let (last7SwipeSlope, _) = self.getSlopeAndWeight(firstBalance: last7startSwipeBalance, lastBalance: lastSwipeBalance)
+            selectedSwipeSlope = (allSwipeSlope + last7SwipeSlope) / 2.0
+        } else if selectedOptionIndex == 2 {
+            selectedDollarSlope = getWeightedAverageSlope(allBalance: self.dollarHistory)
+            selectedSwipeSlope = getWeightedAverageSlope(allBalance: self.swipeHistory)
+        }
         
-        let (averageSlopeD, predictedZeroDateD, endBalanceD) = getWeightedAveragePredictions(allBalance: self.dollarHistory)
-        let (averageSlopeS, predictedZeroDateS, endBalanceS) = getWeightedAveragePredictions(allBalance: self.swipeHistory)
+        let dollarPredictions = self.getPredictions(firstBalance: lastDollarBalance, slope: selectedDollarSlope, maxBalance: maxDollarBalance)
+        self.dollarSlope = dollarPredictions.slope
+        self.dollarPredictedZeroDate = dollarPredictions.predictedZeroDate
+        self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance
+        
+        let swipePredictions = self.getPredictions(firstBalance: lastSwipeBalance, slope: selectedSwipeSlope, maxBalance: maxSwipeBalance)
+        self.swipeSlope = swipePredictions.slope
+        self.swipesPredictedZeroDate = swipePredictions.predictedZeroDate
+        self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
+        
+//        let dollarPredictions = self.getPredictions(firstBalance: startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
+//        let last7dollarPredictions = self.getPredictions(firstBalance: last7startDollarBalance, lastBalance: lastDollarBalance, maxBalance: maxDollarBalance)
+//        
+//        let (averageSlopeD, predictedZeroDateD, endBalanceD) = getWeightedAveragePredictions(allBalance: self.dollarHistory)
+//        let (averageSlopeS, predictedZeroDateS, endBalanceS) = getWeightedAveragePredictions(allBalance: self.swipeHistory)
         
         //OPTIONS DOLLAR
-        if (selectedOptionIndex == 0) {
-            self.dollarSlope = self.getSlope(firstBalance: startDollarBalance, lastBalance: lastDollarBalance)
-            self.dollarPredictedZeroDate = self.predictZeroDate(firstBalance: startDollarBalance, slope: self.dollarSlope)
-            self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance
-            self.dollarSlope = dollarPredictions.slope
-
-        } else if (selectedOptionIndex == 1) {
-            let totalSlope = self.getSlope(firstBalance: startDollarBalance, lastBalance: lastDollarBalance)
-            let last7Slope = self.getSlope(firstBalance: last7startDollarBalance, lastBalance: lastDollarBalance)
-            self.dollarSlope = (totalSlope + last7Slope) / 2
-            self.dollarPredictedZeroDate = self.predictZeroDate(firstBalance: startDollarBalance, slope: self.dollarSlope)
-            self.predictedDollarSemesterEndBalance = (dollarPredictions.predictedEndBalance + last7dollarPredictions.predictedEndBalance) / 2
-            self.dollarSlope = (dollarPredictions.slope + last7dollarPredictions.slope) / 2
-        } else if (selectedOptionIndex == 2) {
-            self.dollarSlope = averageSlopeD
-            self.dollarPredictedZeroDate = predictedZeroDateD
-            self.predictedDollarSemesterEndBalance = endBalanceD
-
-        }
+//        if (selectedOptionIndex == 0) {
+//            self.dollarSlope = self.getSlope(firstBalance: startDollarBalance, lastBalance: lastDollarBalance)
+//            self.dollarPredictedZeroDate = self.predictZeroDate(firstBalance: startDollarBalance, slope: self.dollarSlope)
+//            self.predictedDollarSemesterEndBalance = dollarPredictions.predictedEndBalance
+//            self.dollarSlope = dollarPredictions.slope
+//
+//        } else if (selectedOptionIndex == 1) {
+//            let totalSlope = self.getSlope(firstBalance: startDollarBalance, lastBalance: lastDollarBalance)
+//            let last7Slope = self.getSlope(firstBalance: last7startDollarBalance, lastBalance: lastDollarBalance)
+//            self.dollarSlope = (totalSlope + last7Slope) / 2
+//            self.dollarPredictedZeroDate = self.predictZeroDate(firstBalance: startDollarBalance, slope: self.dollarSlope)
+//            self.predictedDollarSemesterEndBalance = (dollarPredictions.predictedEndBalance + last7dollarPredictions.predictedEndBalance) / 2
+//            self.dollarSlope = (dollarPredictions.slope + last7dollarPredictions.slope) / 2
+//        } else if (selectedOptionIndex == 2) {
+//            self.dollarSlope = averageSlopeD
+//            self.dollarPredictedZeroDate = predictedZeroDateD
+//            self.predictedDollarSemesterEndBalance = endBalanceD
+//
+//        }
         
         self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)
         
         // Get swipe predictions using data from all dates and swipe predictions using data from the last 7 days.
         //  Then average the two.
-        let swipePredictions = self.getPredictions(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: maxSwipeBalance)
-        let last7swipePredictions = self.getPredictions(firstBalance: last7startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: last7maxSwipeBalance)
+//        let swipePredictions = self.getPredictions(firstBalance: startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: maxSwipeBalance)
+//        let last7swipePredictions = self.getPredictions(firstBalance: last7startSwipeBalance, lastBalance: lastSwipeBalance, maxBalance: last7maxSwipeBalance)
         
         //OPTIONS SWIPE
-        if (selectedOptionIndex == 0) {
-            self.swipeSlope = swipePredictions.slope
-            self.swipesPredictedZeroDate = self.predictZeroDate(firstBalance: startSwipeBalance, slope: self.swipeSlope)
-            self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
-
-        } else if (selectedOptionIndex == 1) {
-            self.swipeSlope = (swipePredictions.slope + last7swipePredictions.slope) / 2
-            self.swipesPredictedZeroDate = self.predictZeroDate(firstBalance: startSwipeBalance, slope: self.swipeSlope)
-            self.predictedSwipesSemesterEndBalance = (swipePredictions.predictedEndBalance + last7swipePredictions.predictedEndBalance) / 2
-
-        } else if (selectedOptionIndex == 2) {
-            self.swipeSlope = averageSlopeS
-            self.swipesPredictedZeroDate = predictedZeroDateS
-            self.predictedSwipesSemesterEndBalance = endBalanceS
-
-        }
+//        if (selectedOptionIndex == 0) {
+//            self.swipeSlope = swipePredictions.slope
+//            self.swipesPredictedZeroDate = self.predictZeroDate(firstBalance: startSwipeBalance, slope: self.swipeSlope)
+//            self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
+//
+//        } else if (selectedOptionIndex == 1) {
+//            self.swipeSlope = (swipePredictions.slope + last7swipePredictions.slope) / 2
+//            self.swipesPredictedZeroDate = self.predictZeroDate(firstBalance: startSwipeBalance, slope: self.swipeSlope)
+//            self.predictedSwipesSemesterEndBalance = (swipePredictions.predictedEndBalance + last7swipePredictions.predictedEndBalance) / 2
+//
+//        } else if (selectedOptionIndex == 2) {
+//            self.swipeSlope = averageSlopeS
+//            self.swipesPredictedZeroDate = predictedZeroDateS
+//            self.predictedSwipesSemesterEndBalance = endBalanceS
+//
+//        }
         
         self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
     }
     
-    func getSlopeAndWeight(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance) -> (slope: Double, weight: Double) {
-        let balanceDiff = lastBalance.balance - firstBalance.balance
-        let timeDiff = Double(Calendar.current.dateComponents([.day], from: firstBalance.date, to: lastBalance.date).day!)
-        let weight = timeDiff > 0 ? 1 / timeDiff : 1  // Inverse of days as weight
-        let slope = balanceDiff / timeDiff
-        return (slope, weight)
-    }
-    
-    func getWeightedAveragePredictions(allBalance: [DiningAnalyticsBalance]) -> (slope: Double, predictedZeroDate: Date, predictedEndBalance: Double) {
+    func getWeightedAverageSlope(allBalance: [DiningAnalyticsBalance]) -> Double {
         var totalWeightedSlope = 0.0
         var totalWeight = 0.0
 
@@ -233,14 +255,8 @@ public class DiningAnalyticsViewModel: ObservableObject {
             totalWeight += weight
         }
 
-        let averageSlope = totalWeight > 0 ? totalWeightedSlope / totalWeight : 0.0
-
-        let firstBalance = allBalance.first ?? DiningAnalyticsBalance(date: Date(), balance: 0)
-        let lastBalance = allBalance.last ?? DiningAnalyticsBalance(date: Date(), balance: 0)
-        let zeroDate = predictZeroDate(firstBalance: firstBalance, slope: averageSlope)
-        let endBalance = predictSemesterEndBalance(firstBalance: firstBalance, lastBalance: lastBalance, slope: averageSlope)
-
-        return (averageSlope, zeroDate, endBalance)
+        let averageSlope = totalWeight > 0 ? totalWeightedSlope / totalWeight : totalWeightedSlope
+        return averageSlope
     }
     
     func filterData() {
@@ -265,38 +281,46 @@ public class DiningAnalyticsViewModel: ObservableObject {
             }.map { $0.element }
         }
     }
-
-    func getPredictions(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance, maxBalance: DiningAnalyticsBalance) -> (slope: Double, predictedZeroDate: Date, predictedEndBalance: Double) {
-        if firstBalance.date == lastBalance.date || firstBalance.balance == lastBalance.balance {
+    
+    func getPredictions(firstBalance: DiningAnalyticsBalance, slope: Double, maxBalance: DiningAnalyticsBalance) -> (slope: Double, predictedZeroDate: Date, predictedEndBalance: Double) {
+        if slope == 0.0 || abs(slope) == Double.infinity {
             let zeroDate = Calendar.current.date(byAdding: .day, value: 1, to: Date.endOfSemester)!
-            return (Double(0.0), zeroDate, lastBalance.balance)
+            return (Double(0.0), zeroDate, firstBalance.balance)
         } else {
             // This is the slope needed to calculate zeroDate and endBalance
-            var slope = self.getSlope(firstBalance: firstBalance, lastBalance: lastBalance)
             let zeroDate = self.predictZeroDate(firstBalance: firstBalance, slope: slope)
-            let endBalance = self.predictSemesterEndBalance(firstBalance: firstBalance, lastBalance: lastBalance, slope: slope)
+            let endBalance = self.predictSemesterEndBalance(firstBalance: firstBalance, slope: slope)
             let fullSemester = Date.startOfSemester.distance(to: Date.endOfSemester)
             let fullZeroDistance = firstBalance.date.distance(to: zeroDate)
             let deltaX = fullZeroDistance / fullSemester
             let deltaY = firstBalance.balance / maxBalance.balance
-            slope = -deltaY / deltaX // Resetting slope to different value for graph format
-            return (slope, zeroDate, endBalance)
+            let graphSlope = -deltaY / deltaX // Resetting slope to different value for graph format
+            return (graphSlope, zeroDate, endBalance)
         }
     }
-    func getSlope(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance) -> Double {
+    
+    func getSlopeAndWeight(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance) -> (slope: Double, weight: Double) {
+        if firstBalance.date == lastBalance.date || firstBalance.balance == lastBalance.balance {
+            return (Double(0.0), 1)
+        }
         let balanceDiff = lastBalance.balance - firstBalance.balance
         let timeDiff = Double(Calendar.current.dateComponents([.day], from: firstBalance.date, to: lastBalance.date).day!)
-        return balanceDiff / timeDiff
+        let weight = balanceDiff > 0 ? 0 : (timeDiff > 0 ? timeDiff : 1) // Days as weight
+        let slope = balanceDiff / timeDiff
+        return (slope, weight)
     }
+    
     func predictZeroDate(firstBalance: DiningAnalyticsBalance, slope: Double) -> Date {
-        var offset = -firstBalance.balance / slope
+        let offset = -firstBalance.balance / slope
         return slope == 0 ? Date.distantFuture : Calendar.current.date(byAdding: .day, value: Int(offset), to: firstBalance.date)!
     }
-    func predictSemesterEndBalance(firstBalance: DiningAnalyticsBalance, lastBalance: DiningAnalyticsBalance, slope: Double) -> Double {
+    
+    func predictSemesterEndBalance(firstBalance: DiningAnalyticsBalance, slope: Double) -> Double {
         let diffInDays = Calendar.current.dateComponents([.day], from: firstBalance.date, to: Date.endOfSemester).day!
         let endBalance = (slope * Double(diffInDays)) + firstBalance.balance
         return endBalance
     }
+    
     // Compute axis labels
     static func getAxisLabelsX() -> [String] {
         let xAxisLabelCount = 4
@@ -308,6 +332,7 @@ public class DiningAnalyticsViewModel: ObservableObject {
             dateFormatter.string(from: Date.startOfSemester.advanced(by: semesterStep * $0))
         }
     }
+    
     func getAxisLabelsYX(from trans: [DiningAnalyticsBalance]) -> ([String], [String]) {
         let yAxisLabelCount = 5
         var yLabels: [String] = []

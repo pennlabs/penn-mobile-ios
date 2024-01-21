@@ -14,24 +14,22 @@ struct DiningSettingsView: View {
     
     @Environment(\.presentationMode) var presentationMode
     @State private var totalData = false
-    private let options = ["Total data",
-                               "Smart calculation",
-                               "Weighted average"]
+    private let options = ["All data",
+                           "Smart calculation",
+                           "Weighted average"]
         
     var body: some View {
         if #available(iOS 16.0, *) {
             NavigationView {
                 Form {
-                    // Your settings view content here
-                    Picker(selection: $viewModel.selectedOptionIndex, label: Text("Calculate Options")) {
+                    Picker(selection: $viewModel.selectedOptionIndex, label: Text("Slope Calculation")) {
                         ForEach(0..<options.count, id: \.self) { index in
                             Text(options[index]).tag(index)
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
                     
-                    //Toggle("Include guest swipes", isOn: $totalData)
-                    
+                    // Toggle("Include guest swipes", isOn: $totalData)
                 }
                 .navigationBarTitle("Dining Analytics Settings")
                 .toolbar {
@@ -44,22 +42,19 @@ struct DiningSettingsView: View {
                     }
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
-                
             }
             .presentationDetents([.medium])
         } else {
             NavigationView {
                 Form {
-                    // Your settings view content here
-                    Picker(selection: $viewModel.selectedOptionIndex, label: Text("Calculate Options")) {
+                    Picker(selection: $viewModel.selectedOptionIndex, label: Text("Slope Calculation")) {
                         ForEach(0..<options.count, id: \.self) { index in
                             Text(options[index]).tag(index)
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
                     
-                    //Toggle("Include guest swipes", isOn: $totalData)
-                    
+                    // Toggle("Include guest swipes", isOn: $totalData)
                 }
                 .navigationBarTitle("Dining Analytics Settings")
                 .toolbar {
@@ -72,12 +67,7 @@ struct DiningSettingsView: View {
                     }
                 }
                 .navigationViewStyle(StackNavigationViewStyle())
-                
             }
         }
     }
 }
-//
-//#Preview {
-//    DiningSettingsView(viewModel: <#DiningAnalyticsViewModel#>)
-//}
