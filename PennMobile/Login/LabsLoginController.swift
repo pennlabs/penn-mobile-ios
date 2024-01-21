@@ -63,7 +63,7 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
     }
 
     override var shouldLoadCookies: Bool {
-        return false
+        return true
     }
 
     private let codeVerifier = String.randomString(length: 64)

@@ -7,6 +7,7 @@
 //
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 struct Response: Decodable {
     let message: String
@@ -25,6 +26,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
     let settingsURL = "https://penncoursealert.com/accounts/me/"
     let coursesURL = "https://penncoursealert.com/api/base/"
     let registrationsURL = "https://penncoursealert.com/api/alert/registrations/"
+    let pathRegistrationURL = "https://penncourseplan.com/api/plan/schedules/path/"
 
     func getSearchedCourses(searchText: String, _ callback: @escaping (_ results: [CourseSection]?) -> Void) {
 
@@ -158,6 +160,26 @@ class CourseAlertNetworkManager: NSObject, Requestable {
         }
     }
 
+    func updatePathRegistration(srcdb: String, crns: [String]) async throws {
+        let params: [String: Any] = ["semester": srcdb, "sections": crns.map { ["id": $0] }]
+
+        return try await withCheckedThrowingContinuation { continuation in
+            makeAuthenticatedRequest(url: pathRegistrationURL, requestType: RequestType.PUT, params: params) { (data, response, error) in
+                if let error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                    continuation.resume(throwing: NetworkingError.serverError)
+                    return
+                }
+                
+                continuation.resume(returning: ())
+            }
+        }
+    }
+
 }
 
 // MARK: - General Networking Functions
@@ -233,10 +255,10 @@ extension CourseAlertNetworkManager {
         if let CSRFDict = (UserDefaults.standard.dictionary(forKey: "cookies"))?["csrftokenplatform.pennlabs.org"] as? [String: Any] {
             if let csrfToken = CSRFDict["Value"] as? String {
                 callback(csrfToken)
-            } else {
-                callback(nil)
+                return
             }
         }
+        
         callback(nil)
     }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import OSLog
 
 extension UIApplication {
     public static var isRunningFastlaneTest: Bool {
@@ -666,5 +667,11 @@ public extension JSONDecoder {
         self.init()
         self.keyDecodingStrategy = keyDecodingStrategy
         self.dateDecodingStrategy = dateDecodingStrategy
+    }
+}
+
+public extension Logger {
+    init(category: String) {
+        self.init(subsystem: Bundle.main.bundleIdentifier ?? "Penn Mobile", category: category)
     }
 }
