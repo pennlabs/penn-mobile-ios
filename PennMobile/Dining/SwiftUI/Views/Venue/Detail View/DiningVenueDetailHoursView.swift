@@ -28,6 +28,14 @@ struct DiningVenueDetailHoursView: View {
                     .font(duration == Date().integerDayOfWeek ? .system(size: 18, weight: .bold): .system(size: 18, weight: .regular))
 
                 HStack {
+                    if venue.formattedHoursArrayFor(date).isEmpty {
+                        Text("Closed")
+                            .padding(.vertical, 3)
+                            .padding(.horizontal, 4)
+                            .font(.system(size: 14, weight: .light, design: .default))
+                            .background(Color.grey5)
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                    }
                     ForEach(venue.formattedHoursArrayFor(date), id: \.self) { hours in
                         Text(hours)
                             .padding(.vertical, 3)
