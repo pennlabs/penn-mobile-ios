@@ -35,7 +35,7 @@ class DialogueViewController: UIViewController {
 
     func configView(){
         self.view.backgroundColor = .clear
-        self.backView.background = .black.withAlphaComponent(.6)
+        self.backView.backgroundColor = .black.withAlphaComponent(0.6)
         self.backView.alpha = 0
         self.contentView.alpha = 0
         self.contentView.layer.cornerRadius=10
