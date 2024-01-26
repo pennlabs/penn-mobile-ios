@@ -48,7 +48,7 @@ public struct Sublet: Identifiable, Decodable {
         let sublettees = try container.decode([String].self, forKey: .sublettees)
         let images = try container.decode([SubletImage].self, forKey: .images)
 
-        self.init(id: id, data: data, createdAt: createdAt, expiresAt: expiresAt, subletter: subletter, sublettees: sublettees)
+        self.init(id: id, data: data, createdAt: createdAt, expiresAt: expiresAt, subletter: subletter, sublettees: sublettees, images: images)
     }
 
     public enum CodingKeys: CodingKey {

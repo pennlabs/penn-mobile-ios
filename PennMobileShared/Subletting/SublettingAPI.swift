@@ -60,8 +60,8 @@ public class SublettingAPI {
         }
     }
 
-    public func patchSublet(sublet: Sublet) async throws {
-        let urlString = "\(sublettingUrl)\(sublet.id)/"
+    public func patchSublet(id: Int, data: SubletData) async throws {
+        let urlString = "\(sublettingUrl)\(id)/"
         guard let url = URL(string: urlString) else {
             throw NetworkingError.serverError
         }
@@ -74,7 +74,7 @@ public class SublettingAPI {
         encoder.dateEncodingStrategy = .iso8601
         encoder.keyEncodingStrategy = .convertToSnakeCase
         do {
-            let jsonData = try encoder.encode(sublet)
+            let jsonData = try encoder.encode(data)
             request.httpBody = jsonData
         } catch {
             throw NetworkingError.parsingError
