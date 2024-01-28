@@ -299,7 +299,7 @@
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
 		E735C9422AF81498000F7376 /* DiningSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E735C9412AF81498000F7376 /* DiningSettingsView.swift */; };
-		E7DA7CDD2B64619E00CA2A60 /* Dialogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DA7CDC2B64619E00CA2A60 /* Dialogue.swift */; };
+		E7DA7CDD2B64619E00CA2A60 /* CustomPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DA7CDC2B64619E00CA2A60 /* CustomPopupView.swift */; };
 		E7DA7CE02B64684500CA2A60 /* DialogueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7DA7CDE2B64684500CA2A60 /* DialogueViewController.swift */; };
 		E7DA7CE12B64684500CA2A60 /* DialogueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7DA7CDF2B64684500CA2A60 /* DialogueViewController.xib */; };
 		EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */; };
@@ -711,7 +711,7 @@
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
 		E735C9412AF81498000F7376 /* DiningSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningSettingsView.swift; sourceTree = "<group>"; };
-		E7DA7CDC2B64619E00CA2A60 /* Dialogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dialogue.swift; sourceTree = "<group>"; };
+		E7DA7CDC2B64619E00CA2A60 /* CustomPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopupView.swift; sourceTree = "<group>"; };
 		E7DA7CDE2B64684500CA2A60 /* DialogueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogueViewController.swift; sourceTree = "<group>"; };
 		E7DA7CDF2B64684500CA2A60 /* DialogueViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DialogueViewController.xib; sourceTree = "<group>"; };
 		EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteCell.swift; sourceTree = "<group>"; };
@@ -1423,7 +1423,7 @@
 				6CAE434E253370B200BD0200 /* FadingScrollView.swift */,
 				6CAE434F253370B200BD0200 /* AlertModifier.swift */,
 				6C84D9E426293E680039C57F /* UIKit Views.swift */,
-				E7DA7CDC2B64619E00CA2A60 /* Dialogue.swift */,
+				E7DA7CDC2B64619E00CA2A60 /* CustomPopupView.swift */,
 				E7DA7CDE2B64684500CA2A60 /* DialogueViewController.swift */,
 				E7DA7CDF2B64684500CA2A60 /* DialogueViewController.xib */,
 			);
@@ -2380,7 +2380,7 @@
 				F206DDB528DE5BF0008F572F /* PreferencesViewController.swift in Sources */,
 				21A6B6D222162702003A357D /* GSRReservation.swift in Sources */,
 				2189C0A22027CE4100771C1F /* GSRRoom.swift in Sources */,
-				E7DA7CDD2B64619E00CA2A60 /* Dialogue.swift in Sources */,
+				E7DA7CDD2B64619E00CA2A60 /* CustomPopupView.swift in Sources */,
 				2138E1F82252AFB500E4055A /* GSRLocationCell.swift in Sources */,
 				B654BAF21F802A050038B9D5 /* LaundryCell.swift in Sources */,
 				2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */,
