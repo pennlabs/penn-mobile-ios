@@ -300,6 +300,7 @@
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
+		E49D3B912B66CA570022AB71 /* MyListings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49D3B902B66CA570022AB71 /* MyListings.swift */; };
 		E735C9422AF81498000F7376 /* DiningSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E735C9412AF81498000F7376 /* DiningSettingsView.swift */; };
 		EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */; };
 		EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */; };
@@ -711,6 +712,7 @@
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
+		E49D3B902B66CA570022AB71 /* MyListings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListings.swift; sourceTree = "<group>"; };
 		E735C9412AF81498000F7376 /* DiningSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningSettingsView.swift; sourceTree = "<group>"; };
 		EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteCell.swift; sourceTree = "<group>"; };
 		EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCellItem.swift; sourceTree = "<group>"; };
@@ -1879,8 +1881,17 @@
 		E49D3B8C2B66C6D20022AB71 /* Subletting */ = {
 			isa = PBXGroup;
 			children = (
+				E49D3B8D2B66C9210022AB71 /* Listings */,
 			);
 			path = Subletting;
+			sourceTree = "<group>";
+		};
+		E49D3B8D2B66C9210022AB71 /* Listings */ = {
+			isa = PBXGroup;
+			children = (
+				E49D3B902B66CA570022AB71 /* MyListings.swift */,
+			);
+			path = Listings;
 			sourceTree = "<group>";
 		};
 		EFAE454823F12185005C2286 /* GSRGroups */ = {
@@ -2444,6 +2455,7 @@
 				6C6FE1D127B9B8CB0093FD13 /* InfoTableViewController.swift in Sources */,
 				F2770AE52545E384001EA1DD /* CourseAlertController.swift in Sources */,
 				215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */,
+				E49D3B912B66CA570022AB71 /* MyListings.swift in Sources */,
 				89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */,
 				217A7836204D2E0D004F1227 /* HomeLaundryCellItem.swift in Sources */,
 				6CC88D7027B1BF51006896F6 /* MenuDisclosureGroup.swift in Sources */,
