@@ -21,6 +21,7 @@ enum FeatureIdentifier: String, Hashable {
     case pac = "PAC Code"
     case about = "About"
     case polls = "Poll History"
+    case subletting = "Subletting"
 }
 
 struct AppFeature: Identifiable {
@@ -108,6 +109,10 @@ let features: [AppFeature] = [
             .navigationTitle(Text("Fitness"))
     },
     AppFeature(.polls, shortName: "Polls", longName: "Polls History", color: .blueDark, image: .app("Polls_Grey"), controller: PollsViewController.self),
+    AppFeature(.subletting, name: "Subletting", color: .baseOrange, image: .app("Polls_Grey")) {
+        SublettingView()
+            .navigationTitle(Text("Marketplace"))
+    },
     AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),
     AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]
