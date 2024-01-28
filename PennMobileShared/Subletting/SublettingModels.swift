@@ -53,7 +53,6 @@ public struct Sublet: Identifiable, Decodable {
 
     public enum CodingKeys: CodingKey {
         case id
-        case data
         case createdAt
         case expiresAt
         case subletter
@@ -84,4 +83,38 @@ public struct SubletAmenity: Codable {
 public struct SubletImage: Decodable {
     public let id: Int
     public let imageUrl: String
+}
+
+@dynamicMemberLookup
+public struct SubletOffer: Identifiable, Decodable {
+    public let id: Int
+    public let data: SubletOfferData
+    
+    public subscript<T>(dynamicMember keyPath: KeyPath<SubletOfferData, T>) -> T {
+        data[keyPath: keyPath]
+    }
+    
+    public init(id: Int, data: SubletOfferData) {
+        self.id = id
+        self.data = data
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let data = try SubletOfferData(from: decoder)
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try container.decode(Int.self, forKey: .id)
+        
+        self.init(id: id, data: data)
+    }
+    
+    public enum CodingKeys: CodingKey {
+        case id
+    }
+}
+
+public struct SubletOfferData: Codable {
+    public var email: String
+    public var phoneAddress: String
+    public var message: String
 }
