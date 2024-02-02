@@ -8,8 +8,41 @@
 
 import Foundation
 
-public class SublettingAPI {
+public enum SublettingError: Error {
+    case invalidDateString
+}
 
+public class SublettingAPI {
+    private static let encoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        return encoder
+    }()
+    
+    private static let decoder = JSONDecoder(
+        keyDecodingStrategy: .convertFromSnakeCase,
+        dateDecodingStrategy: .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let string = try container.decode(String.self)
+            
+            // Try decoding the date as an ISO date first
+            let isoFormatter = ISO8601DateFormatter()
+            if let date = isoFormatter.date(from: string) {
+                return date
+            }
+            
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            formatter.calendar = Calendar(identifier: .gregorian)
+            if let date = formatter.date(from: string) {
+                return date
+            }
+            
+            throw SublettingError.invalidDateString
+        }
+    )
+    
     public static let instance = SublettingAPI()
     public let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
 
@@ -22,11 +55,8 @@ public class SublettingAPI {
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        encoder.keyEncodingStrategy = .convertToSnakeCase
         do {
-            let jsonData = try encoder.encode(subletData)
+            let jsonData = try Self.encoder.encode(subletData)
             request.httpBody = jsonData
         } catch {
             throw NetworkingError.parsingError
@@ -70,11 +100,8 @@ public class SublettingAPI {
         request.httpMethod = "PATCH"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        encoder.keyEncodingStrategy = .convertToSnakeCase
         do {
-            let jsonData = try encoder.encode(data)
+            let jsonData = try Self.encoder.encode(data)
             request.httpBody = jsonData
         } catch {
             throw NetworkingError.parsingError
