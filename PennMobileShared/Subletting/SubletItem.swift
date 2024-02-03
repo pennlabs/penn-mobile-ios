@@ -27,16 +27,16 @@ public struct SubletItem: View {
             Text(sublet.title)
                 .font(.headline)
             
-            Text("\(sublet.price) (Negotiable)")
+            Text("$\(sublet.price) (Negotiable)")
             
             if let beds = sublet.beds, let baths = sublet.baths {
-                Text("\(beds) bd | \(baths) ba")
+                Text("\(beds) bd | \(String(format: "%.1f", baths)) ba")
                     .font(.subheadline)
             } else if let beds = sublet.beds {
                 Text("\(beds) bd")
                     .font(.subheadline)
             } else if let baths = sublet.baths {
-                Text("\(baths) ba")
+                Text("\(String(format: "%.1f", baths)) ba")
                     .font(.subheadline)
             }
             
