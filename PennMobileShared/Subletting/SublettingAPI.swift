@@ -3,10 +3,7 @@
 //  PennMobile
 //
 //  Created by Jordan H on 1/26/24.
-//  Copyright © 2024 PennLabs. All rights reserved.
-//
-
-import Foundation
+//  Copyright © 2024 PennLabs. All rights reserve
 
 public enum SublettingError: Error {
     case invalidDateString
