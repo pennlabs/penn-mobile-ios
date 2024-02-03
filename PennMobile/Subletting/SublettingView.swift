@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 import PennMobileShared
 
 class MarketplaceView: ObservableObject {
@@ -48,7 +49,7 @@ struct SubletItem: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Image(sublet.images[0])
+            KFImage(URL(string: sublet.images[0].imageUrl))
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(10)
@@ -58,8 +59,6 @@ struct SubletItem: View {
             
             Text("\(sublet.price) (Negotiable)")
             
-            Text("\(sublet.beds) bd | \(sublet.baths) ba")
-                .font(.subheadline)
             if let beds = sublet.beds, let baths = sublet.baths {
                 Text("\(beds) bd | \(baths) ba")
                     .font(.subheadline)
