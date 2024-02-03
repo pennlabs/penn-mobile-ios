@@ -45,7 +45,6 @@ public struct SubletItem: View {
                 .italic()
         }
         .padding()
-        .border(.black)
     }
     
     func formatDate(_ date: Date) -> String {
