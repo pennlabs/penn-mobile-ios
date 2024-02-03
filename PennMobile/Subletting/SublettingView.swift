@@ -7,11 +7,13 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 class MarketplaceView: ObservableObject {
 }
 
 struct SublettingView: View {
+    @State var sublets: [Sublet] = []
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     
     var body: some View {
@@ -31,37 +33,55 @@ struct SublettingView: View {
             .background(.white)
             ScrollView {
                 LazyVGrid(columns: columns) {
-                    ForEach(0..<5) { index in
-                        SubletItem()
+                    ForEach(sublets) { sublet in
+                        SubletItem(sublet: sublet)
                     }
                 }
             }
         }
-        .padding([.leading, .trailing])
+        .padding(.horizontal)
     }
 }
 
 struct SubletItem: View {
+    let sublet: Sublet
+    
     var body: some View {
         VStack(alignment: .leading) {
-            Image("Image")
+            Image(sublet.images[0])
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(10)
             
-            Text("The Speakeasy")
+            Text(sublet.title)
                 .font(.headline)
             
-            Text("$1200 (negotiable)")
+            Text("\(sublet.price) (Negotiable)")
             
-            Text("2 bd | 2.5 ba")
+            Text("\(sublet.beds) bd | \(sublet.baths) ba")
                 .font(.subheadline)
+            if let beds = sublet.beds, let baths = sublet.baths {
+                Text("\(beds) bd | \(baths) ba")
+                    .font(.subheadline)
+            } else if let beds = sublet.beds {
+                Text("\(beds) bd")
+                    .font(.subheadline)
+            } else if let baths = sublet.baths {
+                Text("\(baths) ba")
+                    .font(.subheadline)
+            }
             
-            Text("Jun 7 - Aug 28")
+            Text("\(formatDate(sublet.startDate)) - \(formatDate(sublet.endDate))")
                 .font(.subheadline)
                 .italic()
         }
         .padding()
         .border(.black)
+    }
+    
+    func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d"
+        return formatter.string(from: date)
     }
 }

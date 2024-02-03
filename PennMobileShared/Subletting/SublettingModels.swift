@@ -66,11 +66,10 @@ public struct SubletData: Codable {
     public var title: String
     public var address: String
     public var beds: Int?
-    public var baths: Int?
+    public var baths: Double?
     public var description: String?
     public var externalLink: String
-    public var minPrice: Int
-    public var maxPrice: Int
+    public var price: Int
     public var expiresAt: Date
     public var startDate: Date
     public var endDate: Date
