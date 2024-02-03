@@ -117,3 +117,26 @@ public struct SubletOfferData: Codable {
     public var phoneAddress: String
     public var message: String
 }
+
+public extension Sublet {
+    static let mock = Self(
+        id: 0,
+        data: .init(
+            amenities: [.init(name: "Private bathroom")],
+            title: "Lauder",
+            address: "3650 Locust Walk",
+            beds: 9,
+            baths: 6.5,
+            externalLink: "",
+            price: 820,
+            expiresAt: .endOfSemester,
+            startDate: .now,
+            endDate: .endOfSemester
+        ),
+        createdAt: .now,
+        expiresAt: .endOfSemester,
+        subletter: "Tim Cook",
+        sublettees: [],
+        images: [SubletImage(id: 0, imageUrl: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuc2lvbnxlbnwwfHwwfHx8MA%3D%3D")]
+    )
+}
