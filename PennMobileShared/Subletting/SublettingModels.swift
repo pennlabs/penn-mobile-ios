@@ -84,7 +84,6 @@ public struct SubletImage: Decodable {
     public let imageUrl: String
 }
 
-<<<<<<< HEAD
 @dynamicMemberLookup
 public struct SubletOffer: Identifiable, Decodable {
     public let id: Int
