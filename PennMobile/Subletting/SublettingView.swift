@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import Kingfisher
 import PennMobileShared
 
 class MarketplaceView: ObservableObject {
@@ -41,46 +40,5 @@ struct SublettingView: View {
             }
         }
         .padding(.horizontal)
-    }
-}
-
-struct SubletItem: View {
-    let sublet: Sublet
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            KFImage(URL(string: sublet.images[0].imageUrl))
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .cornerRadius(10)
-            
-            Text(sublet.title)
-                .font(.headline)
-            
-            Text("\(sublet.price) (Negotiable)")
-            
-            if let beds = sublet.beds, let baths = sublet.baths {
-                Text("\(beds) bd | \(baths) ba")
-                    .font(.subheadline)
-            } else if let beds = sublet.beds {
-                Text("\(beds) bd")
-                    .font(.subheadline)
-            } else if let baths = sublet.baths {
-                Text("\(baths) ba")
-                    .font(.subheadline)
-            }
-            
-            Text("\(formatDate(sublet.startDate)) - \(formatDate(sublet.endDate))")
-                .font(.subheadline)
-                .italic()
-        }
-        .padding()
-        .border(.black)
-    }
-    
-    func formatDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d"
-        return formatter.string(from: date)
     }
 }
