@@ -38,6 +38,7 @@ class ListingsViewModel: ObservableObject {
 
 struct MyListings: View {
     @ObservedObject private var viewModel: ListingsViewModel
+    private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     
     init(viewModel: ListingsViewModel) {
         self.viewModel = viewModel
@@ -58,7 +59,13 @@ struct MyListings: View {
                 .padding()
                 
                 TabView(selection: $viewModel.tab) {
-                    Text("Tab Content 1").tabItem { Text("Tab Label 1") }
+                    ScrollView {
+                        LazyVGrid(columns: columns) {
+                            ForEach(viewModel.listings) { sublet in
+                                SubletItem(sublet: sublet)
+                            }
+                        }
+                    }
                         .tag(ListingsViewModel.Tab.posted)
                     Text("Tab Content 2").tabItem { Text("Tab Label 2") }
                         .tag(ListingsViewModel.Tab.drafts)
