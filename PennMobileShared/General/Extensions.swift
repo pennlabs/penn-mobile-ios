@@ -5,6 +5,7 @@
 //  Copyright © 2016 Josh Doman. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 import OSLog
 
@@ -673,5 +674,18 @@ public extension JSONDecoder {
 public extension Logger {
     init(category: String) {
         self.init(subsystem: Bundle.main.bundleIdentifier ?? "Penn Mobile", category: category)
+    }
+}
+
+public extension View {
+    func placeholder<Content: View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content) -> some View {
+
+        ZStack(alignment: alignment) {
+            placeholder().opacity(shouldShow ? 1 : 0)
+            self
+        }
     }
 }

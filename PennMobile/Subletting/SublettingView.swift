@@ -13,17 +13,19 @@ class MarketplaceView: ObservableObject {
 }
 
 struct SublettingView: View {
-    @State var sublets: [Sublet] = []
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
+    @State var sublets: [Sublet] = []
+    @State private var searchText = ""
     
     var body: some View {
         VStack {
             VStack {
                 HStack {
                     Image(systemName: "bookmark")
-                    Text("Temp")
+                    SearchBar(searchText: $searchText)
                     Image(systemName: "slider.horizontal.3")
                 }
+                .padding()
                 HStack {
                     Spacer()
                     Text("Sort by")
