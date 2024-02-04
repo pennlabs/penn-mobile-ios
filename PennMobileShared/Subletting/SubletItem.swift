@@ -40,9 +40,9 @@ public struct SubletItem: View {
                     .font(.subheadline)
             }
             
-            Text("\(formatDate(sublet.startDate)) - \(formatDate(sublet.endDate))")
+            /* Text("\(formatDate(sublet.startDate)) - \(formatDate(sublet.endDate))")
                 .font(.subheadline)
-                .italic()
+                .italic() */
         }
         .padding()
     }

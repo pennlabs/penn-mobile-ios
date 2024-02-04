@@ -40,5 +40,12 @@ struct SublettingView: View {
             }
         }
         .padding(.horizontal)
+        .toolbar {
+            ToolbarItem {
+                NavigationLink("My Listings") {
+                    MyListings()
+                }
+            }
+        }
     }
 }

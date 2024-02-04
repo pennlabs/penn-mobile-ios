@@ -71,8 +71,23 @@ public struct SubletData: Codable {
     public var externalLink: String
     public var price: Int
     public var expiresAt: Date
-    public var startDate: Date
-    public var endDate: Date
+    public var startDate: String
+    public var endDate: String
+    public var minPrice = 500
+    public var maxPrice = 1000
+}
+
+public extension SubletData {
+    init() {
+        amenities = []
+        title = ""
+        address = ""
+        externalLink = "https://google.com"
+        price = 0
+        expiresAt = Date()
+        startDate = "2024-06-01" // TODO: Make actual dates
+        endDate = "2024-06-05"
+    }
 }
 
 public struct SubletAmenity: Codable {
@@ -130,8 +145,10 @@ public extension Sublet {
             externalLink: "",
             price: 820,
             expiresAt: .endOfSemester,
-            startDate: .now,
-            endDate: .endOfSemester
+            // startDate: .now,
+            // endDate: .endOfSemester
+            startDate: "2024-02-04",
+            endDate: "2024-05-18"
         ),
         createdAt: .now,
         expiresAt: .endOfSemester,

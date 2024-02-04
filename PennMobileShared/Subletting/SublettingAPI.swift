@@ -44,13 +44,15 @@ public class SublettingAPI {
     public static let instance = SublettingAPI()
     public let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
 
-    public func createSublet(subletData: SubletData) async throws -> Sublet {
+    public func createSublet(subletData: SubletData, accessToken: String) async throws -> Sublet {
         guard let url = URL(string: sublettingUrl) else {
             throw NetworkingError.serverError
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {

@@ -49,29 +49,35 @@ struct MyListings: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack {
-                Picker("Tab", selection: $viewModel.tab.animation()) {
-                    Text("Posted").tag(ListingsViewModel.Tab.posted)
-                    Text("Drafts").tag(ListingsViewModel.Tab.drafts)
-                }
-                .pickerStyle(.segmented)
-                .padding()
-                
-                TabView(selection: $viewModel.tab) {
-                    ScrollView {
-                        LazyVGrid(columns: columns) {
-                            ForEach(viewModel.listings) { sublet in
-                                SubletItem(sublet: sublet)
-                            }
+        VStack {
+            Picker("Tab", selection: $viewModel.tab.animation()) {
+                Text("Posted").tag(ListingsViewModel.Tab.posted)
+                Text("Drafts").tag(ListingsViewModel.Tab.drafts)
+            }
+            .pickerStyle(.segmented)
+            .padding()
+            
+            TabView(selection: $viewModel.tab) {
+                ScrollView {
+                    LazyVGrid(columns: columns) {
+                        ForEach(viewModel.listings) { sublet in
+                            SubletItem(sublet: sublet)
                         }
                     }
-                        .tag(ListingsViewModel.Tab.posted)
-                    Text("Tab Content 2").tabItem { Text("Tab Label 2") }
-                        .tag(ListingsViewModel.Tab.drafts)
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .navigationTitle("My Listings")
+                    .tag(ListingsViewModel.Tab.posted)
+                Text("Tab Content 2").tabItem { Text("Tab Label 2") }
+                    .tag(ListingsViewModel.Tab.drafts)
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .navigationTitle("My Listings")
+        }
+        .toolbar {
+            ToolbarItem {
+                NavigationLink(destination: NewListingForm()) {
+                    Image(systemName: "plus")
+                }
+                .accessibilityLabel(Text("New Listing"))
             }
         }
     }
