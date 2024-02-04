@@ -12,9 +12,12 @@ import Kingfisher
 
 public struct SubletItem: View {
     let sublet: Sublet
+    let isSubletterView: Bool
+    @State private var showMenu = false
     
-    public init(sublet: Sublet) {
+    public init(sublet: Sublet, isSubletterView: Bool = false) {
         self.sublet = sublet
+        self.isSubletterView = isSubletterView
     }
     
     public var body: some View {
@@ -24,25 +27,55 @@ public struct SubletItem: View {
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(10)
             
-            Text(sublet.title)
-                .font(.headline)
-            
-            Text("$\(sublet.price) (Negotiable)")
-            
-            if let beds = sublet.beds, let baths = sublet.baths {
-                Text("\(beds) bd | \(String(format: "%.1f", baths)) ba")
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(sublet.title)
+                        .font(.headline)
+                    
+                    Spacer()
+                    
+                    if isSubletterView {
+                        Button(action: {
+                            self.showMenu = true
+                        }) {
+                            Image(systemName: "ellipsis")
+                                .foregroundColor(.primary)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        .actionSheet(isPresented: $showMenu) { // This presents the action sheet upon tapping
+                            ActionSheet(
+                                title: Text("Options"),
+                                buttons: [
+                                    .default(Text("Edit")) {
+                                        // TODO: Handle action
+                                    },
+                                    .destructive(Text("Mark as claimed")) {
+                                        // TODO: Handle action
+                                    },
+                                    .cancel()
+                                ]
+                            )
+                        }
+                    }
+                }
+                
+                Text("$\(sublet.price) (Negotiable)")
+                
+                if let beds = sublet.beds, let baths = sublet.baths {
+                    Text("\(beds) bd | \(String(format: "%.1f", baths)) ba")
+                        .font(.subheadline)
+                } else if let beds = sublet.beds {
+                    Text("\(beds) bd")
+                        .font(.subheadline)
+                } else if let baths = sublet.baths {
+                    Text("\(String(format: "%.1f", baths)) ba")
+                        .font(.subheadline)
+                }
+                
+                Text("\(formatDate(sublet.startDate)) - \(formatDate(sublet.endDate))")
                     .font(.subheadline)
-            } else if let beds = sublet.beds {
-                Text("\(beds) bd")
-                    .font(.subheadline)
-            } else if let baths = sublet.baths {
-                Text("\(String(format: "%.1f", baths)) ba")
-                    .font(.subheadline)
+                    .italic()
             }
-            
-            Text("\(formatDate(sublet.startDate)) - \(formatDate(sublet.endDate))")
-                .font(.subheadline)
-                .italic()
         }
         .padding()
     }

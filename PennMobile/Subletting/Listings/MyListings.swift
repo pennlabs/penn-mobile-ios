@@ -59,15 +59,23 @@ struct MyListings: View {
                 .padding()
                 
                 TabView(selection: $viewModel.tab) {
+                    // Posted tab
                     ScrollView {
                         LazyVGrid(columns: columns) {
                             ForEach(viewModel.listings) { sublet in
-                                SubletItem(sublet: sublet)
+                                SubletItem(sublet: sublet, isSubletterView: true)
                             }
                         }
                     }
                         .tag(ListingsViewModel.Tab.posted)
-                    Text("Tab Content 2").tabItem { Text("Tab Label 2") }
+                    // Drafts tab
+                    ScrollView {
+                        LazyVGrid(columns: columns) {
+                            ForEach(viewModel.drafts) { sublet in
+                                SubletItem(sublet: sublet)
+                            }
+                        }
+                    }
                         .tag(ListingsViewModel.Tab.drafts)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
