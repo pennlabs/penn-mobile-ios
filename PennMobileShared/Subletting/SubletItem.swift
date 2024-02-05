@@ -35,27 +35,18 @@ public struct SubletItem: View {
                     Spacer()
                     
                     if isSubletterView {
-                        Button(action: {
-                            self.showMenu = true
-                        }) {
+                        Menu {
+                            Button("Edit", action: {
+                                // Handle edit action
+                            })
+                            Button("Mark as claimed", action: {
+                                // Handle mark as claimed action
+                            })
+                        } label: {
                             Image(systemName: "ellipsis")
                                 .foregroundColor(.primary)
                         }
                         .buttonStyle(BorderlessButtonStyle())
-                        .actionSheet(isPresented: $showMenu) { // This presents the action sheet upon tapping
-                            ActionSheet(
-                                title: Text("Options"),
-                                buttons: [
-                                    .default(Text("Edit")) {
-                                        // TODO: Handle action
-                                    },
-                                    .destructive(Text("Mark as claimed")) {
-                                        // TODO: Handle action
-                                    },
-                                    .cancel()
-                                ]
-                            )
-                        }
                     }
                 }
                 
