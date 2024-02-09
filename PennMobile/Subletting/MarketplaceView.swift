@@ -12,6 +12,7 @@ import PennMobileShared
 struct MarketplaceView: View {
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @StateObject private var marketplaceViewModel = MarketplaceViewModel()
+    @State private var showingFilters = false
     
     var body: some View {
         VStack {
@@ -19,7 +20,15 @@ struct MarketplaceView: View {
                 HStack {
                     Image(systemName: "bookmark")
                     SearchBar(searchText: $marketplaceViewModel.searchText)
-                    Image(systemName: "slider.horizontal.3")
+                    Button(action: {
+                        showingFilters.toggle()
+                    }) {
+                        Image(systemName: "slider.horizontal.3")
+                    }
+                    .buttonStyle(.plain)
+                    .sheet(isPresented: $showingFilters) {
+                        MarketplaceFilterView()
+                    }
                 }
                 .padding()
                 HStack {
