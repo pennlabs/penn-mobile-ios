@@ -139,4 +139,67 @@ public extension Sublet {
         sublettees: [],
         images: [SubletImage(id: 0, imageUrl: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuc2lvbnxlbnwwfHwwfHx8MA%3D%3D")]
     )
+    static let mocks = [
+        mock,
+        Self(
+            id: 1,
+            data: .init(
+                amenities: [.init(name: "Balcony")],
+                title: "Rittenhouse Square Studio",
+                address: "2101 Market Street",
+                beds: 1,
+                baths: 1,
+                externalLink: "",
+                price: 1200,
+                expiresAt: .endOfSemester,
+                startDate: .now,
+                endDate: .endOfSemester
+            ),
+            createdAt: .now,
+            expiresAt: .endOfSemester,
+            subletter: "Elon Musk",
+            sublettees: [],
+            images: [SubletImage(id: 1, imageUrl: "https://images.unsplash.com/photo-1560184897-ae75f418493e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBhcnRtZW50fGVufDB8fDB8fHw%3D")]
+        ),
+        Self(
+            id: 2,
+            data: .init(
+                amenities: [.init(name: "Gym Access"), .init(name: "Pool Access")],
+                title: "Modern 2BR in Center City",
+                address: "1429 Chestnut Street",
+                beds: 2,
+                baths: 2,
+                externalLink: "",
+                price: 2000,
+                expiresAt: .endOfSemester,
+                startDate: .now,
+                endDate: .endOfSemester
+            ),
+            createdAt: .now,
+            expiresAt: .endOfSemester,
+            subletter: "Satya Nadella",
+            sublettees: [],
+            images: [SubletImage(id: 2, imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXBhcnRtZW50fGVufDB8fDB8fHw%3D")]
+        ),
+        Self(
+            id: 3,
+            data: .init(
+                amenities: [.init(name: "Rooftop Access")],
+                title: "Cozy Loft Near University City",
+                address: "4001 Walnut Street",
+                beds: 3,
+                baths: 1.5,
+                externalLink: "",
+                price: 1500,
+                expiresAt: .endOfSemester,
+                startDate: .now,
+                endDate: .endOfSemester
+            ),
+            createdAt: .now,
+            expiresAt: .endOfSemester,
+            subletter: "Jeff Bezos",
+            sublettees: [],
+            images: [SubletImage(id: 3, imageUrl: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y296eXxlbnwwfHwwfHx8MA%3D%3D")]
+        )
+    ]
 }

@@ -110,7 +110,7 @@ let features: [AppFeature] = [
     },
     AppFeature(.polls, shortName: "Polls", longName: "Polls History", color: .blueDark, image: .app("Polls_Grey"), controller: PollsViewController.self),
     AppFeature(.subletting, name: "Subletting", color: .baseOrange, image: .app("Polls_Grey")) {
-        SublettingView()
+        MarketplaceView()
             .navigationTitle(Text("Marketplace"))
     },
     AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),

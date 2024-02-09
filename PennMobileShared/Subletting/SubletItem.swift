@@ -31,6 +31,7 @@ public struct SubletItem: View {
                 HStack {
                     Text(sublet.title)
                         .font(.headline)
+                        .lineLimit(1)
                     
                     Spacer()
                     
@@ -60,6 +61,7 @@ public struct SubletItem: View {
                 }
                 
                 Text("$\(sublet.price) (Negotiable)")
+                    .lineLimit(1)
                 
                 if let beds = sublet.beds, let baths = sublet.baths {
                     Text("\(beds) bd | \(String(format: "%.1f", baths)) ba")
