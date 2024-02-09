@@ -72,7 +72,7 @@ struct MyListings: View {
                     ScrollView {
                         LazyVGrid(columns: columns) {
                             ForEach(viewModel.drafts) { sublet in
-                                SubletItem(sublet: sublet)
+                                SubletItem(sublet: sublet, isSubletterView: true, isDraft: true)
                             }
                         }
                     }
