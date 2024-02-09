@@ -13,11 +13,13 @@ import Kingfisher
 public struct SubletItem: View {
     let sublet: Sublet
     let isSubletterView: Bool
+    let isDraft: Bool
     @State private var showMenu = false
     
-    public init(sublet: Sublet, isSubletterView: Bool = false) {
+    public init(sublet: Sublet, isSubletterView: Bool = false, isDraft: Bool = false) {
         self.sublet = sublet
         self.isSubletterView = isSubletterView
+        self.isDraft = isDraft
     }
     
     public var body: some View {
@@ -40,9 +42,15 @@ public struct SubletItem: View {
                             Button("Edit", action: {
                                 // Handle edit action
                             })
-                            Button("Mark as claimed", action: {
-                                // Handle mark as claimed action
-                            })
+                            if isDraft {
+                                Button("Remove", action: {
+                                    // Handle mark as claimed action
+                                })
+                            } else {
+                                Button("Mark as claimed", action: {
+                                    // Handle mark as claimed action
+                                })
+                            }
                         } label: {
                             Image(systemName: "ellipsis")
                                 .foregroundColor(.primary)
