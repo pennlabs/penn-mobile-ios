@@ -19,7 +19,7 @@ struct MarketplaceFilterView: View {
     @State private var beds: Int?
     @State private var baths: Int?
     @State private var selectedAmenities: [String] = []
-    let amenities = [
+    @State private var amenities = [
         "Private bathroom", "In-unit laundry", "Gym", "Wifi",
         "Walk-in closet", "Furnished", "Utilities included", "Swimming pool",
         "Resident lounge", "Parking", "Patio", "Kitchen",
@@ -46,19 +46,42 @@ struct MarketplaceFilterView: View {
                     
                     NumericField($baths, title: "# Bath")
                     
-                    //TagSelector()
+//                    TagSelector(selection: $selectedAmenities, tags: $amenities)
                     
                     ComponentWrapper {
                         HStack {
-                            Button("Reset") {
-                                // Reset action
+                            Button(action: {}) {
+                                Text("Reset")
+                                    .font(.title3)
+                                    .bold()
+                                    .foregroundColor(.primary)
+                                    .padding(.vertical, 10)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .background(
+                                        Capsule()
+                                            .fill(Color.uiCardBackground)
+                                    )
+                                    .overlay(
+                                        Capsule()
+                                            .stroke(Color.primary, lineWidth: 2)
+                                    )
                             }
-                            .frame(maxWidth: .infinity)
+                            .padding(.top, 30)
                             
-                            Button("Save") {
-                                // Save action
+                            Button(action: {}) {
+                                Text("Save")
+                                    .font(.title3)
+                                    .bold()
+                                    .foregroundColor(Color.white)
+                                    .padding(.vertical, 10)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .background(
+                                        Capsule()
+                                            .fill(formState.isValid ? Color.baseLabsBlue : .gray)
+                                    )
                             }
-                            .frame(maxWidth: .infinity)
+                            .padding(.top, 30)
+                            .disabled(!formState.isValid)
                         }
                     }
                 }
@@ -68,7 +91,7 @@ struct MarketplaceFilterView: View {
                 dismiss()
             }) {
                 Image(systemName: "xmark")
-                    .foregroundColor(.black)
+                    .foregroundColor(.primary)
             }, trailing: Button(action: {
                 dismiss()
             }) {
