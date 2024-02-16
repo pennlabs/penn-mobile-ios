@@ -47,7 +47,7 @@ struct MarketplaceView: View {
                     )
                 }
             }
-            .background(.uiBackground)
+            .background(Color.uiBackground)
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(marketplaceViewModel.sublets) { sublet in
