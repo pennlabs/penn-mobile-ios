@@ -33,7 +33,7 @@ public struct DiningVenue: Codable, Equatable, Identifiable {
     public let id: Int
     public let name: String
     public let image: URL?
-    public let days: [Day]
+    public let days: [DiningDay]
 
     public var venueType: VenueType {
         switch id {
@@ -47,7 +47,7 @@ public struct DiningVenue: Codable, Equatable, Identifiable {
     public var localImageURL: URL?
 }
 
-public struct Day: Codable, Equatable {
+public struct DiningDay: Codable, Equatable {
     let date: String
     let meals: [Meal]
 

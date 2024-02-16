@@ -73,9 +73,11 @@ public struct SubletItem: View {
                         .font(.subheadline)
                 }
                 
-                Text("\(formatDate(sublet.startDate)) - \(formatDate(sublet.endDate))")
-                    .font(.subheadline)
-                    .italic()
+                if let start = sublet.startDate.date, let end = sublet.endDate.date {
+                    Text("\(formatDate(start)) - \(formatDate(end))")
+                        .font(.subheadline)
+                        .italic()
+                }
             }
         }
         .padding()

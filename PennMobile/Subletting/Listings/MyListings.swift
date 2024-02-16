@@ -67,7 +67,8 @@ struct MyListings: View {
                             }
                         }
                     }
-                        .tag(ListingsViewModel.Tab.posted)
+                    .tag(ListingsViewModel.Tab.posted)
+                    
                     // Drafts tab
                     ScrollView {
                         LazyVGrid(columns: columns) {
@@ -76,10 +77,18 @@ struct MyListings: View {
                             }
                         }
                     }
-                        .tag(ListingsViewModel.Tab.drafts)
+                    .tag(ListingsViewModel.Tab.drafts)
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .navigationTitle("My Listings")
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .navigationTitle("My Listings")
+        }
+        .toolbar {
+            ToolbarItem {
+                NavigationLink(destination: NewListingForm()) {
+                    Image(systemName: "plus")
+                }
+                .accessibilityLabel(Text("New Listing"))
             }
         }
     }

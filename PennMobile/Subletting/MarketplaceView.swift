@@ -57,6 +57,13 @@ struct MarketplaceView: View {
             }
         }
         .padding(.horizontal)
+        .toolbar {
+            ToolbarItem {
+                NavigationLink("My Listings") {
+                    MyListings()
+                }
+            }
+        }
     }
 }
 

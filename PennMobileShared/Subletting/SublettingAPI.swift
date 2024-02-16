@@ -20,37 +20,21 @@ public class SublettingAPI {
     
     private static let decoder = JSONDecoder(
         keyDecodingStrategy: .convertFromSnakeCase,
-        dateDecodingStrategy: .custom { decoder in
-            let container = try decoder.singleValueContainer()
-            let string = try container.decode(String.self)
-            
-            // Try decoding the date as an ISO date first
-            let isoFormatter = ISO8601DateFormatter()
-            if let date = isoFormatter.date(from: string) {
-                return date
-            }
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
-            formatter.calendar = Calendar(identifier: .gregorian)
-            if let date = formatter.date(from: string) {
-                return date
-            }
-            
-            throw SublettingError.invalidDateString
-        }
+        dateDecodingStrategy: .iso8601
     )
     
     public static let instance = SublettingAPI()
     public let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
 
-    public func createSublet(subletData: SubletData) async throws -> Sublet {
+    public func createSublet(subletData: SubletData, accessToken: String) async throws -> Sublet {
         guard let url = URL(string: sublettingUrl) else {
             throw NetworkingError.serverError
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         do {
