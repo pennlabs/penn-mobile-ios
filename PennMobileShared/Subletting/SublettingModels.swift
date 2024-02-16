@@ -17,20 +17,18 @@ import Foundation
 public struct Sublet: Identifiable, Decodable {
     public let id: Int
     public let data: SubletData
-    public let createdAt: Date
     public let expiresAt: Date
-    public let subletter: String
-    public let sublettees: [String]
+    public let subletter: Int
+    public let sublettees: [String]?
     public let images: [SubletImage]
 
     public subscript<T>(dynamicMember keyPath: KeyPath<SubletData, T>) -> T {
         data[keyPath: keyPath]
     }
 
-    public init(id: Int, data: SubletData, createdAt: Date, expiresAt: Date, subletter: String, sublettees: [String], images: [SubletImage]) {
+    public init(id: Int, data: SubletData, expiresAt: Date, subletter: Int, sublettees: [String]?, images: [SubletImage]) {
         self.id = id
         self.data = data
-        self.createdAt = createdAt
         self.expiresAt = expiresAt
         self.subletter = subletter
         self.sublettees = sublettees
@@ -42,18 +40,21 @@ public struct Sublet: Identifiable, Decodable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let id = try container.decode(Int.self, forKey: .id)
-        let createdAt = try container.decode(Date.self, forKey: .createdAt)
         let expiresAt = try container.decode(Date.self, forKey: .expiresAt)
-        let subletter = try container.decode(String.self, forKey: .subletter)
-        let sublettees = try container.decode([String].self, forKey: .sublettees)
+        let subletter = try container.decode(Int.self, forKey: .subletter)
+        let sublettees: [String]?
+        if container.contains(.sublettees) {
+            sublettees = try container.decode([String]?.self, forKey: .sublettees)
+        } else {
+            sublettees = nil
+        }
         let images = try container.decode([SubletImage].self, forKey: .images)
 
-        self.init(id: id, data: data, createdAt: createdAt, expiresAt: expiresAt, subletter: subletter, sublettees: sublettees, images: images)
+        self.init(id: id, data: data, expiresAt: expiresAt, subletter: subletter, sublettees: sublettees, images: images)
     }
 
     public enum CodingKeys: CodingKey {
         case id
-        case createdAt
         case expiresAt
         case subletter
         case sublettees
@@ -70,11 +71,10 @@ public struct SubletData: Codable {
     public var description: String?
     public var externalLink: String
     public var price: Int
+    public var negotiable: Bool
     public var expiresAt: Date
-    public var startDate: String
-    public var endDate: String
-    public var minPrice = 500
-    public var maxPrice = 1000
+    public var startDate: Day
+    public var endDate: Day
 }
 
 public extension SubletData {
@@ -84,9 +84,10 @@ public extension SubletData {
         address = ""
         externalLink = "https://google.com"
         price = 0
+        negotiable = false
         expiresAt = Date()
-        startDate = "2024-06-01" // TODO: Make actual dates
-        endDate = "2024-06-05"
+        startDate = Day()
+        endDate = Day()
     }
 }
 
@@ -144,15 +145,13 @@ public extension Sublet {
             baths: 6.5,
             externalLink: "",
             price: 820,
+            negotiable: false,
             expiresAt: .endOfSemester,
-            // startDate: .now,
-            // endDate: .endOfSemester
-            startDate: "2024-02-04",
-            endDate: "2024-05-18"
+            startDate: Day(),
+            endDate: Day(date: .endOfSemester)
         ),
-        createdAt: .now,
         expiresAt: .endOfSemester,
-        subletter: "Tim Cook",
+        subletter: 123456,
         sublettees: [],
         images: [SubletImage(id: 0, imageUrl: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuc2lvbnxlbnwwfHwwfHx8MA%3D%3D")]
     )

@@ -45,8 +45,15 @@ struct NewListingForm: View {
                 
                 ComponentWrapper {
                     Button(action: {
+                        guard let negotiable, let price, let startDate, let endDate else {
+                            return
+                        }
+                        
                         var data = subletData
-                        // TODO: Fill in price, etc
+                        data.price = price
+                        data.negotiable = negotiable
+                        data.startDate = Day(date: startDate)
+                        data.endDate = Day(date: endDate)
                         
                         OAuth2NetworkManager.instance.getAccessToken { token in
                             guard let token else {
