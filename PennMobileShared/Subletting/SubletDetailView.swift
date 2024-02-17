@@ -22,7 +22,11 @@ public struct SubletDetailView: View {
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                KFImage(URL(string: sublet.images[0].imageUrl))
+                KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
+                    .placeholder {
+                        Color.gray
+                            .aspectRatio(contentMode: .fill)
+                    }
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(10)
@@ -51,17 +55,19 @@ public struct SubletDetailView: View {
                             .foregroundColor(.secondary)
                     }
                     
-                    HStack {
-                        Text(sublet.address)
-                            .font(.subheadline)
-                        Button(action: {}) {
-                            HStack(spacing: 5) {
-                                Image(systemName: "map")
-                                Text("view in map")
+                    if sublet.address != nil {
+                        HStack {
+                            Text(sublet.address!)
+                                .font(.subheadline)
+                            Button(action: {}) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "map")
+                                    Text("view in map")
+                                }
                             }
+                            .font(.caption)
+                            Spacer()
                         }
-                        .font(.caption)
-                        Spacer()
                     }
                 }
                 .padding(.horizontal)

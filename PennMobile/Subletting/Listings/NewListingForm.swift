@@ -54,6 +54,7 @@ struct NewListingForm: View {
                         data.negotiable = negotiable
                         data.startDate = Day(date: startDate)
                         data.endDate = Day(date: endDate)
+                        data.expiresAt = Calendar.current.date(byAdding: .day, value: 3, to: Date())! // TODO: MAKE THIS AN EDITABLE FIELD
                         
                         Task {
                             if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {

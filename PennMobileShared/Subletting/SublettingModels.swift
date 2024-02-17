@@ -17,7 +17,6 @@ import Foundation
 public struct Sublet: Identifiable, Decodable {
     public let id: Int
     public let data: SubletData
-    public let expiresAt: Date
     public let subletter: Int
     public let sublettees: [String]?
     public let images: [SubletImage]
@@ -26,10 +25,9 @@ public struct Sublet: Identifiable, Decodable {
         data[keyPath: keyPath]
     }
 
-    public init(id: Int, data: SubletData, expiresAt: Date, subletter: Int, sublettees: [String]?, images: [SubletImage]) {
+    public init(id: Int, data: SubletData, subletter: Int, sublettees: [String]?, images: [SubletImage]) {
         self.id = id
         self.data = data
-        self.expiresAt = expiresAt
         self.subletter = subletter
         self.sublettees = sublettees
         self.images = images
@@ -40,7 +38,6 @@ public struct Sublet: Identifiable, Decodable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let id = try container.decode(Int.self, forKey: .id)
-        let expiresAt = try container.decode(Date.self, forKey: .expiresAt)
         let subletter = try container.decode(Int.self, forKey: .subletter)
         let sublettees: [String]?
         if container.contains(.sublettees) {
@@ -50,12 +47,11 @@ public struct Sublet: Identifiable, Decodable {
         }
         let images = try container.decode([SubletImage].self, forKey: .images)
 
-        self.init(id: id, data: data, expiresAt: expiresAt, subletter: subletter, sublettees: sublettees, images: images)
+        self.init(id: id, data: data, subletter: subletter, sublettees: sublettees, images: images)
     }
 
     public enum CodingKeys: CodingKey {
         case id
-        case expiresAt
         case subletter
         case sublettees
         case images
@@ -65,14 +61,14 @@ public struct Sublet: Identifiable, Decodable {
 public struct SubletData: Codable {
     public var amenities: [SubletAmenity]
     public var title: String
-    public var address: String
+    public var address: String?
     public var beds: Int?
     public var baths: Double?
     public var description: String?
-    public var externalLink: String
+    public var externalLink: String?
     public var price: Int
     public var negotiable: Bool
-    public var expiresAt: Date
+    public var expiresAt: Date?
     public var startDate: Day
     public var endDate: Day
 }
@@ -150,7 +146,6 @@ public extension Sublet {
             startDate: Day(),
             endDate: Day(date: .endOfSemester)
         ),
-        expiresAt: .endOfSemester,
         subletter: 123456,
         sublettees: [],
         images: [SubletImage(id: 0, imageUrl: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuc2lvbnxlbnwwfHwwfHx8MA%3D%3D")]
@@ -172,7 +167,6 @@ public extension Sublet {
                 startDate: Day(),
                 endDate: Day(date: .endOfSemester)
             ),
-            expiresAt: .endOfSemester,
             subletter: 53213,
             sublettees: [],
             images: [SubletImage(id: 1, imageUrl: "https://images.unsplash.com/photo-1560184897-ae75f418493e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBhcnRtZW50fGVufDB8fDB8fHw%3D")]
@@ -192,7 +186,6 @@ public extension Sublet {
                 startDate: Day(),
                 endDate: Day(date: .endOfSemester)
             ),
-            expiresAt: .endOfSemester,
             subletter: 96232,
             sublettees: [],
             images: [SubletImage(id: 2, imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXBhcnRtZW50fGVufDB8fDB8fHw%3D")]
@@ -212,7 +205,6 @@ public extension Sublet {
                 startDate: Day(),
                 endDate: Day(date: .endOfSemester)
             ),
-            expiresAt: .endOfSemester,
             subletter: 11923,
             sublettees: [],
             images: [SubletImage(id: 3, imageUrl: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y296eXxlbnwwfHwwfHx8MA%3D%3D")]

@@ -57,6 +57,7 @@ struct MarketplaceView: View {
                             SubletItem(sublet: sublet)
                         }
                         .buttonStyle(.plain)
+                        .padding(5)
                     }
                 }
             }

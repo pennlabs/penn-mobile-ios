@@ -24,7 +24,11 @@ public struct SubletItem: View {
     
     public var body: some View {
         VStack(alignment: .leading) {
-            KFImage(URL(string: sublet.images[0].imageUrl))
+            KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
+                .placeholder {
+                    Color.gray
+                        .aspectRatio(contentMode: .fill)
+                }
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(10)
@@ -80,7 +84,6 @@ public struct SubletItem: View {
                 }
             }
         }
-        .padding()
     }
     
     func formatDate(_ date: Date) -> String {

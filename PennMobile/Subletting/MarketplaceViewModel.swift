@@ -28,7 +28,7 @@ struct MarketplaceFilterData {
 }
 
 class MarketplaceViewModel: ObservableObject {
-    @Published var sublets: [Sublet] = Sublet.mocks
+    @Published var sublets: [Sublet] = []
     @Published var searchText = ""
     @Published var sortOption = "Select" {
         didSet {

@@ -70,6 +70,7 @@ struct MyListings: View {
                         LazyVGrid(columns: columns) {
                             ForEach(viewModel.listings) { sublet in
                                 SubletItem(sublet: sublet, isSubletterView: true)
+                                    .padding(5)
                             }
                         }
                     }
@@ -80,6 +81,7 @@ struct MyListings: View {
                         LazyVGrid(columns: columns) {
                             ForEach(viewModel.drafts) { sublet in
                                 SubletItem(sublet: sublet, isSubletterView: true, isDraft: true)
+                                    .padding(5)
                             }
                         }
                     }
