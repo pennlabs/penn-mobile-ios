@@ -27,7 +27,7 @@ struct MarketplaceView: View {
                     }
                     .buttonStyle(.plain)
                     .sheet(isPresented: $showingFilters) {
-                        MarketplaceFilterView()
+                        MarketplaceFilterView(marketplaceViewModel: marketplaceViewModel)
                     }
                 }
                 .padding()
@@ -63,6 +63,9 @@ struct MarketplaceView: View {
                     MyListings()
                 }
             }
+        }
+        .task {
+            await marketplaceViewModel.populate()
         }
     }
 }

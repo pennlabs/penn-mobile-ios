@@ -55,12 +55,8 @@ struct NewListingForm: View {
                         data.startDate = Day(date: startDate)
                         data.endDate = Day(date: endDate)
                         
-                        OAuth2NetworkManager.instance.getAccessToken { token in
-                            guard let token else {
-                                return
-                            }
-                            
-                            Task {
+                        Task {
+                            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
                                 do {
                                     let sublet = try await SublettingAPI.instance.createSublet(subletData: data, accessToken: token.value)
                                     logger.info("Created sublet with id \(sublet.id), yay!")
@@ -73,12 +69,14 @@ struct NewListingForm: View {
                         Text("Post")
                             .font(.title3)
                             .bold()
+                            .foregroundColor(Color.white)
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .background(
+                                Capsule()
+                                    .fill(formState.isValid ? Color.baseLabsBlue : .gray)
+                            )
                     }
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .background(in: Capsule())
-                    .foregroundStyle(.white)
-                    .backgroundStyle(formState.isValid ? Color.baseLabsBlue : .gray)
                     .padding(.top, 30)
                     .disabled(!formState.isValid)
                 }

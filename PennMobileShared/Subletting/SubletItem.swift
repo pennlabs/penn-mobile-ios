@@ -59,7 +59,7 @@ public struct SubletItem: View {
                     }
                 }
                 
-                Text("$\(sublet.price) (Negotiable)")
+                Text("$\(sublet.price)\(sublet.negotiable ? " (Negotiable)" : "")")
                     .lineLimit(1)
                 
                 if let beds = sublet.beds, let baths = sublet.baths {

@@ -10,8 +10,25 @@ import Foundation
 import Combine
 import PennMobileShared
 
+struct MarketplaceFilterData {
+    var minPrice: Int?
+    var maxPrice: Int?
+    var location: String?
+    var startDate: Date?
+    var endDate: Date?
+    var beds: Int?
+    var baths: Int?
+    var selectedAmenities: [String] = []
+    var amenities = [
+        "Private bathroom", "In-unit laundry", "Gym", "Wifi",
+        "Walk-in closet", "Furnished", "Utilities included", "Swimming pool",
+        "Resident lounge", "Parking", "Patio", "Kitchen",
+        "Dog-friendly", "Cat-friendly"
+    ]
+}
+
 class MarketplaceViewModel: ObservableObject {
-    @Published var sublets: [Sublet] = Sublet.mocks
+    @Published var sublets: [Sublet] = []
     @Published var searchText = ""
     @Published var sortOption = "Select" {
         didSet {
@@ -19,6 +36,18 @@ class MarketplaceViewModel: ObservableObject {
         }
     }
     let sortOptions = ["Select", "Name", "Price", "Beds", "Baths", "Start Date", "End Date"]
+    @Published var filterData = MarketplaceFilterData() {
+        didSet {
+            Task {
+                await populate()
+                if searchText != "" {
+                    performSearch() // sort by search text
+                } else {
+                    sortSublets() // sort by sorting options
+                }
+            }
+        }
+    }
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -29,6 +58,48 @@ class MarketplaceViewModel: ObservableObject {
                 self?.performSearch()
             }
             .store(in: &cancellables)
+    }
+    
+    func populate() async {
+        // TODO: need to populate amenities list too, probably elsewhere
+        
+        var queryParameters: [String: String] = [:]
+        if let minPrice = filterData.minPrice {
+            queryParameters["min_price"] = "\(minPrice)"
+        }
+        if let maxPrice = filterData.maxPrice {
+            queryParameters["max_price"] = "\(maxPrice)"
+        }
+        if let location = filterData.location {
+            queryParameters["address"] = location
+        }
+        if let startDate = filterData.startDate {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            queryParameters["starts_after"] = formatter.string(from: startDate)
+        }
+        if let endDate = filterData.endDate {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            queryParameters["ends_before"] = formatter.string(from: endDate)
+        }
+        if let beds = filterData.beds {
+            queryParameters["beds"] = "\(beds)"
+        }
+        if let baths = filterData.baths {
+            queryParameters["baths"] = "\(baths)"
+        }
+        if !filterData.selectedAmenities.isEmpty {
+            queryParameters["amenities"] = filterData.selectedAmenities.joined(separator: ",")
+        }
+        
+        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+            do {
+                sublets = try await SublettingAPI.instance.getSublets(queryParameters: queryParameters, accessToken: token.value)
+            } catch {
+                print("Error populating sublets: \(error)")
+            }
+        }
     }
     
     func sortSublets() {

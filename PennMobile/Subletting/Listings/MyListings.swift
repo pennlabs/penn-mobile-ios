@@ -31,7 +31,13 @@ class ListingsViewModel: ObservableObject {
         self.listings = []
         
         Task {
-            self.listings = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"])
+            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+                do {
+                    self.listings = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"], accessToken: token.value)
+                } catch {
+                    print("Error getting user sublets: \(error)")
+                }
+            }
         }
     }
 }

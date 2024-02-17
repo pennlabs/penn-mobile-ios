@@ -11,46 +11,42 @@ import PennForms
 
 struct MarketplaceFilterView: View {
     @Environment(\.dismiss) var dismiss
-    @State private var minPrice: Int?
-    @State private var maxPrice: Int?
-    @State private var location: String?
-    @State private var startDate: Date?
-    @State private var endDate: Date?
-    @State private var beds: Int?
-    @State private var baths: Int?
-    @State private var selectedAmenities: [String] = []
-    @State private var amenities = [
-        "Private bathroom", "In-unit laundry", "Gym", "Wifi",
-        "Walk-in closet", "Furnished", "Utilities included", "Swimming pool",
-        "Resident lounge", "Parking", "Patio", "Kitchen",
-        "Dog-friendly", "Cat-friendly"
-    ]
+    @ObservedObject var marketplaceViewModel: MarketplaceViewModel
+    @State private var filterData: MarketplaceFilterData
+
+    init(marketplaceViewModel: MarketplaceViewModel) {
+        self.marketplaceViewModel = marketplaceViewModel
+        self._filterData = State(initialValue: marketplaceViewModel.filterData)
+    }
     
     var body: some View {
         NavigationStack {
             ScrollView {
                 LabsForm { formState in
                     PairFields {
-                        NumericField($minPrice, format: .currency(code: "USD").presentation(.narrow), title: "Min Price/month")
-                        NumericField($maxPrice, format: .currency(code: "USD").presentation(.narrow), title: "Max Price/month")
+                        NumericField($filterData.minPrice, format: .currency(code: "USD").presentation(.narrow), title: "Min Price/month")
+                        NumericField($filterData.maxPrice, format: .currency(code: "USD").presentation(.narrow), title: "Max Price/month")
                     }
                     
-                    TextLineField($location, placeholder: "Search", title: "Desired location")
+                    TextLineField($filterData.location, placeholder: "Search", title: "Desired location")
 
-                    DateRangeField(lowerDate: $startDate, upperDate: $endDate, title: "Start & End Date")
+                    DateRangeField(lowerDate: $filterData.startDate, upperDate: $filterData.endDate, title: "Start & End Date")
                     
                     PairFields {
-                        NumericField($beds, title: "# Bed")
-                        NumericField($baths, title: "# Bath")
+                        NumericField($filterData.beds, title: "# Bed")
+                        NumericField($filterData.baths, title: "# Bath")
                     }
                     
-                    NumericField($baths, title: "# Bath")
+                    NumericField($filterData.baths, title: "# Bath")
                     
-//                    TagSelector(selection: $selectedAmenities, tags: $amenities)
+//                    TagSelector(selection: $filterData.selectedAmenities, tags: $filterData.amenities)
                     
                     ComponentWrapper {
                         HStack {
-                            Button(action: {}) {
+                            Button(action: {
+                                marketplaceViewModel.filterData = MarketplaceFilterData()
+                                filterData = MarketplaceFilterData()
+                            }) {
                                 Text("Reset")
                                     .font(.title3)
                                     .bold()
@@ -68,7 +64,10 @@ struct MarketplaceFilterView: View {
                             }
                             .padding(.top, 30)
                             
-                            Button(action: {}) {
+                            Button(action: {
+                                marketplaceViewModel.filterData = filterData
+                                dismiss()
+                            }) {
                                 Text("Save")
                                     .font(.title3)
                                     .bold()
@@ -93,6 +92,7 @@ struct MarketplaceFilterView: View {
                 Image(systemName: "xmark")
                     .foregroundColor(.primary)
             }, trailing: Button(action: {
+                marketplaceViewModel.filterData = filterData
                 dismiss()
             }) {
                 Text("Save")
@@ -102,5 +102,5 @@ struct MarketplaceFilterView: View {
 }
 
 #Preview {
-    MarketplaceFilterView()
+    MarketplaceFilterView(marketplaceViewModel: MarketplaceViewModel())
 }

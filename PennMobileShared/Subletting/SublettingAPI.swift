@@ -96,7 +96,7 @@ public class SublettingAPI {
         }
     }
 
-    public func getSublets(queryParameters: [String: String]? = nil) async throws -> [Sublet] {
+    public func getSublets(queryParameters: [String: String]? = nil, accessToken: String) async throws -> [Sublet] {
         var urlComponents = URLComponents(string: sublettingUrl)!
         
         if let queryParameters = queryParameters, !queryParameters.isEmpty {
@@ -109,6 +109,8 @@ public class SublettingAPI {
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
