@@ -103,6 +103,7 @@
 		21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */; };
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
 		421B03CA29E22035003AE6DC /* FitnessRoomRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B03C929E22035003AE6DC /* FitnessRoomRow.swift */; };
+		422C72402B81341C00424C99 /* SubletDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C723F2B81341C00424C99 /* SubletDetailView.swift */; };
 		422C896E2A0FE8C000A7135C /* FitnessSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C896D2A0FE8C000A7135C /* FitnessSettingsView.swift */; };
 		4232A2162B66CC5300149519 /* MarketplaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4232A2152B66CC5300149519 /* MarketplaceView.swift */; };
 		423814AA2B76D104004178CF /* MarketplaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423814A92B76D104004178CF /* MarketplaceViewModel.swift */; };
@@ -528,6 +529,7 @@
 		407FC3CFC29C6496A17C99C2 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		421B03C929E22035003AE6DC /* FitnessRoomRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessRoomRow.swift; sourceTree = "<group>"; };
 		421B03CD29E25E92003AE6DC /* FitnessGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessGraph.swift; sourceTree = "<group>"; };
+		422C723F2B81341C00424C99 /* SubletDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletDetailView.swift; sourceTree = "<group>"; };
 		422C896D2A0FE8C000A7135C /* FitnessSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessSettingsView.swift; sourceTree = "<group>"; };
 		4232A2152B66CC5300149519 /* MarketplaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceView.swift; sourceTree = "<group>"; };
 		423814A92B76D104004178CF /* MarketplaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewModel.swift; sourceTree = "<group>"; };
@@ -1634,6 +1636,7 @@
 				891067892B64715E00748FC6 /* SublettingModels.swift */,
 				8910678A2B64715E00748FC6 /* SublettingAPI.swift */,
 				6E62C45E2B6EF36A00C92C05 /* SubletItem.swift */,
+				422C723F2B81341C00424C99 /* SubletDetailView.swift */,
 			);
 			name = Subletting;
 			path = PennMobileShared/Subletting;
@@ -2699,6 +2702,7 @@
 			files = (
 				6E5159E92AC8C9D5004B3F41 /* DiningAPI.swift in Sources */,
 				6E5159E12AC8C9D5004B3F41 /* DiningBalance.swift in Sources */,
+				422C72402B81341C00424C99 /* SubletDetailView.swift in Sources */,
 				6E5159EA2AC8C9D5004B3F41 /* Course.swift in Sources */,
 				6E5159E62AC8C9D5004B3F41 /* Colors.swift in Sources */,
 				6E5159E42AC8C9D5004B3F41 /* ScheduleView.swift in Sources */,

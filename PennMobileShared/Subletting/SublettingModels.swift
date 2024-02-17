@@ -91,7 +91,7 @@ public extension SubletData {
     }
 }
 
-public struct SubletAmenity: Codable {
+public struct SubletAmenity: Hashable, Codable {
     public let name: String
 }
 

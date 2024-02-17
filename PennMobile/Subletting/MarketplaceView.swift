@@ -51,7 +51,12 @@ struct MarketplaceView: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(marketplaceViewModel.sublets) { sublet in
-                        SubletItem(sublet: sublet)
+                        NavigationLink {
+                            SubletDetailView(sublet: sublet, isSaved: true)
+                        } label: {
+                            SubletItem(sublet: sublet)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
             }
