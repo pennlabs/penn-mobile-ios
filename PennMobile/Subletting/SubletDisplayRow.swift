@@ -1,5 +1,5 @@
 //
-//  SubletActivityRow.swift
+//  SubletDisplayRow.swift
 //  PennMobile
 //
 //  Created by Jordan H on 2/18/24.
@@ -10,15 +10,14 @@ import SwiftUI
 import Kingfisher
 import PennMobileShared
 
-struct SubletActivityRow: View {
+struct SubletDisplayRow: View {
     let sublet: Sublet
-    @ObservedObject var marketplaceViewModel: MarketplaceViewModel
     let isApplied: Bool = false
     @State var messageExpanded: Bool = false
     
     public var body: some View {
         NavigationLink {
-            SubletDetailView(sublet: sublet, marketplaceViewModel: marketplaceViewModel)
+            SubletDetailView(sublet: sublet)
         } label: {
             HStack {
                 KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
@@ -97,5 +96,5 @@ struct SubletActivityRow: View {
 }
 
 #Preview {
-    SubletActivityRow(sublet: Sublet.mock, marketplaceViewModel: MarketplaceViewModel())
+    SubletDisplayRow(sublet: Sublet.mock)
 }

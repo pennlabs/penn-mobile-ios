@@ -103,10 +103,9 @@
 		21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */; };
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
 		421B03CA29E22035003AE6DC /* FitnessRoomRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B03C929E22035003AE6DC /* FitnessRoomRow.swift */; };
-		422C72422B8226F400424C99 /* MarketplaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423814A92B76D104004178CF /* MarketplaceViewModel.swift */; };
+		422C72422B8226F400424C99 /* SublettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423814A92B76D104004178CF /* SublettingViewModel.swift */; };
 		422C72432B82271D00424C99 /* SubletDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C723F2B81341C00424C99 /* SubletDetailView.swift */; };
-		422C72472B822BFB00424C99 /* SubletActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C72462B822BFB00424C99 /* SubletActivity.swift */; };
-		422C724B2B8234C700424C99 /* SubletActivityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C72482B822F6A00424C99 /* SubletActivityRow.swift */; };
+		422C724B2B8234C700424C99 /* SubletDisplayRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C72482B822F6A00424C99 /* SubletDisplayRow.swift */; };
 		422C896E2A0FE8C000A7135C /* FitnessSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422C896D2A0FE8C000A7135C /* FitnessSettingsView.swift */; };
 		4232A2162B66CC5300149519 /* MarketplaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4232A2152B66CC5300149519 /* MarketplaceView.swift */; };
 		423814AC2B76DB87004178CF /* MarketplaceFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423814AB2B76DB87004178CF /* MarketplaceFilterView.swift */; };
@@ -213,7 +212,7 @@
 		6E5159F22AC8C9D5004B3F41 /* DiningToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5159E02AC8C9D5004B3F41 /* DiningToken.swift */; };
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
-		6E62C45F2B6EF36A00C92C05 /* SubletItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E62C45E2B6EF36A00C92C05 /* SubletItem.swift */; };
+		6E62C45F2B6EF36A00C92C05 /* SubletDisplayBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E62C45E2B6EF36A00C92C05 /* SubletDisplayBox.swift */; };
 		6E903D382AC9C67000F2D384 /* ImageNetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E903D372AC9C67000F2D384 /* ImageNetworkingManager.swift */; };
 		6ECB4C2B2ACA6F4C00F7379A /* DiningVenueRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC88D4C27B1BF50006896F6 /* DiningVenueRow.swift */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
@@ -310,7 +309,7 @@
 		CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1671FB7887E0067D946 /* OnboardingController.swift */; };
 		CF29A1781FB788820067D946 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF29A1681FB7887E0067D946 /* PageCell.swift */; };
 		CF7FCA761FAFCD9E0052F0A9 /* RoomSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */; };
-		E49D3B912B66CA570022AB71 /* MyListings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49D3B902B66CA570022AB71 /* MyListings.swift */; };
+		E49D3B912B66CA570022AB71 /* MyListingsActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49D3B902B66CA570022AB71 /* MyListingsActivity.swift */; };
 		E735C9422AF81498000F7376 /* DiningSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E735C9412AF81498000F7376 /* DiningSettingsView.swift */; };
 		EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */; };
 		EF30077223EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */; };
@@ -532,11 +531,10 @@
 		421B03C929E22035003AE6DC /* FitnessRoomRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessRoomRow.swift; sourceTree = "<group>"; };
 		421B03CD29E25E92003AE6DC /* FitnessGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessGraph.swift; sourceTree = "<group>"; };
 		422C723F2B81341C00424C99 /* SubletDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletDetailView.swift; sourceTree = "<group>"; };
-		422C72462B822BFB00424C99 /* SubletActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletActivity.swift; sourceTree = "<group>"; };
-		422C72482B822F6A00424C99 /* SubletActivityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletActivityRow.swift; sourceTree = "<group>"; };
+		422C72482B822F6A00424C99 /* SubletDisplayRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletDisplayRow.swift; sourceTree = "<group>"; };
 		422C896D2A0FE8C000A7135C /* FitnessSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessSettingsView.swift; sourceTree = "<group>"; };
 		4232A2152B66CC5300149519 /* MarketplaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceView.swift; sourceTree = "<group>"; };
-		423814A92B76D104004178CF /* MarketplaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceViewModel.swift; sourceTree = "<group>"; };
+		423814A92B76D104004178CF /* SublettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SublettingViewModel.swift; sourceTree = "<group>"; };
 		423814AB2B76DB87004178CF /* MarketplaceFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketplaceFilterView.swift; sourceTree = "<group>"; };
 		423B7EF42ACC67B900D30504 /* MeterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 		425E281A28FF5EE200218F50 /* DiningPlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningPlan.swift; sourceTree = "<group>"; };
@@ -639,7 +637,7 @@
 		6E5159DE2AC8C9D5004B3F41 /* DiningMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningMenu.swift; sourceTree = "<group>"; };
 		6E5159DF2AC8C9D5004B3F41 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		6E5159E02AC8C9D5004B3F41 /* DiningToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningToken.swift; sourceTree = "<group>"; };
-		6E62C45E2B6EF36A00C92C05 /* SubletItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletItem.swift; sourceTree = "<group>"; };
+		6E62C45E2B6EF36A00C92C05 /* SubletDisplayBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletDisplayBox.swift; sourceTree = "<group>"; };
 		6E903D372AC9C67000F2D384 /* ImageNetworkingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageNetworkingManager.swift; sourceTree = "<group>"; };
 		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		8766844028CBE907005CAD32 /* NativeNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeNewsViewController.swift; sourceTree = "<group>"; };
@@ -732,7 +730,7 @@
 		CF29A1671FB7887E0067D946 /* OnboardingController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingController.swift; sourceTree = "<group>"; };
 		CF29A1681FB7887E0067D946 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageCell.swift; sourceTree = "<group>"; };
 		CF7FCA751FAFCD9E0052F0A9 /* RoomSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionViewController.swift; sourceTree = "<group>"; };
-		E49D3B902B66CA570022AB71 /* MyListings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListings.swift; sourceTree = "<group>"; };
+		E49D3B902B66CA570022AB71 /* MyListingsActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListingsActivity.swift; sourceTree = "<group>"; };
 		E735C9412AF81498000F7376 /* DiningSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningSettingsView.swift; sourceTree = "<group>"; };
 		EF23946323EF4117005BA55F /* GSRGroupInviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteCell.swift; sourceTree = "<group>"; };
 		EF30077123EE1380006C9CF0 /* HomeGroupInvitesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCellItem.swift; sourceTree = "<group>"; };
@@ -1639,7 +1637,7 @@
 			children = (
 				891067892B64715E00748FC6 /* SublettingModels.swift */,
 				8910678A2B64715E00748FC6 /* SublettingAPI.swift */,
-				6E62C45E2B6EF36A00C92C05 /* SubletItem.swift */,
+				6E62C45E2B6EF36A00C92C05 /* SubletDisplayBox.swift */,
 			);
 			name = Subletting;
 			path = PennMobileShared/Subletting;
@@ -1906,9 +1904,8 @@
 			children = (
 				E49D3B8D2B66C9210022AB71 /* Listings */,
 				4232A2152B66CC5300149519 /* MarketplaceView.swift */,
-				422C72482B822F6A00424C99 /* SubletActivityRow.swift */,
-				422C72462B822BFB00424C99 /* SubletActivity.swift */,
-				423814A92B76D104004178CF /* MarketplaceViewModel.swift */,
+				422C72482B822F6A00424C99 /* SubletDisplayRow.swift */,
+				423814A92B76D104004178CF /* SublettingViewModel.swift */,
 				422C723F2B81341C00424C99 /* SubletDetailView.swift */,
 				423814AB2B76DB87004178CF /* MarketplaceFilterView.swift */,
 			);
@@ -1918,7 +1915,7 @@
 		E49D3B8D2B66C9210022AB71 /* Listings */ = {
 			isa = PBXGroup;
 			children = (
-				E49D3B902B66CA570022AB71 /* MyListings.swift */,
+				E49D3B902B66CA570022AB71 /* MyListingsActivity.swift */,
 				89E37E0F2B6F5BD2000A86B7 /* NewListingForm.swift */,
 			);
 			path = Listings;
@@ -2485,7 +2482,7 @@
 				6C6FE1D127B9B8CB0093FD13 /* InfoTableViewController.swift in Sources */,
 				F2770AE52545E384001EA1DD /* CourseAlertController.swift in Sources */,
 				215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */,
-				E49D3B912B66CA570022AB71 /* MyListings.swift in Sources */,
+				E49D3B912B66CA570022AB71 /* MyListingsActivity.swift in Sources */,
 				89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */,
 				217A7836204D2E0D004F1227 /* HomeLaundryCellItem.swift in Sources */,
 				6CC88D7027B1BF51006896F6 /* MenuDisclosureGroup.swift in Sources */,
@@ -2493,7 +2490,7 @@
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				6CC88D6E27B1BF51006896F6 /* DiningVenueDetailLocationView.swift in Sources */,
-				422C72422B8226F400424C99 /* MarketplaceViewModel.swift in Sources */,
+				422C72422B8226F400424C99 /* SublettingViewModel.swift in Sources */,
 				6CAA4B5827A763A400473CC6 /* HomePollsCellHeader.swift in Sources */,
 				F2B8C40C252C58E600922D08 /* GSRClosedView.swift in Sources */,
 				6ECB4C382ACB11FA00F7379A /* DiningCell.swift in Sources */,
@@ -2520,7 +2517,6 @@
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
 				890D15002AB74D6000672FFE /* RootView.swift in Sources */,
 				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
-				422C72472B822BFB00424C99 /* SubletActivity.swift in Sources */,
 				F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
@@ -2690,7 +2686,7 @@
 				B9AA4EEF236F3E1B0010D7AC /* GSRGroupInviteViewController.swift in Sources */,
 				21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */,
 				21737FD923A31205002DCD07 /* OAuth2NetworkManager.swift in Sources */,
-				422C724B2B8234C700424C99 /* SubletActivityRow.swift in Sources */,
+				422C724B2B8234C700424C99 /* SubletDisplayRow.swift in Sources */,
 				6CC88D6A27B1BF51006896F6 /* DiningView.swift in Sources */,
 				F2E3FE242595A99500518961 /* CourseSection.swift in Sources */,
 				C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */,
@@ -2714,7 +2710,7 @@
 				6E5159EA2AC8C9D5004B3F41 /* Course.swift in Sources */,
 				6E5159E62AC8C9D5004B3F41 /* Colors.swift in Sources */,
 				6E5159E42AC8C9D5004B3F41 /* ScheduleView.swift in Sources */,
-				6E62C45F2B6EF36A00C92C05 /* SubletItem.swift in Sources */,
+				6E62C45F2B6EF36A00C92C05 /* SubletDisplayBox.swift in Sources */,
 				6E5159E32AC8C9D5004B3F41 /* KeychainAccessible.swift in Sources */,
 				6E5159E22AC8C9D5004B3F41 /* WidgetKind.swift in Sources */,
 				6ECB4C2B2ACA6F4C00F7379A /* DiningVenueRow.swift in Sources */,

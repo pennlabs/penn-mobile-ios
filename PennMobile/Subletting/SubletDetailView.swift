@@ -13,14 +13,13 @@ import PennMobileShared
 struct SubletDetailView: View {
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @State var sublet: Sublet
-    @ObservedObject var marketplaceViewModel: MarketplaceViewModel
+    @EnvironmentObject var sublettingViewModel: SublettingViewModel
     private var isSaved: Bool {
-        marketplaceViewModel.isFavorited(sublet: sublet)
+        sublettingViewModel.isFavorited(sublet: sublet)
     }
 
-    init(sublet: Sublet, marketplaceViewModel: MarketplaceViewModel) {
+    init(sublet: Sublet) {
         self._sublet = State(initialValue: sublet)
-        self.marketplaceViewModel = marketplaceViewModel
     }
     
     var body: some View {
@@ -123,9 +122,9 @@ struct SubletDetailView: View {
                     Button(action: {
                         Task {
                             if isSaved {
-                                await marketplaceViewModel.unfavoriteSublet(sublet: sublet)
+                                await sublettingViewModel.unfavoriteSublet(sublet: sublet)
                             } else {
-                                await marketplaceViewModel.favoriteSublet(sublet: sublet)
+                                await sublettingViewModel.favoriteSublet(sublet: sublet)
                             }
                         }
                     }) {
@@ -179,5 +178,5 @@ struct SubletDetailView: View {
 }
 
 #Preview {
-    SubletDetailView(sublet: Sublet.mock, marketplaceViewModel: MarketplaceViewModel())
+    SubletDetailView(sublet: Sublet.mock)
 }

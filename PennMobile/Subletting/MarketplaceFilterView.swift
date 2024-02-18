@@ -11,12 +11,12 @@ import PennForms
 
 struct MarketplaceFilterView: View {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var marketplaceViewModel: MarketplaceViewModel
+    @ObservedObject var sublettingViewModel: SublettingViewModel
     @State private var filterData: MarketplaceFilterData
 
-    init(marketplaceViewModel: MarketplaceViewModel) {
-        self.marketplaceViewModel = marketplaceViewModel
-        self._filterData = State(initialValue: marketplaceViewModel.filterData)
+    init(sublettingViewModel: SublettingViewModel) {
+        self.sublettingViewModel = sublettingViewModel
+        self._filterData = State(initialValue: sublettingViewModel.filterData)
     }
     
     var body: some View {
@@ -44,7 +44,7 @@ struct MarketplaceFilterView: View {
                     ComponentWrapper {
                         HStack {
                             Button(action: {
-                                marketplaceViewModel.filterData = MarketplaceFilterData()
+                                sublettingViewModel.filterData = MarketplaceFilterData()
                                 filterData = MarketplaceFilterData()
                             }) {
                                 Text("Reset")
@@ -65,7 +65,7 @@ struct MarketplaceFilterView: View {
                             .padding(.top, 30)
                             
                             Button(action: {
-                                marketplaceViewModel.filterData = filterData
+                                sublettingViewModel.filterData = filterData
                                 dismiss()
                             }) {
                                 Text("Save")
@@ -92,7 +92,7 @@ struct MarketplaceFilterView: View {
                 Image(systemName: "xmark")
                     .foregroundColor(.primary)
             }, trailing: Button(action: {
-                marketplaceViewModel.filterData = filterData
+                sublettingViewModel.filterData = filterData
                 dismiss()
             }) {
                 Text("Save")
@@ -102,5 +102,5 @@ struct MarketplaceFilterView: View {
 }
 
 #Preview {
-    MarketplaceFilterView(marketplaceViewModel: MarketplaceViewModel())
+    MarketplaceFilterView(sublettingViewModel: SublettingViewModel())
 }

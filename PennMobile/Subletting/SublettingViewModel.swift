@@ -1,5 +1,5 @@
 //
-//  MarketplaceViewModel.swift
+//  SublettingViewModel.swift
 //  PennMobile
 //
 //  Created by Jordan H on 2/9/24.
@@ -27,9 +27,8 @@ struct MarketplaceFilterData {
     ]
 }
 
-class MarketplaceViewModel: ObservableObject {
+class SublettingViewModel: ObservableObject {
     @Published var sublets: [Sublet] = []
-    @Published private var favoritedSublets: Set<Int> = []
     @Published var searchText = ""
     @Published var sortOption = "Select" {
         didSet {
@@ -40,7 +39,7 @@ class MarketplaceViewModel: ObservableObject {
     @Published var filterData = MarketplaceFilterData() {
         didSet {
             Task {
-                await populate()
+                await populateSublets()
                 if searchText != "" {
                     performSearch() // sort by search text
                 } else {
@@ -50,18 +49,87 @@ class MarketplaceViewModel: ObservableObject {
         }
     }
     
+    enum ListingsTabs: CaseIterable {
+        case posted
+        case drafts
+        case saved
+        case applied
+    }
+    
+    @Published var listings: [Sublet]
+    @Published var drafts: [Sublet]
+    @Published var saved: [Sublet]
+    @Published var applied: [Sublet]
+    
     private var cancellables = Set<AnyCancellable>()
     
-    init() {
+    init(listings: [Sublet], drafts: [Sublet], saved: [Sublet], applied: [Sublet]) {
+        self.listings = listings
+        self.drafts = drafts
+        self.saved = saved
+        self.applied = applied
+        
         $searchText
             .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
             .sink { [weak self] _ in
                 self?.performSearch()
             }
             .store(in: &cancellables)
+        
+        Task {
+            await populateSublets()
+        }
     }
     
-    func populate() async {
+    init() {
+        self.drafts = UserDefaults.standard.array(forKey: "drafts") as? [Sublet] ?? []
+        self.listings = []
+        self.saved = []
+        self.applied = []
+        
+        $searchText
+            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.performSearch()
+            }
+            .store(in: &cancellables)
+        
+        Task {
+            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+                do {
+                    self.listings = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"], accessToken: token.value)
+                } catch {
+                    print("Error getting user listings: \(error)")
+                }
+            }
+        }
+        
+        Task {
+            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+                do {
+                    self.saved = try await SublettingAPI.instance.getFavorites(accessToken: token.value)
+                } catch {
+                    print("Error getting user saved sublets: \(error)")
+                }
+            }
+        }
+        
+//        Task {
+//            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+//                do {
+//                    self.applied = try await SublettingAPI.instance.getSublets(queryParams: ???, accessToken: token.value)
+//                } catch {
+//                    print("Error getting user applied sublets: \(error)")
+//                }
+//            }
+//        }
+        
+        Task {
+            await populateSublets()
+        }
+    }
+    
+    func populateSublets() async {
         // TODO: need to populate amenities list too, probably elsewhere
         
         var queryParameters: [String: String] = [:]
@@ -104,13 +172,13 @@ class MarketplaceViewModel: ObservableObject {
     }
     
     func favoriteSublet(sublet: Sublet) async -> Bool {
-        if favoritedSublets.contains(sublet.id) {
+        if isFavorited(sublet: sublet) {
             return false
         }
         if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
             do {
                 try await SublettingAPI.instance.favoriteSublet(id: sublet.id, accessToken: token.value)
-                favoritedSublets.insert(sublet.id)
+                saved.append(sublet)
                 return true
             } catch {
                 print("Error favoriting sublets: \(error)")
@@ -121,13 +189,13 @@ class MarketplaceViewModel: ObservableObject {
     }
     
     func unfavoriteSublet(sublet: Sublet) async -> Bool {
-        if !favoritedSublets.contains(sublet.id) {
+        if !isFavorited(sublet: sublet) {
             return false
         }
         if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
             do {
                 try await SublettingAPI.instance.unfavoriteSublet(id: sublet.id, accessToken: token.value)
-                favoritedSublets.remove(sublet.id)
+                saved.removeAll { $0.id == sublet.id }
                 return true
             } catch {
                 print("Error unfavoriting sublets: \(error)")
@@ -138,19 +206,7 @@ class MarketplaceViewModel: ObservableObject {
     }
     
     func isFavorited(sublet: Sublet) -> Bool {
-        return favoritedSublets.contains(sublet.id)
-    }
-    
-    func getFavorites() async -> [Sublet] {
-        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
-            do {
-                return try await SublettingAPI.instance.getFavorites(accessToken: token.value)
-            } catch {
-                print("Error unfavoriting sublets: \(error)")
-                return []
-            }
-        }
-        return []
+        return saved.contains(where: { $0.id == sublet.id} )
     }
     
     func sortSublets() {

@@ -1,5 +1,5 @@
 //
-//  SubletItem.swift
+//  SubletDisplayBox.swift
 //  PennMobileShared
 //
 //  Created by George Botros on 2/3/24.
@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import Kingfisher
 
-public struct SubletItem: View {
+public struct SubletDisplayBox: View {
     let sublet: Sublet
     let isSubletterView: Bool
     let isDraft: Bool
