@@ -8,18 +8,22 @@
 
 import SwiftUI
 import Kingfisher
+import PennMobileShared
 
-public struct SubletDetailView: View {
+struct SubletDetailView: View {
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @State var sublet: Sublet
-    @State var isSaved: Bool // TODO: Store this somewhere else, in Sublet maybe?
-    
-    public init(sublet: Sublet, isSaved: Bool) {
-        self._sublet = State(initialValue: sublet)
-        self._isSaved = State(initialValue: isSaved)
+    @ObservedObject var marketplaceViewModel: MarketplaceViewModel
+    private var isSaved: Bool {
+        marketplaceViewModel.isFavorited(sublet: sublet)
     }
 
-    public var body: some View {
+    init(sublet: Sublet, marketplaceViewModel: MarketplaceViewModel) {
+        self._sublet = State(initialValue: sublet)
+        self.marketplaceViewModel = marketplaceViewModel
+    }
+    
+    var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
@@ -117,7 +121,13 @@ public struct SubletDetailView: View {
                 
                 HStack {
                     Button(action: {
-                        isSaved.toggle()
+                        Task {
+                            if isSaved {
+                                await marketplaceViewModel.unfavoriteSublet(sublet: sublet)
+                            } else {
+                                await marketplaceViewModel.favoriteSublet(sublet: sublet)
+                            }
+                        }
                     }) {
                         HStack {
                             Image(systemName: isSaved ? "heart.fill" : "heart")
@@ -169,5 +179,5 @@ public struct SubletDetailView: View {
 }
 
 #Preview {
-    SubletDetailView(sublet: Sublet.mock, isSaved: true)
+    SubletDetailView(sublet: Sublet.mock, marketplaceViewModel: MarketplaceViewModel())
 }

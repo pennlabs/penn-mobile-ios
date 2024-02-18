@@ -29,6 +29,7 @@ struct MarketplaceFilterData {
 
 class MarketplaceViewModel: ObservableObject {
     @Published var sublets: [Sublet] = []
+    @Published private var favoritedSublets: Set<Int> = []
     @Published var searchText = ""
     @Published var sortOption = "Select" {
         didSet {
@@ -100,6 +101,56 @@ class MarketplaceViewModel: ObservableObject {
                 print("Error populating sublets: \(error)")
             }
         }
+    }
+    
+    func favoriteSublet(sublet: Sublet) async -> Bool {
+        if favoritedSublets.contains(sublet.id) {
+            return false
+        }
+        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+            do {
+                try await SublettingAPI.instance.favoriteSublet(id: sublet.id, accessToken: token.value)
+                favoritedSublets.insert(sublet.id)
+                return true
+            } catch {
+                print("Error favoriting sublets: \(error)")
+                return false
+            }
+        }
+        return false
+    }
+    
+    func unfavoriteSublet(sublet: Sublet) async -> Bool {
+        if !favoritedSublets.contains(sublet.id) {
+            return false
+        }
+        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+            do {
+                try await SublettingAPI.instance.unfavoriteSublet(id: sublet.id, accessToken: token.value)
+                favoritedSublets.remove(sublet.id)
+                return true
+            } catch {
+                print("Error unfavoriting sublets: \(error)")
+                return false
+            }
+        }
+        return false
+    }
+    
+    func isFavorited(sublet: Sublet) -> Bool {
+        return favoritedSublets.contains(sublet.id)
+    }
+    
+    func getFavorites() async -> [Sublet] {
+        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+            do {
+                return try await SublettingAPI.instance.getFavorites(accessToken: token.value)
+            } catch {
+                print("Error unfavoriting sublets: \(error)")
+                return []
+            }
+        }
+        return []
     }
     
     func sortSublets() {

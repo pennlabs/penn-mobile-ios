@@ -18,8 +18,15 @@ struct MarketplaceView: View {
         VStack {
             VStack {
                 HStack {
-                    Image(systemName: "bookmark")
+                    NavigationLink {
+                        SubletActivity(marketplaceViewModel: marketplaceViewModel)
+                    } label: {
+                        Image(systemName: "bookmark")
+                    }
+                    .buttonStyle(.plain)
+                    
                     SearchBar(searchText: $marketplaceViewModel.searchText)
+                    
                     Button(action: {
                         showingFilters.toggle()
                     }) {
@@ -52,7 +59,7 @@ struct MarketplaceView: View {
                 LazyVGrid(columns: columns) {
                     ForEach(marketplaceViewModel.sublets) { sublet in
                         NavigationLink {
-                            SubletDetailView(sublet: sublet, isSaved: true)
+                            SubletDetailView(sublet: sublet, marketplaceViewModel: marketplaceViewModel)
                         } label: {
                             SubletItem(sublet: sublet)
                         }

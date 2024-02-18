@@ -55,7 +55,7 @@ struct MyListings: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Picker("Tab", selection: $viewModel.tab.animation()) {
                     Text("Posted").tag(ListingsViewModel.Tab.posted)

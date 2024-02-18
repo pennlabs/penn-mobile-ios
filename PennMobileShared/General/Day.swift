@@ -46,7 +46,7 @@ public struct Day: Hashable, Codable, Comparable {
         try container.encode(String(format: "%d-%02d-%02d", year, month, day))
     }
     
-    var date: Date? {
+    public var date: Date? {
         var components = DateComponents()
         components.year = year
         components.month = month
