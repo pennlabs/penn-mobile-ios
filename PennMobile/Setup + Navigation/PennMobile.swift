@@ -14,7 +14,6 @@ struct PennMobile: App {
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
     @ObservedObject var authManager = AuthManager()
     @ObservedObject var homeViewModel = StandardHomeViewModel()
-    @StateObject var popupManager = PopupManager()
 
     #if DEBUG
     @ObservedObject var mockHomeViewModel = MockHomeViewModel()
@@ -54,9 +53,6 @@ struct PennMobile: App {
                 .environmentObject(mockHomeViewModel)
             #endif
                 .accentColor(Color("navigation"))
-            
-            ContentView()
-                .environmentObject(popupManager)
         }
         .onChange(of: authManager.state.isLoggedIn) { _ in
             homeViewModel.clearData()
