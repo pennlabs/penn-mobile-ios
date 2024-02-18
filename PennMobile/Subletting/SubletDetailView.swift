@@ -14,13 +14,15 @@ struct SubletDetailView: View {
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @State var sublet: Sublet
     @ObservedObject var marketplaceViewModel: MarketplaceViewModel
+    let isSubletterView: Bool
     private var isSaved: Bool {
         marketplaceViewModel.isFavorited(sublet: sublet)
     }
 
-    init(sublet: Sublet, marketplaceViewModel: MarketplaceViewModel) {
+    init(sublet: Sublet, marketplaceViewModel: MarketplaceViewModel, isSubletterView: Bool = false) {
         self._sublet = State(initialValue: sublet)
         self.marketplaceViewModel = marketplaceViewModel
+        self.isSubletterView = isSubletterView
     }
     
     var body: some View {
@@ -36,9 +38,22 @@ struct SubletDetailView: View {
                     .cornerRadius(10)
                 
                 VStack(alignment: .leading) {
-                    Text(sublet.title)
-                        .font(.headline)
-                        .lineLimit(1)
+                    HStack {
+                        Text(sublet.title)
+                            .font(.headline)
+                            .lineLimit(1)
+                        
+                        if isSubletterView {
+                            Spacer()
+                            
+                            Button(action: {}) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "pencil.line")
+                                    Text("Edit")
+                                }
+                            }
+                        }
+                    }
                     
                     Text("$\(sublet.price)\(sublet.negotiable ? " (Negotiable)" : "")")
                         .lineLimit(1)
@@ -72,6 +87,53 @@ struct SubletDetailView: View {
                             .font(.caption)
                             Spacer()
                         }
+                    }
+                    HStack {
+                        Button(action: {
+                            Task {
+                                if isSaved {
+                                    await marketplaceViewModel.unfavoriteSublet(sublet: sublet)
+                                } else {
+                                    await marketplaceViewModel.favoriteSublet(sublet: sublet)
+                                }
+                            }
+                        }) {
+                            HStack {
+                                Image(systemName: isSaved ? "heart.fill" : "heart")
+                                Text(isSaved ? "Unsave" : "Save")
+                                    .font(.title3)
+                                    .bold()
+                            }
+                            .foregroundColor(.primary)
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .background(
+                                Capsule()
+                                    .fill(Color.uiCardBackground)
+                            )
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color.primary, lineWidth: 2)
+                            )
+                        }
+                        .padding(.top, 10)
+                        
+                        Button(action: {}) {
+                            HStack {
+                                Image(systemName: "ellipsis.message")
+                                Text("Interested")
+                                    .font(.title3)
+                                    .bold()
+                            }
+                            .foregroundColor(Color.white)
+                            .padding(.vertical, 10)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .background(
+                                Capsule()
+                                    .fill(Color.baseLabsBlue)
+                            )
+                        }
+                        .padding(.top, 10)
                     }
                 }
                 .padding(.horizontal)
@@ -117,54 +179,6 @@ struct SubletDetailView: View {
                         }
                     }
                     .padding(.horizontal)
-                }
-                
-                HStack {
-                    Button(action: {
-                        Task {
-                            if isSaved {
-                                await marketplaceViewModel.unfavoriteSublet(sublet: sublet)
-                            } else {
-                                await marketplaceViewModel.favoriteSublet(sublet: sublet)
-                            }
-                        }
-                    }) {
-                        HStack {
-                            Image(systemName: isSaved ? "heart.fill" : "heart")
-                            Text(isSaved ? "Unsave" : "Save")
-                                .font(.title3)
-                                .bold()
-                        }
-                        .foregroundColor(.primary)
-                        .padding(.vertical, 10)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .background(
-                            Capsule()
-                                .fill(Color.uiCardBackground)
-                        )
-                        .overlay(
-                            Capsule()
-                                .stroke(Color.primary, lineWidth: 2)
-                        )
-                    }
-                    .padding(.top, 30)
-                    
-                    Button(action: {}) {
-                        HStack {
-                            Image(systemName: "ellipsis.message")
-                            Text("Interested")
-                                .font(.title3)
-                                .bold()
-                        }
-                        .foregroundColor(Color.white)
-                        .padding(.vertical, 10)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .background(
-                            Capsule()
-                                .fill(Color.baseLabsBlue)
-                        )
-                    }
-                    .padding(.top, 30)
                 }
             }
             .padding()
