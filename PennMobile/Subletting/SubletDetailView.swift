@@ -18,8 +18,12 @@ struct SubletDetailView: View {
     private var isSaved: Bool {
         marketplaceViewModel.isFavorited(sublet: sublet)
     }
+    private var isClaimed: Bool {
+        // TODO
+        false
+    }
 
-    init(sublet: Sublet, marketplaceViewModel: MarketplaceViewModel, isSubletterView: Bool = false) {
+    init(sublet: Sublet, marketplaceViewModel: MarketplaceViewModel, isSubletterView: Bool = true) {
         self._sublet = State(initialValue: sublet)
         self.marketplaceViewModel = marketplaceViewModel
         self.isSubletterView = isSubletterView
@@ -88,52 +92,94 @@ struct SubletDetailView: View {
                             Spacer()
                         }
                     }
-                    HStack {
+                    if isSubletterView {
                         Button(action: {
                             Task {
-                                if isSaved {
+                                if isClaimed {
                                     await marketplaceViewModel.unfavoriteSublet(sublet: sublet)
                                 } else {
                                     await marketplaceViewModel.favoriteSublet(sublet: sublet)
                                 }
                             }
                         }) {
-                            HStack {
-                                Image(systemName: isSaved ? "heart.fill" : "heart")
-                                Text(isSaved ? "Unsave" : "Save")
-                                    .font(.title3)
-                                    .bold()
+                            if isClaimed {
+                                Button(action: {}) {
+                                    Text("Mark as available")
+                                        .font(.title3)
+                                        .bold()
+                                        .foregroundColor(Color.white)
+                                        .padding(.vertical, 10)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .background(
+                                            Capsule()
+                                                .fill(Color.blueLighter)
+                                        )
+                                }
+                                .padding(.top, 10)
+                            } else {
+                                Button(action: {}) {
+                                    Text("Mark as claimed")
+                                        .font(.title3)
+                                        .bold()
+                                        .foregroundColor(Color.white)
+                                        .padding(.vertical, 10)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .background(
+                                            Capsule()
+                                                .fill(Color.baseLabsBlue)
+                                        )
+                                }
+                                .padding(.top, 10)
                             }
-                            .foregroundColor(.primary)
-                            .padding(.vertical, 10)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .background(
-                                Capsule()
-                                    .fill(Color.uiCardBackground)
-                            )
-                            .overlay(
-                                Capsule()
-                                    .stroke(Color.primary, lineWidth: 2)
-                            )
                         }
-                        .padding(.top, 10)
-                        
-                        Button(action: {}) {
-                            HStack {
-                                Image(systemName: "ellipsis.message")
-                                Text("Interested")
-                                    .font(.title3)
-                                    .bold()
+                    } else {
+                        HStack {
+                            Button(action: {
+                                Task {
+                                    if isSaved {
+                                        await marketplaceViewModel.unfavoriteSublet(sublet: sublet)
+                                    } else {
+                                        await marketplaceViewModel.favoriteSublet(sublet: sublet)
+                                    }
+                                }
+                            }) {
+                                HStack {
+                                    Image(systemName: isSaved ? "heart.fill" : "heart")
+                                    Text(isSaved ? "Unsave" : "Save")
+                                        .font(.title3)
+                                        .bold()
+                                }
+                                .foregroundColor(.primary)
+                                .padding(.vertical, 10)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.uiCardBackground)
+                                )
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color.primary, lineWidth: 2)
+                                )
                             }
-                            .foregroundColor(Color.white)
-                            .padding(.vertical, 10)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .background(
-                                Capsule()
-                                    .fill(Color.baseLabsBlue)
-                            )
+                            .padding(.top, 10)
+                            
+                            Button(action: {}) {
+                                HStack {
+                                    Image(systemName: "ellipsis.message")
+                                    Text("Interested")
+                                        .font(.title3)
+                                        .bold()
+                                }
+                                .foregroundColor(Color.white)
+                                .padding(.vertical, 10)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.baseLabsBlue)
+                                )
+                            }
+                            .padding(.top, 10)
                         }
-                        .padding(.top, 10)
                     }
                 }
                 .padding(.horizontal)
