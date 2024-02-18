@@ -44,6 +44,7 @@ class ListingsViewModel: ObservableObject {
 
 struct MyListings: View {
     @ObservedObject private var viewModel: ListingsViewModel
+    @StateObject private var marketplaceViewModel = MarketplaceViewModel()
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     
     init(viewModel: ListingsViewModel) {
@@ -69,8 +70,13 @@ struct MyListings: View {
                     ScrollView {
                         LazyVGrid(columns: columns) {
                             ForEach(viewModel.listings) { sublet in
-                                SubletItem(sublet: sublet, isSubletterView: true)
-                                    .padding(5)
+                                NavigationLink {
+                                    SubletDetailView(sublet: sublet, marketplaceViewModel: marketplaceViewModel)
+                                } label: {
+                                    SubletItem(sublet: sublet, isSubletterView: true)
+                                }
+                                .buttonStyle(.plain)
+                                .padding(5)
                             }
                         }
                     }
