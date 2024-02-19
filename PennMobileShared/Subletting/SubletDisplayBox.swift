@@ -12,13 +12,12 @@ import Kingfisher
 
 public struct SubletDisplayBox: View {
     let sublet: Sublet
-    let isSubletterView: Bool
+    let isSubletter: Bool
     let isDraft: Bool
-    @State private var showMenu = false
     
-    public init(sublet: Sublet, isSubletterView: Bool = false, isDraft: Bool = false) {
+    public init(sublet: Sublet, isSubletter: Bool = false, isDraft: Bool = false) {
         self.sublet = sublet
-        self.isSubletterView = isSubletterView
+        self.isSubletter = isSubletter
         self.isDraft = isDraft
     }
     
@@ -41,7 +40,7 @@ public struct SubletDisplayBox: View {
                     
                     Spacer()
                     
-                    if isSubletterView {
+                    if isSubletter {
                         Menu {
                             Button("Edit", action: {
                                 // Handle edit action

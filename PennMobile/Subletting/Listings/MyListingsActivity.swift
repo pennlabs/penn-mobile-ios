@@ -10,6 +10,7 @@ import PennMobileShared
 import SwiftUI
 
 struct MyListingsActivity: View {
+    private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @EnvironmentObject private var sublettingViewModel: SublettingViewModel
     @State private var isListings: Bool
     @State private var selectedTab: SublettingViewModel.ListingsTabs
@@ -37,10 +38,15 @@ struct MyListingsActivity: View {
                 TabView(selection: $selectedTab) {
                     // Posted tab
                     ScrollView {
-                        VStack {
+                        LazyVGrid(columns: columns) {
                             ForEach(sublettingViewModel.listings) { sublet in
-                                SubletDisplayRow(sublet: sublet)
-                                    .padding(.horizontal)
+                                NavigationLink {
+                                    SubletDetailView(sublet: sublet, isSubletter: true)
+                                } label: {
+                                    SubletDisplayBox(sublet: sublet, isSubletter: true)
+                                        .padding(5)
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
@@ -48,10 +54,15 @@ struct MyListingsActivity: View {
                     
                     // Drafts tab
                     ScrollView {
-                        VStack {
+                        LazyVGrid(columns: columns) {
                             ForEach(sublettingViewModel.drafts) { sublet in
-                                SubletDisplayRow(sublet: sublet)
-                                    .padding(.horizontal)
+                                NavigationLink {
+                                    SubletDetailView(sublet: sublet, isSubletter: true)
+                                } label: {
+                                    SubletDisplayBox(sublet: sublet, isSubletter: true, isDraft: true)
+                                        .padding(5)
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
@@ -61,8 +72,13 @@ struct MyListingsActivity: View {
                     ScrollView {
                         VStack {
                             ForEach(sublettingViewModel.saved) { sublet in
-                                SubletDisplayRow(sublet: sublet)
-                                    .padding(.horizontal)
+                                NavigationLink {
+                                    SubletDetailView(sublet: sublet)
+                                } label: {
+                                    SubletDisplayRow(sublet: sublet)
+                                        .padding(.horizontal)
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
@@ -72,8 +88,13 @@ struct MyListingsActivity: View {
                     ScrollView {
                         VStack {
                             ForEach(sublettingViewModel.applied) { sublet in
-                                SubletDisplayRow(sublet: sublet)
-                                    .padding(.horizontal)
+                                NavigationLink {
+                                    SubletDetailView(sublet: sublet)
+                                } label: {
+                                    SubletDisplayRow(sublet: sublet)
+                                        .padding(.horizontal)
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                     }

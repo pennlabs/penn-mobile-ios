@@ -17,9 +17,17 @@ struct SubletDetailView: View {
     private var isSaved: Bool {
         sublettingViewModel.isFavorited(sublet: sublet)
     }
-
-    init(sublet: Sublet) {
+    let isSubletter: Bool
+    private var isClaimed: Bool = false // TODO: fill this in
+    
+    public init(sublet: Sublet) {
         self._sublet = State(initialValue: sublet)
+        self.isSubletter = false
+    }
+    
+    public init(sublet: Sublet, isSubletter: Bool) {
+        self._sublet = State(initialValue: sublet)
+        self.isSubletter = isSubletter
     }
     
     var body: some View {
@@ -35,9 +43,22 @@ struct SubletDetailView: View {
                     .cornerRadius(10)
                 
                 VStack(alignment: .leading) {
-                    Text(sublet.title)
-                        .font(.headline)
-                        .lineLimit(1)
+                    HStack {
+                        Text(sublet.title)
+                            .font(.headline)
+                            .lineLimit(1)
+                        
+                        if isSubletter {
+                            Spacer()
+                            
+                            Button(action: {}) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "pencil.line")
+                                    Text("Edit")
+                                }
+                            }
+                        }
+                    }
                     
                     Text("$\(sublet.price)\(sublet.negotiable ? " (Negotiable)" : "")")
                         .lineLimit(1)
@@ -70,6 +91,88 @@ struct SubletDetailView: View {
                             }
                             .font(.caption)
                             Spacer()
+                        }
+                    }
+
+                    if isSubletter {
+                        Button(action: {}) {
+                            if isClaimed {
+                                Button(action: {}) {
+                                    Text("Mark as available")
+                                        .font(.title3)
+                                        .bold()
+                                        .foregroundColor(Color.white)
+                                        .padding(.vertical, 10)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .background(
+                                            Capsule()
+                                                .fill(Color.blueLighter)
+                                        )
+                                }
+                                .padding(.top, 10)
+                            } else {
+                                Button(action: {}) {
+                                    Text("Mark as claimed")
+                                        .font(.title3)
+                                        .bold()
+                                        .foregroundColor(Color.white)
+                                        .padding(.vertical, 10)
+                                        .frame(maxWidth: .infinity, alignment: .center)
+                                        .background(
+                                            Capsule()
+                                                .fill(Color.baseLabsBlue)
+                                        )
+                                }
+                                .padding(.top, 10)
+                            }
+                        }
+                    } else {
+                        HStack {
+                            Button(action: {
+                                Task {
+                                    if isSaved {
+                                        await sublettingViewModel.unfavoriteSublet(sublet: sublet)
+                                    } else {
+                                        await sublettingViewModel.favoriteSublet(sublet: sublet)
+                                    }
+                                }
+                            }) {
+                                HStack {
+                                    Image(systemName: isSaved ? "heart.fill" : "heart")
+                                    Text(isSaved ? "Unsave" : "Save")
+                                        .font(.title3)
+                                        .bold()
+                                }
+                                .foregroundColor(.primary)
+                                .padding(.vertical, 10)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.uiCardBackground)
+                                )
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color.primary, lineWidth: 2)
+                                )
+                            }
+                            .padding(.top, 10)
+                            
+                            Button(action: {}) {
+                                HStack {
+                                    Image(systemName: "ellipsis.message")
+                                    Text("Interested")
+                                        .font(.title3)
+                                        .bold()
+                                }
+                                .foregroundColor(Color.white)
+                                .padding(.vertical, 10)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.baseLabsBlue)
+                                )
+                            }
+                            .padding(.top, 10)
                         }
                     }
                 }
@@ -116,54 +219,6 @@ struct SubletDetailView: View {
                         }
                     }
                     .padding(.horizontal)
-                }
-                
-                HStack {
-                    Button(action: {
-                        Task {
-                            if isSaved {
-                                await sublettingViewModel.unfavoriteSublet(sublet: sublet)
-                            } else {
-                                await sublettingViewModel.favoriteSublet(sublet: sublet)
-                            }
-                        }
-                    }) {
-                        HStack {
-                            Image(systemName: isSaved ? "heart.fill" : "heart")
-                            Text(isSaved ? "Unsave" : "Save")
-                                .font(.title3)
-                                .bold()
-                        }
-                        .foregroundColor(.primary)
-                        .padding(.vertical, 10)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .background(
-                            Capsule()
-                                .fill(Color.uiCardBackground)
-                        )
-                        .overlay(
-                            Capsule()
-                                .stroke(Color.primary, lineWidth: 2)
-                        )
-                    }
-                    .padding(.top, 30)
-                    
-                    Button(action: {}) {
-                        HStack {
-                            Image(systemName: "ellipsis.message")
-                            Text("Interested")
-                                .font(.title3)
-                                .bold()
-                        }
-                        .foregroundColor(Color.white)
-                        .padding(.vertical, 10)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .background(
-                            Capsule()
-                                .fill(Color.baseLabsBlue)
-                        )
-                    }
-                    .padding(.top, 30)
                 }
             }
             .padding()
