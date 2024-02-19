@@ -10,6 +10,7 @@ import SwiftUI
 
 struct MainTabView: View {
     @ObservedObject var mainTabViewCoordinator = MainTabViewCoordinator()
+    @StateObject private var sublettingViewModel = SublettingViewModel()
     @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
     @State var currentTab = "Home"
     
@@ -27,6 +28,7 @@ struct MainTabView: View {
                 NavigationStack {
                     feature.content
                 }
+                .environmentObject(sublettingViewModel)
                 .id(identifier)
                 .tabItem {
                     switch feature.image {
