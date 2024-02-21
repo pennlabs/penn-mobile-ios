@@ -9,25 +9,49 @@
 import SwiftUI
 import PennMobileShared
 
-struct DiningMenuRow: View {
-    var diningMenu: DiningMenu
 
+
+
+struct DiningMenuViewHeader: View {
+    @Binding var diningMenu: DiningMenu
+    @Binding var selectedStation: DiningStation?
+    
     var body: some View {
-        VStack(spacing: 0) {
-            ForEach(diningMenu.stations, id: \.self) { diningStation in
-                DiningStationRow(for: diningStation)
+        VStack {
+            Divider()
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal) {
+                    HStack(spacing: 15) {
+                        ForEach(diningMenu.stations, id: \.hashValue) { diningStation in
+                            Text(diningStation.name.uppercased())
+                                .bold(selectedStation != nil && selectedStation == diningStation)
+                                .underline(selectedStation != nil && selectedStation == diningStation)
+                                .font(.system(size: 16))
+                                .onTapGesture {
+                                    withAnimation {
+                                        selectedStation = diningStation
+                                    }
+                                }.onAppear {
+                                    print(diningStation.hashValue)
+                                }
+                        }
+                    }.onChange(of: selectedStation) { _ in
+                        withAnimation {
+                            proxy.scrollTo(selectedStation!.hashValue, anchor: .leading)
+                        }
+                        
+                    }
+                }
+                .padding(.vertical, 2)
             }
-        }
-        .background(Color.grey7.cornerRadius(8))
+            Divider()
+        }.background(Color(.systemBackground))
     }
 }
 
 struct DiningStationRow: View {
     @State var isExpanded = false
     let diningStation: DiningStation
-    init (for diningStation: DiningStation) {
-        self.diningStation = diningStation
-    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -176,21 +200,21 @@ extension AnyTransition {
     }
 }
 
-struct MenuDisclosureGroup_Previews: PreviewProvider {
-    static var previews: some View {
-        let diningVenues: MenuList = Bundle.main.decode("mock_menu.json")
-
-        return NavigationView {
-            ScrollView {
-                VStack {
-                    DiningVenueDetailMenuView(menus: diningVenues.menus, id: 1)
-                    Spacer()
-                }
-            }.navigationTitle("Dining")
-            .padding()
-        }
-    }
-}
+//struct MenuDisclosureGroup_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let diningVenues: MenuList = Bundle.main.decode("mock_menu.json")
+//
+//        return NavigationView {
+//            ScrollView {
+//                VStack {
+//                    DiningVenueDetailMenuView(menus: diningVenues.menus, id: 1)
+//                    Spacer()
+//                }
+//            }.navigationTitle("Dining")
+//            .padding()
+//        }
+//    }
+//}
 
 extension String {
     func capitalizeMainWords() -> String {

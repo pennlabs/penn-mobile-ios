@@ -8,6 +8,7 @@
 
 import SwiftyJSON
 import Foundation
+import JavaScriptCore
 
 public class DiningAPI {
     public static let defaultVenueIds: [Int] = [593, 636, 1442, 639]
@@ -25,6 +26,8 @@ public class DiningAPI {
         guard let (data, _) = try? await URLSession.shared.data(from: URL(string: diningUrl)!) else {
             return .failure(.serverError)
         }
+        
+        
         
         let decoder = JSONDecoder()
         let dateFormatter = DateFormatter()
