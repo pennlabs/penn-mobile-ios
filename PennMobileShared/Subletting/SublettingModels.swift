@@ -65,10 +65,10 @@ public struct SubletData: Codable {
     public var beds: Int?
     public var baths: Double?
     public var description: String?
-    public var externalLink: String?
+    public var externalLink: String? // Optional since not returned in get all sublets
     public var price: Int
     public var negotiable: Bool
-    public var expiresAt: Date?
+    public var expiresAt: Date? // Optional since not returned in get all sublets
     public var startDate: Day
     public var endDate: Day
 }

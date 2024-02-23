@@ -12,6 +12,7 @@ import PennMobileShared
 
 struct SubletDetailView: View {
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
+    @State var showExternalLink = false
     @State var sublet: Sublet
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
     private var isSaved: Bool {
@@ -225,6 +226,41 @@ struct SubletDetailView: View {
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                HStack {
+                    if !isSubletter {
+                        Button(action: {}) {
+                            Image(systemName: "ellipsis.message")
+                        }
+                        .buttonStyle(.plain)
+                        Button(action: {
+                            Task {
+                                if isSaved {
+                                    await sublettingViewModel.unfavoriteSublet(sublet: sublet)
+                                } else {
+                                    await sublettingViewModel.favoriteSublet(sublet: sublet)
+                                }
+                            }
+                        }) {
+                            Image(systemName: isSaved ? "heart.fill" : "heart")
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    if sublet.data.externalLink != nil {
+                        Button(action: {
+                            showExternalLink = true
+                        }) {
+                            Image(systemName: "link")
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $showExternalLink) {
+            WebView(url: URL(string: sublet.data.externalLink!)!)
+        }
     }
     
     func formatDate(_ date: Date) -> String {
