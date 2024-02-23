@@ -223,6 +223,8 @@ struct SubletDetailView: View {
             }
             .padding()
         }
+        .navigationTitle("Details")
+        .navigationBarTitleDisplayMode(.inline)
     }
     
     func formatDate(_ date: Date) -> String {

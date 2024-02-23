@@ -10,7 +10,6 @@ import PennMobileShared
 import SwiftUI
 
 struct MyListingsActivity: View {
-    private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @EnvironmentObject private var sublettingViewModel: SublettingViewModel
     @State private var isListings: Bool
     @State private var selectedTab: SublettingViewModel.ListingsTabs
@@ -38,35 +37,47 @@ struct MyListingsActivity: View {
                 TabView(selection: $selectedTab) {
                     // Posted tab
                     ScrollView {
-                        LazyVGrid(columns: columns) {
+                        VStack {
+                            NavigationLink(destination: NewListingForm()) {
+                                AddSubletView()
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(Text("New Listing"))
                             ForEach(sublettingViewModel.listings) { sublet in
                                 NavigationLink {
                                     SubletDetailView(sublet: sublet, isSubletter: true)
                                 } label: {
-                                    SubletDisplayBox(sublet: sublet, isSubletter: true)
-                                        .padding(5)
+                                    SubletDisplayRow(sublet: sublet)
+                                        .padding(.horizontal)
                                 }
                                 .buttonStyle(.plain)
                             }
                         }
                     }
                     .tag(SublettingViewModel.ListingsTabs.posted)
+                    .padding()
                     
                     // Drafts tab
                     ScrollView {
-                        LazyVGrid(columns: columns) {
+                        VStack {
+                            NavigationLink(destination: NewListingForm()) {
+                                AddSubletView()
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel(Text("New Listing"))
                             ForEach(sublettingViewModel.drafts) { sublet in
                                 NavigationLink {
                                     SubletDetailView(sublet: sublet, isSubletter: true)
                                 } label: {
-                                    SubletDisplayBox(sublet: sublet, isSubletter: true, isDraft: true)
-                                        .padding(5)
+                                    SubletDisplayRow(sublet: sublet)
+                                        .padding(.horizontal)
                                 }
                                 .buttonStyle(.plain)
                             }
                         }
                     }
                     .tag(SublettingViewModel.ListingsTabs.drafts)
+                    .padding()
                     
                     // Saved tab
                     ScrollView {
@@ -83,6 +94,7 @@ struct MyListingsActivity: View {
                         }
                     }
                     .tag(SublettingViewModel.ListingsTabs.saved)
+                    .padding()
                     
                     // Applied tab
                     ScrollView {
@@ -99,6 +111,7 @@ struct MyListingsActivity: View {
                         }
                     }
                     .tag(SublettingViewModel.ListingsTabs.applied)
+                    .padding()
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))

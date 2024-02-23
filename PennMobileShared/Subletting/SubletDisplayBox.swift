@@ -12,13 +12,9 @@ import Kingfisher
 
 public struct SubletDisplayBox: View {
     let sublet: Sublet
-    let isSubletter: Bool
-    let isDraft: Bool
     
-    public init(sublet: Sublet, isSubletter: Bool = false, isDraft: Bool = false) {
+    public init(sublet: Sublet) {
         self.sublet = sublet
-        self.isSubletter = isSubletter
-        self.isDraft = isDraft
     }
     
     public var body: some View {
@@ -33,34 +29,9 @@ public struct SubletDisplayBox: View {
                 .cornerRadius(10)
             
             VStack(alignment: .leading) {
-                HStack {
-                    Text(sublet.title)
-                        .font(.headline)
-                        .lineLimit(1)
-                    
-                    Spacer()
-                    
-                    if isSubletter {
-                        Menu {
-                            Button("Edit", action: {
-                                // Handle edit action
-                            })
-                            if isDraft {
-                                Button("Remove", action: {
-                                    // Handle mark as claimed action
-                                })
-                            } else {
-                                Button("Mark as claimed", action: {
-                                    // Handle mark as claimed action
-                                })
-                            }
-                        } label: {
-                            Image(systemName: "ellipsis")
-                                .foregroundColor(.primary)
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                    }
-                }
+                Text(sublet.title)
+                    .font(.headline)
+                    .lineLimit(1)
                 
                 Text("$\(sublet.price)\(sublet.negotiable ? " (Negotiable)" : "")")
                     .lineLimit(1)

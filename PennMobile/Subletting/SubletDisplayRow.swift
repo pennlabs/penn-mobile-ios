@@ -25,7 +25,7 @@ struct SubletDisplayRow: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(10)
-                .frame(maxWidth: 120)
+                .frame(maxHeight: 120)
             
             VStack(alignment: .leading) {
                 HStack {
@@ -71,6 +71,8 @@ struct SubletDisplayRow: View {
                             messageExpanded.toggle()
                         }) {
                             Text(messageExpanded ? "Hide Message" : "View Message")
+                                .font(.subheadline)
+                                .bold()
                                 .background(Color.baseLabsBlue)
                         }
                     }
@@ -81,12 +83,33 @@ struct SubletDisplayRow: View {
             
             Image(systemName: "chevron.right")
         }
+        .contentShape(Rectangle())
     }
     
     func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM d"
         return formatter.string(from: date)
+    }
+}
+
+struct AddSubletView: View {
+    var body: some View {
+        VStack {
+            Image(systemName: "plus")
+            Text("Add listing")
+        }
+        .foregroundColor(.secondary)
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.clear)
+        .contentShape(Rectangle())
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(style: StrokeStyle(lineWidth: 1, dash: [6]))
+                .foregroundColor(.secondary)
+        )
+        .frame(height: 120)
     }
 }
 
