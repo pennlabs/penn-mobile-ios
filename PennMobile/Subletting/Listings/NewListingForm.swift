@@ -14,6 +14,8 @@ import OSLog
 private let logger = Logger(category: "NewListingForm")
 
 struct NewListingForm: View {
+    @EnvironmentObject var popupManager: PopupManager
+    @Environment(\.dismiss) var dismiss
     @State var subletData = SubletData()
     @State var negotiable: Bool?
     @State var price: Int?
@@ -41,6 +43,10 @@ struct NewListingForm: View {
                     NumericField($subletData.baths, title: "# Bath")
                 }
                 
+                TextLineField($subletData.externalLink, title: "External Link")
+                
+                DateField(date: $subletData.expiresAt, title: "Listing Expiry Date")
+                
                 TextAreaField($subletData.description, characterCount: 300, title: "Description (optional)")
                 
                 ComponentWrapper {
@@ -54,13 +60,21 @@ struct NewListingForm: View {
                         data.negotiable = negotiable
                         data.startDate = Day(date: startDate)
                         data.endDate = Day(date: endDate)
-                        data.expiresAt = Calendar.current.date(byAdding: .day, value: 3, to: Date())! // TODO: MAKE THIS AN EDITABLE FIELD
                         
                         Task {
                             if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
                                 do {
                                     let sublet = try await SublettingAPI.instance.createSublet(subletData: data, accessToken: token.value)
                                     logger.info("Created sublet with id \(sublet.id), yay!")
+                                    
+                                    popupManager.title = "Listing Posted!"
+                                    popupManager.message = "Your listing is now on the marketplace. You'll be notified when candidates are interested in subletting!"
+                                    popupManager.button1 = "See My Listings"
+                                    popupManager.action1 = {
+                                        popupManager.isShown = false
+                                        dismiss()
+                                    }
+                                    popupManager.isShown = true
                                 } catch let e {
                                     logger.error("Couldn't create sublet: \(e)")
                                 }

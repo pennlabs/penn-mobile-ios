@@ -20,101 +20,99 @@ struct MyListingsActivity: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                Picker("Tab", selection: $selectedTab.animation()) {
-                    if isListings {
-                        Text("Posted").tag(SublettingViewModel.ListingsTabs.posted)
-                        Text("Drafts").tag(SublettingViewModel.ListingsTabs.drafts)
-                    } else {
-                        Text("Saved").tag(SublettingViewModel.ListingsTabs.saved)
-                        Text("Applied").tag(SublettingViewModel.ListingsTabs.applied)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding()
-                
-                TabView(selection: $selectedTab) {
-                    // Posted tab
-                    ScrollView {
-                        VStack {
-                            NavigationLink(destination: NewListingForm()) {
-                                AddSubletView()
-                                    .padding(.horizontal)
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityLabel(Text("New Listing"))
-                            ForEach(sublettingViewModel.listings) { sublet in
-                                NavigationLink {
-                                    SubletDetailView(sublet: sublet, isSubletter: true)
-                                } label: {
-                                    SubletDisplayRow(sublet: sublet)
-                                        .padding(.horizontal)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                    }
-                    .tag(SublettingViewModel.ListingsTabs.posted)
-                    
-                    // Drafts tab
-                    ScrollView {
-                        VStack {
-                            NavigationLink(destination: NewListingForm()) {
-                                AddSubletView()
-                                    .padding(.horizontal)
-                            }
-                            .buttonStyle(.plain)
-                            .accessibilityLabel(Text("New Listing"))
-                            ForEach(sublettingViewModel.drafts) { sublet in
-                                NavigationLink {
-                                    SubletDetailView(sublet: sublet, isSubletter: true)
-                                } label: {
-                                    SubletDisplayRow(sublet: sublet)
-                                        .padding(.horizontal)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                    }
-                    .tag(SublettingViewModel.ListingsTabs.drafts)
-                    
-                    // Saved tab
-                    ScrollView {
-                        VStack {
-                            ForEach(sublettingViewModel.saved) { sublet in
-                                NavigationLink {
-                                    SubletDetailView(sublet: sublet)
-                                } label: {
-                                    SubletDisplayRow(sublet: sublet)
-                                        .padding(.horizontal)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                    }
-                    .tag(SublettingViewModel.ListingsTabs.saved)
-                    
-                    // Applied tab
-                    ScrollView {
-                        VStack {
-                            ForEach(sublettingViewModel.applied) { sublet in
-                                NavigationLink {
-                                    SubletDetailView(sublet: sublet)
-                                } label: {
-                                    SubletDisplayRow(sublet: sublet)
-                                        .padding(.horizontal)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                    }
-                    .tag(SublettingViewModel.ListingsTabs.applied)
+        VStack {
+            Picker("Tab", selection: $selectedTab.animation()) {
+                if isListings {
+                    Text("Posted").tag(SublettingViewModel.ListingsTabs.posted)
+                    Text("Drafts").tag(SublettingViewModel.ListingsTabs.drafts)
+                } else {
+                    Text("Saved").tag(SublettingViewModel.ListingsTabs.saved)
+                    Text("Applied").tag(SublettingViewModel.ListingsTabs.applied)
                 }
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .navigationTitle(isListings ? "My Listings" : "My Activity")
+            .pickerStyle(.segmented)
+            .padding()
+            
+            TabView(selection: $selectedTab) {
+                // Posted tab
+                ScrollView {
+                    VStack {
+                        NavigationLink(destination: NewListingForm()) {
+                            AddSubletView()
+                                .padding(.horizontal)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(Text("New Listing"))
+                        ForEach(sublettingViewModel.listings) { sublet in
+                            NavigationLink {
+                                SubletDetailView(sublet: sublet, isSubletter: true)
+                            } label: {
+                                SubletDisplayRow(sublet: sublet)
+                                    .padding(.horizontal)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+                .tag(SublettingViewModel.ListingsTabs.posted)
+                
+                // Drafts tab
+                ScrollView {
+                    VStack {
+                        NavigationLink(destination: NewListingForm()) {
+                            AddSubletView()
+                                .padding(.horizontal)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(Text("New Listing"))
+                        ForEach(sublettingViewModel.drafts) { sublet in
+                            NavigationLink {
+                                SubletDetailView(sublet: sublet, isSubletter: true)
+                            } label: {
+                                SubletDisplayRow(sublet: sublet)
+                                    .padding(.horizontal)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+                .tag(SublettingViewModel.ListingsTabs.drafts)
+                
+                // Saved tab
+                ScrollView {
+                    VStack {
+                        ForEach(sublettingViewModel.saved) { sublet in
+                            NavigationLink {
+                                SubletDetailView(sublet: sublet)
+                            } label: {
+                                SubletDisplayRow(sublet: sublet)
+                                    .padding(.horizontal)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+                .tag(SublettingViewModel.ListingsTabs.saved)
+                
+                // Applied tab
+                ScrollView {
+                    VStack {
+                        ForEach(sublettingViewModel.applied) { sublet in
+                            NavigationLink {
+                                SubletDetailView(sublet: sublet)
+                            } label: {
+                                SubletDisplayRow(sublet: sublet)
+                                    .padding(.horizontal)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+                .tag(SublettingViewModel.ListingsTabs.applied)
+            }
         }
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .navigationTitle(isListings ? "My Listings" : "My Activity")
         .toolbar {
             if isListings {
                 ToolbarItem {
