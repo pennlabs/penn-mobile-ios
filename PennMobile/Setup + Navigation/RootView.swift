@@ -11,6 +11,7 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject var authManager: AuthManager
     @State var toast: ToastConfiguration?
+    @StateObject var popupManager = PopupManager()
 
     var isOnLogoutScreen: Bool {
         switch authManager.state {
@@ -45,6 +46,20 @@ struct RootView: View {
                 toast = configuration
             }
         }
+        .overlay {
+            if popupManager.isShown {
+                CustomPopupView(isShown: $popupManager.isShown,
+                                image: popupManager.image,
+                                title: popupManager.title,
+                                message: popupManager.message,
+                                confirmAction: {
+                                    // Define the confirm action here
+                                    popupManager.isShown = false
+                                })
+                .transition(.scale)
+            }
+        }
+        .environmentObject(popupManager)
         .task(id: toast?.id) {
             if toast != nil {
                 try? await Task.sleep(for: .seconds(5))
