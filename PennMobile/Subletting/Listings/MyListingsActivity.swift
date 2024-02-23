@@ -40,6 +40,7 @@ struct MyListingsActivity: View {
                         VStack {
                             NavigationLink(destination: NewListingForm()) {
                                 AddSubletView()
+                                    .padding(.horizontal)
                             }
                             .buttonStyle(.plain)
                             .accessibilityLabel(Text("New Listing"))
@@ -55,13 +56,13 @@ struct MyListingsActivity: View {
                         }
                     }
                     .tag(SublettingViewModel.ListingsTabs.posted)
-                    .padding()
                     
                     // Drafts tab
                     ScrollView {
                         VStack {
                             NavigationLink(destination: NewListingForm()) {
                                 AddSubletView()
+                                    .padding(.horizontal)
                             }
                             .buttonStyle(.plain)
                             .accessibilityLabel(Text("New Listing"))
@@ -77,7 +78,6 @@ struct MyListingsActivity: View {
                         }
                     }
                     .tag(SublettingViewModel.ListingsTabs.drafts)
-                    .padding()
                     
                     // Saved tab
                     ScrollView {
@@ -94,7 +94,6 @@ struct MyListingsActivity: View {
                         }
                     }
                     .tag(SublettingViewModel.ListingsTabs.saved)
-                    .padding()
                     
                     // Applied tab
                     ScrollView {
@@ -111,7 +110,6 @@ struct MyListingsActivity: View {
                         }
                     }
                     .tag(SublettingViewModel.ListingsTabs.applied)
-                    .padding()
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
