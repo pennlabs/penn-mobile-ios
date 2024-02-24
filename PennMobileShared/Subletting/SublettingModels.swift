@@ -126,8 +126,11 @@ public struct SubletOffer: Identifiable, Decodable {
 
 public struct SubletOfferData: Codable {
     public var email: String
-    public var phoneAddress: String
+    public var phoneNumber: String
     public var message: String
+//    public var createdDate: Date
+//    public var user: String
+//    public var sublet: Int
 }
 
 public extension Sublet {

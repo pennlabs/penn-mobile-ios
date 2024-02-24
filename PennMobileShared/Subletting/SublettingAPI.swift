@@ -24,6 +24,7 @@ public class SublettingAPI {
     )
     
     public static let instance = SublettingAPI()
+    public let offersUrl = "https://pennmobile.org/api/sublet/offers/"
     public let favoritesUrl = "https://pennmobile.org/api/sublet/"
     public let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
 
@@ -46,14 +47,8 @@ public class SublettingAPI {
         }
         
         let (data, _) = try await URLSession.shared.data(for: request)
-        
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        let sublet = try decoder.decode(Sublet.self, from: data)
+                
+        let sublet = try Self.decoder.decode(Sublet.self, from: data)
         return sublet
     }
 
@@ -119,13 +114,7 @@ public class SublettingAPI {
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        let sublets = try decoder.decode([Sublet].self, from: data)
+        let sublets = try Self.decoder.decode([Sublet].self, from: data)
         return sublets
     }
     
@@ -139,7 +128,11 @@ public class SublettingAPI {
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
         
-        let (_, _) = try await URLSession.shared.data(for: request)
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NetworkingError.serverError
+        }
     }
     
     public func unfavoriteSublet(id: Int, accessToken: String) async throws {
@@ -152,7 +145,11 @@ public class SublettingAPI {
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
         
-        let (_, _) = try await URLSession.shared.data(for: request)
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NetworkingError.serverError
+        }
     }
     
     public func getFavorites(accessToken: String) async throws -> [Sublet] {
@@ -167,13 +164,7 @@ public class SublettingAPI {
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        let sublets = try decoder.decode([Sublet].self, from: data)
+        let sublets = try Self.decoder.decode([Sublet].self, from: data)
         return sublets
     }
     
@@ -189,13 +180,88 @@ public class SublettingAPI {
         
         let (data, _) = try await URLSession.shared.data(for: request)
         
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
-        let amenities = try decoder.decode([String].self, from: data)
+        let amenities = try Self.decoder.decode([String].self, from: data)
         return amenities
+    }
+    
+    public func getUserOffers(accessToken: String) async throws -> [SubletOffer] {
+        guard let url = URL(string: "\(offersUrl)") else {
+            throw NetworkingError.serverError
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        let offers = try Self.decoder.decode([SubletOffer].self, from: data)
+        return offers
+    }
+    
+    public func getSubletOffers(id: Int, accessToken: String) async throws -> [SubletOffer] {
+        guard let url = URL(string: "\(sublettingUrl)\(id)/offers/") else {
+            throw NetworkingError.serverError
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        let offers = try Self.decoder.decode([SubletOffer].self, from: data)
+        return offers
+    }
+    
+    public func makeOffer(offerData: SubletOfferData, id: Int, accessToken: String) async throws -> SubletOffer {
+        guard let url = URL(string: "\(sublettingUrl)\(id)/offers/") else {
+            throw NetworkingError.serverError
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let jsonData = try Self.encoder.encode(offerData)
+            request.httpBody = jsonData
+        } catch {
+            throw NetworkingError.parsingError
+        }
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+                
+        let offer = try Self.decoder.decode(SubletOffer.self, from: data)
+        return offer
+    }
+    
+    public func deleteOffer(offerData: SubletOfferData, id: Int, accessToken: String) async throws {
+        guard let url = URL(string: "\(sublettingUrl)\(id)/offers/") else {
+            throw NetworkingError.serverError
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let jsonData = try Self.encoder.encode(offerData)
+            request.httpBody = jsonData
+        } catch {
+            throw NetworkingError.parsingError
+        }
+        
+        let (_, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NetworkingError.serverError
+        }
     }
 }
