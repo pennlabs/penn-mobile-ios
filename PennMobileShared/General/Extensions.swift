@@ -390,6 +390,19 @@ public extension DateFormatter {
     }
 }
 
+extension JSONDecoder.DateDecodingStrategy {
+    static let iso8601Full = custom { decoder -> Date in
+        let container = try decoder.singleValueContainer()
+        let dateString = try container.decode(String.self)
+        
+        if let date = DateFormatter.iso8601Full.date(from: dateString) {
+            return date
+        } else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid date format")
+        }
+    }
+}
+
 public extension Collection {
     /// Return a copy of `self` with its elements shuffled
     func shuffle() -> [Iterator.Element] {

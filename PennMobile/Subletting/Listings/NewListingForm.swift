@@ -65,18 +65,20 @@ struct NewListingForm: View {
                             if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
                                 do {
                                     let sublet = try await SublettingAPI.instance.createSublet(subletData: data, accessToken: token.value)
-                                    logger.info("Created sublet with id \(sublet.id), yay!")
+                                    logger.info("Created sublet with id \(sublet.id)!")
                                     
-                                    popupManager.title = "Listing Posted!"
-                                    popupManager.message = "Your listing is now on the marketplace. You'll be notified when candidates are interested in subletting!"
-                                    popupManager.button1 = "See My Listings"
-                                    popupManager.action1 = {
-                                        popupManager.isShown = false
-                                        dismiss()
-                                    }
+                                    popupManager.set(
+                                        title: "Listing Posted!",
+                                        message: "Your listing is now on the marketplace. You'll be notified when candidates are interested in subletting!",
+                                        button1: "See My Listings",
+                                        action1: {
+                                            popupManager.isShown = false
+                                            dismiss()
+                                        }
+                                    )
                                     popupManager.isShown = true
-                                } catch let e {
-                                    logger.error("Couldn't create sublet: \(e)")
+                                } catch let error {
+                                    logger.error("Couldn't create sublet: \(error)")
                                 }
                             }
                         }
@@ -97,7 +99,7 @@ struct NewListingForm: View {
                 }
             }
         }
-        .navigationTitle(Text("New Listing"))
+        .navigationTitle("New Listing")
     }
 }
 

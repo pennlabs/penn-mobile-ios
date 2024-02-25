@@ -6,8 +6,13 @@
 //  Copyright © 2024 PennLabs. All rights reserved.
 //
 
-public enum SublettingError: Error {
+struct GenericErrorResponse: Decodable {
+    let detail: String
+}
+
+public enum SublettingError: String, Error {
     case invalidDateString
+    case alreadyExists = "Offer already exists"
 }
 
 public class SublettingAPI {
@@ -116,6 +121,22 @@ public class SublettingAPI {
         
         let sublets = try Self.decoder.decode([Sublet].self, from: data)
         return sublets
+    }
+    
+    public func getSubletDetails(id: Int, accessToken: String) async throws -> Sublet {
+        guard let url = URL(string: "\(sublettingUrl)\(id)/") else {
+            throw NetworkingError.serverError
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "X-Authorization")
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        let sublet = try Self.decoder.decode(Sublet.self, from: data)
+        return sublet
     }
     
     public func favoriteSublet(id: Int, accessToken: String) async throws {
@@ -235,7 +256,15 @@ public class SublettingAPI {
         }
         
         let (data, _) = try await URLSession.shared.data(for: request)
-                
+        
+        let decoder = Self.decoder
+        decoder.dateDecodingStrategy = .iso8601Full
+        
+        if let errorResponse = try? decoder.decode(GenericErrorResponse.self, from: data),
+           let error = SublettingError(rawValue: errorResponse.detail) {
+            throw error
+        }
+        
         let offer = try Self.decoder.decode(SubletOffer.self, from: data)
         return offer
     }

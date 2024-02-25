@@ -8,14 +8,19 @@
 
 import SwiftUI
 
+class NavigationManager: ObservableObject {
+    @Published var path = NavigationPath()
+    @Published var currentTab = "Home"
+}
+
 struct MainTabView: View {
     @ObservedObject var mainTabViewCoordinator = MainTabViewCoordinator()
     @StateObject private var sublettingViewModel = SublettingViewModel()
     @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
-    @State var currentTab = "Home"
+    @StateObject private var navigationManager = NavigationManager()
     
     var body: some View {
-        TabView(selection: $currentTab) {
+        TabView(selection: $navigationManager.currentTab) {
             HomeView<StandardHomeViewModel>()
                 .tabItem {
                     Label("Home", image: "Home_Grey")
@@ -25,10 +30,11 @@ struct MainTabView: View {
             ForEach(tabBarFeatures, id: \.self) { identifier in
                 let feature = features.first(where: { $0.id == identifier })!
                 
-                NavigationStack {
+                NavigationStack(path: $navigationManager.path) {
                     feature.content
                 }
                 .environmentObject(sublettingViewModel)
+                .environmentObject(navigationManager)
                 .id(identifier)
                 .tabItem {
                     switch feature.image {

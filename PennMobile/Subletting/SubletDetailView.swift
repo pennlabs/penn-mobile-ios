@@ -65,7 +65,9 @@ struct SubletDetailView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack {
                         if !isSubletter {
-                            Button(action: {}) {
+                            NavigationLink {
+                                SubletInterestForm(sublet: sublet)
+                            } label: {
                                 Image(systemName: "ellipsis.message")
                             }
                             .buttonStyle(.plain)
@@ -246,7 +248,9 @@ struct SubletDetailOnly: View {
                         }
                         .padding(.top, 10)
                         
-                        Button(action: {}) {
+                        NavigationLink {
+                            SubletInterestForm(sublet: sublet)
+                        } label: {
                             HStack {
                                 Image(systemName: "ellipsis.message")
                                 Text("Interested")
@@ -261,6 +265,7 @@ struct SubletDetailOnly: View {
                                     .fill(Color.baseLabsBlue)
                             )
                         }
+                        .buttonStyle(.plain)
                         .padding(.top, 10)
                     }
                 }

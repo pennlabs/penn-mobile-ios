@@ -99,15 +99,21 @@ public struct SubletImage: Decodable {
 @dynamicMemberLookup
 public struct SubletOffer: Identifiable, Decodable {
     public let id: Int
+    public let createdDate: Date
+    public let user: Int
+    public let sublet: Int
     public let data: SubletOfferData
     
     public subscript<T>(dynamicMember keyPath: KeyPath<SubletOfferData, T>) -> T {
         data[keyPath: keyPath]
     }
     
-    public init(id: Int, data: SubletOfferData) {
+    public init(id: Int, data: SubletOfferData, createdDate: Date, user: Int, sublet: Int) {
         self.id = id
         self.data = data
+        self.createdDate = createdDate
+        self.user = user
+        self.sublet = sublet
     }
     
     public init(from decoder: Decoder) throws {
@@ -115,12 +121,18 @@ public struct SubletOffer: Identifiable, Decodable {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let id = try container.decode(Int.self, forKey: .id)
+        let createdDate = try container.decode(Date.self, forKey: .createdDate)
+        let user = try container.decode(Int.self, forKey: .user)
+        let sublet = try container.decode(Int.self, forKey: .sublet)
         
-        self.init(id: id, data: data)
+        self.init(id: id, data: data, createdDate: createdDate, user: user, sublet: sublet)
     }
     
     public enum CodingKeys: CodingKey {
         case id
+        case createdDate
+        case user
+        case sublet
     }
 }
 
@@ -128,9 +140,14 @@ public struct SubletOfferData: Codable {
     public var email: String
     public var phoneNumber: String
     public var message: String
-//    public var createdDate: Date
-//    public var user: String
-//    public var sublet: Int
+}
+
+public extension SubletOfferData {
+    init() {
+        email = ""
+        phoneNumber = ""
+        message = ""
+    }
 }
 
 public extension Sublet {
