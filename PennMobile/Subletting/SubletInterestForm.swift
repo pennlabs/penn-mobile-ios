@@ -49,12 +49,10 @@ struct SubletInterestForm: View {
                                     button1: "See Applied",
                                     action1: {
                                         // TODO: Make this actually navigate to Applied
-                                        popupManager.isShown = false
                                         dismiss()
                                     },
                                     button2: "Keep Browsing",
                                     action2: {
-                                        popupManager.isShown = false
                                         dismiss()
                                     }
                                 )
@@ -67,7 +65,6 @@ struct SubletInterestForm: View {
                                         message: "You have already made an offer for this sublet.",
                                         button1: "Close",
                                         action1: {
-                                            popupManager.isShown = false
                                             dismiss()
                                         }
                                     )

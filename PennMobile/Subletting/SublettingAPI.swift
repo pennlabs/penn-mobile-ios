@@ -64,8 +64,8 @@ public class SublettingAPI {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
+        let dataDecoder = decoder ?? Self.decoder
         if returnType != nil {
-            let dataDecoder = decoder ?? Self.decoder
             if let errorResponse = try? dataDecoder.decode(GenericErrorResponse.self, from: data),
                let error = NetworkingError(rawValue: errorResponse.detail) {
                 throw error
@@ -77,7 +77,7 @@ public class SublettingAPI {
         }
         
         if returnType != nil {
-            return try Self.decoder.decode(returnType!, from: data)
+            return try dataDecoder.decode(returnType!, from: data)
         } else {
             return nil
         }

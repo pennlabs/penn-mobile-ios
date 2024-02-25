@@ -12,7 +12,7 @@ public enum NetworkingError: String, Error {
     case serverError
     case jsonError = "JSON error"
     case authenticationError = "Unable to authenticate"
-    case alreadyExists = "Already exists"
+    case alreadyExists = "Offer already exists"
     case other
     var localizedDescription: String { self.rawValue }
 }

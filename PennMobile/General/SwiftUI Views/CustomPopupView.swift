@@ -67,7 +67,14 @@ struct CustomPopupView: View {
                 Text(popupManager.message)
                     .font(.subheadline)
                     .multilineTextAlignment(.leading)
-                Button(action: popupManager.action1 ?? { popupManager.isShown = false }) {
+                Button(action: {
+                    withAnimation {
+                        popupManager.isShown = false
+                    }
+                    if popupManager.action1 != nil {
+                        popupManager.action1!()
+                    }
+                }) {
                     Text(popupManager.button1 ?? "Confirm")
                         .foregroundColor(.white)
                         .padding()
@@ -76,7 +83,14 @@ struct CustomPopupView: View {
                 }
                 .padding(.horizontal, 24)
                 if popupManager.button2 != nil {
-                    Button(action: popupManager.action2 ?? { popupManager.isShown = false }) {
+                    Button(action: {
+                        withAnimation {
+                            popupManager.isShown = false
+                        }
+                        if popupManager.action2 != nil {
+                            popupManager.action2!()
+                        }
+                    }) {
                         Text(popupManager.button2!)
                     }
                 }

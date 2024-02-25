@@ -71,7 +71,6 @@ struct NewListingForm: View {
                                     message: "Your listing is now on the marketplace. You'll be notified when candidates are interested in subletting!",
                                     button1: "See My Listings",
                                     action1: {
-                                        popupManager.isShown = false
                                         dismiss()
                                     }
                                 )
