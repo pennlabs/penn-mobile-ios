@@ -41,13 +41,13 @@ struct SubletDetailView: View {
                             Text("Candidates").tag("Candidates")
                         }
                         .pickerStyle(.segmented)
-                        .padding()
+                        .padding(.horizontal)
                         
                         TabView(selection: $selectedTab) {
                             SubletDetailOnly(sublet: sublet, isSubletter: isSubletter)
                                 .tag("Details")
                             
-                            Text("Candidates Page")
+                            SubletCandidatesView(sublet: sublet)
                                 .tag("Candidates")
                         }
                         .tabViewStyle(.page(indexDisplayMode: .never))

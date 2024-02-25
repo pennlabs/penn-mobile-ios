@@ -39,7 +39,7 @@ struct DiningStationRow: View {
                 VStack {
                     ForEach(diningStation.items, id: \.self) { diningStationItem in
                         DiningStationItemRow(isExpanded: false, for: diningStationItem)
-                            .padding([.leading, .trailing])
+                            .padding(.horizontal)
                         if diningStationItem != diningStation.items.last {
                             Line()
                                 .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
