@@ -30,7 +30,7 @@ public class SublettingAPI {
     public let favoritesUrl = "https://pennmobile.org/api/sublet/"
     public let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
     
-    private func makeSubletRequest<C: Encodable, R: Decodable>(_ urlStr: String? = nil, url: URL? = nil, method: String, isContentJSON: Bool = false, content: C? = nil as String?, returnType: R.Type? = nil as String.Type?) async throws -> R? {
+    private func makeSubletRequest<C: Encodable, R: Decodable>(_ urlStr: String? = nil, url: URL? = nil, method: String, isContentJSON: Bool = false, content: C? = nil as String?, returnType: R.Type? = nil as String.Type?, decoder: JSONDecoder? = nil) async throws -> R? {
         guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
             throw NetworkingError.authenticationError
         }
@@ -64,18 +64,20 @@ public class SublettingAPI {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+        if returnType != nil {
+            let dataDecoder = decoder ?? Self.decoder
+            if let errorResponse = try? dataDecoder.decode(GenericErrorResponse.self, from: data),
+               let error = NetworkingError(rawValue: errorResponse.detail) {
+                throw error
+            }
+        }
+            
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 200, httpResponse.statusCode <= 299 else {
             throw NetworkingError.serverError
         }
         
         if returnType != nil {
-            if let errorResponse = try? Self.decoder.decode(GenericErrorResponse.self, from: data),
-               let error = NetworkingError(rawValue: errorResponse.detail) {
-                throw error
-            }
-            
-            let output = try Self.decoder.decode(returnType!, from: data)
-            return output
+            return try Self.decoder.decode(returnType!, from: data)
         } else {
             return nil
         }
@@ -164,7 +166,10 @@ public class SublettingAPI {
     }
     
     public func makeOffer(offerData: SubletOfferData, id: Int) async throws -> SubletOffer {
-        if let result = try await makeSubletRequest("\(sublettingUrl)\(id)/offers/", method: "POST", isContentJSON: true, content: offerData, returnType: SubletOffer.self) {
+        let decoder = Self.decoder
+        decoder.dateDecodingStrategy = .iso8601Full
+        
+        if let result = try await makeSubletRequest("\(sublettingUrl)\(id)/offers/", method: "POST", isContentJSON: true, content: offerData, returnType: SubletOffer.self, decoder: decoder) {
             return result
         } else {
             throw NetworkingError.serverError
