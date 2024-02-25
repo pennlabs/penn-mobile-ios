@@ -176,6 +176,9 @@ extension ShowsAlertForError {
 
         case .failure(.authenticationError):
             self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
+            
+        case .failure(.alreadyExists):
+            self.showAlert(withMsg: "Something went wrong. It seems to already exist.", title: "Uh oh!", completion: other)
 
         case .failure(.other):
             self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)

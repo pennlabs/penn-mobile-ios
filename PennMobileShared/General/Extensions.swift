@@ -390,7 +390,7 @@ public extension DateFormatter {
     }
 }
 
-extension JSONDecoder.DateDecodingStrategy {
+public extension JSONDecoder.DateDecodingStrategy {
     static let iso8601Full = custom { decoder -> Date in
         let container = try decoder.singleValueContainer()
         let dateString = try container.decode(String.self)

@@ -62,24 +62,22 @@ struct NewListingForm: View {
                         data.endDate = Day(date: endDate)
                         
                         Task {
-                            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
-                                do {
-                                    let sublet = try await SublettingAPI.instance.createSublet(subletData: data, accessToken: token.value)
-                                    logger.info("Created sublet with id \(sublet.id)!")
-                                    
-                                    popupManager.set(
-                                        title: "Listing Posted!",
-                                        message: "Your listing is now on the marketplace. You'll be notified when candidates are interested in subletting!",
-                                        button1: "See My Listings",
-                                        action1: {
-                                            popupManager.isShown = false
-                                            dismiss()
-                                        }
-                                    )
-                                    popupManager.isShown = true
-                                } catch let error {
-                                    logger.error("Couldn't create sublet: \(error)")
-                                }
+                            do {
+                                let sublet = try await SublettingAPI.instance.createSublet(subletData: data)
+                                logger.info("Created sublet with id \(sublet.id)!")
+                                
+                                popupManager.set(
+                                    title: "Listing Posted!",
+                                    message: "Your listing is now on the marketplace. You'll be notified when candidates are interested in subletting!",
+                                    button1: "See My Listings",
+                                    action1: {
+                                        popupManager.isShown = false
+                                        dismiss()
+                                    }
+                                )
+                                popupManager.isShown = true
+                            } catch let error {
+                                logger.error("Couldn't create sublet: \(error)")
                             }
                         }
                     }) {

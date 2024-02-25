@@ -116,6 +116,7 @@
 		426A0B52299034910066C7B7 /* DiningAnalyticsGraphBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */; };
 		426FE6182B7023370096B79B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426FE6172B7023370096B79B /* SearchBar.swift */; };
 		429EA1E02B8B96B200824455 /* SubletCandidatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429EA1DF2B8B96B200824455 /* SubletCandidatesView.swift */; };
+		429EA1E12B8BA18300824455 /* SublettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8910678A2B64715E00748FC6 /* SublettingAPI.swift */; };
 		42CC49D02AAE38C6008C41EE /* PollsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */; };
 		42CC49D22AAE3904008C41EE /* PollsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49D12AAE3904008C41EE /* PollsView.swift */; };
 		42D9237329E0C9AF00E9E18E /* FitnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */; };
@@ -235,7 +236,6 @@
 		890D15062AB76C3600672FFE /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D15052AB76C3600672FFE /* MainTabView.swift */; };
 		890DDBC62AA2E4B6006815A3 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890DDBC42AA2E499006815A3 /* ViewExtensions.swift */; };
 		8910678B2B64715E00748FC6 /* SublettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891067892B64715E00748FC6 /* SublettingModels.swift */; };
-		8910678C2B64715E00748FC6 /* SublettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8910678A2B64715E00748FC6 /* SublettingAPI.swift */; };
 		89325390290F98E7006EE62C /* ConfigurationRepresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */; };
 		89325393291025A8006EE62C /* WidgetBackgroundTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
@@ -1646,7 +1646,6 @@
 			isa = PBXGroup;
 			children = (
 				891067892B64715E00748FC6 /* SublettingModels.swift */,
-				8910678A2B64715E00748FC6 /* SublettingAPI.swift */,
 				6E62C45E2B6EF36A00C92C05 /* SubletDisplayBox.swift */,
 			);
 			name = Subletting;
@@ -1915,6 +1914,7 @@
 				E49D3B8D2B66C9210022AB71 /* Listings */,
 				4232A2152B66CC5300149519 /* MarketplaceView.swift */,
 				422C72482B822F6A00424C99 /* SubletDisplayRow.swift */,
+				8910678A2B64715E00748FC6 /* SublettingAPI.swift */,
 				423814A92B76D104004178CF /* SublettingViewModel.swift */,
 				429EA1DF2B8B96B200824455 /* SubletCandidatesView.swift */,
 				422C723F2B81341C00424C99 /* SubletDetailView.swift */,
@@ -2513,6 +2513,7 @@
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
+				429EA1E12B8BA18300824455 /* SublettingAPI.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
@@ -2745,7 +2746,6 @@
 				890C4EC92ACBA486009650CA /* LaundryMachine.swift in Sources */,
 				8910678B2B64715E00748FC6 /* SublettingModels.swift in Sources */,
 				6E5159F22AC8C9D5004B3F41 /* DiningToken.swift in Sources */,
-				8910678C2B64715E00748FC6 /* SublettingAPI.swift in Sources */,
 				421899392B8B79FE0007E833 /* PhoneNumberFormat.swift in Sources */,
 				6E5159ED2AC8C9D5004B3F41 /* DiningVenue.swift in Sources */,
 				423B7EF52ACC67B900D30504 /* MeterView.swift in Sources */,

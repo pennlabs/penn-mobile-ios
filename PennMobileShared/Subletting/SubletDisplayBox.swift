@@ -54,6 +54,7 @@ public struct SubletDisplayBox: View {
                 }
             }
         }
+        .contentShape(Rectangle())
     }
     
     func formatDate(_ date: Date) -> String {

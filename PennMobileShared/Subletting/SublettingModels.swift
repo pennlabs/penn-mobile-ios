@@ -14,7 +14,7 @@ import Foundation
 /// `SubletData` contains the properties that are set by the user when creating a listing,
 /// and `Sublet` contains the remainder.
 @dynamicMemberLookup
-public struct Sublet: Identifiable, Decodable {
+public struct Sublet: Identifiable, Decodable, Hashable {
     public let id: Int
     public let data: SubletData
     public let subletter: Int
@@ -49,6 +49,14 @@ public struct Sublet: Identifiable, Decodable {
         case subletter
         case offers
         case images
+    }
+    
+    public static func ==(lhs: Sublet, rhs: Sublet) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
@@ -91,7 +99,7 @@ public struct SubletImage: Decodable {
 }
 
 @dynamicMemberLookup
-public struct SubletOffer: Identifiable, Decodable {
+public struct SubletOffer: Identifiable, Decodable, Hashable {
     public let id: Int
     public let createdDate: Date
     public let user: Int
@@ -127,6 +135,14 @@ public struct SubletOffer: Identifiable, Decodable {
         case createdDate
         case user
         case sublet
+    }
+
+    public static func ==(lhs: SubletOffer, rhs: SubletOffer) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 

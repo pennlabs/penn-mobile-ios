@@ -39,43 +39,41 @@ struct SubletInterestForm: View {
                         offerData.email = email
                         
                         Task {
-                            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
-                                do {
-                                    let offer = try await SublettingAPI.instance.makeOffer(offerData: offerData, id: sublet.id, accessToken: token.value)
-                                    print("Made offer with id \(offer.id) for sublet \(sublet.id)")
-                                    
+                            do {
+                                let offer = try await SublettingAPI.instance.makeOffer(offerData: offerData, id: sublet.id)
+                                print("Made offer with id \(offer.id) for sublet \(sublet.id)")
+                                
+                                popupManager.set(
+                                    title: "Your Message Has Been Sent!",
+                                    message: "The renter will reach out to you if interested.",
+                                    button1: "See Applied",
+                                    action1: {
+                                        // TODO: Make this actually navigate to Applied
+                                        popupManager.isShown = false
+                                        dismiss()
+                                    },
+                                    button2: "Keep Browsing",
+                                    action2: {
+                                        popupManager.isShown = false
+                                        dismiss()
+                                    }
+                                )
+                                popupManager.isShown = true
+                            } catch let error {
+                                if let sublettingError = error as? NetworkingError, sublettingError == .alreadyExists {
                                     popupManager.set(
-                                        title: "Your Message Has Been Sent!",
-                                        message: "The renter will reach out to you if interested.",
-                                        button1: "See Applied",
+                                        image: Image(systemName: "exclamationmark.2"),
+                                        title: "Already sent offer!",
+                                        message: "You have already made an offer for this sublet.",
+                                        button1: "Close",
                                         action1: {
-                                            // TODO: Make this actually navigate to Applied
-                                            popupManager.isShown = false
-                                            dismiss()
-                                        },
-                                        button2: "Keep Browsing",
-                                        action2: {
                                             popupManager.isShown = false
                                             dismiss()
                                         }
                                     )
                                     popupManager.isShown = true
-                                } catch let error {
-                                    if let sublettingError = error as? SublettingError, sublettingError == .alreadyExists {
-                                        popupManager.set(
-                                            image: Image(systemName: "exclamationmark.2"),
-                                            title: "Already sent offer!",
-                                            message: "You have already made an offer for this sublet.",
-                                            button1: "Close",
-                                            action1: {
-                                                popupManager.isShown = false
-                                                dismiss()
-                                            }
-                                        )
-                                        popupManager.isShown = true
-                                    } else {
-                                        print("Couldn't make offer: \(error)")
-                                    }
+                                } else {
+                                    print("Couldn't make offer: \(error)")
                                 }
                             }
                         }

@@ -95,32 +95,26 @@ class SublettingViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Task {
-            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
-                do {
-                    self.listings = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"], accessToken: token.value)
-                } catch {
-                    print("Error getting user listings: \(error)")
-                }
+            do {
+                self.listings = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"])
+            } catch {
+                print("Error getting user listings: \(error)")
             }
         }
         
         Task {
-            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
-                do {
-                    self.saved = try await SublettingAPI.instance.getFavorites(accessToken: token.value)
-                } catch {
-                    print("Error getting user saved sublets: \(error)")
-                }
+            do {
+                self.saved = try await SublettingAPI.instance.getFavorites()
+            } catch {
+                print("Error getting user saved sublets: \(error)")
             }
         }
         
 //        Task {
-//            if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
-//                do {
-//                    self.applied = try await SublettingAPI.instance.getSublets(queryParams: ???, accessToken: token.value)
-//                } catch {
-//                    print("Error getting user applied sublets: \(error)")
-//                }
+//            do {
+//                self.applied = try await SublettingAPI.instance.getSublets(queryParams: ???)
+//            } catch {
+//                print("Error getting user applied sublets: \(error)")
 //            }
 //        }
         
@@ -162,12 +156,10 @@ class SublettingViewModel: ObservableObject {
             queryParameters["amenities"] = filterData.selectedAmenities.joined(separator: ",")
         }
         
-        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
-            do {
-                sublets = try await SublettingAPI.instance.getSublets(queryParameters: queryParameters, accessToken: token.value)
-            } catch {
-                print("Error populating sublets: \(error)")
-            }
+        do {
+            sublets = try await SublettingAPI.instance.getSublets(queryParameters: queryParameters)
+        } catch {
+            print("Error populating sublets: \(error)")
         }
     }
     
@@ -175,38 +167,32 @@ class SublettingViewModel: ObservableObject {
         if isFavorited(sublet: sublet) {
             return false
         }
-        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
-            do {
-                try await SublettingAPI.instance.favoriteSublet(id: sublet.id, accessToken: token.value)
-                saved.append(sublet)
-                return true
-            } catch {
-                print("Error favoriting sublets: \(error)")
-                return false
-            }
+        do {
+            try await SublettingAPI.instance.favoriteSublet(id: sublet.id)
+            saved.append(sublet)
+            return true
+        } catch {
+            print("Error favoriting sublets: \(error)")
+            return false
         }
-        return false
     }
     
     func unfavoriteSublet(sublet: Sublet) async -> Bool {
         if !isFavorited(sublet: sublet) {
             return false
         }
-        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
-            do {
-                try await SublettingAPI.instance.unfavoriteSublet(id: sublet.id, accessToken: token.value)
-                saved.removeAll { $0.id == sublet.id }
-                return true
-            } catch {
-                print("Error unfavoriting sublets: \(error)")
-                return false
-            }
+        do {
+            try await SublettingAPI.instance.unfavoriteSublet(id: sublet.id)
+            saved.removeAll { $0.id == sublet.id }
+            return true
+        } catch {
+            print("Error unfavoriting sublets: \(error)")
+            return false
         }
-        return false
     }
     
     func isFavorited(sublet: Sublet) -> Bool {
-        return saved.contains(where: { $0.id == sublet.id} )
+        return saved.contains(where: { $0.id == sublet.id })
     }
     
     func sortSublets() {
