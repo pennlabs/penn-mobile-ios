@@ -76,14 +76,17 @@ struct GenericPostCardView: View {
                         .scaledToFill()
                     
                     content
-                        .background(.regularMaterial)
                         .background(alignment: .top) {
-                            KFImage(imageURL)
-                                .resizable()
-                                .scaledToFill()
-                                .scaleEffect(x: 1, y: -1)
-                                .clipped()
+                            ZStack {
+                                KFImage(imageURL)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .scaleEffect(x: 1, y: -1)
+                                Rectangle().fill(.regularMaterial)
+                            }
+                            .drawingGroup()
                         }
+                        .clipped()
                 }
             } else {
                 content
