@@ -61,7 +61,6 @@ struct GenericPostCardView: View {
             if let description {
                 Text(description)
                     .font(.caption)
-                    .lineLimit(3)
             }
         }
         .padding()
@@ -71,30 +70,21 @@ struct GenericPostCardView: View {
     var body: some View {
         HomeCardView {
             if let imageURL {
-                ZStack(alignment: .bottom) {
-                    Rectangle().fill(Material.ultraThin)
-                        .background(
-                            KFImage(imageURL)
-                                .resizable()
-                                .scaledToFill()
-                        )
+                VStack(spacing: 0) {
+                    KFImage(imageURL)
+                        .resizable()
+                        .scaledToFill()
                     
-                    Rectangle().fill(.clear)
-                        .overlay(
+                    content
+                        .background(.regularMaterial)
+                        .background(alignment: .top) {
                             KFImage(imageURL)
                                 .resizable()
                                 .scaledToFill()
-                        )
-                        .mask(alignment: .top) {
-                            VStack(spacing: 0) {
-                                Rectangle().fill(.white).frame(height: 93)
-                                LinearGradient(colors: [.white, .clear], startPoint: .top, endPoint: .bottom).frame(height: 64)
-                            }
+                                .scaleEffect(x: 1, y: -1)
+                                .clipped()
                         }
-                    
-                    content.padding(.top, 150)
                 }
-                .environment(\.colorScheme, .dark)
             } else {
                 content
             }
@@ -181,5 +171,7 @@ struct NewsDetailView: UIViewControllerRepresentable {
         PostCardView(post: Post(id: 1, title: "Congratulations!", subtitle: "You are our lucky winner", postUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", imageUrl: "https://www.cnet.com/a/img/resize/2bec42558a71a3922e6e590476b919288a015288/hub/2017/06/01/a176bcb9-1442-4d6d-a7d9-f01efdbcc4bc/broken-screen-ipad-6200-002.jpg?auto=webp&fit=crop&height=675&width=1200", createdDate: Date(), startDate: Date.midnightYesterday, expireDate: Date.midnightToday, source: "Totally Legit Source"))
     }
     .frame(width: 400)
+    .fixedSize(horizontal: false, vertical: true)
     .padding(.vertical)
+    .frame(maxHeight: .infinity)
 }

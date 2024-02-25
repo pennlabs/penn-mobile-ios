@@ -23,7 +23,11 @@ struct HomeView<Model: HomeViewModel>: View {
     }
     
     var backgroundGradient: some View {
-        LinearGradient(colors: [colorScheme == .dark ? Color("baseDarkBlue") : Color("baseLabsBlue").opacity(0.5), .clear], startPoint: .topLeading, endPoint: .center)
+        if colorScheme == .dark {
+            return LinearGradient(colors: [Color("baseDarkBlue"), .clear], startPoint: .topLeading, endPoint: .center)
+        } else {
+            return LinearGradient(colors: [Color("baseLabsBlue").opacity(0.15), .clear], startPoint: .topLeading, endPoint: .center)
+        }
     }
     
     var body: some View {
@@ -47,7 +51,7 @@ struct HomeView<Model: HomeViewModel>: View {
                                         .background(GeometryReader { geometry in
                                             let minY = geometry.frame(in: .global).minY
                                             Color.clear.onChange(of: minY) { minY in
-                                                showTitle = minY <= 32
+                                                showTitle = minY <= 16
                                             }
                                         })
                                     
@@ -55,8 +59,8 @@ struct HomeView<Model: HomeViewModel>: View {
                                         HStack(alignment: .top) {
                                             Text(splashText)
                                                 .fontWeight(.medium)
+                                                .opacity(0.7)
                                         }
-                                        .foregroundStyle(.secondary)
                                     }
                                 }
                                 .offset(y: -16)
