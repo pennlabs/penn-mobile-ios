@@ -121,6 +121,7 @@
 		42CC49D22AAE3904008C41EE /* PollsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49D12AAE3904008C41EE /* PollsView.swift */; };
 		42D9237329E0C9AF00E9E18E /* FitnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */; };
 		42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237429E0CCFB00E9E18E /* FitnessView.swift */; };
+		42ECD8B92B8CB6A000CE77E5 /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ECD8B82B8CB6A000CE77E5 /* BadgeView.swift */; };
 		56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */; };
 		6C11C08026F842CF00407C04 /* HomeUpdateCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C11C07F26F842CF00407C04 /* HomeUpdateCellItem.swift */; };
 		6C1991BB27B5C73800BBB402 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1991BA27B5C73800BBB402 /* Environment.swift */; };
@@ -553,6 +554,7 @@
 		42D9237029E0C69200E9E18E /* FitnessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessModel.swift; sourceTree = "<group>"; };
 		42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewController.swift; sourceTree = "<group>"; };
 		42D9237429E0CCFB00E9E18E /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
+		42ECD8B82B8CB6A000CE77E5 /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		6C11C07F26F842CF00407C04 /* HomeUpdateCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUpdateCellItem.swift; sourceTree = "<group>"; };
 		6C1991BA27B5C73800BBB402 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationDevelopment.xcconfig; sourceTree = "<group>"; };
@@ -1587,6 +1589,7 @@
 				6E5159D02AC8C9D4004B3F41 /* WidgetKind.swift */,
 				421899372B8B71C20007E833 /* PhoneNumberFormat.swift */,
 				426FE6172B7023370096B79B /* SearchBar.swift */,
+				42ECD8B82B8CB6A000CE77E5 /* BadgeView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -2738,6 +2741,7 @@
 				C31DA0A62ADE632A00C04210 /* FitnessGraph.swift in Sources */,
 				C312D4B72AD4DB6600EDB893 /* FitnessAPI.swift in Sources */,
 				6E5159E82AC8C9D5004B3F41 /* DiningAnalyticsViewModel.swift in Sources */,
+				42ECD8B92B8CB6A000CE77E5 /* BadgeView.swift in Sources */,
 				6E5159EB2AC8C9D5004B3F41 /* DiningPlan.swift in Sources */,
 				426FE6182B7023370096B79B /* SearchBar.swift in Sources */,
 				6E5159E72AC8C9D5004B3F41 /* DiningVenue+Extensions.swift in Sources */,

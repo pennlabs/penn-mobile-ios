@@ -41,6 +41,7 @@ struct SubletDetailView: View {
                             Text("Candidates").tag("Candidates")
                         }
                         .pickerStyle(.segmented)
+                        .customBadge("\(sublet.offers?.count ?? 0)", enabled: sublet.offers?.count ?? 0 > 0)
                         .padding(.horizontal)
                         
                         TabView(selection: $selectedTab) {

@@ -67,7 +67,7 @@ struct MyListingsActivity: View {
                         .accessibilityLabel(Text("New Listing"))
                         ForEach(sublettingViewModel.drafts) { sublet in
                             NavigationLink {
-                                SubletDetailView(sublet: sublet, isSubletter: true)
+                                // TODO: fill out
                             } label: {
                                 SubletDisplayRow(sublet: sublet)
                                     .padding(.horizontal)
