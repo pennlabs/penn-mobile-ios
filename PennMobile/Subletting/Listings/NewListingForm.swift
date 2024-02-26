@@ -74,7 +74,7 @@ struct NewListingForm: View {
                                         dismiss()
                                     }
                                 )
-                                popupManager.isShown = true
+                                popupManager.show()
                             } catch let error {
                                 logger.error("Couldn't create sublet: \(error)")
                             }

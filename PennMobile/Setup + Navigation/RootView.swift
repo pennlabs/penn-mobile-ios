@@ -49,7 +49,8 @@ struct RootView: View {
         .overlay {
             if popupManager.isShown {
                 CustomPopupView(popupManager: popupManager)
-                    .transition(.scale)
+                    .transition(AnyTransition.opacity.combined(with: .scale(scale: 1.05)))
+                    .animation(.easeInOut(duration: 0.3), value: popupManager.isShown)
             }
         }
         .environmentObject(popupManager)

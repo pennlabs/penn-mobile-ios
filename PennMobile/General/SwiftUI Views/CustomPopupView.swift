@@ -33,6 +33,18 @@ class PopupManager: ObservableObject {
         set(image: image, title: title, message: message, button1: button1, action1: action1, button2: button2, action2: action2)
     }
     
+    public func show() {
+        withAnimation {
+            isShown = true
+        }
+    }
+    
+    public func hide() {
+        withAnimation {
+            isShown = false
+        }
+    }
+    
     public func set(image: Image? = nil, title: String, message: String, button1: String? = nil, action1: (() -> Void)? = nil, button2: String? = nil, action2: (() -> Void)? = nil) {
         self.image = image ?? Image(systemName: "star")
         self.title = title
@@ -68,9 +80,7 @@ struct CustomPopupView: View {
                     .font(.subheadline)
                     .multilineTextAlignment(.leading)
                 Button(action: {
-                    withAnimation {
-                        popupManager.isShown = false
-                    }
+                    popupManager.hide()
                     if popupManager.action1 != nil {
                         popupManager.action1!()
                     }
@@ -84,9 +94,7 @@ struct CustomPopupView: View {
                 .padding(.horizontal, 24)
                 if popupManager.button2 != nil {
                     Button(action: {
-                        withAnimation {
-                            popupManager.isShown = false
-                        }
+                        popupManager.hide()
                         if popupManager.action2 != nil {
                             popupManager.action2!()
                         }
@@ -112,9 +120,9 @@ struct CustomPopupView: View {
         message: "This is a sample message.",
         button1: "See My Listings",
         button2: "Cancel")
-    popupManager.action1 = { popupManager.isShown = false }
-    popupManager.action2 = { popupManager.isShown = false }
-    popupManager.isShown = true
+    popupManager.action1 = { popupManager.hide() }
+    popupManager.action2 = { popupManager.hide() }
+    popupManager.show()
 
     return CustomPopupView(popupManager: popupManager)
 }

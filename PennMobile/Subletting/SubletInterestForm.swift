@@ -56,7 +56,7 @@ struct SubletInterestForm: View {
                                         dismiss()
                                     }
                                 )
-                                popupManager.isShown = true
+                                popupManager.show()
                             } catch let error {
                                 if let sublettingError = error as? NetworkingError, sublettingError == .alreadyExists {
                                     popupManager.set(
@@ -68,7 +68,7 @@ struct SubletInterestForm: View {
                                             dismiss()
                                         }
                                     )
-                                    popupManager.isShown = true
+                                    popupManager.show()
                                 } else {
                                     print("Couldn't make offer: \(error)")
                                 }
