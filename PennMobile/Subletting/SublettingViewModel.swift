@@ -24,9 +24,18 @@ struct MarketplaceFilterData: Codable {
 
 class SublettingViewModel: ObservableObject {
     @Published var sublets: [Int: Sublet] = [:]
+    @Published private(set) var sortedFilteredSublets: [Sublet] = []
     @Published var searchText = ""
-    @Published private(set) var debouncedText = ""
-    @Published var sortOption = "Select"
+    @Published private(set) var debouncedText = "" {
+        didSet {
+            sortSublets()
+        }
+    }
+    @Published var sortOption = "Select" {
+        didSet {
+            sortSublets()
+        }
+    }
     let sortOptions = ["Select", "Name", "Price", "Beds", "Baths", "Start Date", "End Date"]
     var amenities: OrderedSet<String> {
         didSet {
@@ -52,7 +61,11 @@ class SublettingViewModel: ObservableObject {
     private var listingsIDs: [Int]
     private var savedIDs: [Int]
     private var appliedIDs: [Int]
-    private var filteredIDs: [Int]
+    private var filteredIDs: [Int] {
+        didSet {
+            sortSublets()
+        }
+    }
     var listings: [Sublet] {
         listingsIDs.compactMap { sublets[$0] }
     }
@@ -62,21 +75,12 @@ class SublettingViewModel: ObservableObject {
     var applied: [Sublet] {
         appliedIDs.compactMap { sublets[$0] }
     }
-    var sortedFilteredSublets: [Sublet] {
-        let filteredSublets = filteredIDs.compactMap { sublets[$0] }
-        
-        if debouncedText != "" {
-            return sortSubletsBySearch(sublets: filteredSublets, searchText: debouncedText)
-        } else {
-            return sortSubletsByField(sublets: filteredSublets, sortOption: sortOption)
-        }
-    }
     @Published var drafts: [Sublet] {
         didSet {
             UserDefaults.standard.setSubletDrafts(drafts)
         }
     }
-        
+    
     init() {
         self.amenities = UserDefaults.standard.getSubletAmenities() ?? OrderedSet<String>()
         self.filterData = UserDefaults.standard.getSubletFilterData() ?? MarketplaceFilterData()
@@ -231,6 +235,16 @@ class SublettingViewModel: ObservableObject {
     
     func updateSublet(sublet: Sublet) {
         sublets[sublet.id] = sublet
+    }
+    
+    private func sortSublets() {
+        let filtered = filteredIDs.compactMap { sublets[$0] }
+        
+        if debouncedText != "" {
+            sortedFilteredSublets = sortSubletsBySearch(sublets: filtered, searchText: debouncedText)
+        } else {
+            sortedFilteredSublets = sortSubletsByField(sublets: filtered, sortOption: sortOption)
+        }
     }
     
     private func sortSubletsByField(sublets: [Sublet], sortOption: String) -> [Sublet] {

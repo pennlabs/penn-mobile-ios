@@ -130,7 +130,7 @@ struct SubletDetailOnly: View {
             KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
                 .placeholder {
                     Color.gray
-                        .aspectRatio(contentMode: .fill)
+                        .aspectRatio(contentMode: .fit)
                 }
                 .resizable()
                 .aspectRatio(contentMode: .fit)

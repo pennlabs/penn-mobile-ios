@@ -77,9 +77,6 @@ struct MarketplaceView: View {
                 }
             }
         }
-        .task {
-            await sublettingViewModel.populateSublets()
-        }
     }
 }
 
