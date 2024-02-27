@@ -26,14 +26,18 @@ struct DiningVenueDetailMenuView: View {
     @State private var currentMenu: DiningMenu?
     @State private var selectedStation: DiningStation?
     
-    init(menus: [DiningMenu], id: Int, venue: DiningVenue, menuDate: Date = Date(), parentScrollProxy: ScrollViewProxy) {
+    @Binding private var parentScrollOffset: CGPoint
+    
+    init(menus: [DiningMenu], id: Int, venue: DiningVenue, menuDate: Date = Date(), parentScrollProxy: ScrollViewProxy, parentScrollOffset: Binding<CGPoint>) {
         self.id = id
         self.venue = venue
         self.parentScrollProxy = parentScrollProxy
+        _parentScrollOffset = parentScrollOffset
         _menus = State(initialValue: menus)
         _menuDate = State(initialValue: menuDate)
         _currentMenu = State(initialValue: getMenu())
         _selectedStation = State(initialValue: currentMenu?.stations.first ?? nil)
+        
     }
     
     /// Constraints of this function:
@@ -65,23 +69,23 @@ struct DiningVenueDetailMenuView: View {
                         }
                     }.pickerStyle(MenuPickerStyle())
                 } else {
-                    Text("Closed Today")
+                    Text("Closed For Today")
                 }
                 DatePicker("", selection: $menuDate, in: Date()...Date().add(minutes: 8640), displayedComponents: .date)
             }
+            
             Section {
-                ForEach(currentMenu?.stations ?? [], id: \.vertUID) { station in
-                    DiningStationRow(diningStation: station)
-                        .bold(selectedStation != nil && selectedStation == station)
-                }
-                .onChange(of: selectedStation) { new in
-                    withAnimation {
-                        parentScrollProxy.scrollTo(new!.vertUID, anchor: .top)
-                    }
-                }
+                DiningStationRowStack(selectedStation: $selectedStation, currentMenu: $currentMenu, parentScrollOffset: $parentScrollOffset, parentScrollProxy: parentScrollProxy)
+                    
+                    
             } header: {
                 DiningMenuViewHeader(diningMenu: $currentMenu, selectedStation: $selectedStation)
             }
+            
+//            .onChange(of: parentScrollOffset) { _ in
+//                print(proxy.size)
+//            }
+            
         }
         
         .onChange(of: currentMenu) { _ in
@@ -96,6 +100,7 @@ struct DiningVenueDetailMenuView: View {
                 currentMenu = getMenu()
             }
         }
+        
     }
 }
 

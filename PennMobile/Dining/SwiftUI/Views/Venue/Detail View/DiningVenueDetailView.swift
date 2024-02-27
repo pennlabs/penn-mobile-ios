@@ -23,6 +23,7 @@ struct DiningVenueDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @State private var pickerIndex = 0
+    @State private var contentOffset: CGPoint = .zero
     @State var showTitle = false
 
     var body: some View {
@@ -77,7 +78,8 @@ struct DiningVenueDetailView: View {
                         
                         VStack {
                             if self.pickerIndex == 0 {
-                                DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.menus ?? [], id: venue.id, venue: venue, parentScrollProxy: fullReader)
+                                DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.menus ?? [], id: venue.id, venue: venue, parentScrollProxy: fullReader,
+                                                          parentScrollOffset: $contentOffset)
                             } else if self.pickerIndex == 1 {
                                 DiningVenueDetailHoursView(for: venue)
                             } else {
@@ -86,7 +88,16 @@ struct DiningVenueDetailView: View {
                             Spacer()
                         }.frame(minHeight: fullGeo.size.height - 80)
                     }.padding(.horizontal)
+                    .background(GeometryReader { geometry in
+                        Color.clear
+                            .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("scroll")).origin)
+                    })
+                    .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                        self.contentOffset = value
                 }
+                
+                }
+                .coordinateSpace(name: "scroll")
                 .navigationTitle(Text(showTitle ? venue.name : ""))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -102,6 +113,13 @@ struct DiningVenueDetailView: View {
                     FirebaseAnalyticsManager.shared.trackScreen("Venue Detail View")
                 }
             }
+        }
+    }
+    
+    struct ScrollOffsetPreferenceKey: PreferenceKey {
+        static var defaultValue: CGPoint = .zero
+
+        static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) {
         }
     }
 }

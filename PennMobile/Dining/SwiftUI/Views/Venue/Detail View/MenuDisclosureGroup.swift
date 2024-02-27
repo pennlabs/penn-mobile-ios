@@ -30,10 +30,11 @@ struct DiningMenuViewHeader: View {
                                     internalSelection = diningStation
                                 }
                     }.onChange(of: internalSelection) { new in
+                        if let newStation = new {
                             withAnimation {
-                                proxy.scrollTo(new!.horizUID, anchor: .leading)
+                                proxy.scrollTo(newStation.horizUID, anchor: .leading)
                             }
-                        
+                        }
                         selectedStation = internalSelection
                         
                         }
@@ -49,6 +50,81 @@ struct DiningMenuViewHeader: View {
             .onChange(of: selectedStation) { _ in
                 internalSelection = selectedStation
             }
+    }
+}
+
+struct DiningStationRowStack: View {
+    @Binding var selectedStation: DiningStation?
+    @Binding var currentMenu: DiningMenu?
+    
+    @Binding var parentScrollOffset: CGPoint
+    var parentScrollProxy: ScrollViewProxy
+    @State var posDictionary: [DiningStation: CGRect] = [:]
+    @State var scrollNext: DiningStation?
+    @State var checkDictionary = true
+    
+    var body: some View {
+        VStack {
+            ForEach(currentMenu?.stations ?? [], id: \.vertUID) { station in
+                DiningStationRow(diningStation: station)
+                    .bold(selectedStation != nil && selectedStation == station)
+                    .background {
+                        GeometryReader { proxy in
+                            Spacer()
+                                .onChange(of: parentScrollOffset) { _ in
+                                    let thisRect = proxy.frame(in: .global)
+
+                                    posDictionary.updateValue(thisRect, forKey: station)
+                                }
+                        }
+                    }
+            }
+            .onChange(of: parentScrollOffset) { _ in
+                if (checkDictionary) {
+                    if let defaultStation = selectedStation {
+                        var mostVisible = (defaultStation, 0.0 as CGFloat, 0)
+                        
+                        posDictionary.forEach { station, rect in
+                            let (_, mvMidY, mvPct) = mostVisible
+                            
+                            let intersection = rect.intersection(UIScreen.main.bounds)
+                            let pctInFrame = Int((intersection.height * 100)/rect.height)
+                            
+                            if (pctInFrame > mvPct) {
+                                mostVisible = (station, rect.midY, pctInFrame)
+                            }
+                            
+                            if (pctInFrame == mvPct && abs(rect.midY - 350.0) < abs(mvMidY - 350.0)) {
+                                mostVisible = (station, rect.midY, pctInFrame)
+                            }
+                        }
+                        
+                        let (st, _, _) = mostVisible
+                        scrollNext = st
+                        selectedStation = st
+                    }
+                }
+            }
+            
+            .onChange(of: currentMenu) { _ in
+                posDictionary = [:]
+            }
+            .onChange(of: selectedStation) { new in
+                if let newStation = new {
+                    if (newStation != scrollNext) {
+                        checkDictionary = false
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            parentScrollProxy.scrollTo(newStation.vertUID, anchor: .top)
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            checkDictionary = true
+                        }
+                    }
+                }
+                scrollNext = nil
+            }
+        }
     }
 }
 
