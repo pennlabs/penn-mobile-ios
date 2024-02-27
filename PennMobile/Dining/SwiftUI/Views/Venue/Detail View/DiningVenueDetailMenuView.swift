@@ -28,7 +28,7 @@ struct DiningVenueDetailMenuView: View {
     
     @Binding private var parentScrollOffset: CGPoint
     
-    init(menus: [DiningMenu], id: Int, venue: DiningVenue, menuDate: Date = Date(), parentScrollProxy: ScrollViewProxy, parentScrollOffset: Binding<CGPoint>) {
+    init(menus: [DiningMenu], id: Int, venue: DiningVenue, menuDate: Date = Date().localTime, parentScrollProxy: ScrollViewProxy, parentScrollOffset: Binding<CGPoint>) {
         self.id = id
         self.venue = venue
         self.parentScrollProxy = parentScrollProxy
@@ -71,7 +71,7 @@ struct DiningVenueDetailMenuView: View {
                 } else {
                     Text("Closed For Today")
                 }
-                DatePicker("", selection: $menuDate, in: Date()...Date().add(minutes: 8640), displayedComponents: .date)
+                DatePicker("", selection: $menuDate, in: Date().localTime...Date().localTime.add(minutes: 8640), displayedComponents: .date)
             }
             
             Section {
