@@ -23,23 +23,19 @@ struct MarketplaceFilterData: Codable {
 }
 
 class SublettingViewModel: ObservableObject {
-    @Published var sublets: [Int: Sublet] = [:] {
-        didSet {
-            sortSublets()
+    @Published var sublets: [Int: Sublet] = [:]
+    var sortedFilteredSublets: [Sublet] {
+        let filtered = filteredIDs.compactMap { sublets[$0] }
+        
+        if debouncedText != "" {
+            return sortSubletsBySearch(sublets: filtered, searchText: debouncedText)
+        } else {
+            return sortSubletsByField(sublets: filtered, sortOption: sortOption)
         }
     }
-    @Published private(set) var sortedFilteredSublets: [Sublet] = []
     @Published var searchText = ""
-    @Published private(set) var debouncedText = "" {
-        didSet {
-            sortSublets()
-        }
-    }
-    @Published var sortOption = "Select" {
-        didSet {
-            sortSublets()
-        }
-    }
+    @Published private(set) var debouncedText = ""
+    @Published var sortOption = "Select"
     let sortOptions = ["Select", "Name", "Price", "Beds", "Baths", "Start Date", "End Date"]
     @Published var amenities: OrderedSet<String> {
         didSet {
@@ -65,11 +61,7 @@ class SublettingViewModel: ObservableObject {
     @Published private var listingsIDs: [Int]
     @Published private var savedIDs: [Int]
     @Published private var appliedIDs: [Int]
-    @Published private var filteredIDs: [Int] {
-        didSet {
-            sortSublets()
-        }
-    }
+    @Published private var filteredIDs: [Int]
     var listings: [Sublet] {
         listingsIDs.compactMap { sublets[$0] }
     }
@@ -238,16 +230,6 @@ class SublettingViewModel: ObservableObject {
     func updateSublet(sublet: Sublet) {
         subletUpdateQueue.sync {
             sublets[sublet.id] = sublet
-        }
-    }
-    
-    private func sortSublets() {
-        let filtered = filteredIDs.compactMap { sublets[$0] }
-        
-        if debouncedText != "" {
-            sortedFilteredSublets = sortSubletsBySearch(sublets: filtered, searchText: debouncedText)
-        } else {
-            sortedFilteredSublets = sortSubletsByField(sublets: filtered, sortOption: sortOption)
         }
     }
     
