@@ -57,7 +57,7 @@ struct MarketplaceView: View {
             .background(Color.uiBackground)
             ScrollView {
                 LazyVGrid(columns: columns) {
-                    ForEach(sublettingViewModel.sortedFilteredSublets) { sublet in
+                    ForEach(sublettingViewModel.sortedFilteredSublets, id: \.identity) { sublet in
                         NavigationLink {
                             SubletDetailView(sublet: sublet)
                         } label: {

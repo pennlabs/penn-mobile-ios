@@ -43,7 +43,7 @@ struct MyListingsActivity: View {
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel(Text("New Listing"))
-                        ForEach(sublettingViewModel.listings) { sublet in
+                        ForEach(sublettingViewModel.listings, id: \.identity) { sublet in
                             NavigationLink {
                                 SubletDetailView(sublet: sublet)
                             } label: {
@@ -65,7 +65,7 @@ struct MyListingsActivity: View {
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel(Text("New Listing"))
-                        ForEach(sublettingViewModel.drafts) { sublet in
+                        ForEach(sublettingViewModel.drafts, id: \.identity) { sublet in
                             NavigationLink {
                                 // TODO: fill out
                             } label: {
@@ -81,7 +81,7 @@ struct MyListingsActivity: View {
                 // Saved tab
                 ScrollView {
                     VStack {
-                        ForEach(sublettingViewModel.saved) { sublet in
+                        ForEach(sublettingViewModel.saved, id: \.identity) { sublet in
                             NavigationLink {
                                 SubletDetailView(sublet: sublet)
                             } label: {
@@ -97,7 +97,7 @@ struct MyListingsActivity: View {
                 // Applied tab
                 ScrollView {
                     VStack {
-                        ForEach(sublettingViewModel.applied) { sublet in
+                        ForEach(sublettingViewModel.applied, id: \.identity) { sublet in
                             NavigationLink {
                                 SubletDetailView(sublet: sublet)
                             } label: {

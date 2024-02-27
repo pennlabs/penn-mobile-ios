@@ -20,6 +20,12 @@ public struct Sublet: Identifiable, Decodable, Hashable {
     public let subletter: Int
     public var offers: [SubletOffer]?
     public let images: [SubletImage]
+    
+    // These are for updating the UI properly since the data can be updated without the id being updated
+    public let lastUpdated: Date
+    public var identity: String {
+        "\(id)-\(lastUpdated.timeIntervalSinceReferenceDate)"
+    }
 
     public subscript<T>(dynamicMember keyPath: KeyPath<SubletData, T>) -> T {
         data[keyPath: keyPath]
@@ -31,6 +37,7 @@ public struct Sublet: Identifiable, Decodable, Hashable {
         self.subletter = subletter
         self.offers = offers
         self.images = images
+        self.lastUpdated = Date()
     }
 
     public init(from decoder: Decoder) throws {
@@ -40,7 +47,7 @@ public struct Sublet: Identifiable, Decodable, Hashable {
         let id = try container.decode(Int.self, forKey: .id)
         let subletter = try container.decode(Int.self, forKey: .subletter)
         let images = try container.decode([SubletImage].self, forKey: .images)
-
+        
         self.init(id: id, data: data, subletter: subletter, images: images)
     }
 

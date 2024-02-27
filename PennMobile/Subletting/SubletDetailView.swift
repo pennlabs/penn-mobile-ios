@@ -21,7 +21,7 @@ struct SubletDetailView: View {
     var isSubletter: Bool {
         Account.getAccount()?.pennid == sublet.subletter
     }
-    private var isClaimed: Bool = false // TODO: fill this in
+    private var isClaimed: Bool = false // TODO: add claimed later
     
     public init(sublet: Sublet) {
         self._sublet = State(initialValue: sublet)
@@ -94,7 +94,7 @@ struct SubletDetailView: View {
             }
         }
         .task {
-            if let sublet = try? await SublettingAPI.instance.getSubletDetails(id: self.sublet.id, withOffers: isSubletter) {
+            if let sublet = try? await SublettingAPI.instance.getSubletDetails(id: sublet.id, withOffers: isSubletter) {
                 self.sublet = sublet
                 sublettingViewModel.updateSublet(sublet: sublet)
             }
@@ -113,7 +113,7 @@ struct SubletDetailOnly: View {
         sublettingViewModel.isFavorited(sublet: sublet)
     }
     let isSubletter: Bool
-    private var isClaimed: Bool = false // TODO: fill this in
+    private var isClaimed: Bool = false // TODO: add claimed later
     
     public init(sublet: Sublet) {
         self._sublet = State(initialValue: sublet)
@@ -189,37 +189,37 @@ struct SubletDetailOnly: View {
                 }
                 
                 if isSubletter {
-                    Button(action: {}) {
-                        if isClaimed {
-                            Button(action: {}) {
-                                Text("Mark as available")
-                                    .font(.title3)
-                                    .bold()
-                                    .foregroundColor(Color.white)
-                                    .padding(.vertical, 10)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .background(
-                                        Capsule()
-                                            .fill(Color.blueLighter)
-                                    )
-                            }
-                            .padding(.top, 10)
-                        } else {
-                            Button(action: {}) {
-                                Text("Mark as claimed")
-                                    .font(.title3)
-                                    .bold()
-                                    .foregroundColor(Color.white)
-                                    .padding(.vertical, 10)
-                                    .frame(maxWidth: .infinity, alignment: .center)
-                                    .background(
-                                        Capsule()
-                                            .fill(Color.baseLabsBlue)
-                                    )
-                            }
-                            .padding(.top, 10)
-                        }
-                    }
+//                    Button(action: {}) {
+//                        if isClaimed {
+//                            Button(action: {}) {
+//                                Text("Mark as available")
+//                                    .font(.title3)
+//                                    .bold()
+//                                    .foregroundColor(Color.white)
+//                                    .padding(.vertical, 10)
+//                                    .frame(maxWidth: .infinity, alignment: .center)
+//                                    .background(
+//                                        Capsule()
+//                                            .fill(Color.blueLighter)
+//                                    )
+//                            }
+//                            .padding(.top, 10)
+//                        } else {
+//                            Button(action: {}) {
+//                                Text("Mark as claimed")
+//                                    .font(.title3)
+//                                    .bold()
+//                                    .foregroundColor(Color.white)
+//                                    .padding(.vertical, 10)
+//                                    .frame(maxWidth: .infinity, alignment: .center)
+//                                    .background(
+//                                        Capsule()
+//                                            .fill(Color.baseLabsBlue)
+//                                    )
+//                            }
+//                            .padding(.top, 10)
+//                        }
+//                    }
                 } else {
                     HStack {
                         Button(action: {
@@ -317,6 +317,8 @@ struct SubletDetailOnly: View {
                 }
                 .padding(.horizontal)
             }
+            
+            Spacer()
         }
         .padding()
     }

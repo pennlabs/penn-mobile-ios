@@ -23,7 +23,11 @@ struct MarketplaceFilterData: Codable {
 }
 
 class SublettingViewModel: ObservableObject {
-    @Published var sublets: [Int: Sublet] = [:]
+    @Published var sublets: [Int: Sublet] = [:] {
+        didSet {
+            sortSublets()
+        }
+    }
     @Published private(set) var sortedFilteredSublets: [Sublet] = []
     @Published var searchText = ""
     @Published private(set) var debouncedText = "" {
@@ -37,7 +41,7 @@ class SublettingViewModel: ObservableObject {
         }
     }
     let sortOptions = ["Select", "Name", "Price", "Beds", "Baths", "Start Date", "End Date"]
-    var amenities: OrderedSet<String> {
+    @Published var amenities: OrderedSet<String> {
         didSet {
             UserDefaults.standard.setSubletAmenities(amenities)
         }
@@ -58,10 +62,10 @@ class SublettingViewModel: ObservableObject {
         case applied
     }
     
-    private var listingsIDs: [Int]
-    private var savedIDs: [Int]
-    private var appliedIDs: [Int]
-    private var filteredIDs: [Int] {
+    @Published private var listingsIDs: [Int]
+    @Published private var savedIDs: [Int]
+    @Published private var appliedIDs: [Int]
+    @Published private var filteredIDs: [Int] {
         didSet {
             sortSublets()
         }
@@ -117,10 +121,9 @@ class SublettingViewModel: ObservableObject {
     func populateListings() async {
         do {
             let listingsArr = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"])
-            listingsArr.forEach { sublets[$0.id] = $0 }
             listingsIDs = listingsArr.map { $0.id }
-            if let updatedListings = try? await SublettingAPI.instance.getSubletDetails(sublets: self.listings, withOffers: true) {
-                updatedListings.forEach { sublets[$0.id] = $0 }
+            if let updatedListings = try? await SublettingAPI.instance.getSubletDetails(sublets: listingsArr, withOffers: true) {
+                updatedListings.forEach { updateSublet(sublet: $0) }
             }
         } catch {
             print("Error getting user listings: \(error)")
@@ -130,10 +133,9 @@ class SublettingViewModel: ObservableObject {
     func populateApplied() async {
         do {
             let appliedArr = try await SublettingAPI.instance.getAppliedSublets()
-            appliedArr.forEach { sublets[$0.id] = $0 }
             appliedIDs = appliedArr.map { $0.id }
-            if let updatedApplied = try? await SublettingAPI.instance.getSubletDetails(sublets: self.applied, withOffers: false) {
-                updatedApplied.forEach { sublets[$0.id] = $0 }
+            if let updatedApplied = try? await SublettingAPI.instance.getSubletDetails(sublets: appliedArr, withOffers: false) {
+                updatedApplied.forEach { updateSublet(sublet: $0) }
             }
         } catch {
             print("Error getting user applied sublets: \(error)")
@@ -143,10 +145,9 @@ class SublettingViewModel: ObservableObject {
     func populateFavorites() async {
         do {
             let savedArr = try await SublettingAPI.instance.getFavorites()
-            savedArr.forEach { sublets[$0.id] = $0 }
             savedIDs = savedArr.map { $0.id }
-            if let updatedSaved = try? await SublettingAPI.instance.getSubletDetails(sublets: self.saved, withOffers: false) {
-                updatedSaved.forEach { sublets[$0.id] = $0 }
+            if let updatedSaved = try? await SublettingAPI.instance.getSubletDetails(sublets: savedArr, withOffers: false) {
+                updatedSaved.forEach { updateSublet(sublet: $0) }
             }
         } catch {
             print("Error getting user saved sublets: \(error)")
@@ -233,8 +234,11 @@ class SublettingViewModel: ObservableObject {
         return savedIDs.contains(sublet.id)
     }
     
+    private let subletUpdateQueue = DispatchQueue(label: "subletUpdateQueue")
     func updateSublet(sublet: Sublet) {
-        sublets[sublet.id] = sublet
+        subletUpdateQueue.sync {
+            sublets[sublet.id] = sublet
+        }
     }
     
     private func sortSublets() {
