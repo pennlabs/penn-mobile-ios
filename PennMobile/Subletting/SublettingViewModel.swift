@@ -23,13 +23,10 @@ struct MarketplaceFilterData: Codable {
 }
 
 class SublettingViewModel: ObservableObject {
-    @Published var sublets: [Sublet] = []
+    @Published var sublets: [Int: Sublet] = [:]
     @Published var searchText = ""
-    @Published var sortOption = "Select" {
-        didSet {
-            sortSublets()
-        }
-    }
+    @Published private(set) var debouncedText = ""
+    @Published var sortOption = "Select"
     let sortOptions = ["Select", "Name", "Price", "Beds", "Baths", "Start Date", "End Date"]
     var amenities: OrderedSet<String> {
         didSet {
@@ -40,12 +37,7 @@ class SublettingViewModel: ObservableObject {
         didSet {
             UserDefaults.standard.setSubletFilterData(filterData)
             Task {
-                await populateSublets()
-                if searchText != "" {
-                    performSearch() // sort by search text
-                } else {
-                    sortSublets() // sort by sorting options
-                }
+                await populateFiltered()
             }
         }
     }
@@ -57,39 +49,55 @@ class SublettingViewModel: ObservableObject {
         case applied
     }
     
-    @Published var listings: [Sublet]
-    @Published var saved: [Sublet]
-    @Published var applied: [Sublet]
+    private var listingsIDs: [Int]
+    private var savedIDs: [Int]
+    private var appliedIDs: [Int]
+    private var filteredIDs: [Int]
+    var listings: [Sublet] {
+        listingsIDs.compactMap { sublets[$0] }
+    }
+    var saved: [Sublet] {
+        savedIDs.compactMap { sublets[$0] }
+    }
+    var applied: [Sublet] {
+        appliedIDs.compactMap { sublets[$0] }
+    }
+    var sortedFilteredSublets: [Sublet] {
+        let filteredSublets = filteredIDs.compactMap { sublets[$0] }
+        
+        if debouncedText != "" {
+            return sortSubletsBySearch(sublets: filteredSublets, searchText: debouncedText)
+        } else {
+            return sortSubletsByField(sublets: filteredSublets, sortOption: sortOption)
+        }
+    }
     @Published var drafts: [Sublet] {
         didSet {
             UserDefaults.standard.setSubletDrafts(drafts)
         }
     }
-    
-    private var cancellables = Set<AnyCancellable>()
-    
+        
     init() {
         self.amenities = UserDefaults.standard.getSubletAmenities() ?? OrderedSet<String>()
         self.filterData = UserDefaults.standard.getSubletFilterData() ?? MarketplaceFilterData()
         self.drafts = UserDefaults.standard.getSubletDrafts()
-        self.listings = []
-        self.saved = []
-        self.applied = []
+        self.listingsIDs = []
+        self.savedIDs = []
+        self.appliedIDs = []
+        self.filteredIDs = []
         
         $searchText
             .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.performSearch()
-            }
-            .store(in: &cancellables)
+            .assign(to: &$debouncedText)
         
         Task {
+            await self.populateSublets()
             await withTaskGroup(of: Void.self) { group in
                 group.addTask { await self.populateAmenities() }
                 group.addTask { await self.populateListings() }
                 group.addTask { await self.populateFavorites() }
                 group.addTask { await self.populateApplied() }
-                group.addTask { await self.populateSublets() }
+                group.addTask { await self.populateFiltered() }
             }
         }
     }
@@ -104,7 +112,12 @@ class SublettingViewModel: ObservableObject {
     
     func populateListings() async {
         do {
-            self.listings = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"])
+            let listingsArr = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"])
+            listingsArr.forEach { sublets[$0.id] = $0 }
+            listingsIDs = listingsArr.map { $0.id }
+            if let updatedListings = try? await SublettingAPI.instance.getSubletDetails(sublets: self.listings, withOffers: true) {
+                updatedListings.forEach { sublets[$0.id] = $0 }
+            }
         } catch {
             print("Error getting user listings: \(error)")
         }
@@ -112,7 +125,12 @@ class SublettingViewModel: ObservableObject {
     
     func populateApplied() async {
         do {
-            self.applied = try await SublettingAPI.instance.getAppliedSublets()
+            let appliedArr = try await SublettingAPI.instance.getAppliedSublets()
+            appliedArr.forEach { sublets[$0.id] = $0 }
+            appliedIDs = appliedArr.map { $0.id }
+            if let updatedApplied = try? await SublettingAPI.instance.getSubletDetails(sublets: self.applied, withOffers: false) {
+                updatedApplied.forEach { sublets[$0.id] = $0 }
+            }
         } catch {
             print("Error getting user applied sublets: \(error)")
         }
@@ -120,13 +138,27 @@ class SublettingViewModel: ObservableObject {
     
     func populateFavorites() async {
         do {
-            self.saved = try await SublettingAPI.instance.getFavorites()
+            let savedArr = try await SublettingAPI.instance.getFavorites()
+            savedArr.forEach { sublets[$0.id] = $0 }
+            savedIDs = savedArr.map { $0.id }
+            if let updatedSaved = try? await SublettingAPI.instance.getSubletDetails(sublets: self.saved, withOffers: false) {
+                updatedSaved.forEach { sublets[$0.id] = $0 }
+            }
         } catch {
             print("Error getting user saved sublets: \(error)")
         }
     }
     
     func populateSublets() async {
+        do {
+            let subletsArr = try await SublettingAPI.instance.getSublets()
+            subletsArr.forEach { sublets[$0.id] = $0 }
+        } catch {
+            print("Error populating sublets: \(error)")
+        }
+    }
+    
+    func populateFiltered() async {
         var queryParameters: [String: String] = [:]
         if let minPrice = filterData.minPrice {
             queryParameters["min_price"] = "\(minPrice)"
@@ -158,7 +190,8 @@ class SublettingViewModel: ObservableObject {
         }
         
         do {
-            sublets = try await SublettingAPI.instance.getSublets(queryParameters: queryParameters)
+            let subletsArr = try await SublettingAPI.instance.getSublets(queryParameters: queryParameters)
+            filteredIDs = subletsArr.map { $0.id }
         } catch {
             print("Error populating sublets: \(error)")
         }
@@ -170,7 +203,7 @@ class SublettingViewModel: ObservableObject {
         }
         do {
             try await SublettingAPI.instance.favoriteSublet(id: sublet.id)
-            saved.append(sublet)
+            savedIDs.append(sublet.id)
             return true
         } catch {
             print("Error favoriting sublets: \(error)")
@@ -184,7 +217,7 @@ class SublettingViewModel: ObservableObject {
         }
         do {
             try await SublettingAPI.instance.unfavoriteSublet(id: sublet.id)
-            saved.removeAll { $0.id == sublet.id }
+            savedIDs.removeAll { $0 == sublet.id }
             return true
         } catch {
             print("Error unfavoriting sublets: \(error)")
@@ -193,34 +226,38 @@ class SublettingViewModel: ObservableObject {
     }
     
     func isFavorited(sublet: Sublet) -> Bool {
-        return saved.contains(where: { $0.id == sublet.id })
+        return savedIDs.contains(sublet.id)
     }
     
-    func sortSublets() {
+    func updateSublet(sublet: Sublet) {
+        sublets[sublet.id] = sublet
+    }
+    
+    private func sortSubletsByField(sublets: [Sublet], sortOption: String) -> [Sublet] {
         switch sortOption {
         case "Name":
-            sublets.sort { $0.title < $1.title }
+            return sublets.sorted { $0.title < $1.title }
         case "Price":
-            sublets.sort { $0.price < $1.price }
+            return sublets.sorted { $0.price < $1.price }
         case "Beds":
-            sublets.sort { ($0.beds ?? 0) < ($1.beds ?? 0) }
+            return sublets.sorted { ($0.beds ?? 0) < ($1.beds ?? 0) }
         case "Baths":
-            sublets.sort { ($0.baths ?? 0) < ($1.baths ?? 0) }
+            return sublets.sorted { ($0.baths ?? 0) < ($1.baths ?? 0) }
         case "Start Date":
-            sublets.sort { $0.startDate < $1.startDate }
+            return sublets.sorted { $0.startDate < $1.startDate }
         case "End Date":
-            sublets.sort { $0.endDate < $1.endDate }
+            return sublets.sorted { $0.endDate < $1.endDate }
         default:
-            break
+            return sublets
         }
     }
     
-    private func performSearch() {
+    private func sortSubletsBySearch(sublets: [Sublet], searchText: String) -> [Sublet] {
         guard !searchText.isEmpty else {
-            return
+            return sublets
         }
         
-        sublets.sort { sublet1, sublet2 in
+        return sublets.sorted { sublet1, sublet2 in
             getSimilaritySort(sublet1.title, sublet2.title, similar: searchText)
         }
     }

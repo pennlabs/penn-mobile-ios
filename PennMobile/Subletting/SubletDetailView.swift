@@ -94,10 +94,9 @@ struct SubletDetailView: View {
             }
         }
         .task {
-            do {
-                self.sublet = try await SublettingAPI.instance.getSubletDetails(id: sublet.id)
-            } catch {
-                print(error)
+            if let sublet = try? await SublettingAPI.instance.getSubletDetails(id: self.sublet.id, withOffers: isSubletter) {
+                self.sublet = sublet
+                sublettingViewModel.updateSublet(sublet: sublet)
             }
         }
         .sheet(isPresented: $showExternalLink) {

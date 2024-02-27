@@ -42,7 +42,7 @@ struct MarketplaceFilterView: View {
                             .bold()
                     }
                     
-                    TagSelector(selection: $filterData.selectedAmenities, tags: $sublettingViewModel.amenities, customisable: .customisable(tagFromString: { $0 }))
+                    TagSelector(selection: $filterData.selectedAmenities, tags: $sublettingViewModel.amenities)
                     
                     ComponentWrapper {
                         HStack {

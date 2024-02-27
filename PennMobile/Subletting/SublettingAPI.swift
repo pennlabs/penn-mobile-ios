@@ -140,6 +140,24 @@ public class SublettingAPI {
         }
     }
     
+    public func getSubletDetails(sublets: [Sublet], withOffers: Bool = false) async throws -> [Sublet] {
+        return await withTaskGroup(of: Sublet.self) { group in
+            var outputSublets: [Sublet] = []
+            outputSublets.reserveCapacity(sublets.count)
+            
+            for sublet in sublets {
+                group.addTask {
+                    return (try? await self.getSubletDetails(id: sublet.id, withOffers: withOffers)) ?? sublet
+                }
+            }
+            for await outputSublet in group {
+                outputSublets.append(outputSublet)
+            }
+            
+            return sublets
+        }
+    }
+    
     public func favoriteSublet(id: Int) async throws {
         _ = try await makeSubletRequest("\(sublettingUrl)\(id)/favorites/", method: "POST")
     }

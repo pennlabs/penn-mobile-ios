@@ -12,8 +12,15 @@ import PennMobileShared
 
 struct SubletDisplayRow: View {
     let sublet: Sublet
-    let isApplied: Bool = false
+    let isApplied: Bool
+    let isListings: Bool
     @State var messageExpanded: Bool = false
+    
+    public init(sublet: Sublet, isApplied: Bool = false, isListings: Bool = false) {
+        self.sublet = sublet
+        self.isApplied = isApplied
+        self.isListings = isListings
+    }
     
     public var body: some View {
         HStack {
@@ -36,9 +43,23 @@ struct SubletDisplayRow: View {
                         .fontWeight(.medium)
                 }
                 
-                Text(sublet.title)
-                    .font(.headline)
-                    .lineLimit(1)
+                HStack {
+                    Text(sublet.title)
+                        .font(.headline)
+                        .lineLimit(1)
+                    
+                    if isListings && sublet.offers?.count ?? 0 > 0 {
+                        ZStack {
+                            Circle()
+                                .fill(.red)
+                                .frame(width: 15, height: 15)
+                            
+                            Text("\(sublet.offers?.count ?? 0)")
+                                .foregroundColor(.white)
+                                .font(.system(size: 12))
+                        }
+                    }
+                }
                 
                 Text("$\(sublet.price)\(sublet.negotiable ? " (Negotiable)" : "")")
                     .font(.subheadline)

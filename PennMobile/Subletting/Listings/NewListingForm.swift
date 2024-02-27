@@ -52,7 +52,7 @@ struct NewListingForm: View {
                         .bold()
                 }
                 
-                TagSelector(selection: $selectedAmenities, tags: $sublettingViewModel.amenities, customisable: .customisable(tagFromString: { $0 }))
+                TagSelector(selection: $selectedAmenities, tags: $sublettingViewModel.amenities)
                 
                 TextAreaField($subletData.description, characterCount: 300, title: "Description (optional)")
                 
