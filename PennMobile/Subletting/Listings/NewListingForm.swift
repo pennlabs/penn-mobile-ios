@@ -9,11 +9,10 @@
 import SwiftUI
 import PennForms
 import PennMobileShared
-import OSLog
-
-private let logger = Logger(category: "NewListingForm")
+import OrderedCollections
 
 struct NewListingForm: View {
+    @EnvironmentObject var sublettingViewModel: SublettingViewModel
     @EnvironmentObject var popupManager: PopupManager
     @Environment(\.dismiss) var dismiss
     @State var subletData = SubletData()
@@ -21,6 +20,7 @@ struct NewListingForm: View {
     @State var price: Int?
     @State var startDate: Date?
     @State var endDate: Date?
+    @State var selectedAmenities = OrderedSet<String>()
     
     var body: some View {
         ScrollView {
@@ -47,6 +47,13 @@ struct NewListingForm: View {
                 
                 DateField(date: $subletData.expiresAt, title: "Listing Expiry Date")
                 
+                ComponentWrapper {
+                    Text("Amenities")
+                        .bold()
+                }
+                
+                TagSelector(selection: $selectedAmenities, tags: $sublettingViewModel.amenities, customisable: .customisable(tagFromString: { $0 }))
+                
                 TextAreaField($subletData.description, characterCount: 300, title: "Description (optional)")
                 
                 ComponentWrapper {
@@ -60,11 +67,12 @@ struct NewListingForm: View {
                         data.negotiable = negotiable
                         data.startDate = Day(date: startDate)
                         data.endDate = Day(date: endDate)
+                        data.amenities = Array(selectedAmenities)
                         
                         Task {
                             do {
                                 let sublet = try await SublettingAPI.instance.createSublet(subletData: data)
-                                logger.info("Created sublet with id \(sublet.id)!")
+                                print("Created sublet with id \(sublet.id)!")
                                 
                                 popupManager.set(
                                     title: "Listing Posted!",
@@ -76,7 +84,14 @@ struct NewListingForm: View {
                                 )
                                 popupManager.show()
                             } catch let error {
-                                logger.error("Couldn't create sublet: \(error)")
+                                popupManager.set(
+                                    image: Image(systemName: "exclamationmark.2"),
+                                    title: "Uh oh!",
+                                    message: "Failed to create the sublet.",
+                                    button1: "Close"
+                                )
+                                popupManager.show()
+                                print("Couldn't create sublet: \(error)")
                             }
                         }
                     }) {

@@ -22,7 +22,20 @@ public class SublettingAPI {
     
     private static let decoder = JSONDecoder(
         keyDecodingStrategy: .convertFromSnakeCase,
-        dateDecodingStrategy: .iso8601
+        dateDecodingStrategy: .custom({ (decoder) -> Date in
+            let container = try decoder.singleValueContainer()
+            let dateString = try container.decode(String.self)
+            
+            if let date = DateFormatter.iso8601.date(from: dateString) {
+                return date
+            } else if let date = DateFormatter.iso8601Full.date(from: dateString) {
+                return date
+            } else if let date = DateFormatter.yyyyMMdd.date(from: dateString) {
+                return date
+            } else {
+                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode date string \(dateString)")
+            }
+        })
     )
     
     public static let instance = SublettingAPI()
@@ -30,7 +43,7 @@ public class SublettingAPI {
     public let favoritesUrl = "https://pennmobile.org/api/sublet/"
     public let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
     
-    private func makeSubletRequest<C: Encodable, R: Decodable>(_ urlStr: String? = nil, url: URL? = nil, method: String, isContentJSON: Bool = false, content: C? = nil as String?, returnType: R.Type? = nil as String.Type?, decoder: JSONDecoder? = nil) async throws -> R? {
+    private func makeSubletRequest<C: Encodable, R: Decodable>(_ urlStr: String? = nil, url: URL? = nil, method: String, isContentJSON: Bool = false, content: C? = nil as String?, returnType: R.Type? = nil as String.Type?) async throws -> R? {
         guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
             throw NetworkingError.authenticationError
         }
@@ -64,9 +77,8 @@ public class SublettingAPI {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        let dataDecoder = decoder ?? Self.decoder
         if returnType != nil {
-            if let errorResponse = try? dataDecoder.decode(GenericErrorResponse.self, from: data),
+            if let errorResponse = try? Self.decoder.decode(GenericErrorResponse.self, from: data),
                let error = NetworkingError(rawValue: errorResponse.detail) {
                 throw error
             }
@@ -77,7 +89,7 @@ public class SublettingAPI {
         }
         
         if returnType != nil {
-            return try dataDecoder.decode(returnType!, from: data)
+            return try Self.decoder.decode(returnType!, from: data)
         } else {
             return nil
         }
@@ -117,8 +129,11 @@ public class SublettingAPI {
         }
     }
     
-    public func getSubletDetails(id: Int) async throws -> Sublet {
-        if let result = try await makeSubletRequest("\(sublettingUrl)\(id)/", method: "GET", returnType: Sublet.self) {
+    public func getSubletDetails(id: Int, withOffers: Bool = true) async throws -> Sublet {
+        if var result = try await makeSubletRequest("\(sublettingUrl)\(id)/", method: "GET", returnType: Sublet.self) {
+            if withOffers {
+                result.offers = try? await getSubletOffers(id: id)
+            }
             return result
         } else {
             throw NetworkingError.serverError
@@ -143,7 +158,7 @@ public class SublettingAPI {
     
     public func getAmenities() async throws -> [String] {
         if let result = try await makeSubletRequest("\(favoritesUrl)amenities/", method: "GET", returnType: [String].self) {
-            return result
+            return result.sorted { $0.lowercased() < $1.lowercased() }
         } else {
             throw NetworkingError.serverError
         }
@@ -166,10 +181,7 @@ public class SublettingAPI {
     }
     
     public func makeOffer(offerData: SubletOfferData, id: Int) async throws -> SubletOffer {
-        let decoder = Self.decoder
-        decoder.dateDecodingStrategy = .iso8601Full
-        
-        if let result = try await makeSubletRequest("\(sublettingUrl)\(id)/offers/", method: "POST", isContentJSON: true, content: offerData, returnType: SubletOffer.self, decoder: decoder) {
+        if let result = try await makeSubletRequest("\(sublettingUrl)\(id)/offers/", method: "POST", isContentJSON: true, content: offerData, returnType: SubletOffer.self) {
             return result
         } else {
             throw NetworkingError.serverError
@@ -178,5 +190,29 @@ public class SublettingAPI {
     
     public func deleteOffer(offerData: SubletOfferData, id: Int) async throws {
         _ = try await makeSubletRequest("\(sublettingUrl)\(id)/offers/", method: "DELETE", isContentJSON: true, content: offerData)
+    }
+    
+    public func getAppliedSublets() async throws -> [Sublet] {
+        let offers = try await self.getUserOffers()
+        
+        return await withTaskGroup(of: Sublet?.self) { group in
+            var sublets: [Sublet] = []
+            sublets.reserveCapacity(offers.count)
+            
+            for offer in offers {
+                group.addTask {
+                    guard var sublet = try? await self.getSubletDetails(id: offer.sublet, withOffers: false) else {
+                        return nil
+                    }
+                    sublet.offers?.append(offer) ?? (sublet.offers = [offer])
+                    return sublet
+                }
+            }
+            for await sublet in group where sublet != nil {
+                sublets.append(sublet!)
+            }
+            
+            return sublets
+        }
     }
 }

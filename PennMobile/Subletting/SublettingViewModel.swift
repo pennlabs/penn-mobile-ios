@@ -9,8 +9,9 @@
 import Foundation
 import Combine
 import PennMobileShared
+import OrderedCollections
 
-struct MarketplaceFilterData {
+struct MarketplaceFilterData: Codable {
     var minPrice: Int?
     var maxPrice: Int?
     var location: String?
@@ -18,13 +19,7 @@ struct MarketplaceFilterData {
     var endDate: Date?
     var beds: Int?
     var baths: Int?
-    var selectedAmenities: [String] = []
-    var amenities = [
-        "Private bathroom", "In-unit laundry", "Gym", "Wifi",
-        "Walk-in closet", "Furnished", "Utilities included", "Swimming pool",
-        "Resident lounge", "Parking", "Patio", "Kitchen",
-        "Dog-friendly", "Cat-friendly"
-    ]
+    var selectedAmenities = OrderedSet<String>()
 }
 
 class SublettingViewModel: ObservableObject {
@@ -36,8 +31,14 @@ class SublettingViewModel: ObservableObject {
         }
     }
     let sortOptions = ["Select", "Name", "Price", "Beds", "Baths", "Start Date", "End Date"]
-    @Published var filterData = MarketplaceFilterData() {
+    var amenities: OrderedSet<String> {
         didSet {
+            UserDefaults.standard.setSubletAmenities(amenities)
+        }
+    }
+    @Published var filterData: MarketplaceFilterData {
+        didSet {
+            UserDefaults.standard.setSubletFilterData(filterData)
             Task {
                 await populateSublets()
                 if searchText != "" {
@@ -57,32 +58,20 @@ class SublettingViewModel: ObservableObject {
     }
     
     @Published var listings: [Sublet]
-    @Published var drafts: [Sublet]
     @Published var saved: [Sublet]
     @Published var applied: [Sublet]
-    
-    private var cancellables = Set<AnyCancellable>()
-    
-    init(listings: [Sublet], drafts: [Sublet], saved: [Sublet], applied: [Sublet]) {
-        self.listings = listings
-        self.drafts = drafts
-        self.saved = saved
-        self.applied = applied
-        
-        $searchText
-            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
-            .sink { [weak self] _ in
-                self?.performSearch()
-            }
-            .store(in: &cancellables)
-        
-        Task {
-            await populateSublets()
+    @Published var drafts: [Sublet] {
+        didSet {
+            UserDefaults.standard.setSubletDrafts(drafts)
         }
     }
     
+    private var cancellables = Set<AnyCancellable>()
+    
     init() {
-        self.drafts = UserDefaults.standard.array(forKey: "drafts") as? [Sublet] ?? []
+        self.amenities = UserDefaults.standard.getSubletAmenities() ?? OrderedSet<String>()
+        self.filterData = UserDefaults.standard.getSubletFilterData() ?? MarketplaceFilterData()
+        self.drafts = UserDefaults.standard.getSubletDrafts()
         self.listings = []
         self.saved = []
         self.applied = []
@@ -95,37 +84,49 @@ class SublettingViewModel: ObservableObject {
             .store(in: &cancellables)
         
         Task {
-            do {
-                self.listings = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"])
-            } catch {
-                print("Error getting user listings: \(error)")
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask { await self.populateAmenities() }
+                group.addTask { await self.populateListings() }
+                group.addTask { await self.populateFavorites() }
+                group.addTask { await self.populateApplied() }
+                group.addTask { await self.populateSublets() }
             }
         }
-        
-        Task {
-            do {
-                self.saved = try await SublettingAPI.instance.getFavorites()
-            } catch {
-                print("Error getting user saved sublets: \(error)")
-            }
+    }
+    
+    func populateAmenities() async {
+        do {
+            self.amenities.formUnion(Set(try await SublettingAPI.instance.getAmenities()))
+        } catch {
+            print("Error populating amenities: \(error)")
         }
-        
-//        Task {
-//            do {
-//                self.applied = try await SublettingAPI.instance.getSublets(queryParams: ???)
-//            } catch {
-//                print("Error getting user applied sublets: \(error)")
-//            }
-//        }
-        
-        Task {
-            await populateSublets()
+    }
+    
+    func populateListings() async {
+        do {
+            self.listings = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"])
+        } catch {
+            print("Error getting user listings: \(error)")
+        }
+    }
+    
+    func populateApplied() async {
+        do {
+            self.applied = try await SublettingAPI.instance.getAppliedSublets()
+        } catch {
+            print("Error getting user applied sublets: \(error)")
+        }
+    }
+    
+    func populateFavorites() async {
+        do {
+            self.saved = try await SublettingAPI.instance.getFavorites()
+        } catch {
+            print("Error getting user saved sublets: \(error)")
         }
     }
     
     func populateSublets() async {
-        // TODO: need to populate amenities list too, probably elsewhere
-        
         var queryParameters: [String: String] = [:]
         if let minPrice = filterData.minPrice {
             queryParameters["min_price"] = "\(minPrice)"

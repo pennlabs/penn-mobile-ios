@@ -27,7 +27,7 @@ public struct BadgeModifier: ViewModifier {
                             .foregroundColor(textColor)
                             .font(.system(size: 12))
                     }
-                        .offset(x: 10, y: -10),
+                    .offset(x: 10, y: -10),
                     alignment: .topTrailing
                 )
         } else {

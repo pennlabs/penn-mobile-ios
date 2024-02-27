@@ -37,7 +37,12 @@ struct MarketplaceFilterView: View {
                         NumericField($filterData.baths, title: "# Bath")
                     }
                     
-                    //                    TagSelector(selection: $filterData.selectedAmenities, tags: $filterData.amenities)
+                    ComponentWrapper {
+                        Text("Amenities")
+                            .bold()
+                    }
+                    
+                    TagSelector(selection: $filterData.selectedAmenities, tags: $sublettingViewModel.amenities, customisable: .customisable(tagFromString: { $0 }))
                     
                     ComponentWrapper {
                         HStack {

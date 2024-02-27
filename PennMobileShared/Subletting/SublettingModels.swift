@@ -18,7 +18,7 @@ public struct Sublet: Identifiable, Decodable, Hashable {
     public let id: Int
     public let data: SubletData
     public let subletter: Int
-    public let offers: [SubletOffer]?
+    public var offers: [SubletOffer]?
     public let images: [SubletImage]
 
     public subscript<T>(dynamicMember keyPath: KeyPath<SubletData, T>) -> T {
@@ -61,7 +61,7 @@ public struct Sublet: Identifiable, Decodable, Hashable {
 }
 
 public struct SubletData: Codable {
-    public var amenities: [SubletAmenity]
+    public var amenities: [String]
     public var title: String
     public var address: String?
     public var beds: Int?
@@ -73,6 +73,55 @@ public struct SubletData: Codable {
     public var expiresAt: Date? // Optional since not returned in get all sublets
     public var startDate: Day
     public var endDate: Day
+    
+    enum CodingKeys: String, CodingKey {
+        case amenities, title, address, beds, baths, description, externalLink, price, negotiable, expiresAt, startDate, endDate
+    }
+
+    enum AmenityCodingKeys: String, CodingKey {
+        case name
+    }
+    
+    public init(amenities: [String], title: String, address: String? = nil, beds: Int? = nil, baths: Double? = nil, description: String? = nil, externalLink: String? = nil, price: Int, negotiable: Bool, expiresAt: Date? = nil, startDate: Day, endDate: Day) {
+        self.amenities = amenities
+        self.title = title
+        self.address = address
+        self.beds = beds
+        self.baths = baths
+        self.description = description
+        self.externalLink = externalLink
+        self.price = price
+        self.negotiable = negotiable
+        self.expiresAt = expiresAt
+        self.startDate = startDate
+        self.endDate = endDate
+        
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.title = try container.decode(String.self, forKey: .title)
+        self.address = try container.decodeIfPresent(String.self, forKey: .address)
+        self.beds = try container.decodeIfPresent(Int.self, forKey: .beds)
+        self.baths = try container.decodeIfPresent(Double.self, forKey: .baths)
+        self.description = try container.decodeIfPresent(String.self, forKey: .description)
+        self.externalLink = try container.decodeIfPresent(String.self, forKey: .externalLink)
+        self.price = try container.decode(Int.self, forKey: .price)
+        self.negotiable = try container.decode(Bool.self, forKey: .negotiable)
+        self.expiresAt = try container.decodeIfPresent(Date.self, forKey: .expiresAt)
+        self.startDate = try container.decode(Day.self, forKey: .startDate)
+        self.endDate = try container.decode(Day.self, forKey: .endDate)
+
+        var amenitiesContainer = try container.nestedUnkeyedContainer(forKey: .amenities)
+        var amenitiesNames: [String] = []
+        while !amenitiesContainer.isAtEnd {
+            let amenityContainer = try amenitiesContainer.nestedContainer(keyedBy: AmenityCodingKeys.self)
+            let name = try amenityContainer.decode(String.self, forKey: .name)
+            amenitiesNames.append(name)
+        }
+        self.amenities = amenitiesNames
+    }
 }
 
 public extension SubletData {
@@ -87,10 +136,6 @@ public extension SubletData {
         startDate = Day()
         endDate = Day()
     }
-}
-
-public struct SubletAmenity: Hashable, Codable {
-    public let name: String
 }
 
 public struct SubletImage: Decodable {
@@ -163,7 +208,7 @@ public extension Sublet {
     static let mock = Self(
         id: 0,
         data: .init(
-            amenities: [.init(name: "Private bathroom")],
+            amenities: ["Private bathroom"],
             title: "Lauder",
             address: "3650 Locust Walk",
             beds: 9,
@@ -196,7 +241,7 @@ public extension Sublet {
         Self(
             id: 1,
             data: .init(
-                amenities: [.init(name: "Balcony")],
+                amenities: ["Balcony"],
                 title: "Rittenhouse Square Studio",
                 address: "2101 Market Street",
                 beds: 1,
@@ -214,7 +259,7 @@ public extension Sublet {
         Self(
             id: 2,
             data: .init(
-                amenities: [.init(name: "Gym Access"), .init(name: "Pool Access")],
+                amenities: ["Gym Access", "Pool Access"],
                 title: "Modern 2BR in Center City",
                 address: "1429 Chestnut Street",
                 beds: 2,
@@ -232,7 +277,7 @@ public extension Sublet {
         Self(
             id: 3,
             data: .init(
-                amenities: [.init(name: "Rooftop Access")],
+                amenities: ["Rooftop Access"],
                 title: "Cozy Loft Near University City",
                 address: "4001 Walnut Street",
                 beds: 3,

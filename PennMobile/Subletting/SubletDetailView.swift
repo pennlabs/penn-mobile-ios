@@ -18,17 +18,13 @@ struct SubletDetailView: View {
     private var isSaved: Bool {
         sublettingViewModel.isFavorited(sublet: sublet)
     }
-    let isSubletter: Bool
+    var isSubletter: Bool {
+        Account.getAccount()?.pennid == sublet.subletter
+    }
     private var isClaimed: Bool = false // TODO: fill this in
     
     public init(sublet: Sublet) {
         self._sublet = State(initialValue: sublet)
-        self.isSubletter = false
-    }
-    
-    public init(sublet: Sublet, isSubletter: Bool) {
-        self._sublet = State(initialValue: sublet)
-        self.isSubletter = isSubletter
     }
     
     var body: some View {
@@ -95,6 +91,13 @@ struct SubletDetailView: View {
                         }
                     }
                 }
+            }
+        }
+        .task {
+            do {
+                self.sublet = try await SublettingAPI.instance.getSubletDetails(id: sublet.id)
+            } catch {
+                print(error)
             }
         }
         .sheet(isPresented: $showExternalLink) {
@@ -307,7 +310,7 @@ struct SubletDetailOnly: View {
                         ForEach(sublet.amenities, id: \.self) { amenity in
                             HStack {
                                 Image(systemName: "checkmark.seal")
-                                Text(amenity.name)
+                                Text(amenity)
                                     .font(.subheadline)
                             }
                         }
