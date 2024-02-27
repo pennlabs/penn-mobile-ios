@@ -77,13 +77,12 @@ struct DiningVenueDetailView: View {
                         
                         VStack {
                             if self.pickerIndex == 0 {
-                                DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.menus ?? [], id: venue.id, venue: venue, globalScrollProxy: fullReader)
+                                DiningVenueDetailMenuView(menus: diningVM.diningMenus[venue.id]?.menus ?? [], id: venue.id, venue: venue, parentScrollProxy: fullReader)
                             } else if self.pickerIndex == 1 {
                                 DiningVenueDetailHoursView(for: venue)
                             } else {
                                 DiningVenueDetailLocationView(for: venue, screenHeight: fullGeo.size.width)
                             }
-                            
                             Spacer()
                         }.frame(minHeight: fullGeo.size.height - 80)
                     }.padding(.horizontal)

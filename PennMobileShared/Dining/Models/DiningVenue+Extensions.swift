@@ -64,8 +64,8 @@ public extension DiningVenue {
         return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing })
     }
 
-    var currentOrNearestMealIndex: Int {
-        return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing }) ?? self.mealsToday?.meals.firstIndex(where: { $0.starttime > Date() }) ?? 0
+    var currentOrNearestMealIndex: Int? {
+        return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing }) ?? self.mealsToday?.meals.firstIndex(where: { $0.starttime > Date() }) ?? nil
     }
     
     var currentOrNearestMeal: Meal? {

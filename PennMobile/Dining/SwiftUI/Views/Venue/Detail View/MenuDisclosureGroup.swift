@@ -9,48 +9,51 @@
 import SwiftUI
 import PennMobileShared
 
-
-
-
 struct DiningMenuViewHeader: View {
-    @Binding var diningMenu: DiningMenu
+    @Binding var diningMenu: DiningMenu?
     @Binding var selectedStation: DiningStation?
+    
+    @State var internalSelection: DiningStation?
     
     var body: some View {
         VStack {
             Divider()
             ScrollViewReader { proxy in
-                ScrollView(.horizontal) {
-                    HStack(spacing: 15) {
-                        ForEach(diningMenu.stations, id: \.hashValue) { diningStation in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 30) {
+                        ForEach(diningMenu?.stations ?? [], id: \.horizUID) { diningStation in
                             Text(diningStation.name.uppercased())
                                 .bold(selectedStation != nil && selectedStation == diningStation)
                                 .underline(selectedStation != nil && selectedStation == diningStation)
                                 .font(.system(size: 16))
                                 .onTapGesture {
-                                    withAnimation {
-                                        selectedStation = diningStation
-                                    }
-                                }.onAppear {
-                                    print(diningStation.hashValue)
+                                    internalSelection = diningStation
                                 }
-                        }
-                    }.onChange(of: selectedStation) { _ in
-                        withAnimation {
-                            proxy.scrollTo(selectedStation!.hashValue, anchor: .leading)
-                        }
+                    }.onChange(of: internalSelection) { new in
+                            withAnimation {
+                                proxy.scrollTo(new!.horizUID, anchor: .leading)
+                            }
                         
+                        selectedStation = internalSelection
+                        
+                        }
                     }
                 }
                 .padding(.vertical, 2)
             }
             Divider()
         }.background(Color(.systemBackground))
+            .onAppear {
+                internalSelection = selectedStation
+            }
+            .onChange(of: selectedStation) { _ in
+                internalSelection = selectedStation
+            }
     }
 }
 
 struct DiningStationRow: View {
-    @State var isExpanded = false
+    @State var isExpanded = true
     let diningStation: DiningStation
 
     var body: some View {

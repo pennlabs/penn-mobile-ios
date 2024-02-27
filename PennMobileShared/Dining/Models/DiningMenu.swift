@@ -67,6 +67,16 @@ public struct VenueInfo: Codable, Hashable {
 public struct DiningStation: Codable, Hashable {
     public let name: String
     public let items: [DiningStationItem]
+    public let vertUID: UUID
+    public let horizUID: UUID
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.items = try container.decode([DiningStationItem].self, forKey: .items)
+        self.vertUID = UUID()
+        self.horizUID = UUID()
+    }
 
     public enum CodingKeys: String, CodingKey {
         case name
