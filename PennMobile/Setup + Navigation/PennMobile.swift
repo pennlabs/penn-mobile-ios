@@ -14,7 +14,7 @@ struct PennMobile: App {
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
     @ObservedObject var authManager = AuthManager()
     @ObservedObject var homeViewModel = StandardHomeViewModel()
-    
+
     #if DEBUG
     @ObservedObject var mockHomeViewModel = MockHomeViewModel()
     #endif

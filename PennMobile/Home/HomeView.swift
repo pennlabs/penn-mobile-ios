@@ -22,10 +22,6 @@ struct HomeView<Model: HomeViewModel>: View {
             .day()
     }
     
-    var backgroundGradient: some View {
-        LinearGradient(colors: [colorScheme == .dark ? Color("baseDarkBlue") : Color("baseLabsBlue").opacity(0.5), .clear], startPoint: .topLeading, endPoint: .center)
-    }
-    
     var body: some View {
         Group {
             switch viewModel.data {
@@ -33,7 +29,6 @@ struct HomeView<Model: HomeViewModel>: View {
                 ProgressView()
                     .controlSize(.large)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(backgroundGradient)
                     .ignoresSafeArea()
             case .some(.success(let data)):
                 NavigationStack {
@@ -47,7 +42,7 @@ struct HomeView<Model: HomeViewModel>: View {
                                         .background(GeometryReader { geometry in
                                             let minY = geometry.frame(in: .global).minY
                                             Color.clear.onChange(of: minY) { minY in
-                                                showTitle = minY <= 32
+                                                showTitle = minY <= 16
                                             }
                                         })
                                     
@@ -55,8 +50,8 @@ struct HomeView<Model: HomeViewModel>: View {
                                         HStack(alignment: .top) {
                                             Text(splashText)
                                                 .fontWeight(.medium)
+                                                .opacity(0.7)
                                         }
-                                        .foregroundStyle(.secondary)
                                     }
                                 }
                                 .offset(y: -16)
@@ -93,7 +88,6 @@ struct HomeView<Model: HomeViewModel>: View {
                     .refreshable {
                         try? await viewModel.fetchData(force: true)
                     }
-                    .background(backgroundGradient.ignoresSafeArea(edges: .all))
                 }
             case .some(.failure(let error)):
                 VStack(spacing: 16) {
@@ -122,8 +116,6 @@ struct HomeView<Model: HomeViewModel>: View {
                 .multilineTextAlignment(.center)
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(LinearGradient(colors: [.red, .clear], startPoint: .topLeading, endPoint: .center))
-                .ignoresSafeArea()
             }
         }.onAppear {
             Task {
