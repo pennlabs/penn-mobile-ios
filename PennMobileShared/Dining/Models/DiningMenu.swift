@@ -105,6 +105,10 @@ public struct DiningStation: Codable, Hashable {
             "smoque'd deli": 16,
             "pizza": 17,
             "flatbread": 18,
+            "simplyoasis": 19,
+            "simplyoasis sides": 20,
+            "global fusion": 21,
+            "global fusion sides": 22,
             
             //26 - 49 Smaller Entrees
             "salad bar": 26,
@@ -114,15 +118,11 @@ public struct DiningStation: Codable, Hashable {
             "breakfast bar": 30,
             "breakfast": 31,
             "rise and dine": 32,
-            "global fusion": 33,
-            "global fusion sides": 34,
-            "near & far": 35,
-            "mezze": 36,
-            "grotto":37,
-            "simplyoasis": 38,
-            "simplyoasis sides": 39,
-            "comfort": 40,
-            "melts": 41,
+            "near & far": 33,
+            "mezze": 34,
+            "grotto":35,
+            "comfort": 36,
+            "melts": 37,
             
             // 50 IS THE DEFAULT
             

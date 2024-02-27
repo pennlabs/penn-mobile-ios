@@ -71,13 +71,11 @@ struct DiningVenueDetailMenuView: View {
                 } else {
                     Text("Closed For Today")
                 }
-                DatePicker("", selection: $menuDate, in: Date().localTime...Date().localTime.add(minutes: 8640), displayedComponents: .date)
+                DatePicker("", selection: $menuDate, in: Date()...Date().add(minutes: 8640), displayedComponents: .date)
             }
             
             Section {
                 DiningStationRowStack(selectedStation: $selectedStation, currentMenu: $currentMenu, parentScrollOffset: $parentScrollOffset, parentScrollProxy: parentScrollProxy)
-                    
-                    
             } header: {
                 DiningMenuViewHeader(diningMenu: $currentMenu, selectedStation: $selectedStation)
             }

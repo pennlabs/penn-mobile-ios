@@ -25,9 +25,12 @@ struct DiningMenuViewHeader: View {
                             Text(diningStation.name.uppercased())
                                 .bold(selectedStation != nil && selectedStation == diningStation)
                                 .underline(selectedStation != nil && selectedStation == diningStation)
-                                .font(.system(size: 16))
+                                .font(.callout)
+                                .padding(3)
                                 .onTapGesture {
-                                    internalSelection = diningStation
+                                    withAnimation {
+                                        internalSelection = diningStation
+                                    }
                                 }
                     }.onChange(of: internalSelection) { new in
                         if let newStation = new {
@@ -58,10 +61,11 @@ struct DiningStationRowStack: View {
     @Binding var currentMenu: DiningMenu?
     
     @Binding var parentScrollOffset: CGPoint
-    var parentScrollProxy: ScrollViewProxy
     @State var posDictionary: [DiningStation: CGRect] = [:]
     @State var scrollNext: DiningStation?
     @State var checkDictionary = true
+    
+    var parentScrollProxy: ScrollViewProxy
     
     var body: some View {
         VStack {
@@ -72,47 +76,57 @@ struct DiningStationRowStack: View {
                         GeometryReader { proxy in
                             Spacer()
                                 .onChange(of: parentScrollOffset) { _ in
-                                    let thisRect = proxy.frame(in: .global)
-
-                                    posDictionary.updateValue(thisRect, forKey: station)
+                                    posDictionary.updateValue(proxy.frame(in: .global), forKey: station)
                                 }
                         }
                     }
             }
             .onChange(of: parentScrollOffset) { _ in
                 if (checkDictionary) {
-                    if let defaultStation = selectedStation {
-                        var mostVisible = (defaultStation, 0.0 as CGFloat, 0)
+                    /// The most visible element is that which has the highest share of the viewport,
+                    /// relative to its own height. If two elements are equally visible, the one whose
+                    /// midpoint is closest to y = 350 is the one that is more visible.
+                    let sortedDict = posDictionary.sorted { (el1, el2) in
+                        let (_, rect1) = el1
+                        let (_, rect2) = el2
                         
-                        posDictionary.forEach { station, rect in
-                            let (_, mvMidY, mvPct) = mostVisible
-                            
-                            let intersection = rect.intersection(UIScreen.main.bounds)
-                            let pctInFrame = Int((intersection.height * 100)/rect.height)
-                            
-                            if (pctInFrame > mvPct) {
-                                mostVisible = (station, rect.midY, pctInFrame)
-                            }
-                            
-                            if (pctInFrame == mvPct && abs(rect.midY - 350.0) < abs(mvMidY - 350.0)) {
-                                mostVisible = (station, rect.midY, pctInFrame)
-                            }
-                        }
+                        let intersection1 = rect1.intersection(UIScreen.main.bounds)
+                        let intersection2 = rect2.intersection(UIScreen.main.bounds)
                         
-                        let (st, _, _) = mostVisible
+                        let pct1 = Int((intersection1.height * 100)/rect1.height)
+                        let pct2 = Int((intersection2.height * 100)/rect2.height)
+                        
+                        return pct1 > pct2 ||
+                            (pct1 == pct2 && abs(rect1.midY-350.0) < abs(rect2.midY-350.0))
+                    }
+                    
+                    if let (st, _) = sortedDict.first {
                         scrollNext = st
                         selectedStation = st
                     }
                 }
             }
-            
             .onChange(of: currentMenu) { _ in
                 posDictionary = [:]
             }
             .onChange(of: selectedStation) { new in
+                /// There's a lot of state changes going on here, becuase there's two
+                /// ScrollViewReaders interacting. On a change of selection due to vertical scrolling,
+                /// We don't want to reanimate the vertical scrolling window, since it wouldn't feel natural.
+                ///
+                /// Further, on vertical scroll changes as a result of clicking an item on the header bar,
+                /// we do not wish to adjust the selected station based on scroll (since the user just
+                /// selected the station)
                 if let newStation = new {
+                    // Don't animate if we just changed this value by vertical scrolling.
                     if (newStation != scrollNext) {
+                        
+                        // Don't adjust anything on scroll while we're animating
                         checkDictionary = false
+                        
+                        /// iOS 17 added an onCompletion method on an animation, but
+                        /// PennMobile is not built for iOS 17 yet, so we are left with just
+                        /// Dispatching an event to fire after the duration of the animation.
                         withAnimation(.easeInOut(duration: 0.3)) {
                             parentScrollProxy.scrollTo(newStation.vertUID, anchor: .top)
                         }
@@ -122,6 +136,7 @@ struct DiningStationRowStack: View {
                         }
                     }
                 }
+                
                 scrollNext = nil
             }
         }
