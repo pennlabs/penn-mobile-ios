@@ -47,7 +47,7 @@ struct MyListingsActivity: View {
                             NavigationLink {
                                 SubletDetailView(sublet: sublet)
                             } label: {
-                                SubletDisplayRow(sublet: sublet, isListings: true)
+                                SubletDisplayRow(sublet: sublet)
                                     .padding(.horizontal)
                             }
                             .buttonStyle(.plain)

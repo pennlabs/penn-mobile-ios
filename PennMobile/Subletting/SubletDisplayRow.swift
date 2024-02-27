@@ -13,13 +13,14 @@ import PennMobileShared
 struct SubletDisplayRow: View {
     let sublet: Sublet
     let isApplied: Bool
-    let isListings: Bool
+    var isSubletter: Bool {
+        Account.getAccount()?.pennid == sublet.subletter
+    }
     @State var messageExpanded: Bool = false
     
-    public init(sublet: Sublet, isApplied: Bool = false, isListings: Bool = false) {
+    public init(sublet: Sublet, isApplied: Bool = false) {
         self.sublet = sublet
         self.isApplied = isApplied
-        self.isListings = isListings
     }
     
     public var body: some View {
@@ -48,7 +49,7 @@ struct SubletDisplayRow: View {
                         .font(.headline)
                         .lineLimit(1)
                     
-                    if isListings && sublet.offers?.count ?? 0 > 0 {
+                    if isSubletter && sublet.offers?.count ?? 0 > 0 {
                         ZStack {
                             Circle()
                                 .fill(.red)
