@@ -22,8 +22,7 @@ extension GSRBookable where Self: UIViewController {
                 case .success:
                     self.showAlert(withMsg: "You booked a space in \(booking.roomName). You should receive a confirmation email in the next few minutes.", title: "Success!", completion: nil)
                     firebaseResult = .success
-                    guard let homeVC = ControllerModel.shared.viewController(for: .home) as? HomeViewController else { return }
-                    homeVC.clearCache()
+                    // TODO: Clear home cache
                 case .failure:
                     self.showAlert(withMsg: "You seem to have exceeded the booking limit for this venue.", title: "Uh oh!", completion: nil)
                     firebaseResult = .failed

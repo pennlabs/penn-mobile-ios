@@ -16,8 +16,6 @@ import PennMobileShared
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var tabBarController: TabBarController!
-
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register: \(error)")
