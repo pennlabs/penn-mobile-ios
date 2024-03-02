@@ -262,6 +262,7 @@
 		89CA729129174CF900CF72FE /* DiningAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA727229171E3900CF72FE /* DiningAnalyticsProvider.swift */; };
 		89CA72952917541C00CF72FE /* DiningAnalyticsHomeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA7292291753DF00CF72FE /* DiningAnalyticsHomeWidget.swift */; };
 		89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCBEC528E791B70029F784 /* CoursesViewController.swift */; };
+		89DF9C352B66C3A700267449 /* Multipart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF9C342B66C3A700267449 /* Multipart.swift */; };
 		89E0DE682AE38A8800E918FF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE672AE38A8800E918FF /* HomeView.swift */; };
 		89E0DE6A2AE396E200E918FF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE692AE396E200E918FF /* HomeViewModel.swift */; };
 		89E0DE6C2AE415A800E918FF /* HomeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE6B2AE415A800E918FF /* HomeCardView.swift */; };
@@ -689,6 +690,7 @@
 		89CA7292291753DF00CF72FE /* DiningAnalyticsHomeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsHomeWidget.swift; sourceTree = "<group>"; };
 		89CA72962917584000CF72FE /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 		89DCBEC528E791B70029F784 /* CoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
+		89DF9C342B66C3A700267449 /* Multipart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multipart.swift; sourceTree = "<group>"; };
 		89E0DE672AE38A8800E918FF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		89E0DE692AE396E200E918FF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		89E0DE6B2AE415A800E918FF /* HomeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCardView.swift; sourceTree = "<group>"; };
@@ -1598,6 +1600,7 @@
 			isa = PBXGroup;
 			children = (
 				6E5159D32AC8C9D4004B3F41 /* NetworkingError.swift */,
+				89DF9C342B66C3A700267449 /* Multipart.swift */,
 			);
 			path = "Networking + Analytics";
 			sourceTree = "<group>";
@@ -2742,6 +2745,7 @@
 				C312D4B72AD4DB6600EDB893 /* FitnessAPI.swift in Sources */,
 				6E5159E82AC8C9D5004B3F41 /* DiningAnalyticsViewModel.swift in Sources */,
 				42ECD8B92B8CB6A000CE77E5 /* BadgeView.swift in Sources */,
+				89DF9C352B66C3A700267449 /* Multipart.swift in Sources */,
 				6E5159EB2AC8C9D5004B3F41 /* DiningPlan.swift in Sources */,
 				426FE6182B7023370096B79B /* SearchBar.swift in Sources */,
 				6E5159E72AC8C9D5004B3F41 /* DiningVenue+Extensions.swift in Sources */,
