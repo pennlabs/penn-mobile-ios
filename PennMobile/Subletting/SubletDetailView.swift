@@ -61,13 +61,14 @@ struct SubletDetailView: View {
             if selectedTab == "Details" {
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack {
-                        if !isSubletter {
+                        if !isSubletter && Account.isLoggedIn {
                             NavigationLink {
                                 SubletInterestForm(sublet: sublet)
                             } label: {
                                 Image(systemName: "ellipsis.message")
                             }
                             .buttonStyle(.plain)
+                            
                             Button(action: {
                                 Task {
                                     if isSaved {
@@ -177,7 +178,9 @@ struct SubletDetailOnly: View {
                     HStack {
                         Text(sublet.address!)
                             .font(.subheadline)
-                        Button(action: {}) {
+                        NavigationLink {
+                            AddressMapView(address: sublet.address!)
+                        } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "map")
                                 Text("view in map")
@@ -220,7 +223,7 @@ struct SubletDetailOnly: View {
 //                            .padding(.top, 10)
 //                        }
 //                    }
-                } else {
+                } else if Account.isLoggedIn {
                     HStack {
                         Button(action: {
                             Task {

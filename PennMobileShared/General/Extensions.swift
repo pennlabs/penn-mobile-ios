@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 import OSLog
+import MapKit
 
 extension UIApplication {
     public static var isRunningFastlaneTest: Bool {
@@ -709,5 +710,11 @@ public extension View {
             placeholder().opacity(shouldShow ? 1 : 0)
             self
         }
+    }
+}
+
+extension CLLocationCoordinate2D: Identifiable {
+    public var id: String {
+        return "\(latitude)-\(longitude)"
     }
 }
