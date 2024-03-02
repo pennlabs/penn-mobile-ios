@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum FeatureIdentifier: String, Hashable {
+enum FeatureIdentifier: String, Hashable, Identifiable {
     case dining = "Dining"
     case gsr = "Study Room Booking"
     case laundry = "Laundry"
@@ -22,6 +22,8 @@ enum FeatureIdentifier: String, Hashable {
     case about = "About"
     case polls = "Poll History"
     case subletting = "Subletting"
+    
+    var id: String { rawValue }
 }
 
 struct AppFeature: Identifiable {

@@ -10,13 +10,16 @@ import PennMobileShared
 import SwiftUI
 
 struct MyListingsActivity: View {
-    @EnvironmentObject private var sublettingViewModel: SublettingViewModel
-    @State private var isListings: Bool
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var sublettingViewModel: SublettingViewModel
+    private var isListings: Bool
     @State private var selectedTab: SublettingViewModel.ListingsTabs
+    @State private var showLoginAlert: Bool
     
-    init(isListings: Bool = false) {
+    public init(isListings: Bool = false) {
         self.isListings = isListings
-        self.selectedTab = isListings ? .posted : .saved
+        self._selectedTab = State(initialValue: isListings ? .posted : .saved)
+        self._showLoginAlert = State(initialValue: !Account.isLoggedIn)
     }
     
     var body: some View {
@@ -122,6 +125,9 @@ struct MyListingsActivity: View {
                     .accessibilityLabel(Text("New Listing"))
                 }
             }
+        }
+        .alert(isPresented: $showLoginAlert) {
+            Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { dismiss() }))
         }
     }
 }

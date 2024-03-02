@@ -128,7 +128,7 @@ struct AddSubletView: View {
         .contentShape(Rectangle())
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(style: StrokeStyle(lineWidth: 1, dash: [6]))
+                .stroke(style: StrokeStyle(lineWidth: 1, dash: [7]))
                 .foregroundColor(.secondary)
         )
         .frame(height: 120)

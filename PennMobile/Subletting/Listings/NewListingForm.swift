@@ -21,11 +21,15 @@ struct NewListingForm: View {
     @State var startDate: Date?
     @State var endDate: Date?
     @State var selectedAmenities = OrderedSet<String>()
+    @State var images: [Image] = []
+    @State var imageData: [Data] = []
     
     var body: some View {
         ScrollView {
             LabsForm { formState in
                 TextLineField($subletData.title, title: "Listing Name")
+                
+                ImagePicker($images, imageData: $imageData, maxSelectionCount: 6)
                 
                 PairFields {
                     NumericField($price, format: .currency(code: "USD").presentation(.narrow), title: "Price/month")
@@ -72,6 +76,11 @@ struct NewListingForm: View {
                         Task {
                             do {
                                 let sublet = try await SublettingAPI.instance.createSublet(subletData: data)
+                                do {
+                                    try await SublettingAPI.instance.uploadSubletImages(images: imageData, id: sublet.id)
+                                } catch let error {
+                                    print("Error uploading sublet images: \(error)")
+                                }
                                 print("Created sublet with id \(sublet.id)!")
                                 
                                 popupManager.set(

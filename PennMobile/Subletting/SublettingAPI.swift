@@ -233,4 +233,46 @@ public class SublettingAPI {
             return sublets
         }
     }
+    
+    public func uploadSubletImage(image: Data, id: Int) async throws {
+        guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
+            throw NetworkingError.authenticationError
+        }
+        
+        guard let url = URL(string: "\(sublettingUrl)\(id)/images/") else {
+            throw NetworkingError.serverError
+        }
+        
+        let boundary = MultipartBody.generateBoundary()
+        let imagePart = MultipartContent(type: "image/jpeg", name: "image", data: image)
+        let idPart = try MultipartContent(name: "sublet", content: "\(id)")
+        let multipartBody = try MultipartBody(boundary: boundary, content: [imagePart, idPart])
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "X-Authorization")
+        request.setValue(multipartBody.contentType, forHTTPHeaderField: "Content-Type")
+        request.httpBody = try multipartBody.assembleData()
+        
+        let (_, response) = try await URLSession.shared.upload(for: request, from: request.httpBody!)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 200, httpResponse.statusCode <= 299 else {
+            let tmp = (response as? HTTPURLResponse)!
+            print(tmp.statusCode)
+            throw NetworkingError.serverError
+        }
+    }
+    
+    public func uploadSubletImages(images: [Data], id: Int) async throws {
+        await withTaskGroup(of: Void.self) { group in
+            for image in images {
+                group.addTask {
+                    try? await self.uploadSubletImage(image: image, id: id)
+                }
+            }
+            for await _ in group {
+            }
+        }
+    }
 }

@@ -9,12 +9,16 @@
 import SwiftUI
 
 class NavigationManager: ObservableObject {
+    @Published var isConfiguringTabs = false
     @Published var path = NavigationPath()
     @Published var currentTab = "Home"
+    
+    func resetPath() {
+        path = NavigationPath()
+    }
 }
 
 struct MainTabView: View {
-    @ObservedObject var mainTabViewCoordinator = MainTabViewCoordinator()
     @StateObject private var sublettingViewModel = SublettingViewModel()
     @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
     @StateObject private var navigationManager = NavigationManager()
@@ -47,17 +51,25 @@ struct MainTabView: View {
                 .tag(identifier.rawValue)
             }
             
-            MoreView(features: features.filter { !tabBarFeatures.contains($0.id) })
-                .tabItem {
-                    Label("More", image: "More_Grey")
-                }
-                .tag("More")
+            NavigationStack(path: $navigationManager.path) {
+                MoreView(features: features.filter { !tabBarFeatures.contains($0.id) })
+            }
+            .environmentObject(sublettingViewModel)
+            .environmentObject(navigationManager)
+            .tabItem {
+                Label("More", image: "More_Grey")
+            }
+            .tag("More")
         }
         .id(tabBarFeatures)
-        .sheet(isPresented: $mainTabViewCoordinator.isConfiguringTabs, content: {
+        .onChange(of: navigationManager.currentTab) { _ in
+            navigationManager.resetPath()
+        }
+        .sheet(isPresented: $navigationManager.isConfiguringTabs) {
             PreferencesView()
                 .presentationDragIndicator(.visible)
-        })
+                .environmentObject(navigationManager)
+        }
         .onAppear {
             UserDefaults.standard.restoreCookies()
             
@@ -87,7 +99,6 @@ struct MainTabView: View {
         .onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
             tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
         }
-        .environmentObject(mainTabViewCoordinator)
     }
     
     func shouldFetchTransactions() -> Bool {
