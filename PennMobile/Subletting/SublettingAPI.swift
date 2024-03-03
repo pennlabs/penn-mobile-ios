@@ -147,14 +147,14 @@ public class SublettingAPI {
             
             for sublet in sublets {
                 group.addTask {
-                    return (try? await self.getSubletDetails(id: sublet.id, withOffers: withOffers)) ?? sublet
+                    return (try? await self.getSubletDetails(id: sublet.subletID, withOffers: withOffers)) ?? sublet
                 }
             }
             for await outputSublet in group {
                 outputSublets.append(outputSublet)
             }
             
-            return sublets
+            return outputSublets
         }
     }
     

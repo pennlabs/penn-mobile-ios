@@ -115,6 +115,7 @@
 		426A0B51299034910066C7B7 /* DiningAnalyticsGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */; };
 		426A0B52299034910066C7B7 /* DiningAnalyticsGraphBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */; };
 		426FE6182B7023370096B79B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426FE6172B7023370096B79B /* SearchBar.swift */; };
+		42712AB32B94CEB00070C2EC /* SubletMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42712AB22B94CEB00070C2EC /* SubletMapView.swift */; };
 		429EA1E02B8B96B200824455 /* SubletCandidatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429EA1DF2B8B96B200824455 /* SubletCandidatesView.swift */; };
 		429EA1E12B8BA18300824455 /* SublettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8910678A2B64715E00748FC6 /* SublettingAPI.swift */; };
 		42CC49D02AAE38C6008C41EE /* PollsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */; };
@@ -549,6 +550,7 @@
 		426A0B4F299034910066C7B7 /* DiningAnalyticsGraph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraph.swift; sourceTree = "<group>"; };
 		426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraphBox.swift; sourceTree = "<group>"; };
 		426FE6172B7023370096B79B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		42712AB22B94CEB00070C2EC /* SubletMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletMapView.swift; sourceTree = "<group>"; };
 		429EA1DF2B8B96B200824455 /* SubletCandidatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletCandidatesView.swift; sourceTree = "<group>"; };
 		42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsViewController.swift; sourceTree = "<group>"; };
 		42CC49D12AAE3904008C41EE /* PollsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsView.swift; sourceTree = "<group>"; };
@@ -1926,6 +1928,7 @@
 				422C723F2B81341C00424C99 /* SubletDetailView.swift */,
 				421899352B8B68960007E833 /* SubletInterestForm.swift */,
 				423814AB2B76DB87004178CF /* MarketplaceFilterView.swift */,
+				42712AB22B94CEB00070C2EC /* SubletMapView.swift */,
 			);
 			path = Subletting;
 			sourceTree = "<group>";
@@ -2507,6 +2510,7 @@
 				217A7836204D2E0D004F1227 /* HomeLaundryCellItem.swift in Sources */,
 				6CC88D7027B1BF51006896F6 /* MenuDisclosureGroup.swift in Sources */,
 				EFE2D6FE239B12380020F6BF /* GSRGroupNetworkManager..swift in Sources */,
+				42712AB32B94CEB00070C2EC /* SubletMapView.swift in Sources */,
 				2190FD3B1EC65E7800EC683C /* ContactManager.swift in Sources */,
 				21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */,
 				6CC88D6E27B1BF51006896F6 /* DiningVenueDetailLocationView.swift in Sources */,

@@ -65,6 +65,9 @@ struct NewListingForm: View {
                         guard let negotiable, let price, let startDate, let endDate else {
                             return
                         }
+                        if imageData.count == 0 {
+                            return
+                        }
                         
                         var data = subletData
                         data.price = price
@@ -77,11 +80,11 @@ struct NewListingForm: View {
                             do {
                                 let sublet = try await SublettingAPI.instance.createSublet(subletData: data)
                                 do {
-                                    try await SublettingAPI.instance.uploadSubletImages(images: imageData, id: sublet.id)
+                                    try await SublettingAPI.instance.uploadSubletImages(images: imageData, id: sublet.subletID)
                                 } catch let error {
                                     print("Error uploading sublet images: \(error)")
                                 }
-                                print("Created sublet with id \(sublet.id)!")
+                                print("Created sublet with id \(sublet.subletID)!")
                                 
                                 popupManager.set(
                                     title: "Listing Posted!",

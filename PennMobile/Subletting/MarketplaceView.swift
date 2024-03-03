@@ -9,6 +9,19 @@
 import SwiftUI
 import PennMobileShared
 
+enum SublettingPage: Hashable, Identifiable {
+    case marketplaceView
+    case myListings
+    case myActivity
+    case subletDetailView(Int)
+    case subletInterestForm(Sublet)
+    case subletMapView(Sublet)
+    case newListingForm
+    case editSubletView
+    
+    var id: SublettingPage { self }
+}
+
 struct MarketplaceView: View {
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
@@ -18,9 +31,7 @@ struct MarketplaceView: View {
         VStack {
             VStack {
                 HStack {
-                    NavigationLink {
-                        MyListingsActivity(isListings: false)
-                    } label: {
+                    NavigationLink(value: SublettingPage.myActivity) {
                         Image(systemName: "bookmark")
                     }
                     .buttonStyle(.plain)
@@ -58,10 +69,8 @@ struct MarketplaceView: View {
             ScrollView {
                 if sublettingViewModel.sortedFilteredSublets.count > 0 {
                     LazyVGrid(columns: columns) {
-                        ForEach(sublettingViewModel.sortedFilteredSublets, id: \.identity) { sublet in
-                            NavigationLink {
-                                SubletDetailView(sublet: sublet)
-                            } label: {
+                        ForEach(sublettingViewModel.sortedFilteredSublets) { sublet in
+                            NavigationLink(value: SublettingPage.subletDetailView(sublet.subletID)) {
                                 SubletDisplayBox(sublet: sublet)
                             }
                             .buttonStyle(.plain)
@@ -78,9 +87,29 @@ struct MarketplaceView: View {
         .padding(.horizontal)
         .toolbar {
             ToolbarItem {
-                NavigationLink("My Listings") {
-                    MyListingsActivity(isListings: true)
+                NavigationLink(value: SublettingPage.myListings) {
+                    Text("My Listings")
                 }
+            }
+        }
+        .navigationDestination(for: SublettingPage.self) { page in
+            switch page {
+            case .marketplaceView:
+                MarketplaceView()
+            case .myListings:
+                MyListingsActivity(isListings: true)
+            case .myActivity:
+                MyListingsActivity(isListings: false)
+            case .subletDetailView(let subletID):
+                SubletDetailView(subletID: subletID) // uses ID since needs to update when VM updates sublet while on the page
+            case .subletInterestForm(let sublet):
+                SubletInterestForm(sublet: sublet)
+            case .subletMapView(let sublet):
+                SubletMapView(sublet: sublet)
+            case .newListingForm:
+                NewListingForm()
+            case .editSubletView:
+                Text("TODO") // TODO: Finish editing
             }
         }
     }

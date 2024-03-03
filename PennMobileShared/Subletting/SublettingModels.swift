@@ -15,7 +15,7 @@ import Foundation
 /// and `Sublet` contains the remainder.
 @dynamicMemberLookup
 public struct Sublet: Identifiable, Decodable, Hashable {
-    public let id: Int
+    public let subletID: Int
     public let data: SubletData
     public let subletter: Int
     public var offers: [SubletOffer]?
@@ -23,16 +23,16 @@ public struct Sublet: Identifiable, Decodable, Hashable {
     
     // These are for updating the UI properly since the data can be updated without the id being updated
     public let lastUpdated: Date
-    public var identity: String {
-        "\(id)-\(lastUpdated.timeIntervalSinceReferenceDate)"
+    public var id: String {
+        "\(subletID)-\(lastUpdated.timeIntervalSinceReferenceDate)"
     }
 
     public subscript<T>(dynamicMember keyPath: KeyPath<SubletData, T>) -> T {
         data[keyPath: keyPath]
     }
 
-    public init(id: Int, data: SubletData, subletter: Int, offers: [SubletOffer]? = nil, images: [SubletImage]) {
-        self.id = id
+    public init(subletID: Int, data: SubletData, subletter: Int, offers: [SubletOffer]? = nil, images: [SubletImage]) {
+        self.subletID = subletID
         self.data = data
         self.subletter = subletter
         self.offers = offers
@@ -44,26 +44,25 @@ public struct Sublet: Identifiable, Decodable, Hashable {
         let data = try SubletData(from: decoder)
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let id = try container.decode(Int.self, forKey: .id)
+        let subletID = try container.decode(Int.self, forKey: .subletID)
         let subletter = try container.decode(Int.self, forKey: .subletter)
         let images = try container.decode([SubletImage].self, forKey: .images)
         
-        self.init(id: id, data: data, subletter: subletter, images: images)
+        self.init(subletID: subletID, data: data, subletter: subletter, images: images)
     }
 
-    public enum CodingKeys: CodingKey {
-        case id
+    public enum CodingKeys: String, CodingKey {
+        case subletID = "id"
         case subletter
-        case offers
         case images
     }
     
     public static func ==(lhs: Sublet, rhs: Sublet) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.subletID == rhs.subletID
     }
 
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+        hasher.combine(subletID)
     }
 }
 
@@ -213,7 +212,7 @@ public extension SubletOfferData {
 
 public extension Sublet {
     static let mock = Self(
-        id: 0,
+        subletID: 0,
         data: .init(
             amenities: ["Private bathroom"],
             title: "Lauder",
@@ -246,7 +245,7 @@ public extension Sublet {
     static let mocks = [
         mock,
         Self(
-            id: 1,
+            subletID: 1,
             data: .init(
                 amenities: ["Balcony"],
                 title: "Rittenhouse Square Studio",
@@ -264,7 +263,7 @@ public extension Sublet {
             images: [SubletImage(id: 1, imageUrl: "https://images.unsplash.com/photo-1560184897-ae75f418493e?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXBhcnRtZW50fGVufDB8fDB8fHw%3D")]
         ),
         Self(
-            id: 2,
+            subletID: 2,
             data: .init(
                 amenities: ["Gym Access", "Pool Access"],
                 title: "Modern 2BR in Center City",
@@ -282,7 +281,7 @@ public extension Sublet {
             images: [SubletImage(id: 2, imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXBhcnRtZW50fGVufDB8fDB8fHw%3D")]
         ),
         Self(
-            id: 3,
+            subletID: 3,
             data: .init(
                 amenities: ["Rooftop Access"],
                 title: "Cozy Loft Near University City",

@@ -94,11 +94,11 @@ class SublettingViewModel: ObservableObject {
             await self.populateSublets()
             await withTaskGroup(of: Void.self) { group in
                 group.addTask { await self.populateAmenities() }
-                group.addTask { await self.populateListings() }
                 group.addTask { await self.populateFavorites() }
                 group.addTask { await self.populateApplied() }
                 group.addTask { await self.populateFiltered() }
             }
+            await self.populateListings()
         }
     }
     
@@ -113,7 +113,7 @@ class SublettingViewModel: ObservableObject {
     func populateListings() async {
         do {
             let listingsArr = try await SublettingAPI.instance.getSublets(queryParameters: ["subletter": "true"])
-            listingsIDs = listingsArr.map { $0.id }
+            listingsIDs = listingsArr.map { $0.subletID }
             if let updatedListings = try? await SublettingAPI.instance.getSubletDetails(sublets: listingsArr, withOffers: true) {
                 updatedListings.forEach { updateSublet(sublet: $0) }
             }
@@ -125,7 +125,7 @@ class SublettingViewModel: ObservableObject {
     func populateApplied() async {
         do {
             let appliedArr = try await SublettingAPI.instance.getAppliedSublets()
-            appliedIDs = appliedArr.map { $0.id }
+            appliedIDs = appliedArr.map { $0.subletID }
             if let updatedApplied = try? await SublettingAPI.instance.getSubletDetails(sublets: appliedArr, withOffers: false) {
                 updatedApplied.forEach { updateSublet(sublet: $0) }
             }
@@ -137,7 +137,7 @@ class SublettingViewModel: ObservableObject {
     func populateFavorites() async {
         do {
             let savedArr = try await SublettingAPI.instance.getFavorites()
-            savedIDs = savedArr.map { $0.id }
+            savedIDs = savedArr.map { $0.subletID }
             if let updatedSaved = try? await SublettingAPI.instance.getSubletDetails(sublets: savedArr, withOffers: false) {
                 updatedSaved.forEach { updateSublet(sublet: $0) }
             }
@@ -149,7 +149,7 @@ class SublettingViewModel: ObservableObject {
     func populateSublets() async {
         do {
             let subletsArr = try await SublettingAPI.instance.getSublets()
-            subletsArr.forEach { sublets[$0.id] = $0 }
+            subletsArr.forEach { sublets[$0.subletID] = $0 }
         } catch {
             print("Error populating sublets: \(error)")
         }
@@ -188,7 +188,7 @@ class SublettingViewModel: ObservableObject {
         
         do {
             let subletsArr = try await SublettingAPI.instance.getSublets(queryParameters: queryParameters)
-            filteredIDs = subletsArr.map { $0.id }
+            filteredIDs = subletsArr.map { $0.subletID }
         } catch {
             print("Error populating sublets: \(error)")
         }
@@ -199,8 +199,8 @@ class SublettingViewModel: ObservableObject {
             return false
         }
         do {
-            try await SublettingAPI.instance.favoriteSublet(id: sublet.id)
-            savedIDs.append(sublet.id)
+            try await SublettingAPI.instance.favoriteSublet(id: sublet.subletID)
+            savedIDs.append(sublet.subletID)
             return true
         } catch {
             print("Error favoriting sublets: \(error)")
@@ -213,8 +213,8 @@ class SublettingViewModel: ObservableObject {
             return false
         }
         do {
-            try await SublettingAPI.instance.unfavoriteSublet(id: sublet.id)
-            savedIDs.removeAll { $0 == sublet.id }
+            try await SublettingAPI.instance.unfavoriteSublet(id: sublet.subletID)
+            savedIDs.removeAll { $0 == sublet.subletID }
             return true
         } catch {
             print("Error unfavoriting sublets: \(error)")
@@ -223,13 +223,13 @@ class SublettingViewModel: ObservableObject {
     }
     
     func isFavorited(sublet: Sublet) -> Bool {
-        return savedIDs.contains(sublet.id)
+        return savedIDs.contains(sublet.subletID)
     }
     
     private let subletUpdateQueue = DispatchQueue(label: "subletUpdateQueue")
     func updateSublet(sublet: Sublet) {
         subletUpdateQueue.sync {
-            sublets[sublet.id] = sublet
+            sublets[sublet.subletID] = sublet
         }
     }
     

@@ -10,7 +10,7 @@ import SwiftUI
 import MapKit
 
 struct AddressMapView: View {
-    var address: String
+    var address: String?
     @State private var region: MKCoordinateRegion = PennCoordinate.shared.getDefaultRegion(at: .far)
     @State private var location: CLLocationCoordinate2D?
 
@@ -19,12 +19,14 @@ struct AddressMapView: View {
             MapMarker(coordinate: location)
         }
         .onAppear {
-            let geocoder = CLGeocoder()
-            let regionHint = CLCircularRegion(center: region.center, radius: 5000, identifier: "regionHint")
-            geocoder.geocodeAddressString(address, in: regionHint) { (placemarks, _) in
-                if let placemark = placemarks?.first, let location = placemark.location {
-                    self.region.center = location.coordinate
-                    self.location = location.coordinate
+            if address != nil {
+                let geocoder = CLGeocoder()
+                let regionHint = CLCircularRegion(center: region.center, radius: 5000, identifier: "regionHint")
+                geocoder.geocodeAddressString(address!, in: regionHint) { (placemarks, _) in
+                    if let placemark = placemarks?.first, let location = placemark.location {
+                        self.region.center = location.coordinate
+                        self.location = location.coordinate
+                    }
                 }
             }
         }

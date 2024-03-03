@@ -16,7 +16,7 @@ struct SubletInterestForm: View {
     @Environment(\.dismiss) var dismiss
     @State var offerData = SubletOfferData()
     @State var phoneNumberInt: Int?
-    var sublet: Sublet
+    let sublet: Sublet
     
     var body: some View {
         ScrollView {
@@ -40,8 +40,8 @@ struct SubletInterestForm: View {
                         
                         Task {
                             do {
-                                let offer = try await SublettingAPI.instance.makeOffer(offerData: offerData, id: sublet.id)
-                                print("Made offer with id \(offer.id) for sublet \(sublet.id)")
+                                let offer = try await SublettingAPI.instance.makeOffer(offerData: offerData, id: sublet.subletID)
+                                print("Made offer with id \(offer.id) for sublet \(sublet.subletID)")
                                 
                                 popupManager.set(
                                     title: "Your Message Has Been Sent!",

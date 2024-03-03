@@ -10,7 +10,7 @@ import PennMobileShared
 import SwiftUI
 
 struct MyListingsActivity: View {
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
     private var isListings: Bool
     @State private var selectedTab: SublettingViewModel.ListingsTabs
@@ -40,17 +40,14 @@ struct MyListingsActivity: View {
                 // Posted tab
                 ScrollView {
                     VStack {
-                        NavigationLink {
-                            NewListingForm()
-                        } label: {
+                        NavigationLink(value: SublettingPage.newListingForm) {
                             AddSubletView()
                                 .padding(.horizontal)
                         }
                         .buttonStyle(.plain)
-                        ForEach(sublettingViewModel.listings, id: \.identity) { sublet in
-                            NavigationLink {
-                                SubletDetailView(sublet: sublet)
-                            } label: {
+                        
+                        ForEach(sublettingViewModel.listings) { sublet in
+                            NavigationLink(value: SublettingPage.subletDetailView(sublet.subletID)) {
                                 SubletDisplayRow(sublet: sublet)
                                     .padding(.horizontal)
                             }
@@ -63,17 +60,14 @@ struct MyListingsActivity: View {
                 // Drafts tab
                 ScrollView {
                     VStack {
-                        NavigationLink {
-                            NewListingForm()
-                        } label: {
+                        NavigationLink(value: SublettingPage.newListingForm) {
                             AddSubletView()
                                 .padding(.horizontal)
                         }
                         .buttonStyle(.plain)
-                        ForEach(sublettingViewModel.drafts, id: \.identity) { sublet in
-                            NavigationLink {
-                                // TODO: fill out
-                            } label: {
+                        
+                        ForEach(sublettingViewModel.drafts) { sublet in
+                            NavigationLink(value: SublettingPage.editSubletView) {
                                 SubletDisplayRow(sublet: sublet)
                                     .padding(.horizontal)
                             }
@@ -87,10 +81,8 @@ struct MyListingsActivity: View {
                 ScrollView {
                     if sublettingViewModel.saved.count > 0 {
                         VStack {
-                            ForEach(sublettingViewModel.saved, id: \.identity) { sublet in
-                                NavigationLink {
-                                    SubletDetailView(sublet: sublet)
-                                } label: {
+                            ForEach(sublettingViewModel.saved) { sublet in
+                                NavigationLink(value: SublettingPage.subletDetailView(sublet.subletID)) {
                                     SubletDisplayRow(sublet: sublet)
                                         .padding(.horizontal)
                                 }
@@ -109,10 +101,8 @@ struct MyListingsActivity: View {
                 ScrollView {
                     if sublettingViewModel.applied.count > 0 {
                         VStack {
-                            ForEach(sublettingViewModel.applied, id: \.identity) { sublet in
-                                NavigationLink {
-                                    SubletDetailView(sublet: sublet)
-                                } label: {
+                            ForEach(sublettingViewModel.applied) { sublet in
+                                NavigationLink(value: SublettingPage.subletDetailView(sublet.subletID)) {
                                     SubletDisplayRow(sublet: sublet)
                                         .padding(.horizontal)
                                 }
@@ -133,7 +123,7 @@ struct MyListingsActivity: View {
         .toolbar {
             if isListings {
                 ToolbarItem {
-                    NavigationLink(destination: NewListingForm()) {
+                    NavigationLink(value: SublettingPage.newListingForm) {
                         Image(systemName: "plus")
                     }
                     .accessibilityLabel(Text("New Listing"))
@@ -141,7 +131,7 @@ struct MyListingsActivity: View {
             }
         }
         .alert(isPresented: $showLoginAlert) {
-            Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { dismiss() }))
+            Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { navigationManager.path.removeLast() }))
         }
     }
 }

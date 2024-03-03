@@ -11,20 +11,23 @@ import Kingfisher
 import PennMobileShared
 
 struct SubletDetailView: View {
-    @State var showExternalLink = false
-    @State var sublet: Sublet
-    @State var selectedTab = "Details"
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
-    private var isSaved: Bool {
+    var subletID: Int?
+    var sublet: Sublet {
+        subletID != nil ? (sublettingViewModel.sublets[subletID!] ?? Sublet.mock) : Sublet.mock
+    }
+    @State var selectedTab = "Details"
+    @State var showExternalLink = false
+    var isSaved: Bool {
         sublettingViewModel.isFavorited(sublet: sublet)
     }
     var isSubletter: Bool {
         Account.getAccount()?.pennid == sublet.subletter
     }
-    private var isClaimed: Bool = false // TODO: add claimed later
+    var isClaimed: Bool = false // TODO: add claimed later
     
-    public init(sublet: Sublet) {
-        self._sublet = State(initialValue: sublet)
+    public init(subletID: Int? = nil) {
+        self.subletID = subletID
     }
     
     var body: some View {
@@ -41,7 +44,7 @@ struct SubletDetailView: View {
                         .padding(.horizontal)
                         
                         TabView(selection: $selectedTab) {
-                            SubletDetailOnly(sublet: sublet, isSubletter: isSubletter)
+                            SubletDetailOnly(sublet: sublet)
                                 .tag("Details")
                             
                             SubletCandidatesView(sublet: sublet)
@@ -51,7 +54,7 @@ struct SubletDetailView: View {
                         .frame(minHeight: proxy.size.height)
                     }
                 } else {
-                    SubletDetailOnly(sublet: sublet, isSubletter: isSubletter)
+                    SubletDetailOnly(sublet: sublet)
                 }
             }
         }
@@ -60,43 +63,12 @@ struct SubletDetailView: View {
         .toolbar {
             if selectedTab == "Details" {
                 ToolbarItem(placement: .topBarTrailing) {
-                    HStack {
-                        if !isSubletter && Account.isLoggedIn {
-                            NavigationLink {
-                                SubletInterestForm(sublet: sublet)
-                            } label: {
-                                Image(systemName: "ellipsis.message")
-                            }
-                            .buttonStyle(.plain)
-                            
-                            Button(action: {
-                                Task {
-                                    if isSaved {
-                                        await sublettingViewModel.unfavoriteSublet(sublet: sublet)
-                                    } else {
-                                        await sublettingViewModel.favoriteSublet(sublet: sublet)
-                                    }
-                                }
-                            }) {
-                                Image(systemName: isSaved ? "heart.fill" : "heart")
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        if sublet.data.externalLink != nil {
-                            Button(action: {
-                                showExternalLink = true
-                            }) {
-                                Image(systemName: "link")
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
+                    SubletDetailToolbar(sublet: sublet, showExternalLink: $showExternalLink)
                 }
             }
         }
         .task {
-            if let sublet = try? await SublettingAPI.instance.getSubletDetails(id: sublet.id, withOffers: isSubletter) {
-                self.sublet = sublet
+            if let sublet = try? await SublettingAPI.instance.getSubletDetails(id: sublet.subletID, withOffers: isSubletter) {
                 sublettingViewModel.updateSublet(sublet: sublet)
             }
         }
@@ -107,26 +79,21 @@ struct SubletDetailView: View {
 }
 
 struct SubletDetailOnly: View {
-    @State var showExternalLink = false
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
-    @State var sublet: Sublet
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
-    private var isSaved: Bool {
+    var sublet: Sublet
+    var isSaved: Bool {
         sublettingViewModel.isFavorited(sublet: sublet)
     }
-    let isSubletter: Bool
-    private var isClaimed: Bool = false // TODO: add claimed later
+    var isSubletter: Bool {
+        Account.getAccount()?.pennid == sublet.subletter
+    }
+    var isClaimed: Bool = false // TODO: add claimed later
     
     public init(sublet: Sublet) {
-        self._sublet = State(initialValue: sublet)
-        self.isSubletter = false
+        self.sublet = sublet
     }
-    
-    public init(sublet: Sublet, isSubletter: Bool) {
-        self._sublet = State(initialValue: sublet)
-        self.isSubletter = isSubletter
-    }
-
+        
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
@@ -179,54 +146,15 @@ struct SubletDetailOnly: View {
                     HStack {
                         Text(sublet.address!)
                             .font(.subheadline)
-                        NavigationLink {
-                            AddressMapView(address: sublet.address!)
-                                .navigationTitle(sublet.title)
-                                .toolbar {
-                                    ToolbarItem(placement: .topBarTrailing) {
-                                        HStack {
-                                            if !isSubletter && Account.isLoggedIn {
-                                                NavigationLink {
-                                                    SubletInterestForm(sublet: sublet)
-                                                } label: {
-                                                    Image(systemName: "ellipsis.message")
-                                                }
-                                                .buttonStyle(.plain)
-                                                
-                                                Button(action: {
-                                                    Task {
-                                                        if isSaved {
-                                                            await sublettingViewModel.unfavoriteSublet(sublet: sublet)
-                                                        } else {
-                                                            await sublettingViewModel.favoriteSublet(sublet: sublet)
-                                                        }
-                                                    }
-                                                }) {
-                                                    Image(systemName: isSaved ? "heart.fill" : "heart")
-                                                }
-                                                .buttonStyle(.plain)
-                                            }
-                                            if sublet.data.externalLink != nil {
-                                                Button(action: {
-                                                    showExternalLink = true
-                                                }) {
-                                                    Image(systemName: "link")
-                                                }
-                                                .buttonStyle(.plain)
-                                            }
-                                        }
-                                    }
-                                }
-                                .sheet(isPresented: $showExternalLink) {
-                                    WebView(url: URL(string: sublet.data.externalLink!)!)
-                                }
-                        } label: {
+                        
+                        NavigationLink(value: SublettingPage.subletMapView(sublet)) {
                             HStack(spacing: 4) {
                                 Image(systemName: "map")
                                 Text("view in map")
                             }
+                            .font(.caption)
                         }
-                        .font(.caption)
+                        
                         Spacer()
                     }
                 }
@@ -294,9 +222,7 @@ struct SubletDetailOnly: View {
                         }
                         .padding(.top, 10)
                         
-                        NavigationLink {
-                            SubletInterestForm(sublet: sublet)
-                        } label: {
+                        NavigationLink(value: SublettingPage.subletInterestForm(sublet)) {
                             HStack {
                                 Image(systemName: "ellipsis.message")
                                 Text("Interested")
@@ -373,6 +299,50 @@ struct SubletDetailOnly: View {
     }
 }
 
+struct SubletDetailToolbar: View {
+    @EnvironmentObject var sublettingViewModel: SublettingViewModel
+    let sublet: Sublet
+    @Binding var showExternalLink: Bool
+    var isSaved: Bool {
+        sublettingViewModel.isFavorited(sublet: sublet)
+    }
+    var isSubletter: Bool {
+        Account.getAccount()?.pennid == sublet.subletter
+    }
+    
+    var body: some View {
+        HStack {
+            if !isSubletter && Account.isLoggedIn {
+                NavigationLink(value: SublettingPage.subletInterestForm(sublet)) {
+                    Image(systemName: "ellipsis.message")
+                }
+                .buttonStyle(.plain)
+                
+                Button(action: {
+                    Task {
+                        if isSaved {
+                            await sublettingViewModel.unfavoriteSublet(sublet: sublet)
+                        } else {
+                            await sublettingViewModel.favoriteSublet(sublet: sublet)
+                        }
+                    }
+                }) {
+                    Image(systemName: isSaved ? "heart.fill" : "heart")
+                }
+                .buttonStyle(.plain)
+            }
+            if sublet.data.externalLink != nil {
+                Button(action: {
+                    showExternalLink = true
+                }) {
+                    Image(systemName: "link")
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+}
+
 #Preview {
-    SubletDetailView(sublet: Sublet.mock)
+    SubletDetailView()
 }
