@@ -280,9 +280,22 @@ struct SubletDetailOnly: View {
                                 Image(systemName: "checkmark.seal")
                                 Text(amenity)
                                     .font(.subheadline)
+                                Spacer()
                             }
                         }
                     }
+                }
+                .padding(.horizontal)
+            }
+            
+            if let expiresAt = sublet.expiresAt {
+                Divider()
+                VStack(alignment: .leading) {
+                    Text("Listing Expires on")
+                        .font(.subheadline)
+                        .bold()
+                    Text("\(formatDate(expiresAt))")
+                        .font(.subheadline)
                 }
                 .padding(.horizontal)
             }

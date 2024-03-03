@@ -79,8 +79,12 @@ struct NewListingForm: View {
                         Task {
                             do {
                                 let sublet = try await SublettingAPI.instance.createSublet(subletData: data)
+                                sublettingViewModel.addListing(sublet: sublet)
                                 do {
                                     try await SublettingAPI.instance.uploadSubletImages(images: imageData, id: sublet.subletID)
+                                    
+                                    let updatedSublet = try await SublettingAPI.instance.getSubletDetails(id: sublet.subletID, withOffers: true)
+                                    sublettingViewModel.updateSublet(sublet: updatedSublet)
                                 } catch let error {
                                     print("Error uploading sublet images: \(error)")
                                 }

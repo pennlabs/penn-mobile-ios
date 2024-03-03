@@ -19,7 +19,6 @@ class NavigationManager: ObservableObject {
 }
 
 struct MainTabView: View {
-    @StateObject private var sublettingViewModel = SublettingViewModel()
     @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
     @StateObject private var navigationManager = NavigationManager()
     
@@ -37,7 +36,6 @@ struct MainTabView: View {
                 NavigationStack(path: $navigationManager.path) {
                     feature.content
                 }
-                .environmentObject(sublettingViewModel)
                 .environmentObject(navigationManager)
                 .id(identifier)
                 .tabItem {
@@ -54,7 +52,6 @@ struct MainTabView: View {
             NavigationStack(path: $navigationManager.path) {
                 MoreView(features: features.filter { !tabBarFeatures.contains($0.id) })
             }
-            .environmentObject(sublettingViewModel)
             .environmentObject(navigationManager)
             .tabItem {
                 Label("More", image: "More_Grey")

@@ -233,6 +233,21 @@ class SublettingViewModel: ObservableObject {
         }
     }
     
+    func addListing(sublet: Sublet) {
+        updateSublet(sublet: sublet)
+        listingsIDs.append(sublet.subletID)
+    }
+    
+    func deleteListing(sublet: Sublet) {
+        listingsIDs.removeAll { $0 == sublet.subletID }
+        sublets[sublet.subletID] = nil
+    }
+    
+    func addApplied(sublet: Sublet) {
+        updateSublet(sublet: sublet)
+        appliedIDs.append(sublet.subletID)
+    }
+    
     private func sortSubletsByField(sublets: [Sublet], sortOption: String) -> [Sublet] {
         switch sortOption {
         case "Name":

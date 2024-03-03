@@ -11,6 +11,7 @@ import PennForms
 import PennMobileShared
 
 struct SubletInterestForm: View {
+    @EnvironmentObject var sublettingViewModel: SublettingViewModel
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var popupManager: PopupManager
     @Environment(\.dismiss) var dismiss
@@ -41,6 +42,9 @@ struct SubletInterestForm: View {
                         Task {
                             do {
                                 let offer = try await SublettingAPI.instance.makeOffer(offerData: offerData, id: sublet.subletID)
+                                var updatedSublet = sublet
+                                updatedSublet.offers = (updatedSublet.offers ?? []) + [offer]
+                                sublettingViewModel.addApplied(sublet: updatedSublet)
                                 print("Made offer with id \(offer.id) for sublet \(sublet.subletID)")
                                 
                                 popupManager.set(

@@ -10,7 +10,6 @@ import SwiftUI
 import PennMobileShared
 
 enum SublettingPage: Hashable, Identifiable {
-    case marketplaceView
     case myListings
     case myActivity
     case subletDetailView(Int)
@@ -24,7 +23,7 @@ enum SublettingPage: Hashable, Identifiable {
 
 struct MarketplaceView: View {
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
-    @EnvironmentObject var sublettingViewModel: SublettingViewModel
+    @StateObject private var sublettingViewModel = SublettingViewModel()
     @State private var showingFilters = false
     
     var body: some View {
@@ -94,20 +93,24 @@ struct MarketplaceView: View {
         }
         .navigationDestination(for: SublettingPage.self) { page in
             switch page {
-            case .marketplaceView:
-                MarketplaceView()
             case .myListings:
                 MyListingsActivity(isListings: true)
+                    .environmentObject(sublettingViewModel)
             case .myActivity:
                 MyListingsActivity(isListings: false)
+                    .environmentObject(sublettingViewModel)
             case .subletDetailView(let subletID):
                 SubletDetailView(subletID: subletID) // uses ID since needs to update when VM updates sublet while on the page
+                    .environmentObject(sublettingViewModel)
             case .subletInterestForm(let sublet):
                 SubletInterestForm(sublet: sublet)
+                    .environmentObject(sublettingViewModel)
             case .subletMapView(let sublet):
                 SubletMapView(sublet: sublet)
+                    .environmentObject(sublettingViewModel)
             case .newListingForm:
                 NewListingForm()
+                    .environmentObject(sublettingViewModel)
             case .editSubletView:
                 Text("TODO") // TODO: Finish editing
             }
