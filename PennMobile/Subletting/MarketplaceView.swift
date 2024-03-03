@@ -56,16 +56,22 @@ struct MarketplaceView: View {
             }
             .background(Color.uiBackground)
             ScrollView {
-                LazyVGrid(columns: columns) {
-                    ForEach(sublettingViewModel.sortedFilteredSublets, id: \.identity) { sublet in
-                        NavigationLink {
-                            SubletDetailView(sublet: sublet)
-                        } label: {
-                            SubletDisplayBox(sublet: sublet)
+                if sublettingViewModel.sortedFilteredSublets.count > 0 {
+                    LazyVGrid(columns: columns) {
+                        ForEach(sublettingViewModel.sortedFilteredSublets, id: \.identity) { sublet in
+                            NavigationLink {
+                                SubletDetailView(sublet: sublet)
+                            } label: {
+                                SubletDisplayBox(sublet: sublet)
+                            }
+                            .buttonStyle(.plain)
+                            .padding(5)
                         }
-                        .buttonStyle(.plain)
-                        .padding(5)
                     }
+                } else {
+                    Text("No sublets found!")
+                        .foregroundStyle(.tertiary)
+                        .font(.subheadline)
                 }
             }
         }

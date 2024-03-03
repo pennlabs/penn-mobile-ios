@@ -107,6 +107,7 @@ struct SubletDetailView: View {
 }
 
 struct SubletDetailOnly: View {
+    @State var showExternalLink = false
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @State var sublet: Sublet
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
@@ -180,6 +181,45 @@ struct SubletDetailOnly: View {
                             .font(.subheadline)
                         NavigationLink {
                             AddressMapView(address: sublet.address!)
+                                .navigationTitle(sublet.title)
+                                .toolbar {
+                                    ToolbarItem(placement: .topBarTrailing) {
+                                        HStack {
+                                            if !isSubletter && Account.isLoggedIn {
+                                                NavigationLink {
+                                                    SubletInterestForm(sublet: sublet)
+                                                } label: {
+                                                    Image(systemName: "ellipsis.message")
+                                                }
+                                                .buttonStyle(.plain)
+                                                
+                                                Button(action: {
+                                                    Task {
+                                                        if isSaved {
+                                                            await sublettingViewModel.unfavoriteSublet(sublet: sublet)
+                                                        } else {
+                                                            await sublettingViewModel.favoriteSublet(sublet: sublet)
+                                                        }
+                                                    }
+                                                }) {
+                                                    Image(systemName: isSaved ? "heart.fill" : "heart")
+                                                }
+                                                .buttonStyle(.plain)
+                                            }
+                                            if sublet.data.externalLink != nil {
+                                                Button(action: {
+                                                    showExternalLink = true
+                                                }) {
+                                                    Image(systemName: "link")
+                                                }
+                                                .buttonStyle(.plain)
+                                            }
+                                        }
+                                    }
+                                }
+                                .sheet(isPresented: $showExternalLink) {
+                                    WebView(url: URL(string: sublet.data.externalLink!)!)
+                                }
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "map")

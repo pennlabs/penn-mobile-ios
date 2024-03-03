@@ -40,12 +40,13 @@ struct MyListingsActivity: View {
                 // Posted tab
                 ScrollView {
                     VStack {
-                        NavigationLink(destination: NewListingForm()) {
+                        NavigationLink {
+                            NewListingForm()
+                        } label: {
                             AddSubletView()
                                 .padding(.horizontal)
                         }
                         .buttonStyle(.plain)
-                        .accessibilityLabel(Text("New Listing"))
                         ForEach(sublettingViewModel.listings, id: \.identity) { sublet in
                             NavigationLink {
                                 SubletDetailView(sublet: sublet)
@@ -62,12 +63,13 @@ struct MyListingsActivity: View {
                 // Drafts tab
                 ScrollView {
                     VStack {
-                        NavigationLink(destination: NewListingForm()) {
+                        NavigationLink {
+                            NewListingForm()
+                        } label: {
                             AddSubletView()
                                 .padding(.horizontal)
                         }
                         .buttonStyle(.plain)
-                        .accessibilityLabel(Text("New Listing"))
                         ForEach(sublettingViewModel.drafts, id: \.identity) { sublet in
                             NavigationLink {
                                 // TODO: fill out
@@ -83,33 +85,45 @@ struct MyListingsActivity: View {
                 
                 // Saved tab
                 ScrollView {
-                    VStack {
-                        ForEach(sublettingViewModel.saved, id: \.identity) { sublet in
-                            NavigationLink {
-                                SubletDetailView(sublet: sublet)
-                            } label: {
-                                SubletDisplayRow(sublet: sublet)
-                                    .padding(.horizontal)
+                    if sublettingViewModel.saved.count > 0 {
+                        VStack {
+                            ForEach(sublettingViewModel.saved, id: \.identity) { sublet in
+                                NavigationLink {
+                                    SubletDetailView(sublet: sublet)
+                                } label: {
+                                    SubletDisplayRow(sublet: sublet)
+                                        .padding(.horizontal)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
+                    } else {
+                        Text("No saved sublets!")
+                            .foregroundStyle(.tertiary)
+                            .font(.subheadline)
                     }
                 }
                 .tag(SublettingViewModel.ListingsTabs.saved)
                 
                 // Applied tab
                 ScrollView {
-                    VStack {
-                        ForEach(sublettingViewModel.applied, id: \.identity) { sublet in
-                            NavigationLink {
-                                SubletDetailView(sublet: sublet)
-                            } label: {
-                                SubletDisplayRow(sublet: sublet)
-                                    .padding(.horizontal)
+                    if sublettingViewModel.applied.count > 0 {
+                        VStack {
+                            ForEach(sublettingViewModel.applied, id: \.identity) { sublet in
+                                NavigationLink {
+                                    SubletDetailView(sublet: sublet)
+                                } label: {
+                                    SubletDisplayRow(sublet: sublet)
+                                        .padding(.horizontal)
+                                }
+                                .buttonStyle(.plain)
                             }
-                            .buttonStyle(.plain)
                         }
-                    }
+                    } else {
+                       Text("No applied sublets!")
+                           .foregroundStyle(.tertiary)
+                           .font(.subheadline)
+                   }
                 }
                 .tag(SublettingViewModel.ListingsTabs.applied)
             }
