@@ -37,14 +37,6 @@ struct SubletDisplayRow: View {
             
             VStack(alignment: .leading) {
                 HStack {
-                    Circle()
-                        .foregroundColor(.green)
-                        .frame(width: 10, height: 10)
-                    Text("OPEN")
-                        .fontWeight(.medium)
-                }
-                
-                HStack {
                     Text(sublet.title)
                         .font(.headline)
                         .lineLimit(1)

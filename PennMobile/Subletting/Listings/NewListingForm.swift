@@ -97,6 +97,7 @@ struct NewListingForm: View {
                                 sublettingViewModel.addListing(sublet: sublet)
                                 do {
                                     sublet.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet.subletID)
+                                    sublet.lastUpdated = Date()
                                     sublettingViewModel.updateSublet(sublet: sublet)
                                 } catch let error {
                                     print("Error uploading sublet images: \(error)")
@@ -113,6 +114,7 @@ struct NewListingForm: View {
                                 )
                                 popupManager.show()
                             } catch let error {
+                                print("Couldn't create sublet: \(error)")
                                 popupManager.set(
                                     image: Image(systemName: "exclamationmark.2"),
                                     title: "Uh oh!",
@@ -120,7 +122,6 @@ struct NewListingForm: View {
                                     button1: "Close"
                                 )
                                 popupManager.show()
-                                print("Couldn't create sublet: \(error)")
                             }
                         }
                     }) {

@@ -22,7 +22,7 @@ public struct Sublet: Identifiable, Decodable, Hashable {
     public var images: [SubletImage]
     
     // These are for updating the UI properly since the data can be updated without the id being updated
-    public let lastUpdated: Date
+    public var lastUpdated: Date
     public var id: String {
         "\(subletID)-\(lastUpdated.timeIntervalSinceReferenceDate)"
     }
