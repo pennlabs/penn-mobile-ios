@@ -12,24 +12,39 @@ import PennMobileShared
 import OrderedCollections
 
 struct NewListingForm: View {
+    @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
     @EnvironmentObject var popupManager: PopupManager
-    @Environment(\.dismiss) var dismiss
     @State var subletData = SubletData()
     @State var negotiable: Bool?
     @State var price: Int?
     @State var startDate: Date?
     @State var endDate: Date?
     @State var selectedAmenities = OrderedSet<String>()
-    @State var images: [Image] = []
-    @State var imageData: [Data] = []
+    @State var images: [UIImage] = []
+    
+    init() {
+        self.subletData = SubletData()
+        self.selectedAmenities = OrderedSet<String>()
+        self.images = []
+    }
+    
+//    init(sublet: Sublet) {
+//        self.subletData = sublet.data
+//        self.negotiable = sublet.negotiable
+//        self.price = sublet.price
+//        self.startDate = sublet.startDate.date
+//        self.endDate = sublet.endDate.date
+//        self.selectedAmenities = OrderedSet(sublet.amenities)
+//        self.images = [] //sublet.images.forEach(<#T##body: (SubletImage) throws -> Void##(SubletImage) throws -> Void#>)
+//    }
     
     var body: some View {
         ScrollView {
             LabsForm { formState in
                 TextLineField($subletData.title, title: "Listing Name")
                 
-                ImagePicker($images, imageData: $imageData, maxSelectionCount: 6)
+                ImagePicker($images, maxSelectionCount: 6)
                 
                 PairFields {
                     NumericField($price, format: .currency(code: "USD").presentation(.narrow), title: "Price/month")
@@ -65,7 +80,7 @@ struct NewListingForm: View {
                         guard let negotiable, let price, let startDate, let endDate else {
                             return
                         }
-                        if imageData.count == 0 {
+                        if images.count == 0 {
                             return
                         }
                         
@@ -78,13 +93,11 @@ struct NewListingForm: View {
                         
                         Task {
                             do {
-                                let sublet = try await SublettingAPI.instance.createSublet(subletData: data)
+                                var sublet = try await SublettingAPI.instance.createSublet(subletData: data)
                                 sublettingViewModel.addListing(sublet: sublet)
                                 do {
-                                    try await SublettingAPI.instance.uploadSubletImages(images: imageData, id: sublet.subletID)
-                                    
-                                    let updatedSublet = try await SublettingAPI.instance.getSubletDetails(id: sublet.subletID, withOffers: true)
-                                    sublettingViewModel.updateSublet(sublet: updatedSublet)
+                                    sublet.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet.subletID)
+                                    sublettingViewModel.updateSublet(sublet: sublet)
                                 } catch let error {
                                     print("Error uploading sublet images: \(error)")
                                 }
@@ -95,7 +108,7 @@ struct NewListingForm: View {
                                     message: "Your listing is now on the marketplace. You'll be notified when candidates are interested in subletting!",
                                     button1: "See My Listings",
                                     action1: {
-                                        dismiss()
+                                        navigationManager.path.removeLast()
                                     }
                                 )
                                 popupManager.show()

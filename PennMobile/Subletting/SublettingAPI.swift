@@ -233,8 +233,8 @@ public class SublettingAPI {
             return sublets
         }
     }
-    
-    public func uploadSubletImage(image: Data, id: Int) async throws {
+        
+    public func uploadSubletImages(images: [UIImage], id: Int) async throws -> [SubletImage] {
         guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
             throw NetworkingError.authenticationError
         }
@@ -244,9 +244,12 @@ public class SublettingAPI {
         }
         
         let boundary = MultipartBody.generateBoundary()
-        let imagePart = MultipartContent(type: "image/jpeg", name: "image", data: image)
         let idPart = try MultipartContent(name: "sublet", content: "\(id)")
-        let multipartBody = try MultipartBody(boundary: boundary, content: [imagePart, idPart])
+        let imagesPart = images.enumerated().compactMap { index, image -> MultipartContent? in
+            guard let imageData = image.jpegData(compressionQuality: 0.8) else { return nil }
+            return MultipartContent(type: "image/jpeg", name: "images", filename: "image\(index).jpeg", data: imageData)
+        }
+        let multipartBody = try MultipartBody(boundary: boundary, content: [idPart] + imagesPart)
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -255,24 +258,32 @@ public class SublettingAPI {
         request.setValue(multipartBody.contentType, forHTTPHeaderField: "Content-Type")
         request.httpBody = try multipartBody.assembleData()
         
-        let (_, response) = try await URLSession.shared.upload(for: request, from: request.httpBody!)
+        let (data, response) = try await URLSession.shared.data(for: request)
         
+        if let errorResponse = try? Self.decoder.decode(GenericErrorResponse.self, from: data),
+           let error = NetworkingError(rawValue: errorResponse.detail) {
+            throw error
+        }
+            
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 200, httpResponse.statusCode <= 299 else {
-            let tmp = (response as? HTTPURLResponse)!
-            print(tmp.statusCode)
             throw NetworkingError.serverError
         }
+        
+        return try Self.decoder.decode([SubletImage].self, from: data)
     }
     
-    public func uploadSubletImages(images: [Data], id: Int) async throws {
-        await withTaskGroup(of: Void.self) { group in
+    public func deleteSubletImage(imageID: Int) async throws {
+        _ = try await makeSubletRequest("\(sublettingUrl)images/\(imageID)/", method: "DELETE")
+    }
+    
+    public func deleteSubletImages(images: [SubletImage]) async throws {
+        return await withTaskGroup(of: Void.self) { group in
             for image in images {
                 group.addTask {
-                    try? await self.uploadSubletImage(image: image, id: id)
+                    try? await self.deleteSubletImage(imageID: image.id)
                 }
             }
-            for await _ in group {
-            }
+            for await _ in group {}
         }
     }
 }

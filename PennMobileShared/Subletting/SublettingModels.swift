@@ -19,7 +19,7 @@ public struct Sublet: Identifiable, Decodable, Hashable {
     public let data: SubletData
     public let subletter: Int
     public var offers: [SubletOffer]?
-    public let images: [SubletImage]
+    public var images: [SubletImage]
     
     // These are for updating the UI properly since the data can be updated without the id being updated
     public let lastUpdated: Date

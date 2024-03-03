@@ -113,36 +113,34 @@ public struct MultipartBody {
     
     public func assembleData() throws -> Data {
         var data = Data()
-        let boundary = try String("--\(boundary)\r\n").data(using: .utf8).unwrap(orThrow: MultipartError.stringEncodingError)
-        let crlf = try String("\r\n").data(using: .utf8).unwrap(orThrow: MultipartError.stringEncodingError)
+        let crlf = "\r\n"
         
         for part in content {
-            data.append(boundary)
+            data.append("--\(boundary)\(crlf)")
             
-            if part.type.contains("\r\n") {
+            if part.type.contains(crlf) {
                 throw MultipartError.invalidContentType
             }
             
-            if part.name.contains("\r\n") {
+            if part.name.contains(crlf) {
                 throw MultipartError.invalidName
             }
             
-            if let filename = part.filename, filename.contains("\r\n") {
+            if let filename = part.filename, filename.contains(crlf) {
                 throw MultipartError.invalidFilename
             }
             
-            var headers = "Content-Type: \(part.type)\r\nContent-Disposition: form-data; name=\(Self.escape(string: part.name))"
+            var headers = "Content-Type: \(part.type)\(crlf)Content-Disposition: form-data; name=\(Self.escape(string: part.name))"
             if let filename = part.filename {
                 headers += "; filename=\(Self.escape(string: filename))"
             }
-            headers += "\r\n\r\n"
-            try data.append(headers.data(using: .utf8).unwrap(orThrow: MultipartError.stringEncodingError))
-            
+            headers += "\(crlf)\(crlf)"
+            data.append(headers)
             data.append(part.data)
             data.append(crlf)
         }
         
-        try data.append("--\(boundary)--\r\n".data(using: .utf8).unwrap(orThrow: MultipartError.stringEncodingError))
+        data.append("--\(boundary)--\(crlf)")
         return data
     }
 }
