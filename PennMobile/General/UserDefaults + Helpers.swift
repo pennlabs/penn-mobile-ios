@@ -636,12 +636,12 @@ extension UserDefaults {
 
 // MARK: - Subletting
 extension UserDefaults {
-    func setSubletDrafts(_ drafts: [Sublet]) {
+    func setSubletDrafts(_ drafts: [SubletDraft]) {
         UserDefaults.standard.set(drafts, forKey: UserDefaultsKeys.subletDrafts.rawValue)
     }
 
-    func getSubletDrafts() -> [Sublet] {
-        return UserDefaults.standard.value(forKey: UserDefaultsKeys.subletDrafts.rawValue) as? [Sublet] ?? []
+    func getSubletDrafts() -> [SubletDraft] {
+        return UserDefaults.standard.value(forKey: UserDefaultsKeys.subletDrafts.rawValue) as? [SubletDraft] ?? []
     }
     
     func setSubletFilterData(_ data: MarketplaceFilterData) {

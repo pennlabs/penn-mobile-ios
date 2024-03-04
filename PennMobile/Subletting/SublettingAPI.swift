@@ -107,8 +107,12 @@ public class SublettingAPI {
         _ = try await makeSubletRequest("\(sublettingUrl)\(id)/", method: "DELETE")
     }
 
-    public func patchSublet(id: Int, data: SubletData) async throws {
-        _ = try await makeSubletRequest("\(sublettingUrl)\(id)/", method: "PATCH", isContentJSON: true, content: data)
+    public func patchSublet(id: Int, data: SubletData) async throws -> Sublet {
+        if let result = try await makeSubletRequest("\(sublettingUrl)\(id)/", method: "PATCH", isContentJSON: true, content: data, returnType: Sublet.self) {
+            return result
+        } else {
+            throw NetworkingError.serverError
+        }
     }
 
     public func getSublets(queryParameters: [String: String]? = nil) async throws -> [Sublet] {

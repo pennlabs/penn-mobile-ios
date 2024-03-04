@@ -3326,7 +3326,7 @@
 			repositoryURL = "https://github.com/pennlabs/PennForms";
 			requirement = {
 				kind = revision;
-				revision = 7a0fca74767f74c1cfb2c103018e42dd25f9a6ca;
+				revision = f18f30f711340b15faf63ddb96b9e546432ef4b7;
 			};
 		};
 		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {

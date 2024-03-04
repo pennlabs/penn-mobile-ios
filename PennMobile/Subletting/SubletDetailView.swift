@@ -114,7 +114,7 @@ struct SubletDetailOnly: View {
                     if isSubletter {
                         Spacer()
                         
-                        Button(action: {}) {
+                        NavigationLink(value: SublettingPage.editSubletForm(sublet)) {
                             HStack(spacing: 4) {
                                 Image(systemName: "pencil.line")
                                 Text("Edit")

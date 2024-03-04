@@ -71,7 +71,7 @@ class SublettingViewModel: ObservableObject {
     var applied: [Sublet] {
         appliedIDs.compactMap { sublets[$0] }
     }
-    @Published var drafts: [Sublet] {
+    @Published var drafts: [SubletDraft] {
         didSet {
             UserDefaults.standard.setSubletDrafts(drafts)
         }

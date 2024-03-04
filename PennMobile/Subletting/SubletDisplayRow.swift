@@ -12,6 +12,7 @@ import PennMobileShared
 
 struct SubletDisplayRow: View {
     let sublet: Sublet
+    let images: [UIImage]?
     let isApplied: Bool
     var isSubletter: Bool {
         Account.getAccount()?.pennid == sublet.subletter
@@ -20,20 +21,45 @@ struct SubletDisplayRow: View {
     
     public init(sublet: Sublet, isApplied: Bool = false) {
         self.sublet = sublet
+        self.images = nil
         self.isApplied = isApplied
+    }
+    
+    public init(subletDraft: SubletDraft) {
+        var sublet = Sublet.mock
+        sublet.data = subletDraft.data
+        sublet.subletter = -1
+        self.sublet = sublet
+        self.images = subletDraft.images
+        self.isApplied = false
     }
     
     public var body: some View {
         HStack {
-            KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
-                .placeholder {
+            if let images {
+                if images.count > 0 {
+                    Image(uiImage: images[0])
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(10)
+                        .frame(maxHeight: 120)
+                } else {
                     Color.gray
-                        .aspectRatio(contentMode: .fill)
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(10)
+                        .frame(maxHeight: 120)
                 }
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .cornerRadius(10)
-                .frame(maxHeight: 120)
+            } else {
+                KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
+                    .placeholder {
+                        Color.gray
+                            .aspectRatio(contentMode: .fill)
+                    }
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(10)
+                    .frame(maxHeight: 120)
+            }
             
             VStack(alignment: .leading) {
                 HStack {

@@ -15,6 +15,8 @@ struct NewListingForm: View {
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
     @EnvironmentObject var popupManager: PopupManager
+    var isNew: Bool = true
+    var originalSublet: Sublet?
     @State var subletData = SubletData()
     @State var negotiable: Bool?
     @State var price: Int?
@@ -22,30 +24,48 @@ struct NewListingForm: View {
     @State var endDate: Date?
     @State var selectedAmenities = OrderedSet<String>()
     @State var images: [UIImage] = []
+    @State var existingImages: [String] = []
     @State var progress: Double?
     
     init() {
-        self.subletData = SubletData()
-        self.selectedAmenities = OrderedSet<String>()
-        self.images = []
+        self.isNew = true
+        self._subletData = State(initialValue: SubletData())
+        self._selectedAmenities = State(initialValue: OrderedSet<String>())
+        self._images = State(initialValue: [])
+        self._existingImages = State(initialValue: [])
     }
     
-//    init(sublet: Sublet) {
-//        self.subletData = sublet.data
-//        self.negotiable = sublet.negotiable
-//        self.price = sublet.price
-//        self.startDate = sublet.startDate.date
-//        self.endDate = sublet.endDate.date
-//        self.selectedAmenities = OrderedSet(sublet.amenities)
-//        self.images = [] //sublet.images.forEach(body: (SubletImage) throws -> Void##(SubletImage) throws -> Void)
-//    }
+    init(subletDraft: SubletDraft) {
+        self.isNew = true
+        self._subletData = State(initialValue: subletDraft.data)
+        self._negotiable = State(initialValue: subletDraft.negotiable)
+        self._price = State(initialValue: subletDraft.price)
+        self._startDate = State(initialValue: subletDraft.startDate.date)
+        self._endDate = State(initialValue: subletDraft.endDate.date)
+        self._selectedAmenities = State(initialValue: OrderedSet(subletDraft.amenities))
+        self._images = State(initialValue: subletDraft.images)
+        self._existingImages = State(initialValue: [])
+    }
+    
+    init(sublet: Sublet) {
+        self.isNew = false
+        self.originalSublet = sublet
+        self._subletData = State(initialValue: sublet.data)
+        self._negotiable = State(initialValue: sublet.negotiable)
+        self._price = State(initialValue: sublet.price)
+        self._startDate = State(initialValue: sublet.startDate.date)
+        self._endDate = State(initialValue: sublet.endDate.date)
+        self._selectedAmenities = State(initialValue: OrderedSet(sublet.amenities))
+        self._images = State(initialValue: [])
+        self._existingImages = State(initialValue: sublet.images.map { $0.imageUrl })
+    }
     
     var body: some View {
         ScrollView {
             LabsForm { formState in
                 TextLineField($subletData.title, title: "Listing Name")
                 
-                ImagePicker($images, maxSelectionCount: 6)
+                ImagePicker($images, existingImages: $existingImages, maxSelectionCount: 6)
                 
                 PairFields {
                     NumericField($price, format: .currency(code: "USD").presentation(.narrow), title: "Price/month")
@@ -77,73 +97,126 @@ struct NewListingForm: View {
                 TextAreaField($subletData.description, characterCount: 300, title: "Description (optional)")
                 
                 ComponentWrapper {
-                    Button(action: {
-                        guard let negotiable, let price, let startDate, let endDate else {
-                            return
+                    HStack {
+                        Button(action: {
+                            // TODO: finish
+                        }) {
+                            Text(isNew ? "Save Draft": "Cancel")
+                                .font(.title3)
+                                .bold()
+                                .foregroundColor(.primary)
+                                .padding(.vertical, 10)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.uiCardBackground)
+                                )
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color.primary, lineWidth: 2)
+                                )
                         }
-                        if images.count == 0 {
-                            return
-                        }
-                        
-                        var data = subletData
-                        data.price = price
-                        data.negotiable = negotiable
-                        data.startDate = Day(date: startDate)
-                        data.endDate = Day(date: endDate)
-                        data.amenities = Array(selectedAmenities)
-                        
-                        Task {
-                            do {
-                                var sublet = try await SublettingAPI.instance.createSublet(subletData: data)
-                                sublettingViewModel.addListing(sublet: sublet)
-                                do {
-                                    popupManager.disableBackground = true
-                                    sublet.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet.subletID) { progress in
-                                        self.progress = progress
+                        .padding(.top, 30)
+                        Button(action: {
+                            guard let negotiable, let price, let startDate, let endDate else {
+                                return
+                            }
+                            if images.count + existingImages.count == 0 {
+                                return
+                            }
+                            
+                            var data = subletData
+                            data.price = price
+                            data.negotiable = negotiable
+                            data.startDate = Day(date: startDate)
+                            data.endDate = Day(date: endDate)
+                            data.amenities = Array(selectedAmenities)
+                            
+                            Task {
+                                var sublet = originalSublet
+
+                                // Remove old images
+                                if !isNew && sublet != nil {
+                                    let imagesToDelete = sublet!.images.filter { image in
+                                        !existingImages.contains(image.imageUrl)
                                     }
-                                    sublet.lastUpdated = Date()
-                                    sublettingViewModel.updateSublet(sublet: sublet)
-                                } catch let error {
-                                    print("Error uploading sublet images: \(error)")
+
+                                    if !imagesToDelete.isEmpty {
+                                        do {
+                                            try await SublettingAPI.instance.deleteSubletImages(images: imagesToDelete)
+                                            sublet!.images = sublet!.images.filter { image in
+                                                existingImages.contains(image.imageUrl)
+                                            }
+                                            sublet!.lastUpdated = Date()
+                                            sublettingViewModel.updateSublet(sublet: sublet!)
+                                        } catch let error {
+                                            print("Error deleting sublet images: \(error)")
+                                        }
+                                    }
                                 }
-                                print("Created sublet with id \(sublet.subletID)!")
-                                self.progress = nil
-                                popupManager.disableBackground = false
                                 
+                                // Upload new data (except images)
+                                do {
+                                    if isNew {
+                                        sublet = try await SublettingAPI.instance.createSublet(subletData: data)
+                                        sublettingViewModel.addListing(sublet: sublet!)
+                                    } else if sublet != nil {
+                                        sublet = try await SublettingAPI.instance.patchSublet(id: sublet!.subletID, data: data)
+                                        sublettingViewModel.updateSublet(sublet: sublet!)
+                                    }
+                                } catch let error {
+                                    print("Couldn't \(isNew ? "create" : "update") sublet: \(error)")
+                                    popupManager.set(
+                                        image: Image(systemName: "exclamationmark.2"),
+                                        title: "Uh oh!",
+                                        message: "Failed to \(isNew ? "create" : "update") the sublet.",
+                                        button1: "Close"
+                                    )
+                                    popupManager.show()
+                                    return
+                                }
+                                
+                                // Upload new images
+                                if sublet != nil {
+                                    do {
+                                        popupManager.disableBackground = true
+                                        sublet!.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet!.subletID) { progress in
+                                            self.progress = progress
+                                        }
+                                        sublet!.lastUpdated = Date()
+                                        sublettingViewModel.updateSublet(sublet: sublet!)
+                                    } catch let error {
+                                        print("Error uploading sublet images: \(error)")
+                                    }
+                                    self.progress = nil
+                                    popupManager.disableBackground = false
+                                }
+                                    
                                 popupManager.set(
-                                    title: "Listing Posted!",
-                                    message: "Your listing is now on the marketplace. You'll be notified when candidates are interested in subletting!",
+                                    title: "Listing \(isNew ? "Posted" : "Updated")!",
+                                    message: "\(isNew ? "Your listing is now on the marketplace. " : "")You'll be notified when candidates are interested in subletting!",
                                     button1: "See My Listings",
                                     action1: {
                                         navigationManager.path.removeLast()
                                     }
                                 )
                                 popupManager.show()
-                            } catch let error {
-                                print("Couldn't create sublet: \(error)")
-                                popupManager.set(
-                                    image: Image(systemName: "exclamationmark.2"),
-                                    title: "Uh oh!",
-                                    message: "Failed to create the sublet.",
-                                    button1: "Close"
-                                )
-                                popupManager.show()
                             }
+                        }) {
+                            Text(isNew ? "Post" : "Save")
+                                .font(.title3)
+                                .bold()
+                                .foregroundColor(Color.white)
+                                .padding(.vertical, 10)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .background(
+                                    Capsule()
+                                        .fill(formState.isValid ? Color.baseLabsBlue : .gray)
+                                )
                         }
-                    }) {
-                        Text("Post")
-                            .font(.title3)
-                            .bold()
-                            .foregroundColor(Color.white)
-                            .padding(.vertical, 10)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .background(
-                                Capsule()
-                                    .fill(formState.isValid ? Color.baseLabsBlue : .gray)
-                            )
+                        .padding(.top, 30)
+                        .disabled(!formState.isValid)
                     }
-                    .padding(.top, 30)
-                    .disabled(!formState.isValid)
                 }
             }
         }

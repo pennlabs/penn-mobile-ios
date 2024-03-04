@@ -16,7 +16,8 @@ enum SublettingPage: Hashable, Identifiable {
     case subletInterestForm(Sublet)
     case subletMapView(Sublet)
     case newListingForm
-    case editSubletView
+    case editSubletDraftForm(SubletDraft)
+    case editSubletForm(Sublet)
     
     var id: SublettingPage { self }
 }
@@ -111,8 +112,12 @@ struct MarketplaceView: View {
             case .newListingForm:
                 NewListingForm()
                     .environmentObject(sublettingViewModel)
-            case .editSubletView:
-                Text("TODO") // TODO: Finish editing
+            case .editSubletDraftForm(let subletDraft):
+                NewListingForm(subletDraft: subletDraft)
+                    .environmentObject(sublettingViewModel)
+            case .editSubletForm(let sublet):
+                NewListingForm(sublet: sublet)
+                    .environmentObject(sublettingViewModel)
             }
         }
     }

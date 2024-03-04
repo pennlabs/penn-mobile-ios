@@ -66,9 +66,9 @@ struct MyListingsActivity: View {
                         }
                         .buttonStyle(.plain)
                         
-                        ForEach(sublettingViewModel.drafts) { sublet in
-                            NavigationLink(value: SublettingPage.editSubletView) {
-                                SubletDisplayRow(sublet: sublet)
+                        ForEach(sublettingViewModel.drafts) { subletDraft in
+                            NavigationLink(value: SublettingPage.editSubletDraftForm(subletDraft)) {
+                                SubletDisplayRow(subletDraft: subletDraft)
                                     .padding(.horizontal)
                             }
                             .buttonStyle(.plain)

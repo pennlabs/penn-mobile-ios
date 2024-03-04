@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 /// A sublet listing.
 /// 
@@ -16,8 +17,8 @@ import Foundation
 @dynamicMemberLookup
 public struct Sublet: Identifiable, Decodable, Hashable {
     public let subletID: Int
-    public let data: SubletData
-    public let subletter: Int
+    public var data: SubletData
+    public var subletter: Int
     public var offers: [SubletOffer]?
     public var images: [SubletImage]
     
@@ -63,6 +64,55 @@ public struct Sublet: Identifiable, Decodable, Hashable {
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(subletID)
+    }
+}
+
+@dynamicMemberLookup
+public struct SubletDraft: Identifiable, Codable, Hashable {
+    public let id: UUID
+    public var data: SubletData
+    public var images: [UIImage]
+
+    public subscript<T>(dynamicMember keyPath: KeyPath<SubletData, T>) -> T {
+        data[keyPath: keyPath]
+    }
+
+    public init(id: UUID = UUID(), data: SubletData, images: [UIImage]) {
+        self.id = id
+        self.data = data
+        self.images = images
+    }
+
+    public init(from decoder: Decoder) throws {
+        let data = try SubletData(from: decoder)
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let id = try container.decode(UUID.self, forKey: .id)
+        let imageData = try container.decode([Data].self, forKey: .images)
+        let images = imageData.compactMap { UIImage(data: $0) }
+        
+        self.init(id: id, data: data, images: images)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try data.encode(to: encoder)
+        let imageData = images.compactMap { $0.pngData() }
+        try container.encode(imageData, forKey: .images)
+    }
+
+    public enum CodingKeys: String, CodingKey {
+        case id
+        case images
+    }
+    
+    public static func ==(lhs: SubletDraft, rhs: SubletDraft) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
