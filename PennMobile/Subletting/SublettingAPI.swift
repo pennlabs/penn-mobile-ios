@@ -233,8 +233,8 @@ public class SublettingAPI {
             return sublets
         }
     }
-        
-    public func uploadSubletImages(images: [UIImage], id: Int) async throws -> [SubletImage] {
+    
+    public func uploadSubletImages(images: [UIImage], id: Int, progressHandler: @escaping (Double) -> Void) async throws -> [SubletImage] {
         guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
             throw NetworkingError.authenticationError
         }
@@ -258,18 +258,50 @@ public class SublettingAPI {
         request.setValue(multipartBody.contentType, forHTTPHeaderField: "Content-Type")
         request.httpBody = try multipartBody.assembleData()
         
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        if let errorResponse = try? Self.decoder.decode(GenericErrorResponse.self, from: data),
-           let error = NetworkingError(rawValue: errorResponse.detail) {
-            throw error
-        }
+        return try await withCheckedThrowingContinuation { continuation in
+            var observation: NSKeyValueObservation?
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                defer {
+                    observation?.invalidate()
+                }
+                
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let data = data else {
+                    continuation.resume(throwing: NetworkingError.parsingError)
+                    return
+                }
+                
+                if let errorResponse = try? Self.decoder.decode(GenericErrorResponse.self, from: data),
+                   let error = NetworkingError(rawValue: errorResponse.detail) {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 200, httpResponse.statusCode <= 299 else {
+                    continuation.resume(throwing: NetworkingError.serverError)
+                    return
+                }
+                
+                do {
+                    let images = try Self.decoder.decode([SubletImage].self, from: data)
+                    continuation.resume(returning: images)
+                } catch {
+                    continuation.resume(throwing: error)
+                }
+            }
             
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 200, httpResponse.statusCode <= 299 else {
-            throw NetworkingError.serverError
+            observation = task.progress.observe(\Progress.fractionCompleted) { progress, _ in
+                DispatchQueue.main.async {
+                    progressHandler(progress.fractionCompleted)
+                }
+            }
+            
+            task.resume()
         }
-        
-        return try Self.decoder.decode([SubletImage].self, from: data)
     }
     
     public func deleteSubletImage(imageID: Int) async throws {

@@ -12,6 +12,7 @@ import PennMobileShared
 // Global state for the popup
 class PopupManager: ObservableObject {
     @Published var isShown: Bool = false
+    @Published var disableBackground: Bool = false
     @Published var image: Image = Image(systemName: "star")
     @Published var title: String = ""
     @Published var message: String = ""
@@ -19,7 +20,6 @@ class PopupManager: ObservableObject {
     @Published var button2: String?
     @Published var action1: (() -> Void)?
     @Published var action2: (() -> Void)?
-    // Add more properties as needed for buttons and actions
     
     public init() {
         isShown = false
@@ -110,6 +110,7 @@ struct CustomPopupView: View {
             .cornerRadius(12)
             .shadow(color: Color.black.opacity(0.15), radius: 20, x: 0, y: 3)
         }
+        .edgesIgnoringSafeArea(.all)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }

@@ -22,6 +22,7 @@ struct NewListingForm: View {
     @State var endDate: Date?
     @State var selectedAmenities = OrderedSet<String>()
     @State var images: [UIImage] = []
+    @State var progress: Double?
     
     init() {
         self.subletData = SubletData()
@@ -36,7 +37,7 @@ struct NewListingForm: View {
 //        self.startDate = sublet.startDate.date
 //        self.endDate = sublet.endDate.date
 //        self.selectedAmenities = OrderedSet(sublet.amenities)
-//        self.images = [] //sublet.images.forEach(<#T##body: (SubletImage) throws -> Void##(SubletImage) throws -> Void#>)
+//        self.images = [] //sublet.images.forEach(body: (SubletImage) throws -> Void##(SubletImage) throws -> Void)
 //    }
     
     var body: some View {
@@ -96,13 +97,18 @@ struct NewListingForm: View {
                                 var sublet = try await SublettingAPI.instance.createSublet(subletData: data)
                                 sublettingViewModel.addListing(sublet: sublet)
                                 do {
-                                    sublet.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet.subletID)
+                                    popupManager.disableBackground = true
+                                    sublet.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet.subletID) { progress in
+                                        self.progress = progress // TODO: fix not updating
+                                    }
                                     sublet.lastUpdated = Date()
                                     sublettingViewModel.updateSublet(sublet: sublet)
                                 } catch let error {
                                     print("Error uploading sublet images: \(error)")
                                 }
                                 print("Created sublet with id \(sublet.subletID)!")
+                                self.progress = nil
+                                popupManager.disableBackground = false // TODO: FIX - can still click nav buttons
                                 
                                 popupManager.set(
                                     title: "Listing Posted!",
@@ -142,6 +148,43 @@ struct NewListingForm: View {
             }
         }
         .navigationTitle("New Listing")
+        .overlay {
+            if let progress = progress {
+                UploadingOverlay(progress: progress, title: "Uploading...", message: "Your listing is being uploaded to the marketplace. Please wait a moment.")
+            }
+        }
+    }
+}
+
+struct UploadingOverlay: View {
+    @State var progress: Double
+    let title: String
+    let message: String
+    
+    var body: some View {
+        ZStack {
+            Color.black
+                .opacity(0.2)
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 18) {
+                MeterView(current: progress, maximum: 100.0, style: Color.blue, lineWidth: 5)
+                    .frame(width: 100, height: 100)
+                Text(title)
+                    .font(.headline)
+                Text(message)
+                    .font(.subheadline)
+                    .multilineTextAlignment(.leading)
+            }
+            .frame(maxWidth: 280)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 32)
+            .background(Color("uiCardBackground"))
+            .cornerRadius(12)
+            .shadow(color: Color.black.opacity(0.15), radius: 20, x: 0, y: 3)
+        }
+        .edgesIgnoringSafeArea(.all)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }
 

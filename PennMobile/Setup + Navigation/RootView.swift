@@ -47,10 +47,17 @@ struct RootView: View {
             }
         }
         .overlay {
-            if popupManager.isShown {
-                CustomPopupView(popupManager: popupManager)
-                    .transition(AnyTransition.opacity.combined(with: .scale(scale: 1.05)))
-                    .animation(.easeInOut(duration: 0.3), value: popupManager.isShown)
+            ZStack {
+                if popupManager.disableBackground {
+                    Color.clear
+                        .edgesIgnoringSafeArea(.all)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                }
+                if popupManager.isShown {
+                    CustomPopupView(popupManager: popupManager)
+                        .transition(AnyTransition.opacity.combined(with: .scale(scale: 1.05)))
+                        .animation(.easeInOut(duration: 0.3), value: popupManager.isShown)
+                }
             }
         }
         .environmentObject(popupManager)
