@@ -108,7 +108,7 @@ struct NewListingForm: View {
                                 }
                                 print("Created sublet with id \(sublet.subletID)!")
                                 self.progress = nil
-                                popupManager.disableBackground = false // TODO: FIX - can still click nav buttons
+                                popupManager.disableBackground = false
                                 
                                 popupManager.set(
                                     title: "Listing Posted!",

@@ -49,7 +49,8 @@ struct RootView: View {
         .overlay {
             ZStack {
                 if popupManager.disableBackground {
-                    Color.clear
+                    Color.white
+                        .opacity(0)
                         .edgesIgnoringSafeArea(.all)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }
