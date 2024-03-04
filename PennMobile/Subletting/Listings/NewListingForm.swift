@@ -99,7 +99,7 @@ struct NewListingForm: View {
                                 do {
                                     popupManager.disableBackground = true
                                     sublet.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet.subletID) { progress in
-                                        self.progress = progress // TODO: fix not updating
+                                        self.progress = progress
                                     }
                                     sublet.lastUpdated = Date()
                                     sublettingViewModel.updateSublet(sublet: sublet)
@@ -157,7 +157,7 @@ struct NewListingForm: View {
 }
 
 struct UploadingOverlay: View {
-    @State var progress: Double
+    let progress: Double
     let title: String
     let message: String
     
@@ -168,7 +168,7 @@ struct UploadingOverlay: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 18) {
-                MeterView(current: progress, maximum: 100.0, style: Color.blue, lineWidth: 5)
+                MeterView(current: progress, maximum: 1.0, style: Color.blue, lineWidth: 5)
                     .frame(width: 100, height: 100)
                 Text(title)
                     .font(.headline)
