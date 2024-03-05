@@ -96,14 +96,19 @@ struct SubletDetailOnly: View {
         
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
-                .placeholder {
-                    Color.gray
+            TabView {
+                ForEach(sublet.images) { image in
+                    KFImage(URL(string: image.imageUrl))
+                        .placeholder {
+                            Color.gray
+                                .aspectRatio(contentMode: .fit)
+                        }
+                        .resizable()
                         .aspectRatio(contentMode: .fit)
+                        .cornerRadius(10)
                 }
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .cornerRadius(10)
+            }
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             
             VStack(alignment: .leading) {
                 HStack {

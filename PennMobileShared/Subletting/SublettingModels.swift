@@ -207,7 +207,7 @@ public extension SubletData {
     }
 }
 
-public struct SubletImage: Codable {
+public struct SubletImage: Identifiable, Codable, Hashable {
     public let id: Int
     public let imageUrl: String
 }
