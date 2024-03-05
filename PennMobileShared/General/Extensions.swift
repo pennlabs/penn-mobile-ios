@@ -727,7 +727,7 @@ public extension Data {
    }
 }
 
-/// This is used to get the current navigation path in a usable format. For example, if SomePage is a Codable enum
+/// This is used to get the current navigation path in a readable format. For example, if SomePage is a Codable enum
 /// that is the type of the values used in any NavigationLink, then calling asList(of: SomePage.self) will return
 /// the current NavigationPath as [SomePage] (but optional in case of failure)
 /// This is very jank, so if someone else knows a better way, PLEASE change this.
@@ -736,23 +736,6 @@ public extension NavigationPath {
         guard let representation = self.codable else { return nil }
         let encoder = JSONEncoder()
         return try? encoder.encode(representation)
-    }
-    
-    mutating func setPath(data: Data) {
-        let decoder = JSONDecoder()
-        let representation = try? decoder.decode(NavigationPath.CodableRepresentation.self, from: data)
-        guard let representation else { return }
-        self = NavigationPath(representation)
-    }
-    
-    mutating func setPath<R: Encodable>(from path: [R]) {
-        let encoder = JSONEncoder()
-        let pageArray: [String] = path.compactMap { page in
-            guard let data = try? encoder.encode(page) else { return nil }
-            return String(data: data, encoding: .utf8)
-        }
-        guard let data = try? encoder.encode(pageArray) else { return }
-        setPath(data: data)
     }
     
     func asList<R: Decodable>(of type: R.Type) -> [R]? {
@@ -764,11 +747,5 @@ public extension NavigationPath {
             return try? decoder.decode(type, from: data)
         }
         return output
-    }
-    
-    mutating func append<R: Codable>(_ page: R) {
-        guard var pages: [R] = self.asList(of: R.self) else { return }
-        pages.append(page)
-        self.setPath(from: pages)
     }
 }

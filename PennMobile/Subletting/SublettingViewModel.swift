@@ -51,11 +51,13 @@ class SublettingViewModel: ObservableObject {
         }
     }
     
-    enum ListingsTabs: CaseIterable {
-        case posted
-        case drafts
-        case saved
-        case applied
+    enum ListingsTabs: String, Hashable, Identifiable, Equatable, Codable {
+        case posted = "Posted"
+        case drafts = "Drafts"
+        case saved = "Saved"
+        case applied = "Applied"
+        
+        var id: ListingsTabs { self }
     }
     
     @Published private var listingsIDs: [Int]

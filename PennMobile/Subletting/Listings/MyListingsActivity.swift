@@ -9,16 +9,32 @@
 import PennMobileShared
 import SwiftUI
 
+extension SublettingViewModel.ListingsTabs {
+    var tabView: some View {
+        Text(self.rawValue).tag(self)
+    }
+}
+
 struct MyListingsActivity: View {
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
     private var isListings: Bool
+    private let initialTab: SublettingViewModel.ListingsTabs // I have no idea why I need to do this workaround with initialTab, but straight initializing the selectedTab to the proper value is not updating the UI (at least when arriving via modifying NavigationPath)
     @State private var selectedTab: SublettingViewModel.ListingsTabs
     @State private var showLoginAlert: Bool
     
-    public init(isListings: Bool = false) {
+    public init(isListings: Bool = false, initialTab: SublettingViewModel.ListingsTabs? = nil) {
         self.isListings = isListings
-        self._selectedTab = State(initialValue: isListings ? .posted : .saved)
+        var tab: SublettingViewModel.ListingsTabs = isListings ? .posted : .saved
+        if let initialTab {
+            if isListings && (initialTab == .posted || initialTab == .drafts) {
+                tab = initialTab
+            } else if !isListings && (initialTab == .saved || initialTab == .applied) {
+                tab = initialTab
+            }
+        }
+        self.initialTab = tab
+        self._selectedTab = State(initialValue: tab)
         self._showLoginAlert = State(initialValue: !Account.isLoggedIn)
     }
     
@@ -26,11 +42,11 @@ struct MyListingsActivity: View {
         VStack {
             Picker("Tab", selection: $selectedTab.animation()) {
                 if isListings {
-                    Text("Posted").tag(SublettingViewModel.ListingsTabs.posted)
-                    Text("Drafts").tag(SublettingViewModel.ListingsTabs.drafts)
+                    SublettingViewModel.ListingsTabs.posted.tabView
+                    SublettingViewModel.ListingsTabs.drafts.tabView
                 } else {
-                    Text("Saved").tag(SublettingViewModel.ListingsTabs.saved)
-                    Text("Applied").tag(SublettingViewModel.ListingsTabs.applied)
+                    SublettingViewModel.ListingsTabs.saved.tabView
+                    SublettingViewModel.ListingsTabs.applied.tabView
                 }
             }
             .pickerStyle(.segmented)
@@ -132,6 +148,9 @@ struct MyListingsActivity: View {
         }
         .alert(isPresented: $showLoginAlert) {
             Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { navigationManager.path.removeLast() }))
+        }
+        .onAppear {
+            selectedTab = initialTab
         }
     }
 }

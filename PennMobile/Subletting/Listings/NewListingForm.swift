@@ -127,8 +127,8 @@ struct NewListingForm: View {
                                     message: "Your draft has been saved. You can edit it further on the drafts tab.",
                                     button1: "See My Drafts",
                                     action1: {
-                                        // TODO: Make this actually navigate to correct spot
-                                        navigationManager.path.removeLast()
+                                        navigationManager.path.removeLast(2)
+                                        navigationManager.path.append(SublettingPage.myListings(.drafts))
                                     }
                                 )
                                 popupManager.show()
@@ -235,6 +235,7 @@ struct NewListingForm: View {
                                     message: "\(isNew ? "Your listing is now on the marketplace. " : "")You'll be notified when candidates are interested in subletting!",
                                     button1: "See My Listings",
                                     action1: {
+                                        // TODO: Nav to correct spot
                                         navigationManager.path.removeLast()
                                     }
                                 )
@@ -258,7 +259,56 @@ struct NewListingForm: View {
                 }
             }
         }
-        .navigationTitle("New Listing")
+        .navigationTitle(isNew ? "New Listing" : "Edit Listing")
+        .toolbar {
+            if draftID != nil || originalSublet != nil {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        popupManager.set(
+                            image: Image(systemName: "trash.fill"),
+                            title: "Delete \(isNew ? "Draft" : "Listing")?",
+                            message: "Are you sure you want to delete your \(isNew ? "draft" : "listing")?",
+                            button1: "Confirm",
+                            action1: {
+                                Task {
+                                    if isNew, let draftID {
+                                        sublettingViewModel.drafts.removeAll(where: { $0.id == draftID })
+                                    } else if let originalSublet {
+                                        do {
+                                            try await SublettingAPI.instance.deleteSublet(id: originalSublet.subletID)
+                                            sublettingViewModel.deleteListing(sublet: originalSublet)
+                                        } catch {
+                                            popupManager.set(
+                                                image: Image(systemName: "exclamationmark.2"),
+                                                title: "Uh oh!",
+                                                message: "Failed to delete listing.",
+                                                button1: "Close"
+                                            )
+                                            return
+                                        }
+                                    }
+                                    popupManager.set(
+                                        title: "\(isNew ? "Draft" : "Listing") Deleted!",
+                                        message: "Your \(isNew ? "draft" : "listing") has been deleted.",
+                                        button1: "See My \(isNew ? "Drafts" : "Listings")",
+                                        action1: {
+                                            navigationManager.path.removeLast(2)
+                                            navigationManager.path.append(SublettingPage.myListings(isNew ? .drafts : .posted))
+                                        }
+                                    )
+                                }
+                            },
+                            button2: "Cancel",
+                            action2: { popupManager.hide() },
+                            autoHide: false
+                        )
+                        popupManager.show()
+                    }) {
+                        Text("Delete")
+                    }
+                }
+            }
+        }
         .overlay {
             if let progress = progress {
                 UploadingOverlay(progress: progress, title: "Uploading...", message: "Your listing is being uploaded to the marketplace. Please wait a moment.")

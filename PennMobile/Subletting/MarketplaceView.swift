@@ -11,8 +11,8 @@ import PennMobileShared
 
 // Codable since used in NavigationPath()
 enum SublettingPage: Hashable, Identifiable, Equatable, Codable {
-    case myListings
-    case myActivity
+    case myListings(SublettingViewModel.ListingsTabs? = .posted)
+    case myActivity(SublettingViewModel.ListingsTabs? = .saved)
     case subletDetailView(Int)
     case subletInterestForm(Sublet)
     case subletMapView(Sublet)
@@ -28,10 +28,10 @@ enum SublettingPage: Hashable, Identifiable, Equatable, Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        if let _ = try? container.decodeNil(forKey: .myListings) {
-            self = .myListings
-        } else if let _ = try? container.decodeNil(forKey: .myActivity) {
-            self = .myActivity
+        if let tab = try? container.decode(SublettingViewModel.ListingsTabs.self, forKey: .myListings) {
+            self = .myListings(tab)
+        } else if let tab = try? container.decode(SublettingViewModel.ListingsTabs.self, forKey: .myActivity) {
+            self = .myActivity(tab)
         } else if let id = try? container.decode(Int.self, forKey: .subletDetailView) {
             self = .subletDetailView(id)
         } else if let sublet = try? container.decode(Sublet.self, forKey: .subletInterestForm) {
@@ -52,10 +52,10 @@ enum SublettingPage: Hashable, Identifiable, Equatable, Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .myListings:
-            try container.encodeNil(forKey: .myListings)
-        case .myActivity:
-            try container.encodeNil(forKey: .myActivity)
+        case .myListings(let tab):
+            try container.encode(tab, forKey: .myListings)
+        case .myActivity(let tab):
+            try container.encode(tab, forKey: .myActivity)
         case .subletDetailView(let id):
             try container.encode(id, forKey: .subletDetailView)
         case .subletInterestForm(let sublet):
@@ -81,7 +81,7 @@ struct MarketplaceView: View {
         VStack {
             VStack {
                 HStack {
-                    NavigationLink(value: SublettingPage.myActivity) {
+                    NavigationLink(value: SublettingPage.myActivity()) {
                         Image(systemName: "bookmark")
                     }
                     .buttonStyle(.plain)
@@ -137,18 +137,18 @@ struct MarketplaceView: View {
         .padding(.horizontal)
         .toolbar {
             ToolbarItem {
-                NavigationLink(value: SublettingPage.myListings) {
+                NavigationLink(value: SublettingPage.myListings()) {
                     Text("My Listings")
                 }
             }
         }
         .navigationDestination(for: SublettingPage.self) { page in
             switch page {
-            case .myListings:
-                MyListingsActivity(isListings: true)
+            case .myListings(let tab):
+                MyListingsActivity(isListings: true, initialTab: tab)
                     .environmentObject(sublettingViewModel)
-            case .myActivity:
-                MyListingsActivity(isListings: false)
+            case .myActivity(let tab):
+                MyListingsActivity(isListings: false, initialTab: tab)
                     .environmentObject(sublettingViewModel)
             case .subletDetailView(let subletID):
                 SubletDetailView(subletID: subletID) // uses ID since needs to update when VM updates sublet while on the page

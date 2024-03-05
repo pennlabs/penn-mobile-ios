@@ -53,11 +53,12 @@ struct SubletInterestForm: View {
                                     message: "The renter will reach out to you if interested.",
                                     button1: "See Applied",
                                     action1: {
-                                        // TODO: Make this actually navigate to Applied
+                                        // TODO: Nav to correct spot
                                         dismiss()
                                     },
                                     button2: "Keep Browsing",
                                     action2: {
+                                        // TODO: Nav to correct spot
                                         dismiss()
                                     }
                                 )
