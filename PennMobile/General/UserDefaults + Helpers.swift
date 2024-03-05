@@ -637,11 +637,18 @@ extension UserDefaults {
 // MARK: - Subletting
 extension UserDefaults {
     func setSubletDrafts(_ drafts: [SubletDraft]) {
-        UserDefaults.standard.set(drafts, forKey: UserDefaultsKeys.subletDrafts.rawValue)
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(drafts) {
+            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.subletDrafts.rawValue)
+        }
     }
-
-    func getSubletDrafts() -> [SubletDraft] {
-        return UserDefaults.standard.value(forKey: UserDefaultsKeys.subletDrafts.rawValue) as? [SubletDraft] ?? []
+    
+    func getSubletDrafts() -> [SubletDraft]? {
+        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.subletDrafts.rawValue) {
+            let decoder = JSONDecoder()
+            return try? decoder.decode([SubletDraft].self, from: decodedData)
+        }
+        return nil
     }
     
     func setSubletFilterData(_ data: MarketplaceFilterData) {

@@ -16,6 +16,7 @@ struct NewListingForm: View {
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
     @EnvironmentObject var popupManager: PopupManager
     var isNew: Bool = true
+    var draftID: UUID?
     var originalSublet: Sublet?
     @State var subletData = SubletData()
     @State var negotiable: Bool?
@@ -37,6 +38,7 @@ struct NewListingForm: View {
     
     init(subletDraft: SubletDraft) {
         self.isNew = true
+        self.draftID = subletDraft.id
         self._subletData = State(initialValue: subletDraft.data)
         self._negotiable = State(initialValue: subletDraft.negotiable)
         self._price = State(initialValue: subletDraft.price)
@@ -99,7 +101,40 @@ struct NewListingForm: View {
                 ComponentWrapper {
                     HStack {
                         Button(action: {
-                            // TODO: finish
+                            if isNew {
+                                var data = subletData
+                                if let price {
+                                    data.price = price
+                                }
+                                if let negotiable {
+                                    data.negotiable = negotiable
+                                }
+                                if let startDate {
+                                    data.startDate = Day(date: startDate)
+                                }
+                                if let endDate {
+                                    data.endDate = Day(date: endDate)
+                                }
+                                data.amenities = Array(selectedAmenities)
+                                
+                                if let draftID {
+                                    sublettingViewModel.drafts.removeAll(where: { $0.id == draftID })
+                                }
+                                sublettingViewModel.drafts.append(SubletDraft(data: data, images: images))
+                                
+                                popupManager.set(
+                                    title: "Draft Saved!",
+                                    message: "Your draft has been saved. You can edit it further on the drafts tab.",
+                                    button1: "See My Drafts",
+                                    action1: {
+                                        // TODO: Make this actually navigate to correct spot
+                                        navigationManager.path.removeLast()
+                                    }
+                                )
+                                popupManager.show()
+                            } else {
+                                navigationManager.path.removeLast()
+                            }
                         }) {
                             Text(isNew ? "Save Draft": "Cancel")
                                 .font(.title3)
@@ -160,6 +195,9 @@ struct NewListingForm: View {
                                     if isNew {
                                         sublet = try await SublettingAPI.instance.createSublet(subletData: data)
                                         sublettingViewModel.addListing(sublet: sublet!)
+                                        if let draftID {
+                                            sublettingViewModel.drafts.removeAll(where: { $0.id == draftID })
+                                        }
                                     } else if sublet != nil {
                                         sublet = try await SublettingAPI.instance.patchSublet(id: sublet!.subletID, data: data)
                                         sublettingViewModel.updateSublet(sublet: sublet!)

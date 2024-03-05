@@ -15,7 +15,7 @@ import SwiftUI
 /// `SubletData` contains the properties that are set by the user when creating a listing,
 /// and `Sublet` contains the remainder.
 @dynamicMemberLookup
-public struct Sublet: Identifiable, Decodable, Hashable {
+public struct Sublet: Identifiable, Codable, Hashable {
     public let subletID: Int
     public var data: SubletData
     public var subletter: Int
@@ -32,30 +32,43 @@ public struct Sublet: Identifiable, Decodable, Hashable {
         data[keyPath: keyPath]
     }
 
-    public init(subletID: Int, data: SubletData, subletter: Int, offers: [SubletOffer]? = nil, images: [SubletImage]) {
+    public init(subletID: Int, data: SubletData, subletter: Int, offers: [SubletOffer]? = nil, images: [SubletImage], lastUpdated: Date = Date()) {
         self.subletID = subletID
         self.data = data
         self.subletter = subletter
         self.offers = offers
         self.images = images
-        self.lastUpdated = Date()
+        self.lastUpdated = lastUpdated
     }
 
     public init(from decoder: Decoder) throws {
-        let data = try SubletData(from: decoder)
-        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let subletID = try container.decode(Int.self, forKey: .subletID)
+        let data = try SubletData(from: decoder)
         let subletter = try container.decode(Int.self, forKey: .subletter)
+        let offers = try container.decodeIfPresent([SubletOffer].self, forKey: .offers)
         let images = try container.decode([SubletImage].self, forKey: .images)
-        
-        self.init(subletID: subletID, data: data, subletter: subletter, images: images)
-    }
+        let lastUpdated = try container.decodeIfPresent(Date.self, forKey: .lastUpdated) ?? Date()
 
+        self.init(subletID: subletID, data: data, subletter: subletter, offers: offers, images: images, lastUpdated: lastUpdated)
+    }
+    
     public enum CodingKeys: String, CodingKey {
         case subletID = "id"
         case subletter
+        case offers
         case images
+        case lastUpdated
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(subletID, forKey: .subletID)
+        try data.encode(to: encoder)
+        try container.encode(subletter, forKey: .subletter)
+        try container.encodeIfPresent(offers, forKey: .offers)
+        try container.encode(images, forKey: .images)
+        try container.encode(lastUpdated, forKey: .lastUpdated)
     }
     
     public static func ==(lhs: Sublet, rhs: Sublet) -> Bool {
@@ -194,13 +207,13 @@ public extension SubletData {
     }
 }
 
-public struct SubletImage: Decodable {
+public struct SubletImage: Codable {
     public let id: Int
     public let imageUrl: String
 }
 
 @dynamicMemberLookup
-public struct SubletOffer: Identifiable, Decodable, Hashable {
+public struct SubletOffer: Identifiable, Codable, Hashable {
     public let id: Int
     public let createdDate: Date
     public let user: Int
@@ -236,6 +249,15 @@ public struct SubletOffer: Identifiable, Decodable, Hashable {
         case createdDate
         case user
         case sublet
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try data.encode(to: encoder)
+        try container.encode(createdDate, forKey: .createdDate)
+        try container.encode(user, forKey: .user)
+        try container.encode(sublet, forKey: .sublet)
     }
 
     public static func ==(lhs: SubletOffer, rhs: SubletOffer) -> Bool {

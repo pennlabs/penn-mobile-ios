@@ -80,7 +80,7 @@ class SublettingViewModel: ObservableObject {
     init() {
         self.amenities = UserDefaults.standard.getSubletAmenities() ?? OrderedSet<String>()
         self.filterData = UserDefaults.standard.getSubletFilterData() ?? MarketplaceFilterData()
-        self.drafts = UserDefaults.standard.getSubletDrafts()
+        self.drafts = UserDefaults.standard.getSubletDrafts() ?? []
         self.listingsIDs = []
         self.savedIDs = []
         self.appliedIDs = []

@@ -9,7 +9,8 @@
 import SwiftUI
 import PennMobileShared
 
-enum SublettingPage: Hashable, Identifiable {
+// Codable since used in NavigationPath()
+enum SublettingPage: Hashable, Identifiable, Equatable, Codable {
     case myListings
     case myActivity
     case subletDetailView(Int)
@@ -20,6 +21,55 @@ enum SublettingPage: Hashable, Identifiable {
     case editSubletForm(Sublet)
     
     var id: SublettingPage { self }
+    
+    enum CodingKeys: CodingKey {
+        case myListings, myActivity, subletDetailView, subletInterestForm, subletMapView, newListingForm, editSubletDraftForm, editSubletForm
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let _ = try? container.decodeNil(forKey: .myListings) {
+            self = .myListings
+        } else if let _ = try? container.decodeNil(forKey: .myActivity) {
+            self = .myActivity
+        } else if let id = try? container.decode(Int.self, forKey: .subletDetailView) {
+            self = .subletDetailView(id)
+        } else if let sublet = try? container.decode(Sublet.self, forKey: .subletInterestForm) {
+            self = .subletInterestForm(sublet)
+        } else if let sublet = try? container.decode(Sublet.self, forKey: .subletMapView) {
+            self = .subletMapView(sublet)
+        } else if let _ = try? container.decodeNil(forKey: .newListingForm) {
+            self = .newListingForm
+        } else if let subletDraft = try? container.decode(SubletDraft.self, forKey: .editSubletDraftForm) {
+            self = .editSubletDraftForm(subletDraft)
+        } else if let sublet = try? container.decode(Sublet.self, forKey: .editSubletForm) {
+            self = .editSubletForm(sublet)
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .myListings, in: container, debugDescription: "Unable to decode SublettingPage")
+        }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case .myListings:
+            try container.encodeNil(forKey: .myListings)
+        case .myActivity:
+            try container.encodeNil(forKey: .myActivity)
+        case .subletDetailView(let id):
+            try container.encode(id, forKey: .subletDetailView)
+        case .subletInterestForm(let sublet):
+            try container.encode(sublet, forKey: .subletInterestForm)
+        case .subletMapView(let sublet):
+            try container.encode(sublet, forKey: .subletMapView)
+        case .newListingForm:
+            try container.encodeNil(forKey: .newListingForm)
+        case .editSubletDraftForm(let subletDraft):
+            try container.encode(subletDraft, forKey: .editSubletDraftForm)
+        case .editSubletForm(let sublet):
+            try container.encode(sublet, forKey: .editSubletForm)
+        }
+    }
 }
 
 struct MarketplaceView: View {
