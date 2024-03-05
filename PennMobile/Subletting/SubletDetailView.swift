@@ -225,6 +225,7 @@ struct SubletDetailOnly: View {
                                     .stroke(Color.primary, lineWidth: 2)
                             )
                         }
+                        .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5), value: isSaved)
                         .padding(.top, 10)
                         
                         NavigationLink(value: SublettingPage.subletInterestForm(sublet)) {
@@ -348,6 +349,7 @@ struct SubletDetailToolbar: View {
                     Image(systemName: isSaved ? "heart.fill" : "heart")
                 }
                 .buttonStyle(.plain)
+                .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5), value: isSaved)
             }
             if sublet.data.externalLink != nil {
                 Button(action: {
