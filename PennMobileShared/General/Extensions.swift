@@ -748,4 +748,12 @@ public extension NavigationPath {
         }
         return output
     }
+    
+    func contains<R: Decodable & Equatable>(_ page: R) -> Bool {
+        return asList(of: R.self)?.contains(page) ?? false
+    }
+    
+    mutating func removeAll() {
+        self.removeLast(self.count)
+    }
 }

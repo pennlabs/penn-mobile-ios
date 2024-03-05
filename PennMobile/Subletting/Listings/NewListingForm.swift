@@ -219,7 +219,9 @@ struct NewListingForm: View {
                                     do {
                                         popupManager.disableBackground = true
                                         sublet!.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet!.subletID) { progress in
-                                            self.progress = progress
+                                            withAnimation {
+                                                self.progress = progress
+                                            }
                                         }
                                         sublet!.lastUpdated = Date()
                                         sublettingViewModel.updateSublet(sublet: sublet!)
@@ -235,7 +237,12 @@ struct NewListingForm: View {
                                     message: "\(isNew ? "Your listing is now on the marketplace. " : "")You'll be notified when candidates are interested in subletting!",
                                     button1: "\(isNew ? "See My Listings" : "See Sublet Details")",
                                     action1: {
-                                        navigationManager.path.removeLast()
+                                        if isNew {
+                                            navigationManager.path.removeLast(2)
+                                            navigationManager.path.append(SublettingPage.myListings(.posted))
+                                        } else {
+                                            navigationManager.path.removeLast(1)
+                                        }
                                     }
                                 )
                                 popupManager.show()
@@ -289,10 +296,12 @@ struct NewListingForm: View {
                                     popupManager.set(
                                         title: "\(isNew ? "Draft" : "Listing") Deleted!",
                                         message: "Your \(isNew ? "draft" : "listing") has been deleted.",
-                                        button1: "See My \(isNew ? "Drafts" : "Listings")",
+                                        button1: isNew ? "See My Drafts" : (navigationManager.path.contains(SublettingPage.myListings(.posted)) ? "See My Listings" : "See Marketplace"),
                                         action1: {
                                             navigationManager.path.removeLast(2)
-                                            navigationManager.path.append(SublettingPage.myListings(isNew ? .drafts : .posted))
+                                            if isNew {
+                                                navigationManager.path.append(SublettingPage.myListings(.drafts))
+                                            }
                                         }
                                     )
                                 }

@@ -14,7 +14,6 @@ struct SubletInterestForm: View {
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var popupManager: PopupManager
-    @Environment(\.dismiss) var dismiss
     @State var offerData = SubletOfferData()
     @State var phoneNumberInt: Int?
     let sublet: Sublet
@@ -53,13 +52,12 @@ struct SubletInterestForm: View {
                                     message: "The renter will reach out to you if interested.",
                                     button1: "See Applied",
                                     action1: {
-                                        // TODO: Nav to correct spot
-                                        dismiss()
+                                        navigationManager.path.removeAll()
+                                        navigationManager.path.append(SublettingPage.myActivity(.applied))
                                     },
                                     button2: "Keep Browsing",
                                     action2: {
-                                        // TODO: Nav to correct spot
-                                        dismiss()
+                                        navigationManager.path.removeLast()
                                     }
                                 )
                                 popupManager.show()
@@ -71,7 +69,7 @@ struct SubletInterestForm: View {
                                         message: "You have already made an offer for this sublet.",
                                         button1: "Close",
                                         action1: {
-                                            dismiss()
+                                            navigationManager.path.removeLast()
                                         }
                                     )
                                     popupManager.show()
