@@ -233,9 +233,8 @@ struct NewListingForm: View {
                                 popupManager.set(
                                     title: "Listing \(isNew ? "Posted" : "Updated")!",
                                     message: "\(isNew ? "Your listing is now on the marketplace. " : "")You'll be notified when candidates are interested in subletting!",
-                                    button1: "See My Listings",
+                                    button1: "\(isNew ? "See My Listings" : "See Sublet Details")",
                                     action1: {
-                                        // TODO: Nav to correct spot
                                         navigationManager.path.removeLast()
                                     }
                                 )

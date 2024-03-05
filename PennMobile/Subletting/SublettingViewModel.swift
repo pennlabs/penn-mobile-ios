@@ -18,12 +18,12 @@ struct MarketplaceFilterData: Codable {
     var startDate: Date?
     var endDate: Date?
     var beds: Int?
-    var baths: Int?
+    var baths: Double?
     var selectedAmenities = OrderedSet<String>()
 }
 
 class SublettingViewModel: ObservableObject {
-    @Published var sublets: [Int: Sublet] = [:]
+    @Published private var sublets: [Int: Sublet] = [:]
     var sortedFilteredSublets: [Sublet] {
         let filtered = filteredIDs.compactMap { sublets[$0] }
         
@@ -235,19 +235,52 @@ class SublettingViewModel: ObservableObject {
         }
     }
     
+    func getSublet(subletID: Int) -> Sublet? {
+        return sublets[subletID]
+    }
+    
     func addListing(sublet: Sublet) {
         updateSublet(sublet: sublet)
         listingsIDs.append(sublet.subletID)
+        if passesFilter(sublet: sublet) {
+            filteredIDs.append(sublet.subletID)
+        }
     }
     
     func deleteListing(sublet: Sublet) {
         listingsIDs.removeAll { $0 == sublet.subletID }
+        filteredIDs.removeAll { $0 == sublet.subletID }
         sublets[sublet.subletID] = nil
     }
     
     func addApplied(sublet: Sublet) {
         updateSublet(sublet: sublet)
         appliedIDs.append(sublet.subletID)
+    }
+    
+    private func passesFilter(sublet: Sublet) -> Bool {
+        if let minPrice = filterData.minPrice, sublet.price < minPrice {
+            return false
+        }
+        if let maxPrice = filterData.maxPrice, sublet.price > maxPrice {
+            return false
+        }
+        if let location = filterData.location, sublet.address != location {
+            return false
+        }
+        if let startDate = filterData.startDate, sublet.startDate != Day(date: startDate) {
+            return false
+        }
+        if let endDate = filterData.endDate, sublet.endDate != Day(date: endDate) {
+            return false
+        }
+        if let beds = filterData.beds, sublet.beds == nil || sublet.beds! < beds {
+            return false
+        }
+        if let baths = filterData.baths, sublet.baths == nil || sublet.baths! < baths {
+            return false
+        }
+        return filterData.selectedAmenities.isSubset(of: Set(sublet.amenities))
     }
     
     private func sortSubletsByField(sublets: [Sublet], sortOption: String) -> [Sublet] {

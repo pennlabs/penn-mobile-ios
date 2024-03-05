@@ -14,7 +14,7 @@ struct SubletDetailView: View {
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
     var subletID: Int?
     var sublet: Sublet {
-        subletID != nil ? (sublettingViewModel.sublets[subletID!] ?? Sublet.mock) : Sublet.mock
+        subletID != nil ? (sublettingViewModel.getSublet(subletID: subletID!) ?? Sublet.mock) : Sublet.mock
     }
     @State var selectedTab = "Details"
     @State var showExternalLink = false
