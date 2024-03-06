@@ -757,3 +757,12 @@ public extension NavigationPath {
         self.removeLast(self.count)
     }
 }
+
+public extension String {
+    static func customFormat(minFractionDigits: Int = 0, maxFractionDigits: Int = 1, _ value: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = minFractionDigits
+        formatter.maximumFractionDigits = maxFractionDigits
+        return formatter.string(from: NSNumber(value: value)) ?? ""
+    }
+}

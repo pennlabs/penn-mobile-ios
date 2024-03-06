@@ -146,10 +146,6 @@ public struct SubletData: Codable {
     enum CodingKeys: String, CodingKey {
         case amenities, title, address, beds, baths, description, externalLink, price, negotiable, expiresAt, startDate, endDate
     }
-
-    enum AmenityCodingKeys: String, CodingKey {
-        case name
-    }
     
     public init(amenities: [String], title: String, address: String? = nil, beds: Int? = nil, baths: Double? = nil, description: String? = nil, externalLink: String? = nil, price: Int, negotiable: Bool, expiresAt: Date? = nil, startDate: Day, endDate: Day) {
         self.amenities = amenities
@@ -170,10 +166,15 @@ public struct SubletData: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        self.amenities = try container.decodeIfPresent([String].self, forKey: .amenities) ?? []
         self.title = try container.decode(String.self, forKey: .title)
         self.address = try container.decodeIfPresent(String.self, forKey: .address)
         self.beds = try container.decodeIfPresent(Int.self, forKey: .beds)
-        self.baths = try container.decodeIfPresent(Double.self, forKey: .baths)
+        if let bathsString = try container.decodeIfPresent(String.self, forKey: .baths) {
+            self.baths = Double(bathsString)
+        } else {
+            self.baths = nil
+        }
         self.description = try container.decodeIfPresent(String.self, forKey: .description)
         self.externalLink = try container.decodeIfPresent(String.self, forKey: .externalLink)
         self.price = try container.decode(Int.self, forKey: .price)
@@ -181,15 +182,24 @@ public struct SubletData: Codable {
         self.expiresAt = try container.decodeIfPresent(Date.self, forKey: .expiresAt)
         self.startDate = try container.decode(Day.self, forKey: .startDate)
         self.endDate = try container.decode(Day.self, forKey: .endDate)
-
-        var amenitiesContainer = try container.nestedUnkeyedContainer(forKey: .amenities)
-        var amenitiesNames: [String] = []
-        while !amenitiesContainer.isAtEnd {
-            let amenityContainer = try amenitiesContainer.nestedContainer(keyedBy: AmenityCodingKeys.self)
-            let name = try amenityContainer.decode(String.self, forKey: .name)
-            amenitiesNames.append(name)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(amenities, forKey: .amenities)
+        try container.encode(title, forKey: .title)
+        try container.encodeIfPresent(address, forKey: .address)
+        try container.encodeIfPresent(beds, forKey: .beds)
+        if let baths = baths {
+            try container.encode(String(baths), forKey: .baths)
         }
-        self.amenities = amenitiesNames
+        try container.encodeIfPresent(description, forKey: .description)
+        try container.encodeIfPresent(externalLink, forKey: .externalLink)
+        try container.encode(price, forKey: .price)
+        try container.encode(negotiable, forKey: .negotiable)
+        try container.encodeIfPresent(expiresAt, forKey: .expiresAt)
+        try container.encode(startDate, forKey: .startDate)
+        try container.encode(endDate, forKey: .endDate)
     }
 }
 

@@ -134,7 +134,7 @@ struct SubletDetailOnly: View {
                     .foregroundColor(.secondary)
                 
                 if let beds = sublet.beds, let baths = sublet.baths {
-                    Text("\(beds) bd | \(String(format: "%.1f", baths)) ba")
+                    Text("\(beds) bd | \(String.customFormat(minFractionDigits: 0, maxFractionDigits: 1, baths)) ba")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 } else if let beds = sublet.beds {
@@ -142,7 +142,7 @@ struct SubletDetailOnly: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 } else if let baths = sublet.baths {
-                    Text("\(String(format: "%.1f", baths)) ba")
+                    Text("\(String.customFormat(minFractionDigits: 0, maxFractionDigits: 1, baths)) ba")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
