@@ -66,35 +66,38 @@ struct NewListingForm: View {
         ScrollView {
             LabsForm { formState in
                 TextLineField($subletData.title, title: "Listing Name")
+                    .validator(.required)
                 
                 ImagePicker($images, existingImages: $existingImages, maxSelectionCount: 6)
+                    .validator(AtLeastValidator(value: 1, { "Must select at least \($0) image\($0 == 1 ? "" : "s")" }))
                 
                 PairFields {
                     NumericField($price, format: .currency(code: "USD").presentation(.narrow), title: "Price/month")
+                        .validator(.required)
                     OptionField($negotiable, options: [false, true], toString: { option in
-                        option ? "Yes" : "No"
-                    }, title: "Negotiable?")
+                            option ? "Yes" : "No"
+                        }, title: "Negotiable?"
+                    )
+                    .validator(.required)
                 }
                 
                 TextLineField($subletData.address, placeholder: "Street address", title: "Location")
                 
                 DateRangeField(lowerDate: $startDate, upperDate: $endDate, title: "Start & End Date")
+                    .validator(.required)
                 
                 PairFields {
                     NumericField($subletData.beds, title: "# Bed")
                     NumericField($subletData.baths, title: "# Bath")
                 }
                 
-                TextLineField($subletData.externalLink, title: "External Link")
+                TextLineField($subletData.externalLink, placeholder: "e.g. https://lauder.house.upenn.edu", title: "External Link")
+                    .validator(.required)
                 
                 DateField(date: $subletData.expiresAt, title: "Listing Expiry Date")
+                    .validator(.required)
                 
-                ComponentWrapper {
-                    Text("Amenities")
-                        .bold()
-                }
-                
-                TagSelector(selection: $selectedAmenities, tags: $sublettingViewModel.amenities)
+                TagSelector(selection: $selectedAmenities, tags: $sublettingViewModel.amenities, title: "Amenities")
                 
                 TextAreaField($subletData.description, characterCount: 300, title: "Description (optional)")
                 

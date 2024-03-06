@@ -208,7 +208,7 @@ public extension SubletData {
         amenities = []
         title = ""
         address = ""
-        externalLink = "https://google.com"
+        externalLink = ""
         price = 0
         negotiable = false
         expiresAt = Date()

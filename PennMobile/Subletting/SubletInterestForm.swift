@@ -23,6 +23,7 @@ struct SubletInterestForm: View {
             LabsForm { formState in
                 // TODO: Fix this field formatting
                 NumericField($phoneNumberInt, format: .phoneNumber, title: "Phone Number")
+                    .validator(.required)
                 
                 TextAreaField($offerData.message, characterCount: 300, title: "Message (optional)")
                 
