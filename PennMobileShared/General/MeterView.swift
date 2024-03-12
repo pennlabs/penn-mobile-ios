@@ -15,7 +15,7 @@ public struct MeterView<S: ShapeStyle, Content: View>: View {
     public var lineWidth: CGFloat
     public var content: Content
 
-    public init(current: Double, maximum: Double, style: S = Color.primary, lineWidth: CGFloat = 4, @ViewBuilder content: () -> Content) {
+    public init(current: Double, maximum: Double, style: S = Color.primary, lineWidth: CGFloat = 4, @ViewBuilder content: () -> Content = { EmptyView() }) {
         self.current = current
         self.maximum = maximum
         self.style = style

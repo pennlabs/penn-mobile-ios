@@ -25,7 +25,7 @@ struct PollsView: View {
                             .font(.system(size: 16, design: .rounded))
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
-                            .padding([.leading, .trailing], 70)
+                            .padding(.horizontal, 70)
                             .padding(.top)
                     }
                     .padding(.top, -120)

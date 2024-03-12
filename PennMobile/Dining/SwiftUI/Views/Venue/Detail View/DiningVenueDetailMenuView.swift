@@ -68,7 +68,7 @@ struct DiningVenueDetailMenuView: View {
                 .padding([.top, .bottom])
             }
             .sheet(isPresented: $showMenu) {
-                MenuWebView(url: URL(string: DiningVenue.menuUrlDict[id] ?? "https://university-of-pennsylvania.cafebonappetit.com/")!)
+                WebView(url: URL(string: DiningVenue.menuUrlDict[id] ?? "https://university-of-pennsylvania.cafebonappetit.com/")!)
             }
             if menus.count > 0 {
                 Picker("Menu", selection: self.$menuIndex) {
@@ -100,7 +100,7 @@ struct DiningVenueDetailMenuView_Previews: PreviewProvider {
     }
 }
 
-struct MenuWebView: UIViewRepresentable {
+struct WebView: UIViewRepresentable {
     let url: URL
     func makeUIView(context: Context) -> WKWebView {
         return WKWebView()

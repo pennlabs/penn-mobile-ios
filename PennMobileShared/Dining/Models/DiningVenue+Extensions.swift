@@ -22,7 +22,7 @@ public extension VenueType {
 public extension DiningVenue {
 
     // MARK: - Venue Status
-    var mealsToday: Day? {
+    var mealsToday: DiningDay? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return self.days.first(where: { day in

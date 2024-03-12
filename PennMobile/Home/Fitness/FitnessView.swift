@@ -122,7 +122,7 @@ struct ListRowModifier: ViewModifier {
     func body(content: Content) -> some View {
         Group {
             content
-                .padding([.leading, .trailing])
+                .padding(.horizontal)
             Divider()
         }
     }

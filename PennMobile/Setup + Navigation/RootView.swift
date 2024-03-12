@@ -47,16 +47,18 @@ struct RootView: View {
             }
         }
         .overlay {
-            if popupManager.isShown {
-                CustomPopupView(isShown: $popupManager.isShown,
-                                image: popupManager.image,
-                                title: popupManager.title,
-                                message: popupManager.message,
-                                button1: popupManager.button1,
-                                button2: popupManager.button2,
-                                action1: popupManager.action1,
-                                action2: popupManager.action2)
-                    .transition(.scale)
+            ZStack {
+                if popupManager.disableBackground {
+                    Color.white
+                        .opacity(0)
+                        .edgesIgnoringSafeArea(.all)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                }
+                if popupManager.isShown {
+                    CustomPopupView(popupManager: popupManager)
+                        .transition(AnyTransition.opacity.combined(with: .scale(scale: 1.05)))
+                        .animation(.easeInOut(duration: 0.3), value: popupManager.isShown)
+                }
             }
         }
         .environmentObject(popupManager)
