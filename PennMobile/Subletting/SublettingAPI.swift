@@ -247,13 +247,15 @@ public class SublettingAPI {
             throw NetworkingError.serverError
         }
         
-        let boundary = MultipartBody.generateBoundary()
-        let idPart = try MultipartContent(name: "sublet", content: "\(id)")
-        let imagesPart = images.enumerated().compactMap { index, image -> MultipartContent? in
-            guard let imageData = image.jpegData(compressionQuality: 0.8) else { return nil }
-            return MultipartContent(type: "image/jpeg", name: "images", filename: "image\(index).jpeg", data: imageData)
+        let multipartBody = try MultipartBody {
+            try MultipartContent(name: "sublet", content: "\(id)")
+            
+            for (index, image) in images.enumerated() {
+                if let imageData = image.jpegData(compressionQuality: 0.8) {
+                    MultipartContent(type: "image/jpeg", name: "images", filename: "image\(index).jpeg", data: imageData)
+                }
+            }
         }
-        let multipartBody = try MultipartBody(boundary: boundary, content: [idPart] + imagesPart)
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
