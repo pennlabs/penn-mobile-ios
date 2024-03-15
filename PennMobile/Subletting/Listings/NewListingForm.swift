@@ -11,6 +11,18 @@ import PennForms
 import PennMobileShared
 import OrderedCollections
 
+struct URLValidator: Validator {
+    let message: String? = "Enter a valid URL"
+    
+    func isValid(_ input: String?) -> Bool {
+        guard let input, !input.isEmpty else { return true }
+        guard let url = URL(string: input) else { return false }
+        guard let scheme = url.scheme else { return true }
+        
+        return scheme.wholeMatch(of: /https?/.ignoresCase()) != nil
+    }
+}
+
 struct NewListingForm: View {
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
@@ -91,8 +103,11 @@ struct NewListingForm: View {
                     NumericField($subletData.baths, title: "# Bath")
                 }
                 
-                TextLineField($subletData.externalLink, placeholder: "e.g. https://lauder.house.upenn.edu", title: "External Link")
-                    .validator(.required)
+                ComponentWrapper {
+                    TextLineField($subletData.externalLink, placeholder: "e.g. https://lauder.house.upenn.edu", title: "External Link")
+                        .validator(URLValidator())
+                        .keyboardType(.URL)
+                }
                 
                 DateField(date: $subletData.expiresAt, title: "Listing Expiry Date")
                     .validator(.required)
@@ -169,6 +184,15 @@ struct NewListingForm: View {
                             data.startDate = Day(date: startDate)
                             data.endDate = Day(date: endDate)
                             data.amenities = Array(selectedAmenities)
+                            
+                            if let link = data.externalLink, let url = URL(string: link) {
+                                if url.scheme == nil {
+                                    let newUrl = "https://\(link)"
+                                    if URL(string: newUrl) != nil {
+                                        data.externalLink = newUrl
+                                    }
+                                }
+                            }
                             
                             Task {
                                 var sublet = originalSublet
