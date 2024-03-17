@@ -176,15 +176,13 @@ struct NewListingForm: View {
                         }
                         .padding(.top, 30)
                         Button(action: {
-                            guard formState.isValid else {
+                            guard formState.isValid, images.count + existingImages.count > 0 else {
                                 showValidationErrors = true
                                 return
                             }
                             
                             guard let negotiable, let price, let startDate, let endDate else {
-                                return
-                            }
-                            if images.count + existingImages.count == 0 {
+                                showValidationErrors = true
                                 return
                             }
                             
