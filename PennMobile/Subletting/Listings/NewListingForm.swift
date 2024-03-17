@@ -176,7 +176,7 @@ struct NewListingForm: View {
                         }
                         .padding(.top, 30)
                         Button(action: {
-                            guard !formState.isValid else {
+                            guard formState.isValid else {
                                 showValidationErrors = true
                                 return
                             }
