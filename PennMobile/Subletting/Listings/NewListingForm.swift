@@ -39,6 +39,7 @@ struct NewListingForm: View {
     @State var images: [UIImage] = []
     @State var existingImages: [String] = []
     @State var progress: Double?
+    @State var showValidationErrors = false
     
     init() {
         self.isNew = true
@@ -59,6 +60,8 @@ struct NewListingForm: View {
         self._selectedAmenities = State(initialValue: OrderedSet(subletDraft.amenities))
         self._images = State(initialValue: subletDraft.images)
         self._existingImages = State(initialValue: [])
+        
+        self.showValidationErrors = true
     }
     
     init(sublet: Sublet) {
@@ -72,6 +75,8 @@ struct NewListingForm: View {
         self._selectedAmenities = State(initialValue: OrderedSet(sublet.amenities))
         self._images = State(initialValue: [])
         self._existingImages = State(initialValue: sublet.images.map { $0.imageUrl })
+        
+        self.showValidationErrors = true
     }
     
     var body: some View {
@@ -171,6 +176,11 @@ struct NewListingForm: View {
                         }
                         .padding(.top, 30)
                         Button(action: {
+                            guard !formState.isValid else {
+                                showValidationErrors = true
+                                return
+                            }
+                            
                             guard let negotiable, let price, let startDate, let endDate else {
                                 return
                             }
@@ -287,7 +297,7 @@ struct NewListingForm: View {
                                 )
                         }
                         .padding(.top, 30)
-                        .disabled(!formState.isValid)
+                        .disabled(showValidationErrors && !formState.isValid)
                     }
                 }
             }
@@ -349,6 +359,7 @@ struct NewListingForm: View {
                 UploadingOverlay(progress: progress, title: "Uploading...", message: "Your listing is being uploaded to the marketplace. Please wait a moment.")
             }
         }
+        .environment(\.showValidationErrors, showValidationErrors)
     }
 }
 
