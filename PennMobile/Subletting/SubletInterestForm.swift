@@ -53,7 +53,7 @@ struct SubletInterestForm: View {
                                     message: "The renter will reach out to you if interested.",
                                     button1: "See Applied",
                                     action1: {
-                                        navigationManager.path.removeAll()
+                                        navigationManager.path.removeLast(navigationManager.path.contains(SublettingPage.myActivity(.saved)) ? 3 : 2)
                                         navigationManager.path.append(SublettingPage.myActivity(.applied))
                                     },
                                     button2: "Keep Browsing",
