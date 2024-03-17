@@ -21,9 +21,7 @@ struct SubletMapView: View {
                     SubletDetailToolbar(sublet: sublet, showExternalLink: $showExternalLink)
                 }
             }
-            .sheet(isPresented: $showExternalLink) {
-                WebView(url: URL(string: sublet.data.externalLink!)!)
-            }
+            .safari(isPresented: $showExternalLink, url: sublet.data.externalLink.flatMap { URL(string: $0) })
     }
 }
 

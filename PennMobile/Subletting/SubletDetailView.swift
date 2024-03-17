@@ -61,10 +61,8 @@ struct SubletDetailView: View {
         .navigationTitle(selectedTab)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            if selectedTab == "Details" {
-                ToolbarItem(placement: .topBarTrailing) {
-                    SubletDetailToolbar(sublet: sublet, showExternalLink: $showExternalLink)
-                }
+            ToolbarItem(placement: .topBarTrailing) {
+                SubletDetailToolbar(sublet: sublet, showExternalLink: $showExternalLink)
             }
         }
         .task {
@@ -72,9 +70,7 @@ struct SubletDetailView: View {
                 sublettingViewModel.updateSublet(sublet: sublet)
             }
         }
-        .sheet(isPresented: $showExternalLink) {
-            WebView(url: URL(string: sublet.data.externalLink!)!)
-        }
+        .safari(isPresented: $showExternalLink, url: sublet.data.externalLink.flatMap { URL(string: $0) })
     }
 }
 
@@ -335,7 +331,6 @@ struct SubletDetailToolbar: View {
                 NavigationLink(value: SublettingPage.subletInterestForm(sublet)) {
                     Image(systemName: "ellipsis.message")
                 }
-                .buttonStyle(.plain)
                 
                 Button(action: {
                     Task {
@@ -348,16 +343,15 @@ struct SubletDetailToolbar: View {
                 }) {
                     Image(systemName: isSaved ? "heart.fill" : "heart")
                 }
-                .buttonStyle(.plain)
                 .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5), value: isSaved)
             }
-            if sublet.data.externalLink != nil {
+            
+            if let link = sublet.data.externalLink, URL(string: link) != nil {
                 Button(action: {
                     showExternalLink = true
                 }) {
                     Image(systemName: "link")
                 }
-                .buttonStyle(.plain)
             }
         }
     }

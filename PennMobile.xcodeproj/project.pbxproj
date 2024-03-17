@@ -239,6 +239,7 @@
 		890D15062AB76C3600672FFE /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890D15052AB76C3600672FFE /* MainTabView.swift */; };
 		890DDBC62AA2E4B6006815A3 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890DDBC42AA2E499006815A3 /* ViewExtensions.swift */; };
 		8910678B2B64715E00748FC6 /* SublettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891067892B64715E00748FC6 /* SublettingModels.swift */; };
+		891591ED2BA778AE00BC230F /* SafariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891591EC2BA778AE00BC230F /* SafariView.swift */; };
 		89325390290F98E7006EE62C /* ConfigurationRepresenting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */; };
 		89325393291025A8006EE62C /* WidgetBackgroundTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
@@ -667,6 +668,7 @@
 		890DDBC42AA2E499006815A3 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		891067892B64715E00748FC6 /* SublettingModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SublettingModels.swift; sourceTree = "<group>"; };
 		8910678A2B64715E00748FC6 /* SublettingAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SublettingAPI.swift; sourceTree = "<group>"; };
+		891591EC2BA778AE00BC230F /* SafariView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariView.swift; sourceTree = "<group>"; };
 		8932538E290F98BD006EE62C /* ConfigurationRepresenting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationRepresenting.swift; sourceTree = "<group>"; };
 		893253912910249B006EE62C /* WidgetBackgroundTypeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBackgroundTypeExtensions.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1456,6 +1458,7 @@
 				6CAE434F253370B200BD0200 /* AlertModifier.swift */,
 				6C84D9E426293E680039C57F /* UIKit Views.swift */,
 				E7DA7CDC2B64619E00CA2A60 /* CustomPopupView.swift */,
+				891591EC2BA778AE00BC230F /* SafariView.swift */,
 			);
 			path = "SwiftUI Views";
 			sourceTree = "<group>";
@@ -2641,6 +2644,7 @@
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				42CC49D02AAE38C6008C41EE /* PollsViewController.swift in Sources */,
 				6CC88D6B27B1BF51006896F6 /* DiningVenueView.swift in Sources */,
+				891591ED2BA778AE00BC230F /* SafariView.swift in Sources */,
 				42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */,
 				6C11C08026F842CF00407C04 /* HomeUpdateCellItem.swift in Sources */,
 				890D15062AB76C3600672FFE /* MainTabView.swift in Sources */,
