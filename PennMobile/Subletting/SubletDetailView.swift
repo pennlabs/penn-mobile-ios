@@ -57,6 +57,11 @@ struct SubletDetailView: View {
                     SubletDetailOnly(sublet: sublet)
                 }
             }
+            .refreshable {
+                if let sublet = try? await SublettingAPI.instance.getSubletDetails(id: sublet.subletID, withOffers: isSubletter) {
+                    sublettingViewModel.updateSublet(sublet: sublet)
+                }
+            }
         }
         .navigationTitle(selectedTab)
         .navigationBarTitleDisplayMode(.inline)
