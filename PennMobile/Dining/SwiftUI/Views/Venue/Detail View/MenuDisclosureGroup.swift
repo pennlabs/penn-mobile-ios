@@ -306,21 +306,6 @@ extension AnyTransition {
     }
 }
 
-//struct MenuDisclosureGroup_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let diningVenues: MenuList = Bundle.main.decode("mock_menu.json")
-//
-//        return NavigationView {
-//            ScrollView {
-//                VStack {
-//                    DiningVenueDetailMenuView(menus: diningVenues.menus, id: 1)
-//                    Spacer()
-//                }
-//            }.navigationTitle("Dining")
-//            .padding()
-//        }
-//    }
-//}
 
 extension String {
     func capitalizeMainWords() -> String {
