@@ -10,6 +10,7 @@ import SwiftUI
 import Kingfisher
 import FirebaseAnalytics
 import PennMobileShared
+import WebKit
 
 struct DiningVenueDetailView: View {
 
@@ -24,6 +25,7 @@ struct DiningVenueDetailView: View {
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @State private var pickerIndex = 0
     @State private var contentOffset: CGPoint = .zero
+    @State private var showMenu = false
     @State var showTitle = false
 
     var body: some View {
@@ -67,12 +69,24 @@ struct DiningVenueDetailView: View {
                     .zIndex(2)
                     
                     VStack(spacing: 10) {
-                        Picker("Section", selection: self.$pickerIndex) {
-                            ForEach(0 ..< self.sectionTitle.count, id: \.self) {
-                                Text(self.sectionTitle[$0])
+                        HStack (spacing: 10) {
+                            Picker("Section", selection: self.$pickerIndex) {
+                                ForEach(0 ..< self.sectionTitle.count, id: \.self) {
+                                    Text(self.sectionTitle[$0])
+                                }
+                            }
+                            .pickerStyle(SegmentedPickerStyle())
+                            
+                            Button {
+                                showMenu.toggle()
+                            } label: {
+                                Image(systemName:"safari")
+                                    .font(.largeTitle)
+                            }
+                            .sheet(isPresented: $showMenu) {
+                                WebView(url: URL(string: DiningVenue.menuUrlDict[venue.id] ?? "https://university-of-pennsylvania.cafebonappetit.com/")!)
                             }
                         }
-                        .pickerStyle(SegmentedPickerStyle())
                         
                         Divider()
                         
@@ -130,5 +144,15 @@ extension UINavigationController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         interactivePopGestureRecognizer?.delegate = nil
+    }
+}
+
+struct WebView: UIViewRepresentable {
+    let url: URL
+    func makeUIView(context: Context) -> WKWebView {
+        return WKWebView()
+    }
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+        uiView.load(URLRequest(url: url))
     }
 }

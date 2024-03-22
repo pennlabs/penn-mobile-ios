@@ -28,7 +28,7 @@ struct DiningVenueDetailMenuView: View {
     
     @Binding private var parentScrollOffset: CGPoint
     
-    init(menus: [DiningMenu], id: Int, venue: DiningVenue, menuDate: Date = Date().localTime, parentScrollProxy: ScrollViewProxy, parentScrollOffset: Binding<CGPoint>) {
+    init(menus: [DiningMenu], id: Int, venue: DiningVenue, menuDate: Date = Date(), parentScrollProxy: ScrollViewProxy, parentScrollOffset: Binding<CGPoint>) {
         self.id = id
         self.venue = venue
         self.parentScrollProxy = parentScrollProxy
@@ -92,7 +92,7 @@ struct DiningVenueDetailMenuView: View {
         }
         .onChange(of: menuDate) { newDate in
             Task.init() {
-                await diningVM.refreshMenus(cache: false, at: newDate)
+                await diningVM.refreshMenus(cache: true, at: newDate)
                 menuDate = newDate
                 menus = diningVM.diningMenus[venue.id]?.menus ?? []
                 currentMenu = getMenu()

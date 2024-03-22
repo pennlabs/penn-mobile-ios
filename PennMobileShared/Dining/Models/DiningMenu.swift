@@ -64,11 +64,85 @@ public struct VenueInfo: Codable, Hashable {
     }
 }
 
+
+
 public struct DiningStation: Codable, Hashable {
     public let name: String
     public let items: [DiningStationItem]
     public let vertUID: UUID
     public let horizUID: UUID
+    
+    // Dictionary is (Int, Int), (Weight, Number of Columns)
+    public static let dictionary: [String:(Int,Int)] = [
+        // 1-10 Specials
+        "chef's table":(1,1),
+        "special events":(2,1),
+        "expo":(3,1),
+        "expo toppings":(4,2),
+        "feature entree":(5,1),
+        "vegan feature entrée":(6,1),
+        "smoothie bar":(7,2),
+        "cafe specials":(8,1),
+        
+        
+        // 11-25 Larger Entree Stations
+        "grill": (11,1),
+        "vegan grill": (12,1),
+        "pennsburg grill": (13,1),
+        "hill grill lunch": (14,1),
+        "hill grill lunch sides": (15,2),
+        "smoque'd deli": (16,2),
+        "pizza": (17,1),
+        "flatbread": (18,1),
+        "simplyoasis": (19,1),
+        "simplyoasis sides": (20,2),
+        "global fusion": (21,1),
+        "global fusion sides": (22,2),
+        
+        //26 - 49 Smaller Entrees
+        "salad bar": (26,2),
+        "salads": (27,2),
+        "insalata": (28,1),
+        "catch": (29,1),
+        "breakfast bar": (30,2),
+        "breakfast": (31,1),
+        "rise and dine": (32,1),
+        "near & far": (33,1),
+        "mezze": (34,2),
+        "grotto":(35,1),
+        "comfort": (36,1),
+        "melts": (37,1),
+        
+        // 50 IS THE DEFAULT
+        
+        // 51 - 60 Sides
+        "kettles": (51,1),
+        "fruit plus": (52,2),
+        "hand fruit": (53,2),
+        "fruit & yogurt": (54,2),
+        "fruit and yogurt": (55,2),
+        "breads and bagels": (56,2),
+        "breads and toast": (57,2),
+        "cereal": (58,2),
+        
+        // 61 - 65 Desserts
+        "sweets & treats": (61,2),
+        "sweets and treats": (62,2),
+        "ice cream": (63,2),
+        "ice cream bar": (64,2),
+        "dessert": (65,1),
+        
+        // 66 - 70 Assorted Toppings
+        "condiments": (66,2),
+        "on the side": (67,2),
+        "dairy comfort": (68,2),
+        "flavors": (69,2),
+        "vegan flavors": (70,2),
+        
+        // 71 - 75 Drinks
+        "beverages": (71,2),
+        "coffee": (72,1)
+    ]
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -83,79 +157,18 @@ public struct DiningStation: Codable, Hashable {
         case items
     }
     
+    
+    
+    
     public static func getWeight(station: DiningStation) -> Int {
-        let dictionary: [String:Int] = [
-            // 1-10 Specials
-            "chef's table":1,
-            "special events":2,
-            "expo":3,
-            "expo toppings":4,
-            "feature entree":5,
-            "vegan feature entrée":6,
-            "smoothie bar":7,
-            "cafe specials":8,
-            
-            
-            // 11-25 Larger Entree Stations
-            "grill": 11,
-            "vegan grill": 12,
-            "pennsburg grill": 13,
-            "hill grill lunch": 14,
-            "hill grill lunch sides": 15,
-            "smoque'd deli": 16,
-            "pizza": 17,
-            "flatbread": 18,
-            "simplyoasis": 19,
-            "simplyoasis sides": 20,
-            "global fusion": 21,
-            "global fusion sides": 22,
-            
-            //26 - 49 Smaller Entrees
-            "salad bar": 26,
-            "salads": 27,
-            "insalata": 28,
-            "catch": 29,
-            "breakfast bar": 30,
-            "breakfast": 31,
-            "rise and dine": 32,
-            "near & far": 33,
-            "mezze": 34,
-            "grotto":35,
-            "comfort": 36,
-            "melts": 37,
-            
-            // 50 IS THE DEFAULT
-            
-            // 51 - 60 Sides
-            "kettles": 51,
-            "fruit plus": 52,
-            "hand fruit": 53,
-            "fruit & yogurt": 54,
-            "fruit and yogurt": 55,
-            "breads and bagels": 56,
-            "breads and toast": 57,
-            "cereal": 58,
-            
-            // 61 - 65 Desserts
-            "sweets & treats": 61,
-            "sweets and treats": 62,
-            "ice cream": 63,
-            "ice cream bar": 64,
-            "dessert": 65,
-            
-            // 66 - 70 Assorted Toppings
-            "condiments": 66,
-            "on the side": 67,
-            "dairy comfort": 68,
-            "flavors": 69,
-            "vegan flavors": 70,
-            
-            // 71 - 75 Drinks
-            "beverages": 71,
-            "coffee": 72
-        ]
+        let (weight, _) = dictionary[station.name.lowercased()] ?? (50, 1)
+        return weight
         
-        return dictionary[station.name.lowercased()] ?? 50
+    }
+    
+    public static func getColumns(station: DiningStation) -> Int {
+        let (_, cols) = dictionary[station.name.lowercased()] ?? (50, 1)
+        return cols
         
     }
     

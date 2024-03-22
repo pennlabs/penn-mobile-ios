@@ -22,24 +22,34 @@ public extension VenueType {
 public extension DiningVenue {
 
     // MARK: - Venue Status
-    var mealsToday: Day? {
+    var mealsToday: [Meal] {
+        
+        return mealsOnDate(date: Date())
+    }
+    
+    func mealsOnDate(date: Date) -> [Meal] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        
         return self.days.first(where: { day in
-            day.date == dateFormatter.string(from: Date())
-        })
+            day.date == dateFormatter.string(from: date)
+        })?.meals.sorted(by: { el1, el2 in
+            return el1.starttime > el2.starttime
+        }) ?? []
     }
 
     var isOpen: Bool {
-        guard let mealsToday = mealsToday else { return false }
-        for meal in mealsToday.meals where meal.isCurrentlyServing {
+        if (mealsToday == []) { return false }
+        
+        for meal in mealsToday where meal.isCurrentlyServing {
             return true
         }
+        
         return false
     }
 
     var currentMeal: Meal? {
-        return self.mealsToday?.meals.first(where: { $0.isCurrentlyServing }) ?? nil
+        return self.mealsToday.first(where: { $0.isCurrentlyServing }) ?? nil
     }
 
     var currentMealType: String? {
@@ -55,25 +65,25 @@ public extension DiningVenue {
     }
 
     var nextMeal: Meal? {
-        guard let mealsToday = mealsToday else { return nil }
-        let now = Date()
-        return mealsToday.meals.first(where: { $0.starttime > now })
+        if (!self.hasMealsToday) { return nil }
+        
+        return mealsToday.first(where: { $0.starttime > Date() })
     }
 
     var currentMealIndex: Int? {
-        return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing })
+        return self.mealsToday.firstIndex(where: { $0.isCurrentlyServing })
     }
 
     var currentOrNearestMealIndex: Int? {
-        return self.mealsToday?.meals.firstIndex(where: { $0.isCurrentlyServing }) ?? self.mealsToday?.meals.firstIndex(where: { $0.starttime > Date() }) ?? nil
+        return self.mealsToday.firstIndex(where: { $0.isCurrentlyServing }) ?? (self.mealsToday.firstIndex(where: { $0.starttime > Date() }) ?? nil)
     }
     
     var currentOrNearestMeal: Meal? {
-        return self.mealsToday?.meals.first(where: { $0.isCurrentlyServing }) ?? (self.mealsToday?.meals.first(where: { $0.starttime > Date() }) ?? nil)
+        return self.mealsToday.first(where: { $0.isCurrentlyServing }) ?? (self.mealsToday.first(where: { $0.starttime > Date() }) ?? nil)
     }
 
     var hasMealsToday: Bool {
-        return mealsToday != nil
+        return mealsToday != []
     }
 
     var nextOpenedDayOfTheWeek: String {
@@ -96,7 +106,7 @@ public extension DiningVenue {
 
     // MARK: - Formatted Hours
     var humanFormattedHoursStringForToday: String {
-        guard mealsToday != nil else { return "" }
+        guard mealsToday != [] else { return "" }
         return formattedHoursStringFor(Date())
     }
 
@@ -154,13 +164,15 @@ public extension DiningVenue {
     }
 
     var humanFormattedHoursArrayForToday: [String] {
-        guard mealsToday != nil else { return [] }
+        guard mealsToday != [] else { return [] }
         return formattedHoursArrayFor(Date())
     }
 
     func formattedHoursArrayFor(_ date: Date) -> [String] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        
 
         let dateString = dateFormatter.string(from: date)
         return formattedHoursArrayFor(dateString)
@@ -182,8 +194,12 @@ public extension DiningVenue {
         formatter.pmSymbol = "pm"
 
         let moreThanOneMeal = meals.count > 1
+        
+        let sortedMeals = meals.sorted(by: { el1, el2 in
+            return el1.starttime < el2.starttime
+        })
 
-        for m in meals {
+        for m in sortedMeals {
             if m.starttime.minutes == 0 {
                 formatter.dateFormat = moreThanOneMeal ? "h" : "h"
             } else {

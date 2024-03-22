@@ -146,58 +146,56 @@ struct DiningStationRowStack: View {
 struct DiningStationRow: View {
     @State var isExpanded = true
     let diningStation: DiningStation
+    var gridColumns: [GridItem] = []
+    
+    init(diningStation: DiningStation) {
+        self.diningStation = diningStation
+        
+        for _ in 0..<DiningStation.getColumns(station: diningStation) {
+            gridColumns.append(GridItem(alignment: .leading))
+        }
+    }
 
     var body: some View {
-        VStack(spacing: 0) {
-            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.name)
-                .font(Font.system(size: 17))
-                .padding()
-                .background(Color.uiCardBackground.cornerRadius(8))
-            if isExpanded {
-                VStack {
-                    ForEach(diningStation.items, id: \.self) { diningStationItem in
-                        DiningStationItemRow(isExpanded: false, for: diningStationItem)
-                            .padding([.leading, .trailing])
-                        if diningStationItem != diningStation.items.last {
-                            Line()
-                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                                .frame(height: 1)
-                                .foregroundColor(Color.grey5)
-                        }
-                    }
-                    .transition(.moveAndFade)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .top) {
+                Text(diningStation.name.capitalizeMainWords())
+                    .font(.title)
+                    .bold()
+                Spacer()
+            }
+            
+            LazyVGrid(columns: gridColumns, alignment: .listRowSeparatorLeading, spacing: 10) {
+                ForEach(diningStation.items.sorted(by: {$0.name.count > $1.name.count}), id: \.self) { item in
+                    DiningStationItemView(item: item)
+                        .padding(4)
                 }
-                .padding([.top, .bottom])
             }
         }
-        .background(Color.grey7.cornerRadius(8))
+    }
+}
+
+struct DiningStationItemView: View {
+    let item: DiningStationItem
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack(alignment: .top) {
+                Text("• ")
+                Text(item.name.capitalizeMainWords())
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+            }
+            Spacer()
+        }
     }
 }
 
 struct DiningMenuSectionRow: View {
-    @Binding var isExpanded: Bool
-    let title: String
-
-    init(isExpanded: Binding<Bool>, title: String) {
-        self.title = title.capitalizeMainWords()
-        self._isExpanded = isExpanded
-    }
+    let station: DiningStation
 
     var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-            Image(systemName: "chevron.right")
-                .rotationEffect(.degrees(isExpanded ? -90 : 90))
-                .frame(width: 28, alignment: .center)
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            FirebaseAnalyticsManager.shared.trackEvent(action: "Open Menu", result: title, content: "")
-            withAnimation {
-                isExpanded.toggle()
-            }
-        }
+        Text("a")
     }
 }
 
@@ -238,6 +236,8 @@ struct DiningStationItemRow: View {
                 withAnimation {
                     isExpanded.toggle()
                 }
+            }.onChange(of: isExpanded) { _ in
+                print(diningStationItem.desc)
             }
             if isExpanded {
                 ItemView(name: name, description: diningStationItem.desc, ingredients: ingredients)
