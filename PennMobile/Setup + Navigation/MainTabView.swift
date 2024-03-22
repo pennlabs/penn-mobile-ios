@@ -8,13 +8,22 @@
 
 import SwiftUI
 
+class NavigationManager: ObservableObject {
+    @Published var isConfiguringTabs = false
+    @Published var path = NavigationPath()
+    @Published var currentTab = "Home"
+    
+    func resetPath() {
+        path = NavigationPath()
+    }
+}
+
 struct MainTabView: View {
-    @ObservedObject var mainTabViewCoordinator = MainTabViewCoordinator()
     @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
-    @State var currentTab = "Home"
+    @StateObject private var navigationManager = NavigationManager()
     
     var body: some View {
-        TabView(selection: $currentTab) {
+        TabView(selection: $navigationManager.currentTab) {
             HomeView<StandardHomeViewModel>()
                 .tabItem {
                     Label("Home", image: "Home_Grey")
@@ -24,9 +33,10 @@ struct MainTabView: View {
             ForEach(tabBarFeatures, id: \.self) { identifier in
                 let feature = features.first(where: { $0.id == identifier })!
                 
-                NavigationStack {
+                NavigationStack(path: $navigationManager.path) {
                     feature.content
                 }
+                .environmentObject(navigationManager)
                 .id(identifier)
                 .tabItem {
                     switch feature.image {
@@ -39,17 +49,24 @@ struct MainTabView: View {
                 .tag(identifier.rawValue)
             }
             
-            MoreView(features: features.filter { !tabBarFeatures.contains($0.id) })
-                .tabItem {
-                    Label("More", image: "More_Grey")
-                }
-                .tag("More")
+            NavigationStack(path: $navigationManager.path) {
+                MoreView(features: features.filter { !tabBarFeatures.contains($0.id) })
+            }
+            .environmentObject(navigationManager)
+            .tabItem {
+                Label("More", image: "More_Grey")
+            }
+            .tag("More")
         }
         .id(tabBarFeatures)
-        .sheet(isPresented: $mainTabViewCoordinator.isConfiguringTabs, content: {
+        .onChange(of: navigationManager.currentTab) { _ in
+            navigationManager.resetPath()
+        }
+        .sheet(isPresented: $navigationManager.isConfiguringTabs) {
             PreferencesView()
                 .presentationDragIndicator(.visible)
-        })
+                .environmentObject(navigationManager)
+        }
         .onAppear {
             UserDefaults.standard.restoreCookies()
             
@@ -79,7 +96,6 @@ struct MainTabView: View {
         .onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
             tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
         }
-        .environmentObject(mainTabViewCoordinator)
     }
     
     func shouldFetchTransactions() -> Bool {

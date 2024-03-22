@@ -136,22 +136,22 @@ public extension Color {
     static var baseYellow = Color("baseYellow")
 
     // MARK: - Extended Palette
-    static var blueLight = Color("blueLighter")
+    static var blueLight = Color("blueLight")
     static var blueLighter = Color("blueLighter")
     static var blueDark = Color("blueDark")
     static var blueDarker = Color("blueDarker")
 
-    static var greenLight = Color("greenLighter")
+    static var greenLight = Color("greenLight")
     static var greenLighter = Color("greenLighter")
     static var greenDark = Color("greenDark")
     static var greenDarker = Color("greenDarker")
 
-    static var orangeLight = Color("orangeLighter")
+    static var orangeLight = Color("orangeLight")
     static var orangeLighter = Color("orangeLighter")
     static var orangeDark = Color("orangeDark")
     static var orangeDarker = Color("orangeDarker")
 
-    static var purpleLight = Color("purpleLighter")
+    static var purpleLight = Color("purpleLight")
     static var purpleLighter = Color("purpleLighter")
     static var purpleDark = Color("purpleDark")
     static var purpleDarker = Color("purpleDarker")
@@ -161,7 +161,7 @@ public extension Color {
     static var redDark = Color("redDark")
     static var redDarker = Color("redDarker")
 
-    static var yellowLight = Color("yellowLighter")
+    static var yellowLight = Color("yellowLight")
     static var yellowLighter = Color("yellowLighter")
     static var yellowDark = Color("yellowDark")
     static var yellowDarker = Color("yellowDarker")
