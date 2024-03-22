@@ -39,7 +39,7 @@ public extension DiningVenue {
     }
 
     var isOpen: Bool {
-        if (mealsToday == []) { return false }
+        if mealsToday.isEmpty { return false }
         
         for meal in mealsToday where meal.isCurrentlyServing {
             return true
