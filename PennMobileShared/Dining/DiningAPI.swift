@@ -8,7 +8,6 @@
 
 import SwiftyJSON
 import Foundation
-import JavaScriptCore
 
 public class DiningAPI {
     public static let defaultVenueIds: [Int] = [593, 636, 1442, 639]
