@@ -133,6 +133,10 @@ struct MarketplaceView: View {
                         .font(.subheadline)
                 }
             }
+            .refreshable {
+                await sublettingViewModel.populateSublets()
+                await sublettingViewModel.populateFiltered()
+            }
         }
         .padding(.horizontal)
         .toolbar {
