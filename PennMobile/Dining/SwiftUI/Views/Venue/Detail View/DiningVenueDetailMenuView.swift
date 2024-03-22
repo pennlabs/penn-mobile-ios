@@ -81,11 +81,6 @@ struct DiningVenueDetailMenuView: View {
                     DiningMenuViewHeader(diningMenu: $currentMenu, selectedStation: $selectedStation)
                 }
             }
-            
-//            .onChange(of: parentScrollOffset) { _ in
-//                print(proxy.size)
-//            }
-            
         }
         
         .onChange(of: currentMenu) { _ in
