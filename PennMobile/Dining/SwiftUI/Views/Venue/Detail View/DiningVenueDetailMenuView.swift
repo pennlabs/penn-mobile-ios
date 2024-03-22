@@ -77,7 +77,9 @@ struct DiningVenueDetailMenuView: View {
             Section {
                 DiningStationRowStack(selectedStation: $selectedStation, currentMenu: $currentMenu, parentScrollOffset: $parentScrollOffset, parentScrollProxy: parentScrollProxy)
             } header: {
-                DiningMenuViewHeader(diningMenu: $currentMenu, selectedStation: $selectedStation)
+                VStack {
+                    DiningMenuViewHeader(diningMenu: $currentMenu, selectedStation: $selectedStation)
+                }
             }
             
 //            .onChange(of: parentScrollOffset) { _ in

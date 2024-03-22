@@ -17,14 +17,17 @@ struct DiningMenuViewHeader: View {
     
     var body: some View {
         VStack {
-            Divider()
+            Rectangle()
+                .foregroundStyle(.secondary)
+                .frame(height: 1)
             ScrollViewReader { proxy in
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 30) {
                         ForEach(diningMenu?.stations ?? [], id: \.horizUID) { diningStation in
                             Text(diningStation.name.uppercased())
                                 .bold(selectedStation != nil && selectedStation == diningStation)
-                                .underline(selectedStation != nil && selectedStation == diningStation)
+                                //.underline(selectedStation != nil && selectedStation == diningStation)
+                                .foregroundStyle((selectedStation != nil && selectedStation == diningStation) ? .primary : .secondary)
                                 .font(.callout)
                                 .padding(3)
                                 .onTapGesture {
@@ -45,7 +48,9 @@ struct DiningMenuViewHeader: View {
                 }
                 .padding(.vertical, 2)
             }
-            Divider()
+            Rectangle()
+                .foregroundStyle(.secondary)
+                .frame(height: 1)
         }.background(Color(.systemBackground))
             .onAppear {
                 internalSelection = selectedStation
@@ -71,7 +76,6 @@ struct DiningStationRowStack: View {
         VStack {
             ForEach(currentMenu?.stations ?? [], id: \.vertUID) { station in
                 DiningStationRow(diningStation: station)
-                    .bold(selectedStation != nil && selectedStation == station)
                     .background {
                         GeometryReader { proxy in
                             Spacer()
@@ -157,7 +161,7 @@ struct DiningStationRow: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .top) {
                 Text(diningStation.name.capitalizeMainWords())
                     .font(.title)
@@ -165,12 +169,20 @@ struct DiningStationRow: View {
                 Spacer()
             }
             
-            LazyVGrid(columns: gridColumns, alignment: .listRowSeparatorLeading, spacing: 10) {
+            LazyVGrid(columns: gridColumns, alignment: .listRowSeparatorLeading, spacing: 6) {
                 ForEach(diningStation.items.sorted(by: {$0.name.count > $1.name.count}), id: \.self) { item in
                     DiningStationItemView(item: item)
                         .padding(4)
                 }
             }
+            .padding(12)
+            .overlay {
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color(UIColor.systemGray5))
+            }
+            
+            
+            
         }
     }
 }
@@ -181,9 +193,9 @@ struct DiningStationItemView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                Text("• ")
+                //Text("• ")
                 Text(item.name.capitalizeMainWords())
-                    .font(.headline)
+                    .font(.body)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             Spacer()
