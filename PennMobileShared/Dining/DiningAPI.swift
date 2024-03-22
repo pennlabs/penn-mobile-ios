@@ -49,7 +49,6 @@ public class DiningAPI {
         guard let (data, _) = try? await URLSession.shared.data(from: URL(string: diningMenuUrl + dateStr + "/")!) else {
             return .failure(.serverError)
         }
-        print(String(data: data, encoding: .utf8)!)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
         if let diningMenus = try? decoder.decode([DiningMenu].self, from: data) {
