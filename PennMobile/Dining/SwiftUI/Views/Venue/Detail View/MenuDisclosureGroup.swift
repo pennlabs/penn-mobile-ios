@@ -9,77 +9,205 @@
 import SwiftUI
 import PennMobileShared
 
-struct DiningMenuRow: View {
-    var diningMenu: DiningMenu
-
+struct DiningMenuViewHeader: View {
+    @Binding var diningMenu: DiningMenu?
+    @Binding var selectedStation: DiningStation?
+    
+    @State var internalSelection: DiningStation?
+    
     var body: some View {
-        VStack(spacing: 0) {
-            ForEach(diningMenu.stations, id: \.self) { diningStation in
-                DiningStationRow(for: diningStation)
+        VStack {
+            Rectangle()
+                .foregroundStyle(.secondary)
+                .frame(height: 1)
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 30) {
+                        ForEach(diningMenu?.stations ?? [], id: \.horizUID) { diningStation in
+                            Text(diningStation.name.uppercased())
+                                .bold(selectedStation != nil && selectedStation == diningStation)
+                                //.underline(selectedStation != nil && selectedStation == diningStation)
+                                .foregroundStyle((selectedStation != nil && selectedStation == diningStation) ? .primary : .secondary)
+                                .font(.callout)
+                                .padding(3)
+                                .onTapGesture {
+                                    withAnimation {
+                                        internalSelection = diningStation
+                                    }
+                                }
+                    }.onChange(of: internalSelection) { new in
+                        if let newStation = new {
+                            withAnimation {
+                                proxy.scrollTo(newStation.horizUID, anchor: .leading)
+                            }
+                        }
+                        selectedStation = internalSelection
+                        
+                        }
+                    }
+                }
+                .padding(.vertical, 2)
+            }
+            Rectangle()
+                .foregroundStyle(.secondary)
+                .frame(height: 1)
+        }.background(Color(.systemBackground))
+            .onAppear {
+                internalSelection = selectedStation
+            }
+            .onChange(of: selectedStation) { _ in
+                internalSelection = selectedStation
+            }
+    }
+}
+
+struct DiningStationRowStack: View {
+    @Binding var selectedStation: DiningStation?
+    @Binding var currentMenu: DiningMenu?
+    
+    @Binding var parentScrollOffset: CGPoint
+    @State var posDictionary: [DiningStation: CGRect] = [:]
+    @State var scrollNext: DiningStation?
+    @State var checkDictionary = true
+    
+    var parentScrollProxy: ScrollViewProxy
+    
+    var body: some View {
+        VStack {
+            ForEach(currentMenu?.stations ?? [], id: \.vertUID) { station in
+                DiningStationRow(diningStation: station)
+                    .background {
+                        GeometryReader { proxy in
+                            Spacer()
+                                .onChange(of: parentScrollOffset) { _ in
+                                    posDictionary.updateValue(proxy.frame(in: .global), forKey: station)
+                                }
+                        }
+                    }
+            }
+            .onChange(of: parentScrollOffset) { _ in
+                if (checkDictionary) {
+                    /// The most visible element is that which has the highest share of the viewport,
+                    /// relative to its own height. If two elements are equally visible, the one whose
+                    /// midpoint is closest to y = 350 is the one that is more visible.
+                    let sortedDict = posDictionary.sorted { (el1, el2) in
+                        let (_, rect1) = el1
+                        let (_, rect2) = el2
+                        
+                        let intersection1 = rect1.intersection(UIScreen.main.bounds)
+                        let intersection2 = rect2.intersection(UIScreen.main.bounds)
+                        
+                        let pct1 = Int((intersection1.height * 100)/rect1.height)
+                        let pct2 = Int((intersection2.height * 100)/rect2.height)
+                        
+                        return pct1 > pct2 ||
+                            (pct1 == pct2 && abs(rect1.midY-350.0) < abs(rect2.midY-350.0))
+                    }
+                    
+                    if let (st, _) = sortedDict.first {
+                        scrollNext = st
+                        selectedStation = st
+                    }
+                }
+            }
+            .onChange(of: currentMenu) { _ in
+                posDictionary = [:]
+            }
+            .onChange(of: selectedStation) { new in
+                /// There's a lot of state changes going on here, becuase there's two
+                /// ScrollViewReaders interacting. On a change of selection due to vertical scrolling,
+                /// We don't want to reanimate the vertical scrolling window, since it wouldn't feel natural.
+                ///
+                /// Further, on vertical scroll changes as a result of clicking an item on the header bar,
+                /// we do not wish to adjust the selected station based on scroll (since the user just
+                /// selected the station)
+                if let newStation = new {
+                    // Don't animate if we just changed this value by vertical scrolling.
+                    if (newStation != scrollNext) {
+                        
+                        // Don't adjust anything on scroll while we're animating
+                        checkDictionary = false
+                        
+                        /// iOS 17 added an onCompletion method on an animation, but
+                        /// PennMobile is not built for iOS 17 yet, so we are left with just
+                        /// Dispatching an event to fire after the duration of the animation.
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            parentScrollProxy.scrollTo(newStation.vertUID, anchor: .top)
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            checkDictionary = true
+                        }
+                    }
+                }
+                
+                scrollNext = nil
             }
         }
-        .background(Color.grey7.cornerRadius(8))
     }
 }
 
 struct DiningStationRow: View {
-    @State var isExpanded = false
+    @State var isExpanded = true
     let diningStation: DiningStation
-    init (for diningStation: DiningStation) {
+    var gridColumns: [GridItem] = []
+    
+    init(diningStation: DiningStation) {
         self.diningStation = diningStation
+        
+        for _ in 0..<DiningStation.getColumns(station: diningStation) {
+            gridColumns.append(GridItem(alignment: .leading))
+        }
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            DiningMenuSectionRow(isExpanded: $isExpanded, title: diningStation.name)
-                .font(Font.system(size: 17))
-                .padding()
-                .background(Color.uiCardBackground.cornerRadius(8))
-            if isExpanded {
-                VStack {
-                    ForEach(diningStation.items, id: \.self) { diningStationItem in
-                        DiningStationItemRow(isExpanded: false, for: diningStationItem)
-                            .padding(.horizontal)
-                        if diningStationItem != diningStation.items.last {
-                            Line()
-                                .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
-                                .frame(height: 1)
-                                .foregroundColor(Color.grey5)
-                        }
-                    }
-                    .transition(.moveAndFade)
-                }
-                .padding([.top, .bottom])
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .top) {
+                Text(diningStation.name.capitalizeMainWords())
+                    .font(.title)
+                    .bold()
+                Spacer()
             }
+            
+            LazyVGrid(columns: gridColumns, alignment: .listRowSeparatorLeading, spacing: 6) {
+                ForEach(diningStation.items.sorted(by: {$0.name.count > $1.name.count}), id: \.self) { item in
+                    DiningStationItemView(item: item)
+                        .padding(4)
+                }
+            }
+            .padding(12)
+            .overlay {
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color(UIColor.systemGray5))
+            }
+            
+            
+            
         }
-        .background(Color.grey7.cornerRadius(8))
+    }
+}
+
+struct DiningStationItemView: View {
+    let item: DiningStationItem
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            HStack(alignment: .top) {
+                //Text("• ")
+                Text(item.name.capitalizeMainWords())
+                    .font(.body)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+            }
+            Spacer()
+        }
     }
 }
 
 struct DiningMenuSectionRow: View {
-    @Binding var isExpanded: Bool
-    let title: String
-
-    init(isExpanded: Binding<Bool>, title: String) {
-        self.title = title.capitalizeMainWords()
-        self._isExpanded = isExpanded
-    }
+    let station: DiningStation
 
     var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-            Image(systemName: "chevron.right")
-                .rotationEffect(.degrees(isExpanded ? -90 : 90))
-                .frame(width: 28, alignment: .center)
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            FirebaseAnalyticsManager.shared.trackEvent(action: "Open Menu", result: title, content: "")
-            withAnimation {
-                isExpanded.toggle()
-            }
-        }
+        Text("a")
     }
 }
 
@@ -120,6 +248,8 @@ struct DiningStationItemRow: View {
                 withAnimation {
                     isExpanded.toggle()
                 }
+            }.onChange(of: isExpanded) { _ in
+                print(diningStationItem.desc)
             }
             if isExpanded {
                 ItemView(name: name, description: diningStationItem.desc, ingredients: ingredients)
@@ -176,21 +306,6 @@ extension AnyTransition {
     }
 }
 
-struct MenuDisclosureGroup_Previews: PreviewProvider {
-    static var previews: some View {
-        let diningVenues: MenuList = Bundle.main.decode("mock_menu.json")
-
-        return NavigationView {
-            ScrollView {
-                VStack {
-                    DiningVenueDetailMenuView(menus: diningVenues.menus, id: 1)
-                    Spacer()
-                }
-            }.navigationTitle("Dining")
-            .padding()
-        }
-    }
-}
 
 extension String {
     func capitalizeMainWords() -> String {

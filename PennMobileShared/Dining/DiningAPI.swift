@@ -26,6 +26,8 @@ public class DiningAPI {
             return .failure(.serverError)
         }
         
+        
+        
         let decoder = JSONDecoder()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"

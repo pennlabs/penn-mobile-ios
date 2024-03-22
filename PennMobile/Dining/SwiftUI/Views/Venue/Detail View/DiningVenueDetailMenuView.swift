@@ -2,8 +2,8 @@
 //  DiningVenueDetailMenuView.swift
 //  PennMobile
 //
-//  Created by CHOI Jongmin on 23/6/2020.
-//  Copyright © 2020 PennLabs. All rights reserved.
+//  Created by Jon Melitski on 2/26/2024.
+//  Copyright © 2024 PennLabs. All rights reserved.
 //
 
 import SwiftUI
@@ -11,92 +11,91 @@ import WebKit
 import PennMobileShared
 
 struct DiningVenueDetailMenuView: View {
-    var menus: [DiningMenu]
-    var id: Int
-    var venue: DiningVenue?
-    @State var menuDate: Date
-    @State private var menuIndex: Int
-    @State private var showMenu: Bool
+    
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
-    init(menus: [DiningMenu], id: Int, venue: DiningVenue? = nil, menuDate: Date = Date(), showMenu: Bool = false) {
-        self.menus = menus
+    
+    var id: Int
+    var venue: DiningVenue
+    var parentScrollProxy: ScrollViewProxy
+    
+    /// Notable invariant, the menuDate must ALWAYS match all of the menus in the array.
+    @State var menuDate: Date
+    @State var menus: [DiningMenu]
+    
+    // Both are nil on init
+    @State private var currentMenu: DiningMenu?
+    @State private var selectedStation: DiningStation?
+    
+    @Binding private var parentScrollOffset: CGPoint
+    
+    init(menus: [DiningMenu], id: Int, venue: DiningVenue, menuDate: Date = Date(), parentScrollProxy: ScrollViewProxy, parentScrollOffset: Binding<CGPoint>) {
         self.id = id
         self.venue = venue
-        _showMenu = State(initialValue: showMenu)
+        self.parentScrollProxy = parentScrollProxy
+        _parentScrollOffset = parentScrollOffset
+        _menus = State(initialValue: menus)
         _menuDate = State(initialValue: menuDate)
-        _menuIndex = State(initialValue: 0)
-        _menuIndex = State(initialValue: self.getIndex())
+        _currentMenu = State(initialValue: getMenu())
+        _selectedStation = State(initialValue: currentMenu?.stations.first ?? nil)
+        
     }
-    func getIndex() -> Int {
-        var inx = 0
-        if self.venue != nil && Calendar.current.isDate(self.menuDate, inSameDayAs: Date()) {
-            if let meal = self.venue!.currentOrNearestMeal {
-                inx = self.menus.firstIndex { $0.service == meal.label } ?? inx
-            }
+    
+    /// Constraints of this function:
+    /// Need to know if a meal is currently going on, to return it.
+    /// If there is a meal today that is closest (utilities), return it.
+    /// If the selected date is not the current day, return the first menu.
+    /// If at any point, the list of menus is empty, return nil.
+    func getMenu() -> DiningMenu? {
+        if (menus.count == 0) { return nil }
+        
+        if (!Calendar.current.isDate(menuDate, inSameDayAs: Date())) {
+            return menus[0]
         }
-        return inx
+        
+        guard let nearestIndex = venue.currentOrNearestMealIndex else {
+            return nil
+        }
+        
+        return menus[nearestIndex]
     }
-
+    
     var body: some View {
-        DatePicker(selection: $menuDate, in: Date()...Date().addingTimeInterval(86400 * 6), displayedComponents: .date) {
-            Text("Menu date")
-        }.onChange(of: menuDate) { newMenuDate in
-            menuIndex = 0
-            Task.init() {
-                await diningVM.refreshMenus(cache: false, at: newMenuDate)
-            }
-            if Calendar.current.isDate(newMenuDate, inSameDayAs: Date()) {
-                menuIndex = getIndex()
-            }
-        }
-        VStack {
-            Button {
-                showMenu.toggle()
-            } label: {
-                CardView {
-                    HStack {
-                        Text("Menu")
-                            .font(.system(size: 20, design: .rounded))
-                            .bold()
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                    }
-                    .padding()
-                    .foregroundColor(.blue).font(Font.system(size: 24).weight(.bold))
+        LazyVStack(pinnedViews: [.sectionHeaders]) {
+            HStack {
+                if currentMenu != nil {
+                    Picker("Menu", selection: Binding($currentMenu)!) {
+                        ForEach(menus, id: \.self) { menu in
+                            Text(menu.service)
+                        }
+                    }.pickerStyle(MenuPickerStyle())
+                } else {
+                    Text("Closed For Today")
                 }
-                .frame(height: 24)
-                .padding([.top, .bottom])
+                DatePicker("", selection: $menuDate, in: Date()...Date().add(minutes: 8640), displayedComponents: .date)
             }
-            .sheet(isPresented: $showMenu) {
-                WebView(url: URL(string: DiningVenue.menuUrlDict[id] ?? "https://university-of-pennsylvania.cafebonappetit.com/")!)
-            }
-            if menus.count > 0 {
-                Picker("Menu", selection: self.$menuIndex) {
-                    ForEach(0 ..< menus.count, id: \.self) {
-                        Text(menus[$0].service)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                DiningMenuRow(diningMenu: menus[menuIndex])
-                    .transition(.opacity)
-            }
-        }
-    }
-}
-
-struct DiningVenueDetailMenuView_Previews: PreviewProvider {
-    let diningVenues: MenuList = Bundle.main.decode("mock_menu.json")
-
-    static var previews: some View {
-        return NavigationView {
-            ScrollView {
+            
+            Section {
+                DiningStationRowStack(selectedStation: $selectedStation, currentMenu: $currentMenu, parentScrollOffset: $parentScrollOffset, parentScrollProxy: parentScrollProxy)
+            } header: {
                 VStack {
-                    DiningVenueDetailMenuView(menus: [], id: 1)
-                    Spacer()
+                    DiningMenuViewHeader(diningMenu: $currentMenu, selectedStation: $selectedStation)
                 }
-            }.navigationTitle("Dining")
-            .padding()
+            }
         }
+        
+        .onChange(of: currentMenu) { _ in
+            print((currentMenu?.service ?? "no menu") + " on " + menuDate.description)
+            selectedStation = currentMenu?.stations.first ?? nil
+        }
+        .onChange(of: menuDate) { newDate in
+            Task.init() {
+                await diningVM.refreshMenus(cache: true, at: newDate)
+                menuDate = newDate
+                menus = diningVM.diningMenus[venue.id]?.menus ?? []
+                currentMenu = getMenu()
+            }
+        }
+        
     }
 }
 
