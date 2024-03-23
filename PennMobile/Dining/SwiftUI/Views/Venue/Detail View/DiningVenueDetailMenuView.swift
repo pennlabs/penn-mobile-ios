@@ -73,9 +73,11 @@ struct DiningVenueDetailMenuView: View {
                 }
                 DatePicker("", selection: $menuDate, in: Date()...Date().add(minutes: 8640), displayedComponents: .date)
             }
+            .padding(.horizontal)
             
             Section {
                 DiningStationRowStack(selectedStation: $selectedStation, currentMenu: $currentMenu, parentScrollOffset: $parentScrollOffset, parentScrollProxy: parentScrollProxy)
+                    .padding(.horizontal)
             } header: {
                 VStack {
                     DiningMenuViewHeader(diningMenu: $currentMenu, selectedStation: $selectedStation)

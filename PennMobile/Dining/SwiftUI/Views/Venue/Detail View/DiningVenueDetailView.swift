@@ -87,6 +87,7 @@ struct DiningVenueDetailView: View {
                                 WebView(url: URL(string: DiningVenue.menuUrlDict[venue.id] ?? "https://university-of-pennsylvania.cafebonappetit.com/")!)
                             }
                         }
+                        .padding(.horizontal)
                         
                         Divider()
                         
@@ -96,12 +97,14 @@ struct DiningVenueDetailView: View {
                                                           parentScrollOffset: $contentOffset)
                             } else if self.pickerIndex == 1 {
                                 DiningVenueDetailHoursView(for: venue)
+                                    .padding(.horizontal)
                             } else {
                                 DiningVenueDetailLocationView(for: venue, screenHeight: fullGeo.size.width)
+                                    .padding(.horizontal)
                             }
                             Spacer()
                         }.frame(minHeight: fullGeo.size.height - 80)
-                    }.padding(.horizontal)
+                    }
                     .background(GeometryReader { geometry in
                         Color.clear
                             .preference(key: ScrollOffsetPreferenceKey.self, value: geometry.frame(in: .named("scroll")).origin)
@@ -126,6 +129,7 @@ struct DiningVenueDetailView: View {
                 .onAppear {
                     FirebaseAnalyticsManager.shared.trackScreen("Venue Detail View")
                 }
+                .coordinateSpace(name: "DiningVenueDetailView")
             }
         }
     }

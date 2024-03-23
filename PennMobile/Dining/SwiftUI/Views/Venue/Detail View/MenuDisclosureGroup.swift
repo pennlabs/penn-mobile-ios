@@ -16,42 +16,50 @@ struct DiningMenuViewHeader: View {
     @State var internalSelection: DiningStation?
     
     var body: some View {
-        VStack {
-            Rectangle()
-                .foregroundStyle(.secondary)
-                .frame(height: 1)
-            ScrollViewReader { proxy in
+        ScrollViewReader { proxy in
+            VStack(spacing: 0) {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 30) {
+                    HStack(spacing: 36) {
                         ForEach(diningMenu?.stations ?? [], id: \.horizUID) { diningStation in
                             Text(diningStation.name.uppercased())
                                 .bold(selectedStation != nil && selectedStation == diningStation)
                                 //.underline(selectedStation != nil && selectedStation == diningStation)
                                 .foregroundStyle((selectedStation != nil && selectedStation == diningStation) ? .primary : .secondary)
                                 .font(.callout)
-                                .padding(3)
                                 .onTapGesture {
                                     withAnimation {
                                         internalSelection = diningStation
                                     }
                                 }
-                    }.onChange(of: internalSelection) { new in
+                        }
+                    }
+                    .onChange(of: internalSelection) { new in
                         if let newStation = new {
                             withAnimation {
-                                proxy.scrollTo(newStation.horizUID, anchor: .leading)
+                                proxy.scrollTo(newStation.horizUID, anchor: .center)
                             }
                         }
                         selectedStation = internalSelection
                         
-                        }
+                    }
+                    .padding(.horizontal)
+                }
+                .padding(.vertical, 11)
+                
+                Rectangle()
+                    .foregroundStyle(.quaternary)
+                    .frame(height: 1)
+            }
+            .background {
+                GeometryReader { geometry in
+                    if geometry.frame(in: .named("DiningVenueDetailView")).minY < 1 {
+                        Rectangle().fill(Material.bar)
+                    } else {
+                        Color.clear
                     }
                 }
-                .padding(.vertical, 2)
             }
-            Rectangle()
-                .foregroundStyle(.secondary)
-                .frame(height: 1)
-        }.background(Color(.systemBackground))
+        }
             .onAppear {
                 internalSelection = selectedStation
             }
