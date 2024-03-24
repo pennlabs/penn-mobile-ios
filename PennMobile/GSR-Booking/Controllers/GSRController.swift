@@ -214,6 +214,7 @@ extension GSRController: GSRBookable {
 
             if times.count == 0 {
                 showAlert(withMsg: "Please select a timeslot to book.", title: "Empty Selection", completion: nil)
+                return
             }
 
             let sorted = times.sorted(by: {$0.startTime < $1.startTime})
