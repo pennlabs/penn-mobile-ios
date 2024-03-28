@@ -228,6 +228,7 @@
 		8766844128CBE907005CAD32 /* NativeNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8766844028CBE907005CAD32 /* NativeNewsViewController.swift */; };
 		87FE6479290EE4BE00AFADF6 /* NotificationAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */; };
 		890471732B76E800001FF257 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890471722B76E800001FF257 /* Day.swift */; };
+		89093EE22BB4FEB90076B712 /* UserEngagementPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89093EE12BB4FEB90076B712 /* UserEngagementPopupView.swift */; };
 		890C4EC82ACBA486009650CA /* LaundryAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C4EC62ACBA486009650CA /* LaundryAttributes.swift */; };
 		890C4EC92ACBA486009650CA /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890C4EC72ACBA486009650CA /* LaundryMachine.swift */; };
 		890C4ECA2ACBA4E7009650CA /* LaundryLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8932693B28FC75A5003D4BF9 /* LaundryLiveActivity.swift */; };
@@ -256,9 +257,9 @@
 		895C75E628FA165100A329A0 /* LabsLoginSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */; };
 		895D98B02ACF312300F8C5DF /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D98AF2ACF312300F8C5DF /* MoreView.swift */; };
 		897F0A932B08256C0060583A /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897F0A922B08256C0060583A /* Toasts.swift */; };
+		8987C8FD29CE5A8B004E9A99 /* BannerDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8987C8FC29CE5A8B004E9A99 /* BannerDescription.swift */; };
 		898DB4912B2E7AA20027CC8F /* PennForms in Frameworks */ = {isa = PBXBuildFile; productRef = 898DB4902B2E7AA20027CC8F /* PennForms */; };
 		89913EAD2AE44FCE00AE30C9 /* CalendarCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */; };
-		8987C8FD29CE5A8B004E9A99 /* BannerDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8987C8FC29CE5A8B004E9A99 /* BannerDescription.swift */; };
 		89B454DF28E1161B00BC918B /* PathAtPennNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */; };
 		89CA5FBF2AD315E400B7D3EF /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */; };
 		89CA728D291721D200CF72FE /* KeychainAccessible+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA728C291721D200CF72FE /* KeychainAccessible+Extensions.swift */; };
@@ -266,13 +267,13 @@
 		89CA729129174CF900CF72FE /* DiningAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA727229171E3900CF72FE /* DiningAnalyticsProvider.swift */; };
 		89CA72952917541C00CF72FE /* DiningAnalyticsHomeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89CA7292291753DF00CF72FE /* DiningAnalyticsHomeWidget.swift */; };
 		89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DCBEC528E791B70029F784 /* CoursesViewController.swift */; };
+		89DF550A29CE49A900EF03F7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF550929CE49A900EF03F7 /* BannerViewModel.swift */; };
+		89DF550C29CE4BDF00EF03F7 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF550B29CE4BDF00EF03F7 /* BannerView.swift */; };
 		89DF9C352B66C3A700267449 /* Multipart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF9C342B66C3A700267449 /* Multipart.swift */; };
 		89E0DE682AE38A8800E918FF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE672AE38A8800E918FF /* HomeView.swift */; };
 		89E0DE6A2AE396E200E918FF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE692AE396E200E918FF /* HomeViewModel.swift */; };
 		89E0DE6C2AE415A800E918FF /* HomeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE6B2AE415A800E918FF /* HomeCardView.swift */; };
 		89E37E102B6F5BD2000A86B7 /* NewListingForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E37E0F2B6F5BD2000A86B7 /* NewListingForm.swift */; };
-		89DF550A29CE49A900EF03F7 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF550929CE49A900EF03F7 /* BannerViewModel.swift */; };
-		89DF550C29CE4BDF00EF03F7 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF550B29CE4BDF00EF03F7 /* BannerView.swift */; };
 		89EA261E290EDFA7008F26CF /* CoursesDayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */; };
 		89EA2622290EE3FD008F26CF /* CoursesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2620290EE3E9008F26CF /* CoursesProvider.swift */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
@@ -660,6 +661,7 @@
 		8766844028CBE907005CAD32 /* NativeNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NativeNewsViewController.swift; sourceTree = "<group>"; };
 		87FE6478290EE4BE00AFADF6 /* NotificationAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPIModel.swift; sourceTree = "<group>"; };
 		890471722B76E800001FF257 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		89093EE12BB4FEB90076B712 /* UserEngagementPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEngagementPopupView.swift; sourceTree = "<group>"; };
 		890C4EC62ACBA486009650CA /* LaundryAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryAttributes.swift; sourceTree = "<group>"; };
 		890C4EC72ACBA486009650CA /* LaundryMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaundryMachine.swift; sourceTree = "<group>"; };
 		890D14FB2AB7469300672FFE /* PennMobile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobile.swift; sourceTree = "<group>"; };
@@ -689,8 +691,8 @@
 		895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginSwiftUI.swift; sourceTree = "<group>"; };
 		895D98AF2ACF312300F8C5DF /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		897F0A922B08256C0060583A /* Toasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toasts.swift; sourceTree = "<group>"; };
-		89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCardView.swift; sourceTree = "<group>"; };
 		8987C8FC29CE5A8B004E9A99 /* BannerDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerDescription.swift; sourceTree = "<group>"; };
+		89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCardView.swift; sourceTree = "<group>"; };
 		89B454DE28E1161B00BC918B /* PathAtPennNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAtPennNetworkManager.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		89CA5FBE2AD315E400B7D3EF /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
 		89CA727229171E3900CF72FE /* DiningAnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsProvider.swift; sourceTree = "<group>"; };
@@ -699,13 +701,13 @@
 		89CA7292291753DF00CF72FE /* DiningAnalyticsHomeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsHomeWidget.swift; sourceTree = "<group>"; };
 		89CA72962917584000CF72FE /* MeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterView.swift; sourceTree = "<group>"; };
 		89DCBEC528E791B70029F784 /* CoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
+		89DF550929CE49A900EF03F7 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
+		89DF550B29CE4BDF00EF03F7 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		89DF9C342B66C3A700267449 /* Multipart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Multipart.swift; sourceTree = "<group>"; };
 		89E0DE672AE38A8800E918FF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		89E0DE692AE396E200E918FF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		89E0DE6B2AE415A800E918FF /* HomeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCardView.swift; sourceTree = "<group>"; };
 		89E37E0F2B6F5BD2000A86B7 /* NewListingForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListingForm.swift; sourceTree = "<group>"; };
-		89DF550929CE49A900EF03F7 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
-		89DF550B29CE4BDF00EF03F7 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayWidget.swift; sourceTree = "<group>"; };
 		89EA2620290EE3E9008F26CF /* CoursesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesProvider.swift; sourceTree = "<group>"; };
 		89EA262C290F2667008F26CF /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -1736,8 +1738,8 @@
 			children = (
 				89DF550929CE49A900EF03F7 /* BannerViewModel.swift */,
 				89DF550B29CE4BDF00EF03F7 /* BannerView.swift */,
+				89093EE12BB4FEB90076B712 /* UserEngagementPopupView.swift */,
 				8987C8FC29CE5A8B004E9A99 /* BannerDescription.swift */,
-				8987C8FA29CE59C3004E9A99 /* UIHostingController+SafeAreaDisabling.swift */,
 			);
 			path = Banners;
 			sourceTree = "<group>";
@@ -2543,6 +2545,7 @@
 				6C6035FC26E723240025FBC7 /* EmptyView.swift in Sources */,
 				21640FD3204A296D008DB6E8 /* LaundryGraphView.swift in Sources */,
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
+				89093EE22BB4FEB90076B712 /* UserEngagementPopupView.swift in Sources */,
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
 				429EA1E12B8BA18300824455 /* SublettingAPI.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,

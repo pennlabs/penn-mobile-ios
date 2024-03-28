@@ -13,7 +13,7 @@ extension BannerDescription: View {
     var imageView: some View {
         KFImage(image)
             .resizable()
-            .aspectRatio(contentMode: .fill)
+            .scaledToFill()
             .accessibilityLabel(Text(text))
     }
 

@@ -11,14 +11,3 @@ struct BannerDescription: Equatable, Codable {
     var text: String
     var action: URL?
 }
-
-struct UserEngagementMessageDescription: Codable {
-    var primary: String?
-    var secondary: String?
-    var actions: [Action]
-
-    struct Action: Codable {
-        var url: URL
-        var title: String
-    }
-}

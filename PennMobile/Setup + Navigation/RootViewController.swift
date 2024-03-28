@@ -11,17 +11,10 @@ import UIKit
 import SwiftUI
 import StoreKit
 import SwiftyJSON
-import SwiftUI
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
 class RootViewController: UIViewController, NotificationRequestable, ShowsAlert {
-    static let userEngagementMessageDelay: TimeInterval = 60
-
     var current: UIViewController
-
-    var bannerController: UIHostingController<AnyView>?
-    weak var bottomConstraint: NSLayoutConstraint?
-    var userEngagementMessageTimer: Timer?
 
     private var lastLoginAttempt: Date?
 
@@ -31,62 +24,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     init() {
         self.current = SplashViewController()
         super.init(nibName: nil, bundle: nil)
-    }
-
-    func applyConstraints(to child: UIView) {
-        bottomConstraint = child.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor).first {
-            $0.firstAnchor == view.bottomAnchor || $0.secondAnchor == view.bottomAnchor
-        }
-        updateConstraintsForBanners()
-    }
-
-    func updateConstraintsForBanners() {
-        if bannerController != nil {
-            bottomConstraint?.constant = -BannerView.height
-        } else {
-            bottomConstraint?.constant = 0
-        }
-    }
-
-    func displayBannersIfNeeded() {
-        if BannerViewModel.shared.shouldDisplayBanners() {
-            BannerViewModel.shared.fetchBannersIfNeeded()
-            if bannerController == nil {
-                bannerController = UIHostingController(rootView: AnyView(
-                    BannerView().environmentObject(BannerViewModel.shared)
-                ))
-                bannerController!.disableSafeArea()
-                addChild(bannerController!)
-                view.addSubview(bannerController!.view)
-                _ = bannerController!.view.anchor(nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, heightConstant: BannerView.height)
-
-                // Also set up user engagement messages
-                userEngagementMessageTimer = Timer.scheduledTimer(withTimeInterval: RootViewController.userEngagementMessageDelay, repeats: true) { [weak self] _ in
-                    self?.displayUserEngagementMessage()
-                }
-            }
-        }
-
-        updateConstraintsForBanners()
-    }
-
-    func displayUserEngagementMessage() {
-        guard let message = BannerViewModel.shared.userEngagementMessages.random else {
-            return
-        }
-
-        let alert = UIAlertController(title: message.primary, message: message.secondary, preferredStyle: .alert)
-        if !message.actions.isEmpty {
-            message.actions.forEach { action in
-                alert.addAction(UIAlertAction(title: action.title, style: .default) { _ in
-                    UIApplication.shared.open(action.url)
-                })
-            }
-
-            alert.addAction(UIAlertAction(title: "Close", style: .cancel))
-        }
-
-        present(alert, animated: true)
     }
 
     override func viewDidLoad() {
@@ -99,7 +36,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         addChild(current)
         current.view.frame = view.bounds
         view.addSubview(current.view)
-        applyConstraints(to: current.view)
         current.didMove(toParent: self)
 
         if #available(iOS 15, *) {
@@ -136,8 +72,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     }
 
     func applicationWillEnterForeground() {
-        displayBannersIfNeeded()
-        
         if Account.isLoggedIn && shouldRequireLogin() {
             // If user is logged in but login is required, clear user data and switch to logout
             clearAccountData()
@@ -232,7 +166,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
             self.current.removeFromParent()
             new.didMove(toParent: self)
             self.current = new
-            self.applyConstraints(to: new.view)
             completion?()
         }
     }
@@ -245,7 +178,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
             self.current.removeFromParent()
             new.didMove(toParent: self)
             self.current = new
-            self.applyConstraints(to: new.view)
             completion?()
         }
     }
@@ -254,7 +186,6 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         addChild(controller)
         controller.view.frame = view.bounds
         view.addSubview(controller.view)
-        applyConstraints(to: controller.view)
         controller.didMove(toParent: self)
         current.willMove(toParent: nil)
         current.view.removeFromSuperview()

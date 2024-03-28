@@ -14,16 +14,28 @@ private func getDefaultBannerURL() -> URL {
     return URL(string: String(data: data, encoding: .ascii)!)!
 }
 
-class BannerViewModel: ObservableObject {
+func getDefaultPopupURL() -> URL {
+    let data = Data(base64Encoded: "aHR0cHM6Ly9wZW5ubGFicy5naXRodWIuaW8vcGxhdGZvcm0tc2FtcGxlLWFzc2V0cy9pbnRlcmFjdGl2ZS5odG1sCg==")!
+    return URL(string: String(data: data, encoding: .ascii)!)!
+}
+
+@MainActor class BannerViewModel: ObservableObject {
     static let shared = BannerViewModel(
         url: getDefaultBannerURL(),
         cacheMaxAge: 60 * 60
     )
+    
+    static var isAprilFools: Bool {
+        let components = Calendar.autoupdatingCurrent.dateComponents(in: .autoupdatingCurrent, from: Date())
+        return components.month == 4 && components.day == 1
+    }
 
     @Published var banners: [BannerDescription] = []
-    @Published var userEngagementMessages: [UserEngagementMessageDescription] = []
     private var isFetching = false
     private var lastSuccessfulFetch: Date?
+    
+    @Published var showBanners = ProcessInfo.processInfo.environment["FORCE_BANNERS"] != nil || BannerViewModel.isAprilFools
+    @Published var showPopup = true
 
     let url: URL
     let cacheMaxAge: TimeInterval
@@ -39,19 +51,6 @@ class BannerViewModel: ObservableObject {
         return decoder
     }()
 
-    func shouldDisplayBanners(on date: Date = Date()) -> Bool {
-        #if DEBUG
-        if ProcessInfo.processInfo.environment["FORCE_BANNERS"] != nil {
-            return true
-        }
-        #endif
-
-        let calendar = Calendar(identifier: .gregorian)
-        let components = calendar.dateComponents(in: TimeZone.current, from: date)
-
-        return components.year == 2023 && components.month == 4 && components.day! <= 2
-    }
-
     func fetchBannersIfNeeded() {
         if isFetching {
             return
@@ -63,7 +62,6 @@ class BannerViewModel: ObservableObject {
 
         struct BannerResponse: Decodable {
             let assets: [BannerDescription]
-            let strings: [UserEngagementMessageDescription]
         }
 
         isFetching = true
@@ -72,7 +70,6 @@ class BannerViewModel: ObservableObject {
                 let (data, _) = try await URLSession(configuration: .ephemeral).data(from: url)
                 let response = try decoder.decode(BannerResponse.self, from: data)
                 banners = response.assets
-                userEngagementMessages = response.strings
                 lastSuccessfulFetch = Date()
             } catch let error {
                 lastSuccessfulFetch = nil
