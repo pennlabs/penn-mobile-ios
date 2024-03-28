@@ -35,6 +35,7 @@ struct MoreView: View {
     
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var navigationManager: NavigationManager
+    @EnvironmentObject var bannerViewModel: BannerViewModel
     
     @State var isPresentingLoginSheet = false
     @State var isLoggingOut = false
@@ -120,6 +121,16 @@ struct MoreView: View {
                 }
             } header: {
                 Text("Links")
+            }
+            
+            if Account.getAccount()?.pennid == 12345678 {
+                Section {
+                    Toggle(isOn: $bannerViewModel.showBanners) {
+                        Text("Force April Fools")
+                    }
+                } header: {
+                    Text("Debugging")
+                }
             }
         }
         .navigationTitle(Text("More"))

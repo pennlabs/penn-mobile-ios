@@ -10,8 +10,10 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var bannerViewModel: BannerViewModel
     @State var toast: ToastConfiguration?
     @StateObject var popupManager = PopupManager()
+    @Environment(\.scenePhase) var scenePhase
 
     var isOnLogoutScreen: Bool {
         switch authManager.state {
@@ -21,12 +23,30 @@ struct RootView: View {
             false
         }
     }
-
+    
+    let timer = Timer.publish(every: 30, on: .main, in: .default).autoconnect()
+    
     var body: some View {
         Group {
             switch authManager.state {
             case .guest, .loggedIn:
-                MainTabView().transition(.opacity)
+                if bannerViewModel.showBanners {
+                    VStack(spacing: 0) {
+                        BannerView()
+                        MainTabView()
+                        BannerView()
+                    }
+                    .transition(.opacity)
+                    .ignoresSafeArea()
+                    .sheet(isPresented: $bannerViewModel.showPopup) {
+                        UserEngagementPopupView()
+                    }
+                    .onReceive(timer) { _ in
+                        bannerViewModel.showPopup = true
+                    }
+                } else {
+                    MainTabView().transition(.opacity)
+                }
             case .loggedOut:
                 LoggedOutView().transition(.opacity)
             default:
@@ -70,6 +90,11 @@ struct RootView: View {
                         toast = nil
                     }
                 }
+            }
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .active && BannerViewModel.isAprilFools {
+                bannerViewModel.showBanners = true
             }
         }
     }

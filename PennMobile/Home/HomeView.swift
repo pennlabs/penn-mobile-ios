@@ -14,6 +14,7 @@ struct HomeView<Model: HomeViewModel>: View {
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: Model
+    @EnvironmentObject var bannerViewModel: BannerViewModel
     
     var dateFormatStyle: Date.FormatStyle {
         Date.FormatStyle()
@@ -51,9 +52,23 @@ struct HomeView<Model: HomeViewModel>: View {
                             .padding(.bottom)
                             .multilineTextAlignment(.center)
                             
+                            if bannerViewModel.showBanners {
+                                BannerView()
+                                    .frame(maxWidth: .infinity)
+                                    .frame(width: 0)
+                                    .padding(.bottom)
+                            }
+                            
                             viewModel.data.content(for: context.date)
                                 .frame(maxWidth: 480)
                                 .frame(maxWidth: .infinity)
+                            
+                            if bannerViewModel.showBanners {
+                                BannerView()
+                                    .frame(maxWidth: .infinity)
+                                    .frame(width: 0)
+                                    .padding(.top)
+                            }
                         }
                         .padding(.bottom)
                         // Hack for forcing the navbar to always render
@@ -97,4 +112,5 @@ struct HomeView<Model: HomeViewModel>: View {
 #Preview {
     HomeView<MockHomeViewModel>()
         .environmentObject(MockHomeViewModel())
+        .environmentObject(BannerViewModel.shared)
 }
