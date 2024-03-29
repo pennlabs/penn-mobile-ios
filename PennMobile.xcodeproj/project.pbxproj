@@ -228,6 +228,7 @@
 		8547D43E2BB4F117006010B9 /* PennEventLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547D43D2BB4F117006010B9 /* PennEventLocation.swift */; };
 		856AF4392BB6B19E008E45F7 /* PennEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856AF4382BB6B19E008E45F7 /* PennEvent.swift */; };
 		856AF43B2BB6B3CE008E45F7 /* PennEventsAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856AF43A2BB6B3CE008E45F7 /* PennEventsAPIManager.swift */; };
+		856AF43D2BB6BCDD008E45F7 /* MailComposerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856AF43C2BB6BCDD008E45F7 /* MailComposerCoordinator.swift */; };
 		858C15782B95150400FE0B62 /* PennEventCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858C15772B95150400FE0B62 /* PennEventCellView.swift */; };
 		858C157D2B95158C00FE0B62 /* PennEventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858C157C2B95158C00FE0B62 /* PennEventViewModel.swift */; };
 		85C523CE2B9DDE220007F23D /* PennEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85C523CD2B9DDE220007F23D /* PennEventsView.swift */; };
@@ -664,6 +665,7 @@
 		8547D43D2BB4F117006010B9 /* PennEventLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventLocation.swift; sourceTree = "<group>"; };
 		856AF4382BB6B19E008E45F7 /* PennEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEvent.swift; sourceTree = "<group>"; };
 		856AF43A2BB6B3CE008E45F7 /* PennEventsAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsAPIManager.swift; sourceTree = "<group>"; };
+		856AF43C2BB6BCDD008E45F7 /* MailComposerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerCoordinator.swift; sourceTree = "<group>"; };
 		858C15772B95150400FE0B62 /* PennEventCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventCellView.swift; sourceTree = "<group>"; };
 		858C157C2B95158C00FE0B62 /* PennEventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventViewModel.swift; sourceTree = "<group>"; };
 		85C523CD2B9DDE220007F23D /* PennEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsView.swift; sourceTree = "<group>"; };
@@ -1681,6 +1683,7 @@
 				858C157C2B95158C00FE0B62 /* PennEventViewModel.swift */,
 				8547D43D2BB4F117006010B9 /* PennEventLocation.swift */,
 				856AF43A2BB6B3CE008E45F7 /* PennEventsAPIManager.swift */,
+				856AF43C2BB6BCDD008E45F7 /* MailComposerCoordinator.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -2732,6 +2735,7 @@
 				21640D5E20105BAC002F33CA /* HomeLaundryCell.swift in Sources */,
 				6CAA4B5727A763A400473CC6 /* HomePollsCell.swift in Sources */,
 				F27AA01A23BC6D1400276C4F /* PrivacyPermissionDelegate.swift in Sources */,
+				856AF43D2BB6BCDD008E45F7 /* MailComposerCoordinator.swift in Sources */,
 				F212BE8A23B71C8500ED46A1 /* NotificationsTableViewCell.swift in Sources */,
 				422C896E2A0FE8C000A7135C /* FitnessSettingsView.swift in Sources */,
 				2130A5062238C2F000DFEEC7 /* PennLoginController.swift in Sources */,

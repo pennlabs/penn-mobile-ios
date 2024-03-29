@@ -9,6 +9,7 @@
 import SwiftUI
 import MapKit
 import SafariServices
+import MessageUI
 
 struct PennEventsViewerView: View {
     var event: PennEventViewModel
@@ -18,6 +19,9 @@ struct PennEventsViewerView: View {
     // boolean flags for the webView and link button
     @State private var showingWebView = false
     @State private var showAlert = false
+    
+    // for email button
+    @State private var showingMailComposer = false
     
     // default to philly
     @State private var region = MKCoordinateRegion(
@@ -85,7 +89,7 @@ struct PennEventsViewerView: View {
                     HStack {
                         Text("Event Start:")
                             .font(.headline)
-                        Text("\(event.start)")
+                        Text("\(event.startDate)")
                             .font(.subheadline)
                         Text("\(event.startTime)")
                             .font(.subheadline)
@@ -94,7 +98,7 @@ struct PennEventsViewerView: View {
                     HStack {
                         Text("Event End:")
                             .font(.headline)
-                        Text("\(event.end)")
+                        Text("\(event.endDate)")
                             .font(.subheadline)
                         Text("\(event.endTime)")
                             .font(.subheadline)
@@ -125,10 +129,11 @@ struct PennEventsViewerView: View {
                         fetchCoordinates(for: event.location)
                     }
                 
-                // more info link button
+                // buttons
                 HStack {
                     Spacer()
                     
+                    // more info link button
                     Button(action: {
                         if event.link != "" {
                             self.showingWebView = true
@@ -155,6 +160,28 @@ struct PennEventsViewerView: View {
                         Alert(title: Text("No valid link"), message: Text("This event does not have a link provided."), dismissButton: .default(Text("OK")))
                     }
                     
+                    // email Button
+                    Button(action: {
+                        if MFMailComposeViewController.canSendMail() {
+                             self.showingMailComposer = true
+                         } else {
+                             print("cannot send mail")
+                         }
+                    }) {
+                        HStack {
+                            Image(systemName: "envelope")
+                            Text("Contact")
+                        }
+                    }
+                    .padding()
+                    .background(event.contactInfo != "" ? Color.black : Color.gray)
+                    .foregroundColor(.white)
+                    .cornerRadius(15)
+                    .disabled(event.contactInfo == "")
+                    .sheet(isPresented: $showingMailComposer) {
+                        MailComposeView(isShowing: $showingMailComposer, email: event.contactInfo)
+                    }
+                    
                     Spacer()
                 }
                 .padding()
@@ -174,30 +201,26 @@ struct PennEventsViewerView: View {
     }
 }
 
-//struct SafariView: UIViewControllerRepresentable {
-//    let url: URL
-//    
-//    func makeUIViewController(context: UIViewControllerRepresentableContext<SafariView>) -> SFSafariViewController {
-//        return SFSafariViewController(url: url)
-//    }
-//    
-//    func updateUIViewController(_ uiViewController: SFSafariViewController, context: UIViewControllerRepresentableContext<SafariView>) {
-//    }
-//}
 
 struct PennEventsViewerView_Previews: PreviewProvider {
     static var previews: some View {
-        PennEventsViewerView(event: PennEventViewModel(
-            id: "1",
-            title: "Lecture Series: Jews and the University",
-            description: "This free lecture series is an effort to share insights from history, sociology, education studies, and other fields that can help put the present moment into context",
-            imageUrl: "https://penntoday.upenn.edu/sites/default/files/styles/event_large/public/2024-01/katz-center-teaser.jpg?h=733e6470&itok=kKJdQofY",
-            location: "The Katz Center for Judaic Studies",
-            start: "01/23/2024",
-            end: "03/14/2024",
-            startTime: "6:45PM",
-            endTime: "4:00PM",
-            link: "https://penntoday.upenn.edu/events/lecture-series-jews-and-university"
-        ))
+        let sampleEvents = [
+            PennEvent(
+                eventType: "Lecture",
+                name: "Lecture Series: Jews and the University",
+                description: "The integration of Jews into the university is one of the great success stories of modern American culture and Jewish life.",
+                location: "The Katz Center for Judaic Studies",
+                imageUrl: "https://penntoday.upenn.edu/sites/default/files/styles/event_large/public/2024-01/katz-center-teaser.jpg?h=733e6470&itok=kKJdQofY",
+                start: "2024-03-23T18:45:00-04:00",
+                end: "2024-03-14T16:00:00-04:00",
+                email: "info@katzcenter.upenn.edu",
+                website: "https://penntoday.upenn.edu/events/lecture-series-jews-and-university"
+            )
+        ]
+        
+        let viewModel = PennEventsViewModel()
+        viewModel.events = sampleEvents.map(PennEventViewModel.init)
+           
+        return PennEventsView(viewModel: viewModel)
     }
 }
