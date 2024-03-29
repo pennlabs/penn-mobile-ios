@@ -17,7 +17,7 @@ struct PennEventsView: View {
     }
 
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack {
                 Picker("Select Category", selection: $viewModel.selectedCategory) {
                     ForEach(viewModel.uniqueEventTypes, id: \.self) { category in
@@ -40,7 +40,7 @@ struct PennEventsView: View {
             .onAppear {
                 viewModel.fetchEvents()
             }
-        }
+//        }
     }
 
 }
