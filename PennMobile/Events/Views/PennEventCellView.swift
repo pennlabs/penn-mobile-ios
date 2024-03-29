@@ -80,18 +80,23 @@ struct PennEventCellView: View {
 
 struct PennEventCellView_Previews: PreviewProvider {
     static var previews: some View {
-        PennEventCellView(viewModel: PennEventViewModel(
-            id: "1",
-            title: "Lecture Series: Jews and the University",
-            description: "This free lecture series is an effort to share insights from history, sociology, education studies, and other fields that can help put the present moment into context.",
-            imageUrl: "https://penntoday.upenn.edu/sites/default/files/styles/event_large/public/2024-01/katz-center-teaser.jpg?h=733e6470&itok=kKJdQofY",
-            location: "The Katz Center for Judaic Studies",
-            start: "01/23/2024",
-            end: "03/14/2024",
-            startTime: "6:45PM",
-            endTime: "4:00PM", 
-            link: "https://penntoday.upenn.edu/events/lecture-series-jews-and-university"
-        ))
-        .previewLayout(.sizeThatFits)
+        let sampleEvents = [
+            PennEvent(
+                eventType: "Lecture",
+                name: "Lecture Series: Jews and the University",
+                description: "The integration of Jews into the university is one of the great success stories of modern American culture and Jewish life.",
+                location: "The Katz Center for Judaic Studies",
+                imageUrl: "https://penntoday.upenn.edu/sites/default/files/styles/event_large/public/2024-01/katz-center-teaser.jpg?h=733e6470&itok=kKJdQofY",
+                start: "2024-03-23T18:45:00-04:00",
+                end: "2024-03-14T16:00:00-04:00",
+                email: "info@katzcenter.upenn.edu",
+                website: "https://penntoday.upenn.edu/events/lecture-series-jews-and-university"
+            )
+        ]
+        
+        let viewModel = PennEventsViewModel()
+        viewModel.events = sampleEvents.map(PennEventViewModel.init)
+           
+        return PennEventsView(viewModel: viewModel)
     }
 }
