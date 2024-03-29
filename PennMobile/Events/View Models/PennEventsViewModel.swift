@@ -27,10 +27,9 @@ class PennEventsViewModel: ObservableObject {
             DispatchQueue.main.async {
                 if let pennEvents = pennEvents {
                     // preprocess and map PennEvent to PennEventViewModel
-                    self?.events = pennEvents.map { event -> PennEventViewModel in
-                        var modifiedEvent = event
-                        modifiedEvent.eventType = self?.categorizeEventType(eventType: event.eventType!) ?? "General"
-                        return PennEventViewModel(from: modifiedEvent)
+                    self?.events = pennEvents.map { event in
+                        let categorizedEventType = self?.categorizeEventType(eventType: event.eventType ?? "No Event Type") ?? "No Event Type"
+                        return PennEventViewModel(from: event, categorizedEventType: categorizedEventType)
                     }
                 } else if let error = error {
                     print("error fetching events: \(error.localizedDescription)")

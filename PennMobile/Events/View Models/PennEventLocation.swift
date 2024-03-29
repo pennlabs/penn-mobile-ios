@@ -53,22 +53,26 @@ struct PennEventLocation: Identifiable {
             let parts = string.lowercased().split(separator: " ").map(String.init)
             for part in parts {
                 if let matchingLocation = pennEventLocations.first(where: { $0.name.lowercased().contains(part) }) {
+                    
+                    print("Matching \(part): '\(part)' with location '\(matchingLocation.name)'")
+                    
                     return matchingLocation.coordinate
                 }
             }
+            print("No match found in \(string) for string: \(string)")
             return nil
         }
 
-        // check first the location, then the event title, then the event type
+        // check first the event type, then location, then the event title
+        if let coordinate = findCoordinate(from: eventType) {
+            return coordinate
+        }
         if location.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != "No Location" {
             if let coordinate = findCoordinate(from: location) {
                 return coordinate
             }
         }
         if let coordinate = findCoordinate(from: eventName) {
-            return coordinate
-        }
-        if let coordinate = findCoordinate(from: eventType) {
             return coordinate
         }
 

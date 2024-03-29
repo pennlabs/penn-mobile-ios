@@ -23,7 +23,7 @@ class PennEventViewModel: ObservableObject, Identifiable {
     @Published var eventType: String
     @Published var originalEventType: String
     
-    init(from pennEvent: PennEvent) {
+    init(from pennEvent: PennEvent, categorizedEventType: String) {
         self.id = UUID().uuidString
         self.title = pennEvent.name ?? "No Title"
         self.description = pennEvent.description ?? "No Description"
@@ -31,9 +31,9 @@ class PennEventViewModel: ObservableObject, Identifiable {
         self.location = pennEvent.location ?? "No Location"
         self.link = pennEvent.website ?? "No Link"
         self.contactInfo = pennEvent.email ?? "No Contact Info"
-        self.originalEventType = pennEvent.eventType ?? "Unknown"
-        self.eventType = pennEvent.eventType ?? "No Event Type"
-
+        self.originalEventType = pennEvent.eventType ?? "No Event Type"
+        self.eventType = categorizedEventType
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"

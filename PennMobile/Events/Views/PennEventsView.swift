@@ -61,9 +61,11 @@ struct PennEventsView_Previews: PreviewProvider {
             )
         ]
         
+        let categorizedEventType = "Penn Today"
+        let viewModelEvents = sampleEvents.map { PennEventViewModel(from: $0, categorizedEventType: categorizedEventType) }
         let viewModel = PennEventsViewModel()
-        viewModel.events = sampleEvents.map(PennEventViewModel.init)
-           
+        viewModel.events = viewModelEvents
+
         return PennEventsView(viewModel: viewModel)
     }
 }
