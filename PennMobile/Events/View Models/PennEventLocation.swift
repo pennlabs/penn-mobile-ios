@@ -44,7 +44,21 @@ struct PennEventLocation: Identifiable {
         PennEventLocation(name: "Steinberg-Dietrich", coordinate: CLLocationCoordinate2D(latitude: 39.95189543035373, longitude: -75.19638290887475)),
         PennEventLocation(name: "Jaffe History of Art", coordinate: CLLocationCoordinate2D(latitude: 39.95273533555461, longitude: -75.1929464299296)),
         PennEventLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
-        PennEventLocation(name: "Annenberg", coordinate: CLLocationCoordinate2D(latitude: 39.95295865404018, longitude: -75.19586669018221))
+        PennEventLocation(name: "Annenberg", coordinate: CLLocationCoordinate2D(latitude: 39.95295865404018, longitude: -75.19586669018221)),
+        PennEventLocation(name: "Harrison", coordinate: CLLocationCoordinate2D(latitude: 39.95191883398914, longitude: -75.20111961064812)),
+        PennEventLocation(name: "Gutmann", coordinate: CLLocationCoordinate2D(latitude: 39.95378369040921, longitude: -75.20209860371801)),
+        PennEventLocation(name: "Radian", coordinate: CLLocationCoordinate2D(latitude: 39.95426285980732, longitude: -75.20118913499053)),
+        PennEventLocation(name: "Du Bois", coordinate: CLLocationCoordinate2D(latitude: 39.953729053974726, longitude: -75.20100366821694)),
+        PennEventLocation(name: "Rodin", coordinate: CLLocationCoordinate2D(latitude: 39.95317963582513, longitude: -75.2013287633819)),
+        PennEventLocation(name: "Gregory", coordinate: CLLocationCoordinate2D(latitude: 39.95284062848591, longitude: -75.2024690313161)),
+        PennEventLocation(name: "Harnwell", coordinate: CLLocationCoordinate2D(latitude: 39.95239945381507, longitude: -75.20011766975578)),
+        PennEventLocation(name: "Stouffer", coordinate: CLLocationCoordinate2D(latitude: 39.951618752554566, longitude: -75.20025454470158)),
+        PennEventLocation(name: "Lauder", coordinate: CLLocationCoordinate2D(latitude: 39.95371471491931, longitude: -75.19129026404389)),
+        PennEventLocation(name: "Hill", coordinate: CLLocationCoordinate2D(latitude: 39.95302883232131, longitude: -75.19067853565349)),
+        PennEventLocation(name: "KCEH", coordinate: CLLocationCoordinate2D(latitude: 39.954270105221795, longitude: -75.19388456903467)),
+        PennEventLocation(name: "Fisher", coordinate: CLLocationCoordinate2D(latitude: 39.950494278320406, longitude: -75.1978243723441)),
+        PennEventLocation(name: "Ware", coordinate: CLLocationCoordinate2D(latitude: 39.95038566116001, longitude: -75.1965884401402)),
+        PennEventLocation(name: "Riepe", coordinate: CLLocationCoordinate2D(latitude: 39.95024529610172, longitude: -75.19591924939768))
     ]
     
     static func coordinateForEvent(location: String, eventName: String, eventType: String) -> CLLocationCoordinate2D? {
