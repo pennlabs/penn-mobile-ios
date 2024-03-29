@@ -21,6 +21,7 @@ class PennEventViewModel: ObservableObject, Identifiable {
     @Published var link: String
     @Published var contactInfo: String
     @Published var eventType: String
+    @Published var originalEventType: String
     
     init(from pennEvent: PennEvent) {
         self.id = UUID().uuidString
@@ -30,6 +31,7 @@ class PennEventViewModel: ObservableObject, Identifiable {
         self.location = pennEvent.location ?? "No Location"
         self.link = pennEvent.website ?? "No Link"
         self.contactInfo = pennEvent.email ?? "No Contact Info"
+        self.originalEventType = pennEvent.eventType ?? "Unknown"
         self.eventType = pennEvent.eventType ?? "No Event Type"
 
         let dateFormatter = DateFormatter()
