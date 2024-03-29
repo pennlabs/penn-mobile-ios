@@ -117,17 +117,19 @@ struct PennEventsViewerView: View {
                     .padding(.bottom)
 
                 // map
-                Map(coordinateRegion: $region, showsUserLocation: true)
-                    .cornerRadius(15)
-                    .frame(height: 250)
-                    .disabled(true)
-                    .padding(.leading, 20)
-                    .padding(.trailing, 20)
-                    .shadow(color: .gray, radius: 5, x: 5, y: 5)
-                    .onAppear {
-                        // fetching the coordinates based on location name (backend?)
-                        fetchCoordinates(for: event.location)
-                    }
+                if event.location != "No Location" {
+                    Map(coordinateRegion: $region, showsUserLocation: true)
+                        .cornerRadius(15)
+                        .frame(height: 250)
+                        .disabled(true)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 20)
+                        .shadow(color: .gray, radius: 5, x: 5, y: 5)
+                        .onAppear {
+                            // fetching the coordinates based on location name (backend?)
+                            fetchCoordinates(for: event.location)
+                        }
+                }
                 
                 // buttons
                 HStack {
