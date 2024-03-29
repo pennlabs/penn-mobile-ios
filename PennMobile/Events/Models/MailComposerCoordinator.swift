@@ -10,6 +10,7 @@ import Foundation
 import MessageUI
 import SwiftUI
 
+// uikit for mail composing (will inject into swiftui view)
 class MailComposerCoordinator: NSObject, MFMailComposeViewControllerDelegate {
     
     @Binding var isShowing: Bool

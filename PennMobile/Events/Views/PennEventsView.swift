@@ -11,47 +11,38 @@ import SwiftUI
 struct PennEventsView: View {
     
     @StateObject var viewModel = PennEventsViewModel()
+    
+    private var categories: [String] {
+        viewModel.uniqueEventTypes
+    }
 
     var body: some View {
         NavigationView {
             VStack {
+                Picker("Select Category", selection: $viewModel.selectedCategory) {
+                    ForEach(viewModel.uniqueEventTypes, id: \.self) { category in
+                        Text(category).tag(category)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+
                 ScrollView {
                     LazyVStack {
-                        ForEach(viewModel.events, id: \.id) { eventViewModel in
-                            NavigationLink(destination: PennEventsViewerView(event: eventViewModel)) {
-                                PennEventCellView(viewModel: eventViewModel)
+                        ForEach(viewModel.selectedCategory == "All" ? viewModel.events : viewModel.events.filter { $0.eventType == viewModel.selectedCategory }, id: \.id) { event in
+                            NavigationLink(destination: PennEventsViewerView(event: event)) {
+                                PennEventCellView(viewModel: event)
                             }
-                            .padding(.horizontal, 15)
-                            .padding(.vertical, 3)
                         }
                     }
                 }
-                .onAppear {
-                    // fetch events into array from backend
-                    viewModel.fetchEvents()
-                }
-                
             }
-        }
-
-    }
-}
-
-class PennEventsViewModel: ObservableObject {
-    @Published var events: [PennEventViewModel] = []
-
-    func fetchEvents() {
-        PennEventsAPIManager.shared.fetchEvents { [weak self] (pennEvents, error) in
-            DispatchQueue.main.async {
-                if let pennEvents = pennEvents {
-                    self?.events = pennEvents.map(PennEventViewModel.init)
-                } else if let error = error {
-                    print("error fetching events: \(error.localizedDescription)")
-                }
+            .onAppear {
+                viewModel.fetchEvents()
             }
         }
     }
-    
+
 }
 
 struct PennEventsView_Previews: PreviewProvider {

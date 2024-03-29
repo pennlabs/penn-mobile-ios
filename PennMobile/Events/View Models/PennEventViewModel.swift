@@ -56,5 +56,6 @@ class PennEventViewModel: ObservableObject, Identifiable {
             self.endTime = "No End Time"
         }
     }
+    
 }
 

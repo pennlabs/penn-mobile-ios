@@ -8,6 +8,7 @@
 
 import Foundation
 
+// api manager for new penn events
 class PennEventsAPIManager {
     static let shared = PennEventsAPIManager()
 
