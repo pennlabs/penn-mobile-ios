@@ -125,6 +125,11 @@
 		42D9237529E0CCFB00E9E18E /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D9237429E0CCFB00E9E18E /* FitnessView.swift */; };
 		42ECD8B92B8CB6A000CE77E5 /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ECD8B82B8CB6A000CE77E5 /* BadgeView.swift */; };
 		56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */; };
+		6788845A2BB9D0C100BA2E70 /* AIChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678884552BB9D0C100BA2E70 /* AIChatModel.swift */; };
+		6788845B2BB9D0C100BA2E70 /* AIChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678884562BB9D0C100BA2E70 /* AIChatViewModel.swift */; };
+		6788845C2BB9D0C100BA2E70 /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678884572BB9D0C100BA2E70 /* ChatMessageView.swift */; };
+		6788845D2BB9D0C100BA2E70 /* AIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678884582BB9D0C100BA2E70 /* AIChatView.swift */; };
+		6788845E2BB9D0C100BA2E70 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678884592BB9D0C100BA2E70 /* ChatMessage.swift */; };
 		6C11C08026F842CF00407C04 /* HomeUpdateCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C11C07F26F842CF00407C04 /* HomeUpdateCellItem.swift */; };
 		6C1991BB27B5C73800BBB402 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1991BA27B5C73800BBB402 /* Environment.swift */; };
 		6C23AF9526E57903002F60F0 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -560,6 +565,11 @@
 		42D9237229E0C9AF00E9E18E /* FitnessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewController.swift; sourceTree = "<group>"; };
 		42D9237429E0CCFB00E9E18E /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
 		42ECD8B82B8CB6A000CE77E5 /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
+		678884552BB9D0C100BA2E70 /* AIChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIChatModel.swift; sourceTree = "<group>"; };
+		678884562BB9D0C100BA2E70 /* AIChatViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIChatViewModel.swift; sourceTree = "<group>"; };
+		678884572BB9D0C100BA2E70 /* ChatMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
+		678884582BB9D0C100BA2E70 /* AIChatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIChatView.swift; sourceTree = "<group>"; };
+		678884592BB9D0C100BA2E70 /* ChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		6C11C07F26F842CF00407C04 /* HomeUpdateCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUpdateCellItem.swift; sourceTree = "<group>"; };
 		6C1991BA27B5C73800BBB402 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationDevelopment.xcconfig; sourceTree = "<group>"; };
@@ -999,6 +1009,7 @@
 		216640621EBADADA00746B8E /* PennMobile */ = {
 			isa = PBXGroup;
 			children = (
+				678884542BB9D09900BA2E70 /* Penn Mobile AI */,
 				E49D3B8C2B66C6D20022AB71 /* Subletting */,
 				211B11A41F2995AD00A22C8A /* PennMobile.entitlements */,
 				CF29A15F1FB7873A0067D946 /* Onboarding */,
@@ -1332,6 +1343,18 @@
 				21B653B82245EB67001A97C5 /* PennAuthRequestable.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		678884542BB9D09900BA2E70 /* Penn Mobile AI */ = {
+			isa = PBXGroup;
+			children = (
+				678884552BB9D0C100BA2E70 /* AIChatModel.swift */,
+				678884582BB9D0C100BA2E70 /* AIChatView.swift */,
+				678884562BB9D0C100BA2E70 /* AIChatViewModel.swift */,
+				678884592BB9D0C100BA2E70 /* ChatMessage.swift */,
+				678884572BB9D0C100BA2E70 /* ChatMessageView.swift */,
+			);
+			path = "Penn Mobile AI";
 			sourceTree = "<group>";
 		};
 		6C11C07E26F841CB00407C04 /* Update */ = {
@@ -2466,6 +2489,7 @@
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				6CAA4B4C27A7639700473CC6 /* PollsNetworkManager.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
+				6788845C2BB9D0C100BA2E70 /* ChatMessageView.swift in Sources */,
 				217A7838204D2E2B004F1227 /* HomeGSRCellItem.swift in Sources */,
 				89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
@@ -2536,6 +2560,7 @@
 				6C84D9E526293E680039C57F /* UIKit Views.swift in Sources */,
 				21B649242236FFD300AC5B7F /* BuildingMapWebviewController.swift in Sources */,
 				89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */,
+				6788845B2BB9D0C100BA2E70 /* AIChatViewModel.swift in Sources */,
 				426A0B52299034910066C7B7 /* DiningAnalyticsGraphBox.swift in Sources */,
 				F212BE7F23B6ACF100ED46A1 /* PrivacyTableViewController.swift in Sources */,
 				89E37E102B6F5BD2000A86B7 /* NewListingForm.swift in Sources */,
@@ -2560,6 +2585,7 @@
 				B62875ED2115433100FB2873 /* PennCoordinate.swift in Sources */,
 				EFE2D6F6239B11050020F6BF /* GSRColorCell.swift in Sources */,
 				6CC88D6227B1BF51006896F6 /* PredictionsGraphView+SmoothedData.swift in Sources */,
+				6788845E2BB9D0C100BA2E70 /* ChatMessage.swift in Sources */,
 				890D15022AB74F0700672FFE /* LoggedOutView.swift in Sources */,
 				F212BE8823B71C7100ED46A1 /* NotificationsTableViewController.swift in Sources */,
 				6CC88D6527B1BF51006896F6 /* PredictionsGraphView+AxisLabels.swift in Sources */,
@@ -2640,7 +2666,9 @@
 				216640C41EBADC9300746B8E /* GenericControllers.swift in Sources */,
 				EFE2D6F4239B11050020F6BF /* GroupCell.swift in Sources */,
 				C1D90F1D2220A25700DAB8EE /* NoReservationsCell.swift in Sources */,
+				6788845A2BB9D0C100BA2E70 /* AIChatModel.swift in Sources */,
 				217A7834204D2DF5004F1227 /* HomeDiningCellItem.swift in Sources */,
+				6788845D2BB9D0C100BA2E70 /* AIChatView.swift in Sources */,
 				C11DFA31219F90E5000FC573 /* CalendarEvent.swift in Sources */,
 				42CC49D02AAE38C6008C41EE /* PollsViewController.swift in Sources */,
 				6CC88D6B27B1BF51006896F6 /* DiningVenueView.swift in Sources */,
