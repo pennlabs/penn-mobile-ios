@@ -11,8 +11,6 @@ import SwiftUI
 struct HomeView<Model: HomeViewModel>: View {
     @State var showTitle = false
     @State var splashText: String?
-    @State var showSheet: Bool = false
-    @State var sheet: AIChatView? = AIChatView()
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: Model
