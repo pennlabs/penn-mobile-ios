@@ -131,6 +131,7 @@ class AIChatModel: ObservableObject {
     }
     
     func moderationRequest(message: String) async throws -> ModerationResponse {
+        let apiKey: String? = nil
         guard let url = URL(string: "https://api.openai.com/v1/moderations") else {
                 fatalError("Invalid URL")
             }
@@ -139,7 +140,7 @@ class AIChatModel: ObservableObject {
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.addValue("Bearer " + (InfoPlistEnvironment.openAIAPIKey ?? ""), forHTTPHeaderField: "Authorization")
+            request.addValue("Bearer " + (apiKey ?? ""), forHTTPHeaderField: "Authorization")
             
             let requestData = try JSONEncoder().encode(moderationRequest)
             request.httpBody = requestData
