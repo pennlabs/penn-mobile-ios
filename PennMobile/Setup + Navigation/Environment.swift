@@ -12,6 +12,7 @@ public enum InfoPlistEnvironment {
 
     enum Keys {
         static let labsOauthClientId = "LABS_OAUTH_CLIENT_ID"
+        static let openAIAPIKey = "OPENAI_API_KEY"
     }
 
     private static let infoDictionary: [String: Any] = {
@@ -27,5 +28,9 @@ public enum InfoPlistEnvironment {
           fatalError("Labs Oath Client Id Key not set in plist for this environment")
         }
         return clientId
+    }()
+    
+    static let openAIAPIKey: String? = {
+        InfoPlistEnvironment.infoDictionary[Keys.openAIAPIKey] as? String
     }()
 }
