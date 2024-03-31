@@ -67,7 +67,7 @@ struct NewListingForm: View {
     init(sublet: Sublet) {
         self.isNew = false
         self.originalSublet = sublet
-        self._subletData = State(initialValue: sublet.data)
+        self._subletData = State(initialValue: SubletData())
         self._negotiable = State(initialValue: sublet.negotiable)
         self._price = State(initialValue: sublet.price)
         self._startDate = State(initialValue: sublet.startDate.date)
@@ -76,7 +76,7 @@ struct NewListingForm: View {
         self._images = State(initialValue: [])
         self._existingImages = State(initialValue: sublet.images.map { $0.imageUrl })
         
-        self.showValidationErrors = true
+        self.showValidationErrors = false
     }
     
     var body: some View {
@@ -358,6 +358,18 @@ struct NewListingForm: View {
             }
         }
         .environment(\.showValidationErrors, showValidationErrors)
+        .onAppear {
+            // HACK: Listing Name field shows really weird behavior unless we do this??
+            if !isNew {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1)) {
+                    if let originalSublet {
+                        subletData = originalSublet.data
+                    }
+                    
+                    showValidationErrors = true
+                }
+            }
+        }
     }
 }
 

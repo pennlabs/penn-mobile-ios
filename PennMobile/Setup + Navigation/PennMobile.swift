@@ -49,6 +49,7 @@ struct PennMobile: App {
             RootView()
                 .environmentObject(authManager)
                 .environmentObject(homeViewModel)
+                .environmentObject(BannerViewModel.shared)
             #if DEBUG
                 .environmentObject(mockHomeViewModel)
             #endif

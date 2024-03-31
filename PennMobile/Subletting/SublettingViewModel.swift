@@ -22,7 +22,7 @@ struct MarketplaceFilterData: Codable {
     var selectedAmenities = OrderedSet<String>()
 }
 
-class SublettingViewModel: ObservableObject {
+@MainActor class SublettingViewModel: ObservableObject {
     @Published private var sublets: [Int: Sublet] = [:]
     var sortedFilteredSublets: [Sublet] {
         let filtered = filteredIDs.compactMap { sublets[$0] }
@@ -228,11 +228,8 @@ class SublettingViewModel: ObservableObject {
         return savedIDs.contains(sublet.subletID)
     }
     
-    private let subletUpdateQueue = DispatchQueue(label: "subletUpdateQueue")
     func updateSublet(sublet: Sublet) {
-        subletUpdateQueue.sync {
-            sublets[sublet.subletID] = sublet
-        }
+        sublets[sublet.subletID] = sublet
     }
     
     func getSublet(subletID: Int) -> Sublet? {

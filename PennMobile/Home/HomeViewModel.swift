@@ -8,6 +8,14 @@
 
 import SwiftUI
 
+extension Optional {
+    mutating func makeNilIfError<Success, Failure: Error>() where Wrapped == Result<Success, Failure> {
+        if case .some(.failure) = self {
+            self = nil
+        }
+    }
+}
+
 struct HomeViewData {
     var firstName: String?
     
@@ -32,11 +40,22 @@ struct HomeViewData {
             switch result {
             case .some(.success(let item)):
                 content(item)
-            case .some(.failure):
+            case .some(.failure(let error)):
                 HomeCardView {
-                    Text("Couldn't load \(description)")
-                        .padding()
+                    VStack {
+                        Image(systemName: "pc")
+                            .font(.system(size: 60))
+                            .symbolRenderingMode(.multicolor)
+                            .padding(.bottom, 4)
+                        Text("Couldn't load \(description) :(")
+                            .fontWeight(.bold)
+                        Text(error.localizedDescription)
+                            .font(.caption)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 24)
                 }
+                .multilineTextAlignment(.center)
             case nil:
                 SwiftUI.EmptyView()
             }
@@ -67,7 +86,7 @@ struct HomeViewData {
                 }
             }
             
-            sectionContent(newsArticles, description: "article") { articles in
+            sectionContent(newsArticles, description: "news article") { articles in
                 ForEach(articles) { article in
                     NewsCardView(article: article)
                 }
@@ -145,6 +164,9 @@ struct HomeViewData {
         print("Fetching HomeViewModel (force = \(force), isFetching = \(isFetching))")
         
         data.firstName = account?.firstName
+        data.polls.makeNilIfError()
+        data.posts.makeNilIfError()
+        data.newsArticles.makeNilIfError()
         
         async let pollsTask = Task {
             let polls = await PollsNetworkManager.instance.getActivePolls().mapError { $0 as Error }
