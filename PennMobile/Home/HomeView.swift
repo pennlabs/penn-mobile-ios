@@ -11,6 +11,8 @@ import SwiftUI
 struct HomeView<Model: HomeViewModel>: View {
     @State var showTitle = false
     @State var splashText: String?
+    @State var showSheet: Bool = false
+    @State var sheet: AIChatView? = AIChatView()
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: Model
@@ -24,7 +26,7 @@ struct HomeView<Model: HomeViewModel>: View {
     }
     
     var body: some View {
-        Group {
+        ZStack {
             NavigationStack {
                 ScrollView {
                     TimelineView(.periodic(from: Date.midnightYesterday, by: 24 * 60 * 60)) { context in
@@ -97,10 +99,42 @@ struct HomeView<Model: HomeViewModel>: View {
                     try? await viewModel.fetchData(force: true)
                 }
             }
+                    
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button {
+                        sheet = sheet != nil ? sheet : AIChatView()
+                        showSheet = true
+                    } label: {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 32)
+                                .foregroundStyle(.blue)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 32)
+                                       .stroke(.white)
+                                }
+                            Text("Check out Penn Mobile AI")
+                                .font(.headline)
+                                .foregroundStyle(.white)
+                        }
+                            .frame(width: 175, height: 100)
+                            .shadow(radius: 2)
+                    }.padding()
+                }
+            }
+                
         }.onAppear {
             Task {
                 try? await viewModel.fetchData(force: false)
             }
+        }
+        .sheet(isPresented: $showSheet, onDismiss: {
+            showSheet = false
+            sheet = nil
+        }) {
+            sheet
         }
     }
     
