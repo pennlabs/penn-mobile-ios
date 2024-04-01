@@ -35,6 +35,7 @@ struct UserEngagementPopupView: View {
                 }
             } label: {
                 Image(systemName: "xmark.circle.fill")
+                    .resizable()
                     .frame(width: 100, height: 100)
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(.white, .black)
