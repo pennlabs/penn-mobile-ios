@@ -3021,7 +3021,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING";
+				MARKETING_VERSION = 7.9.10;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -3061,7 +3061,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING";
+				MARKETING_VERSION = 7.9.10;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
