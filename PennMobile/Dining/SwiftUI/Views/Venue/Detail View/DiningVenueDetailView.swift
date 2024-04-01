@@ -154,7 +154,13 @@ extension UINavigationController {
 struct WebView: UIViewRepresentable {
     let url: URL
     func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
+        let view = WKWebView()
+        if #available(iOS 16.4, *) {
+            view.isInspectable = true
+        } else {
+            // Fallback on earlier versions
+        }
+        return view
     }
     func updateUIView(_ uiView: WKWebView, context: Context) {
         uiView.load(URLRequest(url: url))

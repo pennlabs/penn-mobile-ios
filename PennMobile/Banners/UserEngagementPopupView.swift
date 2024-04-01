@@ -15,7 +15,7 @@ struct UserEngagementPopupView: View {
     
     @State var alignment: Alignment = Self.randomAlignment()
     @EnvironmentObject var bannerViewModel: BannerViewModel
-    @State var remainingDismissAttempts = 1
+    @State var remainingDismissAttempts = 0
     
     var body: some View {
         ZStack(alignment: alignment) {
@@ -35,6 +35,8 @@ struct UserEngagementPopupView: View {
                 }
             } label: {
                 Image(systemName: "xmark.circle.fill")
+                    .resizable()
+                    .frame(width: 100, height: 100)
                     .symbolRenderingMode(.palette)
                     .foregroundStyle(.white, .black)
             }
