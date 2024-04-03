@@ -11,8 +11,6 @@ import SwiftUI
 struct HomeView<Model: HomeViewModel>: View {
     @State var showTitle = false
     @State var splashText: String?
-    @State var showSheet: Bool = false
-    @State var sheet: AIChatView? = AIChatView()
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: Model
@@ -26,115 +24,81 @@ struct HomeView<Model: HomeViewModel>: View {
     }
     
     var body: some View {
-        ZStack {
-            NavigationStack {
-                ScrollView {
-                    TimelineView(.periodic(from: Date.midnightYesterday, by: 24 * 60 * 60)) { context in
-                        VStack(spacing: 0) {
-                            VStack {
-                                Text("\(context.date, format: dateFormatStyle)")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .background(GeometryReader { geometry in
-                                        let minY = geometry.frame(in: .global).minY
-                                        Color.clear.onChange(of: minY) { minY in
-                                            showTitle = minY <= 16
-                                        }
-                                    })
-                                
-                                if let splashText {
-                                    HStack(alignment: .top) {
-                                        Text(splashText)
-                                            .fontWeight(.medium)
-                                            .opacity(0.7)
+        NavigationStack {
+            ScrollView {
+                TimelineView(.periodic(from: Date.midnightYesterday, by: 24 * 60 * 60)) { context in
+                    VStack(spacing: 0) {
+                        VStack {
+                            Text("\(context.date, format: dateFormatStyle)")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .background(GeometryReader { geometry in
+                                    let minY = geometry.frame(in: .global).minY
+                                    Color.clear.onChange(of: minY) { minY in
+                                        showTitle = minY <= 16
                                     }
+                                })
+                            
+                            if let splashText {
+                                HStack(alignment: .top) {
+                                    Text(splashText)
+                                        .fontWeight(.medium)
+                                        .opacity(0.7)
                                 }
                             }
-                            .offset(y: -16)
-                            .padding(.bottom)
-                            .multilineTextAlignment(.center)
-                            
-                            if bannerViewModel.showBanners {
-                                BannerView()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(width: 0)
-                                    .padding(.bottom)
-                            }
-                            
-                            viewModel.data.content(for: context.date)
-                                .frame(maxWidth: 480)
-                                .frame(maxWidth: .infinity)
-                            
-                            if bannerViewModel.showBanners {
-                                BannerView()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(width: 0)
-                                    .padding(.top)
-                            }
                         }
+                        .offset(y: -16)
                         .padding(.bottom)
-                        // Hack for forcing the navbar to always render
-                        .navigationTitle(Text(showTitle ? "\(context.date, format: dateFormatStyle)" : "\u{200C}"))
-                        .navigationBarTitleDisplayMode(.inline)
-#if DEBUG
-                        .toolbar {
-                            if (!(viewModel is MockHomeViewModel)) {
-                                ToolbarItem(placement: .primaryAction) {
-                                    NavigationLink("Debug") {
-                                        HomeView<MockHomeViewModel>()
-                                    }
-                                }
-                            }
+                        .multilineTextAlignment(.center)
+                        
+                        if bannerViewModel.showBanners {
+                            BannerView()
+                                .frame(maxWidth: .infinity)
+                                .frame(width: 0)
+                                .padding(.bottom)
                         }
-#endif
-                        .onAppear {
-                            chooseSplashText(data: viewModel.data, for: context.date)
-                        }
-                        .onChange(of: context.date) { date in
-                            chooseSplashText(data: viewModel.data, for: date)
+                        
+                        viewModel.data.content(for: context.date)
+                            .frame(maxWidth: 480)
+                            .frame(maxWidth: .infinity)
+                        
+                        if bannerViewModel.showBanners {
+                            BannerView()
+                                .frame(maxWidth: .infinity)
+                                .frame(width: 0)
+                                .padding(.top)
                         }
                     }
-                }
-                .refreshable {
-                    try? await viewModel.fetchData(force: true)
-                }
-            }
-                    
-            VStack {
-                Spacer()
-                HStack {
-                    Spacer()
-                    Button {
-                        sheet = sheet != nil ? sheet : AIChatView()
-                        showSheet = true
-                    } label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 32)
-                                .foregroundStyle(.blue)
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 32)
-                                       .stroke(.white)
+                    .padding(.bottom)
+                    // Hack for forcing the navbar to always render
+                    .navigationTitle(Text(showTitle ? "\(context.date, format: dateFormatStyle)" : "\u{200C}"))
+                    .navigationBarTitleDisplayMode(.inline)
+#if DEBUG
+                    .toolbar {
+                        if (!(viewModel is MockHomeViewModel)) {
+                            ToolbarItem(placement: .primaryAction) {
+                                NavigationLink("Debug") {
+                                    HomeView<MockHomeViewModel>()
                                 }
-                            Text("Check out Penn Mobile AI")
-                                .font(.headline)
-                                .foregroundStyle(.white)
+                            }
                         }
-                            .frame(width: 175, height: 100)
-                            .shadow(radius: 2)
-                    }.padding()
+                    }
+#endif
+                    .onAppear {
+                        chooseSplashText(data: viewModel.data, for: context.date)
+                    }
+                    .onChange(of: context.date) { date in
+                        chooseSplashText(data: viewModel.data, for: date)
+                    }
                 }
             }
-                
+            .refreshable {
+                try? await viewModel.fetchData(force: true)
+            }
         }.onAppear {
             Task {
                 try? await viewModel.fetchData(force: false)
             }
-        }
-        .sheet(isPresented: $showSheet, onDismiss: {
-            showSheet = false
-            sheet = nil
-        }) {
-            sheet
         }
     }
     

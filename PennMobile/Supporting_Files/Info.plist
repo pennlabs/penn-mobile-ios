@@ -38,8 +38,6 @@
 	<false/>
 	<key>LABS_OAUTH_CLIENT_ID</key>
 	<string>$(LABS_OAUTH_CLIENT_ID)</string>
-	<key>OPENAI_API_KEY</key>
-	<string>$(OPENAI_API_KEY)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

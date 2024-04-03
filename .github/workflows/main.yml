@@ -22,7 +22,6 @@ jobs:
           LABS_OAUTH_CLIENT_ID = ${{ secrets.LABS_OAUTH_CLIENT_ID }}
           APP_NAME = Penn Mobile
           APP_BUNDLE_ID = org.pennlabs.PennMobile
-          OPENAI_API_KEY = ${{ secrets.OPENAI_API_KEY }}
           EOF
       - name: CREATE GoogleService-Info.plist
         run: |
