@@ -15,7 +15,7 @@ private func getDefaultBannerURL() -> URL {
 }
 
 func getDefaultPopupURL() -> URL {
-    let data = Data(base64Encoded: "aHR0cHM6Ly9wZW5ubGFicy5naXRodWIuaW8vcGxhdGZvcm0tc2FtcGxlLWFzc2V0cy9pbnRlcmFjdGl2ZS5odG1sCg==")!
+    let data = Data(base64Encoded: "aHR0cHM6Ly9wZW5ubGFicy5naXRodWIuaW8vcGxhdGZvcm0tc2FtcGxlLWFzc2V0cy9pbnRlcmFjdGl2ZS5odG1s")!
     return URL(string: String(data: data, encoding: .ascii)!)!
 }
 
