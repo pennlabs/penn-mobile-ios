@@ -111,10 +111,10 @@ let features: [AppFeature] = [
             .navigationTitle(Text("Fitness"))
     },
     AppFeature(.polls, shortName: "Polls", longName: "Polls History", color: .blueDark, image: .app("Polls_Grey"), controller: PollsViewController.self),
-//    AppFeature(.subletting, name: "Subletting", color: .baseOrange, image: .system("building")) {
-//        MarketplaceView()
-//            .navigationTitle(Text("Marketplace"))
-//    },
+    AppFeature(.subletting, name: "Subletting", color: .baseOrange, image: .system("building")) {
+        MarketplaceView()
+            .navigationTitle(Text("Marketplace"))
+    },
     AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),
     AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]
