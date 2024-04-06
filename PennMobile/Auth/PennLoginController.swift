@@ -12,6 +12,7 @@ import PennMobileShared
 class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     final private let loginURL = "https://weblogin.pennkey.upenn.edu/login"
+    final private let loginScreen = "https://weblogin.pennkey.upenn.edu/idp/profile/SAML2/Redirect/SSO?execution=e1"
     open var urlStr: String {
         return "https://weblogin.pennkey.upenn.edu/services/"
     }
@@ -20,6 +21,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     private var password: String?
 
     final private var webView: WKWebView!
+    private var activityIndicator: UIActivityIndicatorView!
 
     var shouldAutoNavigate: Bool = true
     var shouldLoadCookies: Bool {
@@ -54,6 +56,18 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         let myURL = URL(string: self.urlStr)
         let myRequest = URLRequest(url: myURL!)
         self.webView.load(myRequest)
+        
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.isHidden = true
+        self.view.addSubview(activityIndicator)
+        self.view.bringSubviewToFront(activityIndicator)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        activityIndicator.center = view.center
+        view.bringSubviewToFront(activityIndicator)
     }
 
     func webView(
@@ -64,6 +78,13 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         guard let url = request.url else {
             decisionHandler(.allow)
             return
+        }
+        
+        if navigationAction.navigationType == .formSubmitted,
+           webView.url?.absoluteString.contains(loginScreen) == true {
+            activityIndicator.startAnimating()
+            activityIndicator.isHidden = false
+            view.isUserInteractionEnabled = false
         }
 
         webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { (cookies) in
@@ -104,6 +125,10 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             decisionHandler(.allow)
             return
         }
+        
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+        view.isUserInteractionEnabled = true
 
         if self.isSuccessfulRedirect(url: url.absoluteString, hasReferer: true), response.statusCode == 200 {
             self.handleSuccessfulNavigation(webView) { (policy) in
