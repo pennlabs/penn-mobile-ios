@@ -10,6 +10,7 @@ import WebKit
 import PennMobileShared
 
 class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate {
+    static let activityIndicatorAnimationDuration: TimeInterval = 0.1
 
     final private let loginURL = "https://weblogin.pennkey.upenn.edu/login"
     final private let loginScreen = "https://weblogin.pennkey.upenn.edu/idp/profile/SAML2/Redirect/SSO?execution=e1"
@@ -21,6 +22,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     private var password: String?
 
     final private var webView: WKWebView!
+    private var activityIndicatorBackground: UIVisualEffectView!
     private var activityIndicator: UIActivityIndicatorView!
 
     var shouldAutoNavigate: Bool = true
@@ -57,17 +59,24 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         let myRequest = URLRequest(url: myURL!)
         self.webView.load(myRequest)
         
+        activityIndicatorBackground = UIVisualEffectView(effect: UIBlurEffect(style: .systemThickMaterial))
+        activityIndicatorBackground.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        activityIndicatorBackground.layer.cornerRadius = 16
+        activityIndicatorBackground.clipsToBounds = true
+        activityIndicatorBackground.layer.opacity = 0
+        
         activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.isHidden = true
-        self.view.addSubview(activityIndicator)
-        self.view.bringSubviewToFront(activityIndicator)
+        activityIndicator.center = CGPoint(x: activityIndicatorBackground.bounds.midX, y: activityIndicatorBackground.bounds.midY)
+        activityIndicatorBackground.contentView.addSubview(activityIndicator)
+        
+        self.view.addSubview(activityIndicatorBackground)
+        self.view.bringSubviewToFront(activityIndicatorBackground)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        activityIndicator.center = view.center
-        view.bringSubviewToFront(activityIndicator)
+        activityIndicatorBackground.center = view.center
+        view.bringSubviewToFront(activityIndicatorBackground)
     }
 
     func webView(
@@ -83,8 +92,11 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
         if navigationAction.navigationType == .formSubmitted,
            webView.url?.absoluteString.contains(loginScreen) == true {
             activityIndicator.startAnimating()
-            activityIndicator.isHidden = false
             view.isUserInteractionEnabled = false
+            
+            UIView.animate(withDuration: Self.activityIndicatorAnimationDuration) {
+                self.activityIndicatorBackground.layer.opacity = 1
+            }
         }
 
         webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { (cookies) in
@@ -126,9 +138,12 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             return
         }
         
-        activityIndicator.stopAnimating()
-        activityIndicator.isHidden = true
         view.isUserInteractionEnabled = true
+        UIView.animate(withDuration: Self.activityIndicatorAnimationDuration) {
+            self.activityIndicatorBackground.layer.opacity = 0
+        } completion: { _ in
+            self.activityIndicator.stopAnimating()
+        }
 
         if self.isSuccessfulRedirect(url: url.absoluteString, hasReferer: true), response.statusCode == 200 {
             self.handleSuccessfulNavigation(webView) { (policy) in
