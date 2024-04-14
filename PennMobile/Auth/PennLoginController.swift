@@ -75,8 +75,10 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        activityIndicatorBackground.center = view.center
-        view.bringSubviewToFront(activityIndicatorBackground)
+        if let activityIndicatorBackground {
+            activityIndicatorBackground.center = view.center
+            view.bringSubviewToFront(activityIndicatorBackground)
+        }
     }
 
     func webView(
