@@ -370,6 +370,7 @@ struct NewListingForm: View {
                 }
             }
         }
+        .scrollDismissesKeyboard(.interactively)
     }
 }
 

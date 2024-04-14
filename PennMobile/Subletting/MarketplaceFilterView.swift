@@ -88,6 +88,7 @@ struct MarketplaceFilterView: View {
                     }
                 }
             }
+            .scrollDismissesKeyboard(.interactively)
             .navigationBarTitle(Text("Filter by"), displayMode: .inline)
             .navigationBarItems(leading: Button(action: {
                 dismiss()

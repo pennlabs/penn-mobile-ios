@@ -36,6 +36,11 @@ class PopupManager: ObservableObject {
     }
     
     public func show() {
+        if !isShown {
+            // https://www.hackingwithswift.com/quick-start/swiftui/how-to-dismiss-the-keyboard-for-a-textfield
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+        
         withAnimation {
             self.isShown = true
         }
