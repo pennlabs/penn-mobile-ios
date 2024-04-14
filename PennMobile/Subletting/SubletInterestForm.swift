@@ -96,6 +96,7 @@ struct SubletInterestForm: View {
                 }
             }
         }
+        .scrollDismissesKeyboard(.interactively)
         .navigationTitle("Send Interest")
     }
 }
