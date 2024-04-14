@@ -46,13 +46,29 @@ struct DiningVenueDetailMenuView: View {
     /// If the selected date is not the current day, return the first menu.
     /// If at any point, the list of menus is empty, return nil.
     func getMenu() -> DiningMenu? {
-        if (menus.count == 0) { return nil }
+        if menus.isEmpty {
+            return nil
+        }
         
-        if (!Calendar.current.isDate(menuDate, inSameDayAs: Date())) {
+        if !Calendar.current.isDate(menuDate, inSameDayAs: Date()) {
             return menus[0]
         }
         
-        guard let nearestIndex = venue.currentOrNearestMealIndex else {
+        if let label = venue.currentMealType {
+            // Attempt to find a menu with an exact match for the current meal
+            if let menu = menus.first(where: { $0.service == label }) {
+                return menu
+            }
+            
+            // Attempt to find a menu for a "light" version of a meal
+            // swiftlint:disable <no_space_in_method_call>
+            let regex = /Light (.*)/
+            if let match = try? regex.wholeMatch(in: label), let menu = menus.first(where: { $0.service == match.1 }) {
+                return menu
+            }
+        }
+        
+        guard let nearestIndex = venue.currentOrNearestMealIndex, nearestIndex < menus.endIndex else {
             return nil
         }
         
