@@ -15,6 +15,7 @@ struct HomeView<Model: HomeViewModel>: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: Model
     @EnvironmentObject var bannerViewModel: BannerViewModel
+    @EnvironmentObject var navigationManager: NavigationManager
     
     var dateFormatStyle: Date.FormatStyle {
         Date.FormatStyle()
@@ -96,6 +97,7 @@ struct HomeView<Model: HomeViewModel>: View {
                 try? await viewModel.fetchData(force: true)
             }
         }.onAppear {
+            (viewModel as? StandardHomeViewModel)?.navigationManager = navigationManager
             Task {
                 try? await viewModel.fetchData(force: false)
             }

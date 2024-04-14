@@ -261,6 +261,8 @@
 		89534BA22AEEC8AB003ABB70 /* PollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89534BA12AEEC8AB003ABB70 /* PollView.swift */; };
 		895C75E628FA165100A329A0 /* LabsLoginSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */; };
 		895D98B02ACF312300F8C5DF /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895D98AF2ACF312300F8C5DF /* MoreView.swift */; };
+		8961C3F12BCC49700039CBB2 /* HomeViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8961C3F02BCC49700039CBB2 /* HomeViewData.swift */; };
+		8961C3F32BCC4A1F0039CBB2 /* HomeSublettingBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8961C3F22BCC4A1F0039CBB2 /* HomeSublettingBanner.swift */; };
 		897F0A932B08256C0060583A /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897F0A922B08256C0060583A /* Toasts.swift */; };
 		8987C8FD29CE5A8B004E9A99 /* BannerDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8987C8FC29CE5A8B004E9A99 /* BannerDescription.swift */; };
 		898DB4912B2E7AA20027CC8F /* PennForms in Frameworks */ = {isa = PBXBuildFile; productRef = 898DB4902B2E7AA20027CC8F /* PennForms */; };
@@ -700,6 +702,8 @@
 		89534BA12AEEC8AB003ABB70 /* PollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollView.swift; sourceTree = "<group>"; };
 		895C75E528FA165100A329A0 /* LabsLoginSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginSwiftUI.swift; sourceTree = "<group>"; };
 		895D98AF2ACF312300F8C5DF /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		8961C3F02BCC49700039CBB2 /* HomeViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewData.swift; sourceTree = "<group>"; };
+		8961C3F22BCC4A1F0039CBB2 /* HomeSublettingBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSublettingBanner.swift; sourceTree = "<group>"; };
 		897F0A922B08256C0060583A /* Toasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toasts.swift; sourceTree = "<group>"; };
 		8987C8FC29CE5A8B004E9A99 /* BannerDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerDescription.swift; sourceTree = "<group>"; };
 		89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCardView.swift; sourceTree = "<group>"; };
@@ -931,9 +935,11 @@
 				21640D4620104354002F33CA /* Cells */,
 				21640D4320103E9F002F33CA /* Controllers */,
 				89E0DE672AE38A8800E918FF /* HomeView.swift */,
+				8961C3F02BCC49700039CBB2 /* HomeViewData.swift */,
 				89E0DE692AE396E200E918FF /* HomeViewModel.swift */,
 				89E0DE6B2AE415A800E918FF /* HomeCardView.swift */,
 				89913EAC2AE44FCE00AE30C9 /* CalendarCardView.swift */,
+				8961C3F22BCC4A1F0039CBB2 /* HomeSublettingBanner.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -2571,6 +2577,7 @@
 				97E6E1F0239D74F500C07D7A /* GSRGroupIconView.swift in Sources */,
 				89093EE22BB4FEB90076B712 /* UserEngagementPopupView.swift in Sources */,
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
+				8961C3F32BCC4A1F0039CBB2 /* HomeSublettingBanner.swift in Sources */,
 				429EA1E12B8BA18300824455 /* SublettingAPI.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */,
@@ -2592,6 +2599,7 @@
 				212B8360222A37FE00F835D6 /* FeatureAnnouncement.swift in Sources */,
 				890D15002AB74D6000672FFE /* RootView.swift in Sources */,
 				21737FD723A1DEE7002DCD07 /* LabsLoginController.swift in Sources */,
+				8961C3F12BCC49700039CBB2 /* HomeViewData.swift in Sources */,
 				F2770AE02545E311001EA1DD /* CourseAlert.swift in Sources */,
 				CF29A1781FB788820067D946 /* PageCell.swift in Sources */,
 				210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */,
