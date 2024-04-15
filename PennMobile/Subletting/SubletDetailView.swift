@@ -148,7 +148,7 @@ struct SubletDetailOnly: View {
                         .foregroundColor(.secondary)
                 }
                 
-                if sublet.address != nil {
+                if sublet.address != nil && !sublet.address!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     HStack {
                         Text(sublet.address!)
                             .font(.subheadline)
