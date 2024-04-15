@@ -101,15 +101,15 @@ struct SubletDetailOnly: View {
                 ForEach(sublet.images) { image in
                     KFImage(URL(string: image.imageUrl))
                         .placeholder {
-                            Color.gray
-                                .aspectRatio(contentMode: .fit)
+                            ProgressView()
                         }
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(10)
                 }
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .frame(height: 300)
             
             VStack(alignment: .leading) {
                 HStack {
