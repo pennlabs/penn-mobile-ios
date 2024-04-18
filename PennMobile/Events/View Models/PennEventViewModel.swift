@@ -38,7 +38,11 @@ class PennEventViewModel: ObservableObject, Identifiable {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
 
-        if let start = pennEvent.start, let startDate = dateFormatter.date(from: start) {
+        // penn clubs
+        let startString = pennEvent.start ?? pennEvent.startTime
+        let endString = pennEvent.end ?? pennEvent.endTime
+
+        if let start = startString, let startDate = dateFormatter.date(from: start) {
             dateFormatter.dateFormat = "MM/dd/yyyy"
             self.startDate = dateFormatter.string(from: startDate)
             dateFormatter.dateFormat = "h:mm a"
@@ -48,7 +52,7 @@ class PennEventViewModel: ObservableObject, Identifiable {
             self.startTime = "No Start Time"
         }
 
-        if let end = pennEvent.end, let endDate = dateFormatter.date(from: end) {
+        if let end = endString, let endDate = dateFormatter.date(from: end) {
             dateFormatter.dateFormat = "MM/dd/yyyy"
             self.endDate = dateFormatter.string(from: endDate)
             dateFormatter.dateFormat = "h:mm a"
@@ -58,6 +62,5 @@ class PennEventViewModel: ObservableObject, Identifiable {
             self.endTime = "No End Time"
         }
     }
-    
 }
 

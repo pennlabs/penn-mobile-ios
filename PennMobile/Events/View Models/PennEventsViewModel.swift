@@ -23,7 +23,7 @@ class PennEventsViewModel: ObservableObject {
     }
 
     func fetchEvents() {
-        PennEventsAPIManager.shared.fetchEvents { [weak self] pennEvents, error in
+        PennEventsAPIManager.shared.fetchAllEvents { [weak self] pennEvents, error in
             DispatchQueue.main.async {
                 if let pennEvents = pennEvents {
                     // preprocess and map PennEvent to PennEventViewModel
@@ -50,6 +50,8 @@ class PennEventsViewModel: ObservableObject {
             return "Penn Today"
         } else if eventType.contains("VENTURE LAB") {
             return "Venture Lab"
+        } else if eventType.contains("CLUBS") {
+            return "Clubs"
         }
         
         return eventType

@@ -19,6 +19,9 @@ struct PennEvent: Decodable {
     var end: String?
     var email: String?
     var website: String?
+    // penn clubs api
+    var startTime: String?
+    var endTime: String?
     
     enum CodingKeys: String, CodingKey {
         case eventType = "event_type"
@@ -30,5 +33,8 @@ struct PennEvent: Decodable {
         case end
         case email
         case website
+        // penn clubs api
+        case startTime = "start_time"
+        case endTime = "end_time"
     }
 }
