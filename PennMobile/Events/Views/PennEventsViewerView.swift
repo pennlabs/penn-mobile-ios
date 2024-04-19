@@ -124,7 +124,7 @@ struct PennEventsViewerView: View {
                      .frame(height: 250)
                      .padding(.leading, 20)
                      .padding(.trailing, 20)
-                     .shadow(color: .gray, radius: 5, x: 5, y: 5)
+                     .shadow(color: .gray.opacity(0.5), radius: 5, x: 5, y: 5)
                      .onAppear {
                          if let coordinates = PennEventLocation.coordinateForEvent(location: event.location, eventName: event.title, eventType: event.originalEventType) {
                              eventCoordinate = coordinates
