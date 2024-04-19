@@ -28,7 +28,7 @@ private struct PennLink: View, Identifiable {
 
 private let pennLinks: [PennLink] = [
     PennLink(title: "Penn Labs", url: "https://pennlabs.org"),
-    PennLink(title: "Share Your Feedback", url: "https://airtable.com/shrS98E3rj5Nw1wy6")]
+    PennLink(title: "Share Your Feedback", url: "https://pennlabs.org/feedback/ios")]
 
 struct MoreView: View {
     var features: [AppFeature]
