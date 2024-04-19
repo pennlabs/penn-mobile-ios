@@ -13,6 +13,12 @@ struct PennEventCellView: View {
     
     let screenWidth = UIScreen.main.bounds.width
     
+    @Environment(\.colorScheme) var colorScheme
+    
+    var shadowColor: Color {
+        colorScheme == .dark ? .white.opacity(0.2) : .black.opacity(0.2)
+    }
+    
     var body: some View {
         ZStack {
             if let imageUrl = viewModel.imageUrl {
@@ -74,7 +80,7 @@ struct PennEventCellView: View {
         .frame(width: screenWidth - 30, height: 190)
         .cornerRadius(10)
         .padding(.horizontal, 30)
-        .shadow(radius: 10)
+        .shadow(color: shadowColor, radius: 10)
     }
 }
 
