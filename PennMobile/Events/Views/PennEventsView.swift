@@ -26,6 +26,28 @@ struct PennEventsView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
+                
+//                Menu {
+//                    ForEach(categories, id: \.self) { category in
+//                        Button(action: {
+//                            viewModel.selectedCategory = category
+//                        }) {
+//                            Text(category)
+//                        }
+//                    }
+//                } label: {
+//                    HStack {
+//                        Text(viewModel.selectedCategory)
+//                        Image(systemName: "chevron.down")
+//                    }
+//                    .foregroundColor(.accentColor)
+//                    .padding()
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 10)
+//                            .stroke(Color.accentColor, lineWidth: 1)
+//                    )
+//                }
+//                .padding()
 
                 ScrollView {
                     LazyVStack {
