@@ -122,7 +122,6 @@ struct PennEventsViewerView: View {
                      }
                      .cornerRadius(15)
                      .frame(height: 250)
-                     .disabled(true)
                      .padding(.leading, 20)
                      .padding(.trailing, 20)
                      .shadow(color: .gray, radius: 5, x: 5, y: 5)
