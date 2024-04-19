@@ -191,7 +191,7 @@ struct PennEventsViewerView: View {
                      Spacer()
                  }
                  .padding()
-                 .shadow(color: .gray, radius: 10)
+                 .shadow(radius: 10)
                  
              }
          }
