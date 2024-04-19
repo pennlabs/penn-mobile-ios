@@ -115,7 +115,6 @@ struct SubletDetailOnly: View {
                 HStack {
                     Text(sublet.title)
                         .font(.headline)
-                        .lineLimit(1)
                     
                     if isSubletter {
                         Spacer()
