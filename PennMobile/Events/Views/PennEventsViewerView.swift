@@ -23,19 +23,15 @@ struct PennEventsViewerView: View {
     // for email button
     @State private var showingMailComposer = false
     
+    // coordinates for the map annotation
+    @State private var eventCoordinate: CLLocationCoordinate2D?
+    
     // default to philly
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 39.9522, longitude: -75.1932),
         span: MKCoordinateSpan(latitudeDelta: 0.0020, longitudeDelta: 0.0020)
     )
         
-    // placeholder function to simulate fetching coordinates based on a location name (backend??)
-    func fetchCoordinates(for location: String) {
-        // have a simulated delay and then set region to the location's coordinates
-        let simulatedCoordinates = CLLocationCoordinate2D(latitude: 39.9522, longitude: -75.1932)
-        region.center = simulatedCoordinates
-    }
-
     var body: some View {
          ScrollView {
              VStack(alignment: .leading) {
@@ -118,13 +114,10 @@ struct PennEventsViewerView: View {
 
                  // map
 //                 if event.location != "No Location" {
-                     Map(coordinateRegion: $region, annotationItems: [event]) { event in
-                         MapAnnotation(coordinate: region.center) {
+                     Map(coordinateRegion: $region, annotationItems: eventCoordinate != nil ? [eventCoordinate!] : []) { location in
+                         MapAnnotation(coordinate: location) {
                              Image(systemName: "mappin.circle.fill")
                                  .foregroundColor(.red)
-                                 .onTapGesture {
-                                     print("Tapped on location: \(event.location)")
-                                 }
                          }
                      }
                      .cornerRadius(15)
@@ -135,10 +128,10 @@ struct PennEventsViewerView: View {
                      .shadow(color: .gray, radius: 5, x: 5, y: 5)
                      .onAppear {
                          if let coordinates = PennEventLocation.coordinateForEvent(location: event.location, eventName: event.title, eventType: event.originalEventType) {
-                             print("fetched coordinates for \(event.location) AND \(event.title) AND \(event.originalEventType): \(coordinates)")
+                             eventCoordinate = coordinates
                              region.center = coordinates
                          } else {
-                             print("default for \(event.location)")
+                             print("no location found")
                          }
                      }
 //                 }
