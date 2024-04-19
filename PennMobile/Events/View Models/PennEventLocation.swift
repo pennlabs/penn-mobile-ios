@@ -18,13 +18,12 @@ struct PennEventLocation: Identifiable {
     
     let coordinate: CLLocationCoordinate2D
     
-    
     // locations
     static let pennEventLocations: [PennEventLocation] = [
         PennEventLocation(name: "Moore", coordinate: CLLocationCoordinate2D(latitude: 39.95235195358212, longitude: -75.1905628341613)),
         PennEventLocation(name: "Levine", coordinate: CLLocationCoordinate2D(latitude: 39.9523636592379, longitude: -75.19108716260482)),
         PennEventLocation(name: "Skirchanich", coordinate: CLLocationCoordinate2D(latitude: 39.95203211923665, longitude: -75.19053972646232)),
-        PennEventLocation(name: "Towne", coordinate: CLLocationCoordinate2D(latitude: 39.95176422072041, longitude: -75.19094966518134)),
+        PennEventLocation(name: "Towne", coordinate: CLLocationCoordinate2D(latitude: 39.95176216372684, longitude: -75.19096291431735)),
         PennEventLocation(name: "Fisher Bennett Hall", coordinate: CLLocationCoordinate2D(latitude: 39.95250634854153, longitude: -75.1918248868187)),
         PennEventLocation(name: "LRSM", coordinate: CLLocationCoordinate2D(latitude: 39.9529344527566, longitude: -75.18970192557583)),
         PennEventLocation(name: "Singh Center", coordinate: CLLocationCoordinate2D(latitude: 39.95290313241999, longitude: -75.18890554376047)),
@@ -45,13 +44,13 @@ struct PennEventLocation: Identifiable {
         PennEventLocation(name: "Jaffe History of Art", coordinate: CLLocationCoordinate2D(latitude: 39.95273533555461, longitude: -75.1929464299296)),
         PennEventLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
         PennEventLocation(name: "Annenberg", coordinate: CLLocationCoordinate2D(latitude: 39.95295865404018, longitude: -75.19586669018221)),
-        PennEventLocation(name: "Harrison", coordinate: CLLocationCoordinate2D(latitude: 39.95191883398914, longitude: -75.20111961064812)),
+        PennEventLocation(name: "Harrison", coordinate: CLLocationCoordinate2D(latitude: 39.9519532049742, longitude: -75.20112202851995)),
         PennEventLocation(name: "Gutmann", coordinate: CLLocationCoordinate2D(latitude: 39.95378369040921, longitude: -75.20209860371801)),
         PennEventLocation(name: "Radian", coordinate: CLLocationCoordinate2D(latitude: 39.95426285980732, longitude: -75.20118913499053)),
         PennEventLocation(name: "Du Bois", coordinate: CLLocationCoordinate2D(latitude: 39.953729053974726, longitude: -75.20100366821694)),
-        PennEventLocation(name: "Rodin", coordinate: CLLocationCoordinate2D(latitude: 39.95317963582513, longitude: -75.2013287633819)),
+        PennEventLocation(name: "Rodin", coordinate: CLLocationCoordinate2D(latitude: 39.953172783587675, longitude: -75.20134377744817)),
         PennEventLocation(name: "Gregory", coordinate: CLLocationCoordinate2D(latitude: 39.95284062848591, longitude: -75.2024690313161)),
-        PennEventLocation(name: "Harnwell", coordinate: CLLocationCoordinate2D(latitude: 39.95239945381507, longitude: -75.20011766975578)),
+        PennEventLocation(name: "Harnwell", coordinate: CLLocationCoordinate2D(latitude: 39.95238375805794, longitude: -75.20015674568795)),
         PennEventLocation(name: "Stouffer", coordinate: CLLocationCoordinate2D(latitude: 39.951618752554566, longitude: -75.20025454470158)),
         PennEventLocation(name: "Lauder", coordinate: CLLocationCoordinate2D(latitude: 39.95371471491931, longitude: -75.19129026404389)),
         PennEventLocation(name: "Hill", coordinate: CLLocationCoordinate2D(latitude: 39.95302883232131, longitude: -75.19067853565349)),
