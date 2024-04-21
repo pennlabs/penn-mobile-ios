@@ -14,6 +14,8 @@ struct HomeView<Model: HomeViewModel>: View {
     
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewModel: Model
+    @EnvironmentObject var bannerViewModel: BannerViewModel
+    @EnvironmentObject var navigationManager: NavigationManager
     
     var dateFormatStyle: Date.FormatStyle {
         Date.FormatStyle()
@@ -23,66 +25,79 @@ struct HomeView<Model: HomeViewModel>: View {
     }
     
     var body: some View {
-        Group {
-            NavigationStack {
-                ScrollView {
-                    TimelineView(.periodic(from: Date.midnightYesterday, by: 24 * 60 * 60)) { context in
-                        VStack(spacing: 0) {
-                            VStack {
-                                Text("\(context.date, format: dateFormatStyle)")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                    .background(GeometryReader { geometry in
-                                        let minY = geometry.frame(in: .global).minY
-                                        Color.clear.onChange(of: minY) { minY in
-                                            showTitle = minY <= 16
-                                        }
-                                    })
-                                
-                                if let splashText {
-                                    HStack(alignment: .top) {
-                                        Text(splashText)
-                                            .fontWeight(.medium)
-                                            .opacity(0.7)
+        NavigationStack {
+            ScrollView {
+                TimelineView(.periodic(from: Date.midnightYesterday, by: 24 * 60 * 60)) { context in
+                    VStack(spacing: 0) {
+                        VStack {
+                            Text("\(context.date, format: dateFormatStyle)")
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .background(GeometryReader { geometry in
+                                    let minY = geometry.frame(in: .global).minY
+                                    Color.clear.onChange(of: minY) { minY in
+                                        showTitle = minY <= 16
                                     }
-                                }
-                            }
-                            .offset(y: -16)
-                            .padding(.bottom)
-                            .multilineTextAlignment(.center)
+                                })
                             
-                            viewModel.data.content(for: context.date)
-                                .frame(maxWidth: 480)
-                                .frame(maxWidth: .infinity)
-                        }
-                        .padding(.bottom)
-                        // Hack for forcing the navbar to always render
-                        .navigationTitle(Text(showTitle ? "\(context.date, format: dateFormatStyle)" : "\u{200C}"))
-                        .navigationBarTitleDisplayMode(.inline)
-#if DEBUG
-                        .toolbar {
-                            if (!(viewModel is MockHomeViewModel)) {
-                                ToolbarItem(placement: .primaryAction) {
-                                    NavigationLink("Debug") {
-                                        HomeView<MockHomeViewModel>()
-                                    }
+                            if let splashText {
+                                HStack(alignment: .top) {
+                                    Text(splashText)
+                                        .fontWeight(.medium)
+                                        .opacity(0.7)
                                 }
                             }
                         }
-#endif
-                        .onAppear {
-                            chooseSplashText(data: viewModel.data, for: context.date)
+                        .offset(y: -16)
+                        .padding(.bottom)
+                        .multilineTextAlignment(.center)
+                        
+                        if bannerViewModel.showBanners {
+                            BannerView()
+                                .frame(maxWidth: .infinity)
+                                .frame(width: 0)
+                                .padding(.bottom)
                         }
-                        .onChange(of: context.date) { date in
-                            chooseSplashText(data: viewModel.data, for: date)
+                        
+                        viewModel.data.content(for: context.date)
+                            .frame(maxWidth: 480)
+                            .frame(maxWidth: .infinity)
+                        
+                        if bannerViewModel.showBanners {
+                            BannerView()
+                                .frame(maxWidth: .infinity)
+                                .frame(width: 0)
+                                .padding(.top)
                         }
                     }
-                }
-                .refreshable {
-                    try? await viewModel.fetchData(force: true)
+                    .padding(.bottom)
+                    // Hack for forcing the navbar to always render
+                    .navigationTitle(Text(showTitle ? "\(context.date, format: dateFormatStyle)" : "\u{200C}"))
+                    .navigationBarTitleDisplayMode(.inline)
+#if DEBUG
+                    .toolbar {
+                        if (!(viewModel is MockHomeViewModel)) {
+                            ToolbarItem(placement: .primaryAction) {
+                                NavigationLink("Debug") {
+                                    HomeView<MockHomeViewModel>()
+                                }
+                            }
+                        }
+                    }
+#endif
+                    .onAppear {
+                        chooseSplashText(data: viewModel.data, for: context.date)
+                    }
+                    .onChange(of: context.date) { date in
+                        chooseSplashText(data: viewModel.data, for: date)
+                    }
                 }
             }
+            .refreshable {
+                try? await viewModel.fetchData(force: true)
+            }
         }.onAppear {
+            (viewModel as? StandardHomeViewModel)?.navigationManager = navigationManager
             Task {
                 try? await viewModel.fetchData(force: false)
             }
@@ -97,4 +112,5 @@ struct HomeView<Model: HomeViewModel>: View {
 #Preview {
     HomeView<MockHomeViewModel>()
         .environmentObject(MockHomeViewModel())
+        .environmentObject(BannerViewModel.shared)
 }

@@ -25,6 +25,7 @@ struct MainTabView: View {
     var body: some View {
         TabView(selection: $navigationManager.currentTab) {
             HomeView<StandardHomeViewModel>()
+                .environmentObject(navigationManager)
                 .tabItem {
                     Label("Home", image: "Home_Grey")
                 }
