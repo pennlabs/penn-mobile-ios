@@ -86,7 +86,7 @@ struct SublettingTabHint: View {
                 
                 Spacer()
                 
-                Button("Pin to tab bar...") {
+                Button("Pin to tab bar") {
                     var currentTabFeatures = UserDefaults.standard.getTabPreferences()
                     
                     tabHintDismissed = true
