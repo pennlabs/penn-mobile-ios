@@ -116,6 +116,10 @@
 		426A0B52299034910066C7B7 /* DiningAnalyticsGraphBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */; };
 		426FE6182B7023370096B79B /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426FE6172B7023370096B79B /* SearchBar.swift */; };
 		42712AB32B94CEB00070C2EC /* SubletMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42712AB22B94CEB00070C2EC /* SubletMapView.swift */; };
+		4273BCFF2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
+		4273BD002BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
+		4273BD012BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
+		4273BD022BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		429EA1E02B8B96B200824455 /* SubletCandidatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429EA1DF2B8B96B200824455 /* SubletCandidatesView.swift */; };
 		429EA1E12B8BA18300824455 /* SublettingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8910678A2B64715E00748FC6 /* SublettingAPI.swift */; };
 		42CC49D02AAE38C6008C41EE /* PollsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */; };
@@ -563,6 +567,7 @@
 		426A0B50299034910066C7B7 /* DiningAnalyticsGraphBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraphBox.swift; sourceTree = "<group>"; };
 		426FE6172B7023370096B79B /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		42712AB22B94CEB00070C2EC /* SubletMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletMapView.swift; sourceTree = "<group>"; };
+		4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
 		429EA1DF2B8B96B200824455 /* SubletCandidatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletCandidatesView.swift; sourceTree = "<group>"; };
 		42CC49CF2AAE38C6008C41EE /* PollsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsViewController.swift; sourceTree = "<group>"; };
 		42CC49D12AAE3904008C41EE /* PollsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsView.swift; sourceTree = "<group>"; };
@@ -993,6 +998,7 @@
 			isa = PBXGroup;
 			children = (
 				89EA262C290F2667008F26CF /* WidgetExtension.entitlements */,
+				4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */,
 				6C392E3727B5BDF20097640B /* Config */,
 				B6B1E089214442A200CCBBCD /* fastlane */,
 				F230FB0F225809E900760499 /* AutomatedScreenshotUITests */,
@@ -2346,6 +2352,7 @@
 				6CC88D7327B1BF51006896F6 /* mock_menu.json in Resources */,
 				6CC88D6D27B1BF51006896F6 /* sample-dining-venue.json in Resources */,
 				6C3F194227A32C29007BCB4F /* GoogleService-Info.plist in Resources */,
+				4273BCFF2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2354,6 +2361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4273BD022BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2361,6 +2369,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4273BD012BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
 				8932694028FC75A6003D4BF9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2369,6 +2378,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4273BD002BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
