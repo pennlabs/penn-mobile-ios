@@ -43,16 +43,32 @@ struct SubletDetailView: View {
                         .customBadge("\(sublet.offers?.count ?? 0)", enabled: sublet.offers?.count ?? 0 > 0)
                         .padding(.horizontal)
                         
-                        TabView(selection: $selectedTab) {
+                        // TabView does not like displaying content when inside ScrollView
+                        if selectedTab == "Details" {
                             SubletDetailOnly(sublet: sublet)
-                                .tag("Details")
-                            
+                                .transition(.move(edge: .leading))
+                        } else {
                             SubletCandidatesView(sublet: sublet)
-                                .tag("Candidates")
+                                .transition(.move(edge: .trailing))
                         }
-                        .tabViewStyle(.page(indexDisplayMode: .never))
-                        .frame(minHeight: proxy.size.height)
                     }
+                    .frame(minHeight: proxy.size.height)
+                    .clipped()
+                    .contentShape(.rect)
+                    .gesture(
+                        DragGesture()
+                            .onEnded { value in
+                                if value.translation.width < 0 {
+                                    withAnimation {
+                                        selectedTab = "Candidates"
+                                    }
+                                } else if value.translation.width > 0 {
+                                    withAnimation {
+                                        selectedTab = "Details"
+                                    }
+                                }
+                            }
+                    )
                 } else {
                     SubletDetailOnly(sublet: sublet)
                 }
