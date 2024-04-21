@@ -42,12 +42,12 @@ struct SubletDisplayRow: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(10)
-                        .frame(maxHeight: 120)
+                        .frame(width: 150)
                 } else {
                     Color.gray
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(10)
-                        .frame(maxHeight: 120)
+                        .frame(width: 150)
                 }
             } else {
                 KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
@@ -62,7 +62,7 @@ struct SubletDisplayRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(10)
-                    .frame(maxHeight: 120)
+                    .frame(width: 150)
             }
             
             VStack(alignment: .leading) {

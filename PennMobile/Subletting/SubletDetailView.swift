@@ -41,7 +41,7 @@ struct SubletDetailView: View {
                         }
                         .pickerStyle(.segmented)
                         .customBadge("\(sublet.offers?.count ?? 0)", enabled: sublet.offers?.count ?? 0 > 0)
-                        .padding(.horizontal)
+                        .padding([.horizontal, .top])
                         
                         // TabView does not like displaying content when inside ScrollView
                         if selectedTab == "Details" {
