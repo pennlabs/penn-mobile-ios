@@ -12,6 +12,8 @@ struct HomeSublettingBanner: View {
     var onStart: () -> Void
     var onDismiss: () -> Void
     
+    static let gradient = LinearGradient(colors: [Color("Subletting Gradient 1"), Color("Subletting Gradient 2")], startPoint: .topLeading, endPoint: .bottomTrailing)
+    
     var body: some View {
         HomeCardView {
             VStack {
@@ -24,6 +26,7 @@ struct HomeSublettingBanner: View {
                 } label: {
                     HStack {
                         Text("Get started")
+                        BetaBadge()
                         Image(systemName: "arrow.forward")
                     }
                     .font(.title3)
@@ -67,7 +70,7 @@ struct HomeSublettingBanner: View {
             }
             .padding()
             .multilineTextAlignment(.center)
-            .background(LinearGradient(colors: [Color("Subletting Gradient 1"), Color("Subletting Gradient 2")], startPoint: .topLeading, endPoint: .bottomTrailing))
+            .background(Self.gradient)
             .environment(\.colorScheme, .dark)
         }
     }
