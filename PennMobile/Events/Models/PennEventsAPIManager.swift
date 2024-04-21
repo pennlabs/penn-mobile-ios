@@ -34,19 +34,19 @@ class PennEventsAPIManager {
         }
 
         // fetch penn clubs events
-        group.enter()
-        fetchEvents(from: pennClubsUrl, tag: "Clubs") { events, error in
-            if let events = events {
-                allEvents += events.map { event in
-                    var modifiedEvent = event
-                    modifiedEvent.eventType = "CLUBS"
-                    return modifiedEvent
-                }
-            } else {
-                anyError = error
-            }
-            group.leave()
-        }
+//        group.enter()
+//        fetchEvents(from: pennClubsUrl, tag: "Clubs") { events, error in
+//            if let events = events {
+//                allEvents += events.map { event in
+//                    var modifiedEvent = event
+//                    modifiedEvent.eventType = "CLUBS"
+//                    return modifiedEvent
+//                }
+//            } else {
+//                anyError = error
+//            }
+//            group.leave()
+//        }
 
         group.notify(queue: .main) {
             completion(anyError == nil ? allEvents : nil, anyError)
