@@ -100,7 +100,7 @@ struct NewListingForm: View {
                 
                 TextLineField($subletData.address, placeholder: "Street address", title: "Location")
                 
-                DateRangeField(lowerDate: $startDate, upperDate: $endDate, title: "Start & End Date")
+                DateRangeField(lowerDate: $startDate, upperDate: $endDate, in: .now...Date.distantFuture, title: "Start & End Date")
                     .validator(.required)
                 
                 PairFields {

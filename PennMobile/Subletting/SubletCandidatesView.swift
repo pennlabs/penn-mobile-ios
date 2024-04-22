@@ -11,30 +11,30 @@ import PennMobileShared
 
 struct CandidateRow: View {
     let offer: SubletOffer
-    @State var isMessageShowing = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(offer.email)
-                .font(.headline)
+            Button(action: {
+                guard let url = URL(string: "mailto:\(offer.email)") else { return }
+                UIApplication.shared.open(url)
+            }) {
+                Text(offer.email)
+                    .font(.headline)
+            }
             
             HStack {
                 Image(systemName: "phone")
-                Text(offer.phoneNumber)
-                if offer.message != nil {
-                    Button(action: {
-                        withAnimation {
-                            isMessageShowing.toggle()
-                        }
-                    }) {
-                        Image(systemName: "ellipsis.message")
-                    }
+                Button(action: {
+                    guard let url = URL(string: "tel:\(offer.phoneNumber)") else { return }
+                    UIApplication.shared.open(url)
+                }) {
+                    Text(offer.phoneNumber)
                 }
             }
             .font(.subheadline)
             
-            if isMessageShowing {
-                Text("\"\(offer.message ?? "")\"")
+            if offer.message != nil && !offer.message!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                Text("\"\(offer.message!)\"")
             }
             
             Text("Submitted \(formatDate(offer.createdDate))")

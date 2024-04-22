@@ -18,7 +18,7 @@ public struct SubletDisplayBox: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading) {
+        VStack {
             KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
                 .placeholder {
                     if sublet.images.count > 0 {
@@ -31,6 +31,7 @@ public struct SubletDisplayBox: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .cornerRadius(10)
+                .frame(height: 150)
             
             VStack(alignment: .leading) {
                 Text(sublet.title)

@@ -12,6 +12,11 @@ private struct PennLink: View, Identifiable {
     let title: LocalizedStringKey
     let url: URL
     
+    init(title: LocalizedStringKey, url: URL) {
+        self.title = title
+        self.url = url
+    }
+    
     init(title: LocalizedStringKey, url: String) {
         self.title = title
         self.url = URL(string: url)!
@@ -26,9 +31,11 @@ private struct PennLink: View, Identifiable {
     }
 }
 
+let feedbackURL = URL(string: "https://pennlabs.org/feedback/ios")!
+
 private let pennLinks: [PennLink] = [
     PennLink(title: "Penn Labs", url: "https://pennlabs.org"),
-    PennLink(title: "Share Your Feedback", url: "https://pennlabs.org/feedback/ios")]
+    PennLink(title: "Share Your Feedback", url: feedbackURL)]
 
 struct MoreView: View {
     var features: [AppFeature]
@@ -135,9 +142,6 @@ struct MoreView: View {
         }
         .navigationTitle(Text("More"))
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: FeatureIdentifier.self) { id in
-            AnyView(features.first { $0.id == id }!.content)
-        }
         .sheet(isPresented: $isPresentingLoginSheet) {
             LabsLoginView { success in
                 if success {

@@ -111,7 +111,7 @@ let features: [AppFeature] = [
             .navigationTitle(Text("Fitness"))
     },
     AppFeature(.polls, shortName: "Polls", longName: "Polls History", color: .blueDark, image: .app("Polls_Grey"), controller: PollsViewController.self),
-    AppFeature(.subletting, name: "Subletting", color: .baseOrange, image: .system("building")) {
+    AppFeature(.subletting, shortName: "Subletting", longName: "Subletting (Beta)", color: .baseOrange, image: .system("building")) {
         MarketplaceView()
             .navigationTitle(Text("Marketplace"))
     },
