@@ -47,6 +47,8 @@
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Allow Penn Mobile to add events you select to your calendar</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Scan Penn Clubs event tickets using the camera.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Contacts access is required to add emergency contacts</string>
 	<key>NSFaceIDUsageDescription</key>

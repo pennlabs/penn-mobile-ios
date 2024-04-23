@@ -259,6 +259,9 @@
 		8932694028FC75A6003D4BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8932693F28FC75A6003D4BF9 /* Assets.xcassets */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
+		89333AB42BD72C15005B6510 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB32BD72C15005B6510 /* ScannerView.swift */; };
+		89333AB62BD72C1C005B6510 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB52BD72C1C005B6510 /* ScannerViewModel.swift */; };
+		89333AB82BD74027005B6510 /* ScannerViewfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB72BD74027005B6510 /* ScannerViewfinder.swift */; };
 		89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9328E7935E00CE1638 /* CoursesView.swift */; };
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9B28E799AA00CE1638 /* CoursesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */; };
@@ -702,6 +705,9 @@
 		8932693B28FC75A5003D4BF9 /* LaundryLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryLiveActivity.swift; sourceTree = "<group>"; };
 		8932693F28FC75A6003D4BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8932694128FC75A6003D4BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89333AB32BD72C15005B6510 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		89333AB52BD72C1C005B6510 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
+		89333AB72BD74027005B6510 /* ScannerViewfinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewfinder.swift; sourceTree = "<group>"; };
 		89459B9328E7935E00CE1638 /* CoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesView.swift; sourceTree = "<group>"; };
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewModel.swift; sourceTree = "<group>"; };
@@ -1059,6 +1065,7 @@
 				6C6FE1B727B9B8CB0093FD13 /* More Tab */,
 				6C44198927B9A0E400993028 /* Events */,
 				216640EE1EBB867600746B8E /* Contacts */,
+				89333AB12BD72B36005B6510 /* Clubs */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
 			);
 			path = PennMobile;
@@ -1733,6 +1740,24 @@
 				89EA262D290F9411008F26CF /* Intents.intentdefinition */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		89333AB12BD72B36005B6510 /* Clubs */ = {
+			isa = PBXGroup;
+			children = (
+				89333AB22BD72B54005B6510 /* Ticket Scanner */,
+			);
+			path = Clubs;
+			sourceTree = "<group>";
+		};
+		89333AB22BD72B54005B6510 /* Ticket Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				89333AB32BD72C15005B6510 /* ScannerView.swift */,
+				89333AB52BD72C1C005B6510 /* ScannerViewModel.swift */,
+				89333AB72BD74027005B6510 /* ScannerViewfinder.swift */,
+			);
+			path = "Ticket Scanner";
 			sourceTree = "<group>";
 		};
 		89459B9728E7998D00CE1638 /* Models */ = {
@@ -2526,6 +2551,7 @@
 				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
+				89333AB82BD74027005B6510 /* ScannerViewfinder.swift in Sources */,
 				6CAA4B4C27A7639700473CC6 /* PollsNetworkManager.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				6788845C2BB9D0C100BA2E70 /* ChatMessageView.swift in Sources */,
@@ -2592,6 +2618,7 @@
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
 				8961C3F32BCC4A1F0039CBB2 /* HomeSublettingBanner.swift in Sources */,
 				429EA1E12B8BA18300824455 /* SublettingAPI.swift in Sources */,
+				89333AB42BD72C15005B6510 /* ScannerView.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
@@ -2636,6 +2663,7 @@
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
 				6CC88D7727B1BF51006896F6 /* DiningAnalyticsView.swift in Sources */,
 				892D597A2BD31F50002EEDCF /* BetaBadge.swift in Sources */,
+				89333AB62BD72C1C005B6510 /* ScannerViewModel.swift in Sources */,
 				F2770AEA2545E39D001EA1DD /* CourseAlertCreateController.swift in Sources */,
 				6CC88D7427B1BF51006896F6 /* DiningViewModelSwiftUI.swift in Sources */,
 				97E79E082100DA1200D3D606 /* BuildingHoursCell.swift in Sources */,
