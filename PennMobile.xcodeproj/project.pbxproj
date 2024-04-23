@@ -262,6 +262,11 @@
 		89333AB42BD72C15005B6510 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB32BD72C15005B6510 /* ScannerView.swift */; };
 		89333AB62BD72C1C005B6510 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB52BD72C1C005B6510 /* ScannerViewModel.swift */; };
 		89333AB82BD74027005B6510 /* ScannerViewfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB72BD74027005B6510 /* ScannerViewfinder.swift */; };
+		89333ABA2BD74DE6005B6510 /* ScannerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB92BD74DE6005B6510 /* ScannerState.swift */; };
+		89333AC12BD7546A005B6510 /* ScannerError.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 89333ABD2BD7546A005B6510 /* ScannerError.ahap */; };
+		89333AC22BD7546A005B6510 /* ScannerInvalid.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 89333ABE2BD7546A005B6510 /* ScannerInvalid.ahap */; };
+		89333AC32BD7546A005B6510 /* ScannerValid.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 89333ABF2BD7546A005B6510 /* ScannerValid.ahap */; };
+		89333AC42BD7546A005B6510 /* ScannerDuplicate.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 89333AC02BD7546A005B6510 /* ScannerDuplicate.ahap */; };
 		89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9328E7935E00CE1638 /* CoursesView.swift */; };
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9B28E799AA00CE1638 /* CoursesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */; };
@@ -708,6 +713,11 @@
 		89333AB32BD72C15005B6510 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		89333AB52BD72C1C005B6510 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
 		89333AB72BD74027005B6510 /* ScannerViewfinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewfinder.swift; sourceTree = "<group>"; };
+		89333AB92BD74DE6005B6510 /* ScannerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerState.swift; sourceTree = "<group>"; };
+		89333ABD2BD7546A005B6510 /* ScannerError.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScannerError.ahap; sourceTree = "<group>"; };
+		89333ABE2BD7546A005B6510 /* ScannerInvalid.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScannerInvalid.ahap; sourceTree = "<group>"; };
+		89333ABF2BD7546A005B6510 /* ScannerValid.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScannerValid.ahap; sourceTree = "<group>"; };
+		89333AC02BD7546A005B6510 /* ScannerDuplicate.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScannerDuplicate.ahap; sourceTree = "<group>"; };
 		89459B9328E7935E00CE1638 /* CoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesView.swift; sourceTree = "<group>"; };
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewModel.swift; sourceTree = "<group>"; };
@@ -1756,6 +1766,11 @@
 				89333AB32BD72C15005B6510 /* ScannerView.swift */,
 				89333AB52BD72C1C005B6510 /* ScannerViewModel.swift */,
 				89333AB72BD74027005B6510 /* ScannerViewfinder.swift */,
+				89333AB92BD74DE6005B6510 /* ScannerState.swift */,
+				89333ABF2BD7546A005B6510 /* ScannerValid.ahap */,
+				89333AC02BD7546A005B6510 /* ScannerDuplicate.ahap */,
+				89333ABE2BD7546A005B6510 /* ScannerInvalid.ahap */,
+				89333ABD2BD7546A005B6510 /* ScannerError.ahap */,
 			);
 			path = "Ticket Scanner";
 			sourceTree = "<group>";
@@ -2381,7 +2396,11 @@
 				6CC88D6D27B1BF51006896F6 /* sample-dining-venue.json in Resources */,
 				6C3F194227A32C29007BCB4F /* GoogleService-Info.plist in Resources */,
 				4273BCFF2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
+				89333AC32BD7546A005B6510 /* ScannerValid.ahap in Resources */,
+				89333AC22BD7546A005B6510 /* ScannerInvalid.ahap in Resources */,
+				89333AC12BD7546A005B6510 /* ScannerError.ahap in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
+				89333AC42BD7546A005B6510 /* ScannerDuplicate.ahap in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2687,6 +2706,7 @@
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				F25AFDDB25C3E5E900B3AC80 /* ZeroCourseAlertsCell.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
+				89333ABA2BD74DE6005B6510 /* ScannerState.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				212B8357222A31C300F835D6 /* HomePostCell.swift in Sources */,

@@ -11,8 +11,8 @@ import UIKit
 import AVFoundation
 
 struct ScannerViewfinder: UIViewRepresentable {
-    var session: AVCaptureSession
-    
+    @EnvironmentObject var viewModel: ScannerViewModel
+        
     func makeUIView(context: Context) -> InternalView {
         let view = InternalView()
         view.videoPreviewLayer.videoGravity = .resizeAspectFill
@@ -22,7 +22,8 @@ struct ScannerViewfinder: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: InternalView, context: Context) {
-        uiView.videoPreviewLayer.session = session
+        uiView.videoPreviewLayer.session = viewModel.captureSession
+        viewModel.previewLayer = uiView.videoPreviewLayer
     }
     
     class InternalView: UIView {
