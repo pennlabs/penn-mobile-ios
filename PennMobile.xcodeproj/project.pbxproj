@@ -15,7 +15,6 @@
 		211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */; };
 		211DA1AF204921030065BC2C /* LaundryMachinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DA1AE204921030065BC2C /* LaundryMachinesView.swift */; };
 		212209A71EC7CD2F0038FB7F /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */; };
-		212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212304C62054EDB900958CE0 /* FlingViewController.swift */; };
 		212B8355222A31B500F835D6 /* HomePostCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B8354222A31B500F835D6 /* HomePostCellItem.swift */; };
 		212B8357222A31C300F835D6 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B8356222A31C300F835D6 /* HomePostCell.swift */; };
 		212B8359222A331D00F835D6 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B8358222A331D00F835D6 /* Post.swift */; };
@@ -31,7 +30,6 @@
 		21508166220D2499002F7EA1 /* HomeNewsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508165220D2499002F7EA1 /* HomeNewsCellItem.swift */; };
 		21508168220D24A1002F7EA1 /* HomeNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508167220D24A1002F7EA1 /* HomeNewsCell.swift */; };
 		2150816A220D24C4002F7EA1 /* NewsArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21508169220D24C4002F7EA1 /* NewsArticle.swift */; };
-		215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215C6059205C837400FE271A /* FlingNetworkManager.swift */; };
 		21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D3F200EF881002F33CA /* LaundryCell + Graph.swift */; };
 		21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D4420103EB8002F33CA /* HomeViewController.swift */; };
 		21640D542010526B002F33CA /* HomeTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D532010526B002F33CA /* HomeTableViewModel.swift */; };
@@ -98,7 +96,6 @@
 		21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21EB4D2F203D330C0029A460 /* UserDBManager.swift */; };
 		21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */; };
 		21F5F8F320538A90005B143F /* HomeFlingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F220538A90005B143F /* HomeFlingCell.swift */; };
-		21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F5F8F420538AFC005B143F /* FlingPerformer.swift */; };
 		21F70D252346AB3800CEB203 /* CampusExpressLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */; };
 		21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */; };
 		21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */; };
@@ -457,7 +454,6 @@
 		211DA1AA20490E4D0065BC2C /* HomeCellConformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellConformable.swift; sourceTree = "<group>"; };
 		211DA1AE204921030065BC2C /* LaundryMachinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryMachinesView.swift; sourceTree = "<group>"; };
 		212209A61EC7CD2F0038FB7F /* MoveableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
-		212304C62054EDB900958CE0 /* FlingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingViewController.swift; sourceTree = "<group>"; };
 		212B8354222A31B500F835D6 /* HomePostCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCellItem.swift; sourceTree = "<group>"; };
 		212B8356222A31C300F835D6 /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
 		212B8358222A331D00F835D6 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -474,7 +470,6 @@
 		21508165220D2499002F7EA1 /* HomeNewsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCellItem.swift; sourceTree = "<group>"; };
 		21508167220D24A1002F7EA1 /* HomeNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCell.swift; sourceTree = "<group>"; };
 		21508169220D24C4002F7EA1 /* NewsArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticle.swift; sourceTree = "<group>"; };
-		215C6059205C837400FE271A /* FlingNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingNetworkManager.swift; sourceTree = "<group>"; };
 		21640D3F200EF881002F33CA /* LaundryCell + Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaundryCell + Graph.swift"; sourceTree = "<group>"; };
 		21640D4420103EB8002F33CA /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		21640D532010526B002F33CA /* HomeTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewModel.swift; sourceTree = "<group>"; };
@@ -545,7 +540,6 @@
 		21EB4D2F203D330C0029A460 /* UserDBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDBManager.swift; sourceTree = "<group>"; };
 		21F5F8F020538A87005B143F /* HomeFlingCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCellItem.swift; sourceTree = "<group>"; };
 		21F5F8F220538A90005B143F /* HomeFlingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCell.swift; sourceTree = "<group>"; };
-		21F5F8F420538AFC005B143F /* FlingPerformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingPerformer.swift; sourceTree = "<group>"; };
 		21F70D242346AB3400CEB203 /* CampusExpressLoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CampusExpressLoginController.swift; sourceTree = "<group>"; };
 		21FBC23F228514ED00B432D8 /* FeedAnalyticsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedAnalyticsEngine.swift; sourceTree = "<group>"; };
 		21FBC241228B774E00B432D8 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
@@ -893,16 +887,6 @@
 			path = "GSR Locations";
 			sourceTree = "<group>";
 		};
-		212304C52054ED9900958CE0 /* Spring Fling */ = {
-			isa = PBXGroup;
-			children = (
-				212304C62054EDB900958CE0 /* FlingViewController.swift */,
-				215C6059205C837400FE271A /* FlingNetworkManager.swift */,
-				21F5F8F420538AFC005B143F /* FlingPerformer.swift */,
-			);
-			path = "Spring Fling";
-			sourceTree = "<group>";
-		};
 		212B8353222A319200F835D6 /* Post */ = {
 			isa = PBXGroup;
 			children = (
@@ -1052,7 +1036,6 @@
 				2189C0732027CD2F00771C1F /* GSR-Booking */,
 				B654BAE81F801F030038B9D5 /* Laundry */,
 				21D5E06523B68F0E00B331CC /* Housing */,
-				212304C52054ED9900958CE0 /* Spring Fling */,
 				F206DDB128D78A6C008F572F /* Preferences */,
 				6CAA4B4727A7639600473CC6 /* Polls */,
 				216640D31EBB80FD00746B8E /* News */,
@@ -2523,7 +2506,6 @@
 				2138D55322597FCB00D67CA2 /* GSRLocationsController.swift in Sources */,
 				6C6FE1CB27B9B8CB0093FD13 /* PacCodeViewController.swift in Sources */,
 				6CC88D6927B1BF51006896F6 /* DiningViewHeader.swift in Sources */,
-				212304C72054EDB900958CE0 /* FlingViewController.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
 				6CAA4B4C27A7639700473CC6 /* PollsNetworkManager.swift in Sources */,
@@ -2570,7 +2552,6 @@
 				F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */,
 				6C6FE1D127B9B8CB0093FD13 /* InfoTableViewController.swift in Sources */,
 				F2770AE52545E384001EA1DD /* CourseAlertController.swift in Sources */,
-				215C605A205C837400FE271A /* FlingNetworkManager.swift in Sources */,
 				E49D3B912B66CA570022AB71 /* MyListingsActivity.swift in Sources */,
 				89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */,
 				217A7836204D2E0D004F1227 /* HomeLaundryCellItem.swift in Sources */,
@@ -2646,7 +2627,6 @@
 				6CC88D7927B1BF90006896F6 /* DiningLoginController.swift in Sources */,
 				6C6FE1D027B9B8CB0093FD13 /* ProfilePageNetworkManager.swift in Sources */,
 				6CC88D5E27B1BF51006896F6 /* AnalyticsCardView.swift in Sources */,
-				21F5F8F520538AFC005B143F /* FlingPerformer.swift in Sources */,
 				21E6A109224BDFEB00DC457A /* HomeViewController + Delegates.swift in Sources */,
 				217A7832204D2C7E004F1227 /* HomeCellItem.swift in Sources */,
 				6ECB4C362ACB10D500F7379A /* HomeDiningCell.swift in Sources */,
