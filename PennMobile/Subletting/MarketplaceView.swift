@@ -198,12 +198,12 @@ struct MarketplaceView: View {
                     }
                 }
             }
+            .padding(.horizontal)
             .refreshable {
                 await sublettingViewModel.populateSublets()
                 await sublettingViewModel.populateFiltered()
             }
         }
-        .padding(.horizontal)
         .toolbar {
             ToolbarItem {
                 NavigationLink(value: SublettingPage.myListings()) {
