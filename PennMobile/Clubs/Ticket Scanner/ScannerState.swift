@@ -10,10 +10,16 @@ import SwiftUI
 import UIKit
 
 struct ScannedTicket {
-    enum Status: CaseIterable {
-        case valid
-        case duplicate
-        case invalid
+    enum InvalidReason: Error {
+        case malformedTicket
+        case badRequest(String)
+        case notFound
+    }
+    
+    enum Status {
+        case valid(Ticket)
+        case duplicate(Ticket)
+        case invalid(InvalidReason)
     }
     
     var status: Status
@@ -51,7 +57,7 @@ extension ScannerState {
                 Label(title: "Invalid", icon: "hand.raised.fill", background: .red, foreground: .white)
             }
         case .error:
-            Label(title: "Error", icon: "", background: .init(UIColor.systemBackground), foreground: .red)
+            Label(title: "Error", icon: "ant", background: .init(UIColor.systemBackground), foreground: .red)
         }
     }
 }

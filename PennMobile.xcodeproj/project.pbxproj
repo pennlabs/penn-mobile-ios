@@ -294,6 +294,7 @@
 		89E0DE6A2AE396E200E918FF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE692AE396E200E918FF /* HomeViewModel.swift */; };
 		89E0DE6C2AE415A800E918FF /* HomeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE6B2AE415A800E918FF /* HomeCardView.swift */; };
 		89E37E102B6F5BD2000A86B7 /* NewListingForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E37E0F2B6F5BD2000A86B7 /* NewListingForm.swift */; };
+		89E985B92BDEC264004B7D41 /* TicketingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E985B82BDEC264004B7D41 /* TicketingAPI.swift */; };
 		89EA261E290EDFA7008F26CF /* CoursesDayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */; };
 		89EA2622290EE3FD008F26CF /* CoursesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2620290EE3E9008F26CF /* CoursesProvider.swift */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
@@ -745,6 +746,7 @@
 		89E0DE692AE396E200E918FF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		89E0DE6B2AE415A800E918FF /* HomeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCardView.swift; sourceTree = "<group>"; };
 		89E37E0F2B6F5BD2000A86B7 /* NewListingForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListingForm.swift; sourceTree = "<group>"; };
+		89E985B82BDEC264004B7D41 /* TicketingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketingAPI.swift; sourceTree = "<group>"; };
 		89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayWidget.swift; sourceTree = "<group>"; };
 		89EA2620290EE3E9008F26CF /* CoursesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesProvider.swift; sourceTree = "<group>"; };
 		89EA262C290F2667008F26CF /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -1755,6 +1757,7 @@
 		89333AB12BD72B36005B6510 /* Clubs */ = {
 			isa = PBXGroup;
 			children = (
+				89E985B82BDEC264004B7D41 /* TicketingAPI.swift */,
 				89333AB22BD72B54005B6510 /* Ticket Scanner */,
 			);
 			path = Clubs;
@@ -2823,6 +2826,7 @@
 				B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				6CAA4B5527A763A400473CC6 /* PollOptionCell.swift in Sources */,
+				89E985B92BDEC264004B7D41 /* TicketingAPI.swift in Sources */,
 				6CC88D6127B1BF51006896F6 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,

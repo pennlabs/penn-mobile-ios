@@ -117,7 +117,7 @@ struct ScannerBarcode {
 }
 
 @MainActor class ScannerViewModel: ObservableObject {
-    static let scanThrottle: TimeInterval = 1
+    static let scanThrottle: TimeInterval = 0.65
     
     private let scannerSession = ScannerSession()
     private var cancellables = Set<AnyCancellable>()
@@ -136,8 +136,8 @@ struct ScannerBarcode {
     private var seenVisibleBarcodes = Set<String>()
     private var scanTimes = [String: Date]()
     
-    @Published var cameraState = CameraState.settingUp
-    @Published var scannerState = ScannerState.noTicket {
+    @Published private(set) var cameraState = CameraState.settingUp
+    @Published private(set) var scannerState = ScannerState.noTicket {
         didSet {
             switch scannerState {
             case .error:
@@ -185,6 +185,11 @@ struct ScannerBarcode {
         }
     }
     
+    convenience init(mocking state: ScannerState) {
+        self.init()
+        scannerState = state
+    }
+    
     func setup() {
         try? hapticEngine?.start()
         
@@ -202,7 +207,7 @@ struct ScannerBarcode {
         var inactiveBarcodes = Set<VNBarcodeObservation>()
         var alreadyScannedBarcodes = Set<VNBarcodeObservation>()
         
-        var currentString = switch scannerState {
+        let currentString = switch scannerState {
                             case .loading(let str), .scanned(_, let str):
                                 str
                             default:
@@ -234,7 +239,19 @@ struct ScannerBarcode {
             activeBarcodes.insert(barcode)
             
             Task {
-                await check(ticketString: barcode.payloadStringValue!)
+                let string = barcode.payloadStringValue!
+                do {
+                    try await check(ticketString: string)
+                } catch {
+                    if !Task.isCancelled {
+                        if let error = error as? ScannedTicket.InvalidReason {
+                            let ticket = ScannedTicket(status: .invalid(error), scanTime: Date())
+                            scannerState = .scanned(ticket, string)
+                        } else {
+                            scannerState = .error(error)
+                        }
+                    }
+                }
             }
         }
         
@@ -248,17 +265,30 @@ struct ScannerBarcode {
         }
     }
     
-    private var i = 0
-    private func check(ticketString: String) async {
+    private func check(ticketString: String) async throws {
         scannerState = .loading(ticketString)
+        let isDuplicate = scanTimes[ticketString] != nil
         scanTimes[ticketString] = Date()
         
         // Prevent previously seen barcodes from being rescanned until they leave frame
         seenVisibleBarcodes.insert(ticketString)
         
-        try? await Task.sleep(for: .seconds(0.2))
-        scannerState = .scanned(ScannedTicket(status: .allCases[i % 3], scanTime: Date()), ticketString)
-        i += 1
+        // Extract the ticket ID from the ticket URL
+        guard let url = URL(string: ticketString), url.pathComponents.count == 4, url.pathComponents.starts(with: ["/", "api", "tickets"]) else {
+            throw ScannedTicket.InvalidReason.malformedTicket
+        }
+        
+        let id = url.pathComponents[3]
+        guard let ticket = try await TicketingAPI.shared.getTicket(id: id) else {
+            throw ScannedTicket.InvalidReason.notFound
+        }
+
+        if ticket.attended {
+            scannerState = .scanned(.init(status: .duplicate(ticket), scanTime: Date()), ticketString)
+        } else {
+            let updatedTicket = try await TicketingAPI.shared.updateAttendance(id: id, to: true)
+            scannerState = .scanned(.init(status: .valid(updatedTicket), scanTime: Date()), ticketString)
+        }
     }
     
     func destroy() {
@@ -286,5 +316,10 @@ struct ScannerBarcode {
         } catch {
             print("Couldn't play haptic: \(error)")
         }
+    }
+    
+    func resetScannerState() {
+        // TODO: Cancel any current checks
+        scannerState = .noTicket
     }
 }
