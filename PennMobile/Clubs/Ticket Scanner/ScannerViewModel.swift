@@ -117,7 +117,7 @@ struct ScannerBarcode {
 }
 
 @MainActor class ScannerViewModel: ObservableObject {
-    static let scanThrottle: TimeInterval = 0.65
+    static let scanThrottle: TimeInterval = 2
     
     private let scannerSession = ScannerSession()
     private var cancellables = Set<AnyCancellable>()
