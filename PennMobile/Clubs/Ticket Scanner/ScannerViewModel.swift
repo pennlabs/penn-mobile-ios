@@ -283,7 +283,7 @@ struct ScannerBarcode {
             throw ScannedTicket.InvalidReason.notFound
         }
 
-        if ticket.attended {
+        if ticket.attended == true {
             scannerState = .scanned(.init(status: .duplicate(ticket), scanTime: Date()), ticketString)
         } else {
             let updatedTicket = try await TicketingAPI.shared.updateAttendance(id: id, to: true)

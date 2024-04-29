@@ -18,7 +18,9 @@ struct Ticket: Decodable {
     var event: TicketEvent
     var type: String
     var owner: String
-    var attended: Bool
+    
+    // TODO: Make this non-optional whenever the backend actually returns the attended property
+    var attended: Bool?
 }
 
 class TicketingAPI {
@@ -41,17 +43,30 @@ class TicketingAPI {
         return URL(string: "\(baseURL)/api/tickets/\(pathComponent)")
     }
     
-    func getTicket(id: String) async throws -> Ticket? {
+    func getSession() async throws -> URLSession {
         guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
             throw NetworkingError.authenticationError
         }
+        
+        // HACK: iOS doesn't preserve Authorization headers during redirects
+        // (It also doesn't support setting Authorization headers in general apparently)
+        let config = URLSessionConfiguration.default
+        config.httpAdditionalHeaders = [
+            "Authorization": "Bearer \(accessToken.value)",
+            "X-Authorization": "Bearer \(accessToken.value)"
+        ]
+        
+        return URLSession(configuration: config)
+    }
+    
+    func getTicket(id: String) async throws -> Ticket? {
+        let session = try await getSession()
         
         guard let url = ticketUrl(forId: id) else {
             return nil
         }
         
-        let request = URLRequest(url: url, accessToken: accessToken)
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await session.data(from: url)
         
         if let response = response as? HTTPURLResponse, response.statusCode == 404 {
             return nil
@@ -61,9 +76,7 @@ class TicketingAPI {
     }
     
     @discardableResult func updateAttendance(id: String, to attended: Bool) async throws -> Ticket {
-        guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
-            throw NetworkingError.authenticationError
-        }
+        let session = try await getSession()
         
         guard let url = ticketUrl(forId: id) else {
             throw ScannedTicket.InvalidReason.notFound
@@ -73,11 +86,11 @@ class TicketingAPI {
             var attended: Bool
         }
         
-        var request = URLRequest(url: url, accessToken: accessToken)
+        var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = try JSONEncoder().encode(AttendanceUpdateRequest(attended: attended))
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await session.data(for: request)
         
         if let response = response as? HTTPURLResponse, response.statusCode == 400 {
             struct ErrorResponse: Decodable {
