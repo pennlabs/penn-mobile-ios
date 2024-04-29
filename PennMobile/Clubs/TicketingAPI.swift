@@ -19,7 +19,7 @@ struct Ticket: Decodable {
     var type: String
     var owner: String
     
-    // TODO: Make this non-optional whenever the backend actually returns the attended property
+    // TODO: Make attended property non-optional when the backend returns it
     var attended: Bool?
 }
 
@@ -40,7 +40,7 @@ class TicketingAPI {
             return nil
         }
         
-        return URL(string: "\(baseURL)/api/tickets/\(pathComponent)")
+        return URL(string: "\(baseURL)/api/tickets/\(pathComponent)/")
     }
     
     func getSession() async throws -> URLSession {
@@ -87,18 +87,23 @@ class TicketingAPI {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "PATCH"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONEncoder().encode(AttendanceUpdateRequest(attended: attended))
         
         let (data, response) = try await session.data(for: request)
         
-        if let response = response as? HTTPURLResponse, response.statusCode == 400 {
-            struct ErrorResponse: Decodable {
-                var detail: String
+        if let response = response as? HTTPURLResponse {
+            if response.statusCode == 404 {
+                throw ScannedTicket.InvalidReason.notFound
+            } else if response.statusCode == 400 {
+                struct ErrorResponse: Decodable {
+                    var detail: String
+                }
+                
+                let errorResponse = try decoder.decode(ErrorResponse.self, from: data)
+                throw ScannedTicket.InvalidReason.badRequest(errorResponse.detail)
             }
-            
-            let errorResponse = try decoder.decode(ErrorResponse.self, from: data)
-            throw ScannedTicket.InvalidReason.badRequest(errorResponse.detail)
         }
         
         return try decoder.decode(Ticket.self, from: data)

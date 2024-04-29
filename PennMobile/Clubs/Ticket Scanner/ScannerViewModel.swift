@@ -267,7 +267,6 @@ struct ScannerBarcode {
     
     private func check(ticketString: String) async throws {
         scannerState = .loading(ticketString)
-        let isDuplicate = scanTimes[ticketString] != nil
         scanTimes[ticketString] = Date()
         
         // Prevent previously seen barcodes from being rescanned until they leave frame
@@ -282,12 +281,17 @@ struct ScannerBarcode {
         guard let ticket = try await TicketingAPI.shared.getTicket(id: id) else {
             throw ScannedTicket.InvalidReason.notFound
         }
-
+        
         if ticket.attended == true {
             scannerState = .scanned(.init(status: .duplicate(ticket), scanTime: Date()), ticketString)
-        } else {
+            return
+        }
+
+        do {
             let updatedTicket = try await TicketingAPI.shared.updateAttendance(id: id, to: true)
             scannerState = .scanned(.init(status: .valid(updatedTicket), scanTime: Date()), ticketString)
+        } catch ScannedTicket.InvalidReason.notFound {
+            throw ScannerInternalError.insufficientEventPermissions
         }
     }
     

@@ -61,3 +61,14 @@ extension ScannerState {
         }
     }
 }
+
+enum ScannerInternalError: Error {
+    case insufficientEventPermissions
+    
+    var localizedDescription: String {
+        switch self {
+        case .insufficientEventPermissions:
+            String(localized: "You don't have permission to validate tickets for this event.")
+        }
+    }
+}
