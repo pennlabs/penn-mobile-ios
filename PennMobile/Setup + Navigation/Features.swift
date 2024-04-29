@@ -22,6 +22,7 @@ enum FeatureIdentifier: String, Hashable, Identifiable {
     case about = "About"
     case polls = "Poll History"
     case subletting = "Subletting"
+    case ticketScanner = "Ticket Scanner"
     
     var id: String { rawValue }
 }
@@ -116,5 +117,9 @@ let features: [AppFeature] = [
             .navigationTitle(Text("Marketplace"))
     },
     AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),
+    AppFeature(.ticketScanner, shortName: "Scanner", longName: "Ticket Scanner", color: .basePurple, image: .system("qrcode.viewfinder")) {
+        ScannerView()
+            .navigationTitle(Text("Scanner"))
+    },
     AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]

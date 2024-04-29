@@ -256,6 +256,14 @@
 		8932694028FC75A6003D4BF9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8932693F28FC75A6003D4BF9 /* Assets.xcassets */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
+		89333AB42BD72C15005B6510 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB32BD72C15005B6510 /* ScannerView.swift */; };
+		89333AB62BD72C1C005B6510 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB52BD72C1C005B6510 /* ScannerViewModel.swift */; };
+		89333AB82BD74027005B6510 /* ScannerViewfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB72BD74027005B6510 /* ScannerViewfinder.swift */; };
+		89333ABA2BD74DE6005B6510 /* ScannerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89333AB92BD74DE6005B6510 /* ScannerState.swift */; };
+		89333AC12BD7546A005B6510 /* ScannerError.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 89333ABD2BD7546A005B6510 /* ScannerError.ahap */; };
+		89333AC22BD7546A005B6510 /* ScannerInvalid.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 89333ABE2BD7546A005B6510 /* ScannerInvalid.ahap */; };
+		89333AC32BD7546A005B6510 /* ScannerValid.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 89333ABF2BD7546A005B6510 /* ScannerValid.ahap */; };
+		89333AC42BD7546A005B6510 /* ScannerDuplicate.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 89333AC02BD7546A005B6510 /* ScannerDuplicate.ahap */; };
 		89459B9428E7935E00CE1638 /* CoursesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9328E7935E00CE1638 /* CoursesView.swift */; };
 		89459B9628E795F700CE1638 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */; };
 		89459B9B28E799AA00CE1638 /* CoursesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */; };
@@ -283,6 +291,7 @@
 		89E0DE6A2AE396E200E918FF /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE692AE396E200E918FF /* HomeViewModel.swift */; };
 		89E0DE6C2AE415A800E918FF /* HomeCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E0DE6B2AE415A800E918FF /* HomeCardView.swift */; };
 		89E37E102B6F5BD2000A86B7 /* NewListingForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E37E0F2B6F5BD2000A86B7 /* NewListingForm.swift */; };
+		89E985B92BDEC264004B7D41 /* TicketingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89E985B82BDEC264004B7D41 /* TicketingAPI.swift */; };
 		89EA261E290EDFA7008F26CF /* CoursesDayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */; };
 		89EA2622290EE3FD008F26CF /* CoursesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EA2620290EE3E9008F26CF /* CoursesProvider.swift */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
@@ -696,6 +705,14 @@
 		8932693B28FC75A5003D4BF9 /* LaundryLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryLiveActivity.swift; sourceTree = "<group>"; };
 		8932693F28FC75A6003D4BF9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8932694128FC75A6003D4BF9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		89333AB32BD72C15005B6510 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
+		89333AB52BD72C1C005B6510 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
+		89333AB72BD74027005B6510 /* ScannerViewfinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewfinder.swift; sourceTree = "<group>"; };
+		89333AB92BD74DE6005B6510 /* ScannerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerState.swift; sourceTree = "<group>"; };
+		89333ABD2BD7546A005B6510 /* ScannerError.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScannerError.ahap; sourceTree = "<group>"; };
+		89333ABE2BD7546A005B6510 /* ScannerInvalid.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScannerInvalid.ahap; sourceTree = "<group>"; };
+		89333ABF2BD7546A005B6510 /* ScannerValid.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScannerValid.ahap; sourceTree = "<group>"; };
+		89333AC02BD7546A005B6510 /* ScannerDuplicate.ahap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ScannerDuplicate.ahap; sourceTree = "<group>"; };
 		89459B9328E7935E00CE1638 /* CoursesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesView.swift; sourceTree = "<group>"; };
 		89459B9528E795F700CE1638 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		89459B9A28E799AA00CE1638 /* CoursesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewModel.swift; sourceTree = "<group>"; };
@@ -723,6 +740,7 @@
 		89E0DE692AE396E200E918FF /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		89E0DE6B2AE415A800E918FF /* HomeCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCardView.swift; sourceTree = "<group>"; };
 		89E37E0F2B6F5BD2000A86B7 /* NewListingForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListingForm.swift; sourceTree = "<group>"; };
+		89E985B82BDEC264004B7D41 /* TicketingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketingAPI.swift; sourceTree = "<group>"; };
 		89EA261C290EDF12008F26CF /* CoursesDayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesDayWidget.swift; sourceTree = "<group>"; };
 		89EA2620290EE3E9008F26CF /* CoursesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesProvider.swift; sourceTree = "<group>"; };
 		89EA262C290F2667008F26CF /* WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -1042,6 +1060,7 @@
 				6C6FE1B727B9B8CB0093FD13 /* More Tab */,
 				6C44198927B9A0E400993028 /* Events */,
 				216640EE1EBB867600746B8E /* Contacts */,
+				89333AB12BD72B36005B6510 /* Clubs */,
 				216640831EBADB7000746B8E /* Supporting_Files */,
 			);
 			path = PennMobile;
@@ -1718,6 +1737,30 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
+		89333AB12BD72B36005B6510 /* Clubs */ = {
+			isa = PBXGroup;
+			children = (
+				89E985B82BDEC264004B7D41 /* TicketingAPI.swift */,
+				89333AB22BD72B54005B6510 /* Ticket Scanner */,
+			);
+			path = Clubs;
+			sourceTree = "<group>";
+		};
+		89333AB22BD72B54005B6510 /* Ticket Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				89333AB32BD72C15005B6510 /* ScannerView.swift */,
+				89333AB52BD72C1C005B6510 /* ScannerViewModel.swift */,
+				89333AB72BD74027005B6510 /* ScannerViewfinder.swift */,
+				89333AB92BD74DE6005B6510 /* ScannerState.swift */,
+				89333ABF2BD7546A005B6510 /* ScannerValid.ahap */,
+				89333AC02BD7546A005B6510 /* ScannerDuplicate.ahap */,
+				89333ABE2BD7546A005B6510 /* ScannerInvalid.ahap */,
+				89333ABD2BD7546A005B6510 /* ScannerError.ahap */,
+			);
+			path = "Ticket Scanner";
+			sourceTree = "<group>";
+		};
 		89459B9728E7998D00CE1638 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -2339,7 +2382,11 @@
 				6CC88D6D27B1BF51006896F6 /* sample-dining-venue.json in Resources */,
 				6C3F194227A32C29007BCB4F /* GoogleService-Info.plist in Resources */,
 				4273BCFF2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
+				89333AC32BD7546A005B6510 /* ScannerValid.ahap in Resources */,
+				89333AC22BD7546A005B6510 /* ScannerInvalid.ahap in Resources */,
+				89333AC12BD7546A005B6510 /* ScannerError.ahap in Resources */,
 				2190FD2F1EBBC8BA00EC683C /* Assets.xcassets in Resources */,
+				89333AC42BD7546A005B6510 /* ScannerDuplicate.ahap in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2508,6 +2555,7 @@
 				6CC88D6927B1BF51006896F6 /* DiningViewHeader.swift in Sources */,
 				211DA1AB20490E4D0065BC2C /* HomeCellConformable.swift in Sources */,
 				2189C0AA2027CE4B00771C1F /* TextLayer.swift in Sources */,
+				89333AB82BD74027005B6510 /* ScannerViewfinder.swift in Sources */,
 				6CAA4B4C27A7639700473CC6 /* PollsNetworkManager.swift in Sources */,
 				21640FD7204A5309008DB6E8 /* LaundryMachineCellTappable.swift in Sources */,
 				6788845C2BB9D0C100BA2E70 /* ChatMessageView.swift in Sources */,
@@ -2573,6 +2621,7 @@
 				F212BE8423B6C8A200ED46A1 /* NotificationPreference.swift in Sources */,
 				8961C3F32BCC4A1F0039CBB2 /* HomeSublettingBanner.swift in Sources */,
 				429EA1E12B8BA18300824455 /* SublettingAPI.swift in Sources */,
+				89333AB42BD72C15005B6510 /* ScannerView.swift in Sources */,
 				21A6B6D022162652003A357D /* GSRReservationsController.swift in Sources */,
 				F2562A3A2558E7B80021C92F /* CourseAlertCreateCell.swift in Sources */,
 				B654BAEE1F801F830038B9D5 /* LaundryTableViewController.swift in Sources */,
@@ -2617,6 +2666,7 @@
 				97E79E062100DA1200D3D606 /* BuildingMapCell.swift in Sources */,
 				6CC88D7727B1BF51006896F6 /* DiningAnalyticsView.swift in Sources */,
 				892D597A2BD31F50002EEDCF /* BetaBadge.swift in Sources */,
+				89333AB62BD72C1C005B6510 /* ScannerViewModel.swift in Sources */,
 				F2770AEA2545E39D001EA1DD /* CourseAlertCreateController.swift in Sources */,
 				6CC88D7427B1BF51006896F6 /* DiningViewModelSwiftUI.swift in Sources */,
 				97E79E082100DA1200D3D606 /* BuildingHoursCell.swift in Sources */,
@@ -2639,6 +2689,7 @@
 				216640FE1EBBA5A300746B8E /* NewsViewController.swift in Sources */,
 				F25AFDDB25C3E5E900B3AC80 /* ZeroCourseAlertsCell.swift in Sources */,
 				21640D40200EF881002F33CA /* LaundryCell + Graph.swift in Sources */,
+				89333ABA2BD74DE6005B6510 /* ScannerState.swift in Sources */,
 				21EB4D30203D330C0029A460 /* UserDBManager.swift in Sources */,
 				216640641EBADADA00746B8E /* AppDelegate.swift in Sources */,
 				212B8357222A31C300F835D6 /* HomePostCell.swift in Sources */,
@@ -2755,6 +2806,7 @@
 				B6FC5B4D2079536D002AF335 /* BookingRowCell.swift in Sources */,
 				2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */,
 				6CAA4B5527A763A400473CC6 /* PollOptionCell.swift in Sources */,
+				89E985B92BDEC264004B7D41 /* TicketingAPI.swift in Sources */,
 				6CC88D6127B1BF51006896F6 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */,
 				2189C09B2027CE4100771C1F /* GSRTimeSlot.swift in Sources */,
 				21F5F8F120538A87005B143F /* HomeFlingCellItem.swift in Sources */,
