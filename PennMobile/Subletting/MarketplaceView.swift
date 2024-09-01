@@ -203,6 +203,7 @@ struct MarketplaceView: View {
                 await sublettingViewModel.populateSublets()
                 await sublettingViewModel.populateFiltered()
             }
+            .scrollDismissesKeyboard(.interactively)
         }
         .toolbar {
             ToolbarItem {
