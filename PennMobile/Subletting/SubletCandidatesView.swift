@@ -14,22 +14,26 @@ struct CandidateRow: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Menu {
-                Button(action: {
-                    guard let url = URL(string: "mailto:\(offer.email)") else { return }
-                    UIApplication.shared.open(url)
-                }) {
-                    Label("Send Email", systemImage: "envelope")
-                }
+            HStack {
+                Image(systemName: "envelope")
                 
-                Button(action: {
-                    UIPasteboard.general.string = offer.email
-                }) {
-                    Label("Copy Email", systemImage: "doc.on.doc")
+                Menu {
+                    Button(action: {
+                        guard let url = URL(string: "mailto:\(offer.email)") else { return }
+                        UIApplication.shared.open(url)
+                    }) {
+                        Label("Send Email", systemImage: "envelope")
+                    }
+                    
+                    Button(action: {
+                        UIPasteboard.general.string = offer.email
+                    }) {
+                        Label("Copy Email", systemImage: "doc.on.doc")
+                    }
+                } label: {
+                    Text(offer.email)
+                        .font(.headline)
                 }
-            } label: {
-                Text(offer.email)
-                    .font(.headline)
             }
             
             HStack {
@@ -52,7 +56,7 @@ struct CandidateRow: View {
                     Button(action: {
                         UIPasteboard.general.string = offer.phoneNumber
                     }) {
-                        Label("Copy Number", systemImage: "doc.on.doc")
+                        Label("Copy", systemImage: "doc.on.doc")
                     }
                 } label: {
                     Text(offer.phoneNumber)
