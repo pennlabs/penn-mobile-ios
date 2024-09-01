@@ -192,7 +192,7 @@ struct MarketplaceView: View {
                             }
                         }
                     } else {
-                        Text("No sublets found!")
+                        Text(Account.isLoggedIn ? "No sublets found!" : "You must login to view sublets!")
                             .foregroundStyle(.tertiary)
                             .font(.subheadline)
                     }
