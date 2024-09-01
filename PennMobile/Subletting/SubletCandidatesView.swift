@@ -14,21 +14,49 @@ struct CandidateRow: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Button(action: {
-                guard let url = URL(string: "mailto:\(offer.email)") else { return }
-                UIApplication.shared.open(url)
-            }) {
+            Menu {
+                Button(action: {
+                    guard let url = URL(string: "mailto:\(offer.email)") else { return }
+                    UIApplication.shared.open(url)
+                }) {
+                    Label("Send Email", systemImage: "envelope")
+                }
+                
+                Button(action: {
+                    UIPasteboard.general.string = offer.email
+                }) {
+                    Label("Copy Email", systemImage: "doc.on.doc")
+                }
+            } label: {
                 Text(offer.email)
                     .font(.headline)
             }
             
             HStack {
                 Image(systemName: "phone")
-                Button(action: {
-                    guard let url = URL(string: "tel:\(offer.phoneNumber)") else { return }
-                    UIApplication.shared.open(url)
-                }) {
+                Menu {
+                    Button(action: {
+                        guard let url = URL(string: "tel:\(offer.phoneNumber)") else { return }
+                        UIApplication.shared.open(url)
+                    }) {
+                        Label("Call Number", systemImage: "phone")
+                    }
+                    
+                    Button(action: {
+                        guard let url = URL(string: "sms:\(offer.phoneNumber)") else { return }
+                        UIApplication.shared.open(url)
+                    }) {
+                        Label("Send Message", systemImage: "message")
+                    }
+                    
+                    Button(action: {
+                        UIPasteboard.general.string = offer.phoneNumber
+                    }) {
+                        Label("Copy Number", systemImage: "doc.on.doc")
+                    }
+                } label: {
                     Text(offer.phoneNumber)
+                        .font(.headline)
                 }
             }
             .font(.subheadline)
