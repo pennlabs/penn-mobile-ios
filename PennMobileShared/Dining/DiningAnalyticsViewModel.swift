@@ -40,7 +40,6 @@ public class DiningAnalyticsViewModel: ObservableObject {
     @Published public var dollarHistory: [DiningAnalyticsBalance] = Storage.fileExists(dollarHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(dollarHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
     @Published public var swipeHistory: [DiningAnalyticsBalance] = Storage.fileExists(swipeHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(swipeHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
     @Published public var planStartDate: Date? = try? Storage.retrieveThrowing(planStartDateDirectory, from: .groupDocuments, as: Date.self)
-
     @Published public var dollarPredictedZeroDate: Date = Date.endOfSemester
     @Published public var predictedDollarSemesterEndBalance: Double = 0
     @Published public var swipesPredictedZeroDate: Date = Date.endOfSemester
@@ -49,6 +48,13 @@ public class DiningAnalyticsViewModel: ObservableObject {
     @Published public var dollarAxisLabel: ([String], [String]) = ([], [])
     @Published public var dollarSlope: Double = 0.0
     @Published public var swipeSlope: Double = 0.0
+    @Published public var shouldRemoveOutliers: Bool = true {
+        didSet {
+            Task {
+                await refresh()
+            }
+        }
+    }
     
     @Published public var selectedOptionIndex = 0 {
         didSet {
@@ -115,6 +121,9 @@ public class DiningAnalyticsViewModel: ObservableObject {
     }
 
     func populateAxesAndPredictions() {
+        if (shouldRemoveOutliers) {
+            removeOutliers()
+        }
         filterData()
         
         let last7dollarHistory: [DiningAnalyticsBalance] = dollarHistory.suffix(7)
@@ -194,6 +203,16 @@ public class DiningAnalyticsViewModel: ObservableObject {
         self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
     }
     
+    func removeOutliers() {
+        let dollarStdDev = standardDeviation(arr:self.dollarHistory.map({$0.balance}))
+        let dollarJumpIndex = self.dollarHistory.firstIndex(where: { $0.balance <= -1.5 * dollarStdDev || $0.balance >= 1.5 * dollarStdDev})
+        self.dollarHistory.removeFirst(dollarJumpIndex ?? 0)
+        
+        let swipeStdDev = standardDeviation(arr:self.swipeHistory.map({$0.balance}))
+        let swipeJumpIndex = self.swipeHistory.firstIndex(where: { $0.balance <= -1.5 * swipeStdDev || $0.balance >= 1.5 * swipeStdDev})
+        self.swipeHistory.removeFirst(swipeJumpIndex ?? 0)
+    }
+    
     func getWeightedAverageSlope(allBalance: [DiningAnalyticsBalance]) -> Double {
         var totalWeightedSlope = 0.0
         var totalWeight = 0.0
@@ -216,6 +235,8 @@ public class DiningAnalyticsViewModel: ObservableObject {
                 }
                 let previousBalance = self.dollarHistory[index - 1].balance
                 let nextBalance = self.dollarHistory[index + 1].balance
+                
+                //include if we a) have a dollar balance, b) the previous day is > 0, c)
                 return dollar.balance != 0 || previousBalance <= 0 || nextBalance <= 0
             }.map { $0.element }
         }
@@ -268,6 +289,29 @@ public class DiningAnalyticsViewModel: ObservableObject {
         let diffInDays = Calendar.current.dateComponents([.day], from: firstBalance.date, to: Date.endOfSemester).day!
         let endBalance = (slope * Double(diffInDays)) + firstBalance.balance
         return endBalance
+    }
+    
+    func standardDeviation(arr:[Double]) -> Double{
+       let size = arr.count
+        var sum = 0.0
+       var SD = 0.0
+       var S = 0.0
+       var resultSD = 0.0
+       
+       // Calculating the mean
+       for x in 0..<size{
+          sum += arr[x]
+       }
+       let meanValue = sum/Double(size)
+       
+       // Calculating standard deviation
+       for y in 0..<size{
+          SD += pow(Double(arr[y] - meanValue), 2)
+       }
+       S = SD/Double(size)
+       resultSD = sqrt(S)
+       
+       return resultSD
     }
     
     // Compute axis labels

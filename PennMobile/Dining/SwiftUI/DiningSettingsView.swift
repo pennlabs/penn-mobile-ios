@@ -29,6 +29,7 @@ struct DiningSettingsView: View {
                     }
                     .pickerStyle(MenuPickerStyle())
                     
+                    Toggle("Remove Outliers (Beta)", isOn: $viewModel.shouldRemoveOutliers)
                     // Toggle("Include guest swipes", isOn: $totalData)
                 }
                 .navigationBarTitle("Dining Analytics Settings", displayMode: .inline)
@@ -53,7 +54,7 @@ struct DiningSettingsView: View {
                         }
                     }
                     .pickerStyle(MenuPickerStyle())
-                    
+                    Toggle("Remove Outliers (Beta)", isOn: $viewModel.shouldRemoveOutliers)
                     // Toggle("Include guest swipes", isOn: $totalData)
                 }
                 .navigationBarTitle("Dining Analytics Settings", displayMode: .inline)
