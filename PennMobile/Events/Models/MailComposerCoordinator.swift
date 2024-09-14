@@ -12,9 +12,9 @@ import SwiftUI
 
 // uikit for mail composing (will inject into swiftui view)
 class MailComposerCoordinator: NSObject, MFMailComposeViewControllerDelegate {
-    
+
     @Binding var isShowing: Bool
-    
+
     var email: String
 
     init(isShowing: Binding<Bool>, email: String) {
@@ -49,5 +49,7 @@ struct MailComposeView: UIViewControllerRepresentable {
         return context.coordinator.makeMFMailComposeViewController()
     }
 
-    func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {}
+    func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {
+        uiViewController.setToRecipients([email])
+    }
 }

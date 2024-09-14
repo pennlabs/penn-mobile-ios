@@ -16,70 +16,39 @@ class PennEventsAPIManager {
     private let pennClubsUrl = "https://pennclubs.com/api/events/"
 
     // fetch both penn mobile and penn club events
-    func fetchAllEvents(completion: @escaping ([PennEvent]?, Error?) -> Void) {
-        let group = DispatchGroup()
+    func fetchAllEvents() async throws -> [PennEvent] {
+        async let mobileEvents = fetchEvents(from: pennMobileUrl, tag: "Mobile")
+        async let clubEvents = fetchEvents(from: pennClubsUrl, tag: "Clubs")
 
-        var allEvents: [PennEvent] = []
-        var anyError: Error?
-
-        // fetch reg penn mobile backend events
-        group.enter()
-        fetchEvents(from: pennMobileUrl, tag: "Mobile") { events, error in
-            if let events = events {
-                allEvents += events
-            } else {
-                anyError = error
-            }
-            group.leave()
-        }
-
-        // fetch penn clubs events
-//        group.enter()
-//        fetchEvents(from: pennClubsUrl, tag: "Clubs") { events, error in
-//            if let events = events {
-//                allEvents += events.map { event in
-//                    var modifiedEvent = event
-//                    modifiedEvent.eventType = "CLUBS"
-//                    return modifiedEvent
-//                }
-//            } else {
-//                anyError = error
-//            }
-//            group.leave()
-//        }
-
-        group.notify(queue: .main) {
-            completion(anyError == nil ? allEvents : nil, anyError)
+        do {
+    //            let allEvents = try await mobileEvents + clubEvents
+            let allEvents = try await mobileEvents
+            return allEvents
+        } catch {
+            throw error
         }
     }
 
+
     // generic fetch events helper
-    func fetchEvents(from urlString: String, tag: String, completion: @escaping ([PennEvent]?, Error?) -> Void) {
+    func fetchEvents(from urlString: String, tag: String) async throws -> [PennEvent] {
         guard let url = URL(string: urlString) else {
-            completion(nil, NSError(domain: "Invalid URL", code: 404, userInfo: nil))
-            return
+            throw URLError(.badURL)
         }
 
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else {
-                completion(nil, error)
-                return
-            }
+        // data fetching
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let decoder = JSONDecoder()
+        var events = try decoder.decode([PennEvent].self, from: data)
 
-            do {
-                let decoder = JSONDecoder()
-                var events = try decoder.decode([PennEvent].self, from: data)
-                if tag == "Clubs" {
-                    events = events.map { event in
-                        var modifiedEvent = event
-                        modifiedEvent.eventType = "CLUBS"
-                        return modifiedEvent
-                    }
-                }
-                completion(events, nil)
-            } catch {
-                completion(nil, error)
+        if tag == "Clubs" {
+            events = events.map { event in
+                var modifiedEvent = event
+                modifiedEvent.eventType = "CLUBS"
+                return modifiedEvent
             }
-        }.resume()
+        }
+
+        return events
     }
 }

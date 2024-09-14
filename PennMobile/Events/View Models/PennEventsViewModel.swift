@@ -11,49 +11,24 @@ import Foundation
 // this class handles all the EVENTS based on the PennEVENTViewModel
 
 class PennEventsViewModel: ObservableObject {
-    @Published var events: [PennEventViewModel] = []
+    @Published var events: [PennEvent] = []
     @Published var selectedCategory: String = "All"
 
     var uniqueEventTypes: [String] {
-        var types = events.map { $0.eventType }
+        var types = events.map { $0.categorizedEventType }
         types = Array(Set(types)).sorted()
-        // All is default category
+        
         types.insert("All", at: 0)
         return types
     }
 
-    func fetchEvents() {
-        PennEventsAPIManager.shared.fetchAllEvents { [weak self] pennEvents, error in
-            DispatchQueue.main.async {
-                if let pennEvents = pennEvents {
-                    // preprocess and map PennEvent to PennEventViewModel
-                    self?.events = pennEvents.map { event in
-                        let categorizedEventType = self?.categorizeEventType(eventType: event.eventType ?? "No Event Type") ?? "No Event Type"
-                        return PennEventViewModel(from: event, categorizedEventType: categorizedEventType)
-                    }
-                } else if let error = error {
-                    print("error fetching events: \(error.localizedDescription)")
-                }
-            }
+    func fetchEvents() async {
+        do {
+            let pennEvents = try await PennEventsAPIManager.shared.fetchAllEvents()
+            self.events = pennEvents
+        } catch {
+            print("Error fetching events: \(error.localizedDescription)")
         }
     }
 
-    // group into categories
-    private func categorizeEventType(eventType: String) -> String {
-        if eventType.contains("COLLEGE HOUSE") {
-            return "Houses"
-        } else if eventType.contains("ENGINEERING") {
-            return "Engineering"
-        } else if eventType.contains("WHARTON") {
-            return "Wharton"
-        } else if eventType.contains("PENN TODAY") {
-            return "Penn Today"
-        } else if eventType.contains("VENTURE LAB") {
-            return "Venture Lab"
-        } else if eventType.contains("CLUBS") {
-            return "Clubs"
-        }
-        
-        return eventType
-    }
 }

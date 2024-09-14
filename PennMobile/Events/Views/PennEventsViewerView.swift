@@ -10,11 +10,12 @@ import SwiftUI
 import MapKit
 import SafariServices
 import MessageUI
+import Kingfisher
 
 struct PennEventsViewerView: View {
-    var event: PennEventViewModel
+    var event: PennEvent
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismiss
     
     // boolean flags for the webView and link button
     @State private var showingWebView = false
@@ -31,22 +32,28 @@ struct PennEventsViewerView: View {
         center: CLLocationCoordinate2D(latitude: 39.9522, longitude: -75.1932),
         span: MKCoordinateSpan(latitudeDelta: 0.0020, longitudeDelta: 0.0020)
     )
+//    @State private var region = PennCoordinate.shared.getDefaultRegion(at: .)
         
     var body: some View {
          ScrollView {
              VStack(alignment: .leading) {
                  ZStack {
-                     AsyncImage(url: event.imageUrl) { image in
-                         image.resizable()
-                     } placeholder: {
-                         Image("pennmobile")
-                              .resizable()
-                              .aspectRatio(contentMode: .fill)
-                              .frame(height: 250)
-                              .clipped()                    }
-                     .aspectRatio(contentMode: .fill)
+                     GeometryReader { geometry in
+                         AsyncImage(url: event.imageUrl) { image in
+                             image
+                                 .resizable()
+                                 .aspectRatio(contentMode: .fill)
+                                 .frame(width: geometry.size.width, height: 250)
+                                 .clipped()
+                         } placeholder: {
+                             Image("pennmobile")
+                                 .resizable()
+                                 .aspectRatio(contentMode: .fill)
+                                 .frame(width: geometry.size.width, height: 250)
+                                 .clipped()
+                         }
+                     }
                      .frame(height: 250)
-                     .clipped()
                      
                      // gradient overlay
                      LinearGradient(
@@ -59,17 +66,17 @@ struct PennEventsViewerView: View {
                      VStack {
                          Spacer()
                          HStack {
-                             Text(event.title)
+                             Text(event.eventTitle)
                                  .font(.system(size: 25))
                                  .fontWeight(.heavy)
                                  .foregroundColor(.white)
-                                 .lineLimit(2)
+                                 .lineLimit(3)
                              
                              Spacer()
                              
                          }
                          HStack {
-                             Text(event.location)
+                             Text(event.eventLocation)
                                  .font(.subheadline)
                                  .foregroundColor(.white)
                                  .lineLimit(1)
@@ -85,18 +92,18 @@ struct PennEventsViewerView: View {
                      HStack {
                          Text("Event Start:")
                              .font(.headline)
-                         Text("\(event.startDate)")
+                         Text("\(event.formattedStartDate)")
                              .font(.subheadline)
-                         Text("\(event.startTime)")
+                         Text("\(event.formattedStartTime)")
                              .font(.subheadline)
                              .fontWeight(.thin)
                      }
                      HStack {
                          Text("Event End:")
                              .font(.headline)
-                         Text("\(event.endDate)")
+                         Text("\(event.formattedEndDate)")
                              .font(.subheadline)
-                         Text("\(event.endTime)")
+                         Text("\(event.formattedEndTime)")
                              .font(.subheadline)
                              .fontWeight(.thin)
                      }
@@ -105,16 +112,17 @@ struct PennEventsViewerView: View {
                  .padding(.top, 4)
                  
                  // description
-                 Text(event.description)
+                 Text(event.eventDescription)
                      .padding([.leading, .trailing])
                      .padding(.top, 5)
                      .font(.system(size: 18))
                      .fontWeight(.thin)
                      .padding(.bottom)
-
+                 
+                 
                  // map
-//                 if event.location != "No Location" {
-                     Map(coordinateRegion: $region, annotationItems: eventCoordinate != nil ? [eventCoordinate!] : []) { location in
+                 if let coordinate = eventCoordinate {
+                     Map(coordinateRegion: $region, annotationItems: [coordinate]) { location in
                          MapAnnotation(coordinate: location) {
                              Image(systemName: "mappin.circle.fill")
                                  .foregroundColor(.red)
@@ -122,18 +130,9 @@ struct PennEventsViewerView: View {
                      }
                      .cornerRadius(15)
                      .frame(height: 250)
-                     .padding(.leading, 20)
-                     .padding(.trailing, 20)
+                     .padding(.horizontal, 20)
                      .shadow(color: .gray.opacity(0.5), radius: 5, x: 5, y: 5)
-                     .onAppear {
-                         if let coordinates = PennEventLocation.coordinateForEvent(location: event.location, eventName: event.title, eventType: event.originalEventType) {
-                             eventCoordinate = coordinates
-                             region.center = coordinates
-                         } else {
-                             print("no location found")
-                         }
-                     }
-//                 }
+                 }
                  
                  // buttons
                  HStack {
@@ -141,7 +140,7 @@ struct PennEventsViewerView: View {
                      
                      // more info link button
                      Button(action: {
-                         if event.link != "" {
+                         if !event.eventLink.isEmpty {
                              self.showingWebView = true
                          } else {
                              self.showAlert = true
@@ -152,83 +151,68 @@ struct PennEventsViewerView: View {
                              Text("More Info")
                          }
                          .padding()
-                         .background(event.link != "" ? Color.black : Color.grey4)
+                         .background(!event.eventLink.isEmpty ? Color.black : Color.gray)
                          .foregroundColor(.white)
                          .cornerRadius(15)
                      }
-                     .disabled(event.link == "")
+                     .disabled(event.eventLink.isEmpty)
                      .sheet(isPresented: $showingWebView) {
-                         if let url = URL(string: event.link) {
+                         if let url = URL(string: event.eventLink) {
                              SafariView(url: url)
                          }
                      }
                      .alert(isPresented: $showAlert) {
                          Alert(title: Text("No valid link"), message: Text("This event does not have a link provided."), dismissButton: .default(Text("OK")))
                      }
-                     
+
                      // email Button
                      Button(action: {
                          if MFMailComposeViewController.canSendMail() {
-                              self.showingMailComposer = true
-                          } else {
-                              print("cannot send mail")
-                          }
+                             self.showingMailComposer = true
+                         } else {
+                             print("Cannot send mail")
+                         }
                      }) {
                          HStack {
                              Image(systemName: "envelope")
                              Text("Contact")
                          }
+                         .padding()
+                         .background(!event.eventContactInfo.isEmpty ? Color.black : Color.gray)
+                         .foregroundColor(.white)
+                         .cornerRadius(15)
                      }
-                     .padding()
-                     .background(event.contactInfo != "" ? Color.black : Color.gray)
-                     .foregroundColor(.white)
-                     .cornerRadius(15)
-                     .disabled(event.contactInfo == "")
+                     .disabled(event.eventContactInfo.isEmpty)
                      .sheet(isPresented: $showingMailComposer) {
-                         MailComposeView(isShowing: $showingMailComposer, email: event.contactInfo)
+                         MailComposeView(isShowing: $showingMailComposer, email: event.eventContactInfo)
                      }
-                     
+
                      Spacer()
                  }
                  .padding()
                  .shadow(radius: 10)
-                 
              }
          }
          .edgesIgnoringSafeArea(.top)
          .navigationBarBackButtonHidden(true)
          .navigationBarItems(leading: Button(action: {
-             presentationMode.wrappedValue.dismiss()
+             dismiss()
          }) {
-             // changes back button to white arrow
              Image(systemName: "arrow.left")
                  .foregroundColor(.white)
          })
+         .onAppear {
+             if let coordinates = PennEventLocation.coordinateForEvent(location: event.eventLocation, eventName: event.eventTitle, eventType: event.eventType ?? "") {
+                 eventCoordinate = coordinates
+                 region.center = coordinates
+             } else {
+                 print("No location found")
+             }
+         }
      }
  }
 
 
-struct PennEventsViewerView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleEvents = [
-            PennEvent(
-                eventType: "Lecture",
-                name: "Lecture Series: Jews and the University",
-                description: "The integration of Jews into the university is one of the great success stories of modern American culture and Jewish life.",
-                location: "The Katz Center for Judaic Studies",
-                imageUrl: "https://penntoday.upenn.edu/sites/default/files/styles/event_large/public/2024-01/katz-center-teaser.jpg?h=733e6470&itok=kKJdQofY",
-                start: "2024-03-23T18:45:00-04:00",
-                end: "2024-03-14T16:00:00-04:00",
-                email: "info@katzcenter.upenn.edu",
-                website: "https://penntoday.upenn.edu/events/lecture-series-jews-and-university"
-            )
-        ]
-        
-        let categorizedEventType = "Penn Today"
-        let viewModelEvents = sampleEvents.map { PennEventViewModel(from: $0, categorizedEventType: categorizedEventType) }
-        let viewModel = PennEventsViewModel()
-        viewModel.events = viewModelEvents
-
-        return PennEventsView(viewModel: viewModel)
-    }
+#Preview {
+    PennEventsViewerView(event: PennEvent())
 }
