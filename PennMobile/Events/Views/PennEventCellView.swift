@@ -70,7 +70,7 @@ struct PennEventCellView: View {
         }
         .frame(height: 190)
         .cornerRadius(10)
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 15)
         .shadow(color: shadowColor, radius: 10)
     }
 }
