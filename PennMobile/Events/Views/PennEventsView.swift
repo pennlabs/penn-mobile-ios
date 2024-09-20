@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PennEventsView: View {
     @StateObject var viewModel = PennEventsViewModel()
-
+    
     var body: some View {
         VStack {
             Picker("Select Category", selection: $viewModel.selectedCategory) {
@@ -20,7 +20,7 @@ struct PennEventsView: View {
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
-
+            
             ScrollView {
                 LazyVStack {
                     ForEach(filteredEvents, id: \.id) { event in
@@ -35,7 +35,7 @@ struct PennEventsView: View {
             await viewModel.fetchEvents()
         }
     }
-
+    
     private var filteredEvents: [PennEvent] {
         if viewModel.selectedCategory == "All" {
             return viewModel.events

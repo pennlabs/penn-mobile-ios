@@ -13,7 +13,7 @@ import Foundation
 class PennEventsViewModel: ObservableObject {
     @Published var events: [PennEvent] = []
     @Published var selectedCategory: String = "All"
-
+    
     var uniqueEventTypes: [String] {
         var types = events.map { $0.categorizedEventType }
         types = Array(Set(types)).sorted()
@@ -21,7 +21,7 @@ class PennEventsViewModel: ObservableObject {
         types.insert("All", at: 0)
         return types
     }
-
+    
     func fetchEvents() async {
         do {
             let pennEvents = try await PennEventsAPIManager.shared.fetchAllEvents()
@@ -30,5 +30,5 @@ class PennEventsViewModel: ObservableObject {
             print("Error fetching events: \(error.localizedDescription)")
         }
     }
-
+    
 }

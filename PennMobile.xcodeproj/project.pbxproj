@@ -135,10 +135,6 @@
 		6C23AF9526E57903002F60F0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6C369A1526E39BC100721CA1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6C3F194227A32C29007BCB4F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6C3F194127A32C29007BCB4F /* GoogleService-Info.plist */; };
-		6C44198E27B9A0E400993028 /* PennEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198A27B9A0E400993028 /* PennEventsTableViewCell.swift */; };
-		6C44198F27B9A0E400993028 /* EventsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198B27B9A0E400993028 /* EventsAPI.swift */; };
-		6C44199027B9A0E400993028 /* PennEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198C27B9A0E400993028 /* PennEvents.swift */; };
-		6C44199127B9A0E400993028 /* PennEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C44198D27B9A0E400993028 /* PennEventsTableViewController.swift */; };
 		6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */; };
 		6C6035FA26E722E60025FBC7 /* GSRAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035F926E722E60025FBC7 /* GSRAPIResponse.swift */; };
 		6C6035FC26E723240025FBC7 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6035FB26E723240025FBC7 /* EmptyView.swift */; };
@@ -591,10 +587,6 @@
 		6C1991BD27B5CA8500BBB402 /* NotificationRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationRelease.xcconfig; sourceTree = "<group>"; };
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6C3F194127A32C29007BCB4F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		6C44198A27B9A0E400993028 /* PennEventsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennEventsTableViewCell.swift; sourceTree = "<group>"; };
-		6C44198B27B9A0E400993028 /* EventsAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsAPI.swift; sourceTree = "<group>"; };
-		6C44198C27B9A0E400993028 /* PennEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennEvents.swift; sourceTree = "<group>"; };
-		6C44198D27B9A0E400993028 /* PennEventsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PennEventsTableViewController.swift; sourceTree = "<group>"; };
 		6C6035F926E722E60025FBC7 /* GSRAPIResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GSRAPIResponse.swift; sourceTree = "<group>"; };
 		6C6035FB26E723240025FBC7 /* EmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		6C6420AC27AAED2B0096CBA9 /* PennMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PennMobile-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1415,7 +1407,6 @@
 				858C157A2B95154500FE0B62 /* Models */,
 				858C15792B95153A00FE0B62 /* Views */,
 				858C157B2B95155000FE0B62 /* View Models */,
-				85C523D12B9DFBAF0007F23D /* Old Events */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -1727,17 +1718,6 @@
 				8547D43D2BB4F117006010B9 /* PennEventLocation.swift */,
 			);
 			path = "View Models";
-			sourceTree = "<group>";
-		};
-		85C523D12B9DFBAF0007F23D /* Old Events */ = {
-			isa = PBXGroup;
-			children = (
-				6C44198A27B9A0E400993028 /* PennEventsTableViewCell.swift */,
-				6C44198B27B9A0E400993028 /* EventsAPI.swift */,
-				6C44198C27B9A0E400993028 /* PennEvents.swift */,
-				6C44198D27B9A0E400993028 /* PennEventsTableViewController.swift */,
-			);
-			path = "Old Events";
 			sourceTree = "<group>";
 		};
 		890C4EC52ACBA486009650CA /* Laundry */ = {
@@ -2594,12 +2574,10 @@
 				217A7843204D995C004F1227 /* ModularTableViewCell.swift in Sources */,
 				2138D559225998A300D67CA2 /* GSRGroupController.swift in Sources */,
 				217A783D204D97B6004F1227 /* ModularTableViewModel.swift in Sources */,
-				6C44198F27B9A0E400993028 /* EventsAPI.swift in Sources */,
 				85C523CE2B9DDE220007F23D /* PennEventsView.swift in Sources */,
 				2180D2352013F65C008C94CF /* HomeAPIService.swift in Sources */,
 				6C6FE1CE27B9B8CB0093FD13 /* ProfilePageViewController.swift in Sources */,
 				F2568A7A2413637D00561295 /* HomeCellSafeArea.swift in Sources */,
-				6C44198E27B9A0E400993028 /* PennEventsTableViewCell.swift in Sources */,
 				CF29A1771FB788820067D946 /* OnboardingController.swift in Sources */,
 				21D5E06723B68F3100B331CC /* Model.swift in Sources */,
 				F299616F23F78D9B00C67A3B /* AppDelegate+NotificationExtension.swift in Sources */,
@@ -2724,7 +2702,6 @@
 				EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */,
 				6CFA06F626E8352F00944B8E /* HomeStudyRoomCell.swift in Sources */,
 				21FBC240228514ED00B432D8 /* FeedAnalyticsEngine.swift in Sources */,
-				6C44199027B9A0E400993028 /* PennEvents.swift in Sources */,
 				21A6B6D42216824C003A357D /* ReservationCell.swift in Sources */,
 				EFE2D6EF239B11050020F6BF /* GroupIndividualSettingView.swift in Sources */,
 				6CC88D6027B1BF51006896F6 /* CardHeaderView.swift in Sources */,
@@ -2848,7 +2825,6 @@
 				6CC88D6A27B1BF51006896F6 /* DiningView.swift in Sources */,
 				F2E3FE242595A99500518961 /* CourseSection.swift in Sources */,
 				C15C4B50223EB18800E443FD /* HomeReservationsCellItem.swift in Sources */,
-				6C44199127B9A0E400993028 /* PennEventsTableViewController.swift in Sources */,
 				6CC88D6F27B1BF51006896F6 /* DiningVenueDetailMenuView.swift in Sources */,
 				6C6FE1D227B9B8CB0093FD13 /* ProfilePageViewModel.swift in Sources */,
 				EFE2D6F1239B11050020F6BF /* GroupManageButtonCell.swift in Sources */,

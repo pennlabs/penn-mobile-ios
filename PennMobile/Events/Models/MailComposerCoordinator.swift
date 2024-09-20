@@ -12,16 +12,16 @@ import SwiftUI
 
 // uikit for mail composing (will inject into swiftui view)
 class MailComposerCoordinator: NSObject, MFMailComposeViewControllerDelegate {
-
+    
     @Binding var isShowing: Bool
-
+    
     var email: String
-
+    
     init(isShowing: Binding<Bool>, email: String) {
         _isShowing = isShowing
         self.email = email
     }
-
+    
     func makeMFMailComposeViewController() -> MFMailComposeViewController {
         let mailComposeVC = MFMailComposeViewController()
         
@@ -31,7 +31,7 @@ class MailComposerCoordinator: NSObject, MFMailComposeViewControllerDelegate {
         
         return mailComposeVC
     }
-
+    
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         isShowing = false
     }
@@ -40,15 +40,15 @@ class MailComposerCoordinator: NSObject, MFMailComposeViewControllerDelegate {
 struct MailComposeView: UIViewControllerRepresentable {
     @Binding var isShowing: Bool
     var email: String
-
+    
     func makeCoordinator() -> MailComposerCoordinator {
         return MailComposerCoordinator(isShowing: $isShowing, email: email)
     }
-
+    
     func makeUIViewController(context: Context) -> MFMailComposeViewController {
         return context.coordinator.makeMFMailComposeViewController()
     }
-
+    
     func updateUIViewController(_ uiViewController: MFMailComposeViewController, context: Context) {
         uiViewController.setToRecipients([email])
     }

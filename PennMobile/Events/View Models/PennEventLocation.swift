@@ -53,7 +53,7 @@ struct PennEventLocation: Identifiable {
         PennEventLocation(name: "Chem Lab", coordinate: CLLocationCoordinate2D(latitude: 39.95080231715675, longitude: -75.1924193409095)),
         PennEventLocation(name: "Quain Courtyard", coordinate: CLLocationCoordinate2D(latitude: 39.952186767661445, longitude: -75.19087984244156)),
         PennEventLocation(name: "Morgan Building", coordinate: CLLocationCoordinate2D(latitude: 39.95192608237323, longitude: -75.1920054094594)),
-                
+        
         // Wharton
         PennEventLocation(name: "Huntsman", coordinate: CLLocationCoordinate2D(latitude: 39.95307761065585, longitude: -75.19817525836665)),
         PennEventLocation(name: "ARB", coordinate: CLLocationCoordinate2D(latitude: 39.95129828577706, longitude: -75.19683445915696)),
@@ -128,7 +128,7 @@ struct PennEventLocation: Identifiable {
             print("No match found in \(string) for string: \(string)")
             return nil
         }
-
+        
         // check first the event type, then location, then the event title
         if let coordinate = findCoordinate(from: eventType) {
             return coordinate
@@ -141,7 +141,7 @@ struct PennEventLocation: Identifiable {
         if let coordinate = findCoordinate(from: eventName) {
             return coordinate
         }
-
+        
         // default location, philadelphia
         return CLLocationCoordinate2D(latitude: 39.9522, longitude: -75.1932)
     }

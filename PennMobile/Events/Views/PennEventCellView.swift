@@ -30,13 +30,13 @@ struct PennEventCellView: View {
                     .clipped()
             } else {
                 Image("pennmobile")
-                     .resizable()
-                     .aspectRatio(contentMode: .fill)
-                     .frame(height: 190)
-                     .cornerRadius(10)
-                     .clipped()
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 190)
+                    .cornerRadius(10)
+                    .clipped()
             }
-
+            
             // gradient overlay
             LinearGradient(
                 gradient: Gradient(colors: [.clear, .black.opacity(0.7)]),
@@ -44,7 +44,7 @@ struct PennEventCellView: View {
                 endPoint: .bottom
             )
             .cornerRadius(10)
-
+            
             // text
             VStack {
                 Spacer()
