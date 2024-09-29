@@ -15,8 +15,9 @@ struct DiningAnalyticsView: View {
     @State var showDiningLoginView = false
     @State var notLoggedInAlertShowing = false
     @State var showSettingsSheet = false
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
-    func showCorrectAlert () -> Alert {
+    func showCorrectAlert() -> Alert {
         if !Account.isLoggedIn {
             return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { presentationMode.wrappedValue.dismiss() }))
         } else {
@@ -27,142 +28,85 @@ struct DiningAnalyticsView: View {
         }
     }
     var body: some View {
-        if #available(iOS 16.0, *) {
-            let dollarHistory = $diningAnalyticsViewModel.dollarHistory
-            let swipeHistory = $diningAnalyticsViewModel.swipeHistory
-            HStack {
-                Spacer()
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            showSettingsSheet.toggle()
-                        }) {
-                            Image(systemName: "gear")
-                                .imageScale(.large)
+        let dollarHistory = $diningAnalyticsViewModel.dollarHistory
+        let swipeHistory = $diningAnalyticsViewModel.swipeHistory
+        VStack {
+            if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
+                if dollarHistory.wrappedValue.isEmpty && swipeHistory.wrappedValue.isEmpty {
+                    ZStack {
+                        let image = Image("DiningAnalyticsBackground")
+                            .resizable()
+                            .ignoresSafeArea()
+
+                        switch colorScheme {
+                        case .dark:
+                            image
+                                .colorInvert()
+                                .hueRotation(.degrees(180))
+                                .saturation(0.8)
+                                .contrast(0.8)
+                        default:
+                            image
                         }
-                    }
-                }
-                if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
-                    if dollarHistory.wrappedValue.isEmpty && swipeHistory.wrappedValue.isEmpty {
-                        ZStack {
-                            Image("DiningAnalyticsBackground")
-                                .resizable()
-                                .ignoresSafeArea()
-                            VStack(spacing: 24) {
-                                Text("No Dining Plan Found")
-                                    .font(.system(size: 48, weight: .regular))
-                                Text("Dining Analytics may not appear until the day after the semester begins.")
-                            }
-                            .frame(maxWidth: 280)
-                            .padding(.bottom, 64)
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(.black)
-                            .opacity(0.6)
-                        }
-                    } else {
-                        ScrollView {
-                            VStack(alignment: .leading, spacing: 20) {
-                                // Only show dollar history view if there is data for the graph
-                                if !dollarHistory.wrappedValue.isEmpty {
-                                    CardView {
-                                        GraphView(type: .dollars, data: dollarHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance)
-                                    }
-                                }
-                                // Only show swipe history view if there is data for the graph
-                                if !swipeHistory.wrappedValue.isEmpty {
-                                    CardView {
-                                        GraphView(type: .swipes, data: swipeHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance)
-                                    }
-                                }
-                                Spacer()
-                            }
-                            .padding()
-                        }
-                    }
-                }
-            }
-            .task {
-                guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
-                    showMissingDiningTokenAlert = true
-                    return
-                }
-            }
-            .alert(isPresented: $showMissingDiningTokenAlert) {
-                showCorrectAlert()
-            }
-            .sheet(isPresented: $showDiningLoginView) {
-                DiningLoginNavigationView()
-                    .environmentObject(diningAnalyticsViewModel)
-            }
-            .navigationTitle(Text("Dining Analytics"))
-            .sheet(isPresented: $showSettingsSheet) {
-                DiningSettingsView(viewModel: diningAnalyticsViewModel) // Replace with your settings view
-            }
-        } else {
-            let dollarXYHistory = Binding(
-                get: {
-                    getSmoothedData(from: diningAnalyticsViewModel.dollarHistory)
-                },
-                // one directional Binding, setter does not work
-                set: {  _ in }
-            )
-            let swipeXYHistory = Binding(
-                get: { getSmoothedData(from: diningAnalyticsViewModel.swipeHistory) },
-                // one directional Binding, setter does not work
-                set: {  _ in }
-            )
-            HStack {
-                if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
-                    if swipeXYHistory.wrappedValue.isEmpty && dollarXYHistory.wrappedValue.isEmpty {
-                        ZStack {
-                            Image("DiningAnalyticsBackground")
-                                .resizable()
-                                .ignoresSafeArea()
-                            Text("No Dining\nPlan Found\n ")
-                                .multilineTextAlignment(.center)
+                        
+                        VStack(spacing: 24) {
+                            Text("No Dining Plan Found")
                                 .font(.system(size: 48, weight: .regular))
-                                .foregroundColor(.black)
-                                .opacity(0.6)
+                            Text("Dining Analytics may not appear until the day after the semester begins.")
                         }
-                    } else {
-                        ScrollView {
-                            VStack(alignment: .leading, spacing: 20) {
-                                // Only show dollar history view if there is data for the graph
-                                if !dollarXYHistory.wrappedValue.isEmpty {
-                                    CardView {
-                                        PredictionsGraphView(type: "dollars", data: dollarXYHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.dollarAxisLabel, slope: $diningAnalyticsViewModel.dollarSlope)
-                                    }
+                        .frame(maxWidth: 280)
+                        .padding(.bottom, 64)
+                        .multilineTextAlignment(.center)
+                        .opacity(0.6)
+                    }
+                } else {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 20) {
+                            // Only show dollar history view if there is data for the graph
+                            if !dollarHistory.wrappedValue.isEmpty {
+                                CardView {
+                                    GraphView(type: .dollars, data: dollarHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance)
                                 }
-                                // Only show swipe history view if there is data for the graph
-                                if !swipeXYHistory.wrappedValue.isEmpty {
-                                    CardView {
-                                        PredictionsGraphView(type: "swipes", data: swipeXYHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance, axisLabelsYX: $diningAnalyticsViewModel.swipeAxisLabel, slope: $diningAnalyticsViewModel.swipeSlope)
-                                    }
-                                }
-                                Spacer()
                             }
-                            .padding()
+                            // Only show swipe history view if there is data for the graph
+                            if !swipeHistory.wrappedValue.isEmpty {
+                                CardView {
+                                    GraphView(type: .swipes, data: swipeHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance)
+                                }
+                            }
+                            Spacer()
+                        }
+                        .padding()
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                showSettingsSheet.toggle()
+                            }) {
+                                Image(systemName: "gear")
+                                    .imageScale(.large)
+                            }
                         }
                     }
                 }
             }
-            .task {
-                guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
-                    showMissingDiningTokenAlert = true
-                    return
-                }
+        }
+        .task {
+            guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
+                showMissingDiningTokenAlert = true
+                return
             }
-            .alert(isPresented: $showMissingDiningTokenAlert) {
-                showCorrectAlert()
-            }
-            .sheet(isPresented: $showDiningLoginView) {
-                DiningLoginNavigationView()
-                    .environmentObject(diningAnalyticsViewModel)
-            }
-            .navigationTitle("Analytics")
-            .sheet(isPresented: $showSettingsSheet) {
-                DiningSettingsView(viewModel: diningAnalyticsViewModel)
-            }
+        }
+        .alert(isPresented: $showMissingDiningTokenAlert) {
+            showCorrectAlert()
+        }
+        .sheet(isPresented: $showDiningLoginView) {
+            DiningLoginNavigationView()
+                .environmentObject(diningAnalyticsViewModel)
+        }
+        .navigationTitle("Dining Analytics")
+        .sheet(isPresented: $showSettingsSheet) {
+            DiningSettingsView(viewModel: diningAnalyticsViewModel) // Replace with your settings view
         }
     }
 }
