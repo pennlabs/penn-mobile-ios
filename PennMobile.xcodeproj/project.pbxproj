@@ -226,7 +226,6 @@
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
 		6ECB4C362ACB10D500F7379A /* HomeDiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21640D5B20105B98002F33CA /* HomeDiningCell.swift */; };
 		6ECB4C382ACB11FA00F7379A /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97AA806723D26BC700C23488 /* DiningCell.swift */; };
-		8547D43E2BB4F117006010B9 /* PennEventLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547D43D2BB4F117006010B9 /* PennEventLocation.swift */; };
 		856AF4392BB6B19E008E45F7 /* PennEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856AF4382BB6B19E008E45F7 /* PennEvent.swift */; };
 		856AF43B2BB6B3CE008E45F7 /* PennEventsAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856AF43A2BB6B3CE008E45F7 /* PennEventsAPIManager.swift */; };
 		856AF43D2BB6BCDD008E45F7 /* MailComposerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856AF43C2BB6BCDD008E45F7 /* MailComposerCoordinator.swift */; };
@@ -672,7 +671,6 @@
 		6E62C45E2B6EF36A00C92C05 /* SubletDisplayBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubletDisplayBox.swift; sourceTree = "<group>"; };
 		6E903D372AC9C67000F2D384 /* ImageNetworkingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageNetworkingManager.swift; sourceTree = "<group>"; };
 		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
-		8547D43D2BB4F117006010B9 /* PennEventLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventLocation.swift; sourceTree = "<group>"; };
 		856AF4382BB6B19E008E45F7 /* PennEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEvent.swift; sourceTree = "<group>"; };
 		856AF43A2BB6B3CE008E45F7 /* PennEventsAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsAPIManager.swift; sourceTree = "<group>"; };
 		856AF43C2BB6BCDD008E45F7 /* MailComposerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerCoordinator.swift; sourceTree = "<group>"; };
@@ -1717,7 +1715,6 @@
 			isa = PBXGroup;
 			children = (
 				856AF43E2BB6C9EE008E45F7 /* PennEventsViewModel.swift */,
-				8547D43D2BB4F117006010B9 /* PennEventLocation.swift */,
 				85D9A31B2CB759990017D71E /* PennLocation.swift */,
 			);
 			path = "View Models";
@@ -2731,7 +2728,6 @@
 				21B8BBB622231F9F00EBC1D0 /* Account.swift in Sources */,
 				856AF4392BB6B19E008E45F7 /* PennEvent.swift in Sources */,
 				C13F9E9721928576000B866A /* HomeCalendarCell.swift in Sources */,
-				8547D43E2BB4F117006010B9 /* PennEventLocation.swift in Sources */,
 				21640D4520103EB8002F33CA /* HomeViewController.swift in Sources */,
 				2189C0A32027CE4100771C1F /* GSRLocation.swift in Sources */,
 				897F0A932B08256C0060583A /* Toasts.swift in Sources */,
