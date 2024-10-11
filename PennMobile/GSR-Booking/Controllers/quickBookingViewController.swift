@@ -14,8 +14,13 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
     let options: [GSRLocation] = GSRLocationModel.shared.getLocations()
     var selectedOption: String?
     var currentLocation: String?
-    var currentTime: String?
-    
+    var currentTime: String = ""
+    var currentHour: Int!
+    var currentMinute: Int!
+    var soonestTimeSlot: Int!
+    fileprivate var allRooms = [GSRRoom]()
+    var soonestRoom: GSRRoom!
+
     let locationManager = CLLocationManager()
     var hasReceivedLocationUpdate = false
     
@@ -98,10 +103,32 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
         let current = Date()
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone.current
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        formatter.dateFormat = "HH:mm"
         currentTime = formatter.string(from: current)
-        print(currentTime ?? "current time unavailable")
+        let hourMinuteArray = currentTime.components(separatedBy: ":")
+        currentHour = Int(hourMinuteArray[0])
+        currentMinute = Int(hourMinuteArray[1])
+        print(currentTime)
+        print(currentHour!)
+        print(currentMinute!)
     }
+//    
+//    func getSoonestTimeSlot(startTime: Int) {
+//        let roomsWithTimeSlots = allRooms.filter { $0.availability.count > 0 }
+//        var currentRooms = [GSRRoom]()
+//        for room in allRooms {
+//            let timeSlots = room.availability.filter {
+//                return $0.startTime >= startTime
+//            }
+//
+//            var filteredRoom = room
+//            filteredRoom.availability = timeSlots
+//            if !timeSlots.isEmpty {
+//                currentRooms.append(filteredRoom)
+//            }
+//        }
+//        self.soonestRoom = currentRooms.first
+//    }
     
     func setupLocationManager() {
         if CLLocationManager.locationServicesEnabled() {
@@ -120,9 +147,5 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
         print("\(currentLocation ?? "current location unavailable")")
         locationManager.stopUpdatingLocation()
         hasReceivedLocationUpdate = false
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Failed to find user's location: \(error.localizedDescription)")
     }
 }
