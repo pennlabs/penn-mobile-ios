@@ -28,7 +28,7 @@ struct DiningVenueDetailMenuView: View {
     
     @Binding private var parentScrollOffset: CGPoint
     
-    init(menus: [DiningMenu], id: Int, venue: DiningVenue, menuDate: Date = Date(), parentScrollProxy: ScrollViewProxy, parentScrollOffset: Binding<CGPoint>) {
+    init(menus: [DiningMenu], id: Int, venue: DiningVenue, menuDate: Date = Date.currentLocalDate, parentScrollProxy: ScrollViewProxy, parentScrollOffset: Binding<CGPoint>) {
         self.id = id
         self.venue = venue
         self.parentScrollProxy = parentScrollProxy
@@ -87,7 +87,8 @@ struct DiningVenueDetailMenuView: View {
                 } else {
                     Text("Closed For Today")
                 }
-                DatePicker("", selection: $menuDate, in: Date()...Date().add(minutes: 8640), displayedComponents: .date)
+                DatePicker("", selection: $menuDate, in: Date.currentLocalDate...Date.currentLocalDate.add(minutes: 8640), displayedComponents: .date)
+                
             }
             .padding(.horizontal)
             
@@ -100,18 +101,17 @@ struct DiningVenueDetailMenuView: View {
                 }
             }
         }
-        
-        .onChange(of: currentMenu) { _ in
-            print((currentMenu?.service ?? "no menu") + " on " + menuDate.description)
-            selectedStation = currentMenu?.stations.first ?? nil
-        }
-        .onChange(of: menuDate) { newDate in
+        .onChange(of: menuDate) { _ in
             Task.init() {
-                await diningVM.refreshMenus(cache: true, at: newDate)
-                menuDate = newDate
+                await diningVM.refreshMenus(cache: true, at: menuDate)
                 menus = diningVM.diningMenus[venue.id]?.menus ?? []
                 currentMenu = getMenu()
             }
+        }
+        
+        .onChange(of: currentMenu) { _ in
+            print((currentMenu?.service ?? "no menu") + " on " + menuDate.description)
+            selectedStation = nil
         }
         
     }
