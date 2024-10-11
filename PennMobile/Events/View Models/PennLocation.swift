@@ -201,15 +201,23 @@ class PennLocation {
 
     // MARK: - event location fetching from PennEventLocation
 
-    func coordinateForEvent(location: String, eventName: String, eventType: String) -> CLLocationCoordinate2D? {
+    func coordinateForEvent(location: String, eventName: String, eventType: String) -> (coordinate: CLLocationCoordinate2D?, isVirtual: Bool) {
         
         // first check for virtual / zoom, if so dont show map
-        let virtualKeywords = ["virtual", "online", "zoom", "microsoft teams", "google meet", "webex", "san francisco"]
+        let virtualKeywords = ["virtual", "online", "zoom", "microsoft teams", "google meet", "webex"]
+        // this is just for SF wharton rn in venture lab but can be dynamically changed later on to handle other cases where we don't want to show map but it's not virtual
+        let other = ["san francisco"]
         let locationLowercased = location.lowercased()
         for keyword in virtualKeywords {
             if locationLowercased.contains(keyword) {
                 print("Event is virtual: \(location)")
-                return nil
+                return (nil, true)
+            }
+        }
+        for keyword in other {
+            if locationLowercased.contains(keyword) {
+                print("Event is NOT virtual but no location: \(location)")
+                return (nil, false)
             }
         }
         
@@ -228,22 +236,22 @@ class PennLocation {
 
         // check in the order: eventType, location, eventName
         if let coordinate = findCoordinate(from: eventType) {
-            return coordinate
+            return (coordinate, false)
         }
         if location.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() != "no location" {
             if let coordinate = findCoordinate(from: location) {
-                return coordinate
+                return (coordinate, false)
             }
         }
         if let coordinate = findCoordinate(from: eventName) {
-            return coordinate
+            return (coordinate, false)
         }
 
         // default to philadelphia coords if not
 //        return CLLocationCoordinate2D(latitude: 39.9522, longitude: -75.1932)
         
         // default to nil to hide map
-        return nil
+        return (nil, false)
         
     }
 

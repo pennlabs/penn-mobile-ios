@@ -27,6 +27,9 @@ struct PennEventsViewerView: View {
     // coordinates for the map annotation
     @State private var eventCoordinate: CLLocationCoordinate2D?
     
+    // for is virtual event
+    @State private var isVirtualEvent = false
+    
     // default to philly
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 39.9522, longitude: -75.1932),
@@ -134,11 +137,16 @@ struct PennEventsViewerView: View {
                     .frame(height: 250)
                     .padding(.horizontal, 20)
                     .shadow(color: .gray.opacity(0.5), radius: 5, x: 5, y: 5)
-                } else {
-                    // test this for if it's confirmed virtual
+                } else if isVirtualEvent {
                     Text("This event is virtual and will be held online.")
                         .font(.headline)
                         .padding()
+                }
+                // for events with no location but not virtual
+                else {
+                     Text("Location not available.")
+                         .font(.headline)
+                         .padding()
                 }
                 
                 // buttons
@@ -209,17 +217,18 @@ struct PennEventsViewerView: View {
                 .foregroundColor(.white)
         })
         .onAppear {
-            if let coordinates = PennLocation.shared.coordinateForEvent(
+            let result = PennLocation.shared.coordinateForEvent(
                 location: event.eventLocation,
                 eventName: event.eventTitle,
                 eventType: event.eventType.displayName
-            ) {
-                eventCoordinate = coordinates
-                region.center = coordinates
-            } else {
-                // don't display map if nil
-                eventCoordinate = nil
+            )
+
+            eventCoordinate = result.coordinate
+            if let coordinate = result.coordinate {
+                region.center = coordinate
             }
+
+            isVirtualEvent = result.isVirtual
         }
     }
 }
