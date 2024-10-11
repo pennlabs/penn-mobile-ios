@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4273BCFF2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
-		4273BD002BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		4273BD012BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		4273BD022BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
-		56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */; };
 		6C23AF9526E57903002F60F0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6C369A1526E39BC100721CA1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */; };
@@ -28,10 +26,12 @@
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
+		895A1AB52CB98E9000E161AE /* XLPagerTabStrip in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1AB42CB98E9000E161AE /* XLPagerTabStrip */; };
+		895A1AB82CB98F5000E161AE /* ScrollableGraphView in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1AB72CB98F5000E161AE /* ScrollableGraphView */; };
+		895A1ABB2CB98F7100E161AE /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1ABA2CB98F7100E161AE /* SCLAlertView */; };
 		898DB4912B2E7AA20027CC8F /* PennForms in Frameworks */ = {isa = PBXBuildFile; productRef = 898DB4902B2E7AA20027CC8F /* PennForms */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
 		89EA262F290F958B008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
-		AD220CD2B82D72B87DBF87BC /* libPods-AutomatedScreenshotUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D5D1D7F760F28A27C06241 /* libPods-AutomatedScreenshotUITests.a */; };
 		F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftSoup */; };
 		F2568A762413534F00561295 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F2568A752413534F00561295 /* SnapKit */; };
 /* End PBXBuildFile section */
@@ -57,13 +57,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8932693228FC75A5003D4BF9;
 			remoteInfo = WidgetExtension;
-		};
-		F230FB13225809E900760499 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 216640581EBADADA00746B8E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2166405F1EBADADA00746B8E;
-			remoteInfo = PennMobile;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -93,35 +86,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		059FD41D74734ECD9DE8209C /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		22D5D1D7F760F28A27C06241 /* libPods-AutomatedScreenshotUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AutomatedScreenshotUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2F8A024230F1E8D7BA9410B4 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.debug.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		407FC3CFC29C6496A17C99C2 /* Pods-AutomatedScreenshotUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutomatedScreenshotUITests.release.xcconfig"; path = "Target Support Files/Pods-AutomatedScreenshotUITests/Pods-AutomatedScreenshotUITests.release.xcconfig"; sourceTree = "<group>"; };
 		4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
 		6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationDevelopment.xcconfig; sourceTree = "<group>"; };
 		6C1991BD27B5CA8500BBB402 /* NotificationRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationRelease.xcconfig; sourceTree = "<group>"; };
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.debug.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		89EA262D290F9411008F26CF /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		B6B1E089214442A200CCBBCD /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = SOURCE_ROOT; };
-		BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PennMobile.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutomatedScreenshotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		892B2CE02C98743000CD769A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = F230FB0D225809E900760499 /* AutomatedScreenshotUITests */;
-		};
 		892B2D742C9874A800CD769A /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
@@ -146,7 +125,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		892B2CDC2C98743000CD769A /* AutomatedScreenshotUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (892B2CE02C98743000CD769A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = AutomatedScreenshotUITests; sourceTree = "<group>"; };
 		892B2D522C9874A800CD769A /* PennMobileShared */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (892B2D742C9874A800CD769A /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = PennMobileShared; sourceTree = "<group>"; };
 		89A702AE2C9876F00070DF19 /* PennMobile */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (89A703E82C9876F00070DF19 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = PennMobile; sourceTree = "<group>"; };
 		89A7FDDE2C9875430070DF19 /* NotificationServiceExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = NotificationServiceExtension; sourceTree = "<group>"; };
@@ -164,9 +142,11 @@
 				898DB4912B2E7AA20027CC8F /* PennForms in Frameworks */,
 				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
 				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
+				895A1ABB2CB98F7100E161AE /* SCLAlertView in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
-				56D74230B1B43DAF260BCCBE /* Pods_PennMobile.framework in Frameworks */,
 				6E4D821C2AC8C91C009AB78E /* PennMobileShared.framework in Frameworks */,
+				895A1AB52CB98E9000E161AE /* XLPagerTabStrip in Frameworks */,
+				895A1AB82CB98F5000E161AE /* ScrollableGraphView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,14 +171,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F230FB0B225809E900760499 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AD220CD2B82D72B87DBF87BC /* libPods-AutomatedScreenshotUITests.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -213,9 +185,7 @@
 				89EA262D290F9411008F26CF /* Intents.intentdefinition */,
 				4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */,
 				B6B1E089214442A200CCBBCD /* fastlane */,
-				892B2CDC2C98743000CD769A /* AutomatedScreenshotUITests */,
 				216640611EBADADA00746B8E /* Products */,
-				F5E2CE9A9024AE8E28992A5E /* Pods */,
 				6D2C4E8629C0A2D81734AD99 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -224,7 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				216640601EBADADA00746B8E /* PennMobile.app */,
-				F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */,
 				8932693328FC75A5003D4BF9 /* WidgetExtension.appex */,
 				6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */,
 			);
@@ -245,23 +214,10 @@
 		6D2C4E8629C0A2D81734AD99 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BED8AA4945D67F0ED89FA9B0 /* Pods_PennMobile.framework */,
-				22D5D1D7F760F28A27C06241 /* libPods-AutomatedScreenshotUITests.a */,
 				8932693428FC75A5003D4BF9 /* WidgetKit.framework */,
 				8932693628FC75A5003D4BF9 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F5E2CE9A9024AE8E28992A5E /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2F8A024230F1E8D7BA9410B4 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */,
-				059FD41D74734ECD9DE8209C /* Pods-PennMobile.release.xcconfig */,
-				407FC3CFC29C6496A17C99C2 /* Pods-AutomatedScreenshotUITests.release.xcconfig */,
-				72787B1E070BFCDF84D8C3CA /* Pods-PennMobile.debug.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,13 +237,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2166407D1EBADADA00746B8E /* Build configuration list for PBXNativeTarget "PennMobile" */;
 			buildPhases = (
-				662014E98D8525F8B0A152A9 /* [CP] Check Pods Manifest.lock */,
 				2166405C1EBADADA00746B8E /* Sources */,
 				2166405D1EBADADA00746B8E /* Frameworks */,
 				2166405E1EBADADA00746B8E /* Resources */,
 				6E4D821E2AC8C91C009AB78E /* Embed Frameworks */,
-				CAF133B2272BB899064B2A46 /* [CP] Embed Pods Frameworks */,
-				6C6420B327AAF1130096CBA9 /* Linter */,
 				6CE12F9326E82DED00284D9F /* ShellScript */,
 				F2568A6E2411F20E00561295 /* Embed Foundation Extensions */,
 			);
@@ -309,6 +262,9 @@
 				6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */,
 				6CA1ACDA271D2D5000EDB967 /* Kingfisher */,
 				898DB4902B2E7AA20027CC8F /* PennForms */,
+				895A1AB42CB98E9000E161AE /* XLPagerTabStrip */,
+				895A1AB72CB98F5000E161AE /* ScrollableGraphView */,
+				895A1ABA2CB98F7100E161AE /* SCLAlertView */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -364,28 +320,6 @@
 			productReference = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		F230FB0D225809E900760499 /* AutomatedScreenshotUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */;
-			buildPhases = (
-				1EB3843C1C2462BA229132CC /* [CP] Check Pods Manifest.lock */,
-				F230FB0A225809E900760499 /* Sources */,
-				F230FB0B225809E900760499 /* Frameworks */,
-				F230FB0C225809E900760499 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F230FB14225809E900760499 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				892B2CDC2C98743000CD769A /* AutomatedScreenshotUITests */,
-			);
-			name = AutomatedScreenshotUITests;
-			productName = AutomatedScreenshotUITests;
-			productReference = F230FB0E225809E900760499 /* AutomatedScreenshotUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -415,13 +349,6 @@
 					8932693228FC75A5003D4BF9 = {
 						CreatedOnToolsVersion = 14.1;
 					};
-					F230FB0D225809E900760499 = {
-						CreatedOnToolsVersion = 10.1;
-						DevelopmentTeam = VU59R57FGM;
-						LastSwiftMigration = 1250;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 2166405F1EBADADA00746B8E;
-					};
 				};
 			};
 			buildConfigurationList = 2166405B1EBADADA00746B8E /* Build configuration list for PBXProject "PennMobile" */;
@@ -440,13 +367,15 @@
 				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				898DB48F2B2E7AA20027CC8F /* XCRemoteSwiftPackageReference "PennForms" */,
+				895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */,
+				895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
+				895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
 			);
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				2166405F1EBADADA00746B8E /* PennMobile */,
-				F230FB0D225809E900760499 /* AutomatedScreenshotUITests */,
 				8932693228FC75A5003D4BF9 /* WidgetExtension */,
 				6E4D82152AC8C91C009AB78E /* PennMobileShared */,
 			);
@@ -478,80 +407,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F230FB0C225809E900760499 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				4273BD002BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1EB3843C1C2462BA229132CC /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AutomatedScreenshotUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		662014E98D8525F8B0A152A9 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PennMobile-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6C6420B327AAF1130096CBA9 /* Linter */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = Linter;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint PennMobile/*\n";
-		};
 		6CE12F9326E82DED00284D9F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -569,28 +427,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${BUILD_DIR%Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
-		};
-		CAF133B2272BB899064B2A46 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
-				"${BUILT_PRODUCTS_DIR}/ScrollableGraphView/ScrollableGraphView.framework",
-				"${BUILT_PRODUCTS_DIR}/XLPagerTabStrip/XLPagerTabStrip.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ScrollableGraphView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XLPagerTabStrip.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PennMobile/Pods-PennMobile-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -620,13 +456,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F230FB0A225809E900760499 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -644,11 +473,6 @@
 			isa = PBXTargetDependency;
 			target = 8932693228FC75A5003D4BF9 /* WidgetExtension */;
 			targetProxy = 8932694228FC75A6003D4BF9 /* PBXContainerItemProxy */;
-		};
-		F230FB14225809E900760499 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2166405F1EBADADA00746B8E /* PennMobile */;
-			targetProxy = F230FB13225809E900760499 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1028,63 +852,6 @@
 			};
 			name = Release;
 		};
-		F230FB16225809E900760499 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2F8A024230F1E8D7BA9410B4 /* Pods-AutomatedScreenshotUITests.debug.xcconfig */;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = AutomatedScreenshotUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = land.dominic.AutomatedScreenshotUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PennMobile;
-			};
-			name = Debug;
-		};
-		F230FB17225809E900760499 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 407FC3CFC29C6496A17C99C2 /* Pods-AutomatedScreenshotUITests.release.xcconfig */;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VU59R57FGM;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = AutomatedScreenshotUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = land.dominic.AutomatedScreenshotUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PennMobile;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1124,15 +891,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F230FB15225809E900760499 /* Build configuration list for PBXNativeTarget "AutomatedScreenshotUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				F230FB16225809E900760499 /* Debug */,
-				F230FB17225809E900760499 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1150,6 +908,30 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.0.0;
+			};
+		};
+		895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/xmartlabs/XLPagerTabStrip";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
+		895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/GZaccaroni/ScrollableGraphView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.3;
+			};
+		};
+		895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vikmeup/SCLAlertView-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.8.2;
 			};
 		};
 		898DB48F2B2E7AA20027CC8F /* XCRemoteSwiftPackageReference "PennForms" */ = {
@@ -1226,6 +1008,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		895A1AB42CB98E9000E161AE /* XLPagerTabStrip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */;
+			productName = XLPagerTabStrip;
+		};
+		895A1AB72CB98F5000E161AE /* ScrollableGraphView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */;
+			productName = ScrollableGraphView;
+		};
+		895A1ABA2CB98F7100E161AE /* SCLAlertView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */;
+			productName = SCLAlertView;
 		};
 		898DB4902B2E7AA20027CC8F /* PennForms */ = {
 			isa = XCSwiftPackageProductDependency;
