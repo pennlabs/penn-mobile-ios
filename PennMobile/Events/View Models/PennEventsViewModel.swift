@@ -12,13 +12,12 @@ import Foundation
 
 class PennEventsViewModel: ObservableObject {
     @Published var events: [PennEvent] = []
-    @Published var selectedCategory: String = "All"
+    @Published var selectedCategory: EventType?
     
-    var uniqueEventTypes: [String] {
-        var types = events.map { $0.categorizedEventType }
-        types = Array(Set(types)).sorted()
+    var uniqueEventTypes: [EventType] {
+        var types = events.map { $0.eventType }
+        types = Array(Set(types)).sorted { $0.displayName < $1.displayName }
         
-        types.insert("All", at: 0)
         return types
     }
     

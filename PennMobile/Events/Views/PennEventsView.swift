@@ -14,13 +14,13 @@ struct PennEventsView: View {
     var body: some View {
         VStack {
             Picker("Select Category", selection: $viewModel.selectedCategory) {
+                Text("All").tag(nil as EventType?)
                 ForEach(viewModel.uniqueEventTypes, id: \.self) { category in
-                    Text(category).tag(category)
+                    Text(category.displayName).tag(Optional(category))
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
             .padding()
-            
             ScrollView {
                 LazyVStack {
                     ForEach(filteredEvents, id: \.id) { event in
@@ -37,10 +37,10 @@ struct PennEventsView: View {
     }
     
     private var filteredEvents: [PennEvent] {
-        if viewModel.selectedCategory == "All" {
-            return viewModel.events
+        if let selectedCategory = viewModel.selectedCategory {
+            return viewModel.events.filter { $0.eventType == selectedCategory }
         } else {
-            return viewModel.events.filter { $0.categorizedEventType == viewModel.selectedCategory }
+            return viewModel.events
         }
     }
 }

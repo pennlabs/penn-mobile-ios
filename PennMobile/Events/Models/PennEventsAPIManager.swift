@@ -44,7 +44,7 @@ class PennEventsAPIManager {
         if tag == "Clubs" {
             events = events.map { event in
                 var modifiedEvent = event
-                modifiedEvent.eventType = "CLUBS"
+                modifiedEvent.eventType = .clubs
                 return modifiedEvent
             }
         }

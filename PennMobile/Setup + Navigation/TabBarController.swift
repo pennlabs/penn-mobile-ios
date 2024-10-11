@@ -114,13 +114,13 @@ extension ContactsTableViewController: TabBarShowable {
     }
 }
 
-extension PennEventsTableViewController: TabBarShowable {
-    func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "Events_Grey")
-        let selectedImage = UIImage(named: "Events_Blue")
-        return UITabBarItem(title: "Events", image: normalImage, selectedImage: selectedImage)
-    }
-}
+//extension PennEventsTableViewController: TabBarShowable {
+//    func getTabBarItem() -> UITabBarItem {
+//        let normalImage = UIImage(named: "Events_Grey")
+//        let selectedImage = UIImage(named: "Events_Blue")
+//        return UITabBarItem(title: "Events", image: normalImage, selectedImage: selectedImage)
+//    }
+//}
 
 extension CoursesViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {

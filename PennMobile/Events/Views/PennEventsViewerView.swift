@@ -32,7 +32,9 @@ struct PennEventsViewerView: View {
         center: CLLocationCoordinate2D(latitude: 39.9522, longitude: -75.1932),
         span: MKCoordinateSpan(latitudeDelta: 0.0020, longitudeDelta: 0.0020)
     )
-    //    @State private var region = PennCoordinate.shared.getDefaultRegion(at: .)
+    
+    // this one uses PennLocation functionality but i still prefer the defaulted specified region above
+//    @State private var region = PennLocation.shared.getDefaultRegion(at: .mid)
     
     var body: some View {
         ScrollView {
@@ -132,6 +134,11 @@ struct PennEventsViewerView: View {
                     .frame(height: 250)
                     .padding(.horizontal, 20)
                     .shadow(color: .gray.opacity(0.5), radius: 5, x: 5, y: 5)
+                } else {
+                    // test this for if it's confirmed virtual
+                    Text("This event is virtual and will be held online.")
+                        .font(.headline)
+                        .padding()
                 }
                 
                 // buttons
@@ -202,11 +209,16 @@ struct PennEventsViewerView: View {
                 .foregroundColor(.white)
         })
         .onAppear {
-            if let coordinates = PennEventLocation.coordinateForEvent(location: event.eventLocation, eventName: event.eventTitle, eventType: event.eventType ?? "") {
+            if let coordinates = PennLocation.shared.coordinateForEvent(
+                location: event.eventLocation,
+                eventName: event.eventTitle,
+                eventType: event.eventType.displayName
+            ) {
                 eventCoordinate = coordinates
                 region.center = coordinates
             } else {
-                print("No location found")
+                // don't display map if nil
+                eventCoordinate = nil
             }
         }
     }

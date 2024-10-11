@@ -12,7 +12,7 @@ import Foundation
 struct PennEvent: Decodable, Identifiable {
     var id = UUID()
     
-    var eventType: String?
+    var eventType: EventType
     var name: String?
     var description: String?
     var location: String?
@@ -42,7 +42,7 @@ struct PennEvent: Decodable, Identifiable {
     // init for previews
     init(
         id: UUID = UUID(),
-        eventType: String? = nil,
+        eventType: EventType = .other("Other"),
         name: String? = nil,
         description: String? = nil,
         location: String? = nil,
@@ -71,7 +71,7 @@ struct PennEvent: Decodable, Identifiable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        eventType = try container.decodeIfPresent(String.self, forKey: .eventType)
+        eventType = try container.decodeIfPresent(EventType.self, forKey: .eventType) ?? .other("Other")
         name = try container.decodeIfPresent(String.self, forKey: .name)
         description = try container.decodeIfPresent(String.self, forKey: .description)
         location = try container.decodeIfPresent(String.self, forKey: .location)
@@ -154,22 +154,5 @@ struct PennEvent: Decodable, Identifiable {
         return email ?? ""
     }
     
-    // filtering ported over from (PennEventsViewModel)
-    var categorizedEventType: String {
-        guard let eventType = eventType?.uppercased() else { return "Other" }
-        if eventType.contains("COLLEGE HOUSE") {
-            return "Houses"
-        } else if eventType.contains("ENGINEERING") {
-            return "Engineering"
-        } else if eventType.contains("WHARTON") {
-            return "Wharton"
-        } else if eventType.contains("PENN TODAY") {
-            return "Penn Today"
-        } else if eventType.contains("VENTURE LAB") {
-            return "Venture Lab"
-        } else if eventType.contains("CLUBS") {
-            return "Clubs"
-        }
-        return eventType
-    }
+
 }
