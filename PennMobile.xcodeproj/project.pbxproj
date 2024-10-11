@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -2267,8 +2267,9 @@
 		216640581EBADADA00746B8E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1610;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
 					2166405F1EBADADA00746B8E = {
@@ -2293,7 +2294,6 @@
 				};
 			};
 			buildConfigurationList = 2166405B1EBADADA00746B8E /* Build configuration list for PBXProject "PennMobile" */;
-			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -2312,6 +2312,7 @@
 				895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
 				895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2981,7 +2982,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -3029,7 +3030,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -3095,7 +3096,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Widget";
@@ -3137,7 +3138,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
