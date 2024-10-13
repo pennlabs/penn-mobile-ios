@@ -34,7 +34,7 @@ class GSRViewModel: NSObject {
     fileprivate var selectedLocation: GSRLocation
 
     // MARK: Room Data
-    fileprivate var allRooms = [GSRRoom]()
+    var allRooms = [GSRRoom]()
     fileprivate var filteredRooms = [GSRRoom]()
 
     // MARK: Current Selection

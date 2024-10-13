@@ -18,9 +18,10 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
     var currentHour: Int!
     var currentMinute: Int!
     var soonestTimeSlot: Int!
-    fileprivate var allRooms = [GSRRoom]()
     var soonestRoom: GSRRoom!
-
+    fileprivate var newGSRView: GSRViewModel!
+    var viewModel: GSRViewModel!
+    var rooms: [GSRRoom]!
     let locationManager = CLLocationManager()
     var hasReceivedLocationUpdate = false
     
@@ -47,7 +48,8 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        viewModel = GSRViewModel(selectedLocation: options[0])
+        rooms = viewModel.allRooms
         setupDropdownButton()
         setupBook()
         locationManager.delegate = self
@@ -57,8 +59,7 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     @objc func findGSRButtonPressed() {
-        getCurrentTime()
-        setupLocationManager()
+        print(getSoonestTimeSlot())
     }
     
     func setupDropdownButton() {
@@ -112,23 +113,18 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
         print(currentHour!)
         print(currentMinute!)
     }
-//    
-//    func getSoonestTimeSlot(startTime: Int) {
-//        let roomsWithTimeSlots = allRooms.filter { $0.availability.count > 0 }
-//        var currentRooms = [GSRRoom]()
-//        for room in allRooms {
-//            let timeSlots = room.availability.filter {
-//                return $0.startTime >= startTime
-//            }
-//
-//            var filteredRoom = room
-//            filteredRoom.availability = timeSlots
-//            if !timeSlots.isEmpty {
-//                currentRooms.append(filteredRoom)
-//            }
-//        }
-//        self.soonestRoom = currentRooms.first
-//    }
+    
+    var min: Date = Date()
+    func getSoonestTimeSlot() -> Date {
+        for room in rooms where !room.availability.isEmpty {
+            print("reached")
+            let startTime = room.availability.first!.startTime
+            if startTime < min {
+                min = startTime
+            }
+        }
+        return min
+    }
     
     func setupLocationManager() {
         if CLLocationManager.locationServicesEnabled() {
