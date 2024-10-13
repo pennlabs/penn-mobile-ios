@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+import PennMobileShared
 
 class GSRLocationModel {
     static let shared = GSRLocationModel()

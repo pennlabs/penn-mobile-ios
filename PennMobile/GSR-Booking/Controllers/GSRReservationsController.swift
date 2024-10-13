@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SwiftUI
+import PennMobileShared
 
 class GSRReservationsController: GenericTableViewController, ShowsAlert, IndicatorEnabled {
 

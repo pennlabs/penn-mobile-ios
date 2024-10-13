@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PennMobileShared
 
 protocol GSRDeletable: IndicatorEnabled, ShowsAlert {}
 

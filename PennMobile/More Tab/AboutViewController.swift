@@ -8,6 +8,7 @@
 
 import Foundation
 import PennMobileShared
+import SwiftUI
 
 class AboutViewController: UIViewController {
 
