@@ -135,6 +135,13 @@ public class DiningAnalyticsViewModel: ObservableObject {
             try? Storage.storeThrowing(swipeHistoryToStore, to: .groupDocuments, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
             try? Storage.storeThrowing(dollarHistoryToStore, to: .groupDocuments, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
         }
+        
+        if self.swipeHistory.count == 1 && self.swipeHistory[0].date == currentBalanceDate {
+            self.swipeHistory = []
+        }
+        if self.dollarHistory.count == 1 && self.dollarHistory[0].date == currentBalanceDate {
+            self.dollarHistory = []
+        }
 
         if let planStartDate = try? await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken).get() {
             self.planStartDate = planStartDate
