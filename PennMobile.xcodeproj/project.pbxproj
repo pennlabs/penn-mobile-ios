@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		422DDFC92CBC4A0B0053EA2B /* GSRNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422DDFC72CBC4A0B0053EA2B /* GSRNetworkManager.swift */; };
+		422DDFCD2CBC4A5D0053EA2B /* BookedGSRsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422DDFCA2CBC4A5D0053EA2B /* BookedGSRsProvider.swift */; };
+		422DDFCE2CBC4A5D0053EA2B /* BookedGSRsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422DDFCB2CBC4A5D0053EA2B /* BookedGSRsWidget.swift */; };
 		42632C8F2CB9C77B0028CC31 /* ScannerDuplicate.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0E2CB9C77B0028CC31 /* ScannerDuplicate.ahap */; };
 		42632C902CB9C77B0028CC31 /* ScannerError.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0F2CB9C77B0028CC31 /* ScannerError.ahap */; };
 		42632C912CB9C77B0028CC31 /* ScannerInvalid.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B102CB9C77B0028CC31 /* ScannerInvalid.ahap */; };
@@ -138,7 +141,6 @@
 		42632D102CB9C77B0028CC31 /* GSRRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B9B2CB9C77B0028CC31 /* GSRRoom.swift */; };
 		42632D112CB9C77B0028CC31 /* GSRTimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B9C2CB9C77B0028CC31 /* GSRTimeSlot.swift */; };
 		42632D122CB9C77B0028CC31 /* GSRGroupNetworkManager..swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B9E2CB9C77B0028CC31 /* GSRGroupNetworkManager..swift */; };
-		42632D132CB9C77B0028CC31 /* GSRNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B9F2CB9C77B0028CC31 /* GSRNetworkManager.swift */; };
 		42632D142CB9C77B0028CC31 /* GSRManageGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA12CB9C77B0028CC31 /* GSRManageGroupViewModel.swift */; };
 		42632D152CB9C77B0028CC31 /* GSRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA22CB9C77B0028CC31 /* GSRViewModel.swift */; };
 		42632D162CB9C77B0028CC31 /* CreateGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA42CB9C77B0028CC31 /* CreateGroupCell.swift */; };
@@ -445,6 +447,9 @@
 
 /* Begin PBXFileReference section */
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		422DDFC72CBC4A0B0053EA2B /* GSRNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRNetworkManager.swift; sourceTree = "<group>"; };
+		422DDFCA2CBC4A5D0053EA2B /* BookedGSRsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookedGSRsProvider.swift; sourceTree = "<group>"; };
+		422DDFCB2CBC4A5D0053EA2B /* BookedGSRsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookedGSRsWidget.swift; sourceTree = "<group>"; };
 		42632AF92CB9C77B0028CC31 /* OAuth2NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2NetworkManager.swift; sourceTree = "<group>"; };
 		42632AFA2CB9C77B0028CC31 /* PennAuthRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennAuthRequestable.swift; sourceTree = "<group>"; };
 		42632AFB2CB9C77B0028CC31 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
@@ -575,7 +580,6 @@
 		42632B9B2CB9C77B0028CC31 /* GSRRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRoom.swift; sourceTree = "<group>"; };
 		42632B9C2CB9C77B0028CC31 /* GSRTimeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTimeSlot.swift; sourceTree = "<group>"; };
 		42632B9E2CB9C77B0028CC31 /* GSRGroupNetworkManager..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager..swift; sourceTree = "<group>"; };
-		42632B9F2CB9C77B0028CC31 /* GSRNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRNetworkManager.swift; sourceTree = "<group>"; };
 		42632BA12CB9C77B0028CC31 /* GSRManageGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRManageGroupViewModel.swift; sourceTree = "<group>"; };
 		42632BA22CB9C77B0028CC31 /* GSRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRViewModel.swift; sourceTree = "<group>"; };
 		42632BA42CB9C77B0028CC31 /* CreateGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupCell.swift; sourceTree = "<group>"; };
@@ -902,6 +906,23 @@
 				6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		422DDFC82CBC4A0B0053EA2B /* GSR */ = {
+			isa = PBXGroup;
+			children = (
+				422DDFC72CBC4A0B0053EA2B /* GSRNetworkManager.swift */,
+			);
+			path = GSR;
+			sourceTree = "<group>";
+		};
+		422DDFCC2CBC4A5D0053EA2B /* GSR */ = {
+			isa = PBXGroup;
+			children = (
+				422DDFCA2CBC4A5D0053EA2B /* BookedGSRsProvider.swift */,
+				422DDFCB2CBC4A5D0053EA2B /* BookedGSRsWidget.swift */,
+			);
+			path = GSR;
 			sourceTree = "<group>";
 		};
 		42632AFC2CB9C77B0028CC31 /* Auth */ = {
@@ -1312,7 +1333,6 @@
 			isa = PBXGroup;
 			children = (
 				42632B9E2CB9C77B0028CC31 /* GSRGroupNetworkManager..swift */,
-				42632B9F2CB9C77B0028CC31 /* GSRNetworkManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -1992,6 +2012,7 @@
 				42632DD02CB9C77B0028CC31 /* Dining */,
 				42632DD32CB9C77B0028CC31 /* Dining Hours */,
 				42632DD62CB9C77B0028CC31 /* Fitness */,
+				422DDFCC2CBC4A5D0053EA2B /* GSR */,
 				42632DD72CB9C77B0028CC31 /* Assets.xcassets */,
 				42632DD82CB9C77B0028CC31 /* ConfigurationRepresenting.swift */,
 				42632DD92CB9C77B0028CC31 /* Info.plist */,
@@ -2141,6 +2162,7 @@
 				42632E0B2CB9C77B0028CC31 /* Dining */,
 				42632E0F2CB9C77B0028CC31 /* Fitness */,
 				42632E1B2CB9C77B0028CC31 /* General */,
+				422DDFC82CBC4A0B0053EA2B /* GSR */,
 				42632E1E2CB9C77B0028CC31 /* Laundry */,
 				42632E212CB9C77B0028CC31 /* Networking + Analytics */,
 				42632E242CB9C77B0028CC31 /* Subletting */,
@@ -2509,7 +2531,6 @@
 				42632D102CB9C77B0028CC31 /* GSRRoom.swift in Sources */,
 				42632D112CB9C77B0028CC31 /* GSRTimeSlot.swift in Sources */,
 				42632D122CB9C77B0028CC31 /* GSRGroupNetworkManager..swift in Sources */,
-				42632D132CB9C77B0028CC31 /* GSRNetworkManager.swift in Sources */,
 				42632D142CB9C77B0028CC31 /* GSRManageGroupViewModel.swift in Sources */,
 				42632D152CB9C77B0028CC31 /* GSRViewModel.swift in Sources */,
 				42632D162CB9C77B0028CC31 /* CreateGroupCell.swift in Sources */,
@@ -2715,6 +2736,7 @@
 				42632E352CB9C77B0028CC31 /* FitnessGraph.swift in Sources */,
 				42632E362CB9C77B0028CC31 /* FitnessModel.swift in Sources */,
 				42632E372CB9C77B0028CC31 /* BadgeView.swift in Sources */,
+				422DDFC92CBC4A0B0053EA2B /* GSRNetworkManager.swift in Sources */,
 				42632E382CB9C77B0028CC31 /* Colors.swift in Sources */,
 				42632E392CB9C77B0028CC31 /* Day.swift in Sources */,
 				42632E3A2CB9C77B0028CC31 /* Extensions.swift in Sources */,
@@ -2743,6 +2765,8 @@
 				42632DE22CB9C77B0028CC31 /* DiningAnalyticsHomeWidget.swift in Sources */,
 				42632DE32CB9C77B0028CC31 /* DiningAnalyticsProvider.swift in Sources */,
 				42632DE42CB9C77B0028CC31 /* DiningHoursProvider.swift in Sources */,
+				422DDFCD2CBC4A5D0053EA2B /* BookedGSRsProvider.swift in Sources */,
+				422DDFCE2CBC4A5D0053EA2B /* BookedGSRsWidget.swift in Sources */,
 				42632DE52CB9C77B0028CC31 /* DiningHoursWidget.swift in Sources */,
 				42632DE62CB9C77B0028CC31 /* FitnessProvider.swift in Sources */,
 				42632DE72CB9C77B0028CC31 /* FitnessWidget.swift in Sources */,

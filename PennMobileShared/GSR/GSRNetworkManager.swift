@@ -8,7 +8,6 @@
 
 import Foundation
 import SwiftyJSON
-import PennMobileShared
 
 class GSRNetworkManager: NSObject, Requestable {
 
