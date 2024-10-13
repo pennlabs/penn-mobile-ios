@@ -70,13 +70,13 @@ struct HomeViewData {
                     .padding(.bottom)
             }
             
-            // if showSublettingBanner {
+             if showSublettingBanner {
                 HomeSublettingBanner {
                     onStartSubletting?()
                 } onDismiss: {
                     onDismissSubletting?()
                 }
-            // }
+             }
             
             if case .some(.success(let polls)) = polls {
                 ForEach(polls) { poll in
