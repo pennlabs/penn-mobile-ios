@@ -33,6 +33,7 @@ extension DiningAnalyticsBalance: Comparable {
     }
 }
 
+@MainActor
 public class DiningAnalyticsViewModel: ObservableObject {
     public static let dollarHistoryDirectory = "diningAnalyticsDollarData"
     public static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
