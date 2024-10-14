@@ -45,8 +45,6 @@ public class DiningAnalyticsViewModel: ObservableObject {
     @Published public var predictedDollarSemesterEndBalance: Double = 0
     @Published public var swipesPredictedZeroDate: Date = Date.endOfSemester
     @Published public var predictedSwipesSemesterEndBalance: Double = 0
-    @Published public var swipeAxisLabel: ([String], [String]) = ([], [])
-    @Published public var dollarAxisLabel: ([String], [String]) = ([], [])
     @Published public var dollarSlope: Double = 0.0
     @Published public var swipeSlope: Double = 0.0
     
@@ -230,9 +228,6 @@ public class DiningAnalyticsViewModel: ObservableObject {
         self.swipeSlope = swipePredictions.slope
         self.swipesPredictedZeroDate = swipePredictions.predictedZeroDate
         self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
-        
-        self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)
-        self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
     }
     
     func getWeightedAverageSlope(allBalance: [DiningAnalyticsBalance]) -> Double {
@@ -306,32 +301,5 @@ public class DiningAnalyticsViewModel: ObservableObject {
         let diffInDays = Calendar.current.dateComponents([.day], from: firstBalance.date, to: Date.endOfSemester).day!
         let endBalance = (slope * Double(diffInDays)) + firstBalance.balance
         return endBalance
-    }
-    
-    // Compute axis labels
-    static func getAxisLabelsX() -> [String] {
-        let xAxisLabelCount = 4
-        let semester = Date.startOfSemester.distance(to: Date.endOfSemester)
-        let semesterStep = semester / Double(xAxisLabelCount - 1)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "M/d"
-        return stride(from: 0, to: Double(xAxisLabelCount), by: 1).map {
-            dateFormatter.string(from: Date.startOfSemester.advanced(by: semesterStep * $0))
-        }
-    }
-    
-    func getAxisLabelsYX(from trans: [DiningAnalyticsBalance]) -> ([String], [String]) {
-        let yAxisLabelCount = 5
-        var yLabels: [String] = []
-
-        // Generate Y Axis Labels
-        let maxDollarValue = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0
-        let dollarStep = (maxDollarValue / Double(yAxisLabelCount - 1))
-        for i in 0 ..< yAxisLabelCount {
-            let yAxisLabel = "\(Int(dollarStep * Double(yAxisLabelCount - i - 1)))"
-            yLabels.append(yAxisLabel)
-        }
-
-        return (yLabels, DiningAnalyticsViewModel.getAxisLabelsX())
     }
 }
