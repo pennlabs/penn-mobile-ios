@@ -11,19 +11,29 @@ import CoreLocation
 
 class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
     
-    let options: [GSRLocation] = GSRLocationModel.shared.getLocations()
-    var selectedOption: String?
-    var currentLocation: String?
-    var currentTime: String = ""
-    var currentHour: Int!
-    var currentMinute: Int!
-    var soonestTimeSlot: Int!
-    var soonestRoom: GSRRoom!
+    let locations: [GSRLocation] = GSRLocationModel.shared.getLocations()
+    fileprivate var selectedOption: String?
+    fileprivate var currentLocation: String?
+    
+    fileprivate var currentTime: String = ""
+    fileprivate var currentHour: Int!
+    fileprivate var currentMinute: Int!
+    
+    fileprivate var soonestTimeSlot: String!
+    fileprivate var soonestRoom: GSRRoom!
+    fileprivate var soonestLocation: GSRLocation!
+    fileprivate var min: Date! = Date()
+    
     fileprivate var newGSRView: GSRViewModel!
-    var viewModel: GSRViewModel!
-    var rooms: [GSRRoom]!
-    let locationManager = CLLocationManager()
-    var hasReceivedLocationUpdate = false
+    fileprivate var newController: GSRController!
+    fileprivate var allRooms: [GSRRoom]!
+    
+    fileprivate let locationManager = CLLocationManager()
+    fileprivate var hasReceivedLocationUpdate = false
+    
+//    var min: Date {
+//        //round up to half hour
+//    }
     
     let dropdownButton: UIButton = {
         let button = UIButton(type: .system)
@@ -48,18 +58,32 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        viewModel = GSRViewModel(selectedLocation: options[0])
-        rooms = viewModel.allRooms
         setupDropdownButton()
         setupBook()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
-    
     }
     
     @objc func findGSRButtonPressed() {
-        print(getSoonestTimeSlot())
+        setupViewModel()
+    }
+    
+    func setupViewModel() {
+        for location in locations {
+            let startingLocation = location
+            newGSRView = GSRViewModel(selectedLocation: startingLocation)
+            GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: currentTime) { result in
+                switch result {
+                case .success(let rooms):
+                    self.allRooms = rooms
+                    self.getSoonestTimeSlot()
+                    self.newGSRView.updateData(with: rooms)
+                case .failure:
+                    self.present(toast: .apiError)
+                }
+            }
+        }
     }
     
     func setupDropdownButton() {
@@ -77,7 +101,7 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
     @objc func showDropdown() {
         let alertController = UIAlertController(title: "Choose an option", message: nil, preferredStyle: .actionSheet)
         
-        for option in options {
+        for option in locations {
             alertController.addAction(UIAlertAction(title: option.name, style: .default, handler: { [weak self] _ in
                 self?.selectedOption = option.name
                 self?.dropdownButton.setTitle(option.name, for: .normal) // Update button title
@@ -114,16 +138,18 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
         print(currentMinute!)
     }
     
-    var min: Date = Date()
-    func getSoonestTimeSlot() -> Date {
-        for room in rooms where !room.availability.isEmpty {
-            print("reached")
-            let startTime = room.availability.first!.startTime
-            if startTime < min {
-                min = startTime
+    func getSoonestTimeSlot() {
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "HH:mm"
+        for room in allRooms where !room.availability.isEmpty {
+            let start = room.availability.first!.startTime
+            if start < min {
+                min = start
+                soonestTimeSlot = formatter.string(from: min)
+                soonestRoom = room
             }
         }
-        return min
     }
     
     func setupLocationManager() {
