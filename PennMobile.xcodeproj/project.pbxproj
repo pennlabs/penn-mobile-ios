@@ -62,13 +62,6 @@
 		42632CC42CB9C77B0028CC31 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B3B2CB9C77B0028CC31 /* CardView.swift */; };
 		42632CC52CB9C77B0028CC31 /* DiningAnalyticsGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B3D2CB9C77B0028CC31 /* DiningAnalyticsGraph.swift */; };
 		42632CC62CB9C77B0028CC31 /* DiningAnalyticsGraphBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B3E2CB9C77B0028CC31 /* DiningAnalyticsGraphBox.swift */; };
-		42632CC72CB9C77B0028CC31 /* PredictionsGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B3F2CB9C77B0028CC31 /* PredictionsGraphView.swift */; };
-		42632CC82CB9C77B0028CC31 /* PredictionsGraphView+AxisLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B402CB9C77B0028CC31 /* PredictionsGraphView+AxisLabels.swift */; };
-		42632CC92CB9C77B0028CC31 /* PredictionsGraphView+SmoothedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B412CB9C77B0028CC31 /* PredictionsGraphView+SmoothedData.swift */; };
-		42632CCA2CB9C77B0028CC31 /* VariableStepLineGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B422CB9C77B0028CC31 /* VariableStepLineGraphView.swift */; };
-		42632CCB2CB9C77B0028CC31 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B432CB9C77B0028CC31 /* VariableStepLineGraphView+GraphEndpointPath.swift */; };
-		42632CCC2CB9C77B0028CC31 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B442CB9C77B0028CC31 /* VariableStepLineGraphView+PredictionSlopePath.swift */; };
-		42632CCD2CB9C77B0028CC31 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B452CB9C77B0028CC31 /* VariableStepLineGraphView+VariableStepGraphPath.swift */; };
 		42632CCE2CB9C77B0028CC31 /* AnalyticsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B472CB9C77B0028CC31 /* AnalyticsCardView.swift */; };
 		42632CCF2CB9C77B0028CC31 /* DiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B482CB9C77B0028CC31 /* DiningBalanceView.swift */; };
 		42632CD02CB9C77B0028CC31 /* DiningVenueDetailHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B4A2CB9C77B0028CC31 /* DiningVenueDetailHoursView.swift */; };
@@ -497,13 +490,6 @@
 		42632B3B2CB9C77B0028CC31 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		42632B3D2CB9C77B0028CC31 /* DiningAnalyticsGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraph.swift; sourceTree = "<group>"; };
 		42632B3E2CB9C77B0028CC31 /* DiningAnalyticsGraphBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningAnalyticsGraphBox.swift; sourceTree = "<group>"; };
-		42632B3F2CB9C77B0028CC31 /* PredictionsGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionsGraphView.swift; sourceTree = "<group>"; };
-		42632B402CB9C77B0028CC31 /* PredictionsGraphView+AxisLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+AxisLabels.swift"; sourceTree = "<group>"; };
-		42632B412CB9C77B0028CC31 /* PredictionsGraphView+SmoothedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PredictionsGraphView+SmoothedData.swift"; sourceTree = "<group>"; };
-		42632B422CB9C77B0028CC31 /* VariableStepLineGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VariableStepLineGraphView.swift; sourceTree = "<group>"; };
-		42632B432CB9C77B0028CC31 /* VariableStepLineGraphView+GraphEndpointPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+GraphEndpointPath.swift"; sourceTree = "<group>"; };
-		42632B442CB9C77B0028CC31 /* VariableStepLineGraphView+PredictionSlopePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+PredictionSlopePath.swift"; sourceTree = "<group>"; };
-		42632B452CB9C77B0028CC31 /* VariableStepLineGraphView+VariableStepGraphPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VariableStepLineGraphView+VariableStepGraphPath.swift"; sourceTree = "<group>"; };
 		42632B472CB9C77B0028CC31 /* AnalyticsCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsCardView.swift; sourceTree = "<group>"; };
 		42632B482CB9C77B0028CC31 /* DiningBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningBalanceView.swift; sourceTree = "<group>"; };
 		42632B4A2CB9C77B0028CC31 /* DiningVenueDetailHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningVenueDetailHoursView.swift; sourceTree = "<group>"; };
@@ -1094,13 +1080,6 @@
 			children = (
 				42632B3D2CB9C77B0028CC31 /* DiningAnalyticsGraph.swift */,
 				42632B3E2CB9C77B0028CC31 /* DiningAnalyticsGraphBox.swift */,
-				42632B3F2CB9C77B0028CC31 /* PredictionsGraphView.swift */,
-				42632B402CB9C77B0028CC31 /* PredictionsGraphView+AxisLabels.swift */,
-				42632B412CB9C77B0028CC31 /* PredictionsGraphView+SmoothedData.swift */,
-				42632B422CB9C77B0028CC31 /* VariableStepLineGraphView.swift */,
-				42632B432CB9C77B0028CC31 /* VariableStepLineGraphView+GraphEndpointPath.swift */,
-				42632B442CB9C77B0028CC31 /* VariableStepLineGraphView+PredictionSlopePath.swift */,
-				42632B452CB9C77B0028CC31 /* VariableStepLineGraphView+VariableStepGraphPath.swift */,
 			);
 			path = PredictionsGraph;
 			sourceTree = "<group>";
@@ -2433,13 +2412,6 @@
 				42632CC42CB9C77B0028CC31 /* CardView.swift in Sources */,
 				42632CC52CB9C77B0028CC31 /* DiningAnalyticsGraph.swift in Sources */,
 				42632CC62CB9C77B0028CC31 /* DiningAnalyticsGraphBox.swift in Sources */,
-				42632CC72CB9C77B0028CC31 /* PredictionsGraphView.swift in Sources */,
-				42632CC82CB9C77B0028CC31 /* PredictionsGraphView+AxisLabels.swift in Sources */,
-				42632CC92CB9C77B0028CC31 /* PredictionsGraphView+SmoothedData.swift in Sources */,
-				42632CCA2CB9C77B0028CC31 /* VariableStepLineGraphView.swift in Sources */,
-				42632CCB2CB9C77B0028CC31 /* VariableStepLineGraphView+GraphEndpointPath.swift in Sources */,
-				42632CCC2CB9C77B0028CC31 /* VariableStepLineGraphView+PredictionSlopePath.swift in Sources */,
-				42632CCD2CB9C77B0028CC31 /* VariableStepLineGraphView+VariableStepGraphPath.swift in Sources */,
 				42632CCE2CB9C77B0028CC31 /* AnalyticsCardView.swift in Sources */,
 				42632CCF2CB9C77B0028CC31 /* DiningBalanceView.swift in Sources */,
 				42632CD02CB9C77B0028CC31 /* DiningVenueDetailHoursView.swift in Sources */,

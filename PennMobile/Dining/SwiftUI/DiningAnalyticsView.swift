@@ -106,23 +106,8 @@ struct DiningAnalyticsView: View {
         }
         .navigationTitle("Dining Analytics")
         .sheet(isPresented: $showSettingsSheet) {
-            DiningSettingsView(viewModel: diningAnalyticsViewModel) // Replace with your settings view
+            DiningSettingsView(viewModel: diningAnalyticsViewModel)
         }
-    }
-}
-
-extension DiningAnalyticsView {
-    func getSmoothedData(from trans: [DiningAnalyticsBalance]) -> [PredictionsGraphView.YXDataPoint] {
-        let sos = Date.startOfSemester
-        let eos = Date.endOfSemester
-
-        let totalLength = eos.distance(to: sos)
-        let maxDollarValue = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0
-        let yxPoints: [PredictionsGraphView.YXDataPoint] = trans.map { (t) -> PredictionsGraphView.YXDataPoint in
-            let xPoint = t.date.distance(to: sos) / totalLength
-            return PredictionsGraphView.YXDataPoint(y: CGFloat(t.balance / maxDollarValue), x: CGFloat(xPoint))
-        }
-        return yxPoints
     }
 }
 
