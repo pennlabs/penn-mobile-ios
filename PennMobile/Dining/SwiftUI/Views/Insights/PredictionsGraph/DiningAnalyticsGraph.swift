@@ -222,7 +222,7 @@ struct ZoomInfo: View {
                     .font(.caption)
             }
         }
-        .position(x: min(location.x + 25, parentSize.width - 75), y: location.y - 25)
+        .position(x: min(location.x + 25, parentSize.width - 40), y: location.y - 25)
     }
 }
 

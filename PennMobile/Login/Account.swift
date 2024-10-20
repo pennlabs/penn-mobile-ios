@@ -71,6 +71,9 @@ extension Account {
         Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .documents)
         Storage.remove(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .groupDocuments)
         Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .groupDocuments)
+        Storage.remove(DiningAnalyticsViewModel.planStartDateDirectory, from: .groupDocuments)
+        Storage.remove(DiningBalance.directory, from: .groupCaches)
+        Storage.remove(DiningVenue.favoritesDirectory, from: .caches)
     }
 
     static func saveAccount(_ thisAccount: Account) {
