@@ -15,18 +15,12 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
     fileprivate var selectedOption: String?
     fileprivate var currentLocation: String?
     
-    fileprivate var currentTime: String = ""
-    fileprivate var currentHour: Int!
-    fileprivate var currentMinute: Int!
-    
     fileprivate var startingLocation: GSRLocation!
     fileprivate var soonestTimeSlot: String!
     fileprivate var soonestRoom: GSRRoom!
     fileprivate var soonestLocation: GSRLocation!
     fileprivate var min: Date! = Date.distantFuture
     
-    fileprivate var newGSRView: GSRViewModel!
-    fileprivate var newController: GSRController!
     fileprivate var allRooms: [GSRRoom]!
     
     fileprivate let locationManager = CLLocationManager()
@@ -61,28 +55,25 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
         view.backgroundColor = .white
         setupDropdownButton()
         setupBook()
-        setupViewModel()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
     }
     
     @objc func findGSRButtonPressed() {
-        
+        setupViewModel()
     }
     
     func setupViewModel() {
         for location in locations {
-            startingLocation = location
-            newGSRView = GSRViewModel(selectedLocation: startingLocation)
-            GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: currentTime) { result in
+            GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
                 switch result {
                 case .success(let rooms):
-                    self.allRooms = rooms
-                    self.newGSRView.updateData(with: rooms)
-                    self.getSoonestTimeSlot()
+                    startingLocation = location
+                    allRooms = rooms
+                    getSoonestTimeSlot()
                 case .failure:
-                    self.present(toast: .apiError)
+                    present(toast: .apiError)
                 }
             }
         }
@@ -124,20 +115,6 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
             bookButton.widthAnchor.constraint(equalToConstant: 200),
             bookButton.heightAnchor.constraint(equalToConstant: 50)
         ])
-    }
-    
-    func getCurrentTime() {
-        let current = Date()
-        let formatter = DateFormatter()
-        formatter.timeZone = TimeZone.current
-        formatter.dateFormat = "HH:mm"
-        currentTime = formatter.string(from: current)
-        let hourMinuteArray = currentTime.components(separatedBy: ":")
-        currentHour = Int(hourMinuteArray[0])
-        currentMinute = Int(hourMinuteArray[1])
-        print(currentTime)
-        print(currentHour!)
-        print(currentMinute!)
     }
     
     func getSoonestTimeSlot() {
