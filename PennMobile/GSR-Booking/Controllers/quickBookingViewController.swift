@@ -19,10 +19,11 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
     fileprivate var currentHour: Int!
     fileprivate var currentMinute: Int!
     
+    fileprivate var startingLocation: GSRLocation!
     fileprivate var soonestTimeSlot: String!
     fileprivate var soonestRoom: GSRRoom!
     fileprivate var soonestLocation: GSRLocation!
-    fileprivate var min: Date! = Date()
+    fileprivate var min: Date! = Date.distantFuture
     
     fileprivate var newGSRView: GSRViewModel!
     fileprivate var newController: GSRController!
@@ -60,25 +61,26 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
         view.backgroundColor = .white
         setupDropdownButton()
         setupBook()
+        setupViewModel()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
     }
     
     @objc func findGSRButtonPressed() {
-        setupViewModel()
+        
     }
     
     func setupViewModel() {
         for location in locations {
-            let startingLocation = location
+            startingLocation = location
             newGSRView = GSRViewModel(selectedLocation: startingLocation)
             GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: currentTime) { result in
                 switch result {
                 case .success(let rooms):
                     self.allRooms = rooms
-                    self.getSoonestTimeSlot()
                     self.newGSRView.updateData(with: rooms)
+                    self.getSoonestTimeSlot()
                 case .failure:
                     self.present(toast: .apiError)
                 }
@@ -142,12 +144,18 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone.current
         formatter.dateFormat = "HH:mm"
-        for room in allRooms where !room.availability.isEmpty {
-            let start = room.availability.first!.startTime
-            if start < min {
-                min = start
+        for room in allRooms {
+            guard let availability = room.availability.first(where: { $0.startTime >= Date() }) else {
+                continue
+            }
+
+            let startTime = availability.startTime
+
+            if startTime < min {
+                min = startTime
                 soonestTimeSlot = formatter.string(from: min)
                 soonestRoom = room
+                soonestLocation = startingLocation
             }
         }
     }
