@@ -37,12 +37,12 @@ class GSRLocationsController: GenericViewController {
             NSLayoutConstraint.activate([
                 button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
                 button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                button.heightAnchor.constraint(equalToConstant: 44), // Button height
-                button.widthAnchor.constraint(equalToConstant: 200) // Set width as needed
+                button.heightAnchor.constraint(equalToConstant: 44),
+                button.widthAnchor.constraint(equalToConstant: 200)
             ])
     }
     
-    @objc func quickTapped() {
+    @objc private func quickTapped() {
         let quickView = QuickBookingViewController()
         navigationController?.pushViewController(quickView, animated: true)
     }
