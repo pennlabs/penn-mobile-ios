@@ -22,11 +22,25 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     fileprivate var soonestRoom: GSRRoom!
     fileprivate var soonestLocation: GSRLocation!
     fileprivate var min: Date! = Date.distantFuture
-    
+        
     fileprivate var allRooms: [GSRRoom]!
     
     fileprivate let locationManager = CLLocationManager()
     fileprivate var hasReceivedLocationUpdate = false
+    
+    let GSRCoords = [
+        (latitude: 39.95346818228411, longitude: -75.19802835987453, title: "Huntsman"),
+        (latitude: 39.95127416568136, longitude: -75.19700321676956, title: "Academic Research"),
+        (latitude: 39.9498719027302, longitude: -75.1957015032777, title: "Biotech Commons"),
+        (latitude: 39.95059135463279, longitude: -75.18936553396598, title: "Education Commons"),
+        (latitude: 39.95287694035962, longitude: -75.1934213456054, title: "Weigle"),
+        (latitude: 39.94964995704518, longitude: -75.19927449163818, title: "Levin Building"),
+        (latitude: 39.952828782832924, longitude: -75.19349473211366, title: "Lippincott"),
+        (latitude: 39.95291806251846, longitude: -75.19342134560544, title: "Van Pelt"),
+        (latitude: 39.95357192013402, longitude: -75.19463651005043, title: "Perelman Center")
+    ]
+    
+    let mapVC = MapViewController()
     
     let submitButton: UIButton = {
         let button = UIButton(type: .system)
@@ -44,7 +58,7 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     
     let unpreferButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Pick a location you don't prefer", for: .normal)
+        button.setTitle("Pick a locations you don't prefer", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.systemBlue
         button.layer.cornerRadius = 15
@@ -83,6 +97,8 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
         return label
     }()
         
+    let mappingController = GSRMappingController()
+
     fileprivate func setupDisplay(startSlot: String, endSlot: String, room: GSRRoom, location: GSRLocation) {
         roomLabel.text = """
             Soonest available GSR:
@@ -111,30 +127,65 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     
     @objc func findGSRButtonPressed() {
         setupDisplay(startSlot: soonestStartTimeString, endSlot: soonestEndTimeString, room: soonestRoom, location: soonestLocation)
+        setupMapping()
         setupSubmitButton()
 
     }
     
+    func setupMapping() {
+        var lat: CLLocationDegrees!
+        var long: CLLocationDegrees!
+        if let coords = GSRCoords.first(where: { $0.title == soonestLocation.name }) {
+            lat = coords.latitude
+            long = coords.longitude
+        }
+        mappingController.destinationCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+
+        addChild(mappingController)
+
+        view.addSubview(mappingController.view)
+        
+        mappingController.view.layer.cornerRadius = 10
+        mappingController.view.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+        mappingController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            mappingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 280),
+            mappingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            mappingController.view.widthAnchor.constraint(equalToConstant: 300),
+            mappingController.view.heightAnchor.constraint(equalToConstant: 300)
+        ])
+        mappingController.didMove(toParent: self)
+    }
+    
     func setupQuickBooking() {
         var skip: Bool = false
+        var foundAvailableRoom = false
         for location in locations {
+            
             if !UserDefaults.standard.isInWharton() {
                 skip = true
+            }
+            
+            if (location.kind == .wharton) && skip {
+                continue
             }
             
             GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
                 switch result {
                 case .success(let rooms):
-                    if (location.kind == .wharton && skip) || (location.name == selectedOption) {
-                        break
-                    } else {
-                        startingLocation = location
-                        allRooms = rooms
-                        getSoonestTimeSlot()
+                    if !rooms.isEmpty {
+                        self.startingLocation = location
+                        self.allRooms = rooms
+                        self.getSoonestTimeSlot()
+                        foundAvailableRoom = true
                     }
                 case .failure:
                     present(toast: .apiError)
                 }
+            }
+            
+            if !foundAvailableRoom && location == self.locations.last {
+                present(toast: .apiError)
             }
         }
     }
@@ -144,7 +195,7 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
         submitButton.addTarget(self, action: #selector(quickBook(_:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 500),
+            submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600),
             submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             submitButton.widthAnchor.constraint(equalToConstant: 300),
             submitButton.heightAnchor.constraint(equalToConstant: 50)

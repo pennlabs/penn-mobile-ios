@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		123D017B2CB1CB53006A8916 /* quickBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */; };
+		12A6DCED2CCC770600FDF591 /* GSRMappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
 		210AC14520684F9B0050D837 /* HomeCellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210AC14420684F9B0050D837 /* HomeCellProtocols.swift */; };
@@ -456,6 +457,7 @@
 /* Begin PBXFileReference section */
 		059FD41D74734ECD9DE8209C /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quickBookingViewController.swift; sourceTree = "<group>"; };
+		12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRMappingController.swift; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		210AC14420684F9B0050D837 /* HomeCellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCellProtocols.swift; sourceTree = "<group>"; };
@@ -1283,6 +1285,7 @@
 				2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */,
 				123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */,
 				214E254822480818004CB9C4 /* GSRDeletable.swift */,
+				12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */,
 				2189C0822027CDB800771C1F /* GSRController.swift */,
 				21A6B6CF22162652003A357D /* GSRReservationsController.swift */,
 				2138D55422598AA800D67CA2 /* GSRTabController.swift */,
@@ -2704,6 +2707,7 @@
 				21B653BB2245FFA3001A97C5 /* CampusExpressNetworkManager.swift in Sources */,
 				EFE2D6F3239B11050020F6BF /* CreateGroupCell.swift in Sources */,
 				2180D2302013F3B4008C94CF /* NotificationRequestable.swift in Sources */,
+				12A6DCED2CCC770600FDF591 /* GSRMappingController.swift in Sources */,
 				212B8359222A331D00F835D6 /* Post.swift in Sources */,
 				B67881D8211CBF2A000DA750 /* MenuTableView.swift in Sources */,
 				EFE2D700239B124D0020F6BF /* GSRGroupUser.swift in Sources */,
