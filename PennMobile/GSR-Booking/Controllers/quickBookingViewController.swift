@@ -45,8 +45,8 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     let submitButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Submit", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor.systemGreen
+        button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
+        button.backgroundColor = UIColor(named: "baseGreen")!
         button.layer.cornerRadius = 15
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.3
@@ -58,9 +58,9 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     
     let unpreferButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Pick a locations you don't prefer", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor.systemBlue
+        button.setTitle("Preferred Location", for: .normal)
+        button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
+        button.backgroundColor = UIColor(named: "baseLabsBlue")!
         button.layer.cornerRadius = 15
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.3
@@ -73,8 +73,8 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     let bookButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Find GSR", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor.systemPurple
+        button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
+        button.backgroundColor = UIColor(named: "baseLabsBlue")!
         button.layer.cornerRadius = 15
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.3
@@ -220,7 +220,7 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
         for option in locations {
             alertController.addAction(UIAlertAction(title: option.name, style: .default, handler: { [weak self] _ in
                 self?.selectedOption = option.name
-                self?.unpreferButton.setTitle(option.name, for: .normal) // Update button title
+                self?.unpreferButton.setTitle(option.name, for: .normal)
             }))
         }
         

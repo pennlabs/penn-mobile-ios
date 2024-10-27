@@ -25,21 +25,32 @@ class GSRLocationsController: GenericViewController {
     
     fileprivate func setupButton() {
         let button = UIButton(type: .system)
-            button.setTitle("Quick Booking", for: .normal)
-            button.setTitleColor(.white, for: .normal)
-            button.backgroundColor = UIColor.systemGray3
-            button.layer.cornerRadius = 10
-            button.addTarget(self, action: #selector(quickTapped), for: .touchUpInside)
+        button.setTitle("Quick Booking", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
 
-            view.addSubview(button)
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.systemBlue.cgColor, UIColor.systemGreen.cgColor]
+        gradientLayer.frame = button.bounds
+        gradientLayer.cornerRadius = 10
+        button.layer.insertSublayer(gradientLayer, at: 0)
 
-            button.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
+        button.layer.cornerRadius = 10
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.3
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.addTarget(self, action: #selector(quickTapped), for: .touchUpInside)
+
+        view.addSubview(button)
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
                 button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
                 button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 button.heightAnchor.constraint(equalToConstant: 44),
                 button.widthAnchor.constraint(equalToConstant: 200)
-            ])
+        ])
     }
     
     @objc private func quickTapped() {
