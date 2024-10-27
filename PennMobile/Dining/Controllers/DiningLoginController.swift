@@ -11,8 +11,11 @@ import WebKit
 import PennMobileShared
 
 class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate, SHA256Hashable {
+    static let activityIndicatorAnimationDuration: TimeInterval = 0.1
 
     final private var webView: WKWebView!
+    private var activityIndicatorBackground: UIVisualEffectView!
+    private var activityIndicator: UIActivityIndicatorView!
 
     var clientId = "5c09c08b240a56d22f06b46789d0528a"
 
@@ -20,6 +23,7 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
         return
             "https://prod.campusexpress.upenn.edu/api/v1/oauth/authorize"
     }
+    final private let loginScreen = "https://weblogin.pennkey.upenn.edu/idp/profile/SAML2/Redirect/SSO?execution=e1"
 
     var delegate: DiningLoginControllerDelegate!
 
@@ -45,6 +49,27 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
         url.appendQueryItem(name: "redirect_uri", value: "https://pennlabs.org/pennmobile/ios/campus_express_callback/")
 
         webView.load(URLRequest(url: url))
+        
+        activityIndicatorBackground = UIVisualEffectView(effect: UIBlurEffect(style: .systemThickMaterial))
+        activityIndicatorBackground.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        activityIndicatorBackground.layer.cornerRadius = 16
+        activityIndicatorBackground.clipsToBounds = true
+        activityIndicatorBackground.layer.opacity = 0
+        
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.center = CGPoint(x: activityIndicatorBackground.bounds.midX, y: activityIndicatorBackground.bounds.midY)
+        activityIndicatorBackground.contentView.addSubview(activityIndicator)
+        
+        self.view.addSubview(activityIndicatorBackground)
+        self.view.bringSubviewToFront(activityIndicatorBackground)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if let activityIndicatorBackground {
+            activityIndicatorBackground.center = view.center
+            view.bringSubviewToFront(activityIndicatorBackground)
+        }
     }
 
     var handleCancel: (() -> Void)?
@@ -74,6 +99,13 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
     }
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        view.isUserInteractionEnabled = true
+        UIView.animate(withDuration: Self.activityIndicatorAnimationDuration) {
+            self.activityIndicatorBackground.layer.opacity = 0
+        } completion: { _ in
+            self.activityIndicator.stopAnimating()
+        }
+        
         if let url = navigationResponse.response.url, url.absoluteString.contains("https://pennlabs.org/pennmobile/ios/campus_express_callback/") {
             let queryParams = url.queryParameters
 
@@ -110,6 +142,23 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
         decisionHandler(.allow)
     }
 
+    func webView(
+        _ webView: WKWebView,
+        decidePolicyFor navigationAction: WKNavigationAction,
+        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .formSubmitted,
+           webView.url?.absoluteString.contains(loginScreen) == true {
+            activityIndicator.startAnimating()
+            view.isUserInteractionEnabled = false
+            
+            UIView.animate(withDuration: Self.activityIndicatorAnimationDuration) {
+                self.activityIndicatorBackground.layer.opacity = 1
+            }
+        }
+        
+        decisionHandler(.allow)
+    }
+    
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         guard let url = webView.url else {
             return

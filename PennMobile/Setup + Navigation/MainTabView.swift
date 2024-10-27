@@ -52,6 +52,9 @@ struct MainTabView: View {
             
             NavigationStack(path: $navigationManager.path) {
                 MoreView(features: features.filter { !tabBarFeatures.contains($0.id) })
+                    .navigationDestination(for: FeatureIdentifier.self) { id in
+                        AnyView(features.first { $0.id == id }!.content)
+                    }
             }
             .environmentObject(navigationManager)
             .tabItem {

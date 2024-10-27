@@ -72,6 +72,56 @@ enum SublettingPage: Hashable, Identifiable, Equatable, Codable {
     }
 }
 
+struct SublettingTabHint: View {
+    @AppStorage("sublettingTabHintWasDismissed") var tabHintDismissed = false
+    @EnvironmentObject var navigationManager: NavigationManager
+    
+    var body: some View {
+        if tabHintDismissed {
+            AnyView(SwiftUI.EmptyView())
+        } else {
+            AnyView(HStack {
+                Text("Want quick access to sublets?")
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                Button("Pin to tab bar") {
+                    var currentTabFeatures = UserDefaults.standard.getTabPreferences()
+                    
+                    tabHintDismissed = true
+                    
+                    if !currentTabFeatures.contains(.subletting) {
+                        currentTabFeatures[3] = .subletting
+                        UserDefaults.standard.setTabPreferences(currentTabFeatures)
+                        navigationManager.resetPath()
+                        navigationManager.currentTab = FeatureIdentifier.subletting.rawValue
+                    }
+                }
+                .buttonStyle(BorderedButtonStyle())
+                .buttonBorderShape(.capsule)
+                
+                Button {
+                    tabHintDismissed = true
+                } label: {
+                    Label("Dismiss", systemImage: "xmark.circle.fill")
+                        .labelStyle(.iconOnly)
+                }
+            }
+            .tint(.primary)
+            .padding()
+            .environment(\.colorScheme, .dark)
+            .background(HomeSublettingBanner.gradient)
+            .clipShape(.rect(cornerRadius: 16))
+            .onAppear {
+                if UserDefaults.standard.getTabPreferences().contains(.subletting) {
+                    tabHintDismissed = true
+                }
+            })
+        }
+    }
+}
+
 struct MarketplaceView: View {
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @StateObject private var sublettingViewModel = SublettingViewModel()
@@ -117,28 +167,44 @@ struct MarketplaceView: View {
             }
             .background(Color.uiBackground)
             ScrollView {
-                if sublettingViewModel.sortedFilteredSublets.count > 0 {
-                    LazyVGrid(columns: columns) {
-                        ForEach(sublettingViewModel.sortedFilteredSublets) { sublet in
-                            NavigationLink(value: SublettingPage.subletDetailView(sublet.subletID)) {
-                                SubletDisplayBox(sublet: sublet)
-                            }
-                            .buttonStyle(.plain)
-                            .padding(5)
-                        }
+                VStack(spacing: 16) {
+                    VStack {
+                        Text("Penn Mobile Sublet is currently in beta. Have feedback? We're happy to hear it!")
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.secondary)
+                        
+                        Link("Share Feedback...", destination: feedbackURL)
+                            .fontWeight(.medium)
                     }
-                } else {
-                    Text("No sublets found!")
-                        .foregroundStyle(.tertiary)
-                        .font(.subheadline)
+                    .padding(.top, 4)
+                    .font(.callout)
+                    
+                    SublettingTabHint()
+                    
+                    if sublettingViewModel.sortedFilteredSublets.count > 0 {
+                        LazyVGrid(columns: columns) {
+                            ForEach(sublettingViewModel.sortedFilteredSublets) { sublet in
+                                NavigationLink(value: SublettingPage.subletDetailView(sublet.subletID)) {
+                                    SubletDisplayBox(sublet: sublet)
+                                }
+                                .buttonStyle(.plain)
+                                .padding(5)
+                            }
+                        }
+                    } else {
+                        Text(Account.isLoggedIn ? "No sublets found!" : "You must login to view sublets!")
+                            .foregroundStyle(.tertiary)
+                            .font(.subheadline)
+                    }
                 }
             }
+            .padding(.horizontal)
             .refreshable {
                 await sublettingViewModel.populateSublets()
                 await sublettingViewModel.populateFiltered()
             }
+            .scrollDismissesKeyboard(.interactively)
         }
-        .padding(.horizontal)
         .toolbar {
             ToolbarItem {
                 NavigationLink(value: SublettingPage.myListings()) {
@@ -174,6 +240,7 @@ struct MarketplaceView: View {
                     .environmentObject(sublettingViewModel)
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

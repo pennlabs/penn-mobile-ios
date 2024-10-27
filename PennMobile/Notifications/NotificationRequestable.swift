@@ -77,7 +77,7 @@ extension NotificationRequestable {
             }
         }
         let declineStyle = SCLAlertViewStyle.notice
-        alertView.addButton("Decline", backgroundColor: UIColorFromRGB(declineStyle.defaultColorInt), action: {  })
+        alertView.addButton("Decline", backgroundColor: declineStyle.defaultColor, action: {  })
         alertView.showSuccess("Turn On Notifications", subTitle: "Go to Settings -> PennMobile -> Notification -> Turn On Notifications")
     }
 
@@ -88,7 +88,7 @@ extension NotificationRequestable {
             self.registerPushNotification(completion)
         }
         let declineStyle = SCLAlertViewStyle.notice
-        alertView.addButton("Decline", backgroundColor: UIColorFromRGB(declineStyle.defaultColorInt), action: {  })
+        alertView.addButton("Decline", backgroundColor: declineStyle.defaultColor, action: {  })
         alertView.showSuccess("Enable Notifications", subTitle: "Receive monthly dining plan progress updates, laundry alerts, and information about new features.")
     }
 

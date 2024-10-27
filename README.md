@@ -23,8 +23,6 @@ Made with 💝 by Penn Labs.
 
 Anyone can make a pull request and contribute! However, the most effective way to contribute is by applying for our dev team. Applications open in the fall and spring at [pennlabs.org](https://pennlabs.org)
 
-NOTE: this repo requires [CocoaPods](http://cocoapods.org/) to work correctly. Please install both and always open the .xcworkspace file rather than the .xcodeproj file. If a simulator has trouble loading the app, remove the app from the simulator and try again.
-
 ## Penn Labs
 
 [![More Info about Penn Labs](pennlabs-banner.png)](https://itunes.apple.com/us/app/penn-mobile/id944829399)

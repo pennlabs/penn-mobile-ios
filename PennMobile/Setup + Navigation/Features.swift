@@ -22,6 +22,7 @@ enum FeatureIdentifier: String, Hashable, Identifiable {
     case about = "About"
     case polls = "Poll History"
     case subletting = "Subletting"
+    case ticketScanner = "Ticket Scanner"
     
     var id: String { rawValue }
 }
@@ -114,10 +115,14 @@ let features: [AppFeature] = [
             .navigationTitle(Text("Fitness"))
     },
     AppFeature(.polls, shortName: "Polls", longName: "Polls History", color: .blueDark, image: .app("Polls_Grey"), controller: PollsViewController.self),
-    AppFeature(.subletting, name: "Subletting", color: .baseOrange, image: .system("building")) {
+    AppFeature(.subletting, shortName: "Subletting", longName: "Subletting (Beta)", color: .baseOrange, image: .system("building")) {
         MarketplaceView()
             .navigationTitle(Text("Marketplace"))
     },
     AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),
+    AppFeature(.ticketScanner, shortName: "Scanner", longName: "Ticket Scanner", color: .basePurple, image: .system("qrcode.viewfinder")) {
+        ScannerView()
+            .navigationTitle(Text("Scanner"))
+    },
     AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]
