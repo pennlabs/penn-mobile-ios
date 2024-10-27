@@ -11,9 +11,10 @@ import CoreLocation
 
 class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, ShowsAlert {
     
-    let locations: [GSRLocation] = GSRLocationModel.shared.getLocations()
+    var locations: [GSRLocation] = GSRLocationModel.shared.getLocations()
     fileprivate var selectedOption: String?
     fileprivate var currentLocation: String?
+    fileprivate var prefList : [GSRLocation] = []
     
     fileprivate var startingLocation: GSRLocation!
     fileprivate var soonestStartTimeString: String!
@@ -117,19 +118,20 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.prefList = locations
         setupUnpreferButton()
         setupBook()
-        setupQuickBooking()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
     }
     
     @objc func findGSRButtonPressed() {
-        setupDisplay(startSlot: soonestStartTimeString, endSlot: soonestEndTimeString, room: soonestRoom, location: soonestLocation)
-        setupMapping()
-        setupSubmitButton()
-
+        setupQuickBooking {
+                self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
+                self.setupMapping()
+                self.setupSubmitButton()
+        }
     }
     
     func setupMapping() {
@@ -157,35 +159,42 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
         mappingController.didMove(toParent: self)
     }
     
-    func setupQuickBooking() {
-        var skip: Bool = false
-        var foundAvailableRoom = false
-        for location in locations {
-            
-            if !UserDefaults.standard.isInWharton() {
-                skip = true
-            }
-            
-            if (location.kind == .wharton) && skip {
-                continue
-            }
-            
-            GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
-                switch result {
-                case .success(let rooms):
-                    if !rooms.isEmpty {
-                        self.startingLocation = location
-                        self.allRooms = rooms
-                        self.getSoonestTimeSlot()
-                        foundAvailableRoom = true
+    func setupQuickBooking(completion: @escaping () -> Void) {
+        DispatchQueue.global().async { [self] in
+            var skip: Bool = false
+            var foundAvailableRoom = false
+            for location in prefList {
+                
+                if !UserDefaults.standard.isInWharton() {
+                    skip = true
+                }
+                
+                if (location.kind == .wharton) && skip {
+                    continue
+                }
+                
+                GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
+                    switch result {
+                    case .success(let rooms):
+                        if !rooms.isEmpty {
+                            self.startingLocation = location
+                            self.allRooms = rooms
+                            self.getSoonestTimeSlot()
+                            foundAvailableRoom = true
+                        }
+                    case .failure:
+                        present(toast: .apiError)
                     }
-                case .failure:
+                }
+                
+                if !foundAvailableRoom && location == self.locations.last {
                     present(toast: .apiError)
                 }
             }
-            
-            if !foundAvailableRoom && location == self.locations.last {
-                present(toast: .apiError)
+            DispatchQueue.main.async {
+                if self.soonestRoom != nil {
+                    completion()
+                }
             }
         }
     }
@@ -220,6 +229,8 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
         for option in locations {
             alertController.addAction(UIAlertAction(title: option.name, style: .default, handler: { [weak self] _ in
                 self?.selectedOption = option.name
+                let prefLocation: GSRLocation = (self?.locations.first(where: { $0.name == self?.selectedOption })!)!
+                self?.prefList.insert(prefLocation, at: 0)
                 self?.unpreferButton.setTitle(option.name, for: .normal)
             }))
         }
