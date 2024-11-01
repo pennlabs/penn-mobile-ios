@@ -8,13 +8,16 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
-class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, ShowsAlert {
+class QuickBookingViewController: UIViewController, ShowsAlert {
     
     var locations: [GSRLocation] = GSRLocationModel.shared.getLocations()
     fileprivate var selectedOption: String?
     fileprivate var currentLocation: String?
-    fileprivate var prefList : [GSRLocation] = []
+    fileprivate var prefList: [GSRLocation] = []
+    fileprivate var locRankedList: [GSRLocation] = []
+    fileprivate var prefLocation: GSRLocation!
     
     fileprivate var startingLocation: GSRLocation!
     fileprivate var soonestStartTimeString: String!
@@ -23,7 +26,7 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     fileprivate var soonestRoom: GSRRoom!
     fileprivate var soonestLocation: GSRLocation!
     fileprivate var min: Date! = Date.distantFuture
-        
+    
     fileprivate var allRooms: [GSRRoom]!
     
     fileprivate let locationManager = CLLocationManager()
@@ -97,9 +100,9 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-        
+    
     let mappingController = GSRMappingController()
-
+    
     fileprivate func setupDisplay(startSlot: String, endSlot: String, room: GSRRoom, location: GSRLocation) {
         roomLabel.text = """
             Soonest available GSR:
@@ -127,10 +130,12 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     }
     
     @objc func findGSRButtonPressed() {
-        setupQuickBooking {
+        orderLocations {
+            self.setupQuickBooking {
                 self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
                 self.setupMapping()
                 self.setupSubmitButton()
+            }
         }
     }
     
@@ -142,9 +147,9 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
             long = coords.longitude
         }
         mappingController.destinationCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-
+        
         addChild(mappingController)
-
+        
         view.addSubview(mappingController.view)
         
         mappingController.view.layer.cornerRadius = 10
@@ -229,8 +234,8 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
         for option in locations {
             alertController.addAction(UIAlertAction(title: option.name, style: .default, handler: { [weak self] _ in
                 self?.selectedOption = option.name
-                let prefLocation: GSRLocation = (self?.locations.first(where: { $0.name == self?.selectedOption })!)!
-                self?.prefList.insert(prefLocation, at: 0)
+                self!.prefLocation = (self?.locations.first(where: { $0.name == self?.selectedOption })!)!
+                self?.prefList.insert(self!.prefLocation, at: 0)
                 self?.unpreferButton.setTitle(option.name, for: .normal)
             }))
         }
@@ -273,25 +278,68 @@ class QuickBookingViewController: UIViewController, CLLocationManagerDelegate, S
     }
 }
     
-    //        func setupLocationManager() {
-    //            if CLLocationManager.locationServicesEnabled() {
-    //                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-    //                locationManager.startUpdatingLocation()
-    //            }
-    //        }
-    //
-    //        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    //            guard let location = locations.last else { return }
-    //            if hasReceivedLocationUpdate { return }
-    //            hasReceivedLocationUpdate = true
-    //            let latitude = location.coordinate.latitude
-    //            let longitude = location.coordinate.longitude
-    //            currentLocation = String(format: "%.6f, %.6f", latitude, longitude)
-    //            print("\(currentLocation ?? "current location unavailable")")
-    //            locationManager.stopUpdatingLocation()
-    //            hasReceivedLocationUpdate = false
-    //        }
-    //    }
+extension QuickBookingViewController: CLLocationManagerDelegate {
+    
+    func orderLocations(completion: @escaping () -> Void) {
+        locRankedList = locations
+        locRankedList.sort {
+            switch ($0, $1) {
+            case let (x, y):
+                return swap(d1: x, d2: y)
+            }
+        }
+        completion()
+    }
+    
+    func swap(d1: GSRLocation, d2: GSRLocation) -> Bool {
+        let dist1 = distance(loc: d1)
+        let dist2 = distance(loc: d2)
+        
+        return (dist1 > dist2)
+    }
+    
+    func distance(loc: GSRLocation) -> Int {
+        let mapView: MKMapView = {
+            let mapView = MKMapView()
+            mapView.translatesAutoresizingMaskIntoConstraints = false
+            mapView.showsUserLocation = true
+            return mapView
+        }()
+        
+        let userLocation = mapView.userLocation.location
+        var lat: CLLocationDegrees!
+        var long: CLLocationDegrees!
+        if let coords = GSRCoords.first(where: { $0.title == loc.name }) {
+            lat = coords.latitude
+            long = coords.longitude
+        }
+        let userLat: CLLocationDegrees = userLocation!.coordinate.latitude
+        let userLong: CLLocationDegrees = userLocation!.coordinate.longitude
+        let stepLat: Int = Int((userLat-lat))^2
+        let stepLong: Int = Int((userLong-long))^2
+        let step: Double = sqrt(Double(stepLat + stepLong))
+        return Int(round(step))
+    }
+    
+    func setupLocationManager() {
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        if hasReceivedLocationUpdate { return }
+            hasReceivedLocationUpdate = true
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+        currentLocation = String(format: "%.6f, %.6f", latitude, longitude)
+        print("\(currentLocation ?? "current location unavailable")")
+        locationManager.stopUpdatingLocation()
+        hasReceivedLocationUpdate = false
+    }
+}
 
 extension QuickBookingViewController: GSRBookable {
     @objc fileprivate func quickBook(_ sender: Any) {
