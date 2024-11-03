@@ -66,7 +66,6 @@ class ControllerModel: NSObject {
         vcDictionary[.courseSchedule] = CoursesViewController()
         vcDictionary[.pacCode] = PacCodeViewController()
         vcDictionary[.courseAlerts] = CourseAlertController()
-//        vcDictionary[.events] = PennEventsTableViewController()
         vcDictionary[.headlineNews] = NativeNewsViewController()
         vcDictionary[.fitness] = FitnessViewController()
         vcDictionary[.polls] = PollsViewController()

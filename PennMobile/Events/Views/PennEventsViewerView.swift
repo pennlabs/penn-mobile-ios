@@ -31,13 +31,7 @@ struct PennEventsViewerView: View {
     @State private var isVirtualEvent = false
     
     // default to philly
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 39.9522, longitude: -75.1932),
-        span: MKCoordinateSpan(latitudeDelta: 0.0020, longitudeDelta: 0.0020)
-    )
-    
-    // this one uses PennLocation functionality but i still prefer the defaulted specified region above
-//    @State private var region = PennLocation.shared.getDefaultRegion(at: .mid)
+    @State private var region = PennLocation.defaultRegion
     
     var body: some View {
         ScrollView {
@@ -217,7 +211,7 @@ struct PennEventsViewerView: View {
                 .foregroundColor(.white)
         })
         .onAppear {
-            let result = PennLocation.shared.coordinateForEvent(
+            let result = PennLocation.coordinateForEvent(
                 location: event.eventLocation,
                 eventName: event.eventTitle,
                 eventType: event.eventType.displayName

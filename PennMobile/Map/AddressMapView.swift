@@ -11,7 +11,7 @@ import MapKit
 
 struct AddressMapView: View {
     var address: String?
-    @State private var region: MKCoordinateRegion = PennLocation.shared.getDefaultRegion(at: .far)
+    @State private var region: MKCoordinateRegion = PennLocation.getDefaultRegion(at: .far)
     @State private var location: CLLocationCoordinate2D?
 
     var body: some View {

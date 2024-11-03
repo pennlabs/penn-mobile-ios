@@ -244,7 +244,6 @@
 		42632D7C2CB9C77B0028CC31 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C282CB9C77B0028CC31 /* PennInTouchNetworkManager.swift */; };
 		42632D7D2CB9C77B0028CC31 /* AddressMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */; };
 		42632D7E2CB9C77B0028CC31 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2B2CB9C77B0028CC31 /* MapViewController.swift */; };
-		42632D7F2CB9C77B0028CC31 /* PennCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2C2CB9C77B0028CC31 /* PennCoordinate.swift */; };
 		42632D802CB9C77B0028CC31 /* PacCodeNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */; };
 		42632D812CB9C77B0028CC31 /* PacCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */; };
 		42632D822CB9C77B0028CC31 /* ProfilePageNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C312CB9C77B0028CC31 /* ProfilePageNetworkManager.swift */; };
@@ -679,7 +678,6 @@
 		42632C282CB9C77B0028CC31 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressMapView.swift; sourceTree = "<group>"; };
 		42632C2B2CB9C77B0028CC31 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		42632C2C2CB9C77B0028CC31 /* PennCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCoordinate.swift; sourceTree = "<group>"; };
 		42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacCodeNetworkManager.swift; sourceTree = "<group>"; };
 		42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacCodeViewController.swift; sourceTree = "<group>"; };
 		42632C312CB9C77B0028CC31 /* ProfilePageNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageNetworkManager.swift; sourceTree = "<group>"; };
@@ -1699,7 +1697,6 @@
 			children = (
 				42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */,
 				42632C2B2CB9C77B0028CC31 /* MapViewController.swift */,
-				42632C2C2CB9C77B0028CC31 /* PennCoordinate.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -2629,7 +2626,6 @@
 				42632D7C2CB9C77B0028CC31 /* PennInTouchNetworkManager.swift in Sources */,
 				42632D7D2CB9C77B0028CC31 /* AddressMapView.swift in Sources */,
 				42632D7E2CB9C77B0028CC31 /* MapViewController.swift in Sources */,
-				42632D7F2CB9C77B0028CC31 /* PennCoordinate.swift in Sources */,
 				42632D802CB9C77B0028CC31 /* PacCodeNetworkManager.swift in Sources */,
 				42632D812CB9C77B0028CC31 /* PacCodeViewController.swift in Sources */,
 				42632D822CB9C77B0028CC31 /* ProfilePageNetworkManager.swift in Sources */,

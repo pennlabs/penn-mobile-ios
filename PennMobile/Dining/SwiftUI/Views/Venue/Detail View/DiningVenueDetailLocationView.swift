@@ -19,12 +19,12 @@ struct DiningVenueDetailLocationView: View {
     init(for venue: DiningVenue, screenHeight: CGFloat) {
         self.venue = venue
         mapHeight = screenHeight - 20
-        _region = .init(initialValue: PennLocation.shared.getRegion(for: venue, at: .mid))
+        _region = .init(initialValue: PennLocation.getRegion(for: venue, at: .mid))
     }
 
     var body: some View {
         Map(coordinateRegion: $region, annotationItems: [venue]) { venue in
-            MapMarker(coordinate: PennLocation.shared.getCoordinates(for: venue))
+            MapMarker(coordinate: PennLocation.getCoordinates(for: venue))
         }.clipShape(RoundedRectangle(cornerRadius: 25.0))
         .frame(height: mapHeight)
     }
