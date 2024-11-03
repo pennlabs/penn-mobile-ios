@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		421823FC2CCEB12D0028E510 /* PennEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F92CCEB12D0028E510 /* PennEvent.swift */; };
+		421823FD2CCEB12D0028E510 /* MailComposerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */; };
+		421823FE2CCEB12D0028E510 /* PennEventsAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823FA2CCEB12D0028E510 /* PennEventsAPIManager.swift */; };
+		421823FF2CCEB12D0028E510 /* EventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F72CCEB12D0028E510 /* EventType.swift */; };
+		421824032CCEB1320028E510 /* PennLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824012CCEB1320028E510 /* PennLocation.swift */; };
+		421824042CCEB1320028E510 /* PennEventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824002CCEB1320028E510 /* PennEventsViewModel.swift */; };
+		421824092CCEB1370028E510 /* PennEventCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824052CCEB1370028E510 /* PennEventCellView.swift */; };
+		4218240A2CCEB1370028E510 /* PennEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824062CCEB1370028E510 /* PennEventsView.swift */; };
+		4218240B2CCEB1370028E510 /* PennEventsViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824072CCEB1370028E510 /* PennEventsViewerView.swift */; };
 		42632C8F2CB9C77B0028CC31 /* ScannerDuplicate.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0E2CB9C77B0028CC31 /* ScannerDuplicate.ahap */; };
 		42632C902CB9C77B0028CC31 /* ScannerError.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0F2CB9C77B0028CC31 /* ScannerError.ahap */; };
 		42632C912CB9C77B0028CC31 /* ScannerInvalid.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B102CB9C77B0028CC31 /* ScannerInvalid.ahap */; };
@@ -79,10 +88,6 @@
 		42632CDC2CB9C77B0028CC31 /* DiningViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B5B2CB9C77B0028CC31 /* DiningViewControllerSwiftUI.swift */; };
 		42632CDD2CB9C77B0028CC31 /* DiningViewModelSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B5C2CB9C77B0028CC31 /* DiningViewModelSwiftUI.swift */; };
 		42632CDE2CB9C77B0028CC31 /* DiningCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B5E2CB9C77B0028CC31 /* DiningCell.swift */; };
-		42632CDF2CB9C77B0028CC31 /* EventsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B612CB9C77B0028CC31 /* EventsAPI.swift */; };
-		42632CE02CB9C77B0028CC31 /* PennEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B622CB9C77B0028CC31 /* PennEvents.swift */; };
-		42632CE12CB9C77B0028CC31 /* PennEventsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B632CB9C77B0028CC31 /* PennEventsTableViewCell.swift */; };
-		42632CE22CB9C77B0028CC31 /* PennEventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B642CB9C77B0028CC31 /* PennEventsTableViewController.swift */; };
 		42632CE32CB9C77B0028CC31 /* FitnessRoomRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B662CB9C77B0028CC31 /* FitnessRoomRow.swift */; };
 		42632CE42CB9C77B0028CC31 /* FitnessSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B672CB9C77B0028CC31 /* FitnessSettingsView.swift */; };
 		42632CE52CB9C77B0028CC31 /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B682CB9C77B0028CC31 /* FitnessView.swift */; };
@@ -239,7 +244,6 @@
 		42632D7C2CB9C77B0028CC31 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C282CB9C77B0028CC31 /* PennInTouchNetworkManager.swift */; };
 		42632D7D2CB9C77B0028CC31 /* AddressMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */; };
 		42632D7E2CB9C77B0028CC31 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2B2CB9C77B0028CC31 /* MapViewController.swift */; };
-		42632D7F2CB9C77B0028CC31 /* PennCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2C2CB9C77B0028CC31 /* PennCoordinate.swift */; };
 		42632D802CB9C77B0028CC31 /* PacCodeNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */; };
 		42632D812CB9C77B0028CC31 /* PacCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */; };
 		42632D822CB9C77B0028CC31 /* ProfilePageNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C312CB9C77B0028CC31 /* ProfilePageNetworkManager.swift */; };
@@ -438,6 +442,15 @@
 
 /* Begin PBXFileReference section */
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		421823F72CCEB12D0028E510 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
+		421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerCoordinator.swift; sourceTree = "<group>"; };
+		421823F92CCEB12D0028E510 /* PennEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEvent.swift; sourceTree = "<group>"; };
+		421823FA2CCEB12D0028E510 /* PennEventsAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsAPIManager.swift; sourceTree = "<group>"; };
+		421824002CCEB1320028E510 /* PennEventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsViewModel.swift; sourceTree = "<group>"; };
+		421824012CCEB1320028E510 /* PennLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLocation.swift; sourceTree = "<group>"; };
+		421824052CCEB1370028E510 /* PennEventCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventCellView.swift; sourceTree = "<group>"; };
+		421824062CCEB1370028E510 /* PennEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsView.swift; sourceTree = "<group>"; };
+		421824072CCEB1370028E510 /* PennEventsViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsViewerView.swift; sourceTree = "<group>"; };
 		42632AF92CB9C77B0028CC31 /* OAuth2NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2NetworkManager.swift; sourceTree = "<group>"; };
 		42632AFA2CB9C77B0028CC31 /* PennAuthRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennAuthRequestable.swift; sourceTree = "<group>"; };
 		42632AFB2CB9C77B0028CC31 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
@@ -509,10 +522,6 @@
 		42632B5B2CB9C77B0028CC31 /* DiningViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningViewControllerSwiftUI.swift; sourceTree = "<group>"; };
 		42632B5C2CB9C77B0028CC31 /* DiningViewModelSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningViewModelSwiftUI.swift; sourceTree = "<group>"; };
 		42632B5E2CB9C77B0028CC31 /* DiningCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiningCell.swift; sourceTree = "<group>"; };
-		42632B612CB9C77B0028CC31 /* EventsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsAPI.swift; sourceTree = "<group>"; };
-		42632B622CB9C77B0028CC31 /* PennEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEvents.swift; sourceTree = "<group>"; };
-		42632B632CB9C77B0028CC31 /* PennEventsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsTableViewCell.swift; sourceTree = "<group>"; };
-		42632B642CB9C77B0028CC31 /* PennEventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsTableViewController.swift; sourceTree = "<group>"; };
 		42632B662CB9C77B0028CC31 /* FitnessRoomRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessRoomRow.swift; sourceTree = "<group>"; };
 		42632B672CB9C77B0028CC31 /* FitnessSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessSettingsView.swift; sourceTree = "<group>"; };
 		42632B682CB9C77B0028CC31 /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
@@ -669,7 +678,6 @@
 		42632C282CB9C77B0028CC31 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressMapView.swift; sourceTree = "<group>"; };
 		42632C2B2CB9C77B0028CC31 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		42632C2C2CB9C77B0028CC31 /* PennCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCoordinate.swift; sourceTree = "<group>"; };
 		42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacCodeNetworkManager.swift; sourceTree = "<group>"; };
 		42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacCodeViewController.swift; sourceTree = "<group>"; };
 		42632C312CB9C77B0028CC31 /* ProfilePageNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageNetworkManager.swift; sourceTree = "<group>"; };
@@ -888,6 +896,36 @@
 				6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		421823FB2CCEB12D0028E510 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				421823F72CCEB12D0028E510 /* EventType.swift */,
+				421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */,
+				421823F92CCEB12D0028E510 /* PennEvent.swift */,
+				421823FA2CCEB12D0028E510 /* PennEventsAPIManager.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		421824022CCEB1320028E510 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				421824002CCEB1320028E510 /* PennEventsViewModel.swift */,
+				421824012CCEB1320028E510 /* PennLocation.swift */,
+			);
+			path = "View Models";
+			sourceTree = "<group>";
+		};
+		421824082CCEB1370028E510 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				421824052CCEB1370028E510 /* PennEventCellView.swift */,
+				421824062CCEB1370028E510 /* PennEventsView.swift */,
+				421824072CCEB1370028E510 /* PennEventsViewerView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		42632AFC2CB9C77B0028CC31 /* Auth */ = {
@@ -1164,10 +1202,9 @@
 		42632B652CB9C77B0028CC31 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				42632B612CB9C77B0028CC31 /* EventsAPI.swift */,
-				42632B622CB9C77B0028CC31 /* PennEvents.swift */,
-				42632B632CB9C77B0028CC31 /* PennEventsTableViewCell.swift */,
-				42632B642CB9C77B0028CC31 /* PennEventsTableViewController.swift */,
+				421823FB2CCEB12D0028E510 /* Models */,
+				421824022CCEB1320028E510 /* View Models */,
+				421824082CCEB1370028E510 /* Views */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -1660,7 +1697,6 @@
 			children = (
 				42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */,
 				42632C2B2CB9C77B0028CC31 /* MapViewController.swift */,
-				42632C2C2CB9C77B0028CC31 /* PennCoordinate.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -2367,6 +2403,9 @@
 			files = (
 				42632C982CB9C77B0028CC31 /* OAuth2NetworkManager.swift in Sources */,
 				42632C992CB9C77B0028CC31 /* PennAuthRequestable.swift in Sources */,
+				421824092CCEB1370028E510 /* PennEventCellView.swift in Sources */,
+				4218240A2CCEB1370028E510 /* PennEventsView.swift in Sources */,
+				4218240B2CCEB1370028E510 /* PennEventsViewerView.swift in Sources */,
 				42632C9A2CB9C77B0028CC31 /* PennLoginController.swift in Sources */,
 				42632C9B2CB9C77B0028CC31 /* BannerDescription.swift in Sources */,
 				42632C9C2CB9C77B0028CC31 /* BannerView.swift in Sources */,
@@ -2429,10 +2468,6 @@
 				42632CDC2CB9C77B0028CC31 /* DiningViewControllerSwiftUI.swift in Sources */,
 				42632CDD2CB9C77B0028CC31 /* DiningViewModelSwiftUI.swift in Sources */,
 				42632CDE2CB9C77B0028CC31 /* DiningCell.swift in Sources */,
-				42632CDF2CB9C77B0028CC31 /* EventsAPI.swift in Sources */,
-				42632CE02CB9C77B0028CC31 /* PennEvents.swift in Sources */,
-				42632CE12CB9C77B0028CC31 /* PennEventsTableViewCell.swift in Sources */,
-				42632CE22CB9C77B0028CC31 /* PennEventsTableViewController.swift in Sources */,
 				42632CE32CB9C77B0028CC31 /* FitnessRoomRow.swift in Sources */,
 				42632CE42CB9C77B0028CC31 /* FitnessSettingsView.swift in Sources */,
 				42632CE52CB9C77B0028CC31 /* FitnessView.swift in Sources */,
@@ -2466,6 +2501,8 @@
 				42632D012CB9C77B0028CC31 /* GSRManageGroupController.swift in Sources */,
 				42632D022CB9C77B0028CC31 /* GSRBookable.swift in Sources */,
 				42632D032CB9C77B0028CC31 /* GSRController.swift in Sources */,
+				421824032CCEB1320028E510 /* PennLocation.swift in Sources */,
+				421824042CCEB1320028E510 /* PennEventsViewModel.swift in Sources */,
 				42632D042CB9C77B0028CC31 /* GSRDeletable.swift in Sources */,
 				42632D052CB9C77B0028CC31 /* GSRLocationsController.swift in Sources */,
 				42632D062CB9C77B0028CC31 /* GSRReservationsController.swift in Sources */,
@@ -2589,7 +2626,6 @@
 				42632D7C2CB9C77B0028CC31 /* PennInTouchNetworkManager.swift in Sources */,
 				42632D7D2CB9C77B0028CC31 /* AddressMapView.swift in Sources */,
 				42632D7E2CB9C77B0028CC31 /* MapViewController.swift in Sources */,
-				42632D7F2CB9C77B0028CC31 /* PennCoordinate.swift in Sources */,
 				42632D802CB9C77B0028CC31 /* PacCodeNetworkManager.swift in Sources */,
 				42632D812CB9C77B0028CC31 /* PacCodeViewController.swift in Sources */,
 				42632D822CB9C77B0028CC31 /* ProfilePageNetworkManager.swift in Sources */,
@@ -2619,6 +2655,10 @@
 				42632D9A2CB9C77B0028CC31 /* OnboardingController.swift in Sources */,
 				42632D9B2CB9C77B0028CC31 /* Page.swift in Sources */,
 				42632D9C2CB9C77B0028CC31 /* PageCell.swift in Sources */,
+				421823FC2CCEB12D0028E510 /* PennEvent.swift in Sources */,
+				421823FD2CCEB12D0028E510 /* MailComposerCoordinator.swift in Sources */,
+				421823FE2CCEB12D0028E510 /* PennEventsAPIManager.swift in Sources */,
+				421823FF2CCEB12D0028E510 /* EventType.swift in Sources */,
 				42632D9D2CB9C77B0028CC31 /* SAConfettiView.swift in Sources */,
 				42632D9E2CB9C77B0028CC31 /* SelectionCell.swift in Sources */,
 				42632D9F2CB9C77B0028CC31 /* AIChatModel.swift in Sources */,

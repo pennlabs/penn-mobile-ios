@@ -24,7 +24,7 @@ class MapViewController: UIViewController {
         }
     }
 
-    var region: MKCoordinateRegion = PennCoordinate.shared.getDefaultRegion(at: .far) {
+    var region: MKCoordinateRegion = PennLocation.getDefaultRegion(at: .far) {
         didSet {
             mapView?.setRegion(region, animated: false)
         }
@@ -63,7 +63,7 @@ class MapViewController: UIViewController {
     }
 
     fileprivate func showCoordinates(searchTerm: String) {
-        self.region = MKCoordinateRegion.init(center: PennCoordinate.shared.getDefault(), latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
+        self.region = MKCoordinateRegion.init(center: PennLocation.defaultLocation, latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
         self.getCoordinates(for: searchTerm) { (coordinates, title) in
             DispatchQueue.main.async {
                 if let coordinates = coordinates {
@@ -86,7 +86,7 @@ class MapViewController: UIViewController {
                         self.region = MKCoordinateRegion.init(center: coordinates, latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
                     }
                 } else {
-                    self.region = MKCoordinateRegion.init(center: PennCoordinate.shared.getDefault(), latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
+                    self.region = MKCoordinateRegion.init(center: PennLocation.defaultLocation, latitudinalMeters: PennCoordinateScale.mid.rawValue, longitudinalMeters: PennCoordinateScale.mid.rawValue)
                 }
             }
         }

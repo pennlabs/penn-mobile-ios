@@ -88,7 +88,7 @@ extension BuildingMapCell {
         mv.layer.cornerRadius = 10.0
         mv.isScrollEnabled = false
 
-        mv.setRegion(PennCoordinate.shared.getDefaultRegion(at: .close), animated: false)
+        mv.setRegion(PennLocation.getDefaultRegion(at: .close), animated: false)
 
         return mv
     }

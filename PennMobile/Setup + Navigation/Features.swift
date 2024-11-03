@@ -106,7 +106,10 @@ let features: [AppFeature] = [
         CoursesView().environmentObject(CoursesViewModel.shared)
     },
     AppFeature(.pennCourseAlert, shortName: "PCA", longName: "Penn Course Alert", color: .baseLabsBlue, image: .system("bell.fill"), controller: CourseAlertController.self),
-    AppFeature(.events, shortName: "Events", longName: "Penn Events", color: .baseGreen, image: .app("Events_Grey"), controller: PennEventsTableViewController.self),
+    AppFeature(.events, name: "Penn Events", color: .baseGreen, image: .app("Events_Grey")) {
+        PennEventsView()
+            .navigationTitle(Text("Events"))
+    },
     AppFeature(.fitness, name: "Fitness", color: .baseRed, image: .app("Fitness_Grey")) {
         FitnessView()
             .navigationTitle(Text("Fitness"))
