@@ -188,11 +188,6 @@
 		42632D442CB9C77B0028CC31 /* HomeNewsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BDF2CB9C77B0028CC31 /* HomeNewsCellItem.swift */; };
 		42632D452CB9C77B0028CC31 /* NativeNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BE02CB9C77B0028CC31 /* NativeNewsViewController.swift */; };
 		42632D462CB9C77B0028CC31 /* NewsArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BE12CB9C77B0028CC31 /* NewsArticle.swift */; };
-		42632D472CB9C77B0028CC31 /* HomePollsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BE32CB9C77B0028CC31 /* HomePollsCell.swift */; };
-		42632D482CB9C77B0028CC31 /* HomePollsCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BE42CB9C77B0028CC31 /* HomePollsCellFooter.swift */; };
-		42632D492CB9C77B0028CC31 /* HomePollsCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BE52CB9C77B0028CC31 /* HomePollsCellHeader.swift */; };
-		42632D4A2CB9C77B0028CC31 /* HomePollsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BE62CB9C77B0028CC31 /* HomePollsCellItem.swift */; };
-		42632D4B2CB9C77B0028CC31 /* PollOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BE72CB9C77B0028CC31 /* PollOptionCell.swift */; };
 		42632D4C2CB9C77B0028CC31 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BE92CB9C77B0028CC31 /* HomePostCell.swift */; };
 		42632D4D2CB9C77B0028CC31 /* HomePostCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BEA2CB9C77B0028CC31 /* HomePostCellItem.swift */; };
 		42632D4E2CB9C77B0028CC31 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BEB2CB9C77B0028CC31 /* Post.swift */; };
@@ -283,7 +278,6 @@
 		42632DA42CB9C77B0028CC31 /* PollQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C5C2CB9C77B0028CC31 /* PollQuestion.swift */; };
 		42632DA52CB9C77B0028CC31 /* PollsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C5E2CB9C77B0028CC31 /* PollsNetworkManager.swift */; };
 		42632DA62CB9C77B0028CC31 /* PollsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C602CB9C77B0028CC31 /* PollsView.swift */; };
-		42632DA72CB9C77B0028CC31 /* PollsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C612CB9C77B0028CC31 /* PollsViewController.swift */; };
 		42632DA82CB9C77B0028CC31 /* PollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C622CB9C77B0028CC31 /* PollView.swift */; };
 		42632DA92CB9C77B0028CC31 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C642CB9C77B0028CC31 /* PreferencesView.swift */; };
 		42632DAA2CB9C77B0028CC31 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C652CB9C77B0028CC31 /* PreferencesViewController.swift */; };
@@ -622,11 +616,6 @@
 		42632BDF2CB9C77B0028CC31 /* HomeNewsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCellItem.swift; sourceTree = "<group>"; };
 		42632BE02CB9C77B0028CC31 /* NativeNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeNewsViewController.swift; sourceTree = "<group>"; };
 		42632BE12CB9C77B0028CC31 /* NewsArticle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsArticle.swift; sourceTree = "<group>"; };
-		42632BE32CB9C77B0028CC31 /* HomePollsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCell.swift; sourceTree = "<group>"; };
-		42632BE42CB9C77B0028CC31 /* HomePollsCellFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCellFooter.swift; sourceTree = "<group>"; };
-		42632BE52CB9C77B0028CC31 /* HomePollsCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCellHeader.swift; sourceTree = "<group>"; };
-		42632BE62CB9C77B0028CC31 /* HomePollsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePollsCellItem.swift; sourceTree = "<group>"; };
-		42632BE72CB9C77B0028CC31 /* PollOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollOptionCell.swift; sourceTree = "<group>"; };
 		42632BE92CB9C77B0028CC31 /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
 		42632BEA2CB9C77B0028CC31 /* HomePostCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCellItem.swift; sourceTree = "<group>"; };
 		42632BEB2CB9C77B0028CC31 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -717,7 +706,6 @@
 		42632C5C2CB9C77B0028CC31 /* PollQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollQuestion.swift; sourceTree = "<group>"; };
 		42632C5E2CB9C77B0028CC31 /* PollsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsNetworkManager.swift; sourceTree = "<group>"; };
 		42632C602CB9C77B0028CC31 /* PollsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsView.swift; sourceTree = "<group>"; };
-		42632C612CB9C77B0028CC31 /* PollsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollsViewController.swift; sourceTree = "<group>"; };
 		42632C622CB9C77B0028CC31 /* PollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollView.swift; sourceTree = "<group>"; };
 		42632C642CB9C77B0028CC31 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		42632C652CB9C77B0028CC31 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -1497,18 +1485,6 @@
 			path = News;
 			sourceTree = "<group>";
 		};
-		42632BE82CB9C77B0028CC31 /* Polls */ = {
-			isa = PBXGroup;
-			children = (
-				42632BE32CB9C77B0028CC31 /* HomePollsCell.swift */,
-				42632BE42CB9C77B0028CC31 /* HomePollsCellFooter.swift */,
-				42632BE52CB9C77B0028CC31 /* HomePollsCellHeader.swift */,
-				42632BE62CB9C77B0028CC31 /* HomePollsCellItem.swift */,
-				42632BE72CB9C77B0028CC31 /* PollOptionCell.swift */,
-			);
-			path = Polls;
-			sourceTree = "<group>";
-		};
 		42632BEC2CB9C77B0028CC31 /* Post */ = {
 			isa = PBXGroup;
 			children = (
@@ -1548,7 +1524,6 @@
 				42632BDA2CB9C77B0028CC31 /* GSR Reservations */,
 				42632BDD2CB9C77B0028CC31 /* Laundry */,
 				42632BE22CB9C77B0028CC31 /* News */,
-				42632BE82CB9C77B0028CC31 /* Polls */,
 				42632BEC2CB9C77B0028CC31 /* Post */,
 				42632BEF2CB9C77B0028CC31 /* Spring Fling */,
 				42632BF12CB9C77B0028CC31 /* Update */,
@@ -1812,30 +1787,13 @@
 			path = "Penn Mobile AI";
 			sourceTree = "<group>";
 		};
-		42632C5D2CB9C77B0028CC31 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				42632C5C2CB9C77B0028CC31 /* PollQuestion.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		42632C5F2CB9C77B0028CC31 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				42632C5E2CB9C77B0028CC31 /* PollsNetworkManager.swift */,
-			);
-			path = Networking;
-			sourceTree = "<group>";
-		};
 		42632C632CB9C77B0028CC31 /* Polls */ = {
 			isa = PBXGroup;
 			children = (
-				42632C5D2CB9C77B0028CC31 /* Model */,
-				42632C5F2CB9C77B0028CC31 /* Networking */,
 				42632C602CB9C77B0028CC31 /* PollsView.swift */,
-				42632C612CB9C77B0028CC31 /* PollsViewController.swift */,
 				42632C622CB9C77B0028CC31 /* PollView.swift */,
+				42632C5C2CB9C77B0028CC31 /* PollQuestion.swift */,
+				42632C5E2CB9C77B0028CC31 /* PollsNetworkManager.swift */,
 			);
 			path = Polls;
 			sourceTree = "<group>";
@@ -2570,11 +2528,6 @@
 				42632D442CB9C77B0028CC31 /* HomeNewsCellItem.swift in Sources */,
 				42632D452CB9C77B0028CC31 /* NativeNewsViewController.swift in Sources */,
 				42632D462CB9C77B0028CC31 /* NewsArticle.swift in Sources */,
-				42632D472CB9C77B0028CC31 /* HomePollsCell.swift in Sources */,
-				42632D482CB9C77B0028CC31 /* HomePollsCellFooter.swift in Sources */,
-				42632D492CB9C77B0028CC31 /* HomePollsCellHeader.swift in Sources */,
-				42632D4A2CB9C77B0028CC31 /* HomePollsCellItem.swift in Sources */,
-				42632D4B2CB9C77B0028CC31 /* PollOptionCell.swift in Sources */,
 				42632D4C2CB9C77B0028CC31 /* HomePostCell.swift in Sources */,
 				42632D4D2CB9C77B0028CC31 /* HomePostCellItem.swift in Sources */,
 				42632D4E2CB9C77B0028CC31 /* Post.swift in Sources */,
@@ -2669,7 +2622,6 @@
 				42632DA42CB9C77B0028CC31 /* PollQuestion.swift in Sources */,
 				42632DA52CB9C77B0028CC31 /* PollsNetworkManager.swift in Sources */,
 				42632DA62CB9C77B0028CC31 /* PollsView.swift in Sources */,
-				42632DA72CB9C77B0028CC31 /* PollsViewController.swift in Sources */,
 				42632DA82CB9C77B0028CC31 /* PollView.swift in Sources */,
 				42632DA92CB9C77B0028CC31 /* PreferencesView.swift in Sources */,
 				42632DAA2CB9C77B0028CC31 /* PreferencesViewController.swift in Sources */,

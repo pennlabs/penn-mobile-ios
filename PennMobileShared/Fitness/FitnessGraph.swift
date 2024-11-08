@@ -39,42 +39,40 @@ public struct FitnessGraph: View {
     }
     
     public var body: some View {
-        if #available(iOS 16.0, *) {
-            Chart {
-                ForEach(room.data?.usageHours ?? []) {
-                    BarMark(
-                        x: .value("Hour", $0.date, unit: .hour),
-                        y: .value("Value", $0.value)
-                    )
-                    .foregroundStyle(Date().hour == $0.date.hour ? color.gradient : color.opacity(0.5).gradient)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .offset(x: -padding)
-                }
-                RuleMark(
-                    y: .value("Axis", 0)
+        Chart {
+            ForEach(room.data?.usageHours ?? []) {
+                BarMark(
+                    x: .value("Hour", $0.date, unit: .hour),
+                    y: .value("Value", $0.value)
                 )
-                .lineStyle(StrokeStyle(lineWidth: 1))
-                .foregroundStyle(Color.labelPrimary)
-                .offset(y: 6)
+                .foregroundStyle(Date().hour == $0.date.hour ? color.gradient : color.opacity(0.5).gradient)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .offset(x: -padding)
             }
-            .chartYAxis(.hidden)
-            .chartYScale(domain: 0...(room.data?.usageHours.max { $0.value < $1.value }?.value ?? 100))
-            .chartXAxis {
-                AxisMarks(preset: .aligned, values: .automatic(desiredCount: 4, roundLowerBound: true, roundUpperBound: true)) { value in
-                    AxisGridLine()
-                        .offset(x: -padding)
-                    AxisTick()
-                        .offset(x: -padding)
-                    AxisValueLabel(anchor: .top, collisionResolution: .disabled) {
-                        Text(fitnessAxesDateFormatter.string(from: value.as(Date.self)!))
-                            .foregroundColor(Color.labelPrimary)
-                    }
-                    .offset(x: -padding, y: 6)
-                }
-            }
-            .chartXScale(domain: (hours.0)...(hours.1), range: .plotDimension(padding: padding * 2))
-            .frame(height: graphHeight)
+            RuleMark(
+                y: .value("Axis", 0)
+            )
+            .lineStyle(StrokeStyle(lineWidth: 1))
+            .foregroundStyle(Color.labelPrimary)
+            .offset(y: 6)
         }
+        .chartYAxis(.hidden)
+        .chartYScale(domain: 0...(room.data?.usageHours.max { $0.value < $1.value }?.value ?? 100))
+        .chartXAxis {
+            AxisMarks(preset: .aligned, values: .automatic(desiredCount: 4, roundLowerBound: true, roundUpperBound: true)) { value in
+                AxisGridLine()
+                    .offset(x: -padding)
+                AxisTick()
+                    .offset(x: -padding)
+                AxisValueLabel(anchor: .top, collisionResolution: .disabled) {
+                    Text(fitnessAxesDateFormatter.string(from: value.as(Date.self)!))
+                        .foregroundColor(Color.labelPrimary)
+                }
+                .offset(x: -padding, y: 6)
+            }
+        }
+        .chartXScale(domain: (hours.0)...(hours.1), range: .plotDimension(padding: padding * 2))
+        .frame(height: graphHeight)
     }
 }
 
