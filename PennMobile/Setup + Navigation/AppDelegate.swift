@@ -17,6 +17,11 @@ import PennMobileShared
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var tabBarController: TabBarController!
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        application.registerForRemoteNotifications()
+        return true
+    }
 
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
