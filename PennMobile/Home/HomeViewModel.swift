@@ -86,6 +86,9 @@ extension Optional {
         data.polls.makeNilIfError()
         data.posts.makeNilIfError()
         data.newsArticles.makeNilIfError()
+        data.onPollResponse = { [weak self] question, option in
+            self?.respondToPoll(questionId: question, optionId: option)
+        }
         
         async let pollsTask = Task {
             let polls = await PollsNetworkManager.instance.getActivePolls().mapError { $0 as Error }
