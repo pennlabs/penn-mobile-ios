@@ -29,7 +29,6 @@ struct PennMobile: App {
 
         // Register to receive delegate actions from rich notifications
         UNUserNotificationCenter.current().delegate = delegate
-        UIApplication.shared.registerForRemoteNotifications()
 
         FirebaseApp.configure()
 
