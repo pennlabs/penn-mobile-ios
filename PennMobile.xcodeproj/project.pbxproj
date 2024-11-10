@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		123D017B2CB1CB53006A8916 /* quickBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */; };
 		126D64952CE098AC002904EC /* QuickBookingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126D64942CE098AC002904EC /* QuickBookingViewModel.swift */; };
+		126D64972CE0997D002904EC /* QuickBookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126D64962CE0997D002904EC /* QuickBookingView.swift */; };
 		12A6DCED2CCC770600FDF591 /* GSRMappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
@@ -459,6 +460,7 @@
 		059FD41D74734ECD9DE8209C /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quickBookingViewController.swift; sourceTree = "<group>"; };
 		126D64942CE098AC002904EC /* QuickBookingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookingViewModel.swift; sourceTree = "<group>"; };
+		126D64962CE0997D002904EC /* QuickBookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookingView.swift; sourceTree = "<group>"; };
 		12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRMappingController.swift; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
@@ -1272,6 +1274,7 @@
 				2189C08A2027CE2600771C1F /* GSRRangeSlider.swift */,
 				2189C0882027CE2600771C1F /* GSRTimeCell.swift */,
 				2138E1F72252AFB500E4055A /* GSRLocationCell.swift */,
+				126D64962CE0997D002904EC /* QuickBookingView.swift */,
 				2189C0892027CE2600771C1F /* RoomCell.swift */,
 				21A6B6D32216824B003A357D /* ReservationCell.swift */,
 				C1D90F1C2220A25700DAB8EE /* NoReservationsCell.swift */,
@@ -2771,6 +2774,7 @@
 				219F01F61FB7E14B006BBC4E /* SelectionCell.swift in Sources */,
 				89913EAD2AE44FCE00AE30C9 /* CalendarCardView.swift in Sources */,
 				89DF550A29CE49A900EF03F7 /* BannerViewModel.swift in Sources */,
+				126D64972CE0997D002904EC /* QuickBookingView.swift in Sources */,
 				2190FD351EC625BB00EC683C /* Protocols.swift in Sources */,
 				2189C0A82027CE4B00771C1F /* ThumbLayer.swift in Sources */,
 				E735C9422AF81498000F7376 /* DiningSettingsView.swift in Sources */,
