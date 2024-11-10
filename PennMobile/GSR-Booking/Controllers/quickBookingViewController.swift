@@ -121,9 +121,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        orderLocations {
-            self.prefList = self.locRankedList
-        }
+        self.prefList = locations
         setupUnpreferButton()
         setupBook()
         locationManager.delegate = self
@@ -132,10 +130,12 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     }
     
     @objc func findGSRButtonPressed() {
-        self.setupQuickBooking {
-            self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
-            self.setupMapping()
-            self.setupSubmitButton()
+        orderLocations {
+            self.setupQuickBooking {
+                self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
+                self.setupMapping()
+                self.setupSubmitButton()
+            }
         }
     }
     
