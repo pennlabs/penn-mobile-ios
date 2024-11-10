@@ -281,14 +281,34 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
 extension QuickBookingViewController: CLLocationManagerDelegate {
     
     func orderLocations(completion: @escaping () -> Void) {
+        // Ensure we have the user's current location
+        guard let userLocation = locationManager.location else {
+            // Handle case where user location is not available yet
+            return
+        }
+
         locRankedList = locations
         locRankedList.sort {
-            switch ($0, $1) {
-            case let (x, y):
-                return swap(d1: x, d2: y)
+            // Get coordinates for both locations
+            guard let loc1Coords = GSRCoords.first(where: { $0.title == $0.name }),
+                  let loc2Coords = GSRCoords.first(where: { $0.title == $1.name }) else {
+                return false
             }
+
+            // Calculate distance from user's location to each location
+            let loc1 = CLLocation(latitude: loc1Coords.latitude, longitude: loc1Coords.longitude)
+            let loc2 = CLLocation(latitude: loc2Coords.latitude, longitude: loc2Coords.longitude)
+
+            // Calculate distances from user's location to both locations
+            let distance1 = userLocation.distance(from: loc1) // Distance in meters
+            let distance2 = userLocation.distance(from: loc2)
+
+            return distance1 < distance2 // Sort by nearest location
         }
+        
+        // Call completion after sorting
         completion()
+    }
     }
     
     func swap(d1: GSRLocation, d2: GSRLocation) -> Bool {
