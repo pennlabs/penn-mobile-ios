@@ -130,12 +130,12 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     }
     
     @objc func findGSRButtonPressed() {
-        orderLocations {
-            self.setupQuickBooking {
-                self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
+        prefList = orderLocations()
+        prefList = makePreference()
+        self.setupQuickBooking {
+            self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
                 self.setupMapping()
                 self.setupSubmitButton()
-            }
         }
     }
     
@@ -228,6 +228,11 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         ])
     }
     
+    func makePreference() -> [GSRLocation] {
+        self.prefList.insert(self.prefLocation, at: 0)
+        return prefList
+    }
+    
     @objc func showDropdown() {
         let alertController = UIAlertController(title: "Choose an option", message: nil, preferredStyle: .actionSheet)
         
@@ -235,7 +240,6 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
             alertController.addAction(UIAlertAction(title: option.name, style: .default, handler: { [weak self] _ in
                 self?.selectedOption = option.name
                 self!.prefLocation = (self?.locations.first(where: { $0.name == self?.selectedOption })!)!
-                self?.prefList.insert(self!.prefLocation, at: 0)
                 self?.unpreferButton.setTitle(option.name, for: .normal)
             }))
         }
@@ -280,67 +284,24 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     
 extension QuickBookingViewController: CLLocationManagerDelegate {
     
-    func orderLocations(completion: @escaping () -> Void) {
-        // Ensure we have the user's current location
-        guard let userLocation = locationManager.location else {
-            // Handle case where user location is not available yet
-            return
-        }
-
+    func orderLocations() -> [GSRLocation] {
         locRankedList = locations
-        locRankedList.sort {
-            // Get coordinates for both locations
-            guard let loc1Coords = GSRCoords.first(where: { $0.title == $0.name }),
-                  let loc2Coords = GSRCoords.first(where: { $0.title == $1.name }) else {
+        locRankedList.sort { (loc1, loc2) in
+            guard let loc1Coords = GSRCoords.first(where: { $0.title == loc1.name }),
+                  let loc2Coords = GSRCoords.first(where: { $0.title == loc2.name }) else {
                 return false
             }
-
-            // Calculate distance from user's location to each location
             let loc1 = CLLocation(latitude: loc1Coords.latitude, longitude: loc1Coords.longitude)
             let loc2 = CLLocation(latitude: loc2Coords.latitude, longitude: loc2Coords.longitude)
 
-            // Calculate distances from user's location to both locations
-            let distance1 = userLocation.distance(from: loc1) // Distance in meters
-            let distance2 = userLocation.distance(from: loc2)
+            let distance1 = locationManager.location!.distance(from: loc1)
+            let distance2 = locationManager.location!.distance(from: loc2)
 
-            return distance1 < distance2 // Sort by nearest location
+            return distance1 < distance2
         }
-        
-        // Call completion after sorting
-        completion()
+        return locRankedList
     }
-    }
-    
-    func swap(d1: GSRLocation, d2: GSRLocation) -> Bool {
-        let dist1 = distance(loc: d1)
-        let dist2 = distance(loc: d2)
-        
-        return (dist1 > dist2)
-    }
-    
-    func distance(loc: GSRLocation) -> Int {
-        let mapView: MKMapView = {
-            let mapView = MKMapView()
-            mapView.translatesAutoresizingMaskIntoConstraints = false
-            mapView.showsUserLocation = true
-            return mapView
-        }()
-        
-        let userLocation = mapView.userLocation.location
-        var lat: CLLocationDegrees!
-        var long: CLLocationDegrees!
-        if let coords = GSRCoords.first(where: { $0.title == loc.name }) {
-            lat = coords.latitude
-            long = coords.longitude
-        }
-        let userLat: CLLocationDegrees = userLocation!.coordinate.latitude
-        let userLong: CLLocationDegrees = userLocation!.coordinate.longitude
-        let stepLat: Int = Int((userLat-lat))^2
-        let stepLong: Int = Int((userLong-long))^2
-        let step: Double = sqrt(Double(stepLat + stepLong))
-        return Int(round(step))
-    }
-    
+
     func setupLocationManager() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
