@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public class FitnessAPI {
+public final class FitnessAPI: Sendable {
 
     public static let instance = FitnessAPI()
 

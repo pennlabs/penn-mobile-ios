@@ -15,7 +15,7 @@ import SwiftUI
 /// `SubletData` contains the properties that are set by the user when creating a listing,
 /// and `Sublet` contains the remainder.
 @dynamicMemberLookup
-public struct Sublet: Identifiable, Codable, Hashable {
+public struct Sublet: Identifiable, Codable, Hashable, Sendable {
     public let subletID: Int
     public var data: SubletData
     public var subletter: Int
@@ -139,7 +139,7 @@ public struct SubletDraft: Identifiable, Codable, Hashable {
     }
 }
 
-public struct SubletData: Codable {
+public struct SubletData: Codable, Sendable {
     public var amenities: [String]
     public var title: String
     public var address: String?
@@ -227,13 +227,13 @@ public extension SubletData {
     }
 }
 
-public struct SubletImage: Identifiable, Codable, Hashable {
+public struct SubletImage: Identifiable, Codable, Hashable, Sendable {
     public let id: Int
     public let imageUrl: String
 }
 
 @dynamicMemberLookup
-public struct SubletOffer: Identifiable, Codable, Hashable {
+public struct SubletOffer: Identifiable, Codable, Hashable, Sendable {
     public let id: Int
     public let createdDate: Date
     public let user: Int
@@ -289,7 +289,7 @@ public struct SubletOffer: Identifiable, Codable, Hashable {
     }
 }
 
-public struct SubletOfferData: Codable {
+public struct SubletOfferData: Codable, Sendable {
     public var email: String
     public var phoneNumber: String
     public var message: String?

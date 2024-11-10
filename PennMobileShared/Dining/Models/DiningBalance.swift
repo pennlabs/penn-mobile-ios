@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DiningBalance: Codable {
+public struct DiningBalance: Codable, Sendable {
     public static let directory = "diningBalance.json"
 
     public let date: String

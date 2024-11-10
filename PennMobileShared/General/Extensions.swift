@@ -441,10 +441,6 @@ public extension MutableCollection where Index == Int {
 }
 
 public extension Optional {
-    func nullUnwrap() -> Any {
-        return self == nil ? "null" : self!
-    }
-
     /// Unwraps an optional and throws an error if it is nil.
     ///
     /// https://www.avanderlee.com/swift/unwrap-or-throw/
@@ -466,9 +462,9 @@ public extension UILabel {
     }
 }
 
-public extension Sequence {
+public extension Sequence where Element: Sendable {
     /// Maps an array to an array of transformed values, fetched asynchronously in parallel.
-    func asyncMap<T>(_ transform: @escaping (Element) async throws -> T) async rethrows -> [T] {
+    func asyncMap<T: Sendable>(_ transform: @escaping @Sendable (Element) async throws -> T) async rethrows -> [T] {
         try await withThrowingTaskGroup(of: T.self) { group in
             forEach { element in
                 group.addTask {
