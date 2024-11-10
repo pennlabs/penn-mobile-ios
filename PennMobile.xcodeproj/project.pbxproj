@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		123D017B2CB1CB53006A8916 /* quickBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */; };
+		126D64952CE098AC002904EC /* QuickBookingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126D64942CE098AC002904EC /* QuickBookingViewModel.swift */; };
 		12A6DCED2CCC770600FDF591 /* GSRMappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
@@ -457,6 +458,7 @@
 /* Begin PBXFileReference section */
 		059FD41D74734ECD9DE8209C /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quickBookingViewController.swift; sourceTree = "<group>"; };
+		126D64942CE098AC002904EC /* QuickBookingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookingViewModel.swift; sourceTree = "<group>"; };
 		12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRMappingController.swift; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
@@ -1256,6 +1258,7 @@
 			isa = PBXGroup;
 			children = (
 				EFE2D6F7239B120E0020F6BF /* GSRManageGroupViewModel.swift */,
+				126D64942CE098AC002904EC /* QuickBookingViewModel.swift */,
 				2189C0902027CE2E00771C1F /* GSRViewModel.swift */,
 			);
 			path = ViewModel;
@@ -2569,6 +2572,7 @@
 				89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */,
 				2119D26722529A0600693CDB /* HomeGSRLocationsCellItem.swift in Sources */,
 				89E0DE6C2AE415A800E918FF /* HomeCardView.swift in Sources */,
+				126D64952CE098AC002904EC /* QuickBookingViewModel.swift in Sources */,
 				EF23946423EF4117005BA55F /* GSRGroupInviteCell.swift in Sources */,
 				6C6FE1CA27B9B8CB0093FD13 /* MoreViewController.swift in Sources */,
 				2189C0AB2027CE4B00771C1F /* TrackLayer.swift in Sources */,
