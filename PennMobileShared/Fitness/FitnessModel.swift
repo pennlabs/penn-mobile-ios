@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct FitnessRoom: Codable, Equatable, Identifiable {
+public struct FitnessRoom: Codable, Equatable, Identifiable, Sendable {
     public let id: Int
     public let name: String
     public let image_url: URL?
@@ -20,7 +20,7 @@ public struct FitnessRoom: Codable, Equatable, Identifiable {
     public var data: FitnessRoomData?
 }
 
-public struct FitnessRoomData: Codable, Equatable {
+public struct FitnessRoomData: Codable, Equatable, Sendable {
     public let name: String
     public let start: String
     public let end: String
