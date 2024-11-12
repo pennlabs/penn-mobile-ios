@@ -523,7 +523,7 @@ extension UserDBManager {
             body.dev = true
 #endif
             
-            guard let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
+            guard let token = try? await OAuth2NetworkManager.instance.getAccessToken() else {
                 return
             }
             
