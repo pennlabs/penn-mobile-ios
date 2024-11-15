@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		123D017B2CB1CB53006A8916 /* quickBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */; };
+		126AE2C92CE8024C00228CF9 /* QuickBookViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 126AE2C82CE8024C00228CF9 /* QuickBookViewContoller.swift */; };
 		12A6DCED2CCC770600FDF591 /* GSRMappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */; };
 		2108CF211F3F73FF00CEC3F4 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */; };
 		2108CF231F3F762500CEC3F4 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2108CF221F3F762500CEC3F4 /* ContactCell.swift */; };
@@ -457,6 +458,7 @@
 /* Begin PBXFileReference section */
 		059FD41D74734ECD9DE8209C /* Pods-PennMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PennMobile.release.xcconfig"; path = "Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"; sourceTree = "<group>"; };
 		123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quickBookingViewController.swift; sourceTree = "<group>"; };
+		126AE2C82CE8024C00228CF9 /* QuickBookViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookViewContoller.swift; sourceTree = "<group>"; };
 		12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRMappingController.swift; sourceTree = "<group>"; };
 		2108CF201F3F73FF00CEC3F4 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
 		2108CF221F3F762500CEC3F4 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
@@ -1284,6 +1286,7 @@
 				2189C0802027CDB800771C1F /* GSRBookable.swift */,
 				2138D55222597FCB00D67CA2 /* GSRLocationsController.swift */,
 				123D017A2CB1CB53006A8916 /* quickBookingViewController.swift */,
+				126AE2C82CE8024C00228CF9 /* QuickBookViewContoller.swift */,
 				214E254822480818004CB9C4 /* GSRDeletable.swift */,
 				12A6DCEC2CCC770600FDF591 /* GSRMappingController.swift */,
 				2189C0822027CDB800771C1F /* GSRController.swift */,
@@ -2606,6 +2609,7 @@
 				21FBC242228B774E00B432D8 /* PennCashNetworkManager.swift in Sources */,
 				F212BE8123B6C77900ED46A1 /* PrivacyPreference.swift in Sources */,
 				6C6FE1D127B9B8CB0093FD13 /* InfoTableViewController.swift in Sources */,
+				126AE2C92CE8024C00228CF9 /* QuickBookViewContoller.swift in Sources */,
 				F2770AE52545E384001EA1DD /* CourseAlertController.swift in Sources */,
 				E49D3B912B66CA570022AB71 /* MyListingsActivity.swift in Sources */,
 				89DCBEC628E791B70029F784 /* CoursesViewController.swift in Sources */,

@@ -32,7 +32,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     fileprivate let locationManager = CLLocationManager()
     fileprivate var hasReceivedLocationUpdate = false
     
-    let GSRCoords = [
+    public let GSRCoords = [
         (latitude: 39.95346818228411, longitude: -75.19802835987453, title: "Huntsman"),
         (latitude: 39.95127416568136, longitude: -75.19700321676956, title: "Academic Research"),
         (latitude: 39.9498719027302, longitude: -75.1957015032777, title: "Biotech Commons"),
@@ -46,7 +46,18 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     
     let mapVC = MapViewController()
     
-    let submitButton: UIButton = {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.prefList = locations
+        setupUnpreferButton()
+        setupBook()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
+        prefList = orderLocations()
+    }
+    
+    fileprivate let submitButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Submit", for: .normal)
         button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
@@ -60,7 +71,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         return button
     }()
     
-    let unpreferButton: UIButton = {
+    fileprivate let unpreferButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Preferred Location", for: .normal)
         button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
@@ -74,7 +85,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         return button
     }()
     
-    let bookButton: UIButton = {
+    fileprivate let bookButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Find GSR", for: .normal)
         button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
@@ -88,7 +99,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         return button
     }()
     
-    let roomLabel: UILabel = {
+    fileprivate let roomLabel: UILabel = {
         let label = UILabel()
         label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.8)
         label.layer.masksToBounds = true
@@ -119,27 +130,16 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         ])
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.prefList = locations
-        setupUnpreferButton()
-        setupBook()
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
-    }
-    
-    @objc func findGSRButtonPressed() {
-        prefList = orderLocations()
+    @objc fileprivate func findGSRButtonPressed() {
         prefList = makePreference()
         self.setupQuickBooking {
             self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
-                self.setupMapping()
-                self.setupSubmitButton()
+            self.setupMapping()
+            self.setupSubmitButton()
         }
     }
     
-    func setupMapping() {
+    fileprivate func setupMapping() {
         var lat: CLLocationDegrees!
         var long: CLLocationDegrees!
         if let coords = GSRCoords.first(where: { $0.title == soonestLocation.name }) {
@@ -164,7 +164,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         mappingController.didMove(toParent: self)
     }
     
-    func setupQuickBooking(completion: @escaping () -> Void) {
+    fileprivate func setupQuickBooking(completion: @escaping () -> Void) {
         DispatchQueue.global().async { [self] in
             var skip: Bool = false
             var foundAvailableRoom = false
@@ -204,7 +204,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         }
     }
     
-    func setupSubmitButton() {
+    fileprivate func setupSubmitButton() {
         view.addSubview(submitButton)
         submitButton.addTarget(self, action: #selector(quickBook(_:)), for: .touchUpInside)
         
@@ -216,7 +216,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         ])
     }
     
-    func setupUnpreferButton() {
+    fileprivate func setupUnpreferButton() {
         view.addSubview(unpreferButton)
         unpreferButton.addTarget(self, action: #selector(showDropdown), for: .touchUpInside)
         
@@ -228,9 +228,13 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         ])
     }
     
-    func makePreference() -> [GSRLocation] {
-        self.prefList.insert(self.prefLocation, at: 0)
-        return prefList
+    fileprivate func makePreference() -> [GSRLocation] {
+        if prefLocation == nil {
+            return prefList
+        } else {
+            self.prefList.insert(self.prefLocation, at: 0)
+            return prefList
+        }
     }
     
     @objc func showDropdown() {
@@ -249,7 +253,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         present(alertController, animated: true, completion: nil)
     }
     
-    func setupBook() {
+    fileprivate func setupBook() {
         view.addSubview(bookButton)
         
         NSLayoutConstraint.activate([
@@ -260,7 +264,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         ])
     }
     
-    func getSoonestTimeSlot() {
+    public func getSoonestTimeSlot() {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone.current
         formatter.dateFormat = "HH:mm"
@@ -284,7 +288,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     
 extension QuickBookingViewController: CLLocationManagerDelegate {
     
-    func orderLocations() -> [GSRLocation] {
+    fileprivate func orderLocations() -> [GSRLocation] {
         locRankedList = locations
         locRankedList.sort { (loc1, loc2) in
             guard let loc1Coords = GSRCoords.first(where: { $0.title == loc1.name }),
@@ -293,7 +297,6 @@ extension QuickBookingViewController: CLLocationManagerDelegate {
             }
             let loc1 = CLLocation(latitude: loc1Coords.latitude, longitude: loc1Coords.longitude)
             let loc2 = CLLocation(latitude: loc2Coords.latitude, longitude: loc2Coords.longitude)
-
             let distance1 = locationManager.location!.distance(from: loc1)
             let distance2 = locationManager.location!.distance(from: loc2)
 
@@ -302,7 +305,7 @@ extension QuickBookingViewController: CLLocationManagerDelegate {
         return locRankedList
     }
 
-    func setupLocationManager() {
+    fileprivate func setupLocationManager() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
@@ -311,8 +314,9 @@ extension QuickBookingViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
+        
         if hasReceivedLocationUpdate { return }
-            hasReceivedLocationUpdate = true
+        hasReceivedLocationUpdate = true
         let latitude = location.coordinate.latitude
         let longitude = location.coordinate.longitude
         currentLocation = String(format: "%.6f, %.6f", latitude, longitude)
