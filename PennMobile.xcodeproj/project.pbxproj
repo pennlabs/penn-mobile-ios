@@ -45,10 +45,7 @@
 		42632CAA2CB9C77B0028CC31 /* ScannerViewfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B142CB9C77B0028CC31 /* ScannerViewfinder.swift */; };
 		42632CAB2CB9C77B0028CC31 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B152CB9C77B0028CC31 /* ScannerViewModel.swift */; };
 		42632CAC2CB9C77B0028CC31 /* TicketingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B172CB9C77B0028CC31 /* TicketingAPI.swift */; };
-		42632CAD2CB9C77B0028CC31 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B192CB9C77B0028CC31 /* ContactCell.swift */; };
 		42632CAE2CB9C77B0028CC31 /* ContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B1A2CB9C77B0028CC31 /* ContactManager.swift */; };
-		42632CAF2CB9C77B0028CC31 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B1B2CB9C77B0028CC31 /* ContactsTableViewController.swift */; };
-		42632CB02CB9C77B0028CC31 /* SupportItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 42632B1D2CB9C77B0028CC31 /* SupportItem.m */; };
 		42632CB12CB9C77B0028CC31 /* CourseAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B1F2CB9C77B0028CC31 /* CourseAlertController.swift */; };
 		42632CB22CB9C77B0028CC31 /* CourseAlertCreateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B202CB9C77B0028CC31 /* CourseAlertCreateController.swift */; };
 		42632CB32CB9C77B0028CC31 /* CourseAlertSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B212CB9C77B0028CC31 /* CourseAlertSettingsController.swift */; };
@@ -91,7 +88,6 @@
 		42632CE32CB9C77B0028CC31 /* FitnessRoomRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B662CB9C77B0028CC31 /* FitnessRoomRow.swift */; };
 		42632CE42CB9C77B0028CC31 /* FitnessSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B672CB9C77B0028CC31 /* FitnessSettingsView.swift */; };
 		42632CE52CB9C77B0028CC31 /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B682CB9C77B0028CC31 /* FitnessView.swift */; };
-		42632CE62CB9C77B0028CC31 /* FitnessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B692CB9C77B0028CC31 /* FitnessViewController.swift */; };
 		42632CE72CB9C77B0028CC31 /* AnnouncementHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B6B2CB9C77B0028CC31 /* AnnouncementHeaderView.swift */; };
 		42632CE82CB9C77B0028CC31 /* GenericControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B6C2CB9C77B0028CC31 /* GenericControllers.swift */; };
 		42632CE92CB9C77B0028CC31 /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B6D2CB9C77B0028CC31 /* MoveableTableViewController.swift */; };
@@ -359,6 +355,9 @@
 		4273BCFF2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		4273BD012BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		4273BD022BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
+		42ABED2A2CE8EB8D006533CD /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED292CE8EB8D006533CD /* ContactsView.swift */; };
+		42ABED2C2CE8EB9F006533CD /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED2B2CE8EB9F006533CD /* ContactModel.swift */; };
+		42D89D552CE94FC9005DFFD4 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */; };
 		6C23AF9526E57903002F60F0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6C369A1526E39BC100721CA1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */; };
@@ -470,11 +469,7 @@
 		42632B142CB9C77B0028CC31 /* ScannerViewfinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewfinder.swift; sourceTree = "<group>"; };
 		42632B152CB9C77B0028CC31 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
 		42632B172CB9C77B0028CC31 /* TicketingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketingAPI.swift; sourceTree = "<group>"; };
-		42632B192CB9C77B0028CC31 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		42632B1A2CB9C77B0028CC31 /* ContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactManager.swift; sourceTree = "<group>"; };
-		42632B1B2CB9C77B0028CC31 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
-		42632B1C2CB9C77B0028CC31 /* SupportItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SupportItem.h; sourceTree = "<group>"; };
-		42632B1D2CB9C77B0028CC31 /* SupportItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SupportItem.m; sourceTree = "<group>"; };
 		42632B1F2CB9C77B0028CC31 /* CourseAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertController.swift; sourceTree = "<group>"; };
 		42632B202CB9C77B0028CC31 /* CourseAlertCreateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertCreateController.swift; sourceTree = "<group>"; };
 		42632B212CB9C77B0028CC31 /* CourseAlertSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseAlertSettingsController.swift; sourceTree = "<group>"; };
@@ -519,7 +514,6 @@
 		42632B662CB9C77B0028CC31 /* FitnessRoomRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessRoomRow.swift; sourceTree = "<group>"; };
 		42632B672CB9C77B0028CC31 /* FitnessSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessSettingsView.swift; sourceTree = "<group>"; };
 		42632B682CB9C77B0028CC31 /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
-		42632B692CB9C77B0028CC31 /* FitnessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessViewController.swift; sourceTree = "<group>"; };
 		42632B6B2CB9C77B0028CC31 /* AnnouncementHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementHeaderView.swift; sourceTree = "<group>"; };
 		42632B6C2CB9C77B0028CC31 /* GenericControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericControllers.swift; sourceTree = "<group>"; };
 		42632B6D2CB9C77B0028CC31 /* MoveableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
@@ -806,6 +800,9 @@
 		42632E232CB9C77B0028CC31 /* SublettingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SublettingModels.swift; sourceTree = "<group>"; };
 		42632E252CB9C77B0028CC31 /* PennMobileShared.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PennMobileShared.h; sourceTree = "<group>"; };
 		4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
+		42ABED292CE8EB8D006533CD /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		42ABED2B2CE8EB9F006533CD /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
+		42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
 		6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationDevelopment.xcconfig; sourceTree = "<group>"; };
 		6C1991BD27B5CA8500BBB402 /* NotificationRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationRelease.xcconfig; sourceTree = "<group>"; };
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
@@ -996,11 +993,10 @@
 		42632B1E2CB9C77B0028CC31 /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				42632B192CB9C77B0028CC31 /* ContactCell.swift */,
+				42ABED2B2CE8EB9F006533CD /* ContactModel.swift */,
+				42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */,
+				42ABED292CE8EB8D006533CD /* ContactsView.swift */,
 				42632B1A2CB9C77B0028CC31 /* ContactManager.swift */,
-				42632B1B2CB9C77B0028CC31 /* ContactsTableViewController.swift */,
-				42632B1C2CB9C77B0028CC31 /* SupportItem.h */,
-				42632B1D2CB9C77B0028CC31 /* SupportItem.m */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -1203,7 +1199,6 @@
 				42632B662CB9C77B0028CC31 /* FitnessRoomRow.swift */,
 				42632B672CB9C77B0028CC31 /* FitnessSettingsView.swift */,
 				42632B682CB9C77B0028CC31 /* FitnessView.swift */,
-				42632B692CB9C77B0028CC31 /* FitnessViewController.swift */,
 			);
 			path = Fitness;
 			sourceTree = "<group>";
@@ -2383,10 +2378,7 @@
 				42632CAA2CB9C77B0028CC31 /* ScannerViewfinder.swift in Sources */,
 				42632CAB2CB9C77B0028CC31 /* ScannerViewModel.swift in Sources */,
 				42632CAC2CB9C77B0028CC31 /* TicketingAPI.swift in Sources */,
-				42632CAD2CB9C77B0028CC31 /* ContactCell.swift in Sources */,
 				42632CAE2CB9C77B0028CC31 /* ContactManager.swift in Sources */,
-				42632CAF2CB9C77B0028CC31 /* ContactsTableViewController.swift in Sources */,
-				42632CB02CB9C77B0028CC31 /* SupportItem.m in Sources */,
 				42632CB12CB9C77B0028CC31 /* CourseAlertController.swift in Sources */,
 				42632CB22CB9C77B0028CC31 /* CourseAlertCreateController.swift in Sources */,
 				42632CB32CB9C77B0028CC31 /* CourseAlertSettingsController.swift in Sources */,
@@ -2401,6 +2393,7 @@
 				42632CBC2CB9C77B0028CC31 /* SearchResultsCell.swift in Sources */,
 				42632CBD2CB9C77B0028CC31 /* ZeroCourseAlertsCell.swift in Sources */,
 				42632CBE2CB9C77B0028CC31 /* CoursesViewModel.swift in Sources */,
+				42ABED2A2CE8EB8D006533CD /* ContactsView.swift in Sources */,
 				42632CBF2CB9C77B0028CC31 /* CoursesDayView.swift in Sources */,
 				42632CC02CB9C77B0028CC31 /* CoursesView.swift in Sources */,
 				42632CC12CB9C77B0028CC31 /* CoursesViewController.swift in Sources */,
@@ -2420,6 +2413,7 @@
 				42632CD62CB9C77B0028CC31 /* DiningView.swift in Sources */,
 				42632CD72CB9C77B0028CC31 /* DiningViewHeader.swift in Sources */,
 				42632CD82CB9C77B0028CC31 /* DiningAnalyticsView.swift in Sources */,
+				42D89D552CE94FC9005DFFD4 /* ContactRowView.swift in Sources */,
 				42632CD92CB9C77B0028CC31 /* DiningLoginNavigationView.swift in Sources */,
 				42632CDA2CB9C77B0028CC31 /* DiningLoginViewSwiftUI.swift in Sources */,
 				42632CDB2CB9C77B0028CC31 /* DiningSettingsView.swift in Sources */,
@@ -2429,7 +2423,6 @@
 				42632CE32CB9C77B0028CC31 /* FitnessRoomRow.swift in Sources */,
 				42632CE42CB9C77B0028CC31 /* FitnessSettingsView.swift in Sources */,
 				42632CE52CB9C77B0028CC31 /* FitnessView.swift in Sources */,
-				42632CE62CB9C77B0028CC31 /* FitnessViewController.swift in Sources */,
 				42632CE72CB9C77B0028CC31 /* AnnouncementHeaderView.swift in Sources */,
 				42632CE82CB9C77B0028CC31 /* GenericControllers.swift in Sources */,
 				42632CE92CB9C77B0028CC31 /* MoveableTableViewController.swift in Sources */,
@@ -2477,6 +2470,7 @@
 				42632D112CB9C77B0028CC31 /* GSRTimeSlot.swift in Sources */,
 				42632D122CB9C77B0028CC31 /* GSRGroupNetworkManager..swift in Sources */,
 				42632D132CB9C77B0028CC31 /* GSRNetworkManager.swift in Sources */,
+				42ABED2C2CE8EB9F006533CD /* ContactModel.swift in Sources */,
 				42632D142CB9C77B0028CC31 /* GSRManageGroupViewModel.swift in Sources */,
 				42632D152CB9C77B0028CC31 /* GSRViewModel.swift in Sources */,
 				42632D162CB9C77B0028CC31 /* CreateGroupCell.swift in Sources */,

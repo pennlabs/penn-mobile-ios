@@ -58,7 +58,6 @@ class ControllerModel: NSObject {
         vcDictionary[.more] = MoreViewController()
         vcDictionary[.map] = MapViewController()
         vcDictionary[.news] = NewsViewController()
-        vcDictionary[.contacts] = ContactsTableViewController()
         vcDictionary[.about] = AboutViewController()
         vcDictionary[.notifications] = NotificationsViewControllerSwiftUI()
         vcDictionary[.preferences] = PreferencesViewController()
@@ -67,8 +66,6 @@ class ControllerModel: NSObject {
         vcDictionary[.pacCode] = PacCodeViewController()
         vcDictionary[.courseAlerts] = CourseAlertController()
         vcDictionary[.headlineNews] = NativeNewsViewController()
-        vcDictionary[.fitness] = FitnessViewController()
-        // vcDictionary[.fling] = FlingViewController()
     }
 
     var viewControllers: [UIViewController] {
