@@ -358,8 +358,6 @@
 		42ABED2A2CE8EB8D006533CD /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED292CE8EB8D006533CD /* ContactsView.swift */; };
 		42ABED2C2CE8EB9F006533CD /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED2B2CE8EB9F006533CD /* ContactModel.swift */; };
 		42D89D552CE94FC9005DFFD4 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */; };
-		6C23AF9526E57903002F60F0 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		6C369A1526E39BC100721CA1 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */; };
 		6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6CA1ACDA271D2D5000EDB967 /* Kingfisher */; };
 		6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */; };
@@ -2646,8 +2644,6 @@
 				42632DC52CB9C77B0028CC31 /* SublettingAPI.swift in Sources */,
 				42632DC62CB9C77B0028CC31 /* SublettingViewModel.swift in Sources */,
 				89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */,
-				6C369A1526E39BC100721CA1 /* (null) in Sources */,
-				6C23AF9526E57903002F60F0 /* (null) in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
