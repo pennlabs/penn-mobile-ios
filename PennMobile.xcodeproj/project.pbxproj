@@ -731,7 +731,6 @@
 		42632C852CB9C77B0028CC31 /* SublettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SublettingViewModel.swift; sourceTree = "<group>"; };
 		42632C872CB9C77B0028CC31 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		42632C882CB9C77B0028CC31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		42632C8A2CB9C77B0028CC31 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		42632C8C2CB9C77B0028CC31 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		42632C8D2CB9C77B0028CC31 /* PennMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PennMobile.entitlements; sourceTree = "<group>"; };
 		42632DC72CB9C77B0028CC31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1861,7 +1860,6 @@
 			children = (
 				42632C872CB9C77B0028CC31 /* GoogleService-Info.plist */,
 				42632C882CB9C77B0028CC31 /* Info.plist */,
-				42632C8A2CB9C77B0028CC31 /* PrefixHeader.pch */,
 			);
 			path = Supporting_Files;
 			sourceTree = "<group>";
@@ -2863,7 +2861,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU59R57FGM;
 				EXCLUDED_ARCHS = "";
-				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2902,7 +2900,7 @@
 				DEVELOPMENT_TEAM = VU59R57FGM;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU59R57FGM;
 				EXCLUDED_ARCHS = "";
-				GCC_PREFIX_HEADER = PennMobile/Supporting_Files/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
