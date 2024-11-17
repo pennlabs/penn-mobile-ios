@@ -93,7 +93,7 @@ struct IntentFitnessProvider<Intent: ConfigureFitnessWidgetIntent>: IntentTimeli
     
     func getSnapshot(for intent: Intent, in context: Context, completion: @escaping (FitnessEntry<Intent.Configuration>) -> Void) {
         Task {
-            let roomID = intent.configuration.complex.rawValue
+            let _ = intent.configuration.complex.rawValue
             completion(await snapshot(configuration: intent.configuration, roomID: 7)) //getSnapshot is only called when widget is in drawer, and not when in home screen. Therefore, when in the drawer, set roomID to 7, which corresponds to 1st floor Fitness, to show a 'preview' of what the widget looks like. Then when the widget is actually placed on the home screen, it shows the instructions, because roomID is now set from getTimeline, where it defaults to 0 (which is the ID to show the instructions)
         }
     }

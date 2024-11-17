@@ -21,7 +21,6 @@ struct DiningVenueDetailView: View {
     private let venue: DiningVenue
     private let sectionTitle = ["Menu", "Hours", "Location"]
 
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @State private var pickerIndex = 0
     @State private var contentOffset: CGPoint = .zero

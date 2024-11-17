@@ -22,7 +22,7 @@ struct PennEventCellView: View {
     var body: some View {
         ZStack {
             if let imageUrl = event.imageUrl {
-                KFImage(event.imageUrl)
+                KFImage(imageUrl)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 190)

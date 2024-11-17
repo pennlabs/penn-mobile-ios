@@ -18,9 +18,7 @@ final class TabBarController: UITabBarController {
         tabBar.standardAppearance = appearance
 
         // Required to prevent tab bar's appearance from switching between light and dark mode
-        if #available(iOS 15.0, *) {
-            tabBar.scrollEdgeAppearance = appearance
-        }
+        tabBar.scrollEdgeAppearance = appearance
     }
 
     override func viewWillAppear(_ animated: Bool) {

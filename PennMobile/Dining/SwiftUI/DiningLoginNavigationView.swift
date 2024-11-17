@@ -14,7 +14,7 @@ struct DiningLoginNavigationView: View {
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             DiningLoginViewSwiftUI(onDismiss: { dismiss() })
                 .navigationBarTitle(Text("Login"), displayMode: .inline)
                 .navigationBarItems(trailing: Button(action: {
