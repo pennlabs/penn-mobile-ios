@@ -245,11 +245,7 @@
 		42632D872CB9C77B0028CC31 /* ProfilePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C372CB9C77B0028CC31 /* ProfilePageViewModel.swift */; };
 		42632D882CB9C77B0028CC31 /* ProfilePictureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C382CB9C77B0028CC31 /* ProfilePictureTableViewCell.swift */; };
 		42632D892CB9C77B0028CC31 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3A2CB9C77B0028CC31 /* AboutViewController.swift */; };
-		42632D8A2CB9C77B0028CC31 /* HeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3B2CB9C77B0028CC31 /* HeaderViewCell.swift */; };
-		42632D8B2CB9C77B0028CC31 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3C2CB9C77B0028CC31 /* MoreCell.swift */; };
-		42632D8C2CB9C77B0028CC31 /* MoreHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3D2CB9C77B0028CC31 /* MoreHeaderView.swift */; };
 		42632D8D2CB9C77B0028CC31 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3E2CB9C77B0028CC31 /* MoreView.swift */; };
-		42632D8E2CB9C77B0028CC31 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3F2CB9C77B0028CC31 /* MoreViewController.swift */; };
 		42632D8F2CB9C77B0028CC31 /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C402CB9C77B0028CC31 /* ProfileRowView.swift */; };
 		42632D902CB9C77B0028CC31 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C422CB9C77B0028CC31 /* NewsViewController.swift */; };
 		42632D912CB9C77B0028CC31 /* NotificationAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C442CB9C77B0028CC31 /* NotificationAPIModel.swift */; };
@@ -291,8 +287,6 @@
 		42632DB62CB9C77B0028CC31 /* PennMobile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C732CB9C77B0028CC31 /* PennMobile.swift */; };
 		42632DB72CB9C77B0028CC31 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C742CB9C77B0028CC31 /* RootView.swift */; };
 		42632DB82CB9C77B0028CC31 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C752CB9C77B0028CC31 /* RootViewController.swift */; };
-		42632DB92CB9C77B0028CC31 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C762CB9C77B0028CC31 /* SplashViewController.swift */; };
-		42632DBA2CB9C77B0028CC31 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C772CB9C77B0028CC31 /* TabBarController.swift */; };
 		42632DBB2CB9C77B0028CC31 /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C782CB9C77B0028CC31 /* Toasts.swift */; };
 		42632DBC2CB9C77B0028CC31 /* MyListingsActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C7A2CB9C77B0028CC31 /* MyListingsActivity.swift */; };
 		42632DBD2CB9C77B0028CC31 /* NewListingForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C7B2CB9C77B0028CC31 /* NewListingForm.swift */; };
@@ -669,11 +663,7 @@
 		42632C372CB9C77B0028CC31 /* ProfilePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewModel.swift; sourceTree = "<group>"; };
 		42632C382CB9C77B0028CC31 /* ProfilePictureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePictureTableViewCell.swift; sourceTree = "<group>"; };
 		42632C3A2CB9C77B0028CC31 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		42632C3B2CB9C77B0028CC31 /* HeaderViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderViewCell.swift; sourceTree = "<group>"; };
-		42632C3C2CB9C77B0028CC31 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
-		42632C3D2CB9C77B0028CC31 /* MoreHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreHeaderView.swift; sourceTree = "<group>"; };
 		42632C3E2CB9C77B0028CC31 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
-		42632C3F2CB9C77B0028CC31 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		42632C402CB9C77B0028CC31 /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
 		42632C422CB9C77B0028CC31 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		42632C442CB9C77B0028CC31 /* NotificationAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPIModel.swift; sourceTree = "<group>"; };
@@ -715,8 +705,6 @@
 		42632C732CB9C77B0028CC31 /* PennMobile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennMobile.swift; sourceTree = "<group>"; };
 		42632C742CB9C77B0028CC31 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		42632C752CB9C77B0028CC31 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
-		42632C762CB9C77B0028CC31 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
-		42632C772CB9C77B0028CC31 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		42632C782CB9C77B0028CC31 /* Toasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toasts.swift; sourceTree = "<group>"; };
 		42632C7A2CB9C77B0028CC31 /* MyListingsActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyListingsActivity.swift; sourceTree = "<group>"; };
 		42632C7B2CB9C77B0028CC31 /* NewListingForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewListingForm.swift; sourceTree = "<group>"; };
@@ -1704,11 +1692,7 @@
 				42632C302CB9C77B0028CC31 /* PAC Code */,
 				42632C392CB9C77B0028CC31 /* Profile Page */,
 				42632C3A2CB9C77B0028CC31 /* AboutViewController.swift */,
-				42632C3B2CB9C77B0028CC31 /* HeaderViewCell.swift */,
-				42632C3C2CB9C77B0028CC31 /* MoreCell.swift */,
-				42632C3D2CB9C77B0028CC31 /* MoreHeaderView.swift */,
 				42632C3E2CB9C77B0028CC31 /* MoreView.swift */,
-				42632C3F2CB9C77B0028CC31 /* MoreViewController.swift */,
 				42632C402CB9C77B0028CC31 /* ProfileRowView.swift */,
 			);
 			path = "More Tab";
@@ -1822,8 +1806,6 @@
 				42632C732CB9C77B0028CC31 /* PennMobile.swift */,
 				42632C742CB9C77B0028CC31 /* RootView.swift */,
 				42632C752CB9C77B0028CC31 /* RootViewController.swift */,
-				42632C762CB9C77B0028CC31 /* SplashViewController.swift */,
-				42632C772CB9C77B0028CC31 /* TabBarController.swift */,
 				42632C782CB9C77B0028CC31 /* Toasts.swift */,
 			);
 			path = "Setup + Navigation";
@@ -2577,11 +2559,7 @@
 				42632D872CB9C77B0028CC31 /* ProfilePageViewModel.swift in Sources */,
 				42632D882CB9C77B0028CC31 /* ProfilePictureTableViewCell.swift in Sources */,
 				42632D892CB9C77B0028CC31 /* AboutViewController.swift in Sources */,
-				42632D8A2CB9C77B0028CC31 /* HeaderViewCell.swift in Sources */,
-				42632D8B2CB9C77B0028CC31 /* MoreCell.swift in Sources */,
-				42632D8C2CB9C77B0028CC31 /* MoreHeaderView.swift in Sources */,
 				42632D8D2CB9C77B0028CC31 /* MoreView.swift in Sources */,
-				42632D8E2CB9C77B0028CC31 /* MoreViewController.swift in Sources */,
 				42632D8F2CB9C77B0028CC31 /* ProfileRowView.swift in Sources */,
 				42632D902CB9C77B0028CC31 /* NewsViewController.swift in Sources */,
 				42632D912CB9C77B0028CC31 /* NotificationAPIModel.swift in Sources */,
@@ -2627,8 +2605,6 @@
 				42632DB62CB9C77B0028CC31 /* PennMobile.swift in Sources */,
 				42632DB72CB9C77B0028CC31 /* RootView.swift in Sources */,
 				42632DB82CB9C77B0028CC31 /* RootViewController.swift in Sources */,
-				42632DB92CB9C77B0028CC31 /* SplashViewController.swift in Sources */,
-				42632DBA2CB9C77B0028CC31 /* TabBarController.swift in Sources */,
 				42632DBB2CB9C77B0028CC31 /* Toasts.swift in Sources */,
 				42632DBC2CB9C77B0028CC31 /* MyListingsActivity.swift in Sources */,
 				42632DBD2CB9C77B0028CC31 /* NewListingForm.swift in Sources */,
