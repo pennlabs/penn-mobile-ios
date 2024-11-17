@@ -177,7 +177,7 @@ extension OAuth2NetworkManager {
                 let json = try decoder.decode(TokenResponse.self, from: data)
                 let expiration = Date().add(seconds: json.expiresIn)
                 let accessToken = AccessToken(value: json.accessToken, expiration: expiration)
-                let refreshToken = json.refreshToken
+//                let refreshToken = json.refreshToken
                 
                 if let refreshToken = json.refreshToken {
                     saveRefreshToken(token: refreshToken)

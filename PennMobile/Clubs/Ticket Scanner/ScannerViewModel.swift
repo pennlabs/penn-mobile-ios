@@ -18,7 +18,7 @@ enum CameraState {
     case ready
 }
 
-extension CVImageBuffer: @unchecked Sendable {}
+extension CVImageBuffer: @unchecked @retroactive Sendable {}
 
 extension CHHapticEngine {
     func makePlayer(hapticName: String) throws -> CHHapticPatternPlayer {
