@@ -5,8 +5,10 @@
 //  Copyright © 2016 Josh Doman. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 import OSLog
+import MapKit
 
 extension UIApplication {
     public static var isRunningFastlaneTest: Bool {
@@ -348,14 +350,14 @@ public extension Date {
     static var startOfSemester: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: "2024-01-18")!
+        return formatter.date(from: "2024-08-27")!
 
     }
 
     static var endOfSemester: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: "2024-05-14")!
+        return formatter.date(from: "2024-12-19")!
     }
 }
 
@@ -378,6 +380,15 @@ public extension DateFormatter {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         return dateFormatter
     }
+    
+    static var iso8601: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        return formatter
+    }
 
     static var iso8601Full: DateFormatter {
         let formatter = DateFormatter()
@@ -386,6 +397,19 @@ public extension DateFormatter {
         formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
+    }
+}
+
+public extension JSONDecoder.DateDecodingStrategy {
+    static let iso8601Full = custom { decoder -> Date in
+        let container = try decoder.singleValueContainer()
+        let dateString = try container.decode(String.self)
+        
+        if let date = DateFormatter.iso8601Full.date(from: dateString) {
+            return date
+        } else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Invalid date format")
+        }
     }
 }
 
@@ -417,10 +441,6 @@ public extension MutableCollection where Index == Int {
 }
 
 public extension Optional {
-    func nullUnwrap() -> Any {
-        return self == nil ? "null" : self!
-    }
-
     /// Unwraps an optional and throws an error if it is nil.
     ///
     /// https://www.avanderlee.com/swift/unwrap-or-throw/
@@ -442,9 +462,9 @@ public extension UILabel {
     }
 }
 
-public extension Sequence {
+public extension Sequence where Element: Sendable {
     /// Maps an array to an array of transformed values, fetched asynchronously in parallel.
-    func asyncMap<T>(_ transform: @escaping (Element) async throws -> T) async rethrows -> [T] {
+    func asyncMap<T: Sendable>(_ transform: @escaping @Sendable (Element) async throws -> T) async rethrows -> [T] {
         try await withThrowingTaskGroup(of: T.self) { group in
             forEach { element in
                 group.addTask {
@@ -673,5 +693,72 @@ public extension JSONDecoder {
 public extension Logger {
     init(category: String) {
         self.init(subsystem: Bundle.main.bundleIdentifier ?? "Penn Mobile", category: category)
+    }
+}
+
+public extension View {
+    func placeholder<Content: View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content) -> some View {
+
+        ZStack(alignment: alignment) {
+            placeholder().opacity(shouldShow ? 1 : 0)
+            self
+        }
+    }
+}
+
+extension CLLocationCoordinate2D: Identifiable {
+    public var id: String {
+        return "\(latitude)-\(longitude)"
+    }
+}
+
+public extension Data {
+   mutating func append(_ string: String) {
+      if let data = string.data(using: .utf8) {
+         append(data)
+      }
+   }
+}
+
+/// This is used to get the current navigation path in a readable format. For example, if SomePage is a Codable enum
+/// that is the type of the values used in any NavigationLink, then calling asList(of: SomePage.self) will return
+/// the current NavigationPath as [SomePage] (but optional in case of failure)
+/// This is very jank, so if someone else knows a better way, PLEASE change this.
+public extension NavigationPath {
+    func getData() -> Data? {
+        guard let representation = self.codable else { return nil }
+        let encoder = JSONEncoder()
+        return try? encoder.encode(representation)
+    }
+    
+    func asList<R: Decodable>(of type: R.Type) -> [R]? {
+        guard let data = getData() else { return nil }
+        let decoder = JSONDecoder()
+        guard let pageArray = try? decoder.decode([String].self, from: data) else { return nil }
+        let output: [R] = pageArray.compactMap {
+            guard let data = $0.data(using: .utf8) else { return nil }
+            return try? decoder.decode(type, from: data)
+        }
+        return output
+    }
+    
+    func contains<R: Decodable & Equatable>(_ page: R) -> Bool {
+        return asList(of: R.self)?.contains(page) ?? false
+    }
+    
+    mutating func removeAll() {
+        self.removeLast(self.count)
+    }
+}
+
+public extension String {
+    static func customFormat(minFractionDigits: Int = 0, maxFractionDigits: Int = 1, _ value: Double) -> String {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = minFractionDigits
+        formatter.maximumFractionDigits = maxFractionDigits
+        return formatter.string(from: NSNumber(value: value)) ?? ""
     }
 }

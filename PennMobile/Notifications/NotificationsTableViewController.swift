@@ -6,6 +6,7 @@
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 protocol NotificationViewControllerChangedPreference: AnyObject {

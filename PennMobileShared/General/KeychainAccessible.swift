@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class KeychainAccessible {
+public final class KeychainAccessible: Sendable {
 
     public static let instance = KeychainAccessible()
 

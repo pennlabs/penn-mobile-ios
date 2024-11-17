@@ -10,19 +10,19 @@ import SwiftUI
 import PennMobileShared
 
 struct DiningLoginNavigationView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
 
     var body: some View {
         NavigationView {
-            DiningLoginViewSwiftUI()
+            DiningLoginViewSwiftUI(onDismiss: { dismiss() })
                 .navigationBarTitle(Text("Login"), displayMode: .inline)
-                                .navigationBarItems(trailing: Button(action: {
-                                    presentationMode.wrappedValue.dismiss()
-                                }) {
-                                    Text("Cancel")
-                                })
-                                .environmentObject(diningAnalyticsViewModel)
+                .navigationBarItems(trailing: Button(action: {
+                    dismiss()
+                }) {
+                    Text("Cancel")
+                })
+                .environmentObject(diningAnalyticsViewModel)
         }
     }
 }

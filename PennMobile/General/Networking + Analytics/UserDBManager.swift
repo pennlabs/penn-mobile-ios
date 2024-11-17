@@ -504,18 +504,37 @@ extension UserDBManager {
 
     // Updates device token.
     func savePushNotificationDeviceToken(deviceToken: String, notifId: Int, _ completion: (() -> Void)? = nil) {
-        let url = "https://pennmobile.org/api/user/notifications/tokens/\(notifId)"
-        var params: [String: Any] = [
-            "kind": "IOS",
-            "token": deviceToken,
-            "dev": false
-        ]
-
-        #if DEBUG
-            params["dev"] = true
-        #endif
-        makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
-            completion?()
+        Task {
+            defer { completion?() }
+            
+            struct DeviceTokenRequestBody: Encodable {
+                var kind: String
+                var token: String
+                var dev: Bool
+            }
+            
+            guard let url = URL(string: "https://pennmobile.org/api/user/notifications/tokens/\(notifId)/") else {
+                return
+            }
+            
+            var body = DeviceTokenRequestBody(kind: "IOS", token: deviceToken, dev: false)
+            
+#if DEBUG
+            body.dev = true
+#endif
+            
+            guard let token = try? await OAuth2NetworkManager.instance.getAccessToken() else {
+                return
+            }
+            
+            var request = URLRequest(url: url, accessToken: token)
+            request.httpMethod = "PUT"
+            
+            // If serializing a simple JSON object fails something is really wrong
+            request.httpBody = try! JSONEncoder().encode(body)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            _ = try? await URLSession.shared.data(for: request)
         }
     }
 

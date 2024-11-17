@@ -6,6 +6,7 @@
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
 
+import UIKit
 import Foundation
 import SwiftSoup
 import PennMobileShared

@@ -47,7 +47,7 @@ struct PollsView: View {
             case .success(let polls):
                 self.polls = polls.map {
                     var pollQuestion = $0.poll
-                    pollQuestion.optionChosenId = $0.pollOptions[0].id; // id of first returned selected answer
+                    pollQuestion.optionChosenId = $0.pollOptions[0].id // id of first returned selected answer
                     return pollQuestion
                 }
             }

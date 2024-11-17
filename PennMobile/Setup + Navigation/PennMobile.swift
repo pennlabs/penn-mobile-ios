@@ -29,7 +29,6 @@ struct PennMobile: App {
 
         // Register to receive delegate actions from rich notifications
         UNUserNotificationCenter.current().delegate = delegate
-        UIApplication.shared.registerForRemoteNotifications()
 
         FirebaseApp.configure()
 
@@ -48,6 +47,7 @@ struct PennMobile: App {
             RootView()
                 .environmentObject(authManager)
                 .environmentObject(homeViewModel)
+                .environmentObject(BannerViewModel.shared)
             #if DEBUG
                 .environmentObject(mockHomeViewModel)
             #endif

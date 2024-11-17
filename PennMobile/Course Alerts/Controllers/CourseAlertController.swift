@@ -5,7 +5,9 @@
 //  Created by Raunaq Singh on 10/25/20
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
+
 import Foundation
+import UIKit
 
 class CourseAlertController: GenericViewController, ShowsAlertForError, IndicatorEnabled {
 

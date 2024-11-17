@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import SwiftyJSON
 import PennMobileShared
 
@@ -29,7 +30,7 @@ class PollsNetworkManager: NSObject, Requestable, SHA256Hashable {
     let allVotesURL = URL(string: "https://pennmobile.org/api/portal/votes/all/")
     
     func getPollHistory() async -> Result<[PollPost], NetworkingError> {
-        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+        if let token = try? await OAuth2NetworkManager.instance.getAccessToken() {
             var request = URLRequest(url: self.allVotesURL!, accessToken: token)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: PollsNetworkManager.id, encoding: .base64)])
@@ -51,7 +52,7 @@ class PollsNetworkManager: NSObject, Requestable, SHA256Hashable {
     }
 
     func getActivePolls() async -> Result<[PollQuestion], NetworkingError> {
-        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+        if let token = try? await OAuth2NetworkManager.instance.getAccessToken() {
             var request = URLRequest(url: self.pollURL!, accessToken: token)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: PollsNetworkManager.id, encoding: .base64)])
@@ -73,7 +74,7 @@ class PollsNetworkManager: NSObject, Requestable, SHA256Hashable {
     }
 
     func getArchivedPolls() async -> Result<[PollQuestion], NetworkingError> {
-        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+        if let token = try? await OAuth2NetworkManager.instance.getAccessToken() {
             var request = URLRequest(url: self.recentsURL!, accessToken: token)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: PollsNetworkManager.id, encoding: .base64)])
@@ -95,7 +96,7 @@ class PollsNetworkManager: NSObject, Requestable, SHA256Hashable {
     }
 
     func answerPoll(withId id: String, response: Int) async -> Bool {
-        if let token = await OAuth2NetworkManager.instance.getAccessTokenAsync() {
+        if let token = try? await OAuth2NetworkManager.instance.getAccessToken() {
             var request = URLRequest(url: self.votesURL!, accessToken: token)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             let jsonData = try? JSONSerialization.data(withJSONObject: ["id_hash": hash(string: id, encoding: .base64), "poll_options": [response]] as [String: Any])

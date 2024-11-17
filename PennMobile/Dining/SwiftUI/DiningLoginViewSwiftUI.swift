@@ -12,7 +12,7 @@ import WebKit
 import PennMobileShared
 
 struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
-    @Environment(\.presentationMode) var presentationMode
+    var onDismiss: () -> Void
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
 
     func makeUIViewController(context: Context) -> DiningLoginController {
@@ -32,7 +32,7 @@ struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
         }
 
         func dismissDiningLoginController() {
-            parent.presentationMode.wrappedValue.dismiss()
+            self.parent.onDismiss()
             Task.init {
                 await DiningViewModelSwiftUI.instance.refreshBalance()
                 await parent.diningAnalyticsViewModel.refresh()

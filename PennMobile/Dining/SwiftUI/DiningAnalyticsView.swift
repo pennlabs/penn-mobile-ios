@@ -15,8 +15,9 @@ struct DiningAnalyticsView: View {
     @State var showDiningLoginView = false
     @State var notLoggedInAlertShowing = false
     @State var showSettingsSheet = false
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
-    func showCorrectAlert () -> Alert {
+    func showCorrectAlert() -> Alert {
         if !Account.isLoggedIn {
             return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { presentationMode.wrappedValue.dismiss() }))
         } else {
@@ -29,24 +30,25 @@ struct DiningAnalyticsView: View {
     var body: some View {
         let dollarHistory = $diningAnalyticsViewModel.dollarHistory
         let swipeHistory = $diningAnalyticsViewModel.swipeHistory
-        HStack {
-            Spacer()
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        showSettingsSheet.toggle()
-                    }) {
-                        Image(systemName: "gear")
-                            .imageScale(.large)
-                    }
-                }
-            }
+        VStack {
             if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
                 if dollarHistory.wrappedValue.isEmpty && swipeHistory.wrappedValue.isEmpty {
                     ZStack {
-                        Image("DiningAnalyticsBackground")
+                        let image = Image("DiningAnalyticsBackground")
                             .resizable()
                             .ignoresSafeArea()
+
+                        switch colorScheme {
+                        case .dark:
+                            image
+                                .colorInvert()
+                                .hueRotation(.degrees(180))
+                                .saturation(0.8)
+                                .contrast(0.8)
+                        default:
+                            image
+                        }
+                        
                         VStack(spacing: 24) {
                             Text("No Dining Plan Found")
                                 .font(.system(size: 48, weight: .regular))
@@ -55,7 +57,6 @@ struct DiningAnalyticsView: View {
                         .frame(maxWidth: 280)
                         .padding(.bottom, 64)
                         .multilineTextAlignment(.center)
-                        .foregroundColor(.black)
                         .opacity(0.6)
                     }
                 } else {
@@ -67,16 +68,26 @@ struct DiningAnalyticsView: View {
                                     GraphView(type: .dollars, data: dollarHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance)
                                 }
                             }
+                            // Only show swipe history view if there is data for the graph
+                            if !swipeHistory.wrappedValue.isEmpty {
+                                CardView {
+                                    GraphView(type: .swipes, data: swipeHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance)
+                                }
+                            }
+                            Spacer()
                         }
-                        // Only show swipe history view if there is data for the graph
-                        if !swipeHistory.wrappedValue.isEmpty {
-                            CardView {
-                                GraphView(type: .swipes, data: swipeHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance)
+                        .padding()
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                showSettingsSheet.toggle()
+                            }) {
+                                Image(systemName: "gear")
+                                    .imageScale(.large)
                             }
                         }
-                        Spacer()
                     }
-                    .padding()
                 }
             }
         }
@@ -93,9 +104,9 @@ struct DiningAnalyticsView: View {
             DiningLoginNavigationView()
                 .environmentObject(diningAnalyticsViewModel)
         }
-        .navigationTitle(Text("Dining Analytics"))
+        .navigationTitle("Dining Analytics")
         .sheet(isPresented: $showSettingsSheet) {
-            DiningSettingsView(viewModel: diningAnalyticsViewModel) // Replace with your settings view
+            DiningSettingsView(viewModel: diningAnalyticsViewModel)
         }
     }
 }

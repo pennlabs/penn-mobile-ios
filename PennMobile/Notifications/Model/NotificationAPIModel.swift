@@ -11,6 +11,5 @@ import Foundation
 struct GetNotificationID: Codable, Identifiable {
     let id: Int
     let kind: String
-    let dev: Bool
     let token: String
 }

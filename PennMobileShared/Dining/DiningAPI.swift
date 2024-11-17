@@ -9,7 +9,7 @@
 import SwiftyJSON
 import Foundation
 
-public class DiningAPI {
+public final class DiningAPI: Sendable {
     public static let defaultVenueIds: [Int] = [593, 636, 1442, 639]
 
     public static let instance = DiningAPI()
@@ -25,6 +25,8 @@ public class DiningAPI {
         guard let (data, _) = try? await URLSession.shared.data(from: URL(string: diningUrl)!) else {
             return .failure(.serverError)
         }
+        
+        
         
         let decoder = JSONDecoder()
         let dateFormatter = DateFormatter()

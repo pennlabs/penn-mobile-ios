@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class HomeFeatureCell: UITableViewCell, HomeCellConformable {
     static var identifier: String = "homeFeatureCell"

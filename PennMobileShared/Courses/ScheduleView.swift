@@ -124,7 +124,7 @@ public struct ScheduleView: View {
         self.showColors = showColors
     }
 
-    public struct HourLabel: OptionSet {
+    public struct HourLabel: OptionSet, Sendable {
         public var rawValue: UInt8
         public init(rawValue: UInt8) {
             self.rawValue = rawValue

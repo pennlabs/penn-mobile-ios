@@ -10,8 +10,10 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject var authManager: AuthManager
+    @EnvironmentObject var bannerViewModel: BannerViewModel
     @State var toast: ToastConfiguration?
     @StateObject var popupManager = PopupManager()
+    @Environment(\.scenePhase) var scenePhase
 
     var isOnLogoutScreen: Bool {
         switch authManager.state {
@@ -21,12 +23,30 @@ struct RootView: View {
             false
         }
     }
-
+    
+    let timer = Timer.publish(every: 30, on: .main, in: .default).autoconnect()
+    
     var body: some View {
         Group {
             switch authManager.state {
             case .guest, .loggedIn:
-                MainTabView().transition(.opacity)
+                if bannerViewModel.showBanners {
+                    VStack(spacing: 0) {
+                        BannerView()
+                        MainTabView()
+                        BannerView()
+                    }
+                    .transition(.opacity)
+                    .ignoresSafeArea()
+                    .sheet(isPresented: $bannerViewModel.showPopup) {
+                        UserEngagementPopupView()
+                    }
+                    .onReceive(timer) { _ in
+                        bannerViewModel.showPopup = true
+                    }
+                } else {
+                    MainTabView().transition(.opacity)
+                }
             case .loggedOut:
                 LoggedOutView().transition(.opacity)
             default:
@@ -47,16 +67,18 @@ struct RootView: View {
             }
         }
         .overlay {
-            if popupManager.isShown {
-                CustomPopupView(isShown: $popupManager.isShown,
-                                image: popupManager.image,
-                                title: popupManager.title,
-                                message: popupManager.message,
-                                button1: popupManager.button1,
-                                button2: popupManager.button2,
-                                action1: popupManager.action1,
-                                action2: popupManager.action2)
-                    .transition(.scale)
+            ZStack {
+                if popupManager.disableBackground {
+                    Color.white
+                        .opacity(0)
+                        .edgesIgnoringSafeArea(.all)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                }
+                if popupManager.isShown {
+                    CustomPopupView(popupManager: popupManager)
+                        .transition(AnyTransition.opacity.combined(with: .scale(scale: 1.05)))
+                        .animation(.easeInOut(duration: 0.3), value: popupManager.isShown)
+                }
             }
         }
         .environmentObject(popupManager)
@@ -68,6 +90,11 @@ struct RootView: View {
                         toast = nil
                     }
                 }
+            }
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .active && BannerViewModel.isAprilFools {
+                bannerViewModel.showBanners = true
             }
         }
     }

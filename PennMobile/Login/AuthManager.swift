@@ -56,9 +56,12 @@ class AuthManager: ObservableObject {
     static func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
-        OAuth2NetworkManager.instance.clearRefreshToken()
-        OAuth2NetworkManager.instance.clearCurrentAccessToken()
         Account.clear()
+        
+        Task {
+            await OAuth2NetworkManager.instance.clearRefreshToken()
+            await OAuth2NetworkManager.instance.clearCurrentAccessToken()
+        }
     }
 
     func determineInitialState() {

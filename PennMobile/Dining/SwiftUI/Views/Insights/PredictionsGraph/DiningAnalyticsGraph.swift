@@ -48,104 +48,75 @@ struct AnalyticsGraph: View {
     @State var tapBalance: Double = 0.0
     @State var isPrediction: Bool = false
     var body: some View {
-        ZStack {
-            Chart {
-                ForEach(data) {
-                    LineMark(
-                        x: .value("Day", $0.date, unit: .day),
-                        y: .value("Balance", $0.balance)
-                    )
-                    .foregroundStyle(color)
-                    .foregroundStyle(by: .value("Type", "Data"))
+        Chart {
+            ForEach(data) {
+                LineMark(
+                    x: .value("Day", $0.date, unit: .day),
+                    y: .value("Balance", $0.balance)
+                )
+                .foregroundStyle(color)
+                .foregroundStyle(by: .value("Type", "Data"))
+            }
+            ForEach(predictionLineData) {
+                LineMark(
+                    x: .value("Day", $0.date, unit: .day),
+                    y: .value("Balance", $0.balance)
+                )
+                .foregroundStyle(Color.gray)
+                .foregroundStyle(by: .value("Type", "Prediction"))
+                .lineStyle(StrokeStyle(lineWidth: 2, dash: [5]))
+            }
+            RuleMark(x: .value("End of Term", end))
+                .foregroundStyle(Color.red)
+                .annotation(alignment: .trailing) {
+                    Text("End of Term")
+                        .font(.caption)
+                        .foregroundColor(Color.red)
                 }
-                ForEach(predictionLineData) {
-                    LineMark(
-                        x: .value("Day", $0.date, unit: .day),
-                        y: .value("Balance", $0.balance)
-                    )
-                    .foregroundStyle(Color.gray)
-                    .foregroundStyle(by: .value("Type", "Prediction"))
-                    .lineStyle(StrokeStyle(lineWidth: 2, dash: [5]))
-                }
-                RuleMark(x: .value("End of Term", end))
-                    .foregroundStyle(Color.red)
-                    .annotation(alignment: .trailing) {
-                        Text("End of Term")
-                            .font(.caption)
-                            .foregroundColor(Color.red)
-                    }
-                PointMark(x: .value("End of Term", end), y: .value("End of Term", maxY))
-                    .foregroundStyle(Color.red)
-                if showInfo {
-                    PointMark(x: .value("Tap", tapDate), y: .value("Tap", tapBalance))
-                        .foregroundStyle(isPrediction ? Color.gray : color)
+            PointMark(x: .value("End of Term", end), y: .value("End of Term", maxY))
+                .foregroundStyle(Color.red)
+            if showInfo {
+                PointMark(x: .value("Tap", tapDate), y: .value("Tap", tapBalance))
+                    .foregroundStyle(isPrediction ? Color.gray : color)
+            }
+        }
+        .chartLegend(.hidden)
+        .chartYAxis {
+            AxisMarks(position: .leading, values: labels.1) {
+                AxisGridLine()
+                // AxisTick()
+                AxisValueLabel(anchor: .trailing, collisionResolution: .disabled)
+            }
+        }
+        .chartYScale(domain: 0...maxY)
+        .chartXAxis {
+            AxisMarks(values: labels.0) { value in
+                AxisGridLine()
+                // AxisTick(centered: true)
+                AxisValueLabel(anchor: .top, collisionResolution: .disabled) {
+                    Text(axesDateFormatter.string(from: value.as(Date.self)!))
                 }
             }
-            .chartLegend(.hidden)
-            .chartYAxis {
-                AxisMarks(position: .leading, values: labels.1) {
-                    AxisGridLine()
-                    // AxisTick()
-                    AxisValueLabel(anchor: .trailing, collisionResolution: .disabled)
-                }
-            }
-            .chartYScale(domain: 0...maxY)
-            .chartXAxis {
-                AxisMarks(values: labels.0) { value in
-                    AxisGridLine()
-                    // AxisTick(centered: true)
-                    AxisValueLabel(anchor: .top, collisionResolution: .disabled) {
-                        Text(axesDateFormatter.string(from: value.as(Date.self)!))
-                    }
-                }
-            }
-            .chartXScale(domain: start...end)
-            .frame(height: graphHeight)
-            .chartOverlay { proxy in
-                GeometryReader { geometry in
+        }
+        .chartXScale(domain: start...end)
+        .frame(height: graphHeight)
+        .chartOverlay { proxy in
+            GeometryReader { geometry in
+                ZStack {
                     Rectangle().fill(.clear).contentShape(Rectangle())
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onChanged { value in
-                                    // Convert the gesture location to the coordiante space of the plot area
-                                    let origin = geometry[proxy.plotAreaFrame].origin
-                                    let location = CGPoint(
-                                        x: value.location.x - origin.x,
-                                        y: value.location.y - origin.y
-                                    )
-                                    // Get the x (date) and y (balance) value from the tap location (balance from tap location, not line location
-                                    let (date, _) = proxy.value(at: location, as: (Date, Double).self) ?? (start, 0)
-                                    // Get the actual balance at date, from non predicted data
-                                    var balance = data.last(where: {$0.date <= date})?.balance ?? -1.0
-                                    isPrediction = false
-                                    // Get actual balance at date, from predicted data
-                                    if predictionLineData.count != 0 && predictionLineData[0].date < date {
-                                        // Ensuring prediction line exists and is valid
-                                        if let predStart = proxy.position(for: (x: predictionLineData[0].date, y: predictionLineData[0].balance)),
-                                           let predEnd = proxy.position(for: (x: predictionLineData[1].date, y: predictionLineData[1].balance)) {
-                                            // Get slope of line, and then predicted balance
-                                            let slope = (predEnd.y - predStart.y) / (predEnd.x - predStart.x)
-                                            balance = proxy.value(atY: slope * (location.x - predStart.x) + predStart.y) ?? -1.0
-                                            isPrediction = true
-                                        }
-                                    }
-                                    // Get graph coordinate of balance
-                                    let coordOfBalance = proxy.position(forY: balance) ?? 0.0
-                                    // Check if position is on screen (and balance is valid)
-                                    showInfo = balance != -1.0 && 0 <= location.x && location.x <= proxy.plotAreaSize.width && coordOfBalance >= 0 && coordOfBalance <= proxy.plotAreaSize.height
-                                    // Get pixel position of where to display (relative to whole screen)
-                                    tapLocation = CGPoint(x: value.location.x, y: coordOfBalance + origin.y)
-                                    tapDate = date
-                                    tapBalance = balance
+                                    onDrag(chartProxy: proxy, geometryProxy: geometry, dragLocation: value.location)
                                 }
                                 .onEnded { _ in
                                     showInfo = false
                                 }
                         )
+                    if showInfo {
+                        ZoomInfo(location: tapLocation, date: tapDate, balance: tapBalance, balanceFormat: balanceFormat, color: isPrediction ? Color.gray : color, parentSize: geometry.size)
+                    }
                 }
-            }
-            if showInfo {
-                ZoomInfo(location: tapLocation, date: tapDate, balance: tapBalance, balanceFormat: balanceFormat, color: isPrediction ? Color.gray : color)
             }
         }.onChange(of: infoDateFormatter.calendar.dateComponents([.year, .month, .day], from: tapDate)) { _ in
             triggerHaptic()
@@ -158,10 +129,59 @@ struct AnalyticsGraph: View {
             }
         }
     }
+    
+    func onDrag(chartProxy: ChartProxy, geometryProxy: GeometryProxy, dragLocation: CGPoint) {
+        // Convert the gesture location to the coordiante space of the plot area
+        let origin = geometryProxy[chartProxy.plotAreaFrame].origin
+        let location = CGPoint(
+            x: dragLocation.x - origin.x,
+            y: dragLocation.y - origin.y
+        )
+        
+        // Get the x (date) and y (balance) value from the tap location (from tap location, not line location
+        let (date, _) = chartProxy.value(at: location, as: (Date, Double).self) ?? (start, 0)
+        
+        // Find beforeDate and afterDate in non-prediction data
+        let beforeIndex = data.lastIndex(where: { Calendar.current.compare($0.date, to: date, toGranularity: .day) != .orderedDescending })
+        let afterIndex = data.firstIndex(where: { Calendar.current.compare($0.date, to: date, toGranularity: .day) != .orderedAscending })
+        
+        var balance: Double = -1.0
+        isPrediction = false
+        
+        if let beforeIndex = beforeIndex, let afterIndex = afterIndex {
+            // Interpolate between beforeDate and afterDate
+            let beforeData = data[beforeIndex]
+            let afterData = data[afterIndex]
+            let totalTime = afterData.date.timeIntervalSince(beforeData.date)
+            let elapsedTime = date.timeIntervalSince(beforeData.date)
+            let weight = totalTime == 0 ? 1 : elapsedTime / totalTime
+            balance = beforeData.balance + weight * (afterData.balance - beforeData.balance)
+        } else {
+            // Use prediction data at tap
+            if let predStart = chartProxy.position(for: (x: predictionLineData[0].date, y: predictionLineData[0].balance)),
+               let predEnd = chartProxy.position(for: (x: predictionLineData[1].date, y: predictionLineData[1].balance)) {
+                // Get slope of line, and then predicted balance
+                let slope = (predEnd.y - predStart.y) / (predEnd.x - predStart.x)
+                balance = chartProxy.value(atY: slope * (location.x - predStart.x) + predStart.y) ?? -1.0
+                isPrediction = true
+            }
+        }
+        
+        // Get graph coordinate of balance
+        let coordOfBalance = chartProxy.position(forY: balance) ?? 0.0
+        // Check if position is on screen (and balance is valid)
+        showInfo = balance != -1.0 && 0 <= location.x && location.x <= chartProxy.plotAreaSize.width && coordOfBalance >= 0 && coordOfBalance <= chartProxy.plotAreaSize.height
+        // Get pixel position of where to display (relative to whole screen)
+        tapLocation = CGPoint(x: dragLocation.x, y: coordOfBalance + origin.y)
+        tapDate = date
+        tapBalance = balance
+    }
+    
     func triggerHaptic() {
         feedbackGenerator?.impactOccurred(intensity: 0.4 + max(0, min(tapBalance / maxY, 1)) * 0.6)
         feedbackGenerator?.prepare()
     }
+    
     func getXLabels(xAxisLabelCount: Int = 5) -> [Date] {
         var xLabels: [Date] = []
         let semester = start.distance(to: end)
@@ -189,12 +209,10 @@ struct ZoomInfo: View {
     var balance: Double
     var balanceFormat: String
     var color: Color
+    var parentSize: CGSize
+    
     var body: some View {
         ZStack {
-            // Circle()
-            //     .stroke(color, lineWidth: 4)
-            //     .frame(width: 50, height: 50)
-            // ADD SOME OTHER DESIGN
             VStack {
                 Text(infoDateFormatter.string(from: date))
                     .foregroundColor(color)
@@ -204,7 +222,7 @@ struct ZoomInfo: View {
                     .font(.caption)
             }
         }
-        .position(x: min(location.x + 25, UIScreen.main.bounds.size.width - 75), y: location.y - 25)
+        .position(x: min(location.x + 25, parentSize.width - 40), y: location.y - 25)
     }
 }
 

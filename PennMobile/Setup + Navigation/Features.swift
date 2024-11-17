@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-enum FeatureIdentifier: String, Hashable {
+enum FeatureIdentifier: String, Hashable, Identifiable {
     case dining = "Dining"
     case gsr = "Study Room Booking"
     case laundry = "Laundry"
@@ -21,6 +21,10 @@ enum FeatureIdentifier: String, Hashable {
     case pac = "PAC Code"
     case about = "About"
     case polls = "Poll History"
+    case subletting = "Subletting"
+    case ticketScanner = "Ticket Scanner"
+    
+    var id: String { rawValue }
 }
 
 struct AppFeature: Identifiable {
@@ -97,12 +101,18 @@ let features: [AppFeature] = [
     AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey"), controller: GSRTabController.self),
     AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey"), controller: LaundryTableViewController.self),
     AppFeature(.news, name: "News", color: .baseRed, image: .app("News_Grey"), controller: NewsViewController.self),
-    AppFeature(.contacts, shortName: "Contacts", longName: "Penn Contacts", color: .baseYellow, image: .app("Contacts_Grey"), controller: ContactsTableViewController.self),
+    AppFeature(.contacts, shortName: "Contacts", longName: "Penn Contacts", color: .baseYellow, image: .app("Contacts_Grey")) {
+        ContactsView()
+            .navigationTitle(Text("Contacts"))
+    },
     AppFeature(.courseSchedule, shortName: "Courses", longName: "Course Schedule", color: .basePurple, image: .app("Calendar_Grey")) {
         CoursesView().environmentObject(CoursesViewModel.shared)
     },
     AppFeature(.pennCourseAlert, shortName: "PCA", longName: "Penn Course Alert", color: .baseLabsBlue, image: .system("bell.fill"), controller: CourseAlertController.self),
-    AppFeature(.events, shortName: "Events", longName: "Penn Events", color: .baseGreen, image: .app("Events_Grey"), controller: PennEventsTableViewController.self),
+    AppFeature(.events, name: "Penn Events", color: .baseGreen, image: .app("Events_Grey")) {
+        PennEventsView()
+            .navigationTitle(Text("Events"))
+    },
     AppFeature(.fitness, name: "Fitness", color: .baseRed, image: .app("Fitness_Grey")) {
         FitnessView()
             .navigationTitle(Text("Fitness"))
@@ -111,6 +121,14 @@ let features: [AppFeature] = [
         PollsView()
             .navigationTitle(Text("Poll History"))
     },
+    AppFeature(.subletting, shortName: "Subletting", longName: "Subletting (Beta)", color: .baseOrange, image: .system("building")) {
+        MarketplaceView()
+            .navigationTitle(Text("Marketplace"))
+    },
     AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),
+    AppFeature(.ticketScanner, shortName: "Scanner", longName: "Ticket Scanner", color: .basePurple, image: .system("qrcode.viewfinder")) {
+        ScannerView()
+            .navigationTitle(Text("Scanner"))
+    },
     AppFeature(.about, name: "About", color: .baseBlue, image: .system("info.circle"), controller: AboutViewController.self)
 ]

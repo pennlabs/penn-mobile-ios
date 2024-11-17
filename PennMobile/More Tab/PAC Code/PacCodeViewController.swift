@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import PennMobileShared
 
 class PacCodeViewController: UIViewController, ShowsAlertForError, IndicatorEnabled {
