@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import PennMobileShared
 
 class AboutViewController: UIViewController {

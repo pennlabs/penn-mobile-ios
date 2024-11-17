@@ -6,6 +6,7 @@
 //  Copyright © 2024 PennLabs. All rights reserved.
 //
 
+import UIKit
 import PennMobileShared
 
 struct GenericErrorResponse: Decodable {

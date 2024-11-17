@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class ModularTableView: UITableView {
     var model: ModularTableViewModel! {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import XLPagerTabStrip
 
 class GSRTabController: ButtonBarPagerTabStripViewController, LegacyToastPresentingViewController {
