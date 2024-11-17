@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // group gsrs!
 class GSRGroupController: GenericViewController {

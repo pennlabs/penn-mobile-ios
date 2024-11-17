@@ -6,6 +6,7 @@
 //  Copyright © 2018 PennLabs. All rights reserved.
 //
 import Foundation
+import UIKit
 import Kingfisher
 
 class ImageNetworkingManager {

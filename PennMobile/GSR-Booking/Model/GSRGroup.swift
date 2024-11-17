@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct GSRGroup: Decodable, Comparable {
     let id: Int

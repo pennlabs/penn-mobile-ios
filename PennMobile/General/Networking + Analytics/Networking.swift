@@ -6,6 +6,8 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
+import UIKit
+
 public enum Method {
     case delete
     case get

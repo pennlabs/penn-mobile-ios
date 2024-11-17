@@ -6,6 +6,7 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
+import UIKit
 import CoreLocation
 import LocalAuthentication
 import PennMobileShared

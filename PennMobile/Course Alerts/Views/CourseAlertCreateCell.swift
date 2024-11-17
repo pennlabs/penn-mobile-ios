@@ -5,7 +5,9 @@
 //  Created by Raunaq Singh on 11/8/20.
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
+
 import Foundation
+import UIKit
 
 class CourseAlertCreateCell: UITableViewCell {
 

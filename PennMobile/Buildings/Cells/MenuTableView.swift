@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class MenuTableView: UITableView {
     override var contentSize: CGSize {
