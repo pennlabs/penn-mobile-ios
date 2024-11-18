@@ -2872,7 +2872,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.0.7;
+				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -2911,7 +2911,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 8.0.7;
+				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -3050,7 +3050,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.0.7;
+				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Widget";
@@ -3092,7 +3092,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 8.0.7;
+				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
