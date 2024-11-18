@@ -16,19 +16,6 @@ struct AccessToken: Codable {
     let expiration: Date
 }
 
-extension URLRequest {
-    // Sets the appropriate header field given an access token
-    // NOTE: Should ONLY be used for requests to Labs servers. Otherwise, access token will be compromised.
-    init(url: URL, accessToken: AccessToken) {
-        self.init(url: url)
-        // Authorization headers are restricted on iOS and not supposed to be set. They can be removed at any time.
-        // Thus, we et an X-Authorization header to carry the bearer token in addition to the regular Authorization header.
-        // For more info: see https://developer.apple.com/documentation/foundation/nsurlrequest#1776617
-        setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "Authorization")
-        setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "X-Authorization")
-    }
-}
-
 enum OAuth2State {
     case unknown
     case unauthenticated
@@ -56,7 +43,7 @@ enum OAuth2State {
         }
     }
     
-    private static let logger = Logger(subsystem: "org.pennlabs.PennMobile", category: "OAuth2NetworkManager")
+    private static let logger = Logger(category: "OAuth2NetworkManager")
     
     private struct TokenResponse: Decodable {
         var expiresIn: Int
@@ -297,6 +284,29 @@ extension String {
         }
         let encodedParams = parameterArray.joined(separator: "&")
         return encodedParams
+    }
+}
+
+// MARK: - Utilities
+
+extension URLRequest {
+    // Sets the appropriate header field given an access token
+    // NOTE: Should ONLY be used for requests to Labs servers. Otherwise, access token will be compromised.
+    init(url: URL, accessToken: AccessToken) {
+        self.init(url: url)
+        // Authorization headers are restricted on iOS and not supposed to be set. They can be removed at any time.
+        // Thus, we et an X-Authorization header to carry the bearer token in addition to the regular Authorization header.
+        // For more info: see https://developer.apple.com/documentation/foundation/nsurlrequest#1776617
+        setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "Authorization")
+        setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "X-Authorization")
+    }
+    
+    init(authenticatedUrl: URL, authNetworkManager: OAuth2NetworkManager = .shared) async throws {
+        guard let token = try await authNetworkManager.getAccessToken() else {
+            throw NetworkingError.authenticationError
+        }
+        
+        self.init(url: authenticatedUrl, accessToken: token)
     }
 }
 
