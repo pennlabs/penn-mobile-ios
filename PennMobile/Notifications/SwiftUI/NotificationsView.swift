@@ -73,7 +73,7 @@ extension NotificationsView {
     }
 
     func showNotificationsUndeterminedError() -> Alert {
-        return Alert(title: Text("Enable Notifications"), message: Text("Receive monthly dining plan progress updates, laundry alerts, and information about new features."), primaryButton: .default(Text("Don't Allow"), action: { dismiss() }), secondaryButton: .default(Text("OK"), action: {
+        return Alert(title: Text("Enable Notifications"), message: Text("Receive Penn Course Alert notifications (when available), laundry alerts, and information about new features."), primaryButton: .default(Text("Don't Allow"), action: { dismiss() }), secondaryButton: .default(Text("OK"), action: {
                 registerPushNotification { (granted) in
                     DispatchQueue.main.async {
                         if granted {
