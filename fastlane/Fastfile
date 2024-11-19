@@ -42,7 +42,15 @@ platform :ios do
             }
         }
     )
-    pilot(app_identifier: "org.pennlabs.PennMobile", api_key_path: "api_key.json", distribute_external: true, groups: "Penn Labs", changelog: "test CI")
+    pilot(
+      app_identifier: "org.pennlabs.PennMobile",
+      api_key_path: "api_key.json",
+      distribute_external: true,
+      groups: "Penn Labs",
+      changelog: "Test experimental features of Penn Mobile",
+      beta_app_description: "Test experimental features of Penn Mobile",
+      beta_app_feedback_email: "contact@pennlabs.org"
+    )
   end
   
   lane :deployBeta do
