@@ -16,6 +16,7 @@ struct HomeViewData {
     var polls: Result<[PollQuestion], Error>?
     var posts: Result<[Post], Error>?
     var newsArticles: Result<[NewsArticle], Error>?
+    var wrapped: Result<WrappedData, Error>?
     var events: [CalendarEvent] = []
     
     var onPollResponse: ((Int, Int) -> Void)?
@@ -68,6 +69,18 @@ struct HomeViewData {
                 ProgressView()
                     .controlSize(.large)
                     .padding(.bottom)
+            }
+            
+            if case .some(.success(let wrappedData)) = self.wrapped {
+                // TODO WRAPPED
+                if wrappedData.pages.count > 0 {
+                    ZStack {
+                        Image("WrappedBanner")
+                            .resizable()
+                            .scaledToFit()
+                            .padding()
+                    }
+                }
             }
             
              if showSublettingBanner {
