@@ -184,9 +184,27 @@ extension Optional {
                     }
                     
                     do {
-                        let wrapped = try JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode(WrappedData.self, from: data)
+                        let wrapped = try JSONDecoder().decode(WrappedData.self, from: data)
                         DispatchQueue.main.async {
+                            
+                            // THIS HAS A BUG:
+                            // the case where the user opens PM, receives their latest wrapped, then doesn't open until next semester
+                            
+                            // wait, is this a bug? consider that if the semester is always sent with the /current endpoint, then that active/unviewed state can sit in memory and not affect?
+                            
+                            
+                            let currState: WrappedSemesterState? = WrappedSemesterState(rawValue: UserDefaults.standard.integer(forKey: HomeViewData.wrappedSemesters + wrapped.semester))
+                            
+                            if currState == .active {
+                                UserDefaults.standard.set(wrapped.pages.count > 0 ? WrappedSemesterState.active.rawValue : WrappedSemesterState.inactive.rawValue,
+                                                          forKey: HomeViewData.wrappedSemesters + wrapped.semester)
+                            } else {
+                                UserDefaults.standard.set(wrapped.pages.count > 0 ? WrappedSemesterState.newUnviewed.rawValue : WrappedSemesterState.inactive.rawValue,
+                                                          forKey: HomeViewData.wrappedSemesters + wrapped.semester)
+                            }
+                            
                             self.data.wrapped = .success(wrapped)
+                            
                         }
                     } catch {
                         DispatchQueue.main.async {

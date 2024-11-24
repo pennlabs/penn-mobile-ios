@@ -368,6 +368,7 @@
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
+		730669EC2CF39816004C7271 /* WrappedSemesterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730669EB2CF3980D004C7271 /* WrappedSemesterState.swift */; };
 		73E7A0262CF158A4007BC1E3 /* WrappedContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A0232CF158A4007BC1E3 /* WrappedContainerViewModel.swift */; };
 		73E7A0272CF158A4007BC1E3 /* WrappedContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A0222CF158A4007BC1E3 /* WrappedContainerView.swift */; };
 		73E7A0282CF158A4007BC1E3 /* WrappedUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A0242CF158A4007BC1E3 /* WrappedUnit.swift */; };
@@ -375,6 +376,7 @@
 		73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 73E7A02B2CF158F3007BC1E3 /* Lottie */; };
 		73E7A04E2CF15B0E007BC1E3 /* WrappedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A04D2CF15B0B007BC1E3 /* WrappedData.swift */; };
 		73E7A0522CF18157007BC1E3 /* WrappedAPIUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A0512CF18153007BC1E3 /* WrappedAPIUnit.swift */; };
+		73E7A06F2CF1B9B3007BC1E3 /* WrappedHomeScreenExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A06E2CF1B9AE007BC1E3 /* WrappedHomeScreenExperience.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -811,12 +813,14 @@
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		730669EB2CF3980D004C7271 /* WrappedSemesterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedSemesterState.swift; sourceTree = "<group>"; };
 		73E7A0222CF158A4007BC1E3 /* WrappedContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedContainerView.swift; sourceTree = "<group>"; };
 		73E7A0232CF158A4007BC1E3 /* WrappedContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedContainerViewModel.swift; sourceTree = "<group>"; };
 		73E7A0242CF158A4007BC1E3 /* WrappedUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedUnit.swift; sourceTree = "<group>"; };
 		73E7A0252CF158A4007BC1E3 /* WrappedUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedUnitView.swift; sourceTree = "<group>"; };
 		73E7A04D2CF15B0B007BC1E3 /* WrappedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedData.swift; sourceTree = "<group>"; };
 		73E7A0512CF18153007BC1E3 /* WrappedAPIUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedAPIUnit.swift; sourceTree = "<group>"; };
+		73E7A06E2CF1B9AE007BC1E3 /* WrappedHomeScreenExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedHomeScreenExperience.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -2149,6 +2153,8 @@
 		73E7A0212CF158A1007BC1E3 /* Wrapped */ = {
 			isa = PBXGroup;
 			children = (
+				730669EB2CF3980D004C7271 /* WrappedSemesterState.swift */,
+				73E7A06E2CF1B9AE007BC1E3 /* WrappedHomeScreenExperience.swift */,
 				73E7A04D2CF15B0B007BC1E3 /* WrappedData.swift */,
 				73E7A0222CF158A4007BC1E3 /* WrappedContainerView.swift */,
 				73E7A0232CF158A4007BC1E3 /* WrappedContainerViewModel.swift */,
@@ -2535,6 +2541,7 @@
 				42632D382CB9C77B0028CC31 /* HomeGroupInvitesCellItem.swift in Sources */,
 				42632D392CB9C77B0028CC31 /* BookingRowCell.swift in Sources */,
 				42632D3A2CB9C77B0028CC31 /* HomeGSRBookingButton.swift in Sources */,
+				730669EC2CF39816004C7271 /* WrappedSemesterState.swift in Sources */,
 				42632D3B2CB9C77B0028CC31 /* HomeGSRCellItem.swift in Sources */,
 				42632D3C2CB9C77B0028CC31 /* HomeStudyRoomCell.swift in Sources */,
 				42632D3D2CB9C77B0028CC31 /* HomeGSRLocationsCell.swift in Sources */,
@@ -2553,6 +2560,7 @@
 				42632D4F2CB9C77B0028CC31 /* HomeFlingCell.swift in Sources */,
 				42632D502CB9C77B0028CC31 /* HomeFlingCellItem.swift in Sources */,
 				42632D512CB9C77B0028CC31 /* HomeUpdateCellItem.swift in Sources */,
+				73E7A06F2CF1B9B3007BC1E3 /* WrappedHomeScreenExperience.swift in Sources */,
 				42632D522CB9C77B0028CC31 /* HomeCellConformable.swift in Sources */,
 				73E7A0262CF158A4007BC1E3 /* WrappedContainerViewModel.swift in Sources */,
 				73E7A0272CF158A4007BC1E3 /* WrappedContainerView.swift in Sources */,

@@ -23,6 +23,8 @@ struct HomeViewData {
     var onStartSubletting: (() -> Void)?
     var onDismissSubletting: (() -> Void)?
     
+    static let wrappedSemesters = "wrappedSemester."
+    
     func splashText(for date: Date) -> String {
         let intro = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"].randomElement()!
         if let firstName {
@@ -73,15 +75,13 @@ struct HomeViewData {
             
             if case .some(.success(let wrappedData)) = self.wrapped {
                 // TODO WRAPPED
+                // this pages.count could later become if wrappedData.pages != nil (pages being optional)
                 if wrappedData.pages.count > 0 {
-                    ZStack {
-                        Image("WrappedBanner")
-                            .resizable()
-                            .scaledToFit()
-                            .padding()
-                    }
+                    WrappedHomeScreenExperience(with: wrappedData)
                 }
             }
+            
+            
             
              if showSublettingBanner {
                 HomeSublettingBanner {
