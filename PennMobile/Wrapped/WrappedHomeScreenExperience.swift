@@ -10,32 +10,45 @@ import Foundation
 import SwiftUI
 
 struct WrappedHomeScreenExperience: View {
-    @State var wrappedExperienceState: WrappedExperienceState = .inactive
-    let wrappedData: WrappedData
     
-    init(with wrappedData: WrappedData) {
-        self.wrappedData = wrappedData
+    @ObservedObject var vm: WrappedExperienceViewModel
+    
+    init(with wrappedModel: WrappedModel) {
+        self.vm = WrappedExperienceViewModel(model: wrappedModel)
     }
     
     
     var body: some View {
-        let wrappedActive = Binding<Bool>(get: { self.wrappedExperienceState != .inactive }, set: { _ in })
         ZStack {
             Image("WrappedBanner")
                 .resizable()
                 .scaledToFit()
                 .padding(.horizontal)
-                .fullScreenCover(isPresented: wrappedActive) {
-                    
+                .fullScreenCover(isPresented: $vm.showWrapped) {
+                    WrappedExperience([
+                        WrappedLoadingView(onFinish: { res in
+                            switch res {
+                            case .success(let units):
+                                guard let nonNilUnits = units as? [WrappedUnit] else { return }
+                                vm.finishedLoading(units: nonNilUnits)
+                                break;
+                            case .failure(let err):
+                                vm.error(error: err)
+                            }
+                        }, activeState: .loading),
+                        WrappedContainerView(onFinish: { res in
+                            
+                        },
+                         activeState: .active,
+                         viewModel: WrappedContainerViewModel(units: vm.wrappedUnits))
+                    ])
+                    .environmentObject(vm)
                 }
         }
         .onTapGesture {
-            UserDefaults.standard.set(WrappedSemesterState.active.rawValue, forKey: HomeViewData.wrappedSemesters + wrappedData.semester)
-            wrappedExperienceState = .loading
+            vm.startExperience()
         }
     }
 }
 
-enum WrappedExperienceState {
-    case loading, landing, error, active, inactive, shareScreen, finished
-}
+

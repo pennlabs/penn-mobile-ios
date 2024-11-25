@@ -166,7 +166,7 @@ extension Optional {
             OAuth2NetworkManager.instance.getAccessToken { token in
                 guard let token = token else {
                     DispatchQueue.main.async {
-                        self.data.wrapped = .success(WrappedData(semester: "", pages: []))
+                        self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
                     }
                     continuation.resume()
                     return
@@ -177,14 +177,14 @@ extension Optional {
                 let task = URLSession.shared.dataTask(with: url) { data, response, _ in
                     guard let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 else {
                         DispatchQueue.main.async {
-                            self.data.wrapped = .success(WrappedData(semester: "", pages: []))
+                            self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
                         }
                         continuation.resume()
                         return
                     }
                     
                     do {
-                        let wrapped = try JSONDecoder().decode(WrappedData.self, from: data)
+                        let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
                         DispatchQueue.main.async {
                             
                             // THIS HAS A BUG:

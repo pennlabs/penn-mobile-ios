@@ -7,7 +7,12 @@
 
 import SwiftUI
 
-struct WrappedContainerView: View {
+struct WrappedContainerView: View, WrappedStage {
+    let id = UUID()
+    var onFinish: ((Result<Any?, any Error>) -> Void)
+    let activeState: WrappedExperienceState
+    
+    
     @Environment(\.scenePhase) var scenePhase
     
     @ObservedObject var viewModel: WrappedContainerViewModel
@@ -27,8 +32,6 @@ struct WrappedContainerView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .ignoresSafeArea()
 
-            
-            
             VStack {
                 Spacer()
                 HStack (spacing: 0){
@@ -87,8 +90,15 @@ struct WrappedContainerView: View {
                 break;
             }
         }
-        
-        
+        .onChange(of: viewModel.state) { new in
+            if (new == .finished) {
+                onFinish(.success(nil))
+            }
+        }
+    }
+    
+    func start() {
+        viewModel.play()
     }
     
 }

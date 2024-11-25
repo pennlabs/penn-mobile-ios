@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct WrappedData: Codable {
+public struct WrappedModel: Codable {
     let semester: String
     let pages: [WrappedAPIUnit]
     

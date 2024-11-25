@@ -16,7 +16,7 @@ struct HomeViewData {
     var polls: Result<[PollQuestion], Error>?
     var posts: Result<[Post], Error>?
     var newsArticles: Result<[NewsArticle], Error>?
-    var wrapped: Result<WrappedData, Error>?
+    var wrapped: Result<WrappedModel, Error>?
     var events: [CalendarEvent] = []
     
     var onPollResponse: ((Int, Int) -> Void)?
