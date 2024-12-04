@@ -41,6 +41,11 @@ struct PennMobile: App {
         UserDBManager.shared.loginToBackend()
 
         migrateDataToGroupContainer()
+        
+        let state = authManager.state
+        Task {
+            await NotificationDeviceTokenManager.shared.authStateDetermined(state)
+        }
     }
 
     var body: some Scene {
@@ -56,6 +61,11 @@ struct PennMobile: App {
         }
         .onChange(of: authManager.state.isLoggedIn) { _ in
             homeViewModel.clearData()
+        }
+        .onChange(of: authManager.state) { state in
+            Task {
+                await NotificationDeviceTokenManager.shared.authStateDetermined(state)
+            }
         }
     }
 }

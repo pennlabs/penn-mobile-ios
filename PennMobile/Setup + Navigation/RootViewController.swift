@@ -38,35 +38,29 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
         view.addSubview(current.view)
         current.didMove(toParent: self)
 
-        if #available(iOS 15, *) {
-            Task {
-                if let (data, _) = try? await URLSession.shared.data(from: URL(string: "https://itunes.apple.com/lookup?bundleId=org.pennlabs.PennMobile")!),
-                   let data = try? JSON(data: data),
-                   let version = data["results"][0]["version"].string,
-                   let minimumOsVersion = data["results"][0]["minimumOsVersion"].int {
-                    let appVersion = UserDefaults.standard.getAppVersion()
-                    if appVersion.versionCompare(version) == .orderedAscending {
-                        showOption(withMsg: "New version of PennMobile available for iOS version greater than \(minimumOsVersion). The app may not be fully functional on older versions.", title: "Update available", onAccept: {
-                            guard let url = URL(string: "itms-apps://apps.apple.com/us/app/penn-mobile/id944829399") else { return }
-                            UIApplication.shared.open(url)
-                        }, onCancel: {
-                            self.applicationWillEnterForeground()
-                        })
-                    } else {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            self.applicationWillEnterForeground()
-                        }
-                    }
+        Task {
+            if let (data, _) = try? await URLSession.shared.data(from: URL(string: "https://itunes.apple.com/lookup?bundleId=org.pennlabs.PennMobile")!),
+               let data = try? JSON(data: data),
+               let version = data["results"][0]["version"].string,
+               let minimumOsVersion = data["results"][0]["minimumOsVersion"].int {
+                let appVersion = UserDefaults.standard.getAppVersion()
+                if appVersion.versionCompare(version) == .orderedAscending {
+                    showOption(withMsg: "New version of PennMobile available for iOS version greater than \(minimumOsVersion). The app may not be fully functional on older versions.", title: "Update available", onAccept: {
+                        guard let url = URL(string: "itms-apps://apps.apple.com/us/app/penn-mobile/id944829399") else { return }
+                        UIApplication.shared.open(url)
+                    }, onCancel: {
+                        self.applicationWillEnterForeground()
+                    })
                 } else {
-                    // No network request, simply go to home
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         self.applicationWillEnterForeground()
                     }
                 }
-            }
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.applicationWillEnterForeground()
+            } else {
+                // No network request, simply go to home
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.applicationWillEnterForeground()
+                }
             }
         }
     }

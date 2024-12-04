@@ -16,15 +16,15 @@ struct DiningAnalyticsView: View {
     @State var notLoggedInAlertShowing = false
     @State var showSettingsSheet = false
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     func showCorrectAlert() -> Alert {
         if !Account.isLoggedIn {
-            return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { presentationMode.wrappedValue.dismiss() }))
+            return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { dismiss() }))
         } else {
             return Alert(title: Text("\"Penn Mobile\" requires you to login to Campus Express to use this feature."),
                          message: Text("Would you like to continue to campus express?"),
                          primaryButton: .default(Text("Continue"), action: {showDiningLoginView = true}),
-                         secondaryButton: .cancel({ presentationMode.wrappedValue.dismiss() }))
+                         secondaryButton: .cancel({ dismiss() }))
         }
     }
     var body: some View {

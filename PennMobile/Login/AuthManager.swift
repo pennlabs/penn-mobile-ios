@@ -92,3 +92,18 @@ class AuthManager: ObservableObject {
         AuthManager.clearAccountData()
     }
 }
+
+extension AuthState: CustomDebugStringConvertible {
+    var debugDescription: String {
+        switch self {
+        case .notDetermined:
+            "Not determined"
+        case .loggedOut:
+            "Logged out"
+        case .guest:
+            "Guest"
+        case .loggedIn(let account):
+            "Logged in as \(account.username)"
+        }
+    }
+}
