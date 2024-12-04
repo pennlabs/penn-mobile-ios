@@ -9,10 +9,9 @@
 import Foundation
 import SwiftUI
 
-public protocol WrappedStage: Identifiable, View, AccessibilityRotorContent {
+public protocol WrappedStage: Identifiable, View {
     var id: UUID { get }
-    var onFinish: ((Result<Any?, Error>) -> Void) { get set }
-    func start() async
     var activeState: WrappedExperienceState { get }
-    var body: any View { get }
+    var onFinish: (Bool) -> Void { get set }
+    func start() async
 }

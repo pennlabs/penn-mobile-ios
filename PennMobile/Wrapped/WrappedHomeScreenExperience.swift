@@ -26,21 +26,16 @@ struct WrappedHomeScreenExperience: View {
                 .padding(.horizontal)
                 .fullScreenCover(isPresented: $vm.showWrapped) {
                     WrappedExperience([
-                        WrappedLoadingView(onFinish: { res in
-                            switch res {
-                            case .success(let units):
-                                guard let nonNilUnits = units as? [WrappedUnit] else { return }
-                                vm.finishedLoading(units: nonNilUnits)
-                                break;
-                            case .failure(let err):
-                                vm.error(error: err)
+                        WrappedLoadingView(activeState: .loading) { res in
+                            if res {
+                                vm.finishedLoading()
+                            } else {
+                                vm.error(error: WrappedLoadingError())
                             }
-                        }, activeState: .loading),
-                        WrappedContainerView(onFinish: { res in
-                            
                         },
-                         activeState: .active,
-                         viewModel: WrappedContainerViewModel(units: vm.wrappedUnits))
+                        WrappedContainerView(activeState: .active) { res in
+                            
+                        }
                     ])
                     .environmentObject(vm)
                 }

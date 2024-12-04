@@ -6,99 +6,107 @@
 //
 
 import SwiftUI
+import Foundation
 
-struct WrappedContainerView: View, WrappedStage {
-    let id = UUID()
-    var onFinish: ((Result<Any?, any Error>) -> Void)
-    let activeState: WrappedExperienceState
-    
+struct WrappedContainerView: WrappedStage {
+    var activeState: WrappedExperienceState
     
     @Environment(\.scenePhase) var scenePhase
-    
-    @ObservedObject var viewModel: WrappedContainerViewModel
+    @EnvironmentObject var vm: WrappedExperienceViewModel
+    let id: UUID = UUID()
+    var onFinish: (Bool) -> Void
     
     var body: some View {
-        ZStack {
-            Color(red: 0.1, green: 0.1, blue: 0.1)
-                .ignoresSafeArea()
-            TabView(selection: $viewModel.activeUnit) {
-                ForEach(viewModel.units) { unit in
-                    WrappedUnitView(unit: unit)
-                        .environmentObject(viewModel)
-                        .tag(unit)
-                }
-            }
+        
+        
+        if vm.containerVM != nil {
+            @ObservedObject var viewModel = vm.containerVM!
             
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .ignoresSafeArea()
-
-            VStack {
-                Spacer()
-                HStack (spacing: 0){
-                    ForEach(viewModel.units, id:\.self) { unit in
-                        GeometryReader { proxy in
-                            ZStack {
-                                Rectangle()
-                                    .size(width: CGFloat((Float(proxy.size.width))), height: 2)
-                                    .cornerRadius(1)
-                                    .foregroundStyle(.white.opacity(0.5))
-                                if unit.id <= viewModel.activeUnit.id {
-                                    Rectangle()
-                                        .size(width: unit.id < viewModel.activeUnit.id ? proxy.size.width :
-                                                CGFloat((Float(proxy.size.width) * Float(viewModel.activeUnitProgress))), height: 2)
-                                        .cornerRadius(1)
-                                        .foregroundStyle(.white)
-                                }
-                            }
-                        }.padding(.horizontal, 1)
+            ZStack {
+                Color(red: 0.1, green: 0.1, blue: 0.1)
+                    .ignoresSafeArea()
+                TabView(selection: $viewModel.activeUnit) {
+                    ForEach(viewModel.units) { unit in
+                        WrappedUnitView(unit: unit)
+                            .tag(unit)
                     }
                 }
-            }.foregroundColor(.white)
-        }
-        .onLongPressGesture(perform: {
-            viewModel.pause()
-            UIImpactFeedbackGenerator(style: .soft).impactOccurred()
-        }, onPressingChanged: { pressed in
-            if !pressed && viewModel.state == .paused {
+                
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .ignoresSafeArea()
+                
+                VStack {
+                    Spacer()
+                    HStack (spacing: 0){
+                        ForEach(viewModel.units, id:\.self) { unit in
+                            GeometryReader { proxy in
+                                ZStack {
+                                    Rectangle()
+                                        .size(width: CGFloat((Float(proxy.size.width))), height: 2)
+                                        .cornerRadius(1)
+                                        .foregroundStyle(.white.opacity(0.5))
+                                    if unit.id <= vm.containerVM!.activeUnit.id {
+                                        Rectangle()
+                                            .size(width: unit.id < viewModel.activeUnit.id ? proxy.size.width :
+                                                    CGFloat((Float(proxy.size.width) * Float(viewModel.activeUnitProgress))), height: 2)
+                                            .cornerRadius(1)
+                                            .foregroundStyle(.white)
+                                    }
+                                }
+                            }.padding(.horizontal, 1)
+                        }
+                    }
+                }.foregroundColor(.white)
+            }
+            .onLongPressGesture(perform: {
+                viewModel.pause()
+                UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+            }, onPressingChanged: { pressed in
+                if !pressed && viewModel.state == .paused {
+                    viewModel.play()
+                }
+            })
+            .onTapGesture { location in
+                if (location.x > 150) {
+                    viewModel.next()
+                } else {
+                    if (viewModel.activeUnitProgress > 0.2) {
+                        viewModel.restartCurrent()
+                    } else {
+                        viewModel.previous()
+                    }
+                    
+                }
+            }
+            .onAppear {
+                viewModel.reset()
                 viewModel.play()
             }
-        })
-        .onTapGesture { location in
-            if (location.x > 150) {
-                viewModel.next()
-            } else {
-                if (viewModel.activeUnitProgress > 0.2) {
-                    viewModel.restartCurrent()
-                } else {
-                    viewModel.previous()
-                }
-                
-            }
-        }
-        .onAppear {
-            viewModel.reset()
-        }
-        .onChange(of: scenePhase) { new in
-            switch (new) {
-            case .background, .inactive:
+            .onChange(of: scenePhase) { new in
+                switch (new) {
+                case .background, .inactive:
                     viewModel.pause()
                     break;
-            case .active:
-                viewModel.play()
-                break;
-            @unknown default:
-                break;
+                case .active:
+                    viewModel.play()
+                    break;
+                @unknown default:
+                    break;
+                }
             }
-        }
-        .onChange(of: viewModel.state) { new in
-            if (new == .finished) {
-                onFinish(.success(nil))
+            .onChange(of: viewModel.state) { new in
+                if (new == .finished) {
+                    onFinish(true)
+                }
             }
+        
+        } else {
+            Text("Error!")
         }
     }
     
-    func start() {
-        viewModel.play()
+    func start() async {
+        vm.containerVM?.play()
     }
     
 }

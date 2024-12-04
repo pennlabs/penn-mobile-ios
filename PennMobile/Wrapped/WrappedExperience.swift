@@ -19,7 +19,8 @@ public struct WrappedExperience: View {
     public var body: some View {
         TabView(selection: $vm.wrappedExperienceState) {
             ForEach(stages, id: \.id) { stage in
-                stage.tag(stage.activeState)
+                AnyView(stage)
+                    .tag(stage.activeState)
             }
         }
     }

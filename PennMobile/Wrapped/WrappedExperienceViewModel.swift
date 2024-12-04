@@ -18,6 +18,7 @@ public class WrappedExperienceViewModel: ObservableObject {
     }
     @Published var showWrapped: Bool = false
     @Published var error: Error?
+    @Published var containerVM: WrappedContainerViewModel?
     
     var wrappedUnits: [WrappedUnit] = []
     
@@ -31,8 +32,8 @@ public class WrappedExperienceViewModel: ObservableObject {
         wrappedExperienceState = .loading
     }
     
-    func finishedLoading(units: [WrappedUnit]) {
-        self.wrappedUnits = units
+    func finishedLoading() {
+        containerVM = WrappedContainerViewModel(units: wrappedUnits)
         wrappedExperienceState = .active
     }
     
