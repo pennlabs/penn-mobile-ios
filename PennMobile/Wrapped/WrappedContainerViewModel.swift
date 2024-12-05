@@ -49,7 +49,7 @@ class WrappedContainerViewModel: ObservableObject {
                 activeUnitPlaybackMode = .paused(at: .currentFrame)
                 
             case .playing:
-                timer = Timer.scheduledTimer(withTimeInterval: 0, repeats: true) {_ in
+                timer = Timer.scheduledTimer(withTimeInterval: 0.0, repeats: true) {_ in
                     self.update()
                 }
                 activeUnitPlaybackMode = .playing(.toProgress(1, loopMode: .loop))
