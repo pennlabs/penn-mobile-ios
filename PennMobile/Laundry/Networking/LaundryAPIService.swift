@@ -18,11 +18,23 @@ class LaundryAPIService: Requestable {
     fileprivate let statusURL = "https://pennmobile.org/api/laundry/status"
 
     public var idToRooms: [Int: LaundryRoom]?
+    
+    private func getCachedLaundryRooms() -> [Int: LaundryRoom]? {
+        let key = "laundryDataUpgraded"
+        if !UserDefaults.standard.bool(forKey: key) {
+            Storage.remove(LaundryRoom.directory, from: .caches)
+            UserDefaults.standard.set(true, forKey: key)
+        } else if Storage.fileExists(LaundryRoom.directory, in: .caches) {
+            return try? Storage.retrieveThrowing(LaundryRoom.directory, from: .caches, as: Dictionary<Int, LaundryRoom>.self)
+        }
+        
+        return nil
+    }
 
     // Prepare the service
     func prepare(_ completion: @escaping () -> Void) {
-        if Storage.fileExists(LaundryRoom.directory, in: .caches) {
-            self.idToRooms = Storage.retrieve(LaundryRoom.directory, from: .caches, as: Dictionary<Int, LaundryRoom>.self)
+        if let cached = getCachedLaundryRooms() {
+            self.idToRooms = cached
             completion()
         } else {
             loadIds { (_) in
