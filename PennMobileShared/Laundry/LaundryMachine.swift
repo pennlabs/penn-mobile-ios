@@ -18,14 +18,14 @@ public class LaundryMachine: Hashable, Codable {
         case outOfOrder = "out_of_order"
 
         static func parseStatus(for status: String) -> Status {
-            if status == "Not online" {
-                return .offline
-            } else if status == "Almost done" || status == "In use" {
+            if status == "AVAILABLE" || status == "COMPLETE" {
+                return .open
+            } else if status == "IN_USE" {
                 return .running
-            } else if status == "Out of order" {
+            } else if status == "OUT_OF_ORDER" {
                 return .outOfOrder
             } else {
-                return .open
+                return .offline
             }
         }
     }
