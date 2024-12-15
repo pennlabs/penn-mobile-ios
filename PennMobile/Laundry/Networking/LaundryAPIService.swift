@@ -73,20 +73,27 @@ class LaundryAPIService: Requestable {
 // MARK: - Fetch API
 extension LaundryAPIService {
     func fetchLaundryData(for ids: [Int], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
-        let ids: String = ids.map { String($0) }.joined(separator: ",")
-        let url = "\(laundryUrl)/\(ids)"
-        getRequest(url: url) { (dict, _, _) in
-            var rooms: [LaundryRoom]?
-            if let dict = dict {
-                let json = JSON(dict)
-                let jsonArray = json["rooms"].arrayValue
-                rooms = [LaundryRoom]()
-                for json in jsonArray {
-                    let room = LaundryRoom(json: json)
-                    rooms?.append(room)
+        var rooms = [LaundryRoom]()
+        var requestsCompleted = 0
+        
+        for id in ids {
+            getRequest(url: "\(laundryUrl)/\(id)") { (dict, _, _) in
+                DispatchQueue.main.async {
+                    if let dict = dict {
+                        let json = JSON(dict)
+                        let jsonArray = json["rooms"].arrayValue
+                        for json in jsonArray {
+                            let room = LaundryRoom(json: json)
+                            rooms.append(room)
+                        }
+                    }
+                    
+                    requestsCompleted += 1
+                    if requestsCompleted == ids.count {
+                        callback(rooms)
+                    }
                 }
             }
-            callback(rooms)
         }
     }
 
