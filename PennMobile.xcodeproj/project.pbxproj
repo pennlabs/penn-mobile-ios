@@ -368,6 +368,7 @@
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
+		738A7BF22CEA67370060BFF0 /* RefactorDiningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -804,6 +805,7 @@
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningView.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -1874,6 +1876,7 @@
 				42632B1E2CB9C77B0028CC31 /* Contacts */,
 				42632B302CB9C77B0028CC31 /* Course Alerts */,
 				42632B372CB9C77B0028CC31 /* Courses */,
+				738A7BEE2CEA65CE0060BFF0 /* RefactorDining */,
 				42632B602CB9C77B0028CC31 /* Dining */,
 				42632B652CB9C77B0028CC31 /* Events */,
 				42632B6A2CB9C77B0028CC31 /* Fitness */,
@@ -2099,6 +2102,7 @@
 		42632E262CB9C77B0028CC31 /* PennMobileShared */ = {
 			isa = PBXGroup;
 			children = (
+				738A7BED2CEA656A0060BFF0 /* RefactorDining */,
 				42632DFF2CB9C77B0028CC31 /* Courses */,
 				42632E0B2CB9C77B0028CC31 /* Dining */,
 				42632E0F2CB9C77B0028CC31 /* Fitness */,
@@ -2129,6 +2133,21 @@
 				8932693628FC75A5003D4BF9 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		738A7BED2CEA656A0060BFF0 /* RefactorDining */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RefactorDining;
+			sourceTree = "<group>";
+		};
+		738A7BEE2CEA65CE0060BFF0 /* RefactorDining */ = {
+			isa = PBXGroup;
+			children = (
+				738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */,
+			);
+			path = RefactorDining;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2350,6 +2369,7 @@
 			files = (
 				42632C982CB9C77B0028CC31 /* OAuth2NetworkManager.swift in Sources */,
 				42632C992CB9C77B0028CC31 /* PennAuthRequestable.swift in Sources */,
+				738A7BF22CEA67370060BFF0 /* RefactorDiningView.swift in Sources */,
 				421824092CCEB1370028E510 /* PennEventCellView.swift in Sources */,
 				4218240A2CCEB1370028E510 /* PennEventsView.swift in Sources */,
 				4218240B2CCEB1370028E510 /* PennEventsViewerView.swift in Sources */,

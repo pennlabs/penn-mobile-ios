@@ -95,7 +95,7 @@ extension AppFeature.FeatureImage: View {
 
 let features: [AppFeature] = [
     AppFeature(.dining, name: "Dining", color: .baseOrange, image: .app("Dining_Grey")) {
-        DiningView()
+        RefactorDiningView()
             .navigationTitle(Text("Dining"))
     },
     AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey"), controller: GSRTabController.self),
