@@ -369,6 +369,7 @@
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
 		738A7BF22CEA67370060BFF0 /* RefactorDiningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */; };
+		73E893052D3432D900DD2004 /* RefactorDiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -806,6 +807,7 @@
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningView.swift; sourceTree = "<group>"; };
+		73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningBalanceView.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -2146,6 +2148,7 @@
 			isa = PBXGroup;
 			children = (
 				738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */,
+				73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */,
 			);
 			path = RefactorDining;
 			sourceTree = "<group>";
@@ -2441,6 +2444,7 @@
 				42632CE82CB9C77B0028CC31 /* GenericControllers.swift in Sources */,
 				42632CE92CB9C77B0028CC31 /* MoveableTableViewController.swift in Sources */,
 				42632CEA2CB9C77B0028CC31 /* ModularTableView.swift in Sources */,
+				73E893052D3432D900DD2004 /* RefactorDiningBalanceView.swift in Sources */,
 				42632CEB2CB9C77B0028CC31 /* ModularTableViewCell.swift in Sources */,
 				42632CEC2CB9C77B0028CC31 /* ModularTableViewItem.swift in Sources */,
 				42632CED2CB9C77B0028CC31 /* ModularTableViewItemTypes.swift in Sources */,
