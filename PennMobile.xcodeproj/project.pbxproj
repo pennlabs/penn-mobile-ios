@@ -370,6 +370,8 @@
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
 		738A7BF22CEA67370060BFF0 /* RefactorDiningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */; };
 		73E893052D3432D900DD2004 /* RefactorDiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */; };
+		73E893072D35705800DD2004 /* RefactorDiningHallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893062D35704700DD2004 /* RefactorDiningHallStatusView.swift */; };
+		73E893092D35717E00DD2004 /* RefactorDiningHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893082D35717900DD2004 /* RefactorDiningHall.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -808,6 +810,8 @@
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningView.swift; sourceTree = "<group>"; };
 		73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningBalanceView.swift; sourceTree = "<group>"; };
+		73E893062D35704700DD2004 /* RefactorDiningHallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningHallStatusView.swift; sourceTree = "<group>"; };
+		73E893082D35717900DD2004 /* RefactorDiningHall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningHall.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -2147,10 +2151,20 @@
 		738A7BEE2CEA65CE0060BFF0 /* RefactorDining */ = {
 			isa = PBXGroup;
 			children = (
+				73E8930A2D35718300DD2004 /* Models */,
 				738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */,
 				73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */,
+				73E893062D35704700DD2004 /* RefactorDiningHallStatusView.swift */,
 			);
 			path = RefactorDining;
+			sourceTree = "<group>";
+		};
+		73E8930A2D35718300DD2004 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				73E893082D35717900DD2004 /* RefactorDiningHall.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2527,6 +2541,7 @@
 				42632D372CB9C77B0028CC31 /* HomeGroupInvitesCell.swift in Sources */,
 				42632D382CB9C77B0028CC31 /* HomeGroupInvitesCellItem.swift in Sources */,
 				42632D392CB9C77B0028CC31 /* BookingRowCell.swift in Sources */,
+				73E893092D35717E00DD2004 /* RefactorDiningHall.swift in Sources */,
 				42632D3A2CB9C77B0028CC31 /* HomeGSRBookingButton.swift in Sources */,
 				42632D3B2CB9C77B0028CC31 /* HomeGSRCellItem.swift in Sources */,
 				42632D3C2CB9C77B0028CC31 /* HomeStudyRoomCell.swift in Sources */,
@@ -2559,6 +2574,7 @@
 				42632D5C2CB9C77B0028CC31 /* HomeTableViewModel.swift in Sources */,
 				42632D5D2CB9C77B0028CC31 /* HomeAPIService.swift in Sources */,
 				42632D5E2CB9C77B0028CC31 /* CalendarCardView.swift in Sources */,
+				73E893072D35705800DD2004 /* RefactorDiningHallStatusView.swift in Sources */,
 				42632D5F2CB9C77B0028CC31 /* HomeCardView.swift in Sources */,
 				42632D602CB9C77B0028CC31 /* HomeSublettingBanner.swift in Sources */,
 				42632D612CB9C77B0028CC31 /* HomeView.swift in Sources */,

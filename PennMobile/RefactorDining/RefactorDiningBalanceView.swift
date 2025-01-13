@@ -18,34 +18,34 @@ struct RefactorDiningBalanceView: View {
             }
             GridRow {
                 BalanceCard(value: 10, type: .swipes, subtitle: "Guest Swipes", systemImage: "person.2.fill")
-                
-                
                 NavigationLink {
                     Text("Analytics")
                         .navigationTitle("Analytics!")
                 } label: {
-                    Group {
-                        HStack {
-                            Text("Analytics")
-                                .font(.title2)
-                                .bold()
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                        }
-                        
-                        .foregroundStyle(.blue)
-                        .padding()
-                        
-                        
-                        
-                    }
-                    .frame(minHeight: 75)
-                    .background(.background)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .shadow(radius: 4)
+                    AnalyticsCard()
                 }
             }
         }
+    }
+}
+
+struct AnalyticsCard: View {
+    var body: some View {
+        Group {
+            HStack {
+                Text("Analytics")
+                    .font(.title2)
+                    .bold()
+                Spacer()
+                Image(systemName: "chevron.right")
+            }
+            .foregroundStyle(.blue)
+            .padding()
+        }
+        .frame(minHeight: 75)
+        .background(.background)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .shadow(radius: 4)
     }
 }
 
