@@ -24,55 +24,14 @@ import Foundation
  6. Then cache the whole data structure. (probably expensive given its like 200,000 lines)
  */
 
-struct RefactorDiningHall: Codable, Identifiable {
+public struct RefactorDiningHall: Codable, Identifiable {
+    public let id: Int
     let name: String
     let address: String
-    let schedule: [RefactorDiningDay]
-    let imageUrl: URL
-    let id: Int
-    
-    
-    enum CodingKeys: String, CodingKey {
-        case name
-        case address
-        case schedule = "days"
-        case imageUrl = "image"
-        case id
-    }
-}
-
-struct RefactorDiningDay: Codable {
-    let date: Date
-    let open: Bool
     let meals: [RefactorDiningMeal]
-    
-    init(from decoder: any Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        guard let date = try values.decodeIfPresent(Date.self, forKey: .date) else {
-            throw DecodingError.valueNotFound(Date.self, DecodingError.Context(codingPath: [CodingKeys.date], debugDescription: "Date not found."))
-        }
-        guard let open = try values.decodeIfPresent(Bool.self, forKey: .open) else {
-            throw DecodingError.valueNotFound(Bool.self, DecodingError.Context(codingPath: [CodingKeys.open], debugDescription: "Status not found."))
-        }
-        guard let meals = try values.decodeIfPresent([RefactorDiningMeal].self, forKey: .meals) else {
-            throw DecodingError.valueNotFound([RefactorDiningMeal].self, DecodingError.Context(codingPath: [CodingKeys.meals], debugDescription: "Meals not found."))
-        }
-        
-        self.date = date
-        self.open = open
-        self.meals = meals
-        
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case date
-        case open = "status"
-        case meals = "dayparts"
-    }
+    let imageUrl: String
 }
 
-struct RefactorDiningMeal: Codable {
-    
-}
+
 
 

@@ -372,6 +372,10 @@
 		73E893052D3432D900DD2004 /* RefactorDiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */; };
 		73E893072D35705800DD2004 /* RefactorDiningHallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893062D35704700DD2004 /* RefactorDiningHallStatusView.swift */; };
 		73E893092D35717E00DD2004 /* RefactorDiningHall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893082D35717900DD2004 /* RefactorDiningHall.swift */; };
+		73E8930C2D3590D100DD2004 /* RefactorDiningMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E8930B2D3590CE00DD2004 /* RefactorDiningMeal.swift */; };
+		73E8930E2D3598A100DD2004 /* RefactorDiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E8930D2D35989E00DD2004 /* RefactorDiningAPI.swift */; };
+		73E893102D35A91F00DD2004 /* RefactorVenueAPIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E8930F2D35A8F800DD2004 /* RefactorVenueAPIModels.swift */; };
+		73E893122D35AA2800DD2004 /* RefactorMenuAPIMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893112D35AA2100DD2004 /* RefactorMenuAPIMeal.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -812,6 +816,10 @@
 		73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningBalanceView.swift; sourceTree = "<group>"; };
 		73E893062D35704700DD2004 /* RefactorDiningHallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningHallStatusView.swift; sourceTree = "<group>"; };
 		73E893082D35717900DD2004 /* RefactorDiningHall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningHall.swift; sourceTree = "<group>"; };
+		73E8930B2D3590CE00DD2004 /* RefactorDiningMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningMeal.swift; sourceTree = "<group>"; };
+		73E8930D2D35989E00DD2004 /* RefactorDiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningAPI.swift; sourceTree = "<group>"; };
+		73E8930F2D35A8F800DD2004 /* RefactorVenueAPIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorVenueAPIModels.swift; sourceTree = "<group>"; };
+		73E893112D35AA2100DD2004 /* RefactorMenuAPIMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorMenuAPIMeal.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -2151,6 +2159,7 @@
 		738A7BEE2CEA65CE0060BFF0 /* RefactorDining */ = {
 			isa = PBXGroup;
 			children = (
+				73E8930D2D35989E00DD2004 /* RefactorDiningAPI.swift */,
 				73E8930A2D35718300DD2004 /* Models */,
 				738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */,
 				73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */,
@@ -2162,7 +2171,10 @@
 		73E8930A2D35718300DD2004 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				73E893112D35AA2100DD2004 /* RefactorMenuAPIMeal.swift */,
+				73E8930F2D35A8F800DD2004 /* RefactorVenueAPIModels.swift */,
 				73E893082D35717900DD2004 /* RefactorDiningHall.swift */,
+				73E8930B2D3590CE00DD2004 /* RefactorDiningMeal.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2516,6 +2528,7 @@
 				42632D1E2CB9C77B0028CC31 /* GSRColorCell.swift in Sources */,
 				42632D1F2CB9C77B0028CC31 /* GSRGroupIconView.swift in Sources */,
 				42632D202CB9C77B0028CC31 /* EmptyView.swift in Sources */,
+				73E8930C2D3590D100DD2004 /* RefactorDiningMeal.swift in Sources */,
 				42632D212CB9C77B0028CC31 /* GSRClosedView.swift in Sources */,
 				42632D222CB9C77B0028CC31 /* GSRLocationCell.swift in Sources */,
 				42632D232CB9C77B0028CC31 /* GSRRangeSlider.swift in Sources */,
@@ -2555,6 +2568,7 @@
 				42632D442CB9C77B0028CC31 /* HomeNewsCellItem.swift in Sources */,
 				42632D452CB9C77B0028CC31 /* NativeNewsViewController.swift in Sources */,
 				42632D462CB9C77B0028CC31 /* NewsArticle.swift in Sources */,
+				73E893122D35AA2800DD2004 /* RefactorMenuAPIMeal.swift in Sources */,
 				42632D4C2CB9C77B0028CC31 /* HomePostCell.swift in Sources */,
 				42632D4D2CB9C77B0028CC31 /* HomePostCellItem.swift in Sources */,
 				42632D4E2CB9C77B0028CC31 /* Post.swift in Sources */,
@@ -2637,6 +2651,7 @@
 				42632D9B2CB9C77B0028CC31 /* Page.swift in Sources */,
 				42632D9C2CB9C77B0028CC31 /* PageCell.swift in Sources */,
 				421823FC2CCEB12D0028E510 /* PennEvent.swift in Sources */,
+				73E893102D35A91F00DD2004 /* RefactorVenueAPIModels.swift in Sources */,
 				421823FD2CCEB12D0028E510 /* MailComposerCoordinator.swift in Sources */,
 				421823FE2CCEB12D0028E510 /* PennEventsAPIManager.swift in Sources */,
 				421823FF2CCEB12D0028E510 /* EventType.swift in Sources */,
@@ -2666,6 +2681,7 @@
 				42632DB52CB9C77B0028CC31 /* MainTabView.swift in Sources */,
 				42632DB62CB9C77B0028CC31 /* PennMobile.swift in Sources */,
 				42632DB72CB9C77B0028CC31 /* RootView.swift in Sources */,
+				73E8930E2D3598A100DD2004 /* RefactorDiningAPI.swift in Sources */,
 				42632DB82CB9C77B0028CC31 /* RootViewController.swift in Sources */,
 				42632DB92CB9C77B0028CC31 /* SplashViewController.swift in Sources */,
 				42632DBA2CB9C77B0028CC31 /* TabBarController.swift in Sources */,

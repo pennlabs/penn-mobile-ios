@@ -26,6 +26,16 @@ struct RefactorDiningView: View {
                     Text("RetailView")
                 }
             }
+            .onAppear {
+                
+                Task {
+                    if case .success(let halls) = await RefactorDiningAPI.instance.getDiningHalls() {
+                        let halls: [RefactorDiningHall] = halls
+                    } else {
+                        print("failed")
+                    }
+                }
+            }
             
         }
     }
