@@ -10,73 +10,92 @@ import SwiftUI
 import Foundation
 
 struct RefactorDiningView: View {
+    
+    @ObservedObject var vm = RefactorDiningViewModel()
+    
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]) {
-                DiningSection(title: "Dining Balance") {
-                    RefactorDiningBalanceView()
-                }
-                DiningSection(title: "Favorites") {
-                    Text("FavoritesView")
-                }
-                DiningSection(title: "Dining Halls") {
-                    Text("HallsView")
-                }
-                DiningSection(title: "Retail Dining") {
-                    Text("RetailView")
-                }
+        List {
+            Section(header:
+                Text("Dining Balance")
+                    .font(.title2)
+                    .bold()
+                    .padding(.vertical, 12)
+                    .foregroundStyle(.primary)
+            ) {
+                RefactorDiningBalanceView()
             }
-            .onAppear {
-                
-                Task {
-                    if case .success(let halls) = await RefactorDiningAPI.instance.getDiningHalls() {
-                        let halls: [RefactorDiningHall] = halls
-                    } else {
-                        print("failed")
+            
+            Section(header:
+                Text("Favorites")
+                    .font(.title2)
+                    .bold()
+                    .padding(.vertical, 12)
+                    .foregroundStyle(.primary)
+            ) {
+                Text("FavoritesView")
+            }
+            
+            Section(header:
+                Text("Dining Halls")
+                    .font(.title2)
+                    .bold()
+                    .padding(.vertical, 12)
+                    .foregroundStyle(.primary)
+            ) {
+                ForEach(vm.diningHalls) { hall in
+                    NavigationLink {
+                        // RefactorDiningHallDetailView(hall)
+                        Text("asdf")
+                            .navigationTitle(hall.name)
+                    } label: {
+                        RefactorDiningHallStatusView(hall)
                     }
                 }
             }
             
+            Section(header:
+                Text("Retail Dining")
+                    .font(.title2)
+                    .bold()
+                    .padding(.vertical, 12)
+                    .foregroundStyle(.primary)
+            ) {
+                ForEach(vm.retailDining) { hall in
+                    NavigationLink {
+                        // RefactorDiningHallDetailView(hall)
+                        Text("asdf")
+                            .navigationTitle(hall.name)
+                    } label: {
+                        RefactorDiningHallStatusView(hall)
+                    }
+                }
+            }
+        }
+        .listStyle(.plain)
+        .onAppear {
+            Task {
+                await vm.refresh()
+                print("Finished refreshing")
+            }
         }
     }
 }
 
-struct DiningSection<Content: View>: View {
-    let title: String
-    let content: () -> Content
-    
-    
-    init(title: String, @ViewBuilder content: @escaping () -> Content) {
-        self.title = title
-        self.content = content
-    }
-    
-    var body: some View {
-        Section(header:
-        HStack {
-            Text("\(title)")
-                .font(.title2)
-                .bold()
-                .padding(.vertical, 12)
-                .padding(.horizontal, 16)
-            Spacer()
-        }
-            .background {
-                Rectangle()
-                    .foregroundStyle(.background)
-                    .frame(minWidth: UIScreen.main.bounds.width)
-            }
-                
-        ) {
-            VStack(alignment: .leading) {
-                Divider()
-                content()
-            }
-            .padding(.horizontal, 16)
-        }
-        
-    }
-}
+//struct DiningSection<Content: View>: View {
+//    let title: String
+//    let content: () -> Content
+//    
+//    
+//    init(title: String, @ViewBuilder content: @escaping () -> Content) {
+//        self.title = title
+//        self.content = content
+//    }
+//    
+//    var body: some View {
+//        
+//        
+//    }
+//}
 
 #Preview {
     RefactorDiningView()

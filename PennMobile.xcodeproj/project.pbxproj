@@ -376,6 +376,10 @@
 		73E8930E2D3598A100DD2004 /* RefactorDiningAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E8930D2D35989E00DD2004 /* RefactorDiningAPI.swift */; };
 		73E893102D35A91F00DD2004 /* RefactorVenueAPIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E8930F2D35A8F800DD2004 /* RefactorVenueAPIModels.swift */; };
 		73E893122D35AA2800DD2004 /* RefactorMenuAPIMeal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893112D35AA2100DD2004 /* RefactorMenuAPIMeal.swift */; };
+		73E893152D35E9F400DD2004 /* RefactorDiningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893142D35E9F000DD2004 /* RefactorDiningViewModel.swift */; };
+		73E893172D35F3C700DD2004 /* RefactorDiningHallExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893162D35F3C000DD2004 /* RefactorDiningHallExtensions.swift */; };
+		73E893192D36CAD000DD2004 /* RefactorDiningHallHoursStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893182D36CAC900DD2004 /* RefactorDiningHallHoursStack.swift */; };
+		73E8931B2D36E6B500DD2004 /* RefactorDiningHallDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E8931A2D36E6B100DD2004 /* RefactorDiningHallDetailView.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -820,6 +824,10 @@
 		73E8930D2D35989E00DD2004 /* RefactorDiningAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningAPI.swift; sourceTree = "<group>"; };
 		73E8930F2D35A8F800DD2004 /* RefactorVenueAPIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorVenueAPIModels.swift; sourceTree = "<group>"; };
 		73E893112D35AA2100DD2004 /* RefactorMenuAPIMeal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorMenuAPIMeal.swift; sourceTree = "<group>"; };
+		73E893142D35E9F000DD2004 /* RefactorDiningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningViewModel.swift; sourceTree = "<group>"; };
+		73E893162D35F3C000DD2004 /* RefactorDiningHallExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningHallExtensions.swift; sourceTree = "<group>"; };
+		73E893182D36CAC900DD2004 /* RefactorDiningHallHoursStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningHallHoursStack.swift; sourceTree = "<group>"; };
+		73E8931A2D36E6B100DD2004 /* RefactorDiningHallDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningHallDetailView.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -2159,11 +2167,15 @@
 		738A7BEE2CEA65CE0060BFF0 /* RefactorDining */ = {
 			isa = PBXGroup;
 			children = (
+				73E893132D35E9E700DD2004 /* ViewModels */,
 				73E8930D2D35989E00DD2004 /* RefactorDiningAPI.swift */,
 				73E8930A2D35718300DD2004 /* Models */,
 				738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */,
 				73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */,
 				73E893062D35704700DD2004 /* RefactorDiningHallStatusView.swift */,
+				73E8931A2D36E6B100DD2004 /* RefactorDiningHallDetailView.swift */,
+				73E893182D36CAC900DD2004 /* RefactorDiningHallHoursStack.swift */,
+				73E893162D35F3C000DD2004 /* RefactorDiningHallExtensions.swift */,
 			);
 			path = RefactorDining;
 			sourceTree = "<group>";
@@ -2177,6 +2189,14 @@
 				73E8930B2D3590CE00DD2004 /* RefactorDiningMeal.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		73E893132D35E9E700DD2004 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				73E893142D35E9F000DD2004 /* RefactorDiningViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2398,10 +2418,12 @@
 			files = (
 				42632C982CB9C77B0028CC31 /* OAuth2NetworkManager.swift in Sources */,
 				42632C992CB9C77B0028CC31 /* PennAuthRequestable.swift in Sources */,
+				73E893192D36CAD000DD2004 /* RefactorDiningHallHoursStack.swift in Sources */,
 				738A7BF22CEA67370060BFF0 /* RefactorDiningView.swift in Sources */,
 				421824092CCEB1370028E510 /* PennEventCellView.swift in Sources */,
 				4218240A2CCEB1370028E510 /* PennEventsView.swift in Sources */,
 				4218240B2CCEB1370028E510 /* PennEventsViewerView.swift in Sources */,
+				73E8931B2D36E6B500DD2004 /* RefactorDiningHallDetailView.swift in Sources */,
 				42632C9A2CB9C77B0028CC31 /* PennLoginController.swift in Sources */,
 				42632C9B2CB9C77B0028CC31 /* BannerDescription.swift in Sources */,
 				42632C9C2CB9C77B0028CC31 /* BannerView.swift in Sources */,
@@ -2602,6 +2624,7 @@
 				42632D692CB9C77B0028CC31 /* LaundryMachineCell.swift in Sources */,
 				42632D6A2CB9C77B0028CC31 /* LaundryMachinesView.swift in Sources */,
 				42632D6B2CB9C77B0028CC31 /* LaundryMachineCellTappable.swift in Sources */,
+				73E893152D35E9F400DD2004 /* RefactorDiningViewModel.swift in Sources */,
 				42632D6C2CB9C77B0028CC31 /* LaundryTableViewController.swift in Sources */,
 				42632D6D2CB9C77B0028CC31 /* RoomSelectionViewController.swift in Sources */,
 				42632D6E2CB9C77B0028CC31 /* LaundryNotificationCenter.swift in Sources */,
@@ -2652,6 +2675,7 @@
 				42632D9C2CB9C77B0028CC31 /* PageCell.swift in Sources */,
 				421823FC2CCEB12D0028E510 /* PennEvent.swift in Sources */,
 				73E893102D35A91F00DD2004 /* RefactorVenueAPIModels.swift in Sources */,
+				73E893172D35F3C700DD2004 /* RefactorDiningHallExtensions.swift in Sources */,
 				421823FD2CCEB12D0028E510 /* MailComposerCoordinator.swift in Sources */,
 				421823FE2CCEB12D0028E510 /* PennEventsAPIManager.swift in Sources */,
 				421823FF2CCEB12D0028E510 /* EventType.swift in Sources */,

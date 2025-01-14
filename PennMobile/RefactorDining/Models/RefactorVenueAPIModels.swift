@@ -20,6 +20,14 @@ public struct RefactorVenueAPIDiningHall: Codable, Identifiable {
     let imageUrl: String
     public let id: Int
     
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.address = try container.decode(String.self, forKey: .address)
+        self.schedule = try container.decode([RefactorVenueAPIDay].self, forKey: .schedule)
+        self.imageUrl = try container.decode(String.self, forKey: .imageUrl)
+        self.id = try container.decode(Int.self, forKey: .id)
+    }
     
     enum CodingKeys: String, CodingKey {
         case name

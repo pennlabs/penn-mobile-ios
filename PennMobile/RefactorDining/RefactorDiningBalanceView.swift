@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct RefactorDiningBalanceView: View {
+    
+    @State var showingAnalytics: Bool = false
+    
     var body: some View {
         
         Grid(horizontalSpacing: 12, verticalSpacing: 12) {
@@ -18,13 +21,18 @@ struct RefactorDiningBalanceView: View {
             }
             GridRow {
                 BalanceCard(value: 10, type: .swipes, subtitle: "Guest Swipes", systemImage: "person.2.fill")
-                NavigationLink {
-                    Text("Analytics")
-                        .navigationTitle("Analytics!")
-                } label: {
-                    AnalyticsCard()
+                AnalyticsCard()
+                .frame(minHeight: 75)
+                .background(.background)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .shadow(radius: 4)
+                .onTapGesture {
+                    showingAnalytics = true
                 }
             }
+        }
+        .sheet(isPresented: $showingAnalytics, onDismiss: { showingAnalytics = false}) {
+            Text("Analytics!")
         }
     }
 }
@@ -38,14 +46,12 @@ struct AnalyticsCard: View {
                     .bold()
                 Spacer()
                 Image(systemName: "chevron.right")
+                    .padding(.trailing, 16)
             }
             .foregroundStyle(.blue)
             .padding()
         }
-        .frame(minHeight: 75)
-        .background(.background)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(radius: 4)
+        
     }
 }
 
