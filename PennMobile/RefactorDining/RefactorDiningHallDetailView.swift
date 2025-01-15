@@ -64,6 +64,8 @@ struct RefactorDiningHallDetailView: View {
                             HStack {
                                 Spacer()
                                 Image(systemName: "xmark")
+                                    .font(.largeTitle)
+                                    .padding(8)
                                     .onTapGesture {
                                         showMenu = false
                                     }
