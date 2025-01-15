@@ -25,8 +25,8 @@ struct RefactorDiningHallDetailView: View {
     
     
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]) {
+        ScrollView(showsIndicators: false) {
+            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
                 ZStack {
                     KFImage(URL(string: hall.imageUrl))
                         .resizable()
@@ -37,7 +37,7 @@ struct RefactorDiningHallDetailView: View {
                         Spacer()
                         Text(hall.name)
                             .multilineTextAlignment(.center)
-                            .font(.largeTitle)
+                            .font(.system(.largeTitle, design: .serif))
                             .bold()
                             .foregroundColor(.white)
                             .shadow(radius: 2)
@@ -49,6 +49,7 @@ struct RefactorDiningHallDetailView: View {
                     Picker("Section", selection: self.$pickerIndex) {
                         ForEach(0 ..< self.sectionTitle.count, id: \.self) {
                             Text(self.sectionTitle[$0])
+                                .font(.system(.body, design: .serif))
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
@@ -87,7 +88,6 @@ struct RefactorDiningHallDetailView: View {
                         Text("Location")
                     }
                 }
-                .padding(.horizontal)
 //                .background {
 //                    let image = Image("DiningAnalyticsBackground")
 //                        .resizable()
@@ -107,6 +107,7 @@ struct RefactorDiningHallDetailView: View {
                 
             }
         }
+        .ignoresSafeArea(edges: .horizontal)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

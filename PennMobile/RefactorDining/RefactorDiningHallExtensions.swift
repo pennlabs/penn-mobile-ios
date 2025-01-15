@@ -18,7 +18,7 @@ public extension RefactorDiningHall {
             if closingSoon {
                 return "Closing in \(String(format: "%.0f",Date.now.distance(to: currentMeal.endTime) / 60))m"
             } else {
-                return currentMeal.service
+                return self.venueType == .dining ? currentMeal.service : "Open"
             }
         case .closedIndefinitely:
             return "Closed indefinitely"
