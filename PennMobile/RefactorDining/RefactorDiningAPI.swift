@@ -12,12 +12,12 @@ import HeapModule
 public final class RefactorDiningAPI: Sendable {
     public static let instance = RefactorDiningAPI()
     
-    let venueUrl = URL(string: "https://pennmobile.org/api/dining/venues/")!
-    let menuUrl = URL(string: "https://pennmobile.org/api/dining/menus/")!
+    let venueUrlString = "https://pennmobile.org/api/dining/venues/"
+    let menuUrlString = "https://pennmobile.org/api/dining/menus/"
     
     
     public func getDiningHalls() async -> Result<[RefactorDiningHall], Error> {
-        guard let (venueData, _) = try? await URLSession.shared.data(from: venueUrl), let (menuData, _) = try? await URLSession.shared.data(from: menuUrl) else {
+        guard let (venueData, _) = try? await URLSession.shared.data(from: URL(string: venueUrlString)!) else {
             return .failure(NetworkingError.serverError)
         }
         
@@ -27,11 +27,25 @@ public final class RefactorDiningAPI: Sendable {
         // since one of the models has a field that doesn't exist in the data, we're going to artificially add it to the data so that it can be decoded
         var preprocessedVenueData: [RefactorVenueAPIDiningHall] = []
         var preprocessedMenuData: [RefactorMenuAPIMeal] = []
+        
+        let date = DateFormatter()
+        date.dateFormat = "yyyy-MM-dd"
+        for i in 0..<7 {
+            guard let (menuData, _) = try? await URLSession.shared.data(from: URL(string: menuUrlString + date.string(from: Calendar.current.date(byAdding: .day, value: i, to: Date.now.localTime)!))!) else {
+                return .failure(NetworkingError.serverError)
+            }
+            
+            do {
+                let newMeals = try json.decode([RefactorMenuAPIMeal].self, from: menuData)
+                preprocessedMenuData.append(contentsOf: newMeals)
+            } catch {
+                print(error)
+                return .failure(error)
+            }
+        }
+        
         do {
-            
             preprocessedVenueData = try json.decode([RefactorVenueAPIDiningHall].self, from: venueData)
-            
-            preprocessedMenuData = try json.decode([RefactorMenuAPIMeal].self, from: menuData)
         } catch {
             print(error)
             return .failure(error)
@@ -82,7 +96,7 @@ public final class RefactorDiningAPI: Sendable {
             
             if let venueMin = venueMeals.min, let menuMin = menuMeals.min {
                 //The same meal
-                if venueMin.venueId == menuMin.venue.venueId && venueMin.startTime == menuMin.startTime && venueMin.endTime == menuMin.endTime {
+                if venueMin.venueId == menuMin.venue.venueId && venueMin.startTime.localTime == menuMin.startTime.localTime && venueMin.endTime.localTime == menuMin.endTime.localTime {
                     let venueMeal = venueMeals.removeMin()
                     let menuMeal = menuMeals.removeMin()
                     let combined = combineMeals(venueMeal: venueMeal, menuMeal: menuMeal)

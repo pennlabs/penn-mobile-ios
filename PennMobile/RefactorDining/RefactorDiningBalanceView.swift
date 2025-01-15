@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct RefactorDiningBalanceView: View {
     
@@ -23,7 +24,7 @@ struct RefactorDiningBalanceView: View {
                 BalanceCard(value: 10, type: .swipes, subtitle: "Guest Swipes", systemImage: "person.2.fill")
                 AnalyticsCard()
                 .frame(minHeight: 75)
-                .background(.background)
+                .background(.ultraThickMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .shadow(radius: 4)
                 .onTapGesture {
@@ -94,7 +95,7 @@ struct BalanceCard: View {
             }.foregroundStyle(.blue)
         }
         .frame(minHeight: 75)
-        .background(.background)
+        .background(.ultraThickMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .shadow(radius: 4)
     }

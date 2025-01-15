@@ -36,7 +36,8 @@ public struct RefactorDiningMeal: Codable, Comparable, Hashable, Identifiable {
     }
 }
 
-public struct RefactorDiningStation: Codable, Hashable {
+public struct RefactorDiningStation: Codable, Hashable, Identifiable {
+    public let id = UUID()
     let name: String
     let items: [RefactorDiningItem]
 }

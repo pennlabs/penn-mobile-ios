@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct RefactorDiningHallStatusView: View {
     
@@ -17,19 +18,13 @@ struct RefactorDiningHallStatusView: View {
     
     var body: some View {
         HStack(spacing: 8) {
-            AsyncImage(url: URL(string: diningHall.imageUrl)) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 100, height: 64)
-                    .background(Color.grey1)
-                    .clipShape(RoundedRectangle(cornerRadius: 7))
-            } placeholder: {
-                ProgressView()
-                    .padding()
-                    .frame(width: 100, height: 64)
-            }
-            .padding(4)
+            KFImage(URL(string: diningHall.imageUrl))
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 120, height: 80)
+                .background(Color.grey1)
+                .clipShape(RoundedRectangle(cornerRadius: 7))
+                .padding(4)
             TimelineView(.everyMinute) { context in
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {

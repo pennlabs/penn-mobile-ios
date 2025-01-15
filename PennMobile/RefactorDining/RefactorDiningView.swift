@@ -44,8 +44,7 @@ struct RefactorDiningView: View {
             ) {
                 ForEach(vm.diningHalls) { hall in
                     NavigationLink {
-                        // RefactorDiningHallDetailView(hall)
-                        Text("asdf")
+                        RefactorDiningHallDetailView(hall)
                             .navigationTitle(hall.name)
                     } label: {
                         RefactorDiningHallStatusView(hall)
@@ -62,8 +61,7 @@ struct RefactorDiningView: View {
             ) {
                 ForEach(vm.retailDining) { hall in
                     NavigationLink {
-                        // RefactorDiningHallDetailView(hall)
-                        Text("asdf")
+                        RefactorDiningHallDetailView(hall)
                             .navigationTitle(hall.name)
                     } label: {
                         RefactorDiningHallStatusView(hall)
