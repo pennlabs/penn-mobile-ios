@@ -119,8 +119,7 @@ struct RefactorDiningStationBody: View {
                             .truncationMode(.tail)
                         // dietary icons
                         HStack(alignment: .center) {
-                            Image(systemName: "xmark")
-                                .font(.title2)
+                            RefactorDiningItemAllergenStack(item)
                             GeometryReader { geometry in
                                 Path { path in
                                     path.move(to: CGPoint(x: 0, y: 0))

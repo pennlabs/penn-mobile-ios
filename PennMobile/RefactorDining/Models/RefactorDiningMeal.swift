@@ -55,3 +55,89 @@ public struct RefactorDiningItem: Codable, Identifiable, Hashable {
     public let ingredients: String
     public let allergens: String
 }
+
+
+
+
+public extension RefactorDiningItem {
+    func getAllergens() -> [RefactorDiningAllergen] {
+        let allergens: [RefactorDiningAllergen] = self.allergens.split(usingRegex: #",\s*"#).map { el in
+            
+            for allergen in RefactorDiningAllergen.allCases {
+                if el == allergen.rawValue {
+                    return allergen
+                }
+            }
+            return .other
+        }.filter({$0 != RefactorDiningAllergen.other})
+        
+        return allergens
+    }
+    
+    
+    func getAllergenImages() -> [String] {
+        let allergens = getAllergens()
+        return allergens.map { el in
+            el.imagePath
+        }
+    }
+}
+
+
+public enum RefactorDiningAllergen: String, CaseIterable {
+        case seafoodWatch = "Seafood Watch"
+        case sesame = "Sesame"
+        case fish = "Fish"
+        case soy = "Soy"
+        case egg = "Egg"
+        case vegetarian = "Vegetarian"
+        case vegan = "Vegan"
+        case farmToFork = "Farm to Fork"
+        case humane = "Humane"
+        case locallyCrafted = "Locally Crafted"
+        case peanut = "Peanut"
+        case treeNut = "Tree Nut"
+        case wheatGluten = "Wheat/Gluten"
+        case milk = "Milk"
+        case askUs = "Ask Us"
+        case other
+    
+    
+    
+    var imagePath: String {
+        switch self {
+        case .seafoodWatch:
+            return "Seafood Watch"
+        case .sesame:
+            return "Sesame"
+        case .fish:
+            return "Fish"
+        case .soy:
+            return "Soy"
+        case .egg:
+            return "Egg"
+        case .vegetarian:
+            return "Vegetarian"
+        case .vegan:
+            return "Vegan"
+        case .farmToFork:
+            return "Farm to Fork"
+        case .humane:
+            return "Humane"
+        case .locallyCrafted:
+            return "Locally Crafted"
+        case .peanut:
+            return "Peanut"
+        case .treeNut:
+            return "Tree Nut"
+        case .wheatGluten:
+            return "Wheat"
+        case .milk:
+            return "Milk"
+        case .askUs:
+            return "Ask Us"
+        case .other:
+            return ""
+        }
+    }
+}
