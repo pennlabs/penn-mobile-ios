@@ -20,9 +20,45 @@ class GSRLocationsController: GenericViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locations = GSRLocationModel.shared.getLocations()
+        setupButton()
         setupTableView()
     }
+    
+    fileprivate func setupButton() {
+        let button = UIButton(type: .system)
+        button.setTitle("Quick Booking", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
 
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor.systemBlue.cgColor, UIColor.systemGreen.cgColor]
+        gradientLayer.frame = button.bounds
+        gradientLayer.cornerRadius = 10
+        button.layer.insertSublayer(gradientLayer, at: 0)
+
+        button.layer.cornerRadius = 10
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.3
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.layer.shadowRadius = 4
+        button.addTarget(self, action: #selector(quickTapped), for: .touchUpInside)
+
+        view.addSubview(button)
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+                button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+                button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                button.heightAnchor.constraint(equalToConstant: 44),
+                button.widthAnchor.constraint(equalToConstant: 200)
+        ])
+    }
+    
+    @objc private func quickTapped() {
+        let quickView = QuickBookingViewController()
+        navigationController?.pushViewController(quickView, animated: true)
+    }
+        
     override func setupNavBar() {
         super.setupNavBar()
         self.tabBarController?.title = "Study Room Booking"
@@ -45,7 +81,14 @@ extension GSRLocationsController {
         tableView.delegate = self
 
         view.addSubview(tableView)
-        _ = tableView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 72), // Adjust based on button height + margin
+                tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
         tableView.register(GSRLocationCell.self, forCellReuseIdentifier: GSRLocationCell.identifier)
     }

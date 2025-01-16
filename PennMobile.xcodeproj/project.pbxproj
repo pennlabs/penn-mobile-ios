@@ -368,6 +368,8 @@
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
+		7399FA312D39B3A7003F2FCE /* quickBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7399FA302D39B3A6003F2FCE /* quickBookingViewController.swift */; };
+		7399FA322D39B3A7003F2FCE /* GSRMappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7399FA2F2D39B3A6003F2FCE /* GSRMappingController.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -805,6 +807,8 @@
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7399FA2F2D39B3A6003F2FCE /* GSRMappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRMappingController.swift; sourceTree = "<group>"; };
+		7399FA302D39B3A6003F2FCE /* quickBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quickBookingViewController.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -1280,6 +1284,8 @@
 				42632B8B2CB9C77B0028CC31 /* GSRGroups */,
 				42632B8C2CB9C77B0028CC31 /* GSRBookable.swift */,
 				42632B8D2CB9C77B0028CC31 /* GSRController.swift */,
+				7399FA2F2D39B3A6003F2FCE /* GSRMappingController.swift */,
+				7399FA302D39B3A6003F2FCE /* quickBookingViewController.swift */,
 				42632B8E2CB9C77B0028CC31 /* GSRDeletable.swift */,
 				42632B8F2CB9C77B0028CC31 /* GSRLocationsController.swift */,
 				42632B902CB9C77B0028CC31 /* GSRReservationsController.swift */,
@@ -2632,6 +2638,8 @@
 				42632DB72CB9C77B0028CC31 /* RootView.swift in Sources */,
 				42632DB82CB9C77B0028CC31 /* RootViewController.swift in Sources */,
 				42632DB92CB9C77B0028CC31 /* SplashViewController.swift in Sources */,
+				7399FA312D39B3A7003F2FCE /* quickBookingViewController.swift in Sources */,
+				7399FA322D39B3A7003F2FCE /* GSRMappingController.swift in Sources */,
 				42632DBA2CB9C77B0028CC31 /* TabBarController.swift in Sources */,
 				42632DBB2CB9C77B0028CC31 /* Toasts.swift in Sources */,
 				42632DBC2CB9C77B0028CC31 /* MyListingsActivity.swift in Sources */,
