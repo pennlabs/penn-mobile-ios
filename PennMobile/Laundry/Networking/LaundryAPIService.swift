@@ -18,11 +18,23 @@ class LaundryAPIService: Requestable {
     fileprivate let statusURL = "https://pennmobile.org/api/laundry/status"
 
     public var idToRooms: [Int: LaundryRoom]?
+    
+    private func getCachedLaundryRooms() -> [Int: LaundryRoom]? {
+        let key = "laundryDataUpgraded"
+        if !UserDefaults.standard.bool(forKey: key) {
+            Storage.remove(LaundryRoom.directory, from: .caches)
+            UserDefaults.standard.set(true, forKey: key)
+        } else if Storage.fileExists(LaundryRoom.directory, in: .caches) {
+            return try? Storage.retrieveThrowing(LaundryRoom.directory, from: .caches, as: Dictionary<Int, LaundryRoom>.self)
+        }
+        
+        return nil
+    }
 
     // Prepare the service
     func prepare(_ completion: @escaping () -> Void) {
-        if Storage.fileExists(LaundryRoom.directory, in: .caches) {
-            self.idToRooms = Storage.retrieve(LaundryRoom.directory, from: .caches, as: Dictionary<Int, LaundryRoom>.self)
+        if let cached = getCachedLaundryRooms() {
+            self.idToRooms = cached
             completion()
         } else {
             loadIds { (_) in
@@ -61,20 +73,27 @@ class LaundryAPIService: Requestable {
 // MARK: - Fetch API
 extension LaundryAPIService {
     func fetchLaundryData(for ids: [Int], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
-        let ids: String = ids.map { String($0) }.joined(separator: ",")
-        let url = "\(laundryUrl)/\(ids)"
-        getRequest(url: url) { (dict, _, _) in
-            var rooms: [LaundryRoom]?
-            if let dict = dict {
-                let json = JSON(dict)
-                let jsonArray = json["rooms"].arrayValue
-                rooms = [LaundryRoom]()
-                for json in jsonArray {
-                    let room = LaundryRoom(json: json)
-                    rooms?.append(room)
+        var rooms = [LaundryRoom]()
+        var requestsCompleted = 0
+        
+        for id in ids {
+            getRequest(url: "\(laundryUrl)/\(id)") { (dict, _, _) in
+                DispatchQueue.main.async {
+                    if let dict = dict {
+                        let json = JSON(dict)
+                        let jsonArray = json["rooms"].arrayValue
+                        for json in jsonArray {
+                            let room = LaundryRoom(json: json)
+                            rooms.append(room)
+                        }
+                    }
+                    
+                    requestsCompleted += 1
+                    if requestsCompleted == ids.count {
+                        callback(rooms)
+                    }
                 }
             }
-            callback(rooms)
         }
     }
 

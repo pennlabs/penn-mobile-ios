@@ -23,21 +23,24 @@ public extension DiningVenue {
 
     // MARK: - Venue Status
     var mealsToday: [Meal] {
-        
-        return mealsOnDate(date: Date())
+        return mealsOnDate(date: Date.currentLocalDate)
     }
     
     func mealsOnDate(date: Date) -> [Meal] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone = .gmt
+        let formattedDate = dateFormatter.string(from: date)
         
-        return self.days.first(where: { day in
-            day.date == dateFormatter.string(from: date)
+        let meals = self.days.first(where: { day in
+            day.date == formattedDate
         })?.meals.sorted(by: { el1, el2 in
-            return el1.starttime > el2.starttime
+            return el1.starttime < el2.starttime
         }) ?? []
+        
+        return meals
     }
-
+    
     var isOpen: Bool {
         if mealsToday.isEmpty { return false }
         
@@ -79,7 +82,11 @@ public extension DiningVenue {
     }
     
     var currentOrNearestMeal: Meal? {
-        return self.mealsToday.first(where: { $0.isCurrentlyServing }) ?? (self.mealsToday.first(where: { $0.starttime > Date() }) ?? nil)
+        guard let index = currentOrNearestMealIndex else {
+            return nil
+        }
+        
+        return self.mealsToday[index]
     }
 
     var hasMealsToday: Bool {

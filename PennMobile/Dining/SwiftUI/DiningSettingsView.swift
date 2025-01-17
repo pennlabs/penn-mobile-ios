@@ -12,62 +12,36 @@ import PennMobileShared
 struct DiningSettingsView: View {
     @ObservedObject var viewModel: DiningAnalyticsViewModel
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @State private var totalData = false
     private let options = ["All data",
                            "Smart calculation",
                            "Weighted average"]
         
     var body: some View {
-        if #available(iOS 16.0, *) {
-            NavigationView {
-                Form {
-                    Picker(selection: $viewModel.selectedOptionIndex, label: Text("Slope Calculation")) {
-                        ForEach(0..<options.count, id: \.self) { index in
-                            Text(options[index]).tag(index)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    
-                    // Toggle("Include guest swipes", isOn: $totalData)
-                }
-                .navigationBarTitle("Dining Analytics Settings", displayMode: .inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Text("Done")
-                        }
+        NavigationStack {
+            Form {
+                Picker(selection: $viewModel.selectedOptionIndex, label: Text("Slope Calculation")) {
+                    ForEach(0..<options.count, id: \.self) { index in
+                        Text(options[index]).tag(index)
                     }
                 }
-                .navigationViewStyle(StackNavigationViewStyle())
+                .pickerStyle(MenuPickerStyle())
+                
+                // Toggle("Include guest swipes", isOn: $totalData)
             }
-            .presentationDetents([.medium])
-        } else {
-            NavigationView {
-                Form {
-                    Picker(selection: $viewModel.selectedOptionIndex, label: Text("Slope Calculation")) {
-                        ForEach(0..<options.count, id: \.self) { index in
-                            Text(options[index]).tag(index)
-                        }
-                    }
-                    .pickerStyle(MenuPickerStyle())
-                    
-                    // Toggle("Include guest swipes", isOn: $totalData)
-                }
-                .navigationBarTitle("Dining Analytics Settings", displayMode: .inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Text("Done")
-                        }
+            .navigationBarTitle("Dining Analytics Settings", displayMode: .inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Text("Done")
                     }
                 }
-                .navigationViewStyle(StackNavigationViewStyle())
             }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
+        .presentationDetents([.medium])
     }
 }

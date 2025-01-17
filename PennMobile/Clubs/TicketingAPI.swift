@@ -44,7 +44,7 @@ class TicketingAPI {
     }
     
     func getSession() async throws -> URLSession {
-        guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
+        guard let accessToken = try? await OAuth2NetworkManager.instance.getAccessToken() else {
             throw NetworkingError.authenticationError
         }
         

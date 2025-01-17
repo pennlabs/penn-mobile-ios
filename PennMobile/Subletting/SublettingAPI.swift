@@ -6,6 +6,7 @@
 //  Copyright © 2024 PennLabs. All rights reserved.
 //
 
+import UIKit
 import PennMobileShared
 
 struct GenericErrorResponse: Decodable {
@@ -44,7 +45,7 @@ public class SublettingAPI {
     public let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
     
     private func makeSubletRequest<C: Encodable, R: Decodable>(_ urlStr: String? = nil, url: URL? = nil, method: String, isContentJSON: Bool = false, content: C? = nil as String?, returnType: R.Type? = nil as String.Type?) async throws -> R? {
-        guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
+        guard let accessToken = try? await OAuth2NetworkManager.instance.getAccessToken() else {
             throw NetworkingError.authenticationError
         }
         
@@ -239,7 +240,7 @@ public class SublettingAPI {
     }
     
     public func uploadSubletImages(images: [UIImage], id: Int, progressHandler: @escaping (Double) -> Void) async throws -> [SubletImage] {
-        guard let accessToken = await OAuth2NetworkManager.instance.getAccessTokenAsync() else {
+        guard let accessToken = try? await OAuth2NetworkManager.instance.getAccessToken() else {
             throw NetworkingError.authenticationError
         }
         

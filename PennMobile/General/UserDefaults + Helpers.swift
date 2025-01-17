@@ -562,7 +562,7 @@ extension UserDefaults {
 // MARK: - Current Dining Balance Object
 extension UserDefaults {
     @available(*, deprecated)
-    func setdiningBalance(_ diningBalance: DiningBalance) {
+    func setDiningBalance(_ diningBalance: DiningBalance) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(diningBalance) {
             UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.diningBalance.rawValue)

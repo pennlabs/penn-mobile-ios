@@ -16,15 +16,15 @@ struct DiningAnalyticsView: View {
     @State var notLoggedInAlertShowing = false
     @State var showSettingsSheet = false
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     func showCorrectAlert() -> Alert {
         if !Account.isLoggedIn {
-            return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { presentationMode.wrappedValue.dismiss() }))
+            return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { dismiss() }))
         } else {
             return Alert(title: Text("\"Penn Mobile\" requires you to login to Campus Express to use this feature."),
                          message: Text("Would you like to continue to campus express?"),
                          primaryButton: .default(Text("Continue"), action: {showDiningLoginView = true}),
-                         secondaryButton: .cancel({ presentationMode.wrappedValue.dismiss() }))
+                         secondaryButton: .cancel({ dismiss() }))
         }
     }
     var body: some View {
@@ -106,23 +106,8 @@ struct DiningAnalyticsView: View {
         }
         .navigationTitle("Dining Analytics")
         .sheet(isPresented: $showSettingsSheet) {
-            DiningSettingsView(viewModel: diningAnalyticsViewModel) // Replace with your settings view
+            DiningSettingsView(viewModel: diningAnalyticsViewModel)
         }
-    }
-}
-
-extension DiningAnalyticsView {
-    func getSmoothedData(from trans: [DiningAnalyticsBalance]) -> [PredictionsGraphView.YXDataPoint] {
-        let sos = Date.startOfSemester
-        let eos = Date.endOfSemester
-
-        let totalLength = eos.distance(to: sos)
-        let maxDollarValue = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0
-        let yxPoints: [PredictionsGraphView.YXDataPoint] = trans.map { (t) -> PredictionsGraphView.YXDataPoint in
-            let xPoint = t.date.distance(to: sos) / totalLength
-            return PredictionsGraphView.YXDataPoint(y: CGFloat(t.balance / maxDollarValue), x: CGFloat(xPoint))
-        }
-        return yxPoints
     }
 }
 

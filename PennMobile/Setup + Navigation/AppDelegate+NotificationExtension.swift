@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import SwiftyJSON
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
@@ -23,18 +24,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let tokenParts = deviceToken.map { data -> String in
-            return String(format: "%02.2hhx", data)
+        Task {
+            await NotificationDeviceTokenManager.shared.tokenReceived(deviceToken)
         }
-
-        let token = tokenParts.joined()
-
-        UserDBManager.shared.getNotificationId { result in
-            if let getIdResp = try? result.get()[0] {
-                let notificationId: Int = getIdResp.id
-                UserDBManager.shared.savePushNotificationDeviceToken(deviceToken: token, notifId: notificationId)
-                }
-            }
 
         // Setup rich notification categories
         let cancelGSRBookingAction = UNNotificationAction(identifier: NotificationIdentifiers.cancelGSRAction, title: "Cancel Booking", options: [.foreground])

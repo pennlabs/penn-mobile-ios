@@ -465,68 +465,6 @@ extension UserDBManager {
     }
 }
 
-// MARK: - Push Notifications
-extension UserDBManager {
-    // Gets the notification token information using the access token.
-    func getNotificationId(_ completion: @escaping (_ result: Result<[GetNotificationID], NetworkingError>) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                completion(.failure(.authenticationError))
-                return
-            }
-            let url = URL(string: "https://pennmobile.org/api/user/notifications/tokens/")!
-            var params: [String: Any] = [
-                "dev": false
-            ]
-
-            #if DEBUG
-                params["dev"] = true
-            #endif
-
-            let request = URLRequest(url: url, accessToken: token)
-            let task = URLSession.shared.dataTask(with: request) { data, _, _ in
-                guard let data = data else {
-                    completion(.failure(.serverError))
-                    return
-                }
-
-                let decoder = JSONDecoder()
-                if let response = try?
-                    decoder.decode([GetNotificationID].self, from: data) {
-                    completion(.success(response))
-                } else {
-                    completion(.failure(.parsingError))
-                }
-            }
-            task.resume()
-        }
-    }
-
-    // Updates device token.
-    func savePushNotificationDeviceToken(deviceToken: String, notifId: Int, _ completion: (() -> Void)? = nil) {
-        let url = "https://pennmobile.org/api/user/notifications/tokens/\(notifId)"
-        var params: [String: Any] = [
-            "kind": "IOS",
-            "token": deviceToken,
-            "dev": false
-        ]
-
-        #if DEBUG
-            params["dev"] = true
-        #endif
-        makePostRequestWithAccessToken(url: url, params: params) { (_, _, _) in
-            completion?()
-        }
-    }
-
-    func clearPushNotificationDeviceToken(_ completion: (() -> Void)? = nil) {
-        let url = "\(baseUrl)/notifications/register"
-        makePostRequestWithAccessToken(url: url, params: [:]) { (_, _, _) in
-            completion?()
-        }
-    }
-}
-
 // MARK: - Anonymized Token Registration
 extension UserDBManager {
     /// Updates the anonymization keys in case either of them changed. The only key that may change is the pennkey-password.

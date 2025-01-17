@@ -39,7 +39,7 @@ private enum DiningAnalyticsProviderError: Error {
     case noDiningToken
 }
 
-private func refresh() async {
+@MainActor private func refresh() async {
     let model = DiningAnalyticsViewModel()
     let modelRefreshTask = Task {
         await model.refresh()

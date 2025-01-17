@@ -6,6 +6,8 @@
 //  Copyright © 2017 PennLabs. All rights reserved.
 //
 
+import UIKit
+
 protocol RoomSelectionViewDelegate: AnyObject {
     func updateSelectedRooms(for rooms: [LaundryRoom])
     func handleFailureToLoadDictionary()

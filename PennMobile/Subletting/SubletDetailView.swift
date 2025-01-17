@@ -98,6 +98,7 @@ struct SubletDetailView: View {
 struct SubletDetailOnly: View {
     private var columns: [GridItem] = Array(repeating: .init(.flexible()), count: 2)
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
+    @State private var currentIndex = 0
     var sublet: Sublet
     var isSaved: Bool {
         sublettingViewModel.isFavorited(sublet: sublet)
@@ -113,19 +114,31 @@ struct SubletDetailOnly: View {
         
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            TabView {
-                ForEach(sublet.images) { image in
-                    KFImage(URL(string: image.imageUrl))
+            TabView(selection: $currentIndex) {
+                ForEach(sublet.images.indices, id: \.self) { index in
+                    KFImage(URL(string: sublet.images[index].imageUrl))
                         .placeholder {
                             ProgressView()
                         }
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(10)
+                        .tag(index)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .frame(height: 300)
+            
+            if sublet.images.count > 1 {
+                HStack(spacing: 8) {
+                    ForEach(0..<sublet.images.count, id: \.self) { index in
+                        Circle()
+                            .fill(currentIndex == index ? Color.baseLabsBlue : .secondary)
+                            .frame(width: 6, height: 6)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+            }
             
             VStack(alignment: .leading) {
                 HStack {

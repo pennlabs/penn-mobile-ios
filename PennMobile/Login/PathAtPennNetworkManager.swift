@@ -121,7 +121,7 @@ extension PathAtPennNetworkManager {
             request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             request.httpBody = twoFactorRequestBody
             
-            let (postData, postResponse) = try await URLSession.shared.data(for: request)
+            let (_, _) = try await URLSession.shared.data(for: request)
             
             return try await getTokenWithoutReauthenticating()
         } catch {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import ScrollableGraphView
 
 // MARK: - Scrollable Graph View

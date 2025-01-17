@@ -6,6 +6,8 @@
 //  Copyright © 2023 PennLabs. All rights reserved.
 //
 
+import Foundation
+
 struct BannerDescription: Equatable, Codable {
     var image: URL
     var text: String

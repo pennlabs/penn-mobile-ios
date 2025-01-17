@@ -1,83 +1,122 @@
 //
-//  EmergencyContacts.swift
+//  ContactManager.swift
 //  PennMobile
 //
-//  Created by Josh Doman on 5/12/17.
-//  Copyright © 2017 PennLabs. All rights reserved.
+//  Created by Jordan Hochman on 11/16/24.
+//  Copyright © 2024 PennLabs. All rights reserved.
 //
 
 import Contacts
 
-extension SupportItem {
-
+extension Contact {
     var cnContact: CNMutableContact {
         let contact = CNMutableContact()
         contact.givenName = self.contactName
         contact.phoneNumbers = [CNLabeledValue(
-            label: CNLabelPhoneNumberiPhone,
+            label: CNLabelPhoneNumberMain,
             value: CNPhoneNumber(stringValue: self.phoneFiltered))]
-        if let desc = self.descriptionText {
+        if let desc = self.description {
             contact.note = desc
         }
         return contact
     }
-
 }
 
 class ContactManager: NSObject {
-
     static let shared = ContactManager()
-
-    func save(_ items: [SupportItem], callback: @escaping (_ success: Bool) -> Void) {
-        let saveRequest = CNSaveRequest()
-        let store = CNContactStore()
-        for item in items {
-            saveRequest.add(item.cnContact, toContainerWithIdentifier: nil)
-        }
-        do {
-            try store.execute(saveRequest)
-            callback(true)
-        } catch {
-            callback(false)
-        }
-    }
-
-    func delete(_ items: [SupportItem], callback: (_ success: Bool) -> Void) {
-        var successful = true
-        for item in items {
-            delete(item) { (success) in
-                successful = successful ? success : false
+    private let contactStore = CNContactStore()
+    
+    func requestAccess() async -> Bool {
+        return await withCheckedContinuation { continuation in
+            contactStore.requestAccess(for: .contacts) { granted, _ in
+                continuation.resume(returning: granted)
             }
         }
-        callback(successful)
+    }
+    
+    func doesHaveAccess() -> Bool {
+        let access = CNContactStore.authorizationStatus(for: .contacts)
+        
+        var valid: [CNAuthorizationStatus] = [.authorized]
+        if #available(iOS 18.0, *) {
+            valid.append(.limited)
+        }
+        return valid.contains(access)
     }
 
-    func delete(_ item: SupportItem, callback2: (_ success: Bool) -> Void) {
-        let store = CNContactStore()
-        let predicate = CNContact.predicateForContacts(matchingName: item.contactName)
+    func saveContacts(_ contacts: [Contact]) -> Bool {
+        let saveRequest = CNSaveRequest()
+        for contact in contacts {
+            saveRequest.add(contact.cnContact, toContainerWithIdentifier: nil)
+        }
+
+        do {
+            try contactStore.execute(saveRequest)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    func deleteContacts(_ contacts: [Contact]) -> Bool {
+        var success = true
+        for contact in contacts {
+            if !deleteContact(contact) {
+                success = false
+            }
+        }
+        return success
+    }
+
+    func deleteContact(_ contact: Contact) -> Bool {
+        let predicate = CNContact.predicateForContacts(matchingName: contact.contactName)
         let toFetch = [CNContactGivenNameKey] as [CNKeyDescriptor]
 
         do {
-            let contacts = try store.unifiedContacts(matching: predicate, keysToFetch: toFetch)
-            guard contacts.count > 0 else {
-                callback2(true) // no contacts found
-                return
+            let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: toFetch)
+            guard !contacts.isEmpty else {
+                return true // no contacts found
             }
 
+            var success = true
             for contact in contacts {
                 let req = CNSaveRequest()
-                let mutableContact = contact.mutableCopy() as! CNMutableContact
-                req.delete(mutableContact)
-
+                let mutableContact = contact.mutableCopy() as? CNMutableContact
+                if let mutableContact {
+                    req.delete(mutableContact)
+                }
+                
                 do {
-                    try store.execute(req)
-                    callback2(true) // successfully deleted user
+                    try contactStore.execute(req)
                 } catch {
-                    callback2(false)
+                    success = false
                 }
             }
+            return success
         } catch {
-            callback2(false)
+            return false
         }
+    }
+    
+    func checkContactsExist(_ contacts: [Contact]) -> Bool {
+        if !doesHaveAccess() {
+            return false
+        }
+        
+        let toFetch = [CNContactGivenNameKey] as [CNKeyDescriptor]
+        
+        for contact in contacts {
+            let predicate = CNContact.predicateForContacts(matchingName: contact.contactName)
+
+            do {
+                let contacts = try contactStore.unifiedContacts(matching: predicate, keysToFetch: toFetch)
+                if contacts.isEmpty {
+                    return false // at least one contact does not exist
+                }
+            } catch {
+                return false // error occured during fetching
+            }
+        }
+        return true
     }
 }

@@ -8,17 +8,16 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
-      - name: Select Xcode 15
+      - name: Select Xcode 16
         # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
-        run: sudo xcode-select -s '/Applications/Xcode_15.0.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_16.0.app/Contents/Developer'
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Create Config File
         run: |
           cat << EOF > Config/Release.xcconfig
-          #include "Pods/Target Support Files/Pods-PennMobile/Pods-PennMobile.release.xcconfig"
           LABS_OAUTH_CLIENT_ID = ${{ secrets.LABS_OAUTH_CLIENT_ID }}
           APP_NAME = Penn Mobile
           APP_BUNDLE_ID = org.pennlabs.PennMobile
@@ -33,15 +32,8 @@ jobs:
           cat << EOF > api_key.json
           ${{ secrets.FASTLANE_JSON_KEY }}
           EOF
-      - name: Cache CocoaPods
-        uses: actions/cache@v2
-        with:
-          path: Pods
-          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
       - name: Cache SPM
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: .build
           key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
@@ -50,15 +42,8 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.6.8'
+          ruby-version: '3.3.0'
           bundler-cache: true
-      - name: Download pods
-        run: bundle exec pod install
-      - name: Fix pod script
-        # https://stackoverflow.com/questions/63533819/rsync-error-some-files-could-not-be-transferred-code-23-command-phasescriptex
-        run: find Pods/Target\ Support\ Files/Pods-PennMobile -name '*-frameworks.sh' -exec sed -i '' 's|source="\$(readlink "\${source}")"|source="\$(readlink -f "\${source}")"|g' {} +
-      - name: Linter
-        run: Pods/SwiftLint/swiftlint PennMobile/*
       - name: Install the Apple certificate and provisioning profile
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}

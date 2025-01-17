@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import ScrollableGraphView
 
 final class LaundryGraphView: UIView {

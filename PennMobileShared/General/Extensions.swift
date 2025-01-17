@@ -350,14 +350,14 @@ public extension Date {
     static var startOfSemester: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: "2024-08-27")!
+        return formatter.date(from: "2025-01-15")!
 
     }
 
     static var endOfSemester: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: "2024-12-19")!
+        return formatter.date(from: "2025-05-13")!
     }
 }
 
@@ -441,10 +441,6 @@ public extension MutableCollection where Index == Int {
 }
 
 public extension Optional {
-    func nullUnwrap() -> Any {
-        return self == nil ? "null" : self!
-    }
-
     /// Unwraps an optional and throws an error if it is nil.
     ///
     /// https://www.avanderlee.com/swift/unwrap-or-throw/
@@ -466,9 +462,9 @@ public extension UILabel {
     }
 }
 
-public extension Sequence {
+public extension Sequence where Element: Sendable {
     /// Maps an array to an array of transformed values, fetched asynchronously in parallel.
-    func asyncMap<T>(_ transform: @escaping (Element) async throws -> T) async rethrows -> [T] {
+    func asyncMap<T: Sendable>(_ transform: @escaping @Sendable (Element) async throws -> T) async rethrows -> [T] {
         try await withThrowingTaskGroup(of: T.self) { group in
             forEach { element in
                 group.addTask {
@@ -713,7 +709,7 @@ public extension View {
     }
 }
 
-extension CLLocationCoordinate2D: Identifiable {
+extension CLLocationCoordinate2D: @retroactive Identifiable {
     public var id: String {
         return "\(latitude)-\(longitude)"
     }

@@ -56,9 +56,12 @@ class AuthManager: ObservableObject {
     static func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
-        OAuth2NetworkManager.instance.clearRefreshToken()
-        OAuth2NetworkManager.instance.clearCurrentAccessToken()
         Account.clear()
+        
+        Task {
+            await OAuth2NetworkManager.instance.clearRefreshToken()
+            await OAuth2NetworkManager.instance.clearCurrentAccessToken()
+        }
     }
 
     func determineInitialState() {
@@ -87,5 +90,20 @@ class AuthManager: ObservableObject {
     func logOut() {
         state = .loggedOut
         AuthManager.clearAccountData()
+    }
+}
+
+extension AuthState: CustomDebugStringConvertible {
+    var debugDescription: String {
+        switch self {
+        case .notDetermined:
+            "Not determined"
+        case .loggedOut:
+            "Logged out"
+        case .guest:
+            "Guest"
+        case .loggedIn(let account):
+            "Logged in as \(account.username)"
+        }
     }
 }

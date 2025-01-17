@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol HomeGSRBookingButtonDelegate {
     func handleBookingSelected(_ booking: GSRBooking)

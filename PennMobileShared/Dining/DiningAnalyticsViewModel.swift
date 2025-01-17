@@ -33,6 +33,7 @@ extension DiningAnalyticsBalance: Comparable {
     }
 }
 
+@MainActor
 public class DiningAnalyticsViewModel: ObservableObject {
     public static let dollarHistoryDirectory = "diningAnalyticsDollarData"
     public static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
@@ -45,8 +46,6 @@ public class DiningAnalyticsViewModel: ObservableObject {
     @Published public var predictedDollarSemesterEndBalance: Double = 0
     @Published public var swipesPredictedZeroDate: Date = Date.endOfSemester
     @Published public var predictedSwipesSemesterEndBalance: Double = 0
-    @Published public var swipeAxisLabel: ([String], [String]) = ([], [])
-    @Published public var dollarAxisLabel: ([String], [String]) = ([], [])
     @Published public var dollarSlope: Double = 0.0
     @Published public var swipeSlope: Double = 0.0
     
@@ -55,6 +54,8 @@ public class DiningAnalyticsViewModel: ObservableObject {
             populateAxesAndPredictions()
         }
     }
+    
+    var currentBalance = try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)
 
     var yIntercept = 0.0
     var slope = 0.0
@@ -86,37 +87,76 @@ public class DiningAnalyticsViewModel: ObservableObject {
         if startDate != Date.startOfSemester {
             startDate = Calendar.current.date(byAdding: .day, value: 1, to: startDate)!
         }
-        let startDateStr = formatter.string(from: startDate)
-        let balances = await DiningAPI.instance.getPastDiningBalances(diningToken: diningToken, startDate: startDateStr)
-        switch balances {
-        case .failure:
-            return
-        case .success(let balanceList):
-            if startDateStr != self.formatter.string(from: Date()) {
-                let newDollarHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.diningDollars) ?? 0.0)})
-                let newSwipeHistory = balanceList.map({DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits))})
-                self.swipeHistory.append(contentsOf: newSwipeHistory)
-                self.dollarHistory.append(contentsOf: newDollarHistory)
-                try? Storage.storeThrowing(self.swipeHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
-                try? Storage.storeThrowing(self.dollarHistory, to: .groupDocuments, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
-            }
-            let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
-            if let planStartDate = try? planStartDateResult.get() {
-                self.planStartDate = planStartDate
-                try? Storage.storeThrowing(planStartDate, to: .groupDocuments, as: Self.planStartDateDirectory)
-            }
-            if refreshWidgets {
-                WidgetKind.diningAnalyticsWidgets.forEach {
-                    WidgetCenter.shared.reloadTimelines(ofKind: $0)
-                }
-            }
-            populateAxesAndPredictions()
+        let startDateStr = self.formatter.string(from: startDate)
+        let fetchNewBalances = startDate < Date()
+
+        if currentBalance == nil {
+            currentBalance = try? await DiningAPI.instance.getDiningBalance(diningToken: diningToken).get()
         }
+        guard let currentBalance else {
+            return
+        }
+        let currentBalanceDate = self.formatter.date(from: currentBalance.date)!
+
+        var balances: [DiningBalance] = []
+        if fetchNewBalances {
+            // add all of the new balances to the list
+            guard let balanceList = try? await DiningAPI.instance.getPastDiningBalances(diningToken: diningToken, startDate: startDateStr).get() else {
+                return
+            }
+            balances = balanceList
+
+            // replace last element if same date as current date
+            let lastDate = balances.isEmpty ? nil : self.formatter.date(from: balances.last!.date)
+            if let lastDate, lastDate == currentBalanceDate {
+                balances.removeLast()
+            }
+        }
+        // always add the current balance to the list
+        balances.append(currentBalance)
+        
+        // update global list of balances
+        let newDollarHistory = balances.map { DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.diningDollars) ?? 0.0) }
+        let newSwipeHistory = balances.map { DiningAnalyticsBalance(date: self.formatter.date(from: $0.date)!, balance: Double($0.regularVisits)) }
+        self.swipeHistory.append(contentsOf: newSwipeHistory)
+        self.dollarHistory.append(contentsOf: newDollarHistory)
+        
+        // remove random zeros in the data
+        self.swipeHistory = removeZeros(data: self.swipeHistory)
+        self.dollarHistory = removeZeros(data: self.dollarHistory)
+            
+        // only save to file if fetched new balances
+        if fetchNewBalances {
+            // don't want to save the current balance, only all new fetched balances
+            let swipeHistoryToStore = self.swipeHistory.filter { $0.date != currentBalanceDate }
+            let dollarHistoryToStore = self.dollarHistory.filter { $0.date != currentBalanceDate }
+            
+            try? Storage.storeThrowing(swipeHistoryToStore, to: .groupDocuments, as: DiningAnalyticsViewModel.swipeHistoryDirectory)
+            try? Storage.storeThrowing(dollarHistoryToStore, to: .groupDocuments, as: DiningAnalyticsViewModel.dollarHistoryDirectory)
+        }
+        
+        if self.swipeHistory.count == 1 && self.swipeHistory[0].date == currentBalanceDate {
+            self.swipeHistory = []
+        }
+        if self.dollarHistory.count == 1 && self.dollarHistory[0].date == currentBalanceDate {
+            self.dollarHistory = []
+        }
+
+        if let planStartDate = try? await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken).get() {
+            self.planStartDate = planStartDate
+            try? Storage.storeThrowing(planStartDate, to: .groupDocuments, as: Self.planStartDateDirectory)
+        }
+
+        if refreshWidgets {
+            WidgetKind.diningAnalyticsWidgets.forEach {
+                WidgetCenter.shared.reloadTimelines(ofKind: $0)
+            }
+        }
+
+        populateAxesAndPredictions()
     }
 
     func populateAxesAndPredictions() {
-        filterData()
-        
         let last7dollarHistory: [DiningAnalyticsBalance] = dollarHistory.suffix(7)
         let last7swipeHistory: [DiningAnalyticsBalance] = swipeHistory.suffix(7)
         
@@ -189,9 +229,6 @@ public class DiningAnalyticsViewModel: ObservableObject {
         self.swipeSlope = swipePredictions.slope
         self.swipesPredictedZeroDate = swipePredictions.predictedZeroDate
         self.predictedSwipesSemesterEndBalance = swipePredictions.predictedEndBalance
-        
-        self.dollarAxisLabel = self.getAxisLabelsYX(from: self.dollarHistory)
-        self.swipeAxisLabel = self.getAxisLabelsYX(from: self.swipeHistory)
     }
     
     func getWeightedAverageSlope(allBalance: [DiningAnalyticsBalance]) -> Double {
@@ -208,27 +245,24 @@ public class DiningAnalyticsViewModel: ObservableObject {
         return averageSlope
     }
     
-    func filterData() {
-        if self.dollarHistory.count >= 2 {
-            self.dollarHistory = self.dollarHistory.enumerated().filter { index, dollar in
-                guard index > 0 && index < self.dollarHistory.count - 1 else {
-                    return true
-                }
-                let previousBalance = self.dollarHistory[index - 1].balance
-                let nextBalance = self.dollarHistory[index + 1].balance
-                return dollar.balance != 0 || previousBalance <= 0 || nextBalance <= 0
-            }.map { $0.element }
+    func removeZeros(data: [DiningAnalyticsBalance]) -> [DiningAnalyticsBalance] {
+        if self.dollarHistory.count <= 2 {
+            return data
         }
-        if self.swipeHistory.count >= 2 {
-            self.swipeHistory = self.swipeHistory.enumerated().filter { index, swipe in
-                guard index > 0 && index < self.swipeHistory.count - 1 else {
-                    return true
-                }
-                let previousBalance = self.swipeHistory[index - 1].balance
-                let nextBalance = self.swipeHistory[index + 1].balance
-                return swipe.balance != 0 || previousBalance <= 0 || nextBalance <= 0
-            }.map { $0.element }
-        }
+        
+        return data.enumerated().filter { index, currentValue in
+            // automatically keep first and last
+            guard index > 0 && index < self.dollarHistory.count - 1 else {
+                return true
+            }
+            
+            let currentBalance = currentValue.balance
+            let previousBalance = self.dollarHistory[index - 1].balance
+            let nextBalance = self.dollarHistory[index + 1].balance
+            
+            // remove if currentBalance == 0 && previousBalance > 0 && nextBalance > 0
+            return currentBalance != 0 || previousBalance <= 0 || nextBalance <= 0
+        }.map { $0.element }
     }
     
     func getPredictions(firstBalance: DiningAnalyticsBalance, slope: Double, maxBalance: DiningAnalyticsBalance) -> (slope: Double, predictedZeroDate: Date, predictedEndBalance: Double) {
@@ -268,32 +302,5 @@ public class DiningAnalyticsViewModel: ObservableObject {
         let diffInDays = Calendar.current.dateComponents([.day], from: firstBalance.date, to: Date.endOfSemester).day!
         let endBalance = (slope * Double(diffInDays)) + firstBalance.balance
         return endBalance
-    }
-    
-    // Compute axis labels
-    static func getAxisLabelsX() -> [String] {
-        let xAxisLabelCount = 4
-        let semester = Date.startOfSemester.distance(to: Date.endOfSemester)
-        let semesterStep = semester / Double(xAxisLabelCount - 1)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "M/d"
-        return stride(from: 0, to: Double(xAxisLabelCount), by: 1).map {
-            dateFormatter.string(from: Date.startOfSemester.advanced(by: semesterStep * $0))
-        }
-    }
-    
-    func getAxisLabelsYX(from trans: [DiningAnalyticsBalance]) -> ([String], [String]) {
-        let yAxisLabelCount = 5
-        var yLabels: [String] = []
-
-        // Generate Y Axis Labels
-        let maxDollarValue = trans.max(by: { $0.balance < $1.balance })?.balance ?? 1.0
-        let dollarStep = (maxDollarValue / Double(yAxisLabelCount - 1))
-        for i in 0 ..< yAxisLabelCount {
-            let yAxisLabel = "\(Int(dollarStep * Double(yAxisLabelCount - i - 1)))"
-            yLabels.append(yAxisLabel)
-        }
-
-        return (yLabels, DiningAnalyticsViewModel.getAxisLabelsX())
     }
 }

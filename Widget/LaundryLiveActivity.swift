@@ -17,7 +17,6 @@ extension LaundryMachine {
     }
 }
 
-@available(iOS 16.0, *)
 struct LaundryLiveActivityView: View {
     var attributes: LaundryAttributes
     
@@ -35,7 +34,6 @@ struct LaundryLiveActivityView: View {
     }
 }
 
-@available(iOS 16.0, *)
 struct LaundryLiveActivityView_Previews: PreviewProvider {
     static var previews: some View {
         LaundryLiveActivityView(
