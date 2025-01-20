@@ -26,24 +26,31 @@ struct RefactorDiningHallDetailView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
-                ZStack {
-                    KFImage(URL(string: hall.imageUrl))
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(maxHeight: UIScreen.main.bounds.height * 4/9)
-                    LinearGradient(colors: [Color.black.opacity(1.0), Color.black.opacity(0), Color.black.opacity(0)], startPoint: .bottom, endPoint: .top)
-                    VStack {
-                        Spacer()
+            VStack {
+                GeometryReader { geometry in
+                    let minY = geometry.frame(in: .global).minY
+                    ZStack(alignment: .bottomLeading) {
+                        KFImage(URL(string: hall.imageUrl))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geometry.size.width, height: UIScreen.main.bounds.height * 4/9 + max(0, minY))
+                            .offset(y: min(0, minY) * -2/3)
+                            .allowsHitTesting(false)
+                            .clipped()
+                        
+                        LinearGradient(gradient: Gradient(colors: [.black.opacity(0.6), .black.opacity(0.2), .clear, .black.opacity(0.3), .black]), startPoint: .init(x: 0.5, y: 0.2), endPoint: .init(x: 0.5, y: 1))
+                        
                         Text(hall.name)
-                            .multilineTextAlignment(.center)
-                            .font(.system(.largeTitle, design: .serif))
-                            .bold()
-                            .foregroundColor(.white)
-                            .shadow(radius: 2)
                             .padding()
+                            .foregroundColor(.white)
+                            .font(.system(size: 40, weight: .bold))
+                            .minimumScaleFactor(0.2)
+                            .lineLimit(1)
                     }
+                    .offset(y: -max(0, minY))
                 }
+                .edgesIgnoringSafeArea(.all)
+                .frame(height: UIScreen.main.bounds.height * 4/9)
                 
                 HStack (alignment: .center, spacing: 10) {
                     Picker("Section", selection: self.$pickerIndex) {
@@ -77,6 +84,7 @@ struct RefactorDiningHallDetailView: View {
                 }
                 .padding()
                 
+                
                 Group {
                     if pickerIndex == 0 {
                         RefactorDiningHallMenuSubview(hall: hall)
@@ -88,26 +96,34 @@ struct RefactorDiningHallDetailView: View {
                         Text("Location")
                     }
                 }
-//                .background {
-//                    let image = Image("DiningAnalyticsBackground")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .opacity(0.3)
-//                    switch colorScheme {
-//                    case .dark:
-//                        image
-//                            .colorInvert()
-//                            .hueRotation(.degrees(180))
-//                            .saturation(0.8)
-//                            .contrast(0.8)
-//                    default:
-//                        image
-//                    }
-//                }
-                
             }
+            //        ScrollView(showsIndicators: false) {
+            //
+            //            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
+            //
+            //
+            //
+            ////                .background {
+            ////                    let image = Image("DiningAnalyticsBackground")
+            ////                        .resizable()
+            ////                        .scaledToFit()
+            ////                        .opacity(0.3)
+            ////                    switch colorScheme {
+            ////                    case .dark:
+            ////                        image
+            ////                            .colorInvert()
+            ////                            .hueRotation(.degrees(180))
+            ////                            .saturation(0.8)
+            ////                            .contrast(0.8)
+            ////                    default:
+            ////                        image
+            ////                    }
+            ////                }
+            //
+            //            }
+            //        }
+            .navigationBarTitleDisplayMode(.inline)
+            .edgesIgnoringSafeArea(.horizontal)
         }
-        .ignoresSafeArea(edges: .horizontal)
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
