@@ -9,21 +9,65 @@
 import SwiftUI
 
 
+
 struct RefactorDiningHallMenuSubview: View {
-    let hall: RefactorDiningHall
-    @State var currentMeal: RefactorDiningMeal?
-    @State var menuDate: Date = Date.distantPast
-    @State var mealsOnDate: [RefactorDiningMeal] = []
-    @State var focusedItem: RefactorDiningItem? = nil
-    
+    @ObservedObject private var vm: ViewModel
     @State private var headerOffset: CGFloat = 0
-    @State private var focusedStationId: UUID? = nil
+    
+    class ViewModel: ObservableObject {
+        let hall: RefactorDiningHall
+        @Published var currentMeal: RefactorDiningMeal?
+        @Published var menuDate: Date = Date.distantPast {
+            didSet {
+                let newMeals = hall.meals.filter({
+                    Calendar.current.isDate(menuDate.localTime, equalTo: $0.startTime.localTime, toGranularity: .day)
+                })
+                mealsOnDate = newMeals
+                if let meal = hall.currentStatus().relevantMeal, mealsOnDate.contains(meal) {
+                    currentMeal = meal
+                } else {
+                    currentMeal = newMeals.first
+                }
+            }
+        }
+        @Published var mealsOnDate: [RefactorDiningMeal] = []
+        @Published var focusedItem: RefactorDiningItem? = nil
+        @Published var isScrolling: Bool = false
+        
+        @Published var focusedStationId: UUID? = nil {
+            willSet {
+                
+                // if it's more than one station away from the current ID, don't animate scrolling
+                if newValue != focusedStationId {
+                    print("hello")
+                }
+            }
+        }
+        
+        init(hall: RefactorDiningHall) {
+            self.hall = hall
+        }
+        
+        func setFocusedStation(_ station: RefactorDiningStation?) {
+            self.focusedStationId = station?.id ?? nil
+        }
+        
+        func setFocusedItem(_ item: RefactorDiningItem?) {
+            self.focusedItem = item
+        }
+        
+        
+    }
+    
+    init(hall: RefactorDiningHall) {
+        vm = ViewModel(hall: hall)
+    }
     
     var body: some View {
         HStack {
-            if currentMeal != nil {
-                Picker("Menu", selection: Binding($currentMeal)!) {
-                    ForEach(mealsOnDate, id: \.self) { meal in
+            if vm.currentMeal != nil {
+                Picker("Menu", selection: Binding($vm.currentMeal)!) {
+                    ForEach(vm.mealsOnDate, id: \.self) { meal in
                         Text(meal.service)
                     }
                 }.pickerStyle(MenuPickerStyle())
@@ -31,31 +75,20 @@ struct RefactorDiningHallMenuSubview: View {
                 Text("Closed For Today")
             }
             Spacer()
-            DatePicker("", selection: $menuDate, in: Date.currentLocalDate...Date.currentLocalDate.add(minutes: 8640), displayedComponents: .date)
-                .onChange(of: menuDate) { newValue in
-                    let newMeals = hall.meals.filter({
-                        Calendar.current.isDate(newValue.localTime, equalTo: $0.startTime.localTime, toGranularity: .day)
-                    })
-                    mealsOnDate = newMeals
-                    if let meal = hall.currentStatus().relevantMeal, mealsOnDate.contains(meal) {
-                        currentMeal = meal
-                    } else {
-                        currentMeal = newMeals.first
-                    }
-                    
-                }
+            DatePicker("", selection: $vm.menuDate, in: Date.currentLocalDate...Date.currentLocalDate.add(minutes: 8640), displayedComponents: .date)
                 .padding()
             
         }
         .onAppear() {
-            menuDate = Date.now.localTime
+            vm.menuDate = Date.now.localTime
         }
         
-        if let current = currentMeal {
+        if let current = vm.currentMeal {
             ScrollViewReader { proxy in
                 LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
                     Section(header: GeometryReader { headerGeo in
-                        RefactorDiningHallMenuHeader(meal: current, focusedStationId: $focusedStationId)
+                        RefactorDiningHallMenuHeader(meal: current)
+                            .environmentObject(vm)
                             .onAppear {
                                 headerOffset = headerGeo.frame(in: .global).minY
                             }
@@ -72,8 +105,9 @@ struct RefactorDiningHallMenuSubview: View {
                         ForEach(sorted.indices, id: \.self) { index in
                             Group {
                                 RefactorDiningStationHeader(station: sorted[index])
-                                RefactorDiningStationBody(station: sorted[index], focusedItem: $focusedItem)
+                                RefactorDiningStationBody(station: sorted[index])
                             }
+                            .environmentObject(vm)
                             .id(sorted[index].idVert)
                             .background {
                                 GeometryReader { sectionGeo in
@@ -85,17 +119,12 @@ struct RefactorDiningHallMenuSubview: View {
                                     Color.clear
                                     .onAppear {
                                         if isIntersecting {
-                                            focusedStationId = sorted[index].id
+                                            vm.setFocusedStation(sorted[index])
                                         }
                                     }
                                     .onChange(of: sectionTop) { _ in
                                         if isIntersecting {
-                                            focusedStationId = sorted[index].id
-                                        }
-                                    }
-                                    .onChange(of: sectionBottom) { _ in
-                                        if isIntersecting {
-                                            focusedStationId = sorted[index].id
+                                            vm.setFocusedStation(sorted[index])
                                         }
                                     }
                                 }
@@ -110,13 +139,12 @@ struct RefactorDiningHallMenuSubview: View {
 
 
 struct RefactorDiningHallMenuHeader: View {
-    @Binding var focusedStationId: UUID?
     let meal: RefactorDiningMeal
     let sortedStations: [RefactorDiningStation]
+    @EnvironmentObject var vm: RefactorDiningHallMenuSubview.ViewModel
     
-    init(meal: RefactorDiningMeal, focusedStationId: Binding<UUID?>) {
+    init(meal: RefactorDiningMeal) {
         self.meal = meal
-        _focusedStationId = focusedStationId
         self.sortedStations = meal.stations.sorted { el1, el2 in
             return RefactorDiningStation.getWeight(station: el1) < RefactorDiningStation.getWeight(station: el2)
         }
@@ -130,14 +158,14 @@ struct RefactorDiningHallMenuHeader: View {
                     ForEach(sortedStations, id: \.idHoriz) { station in
                         Text(station.name.uppercased())
                             .font(.headline)
-                            .bold(station.id == focusedStationId)
+                            .bold(station.id == vm.focusedStationId)
                             
                     }
                 }
                 .background(.background)
             }
             .padding(.horizontal)
-            .onChange(of: focusedStationId) { new in
+            .onChange(of: vm.focusedStationId) { new in
                 guard let station = sortedStations.filter({ el in
                     return el.id == new
                 }).first else {
@@ -173,10 +201,10 @@ struct RefactorDiningStationHeader: View {
 struct RefactorDiningStationBody: View {
     let station: RefactorDiningStation
     let items: [RefactorDiningItem]
-    @Binding var focusedItem: RefactorDiningItem?
+    @EnvironmentObject var vm: RefactorDiningHallMenuSubview.ViewModel
     
     
-    init(station: RefactorDiningStation, focusedItem: Binding<RefactorDiningItem?>) {
+    init(station: RefactorDiningStation) {
         self.station = station
         self.items = station.items.sorted { el1, el2 in
 //            if let el1ServingString = el1.nutritionInfo["Serving Size"],
@@ -190,7 +218,6 @@ struct RefactorDiningStationBody: View {
             return el1.itemId > el2.itemId
             
         }
-        self._focusedItem = focusedItem
     }
     
     var body: some View {
@@ -219,12 +246,12 @@ struct RefactorDiningStationBody: View {
                     }
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .rotationEffect(Angle(degrees: focusedItem == item ? 90 : 0))
+                        .rotationEffect(Angle(degrees: vm.focusedItem == item ? 90 : 0))
                 }
                 .padding(.horizontal)
                 .onTapGesture {
                     withAnimation {
-                        focusedItem = (focusedItem == item) ? nil : item
+                        vm.setFocusedItem(vm.focusedItem == item ? nil : item)
                     }
                 }
             }
