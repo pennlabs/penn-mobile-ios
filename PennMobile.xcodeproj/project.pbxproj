@@ -17,7 +17,6 @@
 		4218240A2CCEB1370028E510 /* PennEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824062CCEB1370028E510 /* PennEventsView.swift */; };
 		4218240B2CCEB1370028E510 /* PennEventsViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824072CCEB1370028E510 /* PennEventsViewerView.swift */; };
 		423B40D42D42A2070035E12D /* GSRMappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B40D32D42A2070035E12D /* GSRMappingController.swift */; };
-		423B40D62D42A2250035E12D /* QuickBookViewContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B40D52D42A2250035E12D /* QuickBookViewContoller.swift */; };
 		423B40D82D42A2300035E12D /* quickBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B40D72D42A2300035E12D /* quickBookingViewController.swift */; };
 		42632C8F2CB9C77B0028CC31 /* ScannerDuplicate.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0E2CB9C77B0028CC31 /* ScannerDuplicate.ahap */; };
 		42632C902CB9C77B0028CC31 /* ScannerError.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0F2CB9C77B0028CC31 /* ScannerError.ahap */; };
@@ -447,7 +446,6 @@
 		421824062CCEB1370028E510 /* PennEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsView.swift; sourceTree = "<group>"; };
 		421824072CCEB1370028E510 /* PennEventsViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsViewerView.swift; sourceTree = "<group>"; };
 		423B40D32D42A2070035E12D /* GSRMappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRMappingController.swift; sourceTree = "<group>"; };
-		423B40D52D42A2250035E12D /* QuickBookViewContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookViewContoller.swift; sourceTree = "<group>"; };
 		423B40D72D42A2300035E12D /* quickBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quickBookingViewController.swift; sourceTree = "<group>"; };
 		42632AF92CB9C77B0028CC31 /* OAuth2NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2NetworkManager.swift; sourceTree = "<group>"; };
 		42632AFA2CB9C77B0028CC31 /* PennAuthRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennAuthRequestable.swift; sourceTree = "<group>"; };
@@ -1291,7 +1289,6 @@
 				42632B902CB9C77B0028CC31 /* GSRReservationsController.swift */,
 				42632B912CB9C77B0028CC31 /* GSRTabController.swift */,
 				423B40D32D42A2070035E12D /* GSRMappingController.swift */,
-				423B40D52D42A2250035E12D /* QuickBookViewContoller.swift */,
 				423B40D72D42A2300035E12D /* quickBookingViewController.swift */,
 			);
 			path = Controllers;
@@ -2378,7 +2375,6 @@
 				42632CA42CB9C77B0028CC31 /* BuildingMapCell.swift in Sources */,
 				42632CA52CB9C77B0028CC31 /* BuildingSectionHeader.swift in Sources */,
 				42632CA62CB9C77B0028CC31 /* MenuTableView.swift in Sources */,
-				423B40D62D42A2250035E12D /* QuickBookViewContoller.swift in Sources */,
 				42632CA72CB9C77B0028CC31 /* BuildingProtocol.swift in Sources */,
 				42632CA82CB9C77B0028CC31 /* ScannerState.swift in Sources */,
 				42632CA92CB9C77B0028CC31 /* ScannerView.swift in Sources */,

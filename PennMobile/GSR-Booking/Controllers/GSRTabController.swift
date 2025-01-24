@@ -73,14 +73,15 @@ class GSRTabController: ButtonBarPagerTabStripViewController, LegacyToastPresent
 
     override func viewControllers(for pagerTabStripController: PagerTabStripViewController) -> [UIViewController] {
         let child1 = GSRLocationsController()
-        let child2 = GSRReservationsController()
+        let child2 = QuickBookingViewController()
+        let child3 = GSRReservationsController()
 
         if UserDefaults.standard.gsrGroupsEnabled() {
-            let child3 = GSRGroupController()
+//            let child4 = GSRGroupController()
             return [child1, child2, child3]
         }
 
-        return [child1, child2]
+        return [child1, child2, child3]
     }
 }
 
@@ -96,8 +97,14 @@ extension GSRReservationsController: IndicatorInfoProvider {
     }
 }
 
-extension GSRGroupController: IndicatorInfoProvider {
+extension QuickBookingViewController: IndicatorInfoProvider {
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
-        return IndicatorInfo(title: "Groups")
+        return IndicatorInfo(title: "Quick Book")
     }
 }
+
+//extension GSRGroupController: IndicatorInfoProvider {
+//    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+//        return IndicatorInfo(title: "Groups")
+//    }
+//}

@@ -51,6 +51,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         self.prefList = locations
         setupUnpreferButton()
         setupBook()
+        setupDescriptionLabel()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
@@ -61,7 +62,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         let button = UIButton(type: .system)
         button.setTitle("Submit", for: .normal)
         button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
-        button.backgroundColor = UIColor(named: "baseGreen")!
+        button.backgroundColor = UIColor(red: 2.0 / 255, green: 192.0 / 255, blue: 92.0 / 255, alpha: 1.0)
         button.layer.cornerRadius = 15
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.3
@@ -75,7 +76,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         let button = UIButton(type: .system)
         button.setTitle("Preferred Location", for: .normal)
         button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
-        button.backgroundColor = UIColor(named: "baseLabsBlue")!
+        button.backgroundColor = UIColor(red: 2.0 / 255, green: 192.0 / 255, blue: 92.0 / 255, alpha: 1.0)
         button.layer.cornerRadius = 15
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.3
@@ -87,9 +88,9 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     
     fileprivate let bookButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Find GSR", for: .normal)
+        button.setTitle("Search", for: .normal)
         button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
-        button.backgroundColor = UIColor(named: "baseLabsBlue")!
+        button.backgroundColor = UIColor(red: 2.0 / 255, green: 192.0 / 255, blue: 92.0 / 255, alpha: 1.0)
         button.layer.cornerRadius = 15
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.3
@@ -101,13 +102,26 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     
     fileprivate let roomLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = UIColor.lightGray.withAlphaComponent(0.8)
+        label.backgroundColor = .uiBackgroundSecondary
         label.layer.masksToBounds = true
         label.layer.cornerRadius = 10
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = .labelPrimary
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    fileprivate let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .uiGroupedBackgroundSecondary
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = 10
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .labelPrimary
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -130,13 +144,24 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         ])
     }
     
-    @objc fileprivate func findGSRButtonPressed() {
-        prefList = makePreference()
-        self.setupQuickBooking {
-            self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
-            self.setupMapping()
-            self.setupSubmitButton()
-        }
+    fileprivate func setupDescriptionLabel() {
+        descriptionLabel.text = """
+            
+                Quickly book the soonest available room 
+                in any location on campus.  
+            
+                Preferred location will be booked over  
+                other locations with the same soonest   
+                available time.    
+            
+            """
+        view.addSubview(descriptionLabel)
+        
+        NSLayoutConstraint.activate([
+            descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 180),
+            descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            descriptionLabel.widthAnchor.constraint(equalToConstant: 350)
+        ])
     }
     
     fileprivate func setupMapping() {
@@ -162,6 +187,15 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
             mappingController.view.heightAnchor.constraint(equalToConstant: 300)
         ])
         mappingController.didMove(toParent: self)
+    }
+    
+    @objc fileprivate func findGSRButtonPressed() {
+        prefList = makePreference()
+        self.setupQuickBooking {
+            self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
+            self.setupMapping()
+            self.setupSubmitButton()
+        }
     }
     
     fileprivate func setupQuickBooking(completion: @escaping () -> Void) {
