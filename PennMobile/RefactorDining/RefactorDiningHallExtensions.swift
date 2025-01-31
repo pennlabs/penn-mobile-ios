@@ -89,21 +89,30 @@ public extension RefactorDiningHall {
             }
         }
         
-        var color: Color {
+        var bgColor: Color {
             switch self {
             case .open(let isClosingSoon, _):
                 return isClosingSoon ? Color.redLight : Color.greenLight
+            case .closedIndefinitely, .closedUntil(_), .openingSoon(_):
+                return Color.grey6
+            }
+        }
+        
+        var labelColor: Color {
+            switch self {
+            case .open(let isClosingSoon, _):
+                return isClosingSoon ? Color.red : Color.green
             case .closedIndefinitely, .closedUntil(_), .openingSoon(_):
                 return Color.grey2
             }
         }
         
-        var secondaryColor: Color {
+        var textColor: Color {
             switch self {
-            case .open(_, _):
-                return Color.white
+            case .open(let isClosingSoon, _):
+                return .white
             case .closedIndefinitely, .closedUntil(_), .openingSoon(_):
-                return Color.primary
+                return .labelPrimary
             }
         }
         

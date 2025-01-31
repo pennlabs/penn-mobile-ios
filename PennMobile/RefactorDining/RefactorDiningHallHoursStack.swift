@@ -16,16 +16,18 @@ struct RefactorDiningHallHoursStack: View {
     
     
     var body: some View {
-        HStack(spacing: 4){
-            ForEach(hours) { meal in
-                Text(meal.getHumanReadableHours())
-                    .foregroundStyle(meal == currentStatus?.relevantMeal ? currentStatus?.secondaryColor ?? Color.primary : Color.primary)
-                    .font(.caption)
-                    .padding(6)
-                    .background {
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundStyle(meal == currentStatus?.relevantMeal ? currentStatus?.color ?? Color.grey2 : Color.grey2)
-                    }
+        ScrollView (.horizontal) {
+            HStack(spacing: 4) {
+                ForEach(hours) { meal in
+                    Text(meal.getHumanReadableHours())
+                        .foregroundStyle(meal == currentStatus?.relevantMeal ? currentStatus?.textColor ?? Color.primary : Color.primary)
+                        .font(.system(.caption, weight: .light))
+                        .padding(6)
+                        .background {
+                            RoundedRectangle(cornerRadius: 8)
+                                .foregroundStyle(meal == currentStatus?.relevantMeal ? currentStatus?.bgColor ?? Color.grey6 : Color.grey6)
+                        }
+                }
             }
         }
     }
@@ -48,29 +50,18 @@ public extension RefactorDiningMeal {
         // Determine if both times are AM or PM
         let isSamePeriod = (startHour < 12 && endHour < 12) || (startHour >= 12 && endHour >= 12)
         
-        // Adjust formatter based on the time details
-        if isSamePeriod && startMinute == 0 && endMinute == 0 {
-            if startHour < 12 {
-                // Case 1: Morning hours
-                return "\(startHour)-\(endHour)AM"
-            } else {
-                // Case 3: Afternoon/evening hours
-                return "\(startHour - 12)-\(endHour - 12)PM"
-            }
-        } else if isSamePeriod {
-            // Case 4: Minutes or less obvious periods
-            formatter.dateFormat = "h:mm"
-            let startTimeString = formatter.string(from: startTime)
-            formatter.dateFormat = "h"
-            let endTimeString = formatter.string(from: endTime)
-            return "\(startTimeString)-\(endTimeString)\(startHour < 12 ? "AM" : "PM")"
-        } else {
-            // Case 2: Crossing AM/PM boundary
-            formatter.dateFormat = "h"
-            let startTimeString = formatter.string(from: startTime)
-            let endTimeString = formatter.string(from: endTime)
-            return "\(startTimeString)-\(endTimeString)"
-        }
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+
+        //AM
+        formatter.dateFormat = "h\(startMinute != 0 ? ":mm" : "")"
+        let startTimeString = formatter.string(from: startTime)
+        
+        //PM
+        formatter.dateFormat = "h\(endMinute != 0 ? ":mm" : "")\(!isSamePeriod ? "" : "a")"
+        let endTimeString = formatter.string(from: endTime)
+        
+        return "\(startTimeString)-\(endTimeString)"
     }
 }
 

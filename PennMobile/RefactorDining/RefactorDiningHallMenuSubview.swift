@@ -32,8 +32,6 @@ struct RefactorDiningHallMenuSubview: View {
         }
         @Published var mealsOnDate: [RefactorDiningMeal] = []
         @Published var focusedItem: RefactorDiningItem? = nil
-        @Published var isScrolling: Bool = false
-        
         @Published var focusedStationId: UUID? = nil {
             willSet {
                 
@@ -87,15 +85,20 @@ struct RefactorDiningHallMenuSubview: View {
             ScrollViewReader { proxy in
                 LazyVStack(alignment: .leading, spacing: 0, pinnedViews: [.sectionHeaders]) {
                     Section(header: GeometryReader { headerGeo in
-                        RefactorDiningHallMenuHeader(meal: current)
-                            .environmentObject(vm)
-                            .onAppear {
-                                headerOffset = headerGeo.frame(in: .global).minY
-                            }
-                            .onChange(of: headerGeo.frame(in: .global).minY) { newValue in
-                                headerOffset = newValue
-                            }
-                            .frame(height: 50)
+                        VStack {
+                            RefactorDiningHallMenuHeader(meal: current)
+                                .environmentObject(vm)
+                                .onAppear {
+                                    headerOffset = headerGeo.frame(in: .global).minY
+                                }
+                                .onChange(of: headerGeo.frame(in: .global).minY) { newValue in
+                                    headerOffset = newValue
+                                }
+                                .frame(height: 50)
+                                
+                            Divider()
+                        }
+                        .background(.background)
                     }, content: {
                         let sorted = current.stations.sorted(by: { el1, el2 in
                             return RefactorDiningStation.getWeight(station: el1) < RefactorDiningStation.getWeight(station: el2)
@@ -159,10 +162,10 @@ struct RefactorDiningHallMenuHeader: View {
                         Text(station.name.uppercased())
                             .font(.headline)
                             .bold(station.id == vm.focusedStationId)
+                            .underline(station.id == vm.focusedStationId)
                             
                     }
                 }
-                .background(.background)
             }
             .padding(.horizontal)
             .onChange(of: vm.focusedStationId) { new in

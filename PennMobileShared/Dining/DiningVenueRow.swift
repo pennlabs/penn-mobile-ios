@@ -81,7 +81,7 @@ public struct DiningVenueRow: View {
                     .padding(.vertical, 3)
                     .padding(.horizontal, horizontalPadding)
                     .foregroundColor(index == venue.currentMealIndex ? Color.white : Color.labelPrimary)
-                    .background(index == venue.currentMealIndex ? (venue.isClosingSoon ? Color.redLight : Color.greenLight) : Color.grey5)
+                    .background(index == venue.currentMealIndex ? (venue.isClosingSoon ? Color.redLight : Color.greenLight) : Color.grey6)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
                     .id(index)
                     .frame(height: geo.frame(in: .global).height)

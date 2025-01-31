@@ -33,7 +33,7 @@ struct RefactorDiningHallStatusView: View {
                         Text(diningHall.statusText())
                             .bold()
                     }
-                        .foregroundStyle(diningHall.currentStatus().color)
+                        .foregroundStyle(diningHall.currentStatus().labelColor)
                         .font(.caption2)
                     Text(diningHall.name)
                         .font(.headline)

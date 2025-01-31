@@ -13,16 +13,24 @@ import PennMobileShared
 struct RefactorDiningHallDetailView: View {
     let hall: RefactorDiningHall
     
-    init(_ hall: RefactorDiningHall) {
-        self.hall = hall
-    }
-    
     @Environment(\.colorScheme) var colorScheme
     @State var pickerIndex: Int = 0
     @State var showMenu: Bool = false
-    private let sectionTitle = ["Menu", "Hours", "Location"]
+    private let sectionTitle: [String]
+    private let hasMenu: Bool
     
-    
+    init(_ hall: RefactorDiningHall) {
+        self.hall = hall
+        
+        hasMenu = !hall.meals.filter({ el in
+            return el.stations.count > 0
+        }).isEmpty
+        
+        var sections = hasMenu ? ["Menu"] : []
+        sections.append(contentsOf: ["Hours", "Location"])
+        sectionTitle = sections
+        
+    }
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -84,14 +92,15 @@ struct RefactorDiningHallDetailView: View {
                 }
                 .padding()
                 
-                
+                // Don't show an empty view if there are no menu items. Instead, just show the hours screen
+                // The subtracted index is to adjust for whether the "Menu" section in the picker exists
                 Group {
-                    if pickerIndex == 0 {
+                    if pickerIndex == 0 && hasMenu {
                         RefactorDiningHallMenuSubview(hall: hall)
-                    } else if pickerIndex == 1 {
+                    } else if pickerIndex == 1 - (hasMenu ? 0 : 1) {
                         //RefactorDiningHallHoursView()
                         Text("Hours")
-                    } else if pickerIndex == 2 {
+                    } else if pickerIndex == 2 - (hasMenu ? 0 : 1) {
                         //RefactorDiningHallLocationView()
                         Text("Location")
                     }
