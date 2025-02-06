@@ -34,10 +34,10 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
         navigationItem.title = "Campus Express Authorization"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
 
-        webView = WKWebView(frame: view.bounds)
+        webView = WKWebView(frame: .zero)
         webView.navigationDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(webView)
+        view = webView
 
         var url = URL(string: urlStr)!
         url.appendQueryItem(name: "response_type", value: "code")
