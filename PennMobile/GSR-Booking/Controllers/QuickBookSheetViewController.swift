@@ -15,10 +15,16 @@ class QuickBookSheetViewController : UIViewController {
     let mapVC = MapViewController()
     let mappingController = GSRMappingController()
     let quickBooking = QuickBookingViewController()
-    var soonestLocation: GSRLocation
     
-    init(soonestLocation: GSRLocation) {
+    fileprivate var soonesTimeSlot: GSRTimeSlot!
+    fileprivate var soonestRoom: GSRRoom!
+    fileprivate var soonestLocation: GSRLocation!
+        
+    init(soonestLocation: GSRLocation, soonestRoom: GSRRoom, soonesTimeSlot: GSRTimeSlot) {
         self.soonestLocation = soonestLocation
+        self.soonestRoom = soonestRoom
+        self.soonesTimeSlot = soonesTimeSlot
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -33,7 +39,7 @@ class QuickBookSheetViewController : UIViewController {
     
     fileprivate let submitButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Submit", for: .normal)
+        button.setTitle("Accept", for: .normal)
         button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
         button.backgroundColor = UIColor(red: 2.0 / 255, green: 192.0 / 255, blue: 92.0 / 255, alpha: 1.0)
         button.layer.cornerRadius = 15
@@ -72,7 +78,7 @@ class QuickBookSheetViewController : UIViewController {
     
     fileprivate func setupSubmitButton() {
         view.addSubview(submitButton)
-        submitButton.addTarget(self, action: #selector(QuickBookingViewController.quickBook(_:)), for: .touchUpInside)
+        submitButton.addTarget(self, action: #selector(quickBook(_:)), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600),
@@ -96,6 +102,16 @@ class QuickBookSheetViewController : UIViewController {
             quickBooking.getRoom().centerXAnchor.constraint(equalTo: view.centerXAnchor),
             quickBooking.getRoom().widthAnchor.constraint(equalToConstant: 300)
         ])
+    }
+}
+
+extension QuickBookSheetViewController: GSRBookable {
+    @objc public func quickBook(_ sender: Any) {
+        if !Account.isLoggedIn {
+            self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
+        } else {
+            submitBooking(for: GSRBooking(gid: soonestLocation.gid, startTime: soonesTimeSlot.startTime, endTime: soonesTimeSlot.endTime, id: soonestRoom.id, roomName: soonestRoom.roomName))
+        }
     }
 }
 

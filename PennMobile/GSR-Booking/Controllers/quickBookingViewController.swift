@@ -134,7 +134,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     @objc fileprivate func findGSRButtonPressed() {
         prefList = makePreference()
         self.setupQuickBooking {
-            let SheetVC = QuickBookSheetViewController(soonestLocation: self.soonestLocation)
+            let SheetVC = QuickBookSheetViewController(soonestLocation: self.soonestLocation, soonestRoom: self.soonestRoom, soonesTimeSlot: self.soonesTimeSlot)
 
             SheetVC.modalPresentationStyle = .pageSheet
             if let sheet = SheetVC.sheetPresentationController {
@@ -304,15 +304,5 @@ extension QuickBookingViewController: CLLocationManagerDelegate {
     
     public func getRoom() -> UILabel {
         return roomLabel;
-    }
-}
-
-extension QuickBookingViewController: GSRBookable {
-    @objc public func quickBook(_ sender: Any) {
-        if !Account.isLoggedIn {
-            self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
-        } else {
-            submitBooking(for: GSRBooking(gid: soonestLocation.gid, startTime: soonesTimeSlot.startTime, endTime: soonesTimeSlot.endTime, id: soonestRoom.id, roomName: soonestRoom.roomName))
-        }
     }
 }
