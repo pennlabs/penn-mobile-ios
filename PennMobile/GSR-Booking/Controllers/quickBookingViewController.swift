@@ -43,9 +43,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         (latitude: 39.95291806251846, longitude: -75.19342134560544, title: "Van Pelt"),
         (latitude: 39.95357192013402, longitude: -75.19463651005043, title: "Perelman Center")
     ]
-    
-    let mapVC = MapViewController()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.prefList = locations
@@ -57,20 +55,6 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
         prefList = orderLocations()
     }
-    
-    fileprivate let submitButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Submit", for: .normal)
-        button.setTitleColor(UIColor(named: "labelPrimary"), for: .normal)
-        button.backgroundColor = UIColor(red: 2.0 / 255, green: 192.0 / 255, blue: 92.0 / 255, alpha: 1.0)
-        button.layer.cornerRadius = 15
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.3
-        button.layer.shadowOffset = CGSize(width: 0, height: 2)
-        button.layer.shadowRadius = 5
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
     
     fileprivate let unpreferButton: UIButton = {
         let button = UIButton(type: .system)
@@ -121,28 +105,11 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .labelPrimary
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    let mappingController = GSRMappingController()
-    
-    fileprivate func setupDisplay(startSlot: String, endSlot: String, room: GSRRoom, location: GSRLocation) {
-        roomLabel.text = """
-            Soonest available GSR:
-            Time Slot: \(startSlot) to \(endSlot)
-            Room: \(room.roomName)
-            Location: \(location.name)
-            """
-        view.addSubview(roomLabel)
-        
-        NSLayoutConstraint.activate([
-            roomLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 180),
-            roomLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            roomLabel.widthAnchor.constraint(equalToConstant: 300)
-        ])
-    }
+
     
     fileprivate func setupDescriptionLabel() {
         descriptionLabel.text = """
@@ -164,37 +131,20 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         ])
     }
     
-    fileprivate func setupMapping() {
-        var lat: CLLocationDegrees!
-        var long: CLLocationDegrees!
-        if let coords = GSRCoords.first(where: { $0.title == soonestLocation.name }) {
-            lat = coords.latitude
-            long = coords.longitude
-        }
-        mappingController.destinationCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        
-        addChild(mappingController)
-        
-        view.addSubview(mappingController.view)
-        
-        mappingController.view.layer.cornerRadius = 10
-        mappingController.view.backgroundColor = UIColor.red.withAlphaComponent(0.5)
-        mappingController.view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mappingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 280),
-            mappingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            mappingController.view.widthAnchor.constraint(equalToConstant: 300),
-            mappingController.view.heightAnchor.constraint(equalToConstant: 300)
-        ])
-        mappingController.didMove(toParent: self)
-    }
-    
     @objc fileprivate func findGSRButtonPressed() {
         prefList = makePreference()
         self.setupQuickBooking {
-            self.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
-            self.setupMapping()
-            self.setupSubmitButton()
+            let SheetVC = QuickBookSheetViewController(soonestLocation: self.soonestLocation)
+
+            SheetVC.modalPresentationStyle = .pageSheet
+            if let sheet = SheetVC.sheetPresentationController {
+                sheet.detents = [.large(), .large()]
+                sheet.prefersGrabberVisible = true
+            }
+                    
+            self.present(SheetVC, animated: true, completion: nil)
+            SheetVC.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
+            SheetVC.setupMapping()
         }
     }
     
@@ -237,18 +187,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
             }
         }
     }
-    
-    fileprivate func setupSubmitButton() {
-        view.addSubview(submitButton)
-        submitButton.addTarget(self, action: #selector(quickBook(_:)), for: .touchUpInside)
-        
-        NSLayoutConstraint.activate([
-            submitButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 600),
-            submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            submitButton.widthAnchor.constraint(equalToConstant: 300),
-            submitButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
+
     
     fileprivate func setupUnpreferButton() {
         view.addSubview(unpreferButton)
@@ -358,10 +297,18 @@ extension QuickBookingViewController: CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
         hasReceivedLocationUpdate = false
     }
+    
+    public func getSoonestLocation() -> String {
+        return soonestLocation.name;
+    }
+    
+    public func getRoom() -> UILabel {
+        return roomLabel;
+    }
 }
 
 extension QuickBookingViewController: GSRBookable {
-    @objc fileprivate func quickBook(_ sender: Any) {
+    @objc public func quickBook(_ sender: Any) {
         if !Account.isLoggedIn {
             self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
         } else {
