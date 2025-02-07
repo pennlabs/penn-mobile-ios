@@ -29,7 +29,7 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .uiBackground
 
         navigationItem.title = "Campus Express Authorization"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
@@ -146,6 +146,12 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let request = navigationAction.request
+        guard let _ = request.url else {
+            decisionHandler(.allow)
+            return
+        }
+        
         if navigationAction.navigationType == .formSubmitted,
            webView.url?.absoluteString.contains(loginScreen) == true {
             activityIndicator.startAnimating()
