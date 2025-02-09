@@ -18,6 +18,8 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     fileprivate var prefList: [GSRLocation] = []
     fileprivate var locRankedList: [GSRLocation] = []
     fileprivate var prefLocation: GSRLocation!
+//    fileprivate var pickerView: UIPickerView!
+
     
     fileprivate var startingLocation: GSRLocation!
     fileprivate var soonestStartTimeString: String!
@@ -47,9 +49,12 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.prefList = locations
+//        self.pickerView.selectRow(0, inComponent: 1, animated: true)
+//        preparePickerView()
         setupUnpreferButton()
         setupBook()
         setupDescriptionLabel()
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
@@ -258,10 +263,32 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         }
     }
 }
+
+extension QuickBookingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 9
+    }
     
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        <#code#>
+    }
+    
+    func createPickerView() {
+           let pickerView = UIPickerView()
+           pickerView.delegate = self
+    }
+
+    @objc func action() {
+          view.endEditing(true)
+    }
+}
+
 extension QuickBookingViewController: CLLocationManagerDelegate {
     
     fileprivate func orderLocations() -> [GSRLocation] {
+        if (locationManager.location == nil) {
+            return []
+        }
         locRankedList = locations
         locRankedList.sort { (loc1, loc2) in
             guard let loc1Coords = GSRCoords.first(where: { $0.title == loc1.name }),
@@ -285,7 +312,7 @@ extension QuickBookingViewController: CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
         if hasReceivedLocationUpdate { return }

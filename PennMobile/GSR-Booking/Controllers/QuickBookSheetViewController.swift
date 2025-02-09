@@ -115,4 +115,6 @@ extension QuickBookSheetViewController: GSRBookable {
     }
 }
 
-
+//make it look like dropdown
+//use alertview cancel/accept
+//center description
