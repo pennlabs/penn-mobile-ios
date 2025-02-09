@@ -100,7 +100,15 @@ let features: [AppFeature] = [
     },
     AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey"), controller: GSRTabController.self),
     AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey"), controller: LaundryTableViewController.self),
-    AppFeature(.news, name: "News", color: .baseRed, image: .app("News_Grey"), controller: NewsViewController.self),
+    
+    
+//    AppFeature(.news, name: "News", color: .baseRed, image: .app("News_Grey"), controller: NewsViewController.self),
+    AppFeature(.news, name: "News", color: .baseDarkBlue, image: .app("News_Grey")) {
+        ExternalNewsView()
+            .navigationTitle(Text("News"))
+    },
+    
+    
     AppFeature(.contacts, shortName: "Contacts", longName: "Penn Contacts", color: .baseYellow, image: .app("Contacts_Grey")) {
         ContactsView()
             .navigationTitle(Text("Contacts"))
@@ -109,10 +117,14 @@ let features: [AppFeature] = [
         CoursesView().environmentObject(CoursesViewModel.shared)
     },
     AppFeature(.pennCourseAlert, shortName: "PCA", longName: "Penn Course Alert", color: .baseLabsBlue, image: .system("bell.fill"), controller: CourseAlertController.self),
+    
+    
     AppFeature(.events, name: "Penn Events", color: .baseGreen, image: .app("Events_Grey")) {
         PennEventsView()
             .navigationTitle(Text("Events"))
     },
+    
+    
     AppFeature(.fitness, name: "Fitness", color: .baseRed, image: .app("Fitness_Grey")) {
         FitnessView()
             .navigationTitle(Text("Fitness"))
