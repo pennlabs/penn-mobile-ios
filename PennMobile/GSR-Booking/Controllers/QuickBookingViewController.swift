@@ -18,13 +18,13 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     fileprivate var prefList: [GSRLocation] = []
     fileprivate var locRankedList: [GSRLocation] = []
     fileprivate var prefLocation: GSRLocation!
-//    fileprivate var pickerView: UIPickerView!
-
+    fileprivate var pickerView: UIPickerView!
+    fileprivate var viewModel: QuickBookingViewController!
     
     fileprivate var startingLocation: GSRLocation!
     fileprivate var soonestStartTimeString: String!
     fileprivate var soonestEndTimeString: String!
-    fileprivate var soonesTimeSlot: GSRTimeSlot!
+    fileprivate var soonestTimeSlot: GSRTimeSlot!
     fileprivate var soonestRoom: GSRRoom!
     fileprivate var soonestLocation: GSRLocation!
     fileprivate var min: Date! = Date.distantFuture
@@ -33,6 +33,8 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     
     fileprivate let locationManager = CLLocationManager()
     fileprivate var hasReceivedLocationUpdate = false
+    
+    let mappingController = GSRMappingController()
     
     public let GSRCoords = [
         (latitude: 39.95346818228411, longitude: -75.19802835987453, title: "Huntsman"),
@@ -49,7 +51,6 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.prefList = locations
-//        self.pickerView.selectRow(0, inComponent: 1, animated: true)
 //        preparePickerView()
         setupUnpreferButton()
         setupBook()
@@ -59,6 +60,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         locationManager.requestWhenInUseAuthorization()
         bookButton.addTarget(self, action: #selector(findGSRButtonPressed), for: .touchUpInside)
         prefList = orderLocations()
+//        self.pickerView.selectRow(0, inComponent: 1, animated: true)
     }
     
     fileprivate let unpreferButton: UIButton = {
@@ -119,80 +121,119 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     fileprivate func setupDescriptionLabel() {
         descriptionLabel.text = """
             
-                Quickly book the soonest available room 
-                in any location on campus.  
+                Quickly book the soonest available room in any location on campus.  
             
-                Preferred location will be booked over  
-                other locations with the same soonest   
-                available time.    
+                Preferred location will be booked over other locations with the same soonest available time.    
             
             """
         view.addSubview(descriptionLabel)
         
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 180),
-            descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            descriptionLabel.widthAnchor.constraint(equalToConstant: 350)
+            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
         ])
     }
+    
+//    private func preparePickerView() {
+//        pickerView = UIPickerView(frame: .zero)
+//        pickerView.translatesAutoresizingMaskIntoConstraints = false
+//        pickerView.delegate = viewModel
+//        pickerView.dataSource = viewModel
+//
+//        view.addSubview(pickerView)
+//        NSLayoutConstraint.activate([
+//            descriptionLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 180),
+//            descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            descriptionLabel.widthAnchor.constraint(equalToConstant: 350)
+//        ])
+//
+//    }
     
     @objc fileprivate func findGSRButtonPressed() {
         prefList = makePreference()
         self.setupQuickBooking {
-            let SheetVC = QuickBookSheetViewController(soonestLocation: self.soonestLocation, soonestRoom: self.soonestRoom, soonesTimeSlot: self.soonesTimeSlot)
+            let alert = QuickBookAlertViewController(soonestLocation: self.soonestLocation, soonestTimeSlot: self.soonestTimeSlot, soonestRoom: self.soonestRoom)
 
-            SheetVC.modalPresentationStyle = .pageSheet
-            if let sheet = SheetVC.sheetPresentationController {
-                sheet.detents = [.large(), .large()]
-                sheet.prefersGrabberVisible = true
+            alert.setupSubmitAlert()
+            DispatchQueue.main.async {
+                self.present(alert, animated: true, completion: nil)
             }
-                    
-            self.present(SheetVC, animated: true, completion: nil)
-            SheetVC.setupDisplay(startSlot: self.soonestStartTimeString, endSlot: self.soonestEndTimeString, room: self.soonestRoom, location: self.soonestLocation)
-            SheetVC.setupMapping()
         }
     }
     
+//    internal func setupMapping() {
+//        var lat: CLLocationDegrees!
+//        var long: CLLocationDegrees!
+//        if let coords = GSRCoords.first(where: { $0.title == soonestLocation.name}) {
+//            lat = coords.latitude
+//            long = coords.longitude
+//        }
+//        mappingController.destinationCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+//        
+//        addChild(mappingController)
+//        
+//        view.addSubview(mappingController.view)
+//        
+//        mappingController.view.layer.cornerRadius = 10
+//        mappingController.view.backgroundColor = UIColor.red.withAlphaComponent(0.5)
+//        mappingController.view.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            mappingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 280),
+//            mappingController.view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            mappingController.view.widthAnchor.constraint(equalToConstant: 300),
+//            mappingController.view.heightAnchor.constraint(equalToConstant: 300)
+//        ])
+//        mappingController.didMove(toParent: self)
+//    }
+    
+    
     fileprivate func setupQuickBooking(completion: @escaping () -> Void) {
-        DispatchQueue.global().async { [self] in
-            var skip: Bool = false
-            var foundAvailableRoom = false
-            for location in prefList {
+        let group = DispatchGroup()
+        var skip: Bool = false
+        var foundAvailableRoom = false
+        for location in prefList {
                 
-                if !UserDefaults.standard.isInWharton() {
-                    skip = true
-                }
+        if !UserDefaults.standard.isInWharton() {
+            skip = true
+        }
                 
-                if (location.kind == .wharton) && skip {
-                    continue
-                }
+        if (location.kind == .wharton) && skip {
+            continue
+        }
                 
-                GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
-                    switch result {
-                    case .success(let rooms):
-                        if !rooms.isEmpty {
-                            self.startingLocation = location
-                            self.allRooms = rooms
-                            self.getSoonestTimeSlot()
-                            foundAvailableRoom = true
-                        }
-                    case .failure:
-                        present(toast: .apiError)
+        group.enter()
+                
+        GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
+            defer {
+                group.leave()
+            }
+                    
+            switch result {
+                case .success(let rooms):
+                    if !rooms.isEmpty {
+                        self.startingLocation = location
+                        self.allRooms = rooms
+                        self.getSoonestTimeSlot()
+                        foundAvailableRoom = true
                     }
-                }
-                
-                if !foundAvailableRoom && location == self.locations.last {
+                case .failure:
                     present(toast: .apiError)
                 }
             }
-            DispatchQueue.main.async {
-                if self.soonestRoom != nil {
-                    completion()
-                }
+            if !foundAvailableRoom && location == self.locations.last {
+                present(toast: .apiError)
+            }
+        }
+        group.notify(queue: DispatchQueue.main) {
+            if foundAvailableRoom {
+                completion()
+            } else {
+                self.present(toast: .apiError)
             }
         }
     }
-
     
     fileprivate func setupUnpreferButton() {
         view.addSubview(unpreferButton)
@@ -220,8 +261,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         
         for option in locations {
             alertController.addAction(UIAlertAction(title: option.name, style: .default, handler: { [weak self] _ in
-                self?.selectedOption = option.name
-                self!.prefLocation = (self?.locations.first(where: { $0.name == self?.selectedOption })!)!
+                self!.prefLocation = option
                 self?.unpreferButton.setTitle(option.name, for: .normal)
             }))
         }
@@ -256,7 +296,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
                 min = startTime
                 soonestStartTimeString = formatter.string(from: startTime)
                 soonestEndTimeString = formatter.string(from: availability.endTime)
-                soonesTimeSlot = availability
+                soonestTimeSlot = availability
                 soonestRoom = room
                 soonestLocation = startingLocation
             }
@@ -264,32 +304,43 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     }
 }
 
-extension QuickBookingViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 9
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        <#code#>
-    }
-    
-    func createPickerView() {
-           let pickerView = UIPickerView()
-           pickerView.delegate = self
-    }
+//extension QuickBookingViewController: GSRBookable {
+//    @objc internal func quickBook() {
+//        if !Account.isLoggedIn {
+//            self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
+//        } else {
+//            submitBooking(for: GSRBooking(gid: soonestLocation.gid, startTime: soonestTimeSlot.startTime, endTime: soonestTimeSlot.endTime, id: soonestRoom.id, roomName: soonestRoom.roomName))
+//        }
+//    }
+//}
 
-    @objc func action() {
-          view.endEditing(true)
-    }
-}
+//extension QuickBookingViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+//    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+//        return 1
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+//        return locations.count
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        prefLocation = locations[row]
+//        
+//    }
+//
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return locations[row].name
+//    }
+//}
 
 extension QuickBookingViewController: CLLocationManagerDelegate {
     
     fileprivate func orderLocations() -> [GSRLocation] {
         if (locationManager.location == nil) {
-            return []
+            return prefList
         }
-        locRankedList = locations
+        
+        locRankedList = prefList
         locRankedList.sort { (loc1, loc2) in
             guard let loc1Coords = GSRCoords.first(where: { $0.title == loc1.name }),
                   let loc2Coords = GSRCoords.first(where: { $0.title == loc2.name }) else {
