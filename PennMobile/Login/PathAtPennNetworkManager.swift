@@ -50,11 +50,7 @@ extension PathAtPennNetworkManager {
     private func getTokenWithoutReauthenticating() async throws -> String {
         let (data, _) = try await URLSession.shared.data(from: PathAtPennNetworkManager.oauthURL)
         let str = try String(data: data, encoding: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
-        let body = try SwiftSoup.parse(str)
-        let tokenContaining = try body.select("script").first().unwrap(orThrow: PathAtPennError.noTokenFound(str))
 
-        
-        
         let matches = str.getMatches(for: "value: \"(.*)\"")
         let token = try matches.first.unwrap(orThrow: PathAtPennError.noTokenFound(str))
         
