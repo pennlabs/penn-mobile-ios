@@ -22,7 +22,7 @@ class GSRLocationsController: GenericViewController {
         self.locations = GSRLocationModel.shared.getLocations()
         setupTableView()
     }
-
+        
     override func setupNavBar() {
         super.setupNavBar()
         self.tabBarController?.title = "Study Room Booking"
@@ -45,7 +45,14 @@ extension GSRLocationsController {
         tableView.delegate = self
 
         view.addSubview(tableView)
-        _ = tableView.anchor(view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+                tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
 
         tableView.register(GSRLocationCell.self, forCellReuseIdentifier: GSRLocationCell.identifier)
     }

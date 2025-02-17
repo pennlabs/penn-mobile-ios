@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1239C3CE2D5440E7001F8B6E /* QuickBookSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1239C3CD2D5440E7001F8B6E /* QuickBookSheetViewController.swift */; };
 		421823FC2CCEB12D0028E510 /* PennEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F92CCEB12D0028E510 /* PennEvent.swift */; };
 		421823FD2CCEB12D0028E510 /* MailComposerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */; };
 		421823FE2CCEB12D0028E510 /* PennEventsAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823FA2CCEB12D0028E510 /* PennEventsAPIManager.swift */; };
@@ -16,6 +17,8 @@
 		421824092CCEB1370028E510 /* PennEventCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824052CCEB1370028E510 /* PennEventCellView.swift */; };
 		4218240A2CCEB1370028E510 /* PennEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824062CCEB1370028E510 /* PennEventsView.swift */; };
 		4218240B2CCEB1370028E510 /* PennEventsViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824072CCEB1370028E510 /* PennEventsViewerView.swift */; };
+		423B40D42D42A2070035E12D /* GSRMappingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B40D32D42A2070035E12D /* GSRMappingController.swift */; };
+		423B40D82D42A2300035E12D /* quickBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423B40D72D42A2300035E12D /* quickBookingViewController.swift */; };
 		42632C8F2CB9C77B0028CC31 /* ScannerDuplicate.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0E2CB9C77B0028CC31 /* ScannerDuplicate.ahap */; };
 		42632C902CB9C77B0028CC31 /* ScannerError.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0F2CB9C77B0028CC31 /* ScannerError.ahap */; };
 		42632C912CB9C77B0028CC31 /* ScannerInvalid.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B102CB9C77B0028CC31 /* ScannerInvalid.ahap */; };
@@ -433,6 +436,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1239C3CD2D5440E7001F8B6E /* QuickBookSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookSheetViewController.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		421823F72CCEB12D0028E510 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
 		421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerCoordinator.swift; sourceTree = "<group>"; };
@@ -443,6 +447,8 @@
 		421824052CCEB1370028E510 /* PennEventCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventCellView.swift; sourceTree = "<group>"; };
 		421824062CCEB1370028E510 /* PennEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsView.swift; sourceTree = "<group>"; };
 		421824072CCEB1370028E510 /* PennEventsViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsViewerView.swift; sourceTree = "<group>"; };
+		423B40D32D42A2070035E12D /* GSRMappingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRMappingController.swift; sourceTree = "<group>"; };
+		423B40D72D42A2300035E12D /* quickBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quickBookingViewController.swift; sourceTree = "<group>"; };
 		42632AF92CB9C77B0028CC31 /* OAuth2NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2NetworkManager.swift; sourceTree = "<group>"; };
 		42632AFA2CB9C77B0028CC31 /* PennAuthRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennAuthRequestable.swift; sourceTree = "<group>"; };
 		42632AFB2CB9C77B0028CC31 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
@@ -1284,6 +1290,9 @@
 				42632B8F2CB9C77B0028CC31 /* GSRLocationsController.swift */,
 				42632B902CB9C77B0028CC31 /* GSRReservationsController.swift */,
 				42632B912CB9C77B0028CC31 /* GSRTabController.swift */,
+				423B40D32D42A2070035E12D /* GSRMappingController.swift */,
+				1239C3CD2D5440E7001F8B6E /* QuickBookSheetViewController.swift */,
+				423B40D72D42A2300035E12D /* quickBookingViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2432,6 +2441,7 @@
 				42632CF02CB9C77B0028CC31 /* FirebaseAnalyticsManager.swift in Sources */,
 				42632CF12CB9C77B0028CC31 /* ImageNetworkingManager.swift in Sources */,
 				42632CF22CB9C77B0028CC31 /* Networking.swift in Sources */,
+				423B40D42D42A2070035E12D /* GSRMappingController.swift in Sources */,
 				42632CF32CB9C77B0028CC31 /* UserDBManager.swift in Sources */,
 				42632CF42CB9C77B0028CC31 /* AlertModifier.swift in Sources */,
 				42632CF52CB9C77B0028CC31 /* BetaBadge.swift in Sources */,
@@ -2505,6 +2515,7 @@
 				42632D352CB9C77B0028CC31 /* HomeFeatureCellItem.swift in Sources */,
 				42632D362CB9C77B0028CC31 /* GSRGroupInviteCell.swift in Sources */,
 				42632D372CB9C77B0028CC31 /* HomeGroupInvitesCell.swift in Sources */,
+				423B40D82D42A2300035E12D /* quickBookingViewController.swift in Sources */,
 				42632D382CB9C77B0028CC31 /* HomeGroupInvitesCellItem.swift in Sources */,
 				42632D392CB9C77B0028CC31 /* BookingRowCell.swift in Sources */,
 				42632D3A2CB9C77B0028CC31 /* HomeGSRBookingButton.swift in Sources */,
@@ -2584,6 +2595,7 @@
 				42632D8A2CB9C77B0028CC31 /* HeaderViewCell.swift in Sources */,
 				42632D8B2CB9C77B0028CC31 /* MoreCell.swift in Sources */,
 				42632D8C2CB9C77B0028CC31 /* MoreHeaderView.swift in Sources */,
+				1239C3CE2D5440E7001F8B6E /* QuickBookSheetViewController.swift in Sources */,
 				42632D8D2CB9C77B0028CC31 /* MoreView.swift in Sources */,
 				42632D8E2CB9C77B0028CC31 /* MoreViewController.swift in Sources */,
 				42632D8F2CB9C77B0028CC31 /* ProfileRowView.swift in Sources */,
