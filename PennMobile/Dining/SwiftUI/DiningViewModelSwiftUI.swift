@@ -11,7 +11,26 @@ import SwiftUI
 import PennMobileShared
 
 @MainActor
-class DiningViewModelSwiftUI: ObservableObject {
+class DiningViewModelSwiftUI: ObservableObject, HomeViewAnnounceable {
+    func getHomeViewAnnouncements() async -> [HomeViewAnnouncement] {
+        await refreshVenues()
+        guard !favoriteVenues.isEmpty, !favoriteVenues.filter({$0.isOpen}).isEmpty else { return [] }
+        return [HomeViewAnnouncement(analyticsSlug: "favorite venue alert", disappearOnTap: true) {
+            HStack {
+                Image(systemName: "fork.knife")
+                    .font(.system(size: 32))
+                    .padding(12)
+                Divider()
+                VStack(alignment: .leading) {
+                    Text("1920 Commons is Open!")
+                        .font(.caption)
+                }
+            }
+        } linkedView: {
+            Text("asdf")
+        }]
+    }
+    
     static let instance = DiningViewModelSwiftUI()
 
     @Published var diningVenues: [VenueType: [DiningVenue]]

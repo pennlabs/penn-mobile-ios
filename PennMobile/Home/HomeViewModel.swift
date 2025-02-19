@@ -24,6 +24,8 @@ extension Optional {
 @MainActor class StandardHomeViewModel: HomeViewModel {
     static let sublettingBannerKey = "sublettingBannerDismissed"
     
+    static let announceable: [HomeViewAnnounceable] = [DiningViewModelSwiftUI.instance]
+    
     @Published private(set) var data = HomeViewData()
     var isFetching = false
     var lastFetch: Date?
@@ -88,6 +90,39 @@ extension Optional {
         data.newsArticles.makeNilIfError()
         data.onPollResponse = { [weak self] question, option in
             self?.respondToPoll(questionId: question, optionId: option)
+        }
+        
+        async let announcementsTask = Task {
+            var announcements = await StandardHomeViewModel.announceable.asyncMap { feature in
+                    await feature.getHomeViewAnnouncements()
+            }.flatMap { $0 }
+            
+            for (i, announcement) in announcements.enumerated() {
+                if let featureId = announcement.linkedFeature {
+                    announcements[i].addTapListener {
+                        Task {
+                            await MainActor.run {
+                                guard let nav = self.navigationManager else { return }
+                                let tabFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
+                                if tabFeatures.contains(.subletting) {
+                                    nav.currentTab = featureId.rawValue
+                                } else {
+                                    nav.currentTab = "More"
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
+                                        nav.path = .init([featureId])
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
+            
+            await MainActor.run {
+                data.announcements = announcements
+            }
         }
         
         async let pollsTask = Task {
@@ -162,6 +197,7 @@ extension Optional {
             }
         }
         
+        _ = await announcementsTask
         _ = await pollsTask
         _ = await postsTask
         _ = await newsArticlesTask

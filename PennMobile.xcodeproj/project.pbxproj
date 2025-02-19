@@ -368,6 +368,8 @@
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
+		73FE3A282D661C30004E0E50 /* HomeViewAnnounceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE3A272D661C2C004E0E50 /* HomeViewAnnounceable.swift */; };
+		73FE3A2A2D661D3D004E0E50 /* HomeViewAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE3A292D661D38004E0E50 /* HomeViewAnnouncement.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -805,6 +807,8 @@
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73FE3A272D661C2C004E0E50 /* HomeViewAnnounceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewAnnounceable.swift; sourceTree = "<group>"; };
+		73FE3A292D661D38004E0E50 /* HomeViewAnnouncement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewAnnouncement.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -1542,6 +1546,7 @@
 		42632BFF2CB9C77B0028CC31 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				73FE3A292D661D38004E0E50 /* HomeViewAnnouncement.swift */,
 				42632BFC2CB9C77B0028CC31 /* HomeCellItem.swift */,
 				42632BFD2CB9C77B0028CC31 /* HomeItemTypes.swift */,
 				42632BFE2CB9C77B0028CC31 /* HomeTableViewModel.swift */,
@@ -1570,6 +1575,7 @@
 				42632C052CB9C77B0028CC31 /* HomeView.swift */,
 				42632C062CB9C77B0028CC31 /* HomeViewData.swift */,
 				42632C072CB9C77B0028CC31 /* HomeViewModel.swift */,
+				73FE3A272D661C2C004E0E50 /* HomeViewAnnounceable.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -2403,6 +2409,7 @@
 				42632CCF2CB9C77B0028CC31 /* DiningBalanceView.swift in Sources */,
 				42632CD02CB9C77B0028CC31 /* DiningVenueDetailHoursView.swift in Sources */,
 				42632CD12CB9C77B0028CC31 /* DiningVenueDetailLocationView.swift in Sources */,
+				73FE3A2A2D661D3D004E0E50 /* HomeViewAnnouncement.swift in Sources */,
 				42632CD22CB9C77B0028CC31 /* DiningVenueDetailMenuView.swift in Sources */,
 				42632CD32CB9C77B0028CC31 /* DiningVenueDetailView.swift in Sources */,
 				42632CD42CB9C77B0028CC31 /* MenuDisclosureGroup.swift in Sources */,
@@ -2451,6 +2458,7 @@
 				42632D032CB9C77B0028CC31 /* GSRController.swift in Sources */,
 				421824032CCEB1320028E510 /* PennLocation.swift in Sources */,
 				421824042CCEB1320028E510 /* PennEventsViewModel.swift in Sources */,
+				73FE3A282D661C30004E0E50 /* HomeViewAnnounceable.swift in Sources */,
 				42632D042CB9C77B0028CC31 /* GSRDeletable.swift in Sources */,
 				42632D052CB9C77B0028CC31 /* GSRLocationsController.swift in Sources */,
 				42632D062CB9C77B0028CC31 /* GSRReservationsController.swift in Sources */,
