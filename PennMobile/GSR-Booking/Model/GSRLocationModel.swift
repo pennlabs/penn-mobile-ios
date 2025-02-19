@@ -26,7 +26,9 @@ class GSRLocationModel {
         }
         return ""
     }
-
+    
+    
+    // JM: this is a bit strange of a design.
     func prepare() {
         DispatchQueue.main.async {
             GSRNetworkManager.instance.getLocations { result in

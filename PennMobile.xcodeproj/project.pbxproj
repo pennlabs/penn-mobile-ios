@@ -110,17 +110,6 @@
 		42632CFA2CB9C77B0028CC31 /* KeychainAccessible+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B822CB9C77B0028CC31 /* KeychainAccessible+Extensions.swift */; };
 		42632CFB2CB9C77B0028CC31 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B832CB9C77B0028CC31 /* Protocols.swift */; };
 		42632CFC2CB9C77B0028CC31 /* UserDefaults + Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B842CB9C77B0028CC31 /* UserDefaults + Helpers.swift */; };
-		42632CFD2CB9C77B0028CC31 /* GSRGroupConfirmBookingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B862CB9C77B0028CC31 /* GSRGroupConfirmBookingController.swift */; };
-		42632CFE2CB9C77B0028CC31 /* GSRGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B872CB9C77B0028CC31 /* GSRGroupController.swift */; };
-		42632CFF2CB9C77B0028CC31 /* GSRGroupInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B882CB9C77B0028CC31 /* GSRGroupInviteViewController.swift */; };
-		42632D002CB9C77B0028CC31 /* GSRGroupNewIntialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B892CB9C77B0028CC31 /* GSRGroupNewIntialController.swift */; };
-		42632D012CB9C77B0028CC31 /* GSRManageGroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B8A2CB9C77B0028CC31 /* GSRManageGroupController.swift */; };
-		42632D022CB9C77B0028CC31 /* GSRBookable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B8C2CB9C77B0028CC31 /* GSRBookable.swift */; };
-		42632D032CB9C77B0028CC31 /* GSRController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B8D2CB9C77B0028CC31 /* GSRController.swift */; };
-		42632D042CB9C77B0028CC31 /* GSRDeletable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B8E2CB9C77B0028CC31 /* GSRDeletable.swift */; };
-		42632D052CB9C77B0028CC31 /* GSRLocationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B8F2CB9C77B0028CC31 /* GSRLocationsController.swift */; };
-		42632D062CB9C77B0028CC31 /* GSRReservationsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B902CB9C77B0028CC31 /* GSRReservationsController.swift */; };
-		42632D072CB9C77B0028CC31 /* GSRTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B912CB9C77B0028CC31 /* GSRTabController.swift */; };
 		42632D082CB9C77B0028CC31 /* GSRAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B932CB9C77B0028CC31 /* GSRAPIResponse.swift */; };
 		42632D092CB9C77B0028CC31 /* GSRBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B942CB9C77B0028CC31 /* GSRBooking.swift */; };
 		42632D0A2CB9C77B0028CC31 /* GSRDateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B952CB9C77B0028CC31 /* GSRDateHandler.swift */; };
@@ -133,30 +122,6 @@
 		42632D112CB9C77B0028CC31 /* GSRTimeSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B9C2CB9C77B0028CC31 /* GSRTimeSlot.swift */; };
 		42632D122CB9C77B0028CC31 /* GSRGroupNetworkManager..swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B9E2CB9C77B0028CC31 /* GSRGroupNetworkManager..swift */; };
 		42632D132CB9C77B0028CC31 /* GSRNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B9F2CB9C77B0028CC31 /* GSRNetworkManager.swift */; };
-		42632D142CB9C77B0028CC31 /* GSRManageGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA12CB9C77B0028CC31 /* GSRManageGroupViewModel.swift */; };
-		42632D152CB9C77B0028CC31 /* GSRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA22CB9C77B0028CC31 /* GSRViewModel.swift */; };
-		42632D162CB9C77B0028CC31 /* CreateGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA42CB9C77B0028CC31 /* CreateGroupCell.swift */; };
-		42632D172CB9C77B0028CC31 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA52CB9C77B0028CC31 /* GroupCell.swift */; };
-		42632D182CB9C77B0028CC31 /* GroupHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA62CB9C77B0028CC31 /* GroupHeaderCell.swift */; };
-		42632D192CB9C77B0028CC31 /* GroupIndividualSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA72CB9C77B0028CC31 /* GroupIndividualSettingView.swift */; };
-		42632D1A2CB9C77B0028CC31 /* GroupInviteUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA82CB9C77B0028CC31 /* GroupInviteUserCell.swift */; };
-		42632D1B2CB9C77B0028CC31 /* GroupManageButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BA92CB9C77B0028CC31 /* GroupManageButtonCell.swift */; };
-		42632D1C2CB9C77B0028CC31 /* GroupMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BAA2CB9C77B0028CC31 /* GroupMemberCell.swift */; };
-		42632D1D2CB9C77B0028CC31 /* GroupSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BAB2CB9C77B0028CC31 /* GroupSettingsCell.swift */; };
-		42632D1E2CB9C77B0028CC31 /* GSRColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BAC2CB9C77B0028CC31 /* GSRColorCell.swift */; };
-		42632D1F2CB9C77B0028CC31 /* GSRGroupIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BAD2CB9C77B0028CC31 /* GSRGroupIconView.swift */; };
-		42632D202CB9C77B0028CC31 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BAF2CB9C77B0028CC31 /* EmptyView.swift */; };
-		42632D212CB9C77B0028CC31 /* GSRClosedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BB02CB9C77B0028CC31 /* GSRClosedView.swift */; };
-		42632D222CB9C77B0028CC31 /* GSRLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BB12CB9C77B0028CC31 /* GSRLocationCell.swift */; };
-		42632D232CB9C77B0028CC31 /* GSRRangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BB22CB9C77B0028CC31 /* GSRRangeSlider.swift */; };
-		42632D242CB9C77B0028CC31 /* GSRTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BB32CB9C77B0028CC31 /* GSRTimeCell.swift */; };
-		42632D252CB9C77B0028CC31 /* NoReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BB42CB9C77B0028CC31 /* NoReservationsCell.swift */; };
-		42632D262CB9C77B0028CC31 /* ReservationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BB52CB9C77B0028CC31 /* ReservationCell.swift */; };
-		42632D272CB9C77B0028CC31 /* RoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BB62CB9C77B0028CC31 /* RoomCell.swift */; };
-		42632D282CB9C77B0028CC31 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BB82CB9C77B0028CC31 /* RangeSlider.swift */; };
-		42632D292CB9C77B0028CC31 /* TextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BB92CB9C77B0028CC31 /* TextLayer.swift */; };
-		42632D2A2CB9C77B0028CC31 /* ThumbLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BBA2CB9C77B0028CC31 /* ThumbLayer.swift */; };
-		42632D2B2CB9C77B0028CC31 /* TrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BBB2CB9C77B0028CC31 /* TrackLayer.swift */; };
 		42632D2C2CB9C77B0028CC31 /* CalendarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BBE2CB9C77B0028CC31 /* CalendarAPI.swift */; };
 		42632D2D2CB9C77B0028CC31 /* CalendarEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BBF2CB9C77B0028CC31 /* CalendarEvent.swift */; };
 		42632D2E2CB9C77B0028CC31 /* HomeCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BC02CB9C77B0028CC31 /* HomeCalendarCell.swift */; };
@@ -167,17 +132,6 @@
 		42632D332CB9C77B0028CC31 /* FeatureAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BC72CB9C77B0028CC31 /* FeatureAnnouncement.swift */; };
 		42632D342CB9C77B0028CC31 /* HomeFeatureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BC82CB9C77B0028CC31 /* HomeFeatureCell.swift */; };
 		42632D352CB9C77B0028CC31 /* HomeFeatureCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BC92CB9C77B0028CC31 /* HomeFeatureCellItem.swift */; };
-		42632D362CB9C77B0028CC31 /* GSRGroupInviteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BCB2CB9C77B0028CC31 /* GSRGroupInviteCell.swift */; };
-		42632D372CB9C77B0028CC31 /* HomeGroupInvitesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BCC2CB9C77B0028CC31 /* HomeGroupInvitesCell.swift */; };
-		42632D382CB9C77B0028CC31 /* HomeGroupInvitesCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BCD2CB9C77B0028CC31 /* HomeGroupInvitesCellItem.swift */; };
-		42632D392CB9C77B0028CC31 /* BookingRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BCF2CB9C77B0028CC31 /* BookingRowCell.swift */; };
-		42632D3A2CB9C77B0028CC31 /* HomeGSRBookingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BD12CB9C77B0028CC31 /* HomeGSRBookingButton.swift */; };
-		42632D3B2CB9C77B0028CC31 /* HomeGSRCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BD22CB9C77B0028CC31 /* HomeGSRCellItem.swift */; };
-		42632D3C2CB9C77B0028CC31 /* HomeStudyRoomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BD32CB9C77B0028CC31 /* HomeStudyRoomCell.swift */; };
-		42632D3D2CB9C77B0028CC31 /* HomeGSRLocationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BD52CB9C77B0028CC31 /* HomeGSRLocationsCell.swift */; };
-		42632D3E2CB9C77B0028CC31 /* HomeGSRLocationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BD62CB9C77B0028CC31 /* HomeGSRLocationsCellItem.swift */; };
-		42632D3F2CB9C77B0028CC31 /* HomeReservationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BD82CB9C77B0028CC31 /* HomeReservationsCell.swift */; };
-		42632D402CB9C77B0028CC31 /* HomeReservationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BD92CB9C77B0028CC31 /* HomeReservationsCellItem.swift */; };
 		42632D412CB9C77B0028CC31 /* HomeLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BDB2CB9C77B0028CC31 /* HomeLaundryCell.swift */; };
 		42632D422CB9C77B0028CC31 /* HomeLaundryCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BDC2CB9C77B0028CC31 /* HomeLaundryCellItem.swift */; };
 		42632D432CB9C77B0028CC31 /* HomeNewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BDE2CB9C77B0028CC31 /* HomeNewsCell.swift */; };
@@ -368,6 +322,8 @@
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
+		73FE3A242D661484004E0E50 /* GSRCentralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE3A232D661468004E0E50 /* GSRCentralView.swift */; };
+		73FE3A262D6615DA004E0E50 /* GSRViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE3A252D6615D2004E0E50 /* GSRViewControllerSwiftUI.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -535,17 +491,6 @@
 		42632B822CB9C77B0028CC31 /* KeychainAccessible+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainAccessible+Extensions.swift"; sourceTree = "<group>"; };
 		42632B832CB9C77B0028CC31 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		42632B842CB9C77B0028CC31 /* UserDefaults + Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults + Helpers.swift"; sourceTree = "<group>"; };
-		42632B862CB9C77B0028CC31 /* GSRGroupConfirmBookingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupConfirmBookingController.swift; sourceTree = "<group>"; };
-		42632B872CB9C77B0028CC31 /* GSRGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupController.swift; sourceTree = "<group>"; };
-		42632B882CB9C77B0028CC31 /* GSRGroupInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteViewController.swift; sourceTree = "<group>"; };
-		42632B892CB9C77B0028CC31 /* GSRGroupNewIntialController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupNewIntialController.swift; sourceTree = "<group>"; };
-		42632B8A2CB9C77B0028CC31 /* GSRManageGroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRManageGroupController.swift; sourceTree = "<group>"; };
-		42632B8C2CB9C77B0028CC31 /* GSRBookable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRBookable.swift; sourceTree = "<group>"; };
-		42632B8D2CB9C77B0028CC31 /* GSRController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRController.swift; sourceTree = "<group>"; };
-		42632B8E2CB9C77B0028CC31 /* GSRDeletable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRDeletable.swift; sourceTree = "<group>"; };
-		42632B8F2CB9C77B0028CC31 /* GSRLocationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationsController.swift; sourceTree = "<group>"; };
-		42632B902CB9C77B0028CC31 /* GSRReservationsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRReservationsController.swift; sourceTree = "<group>"; };
-		42632B912CB9C77B0028CC31 /* GSRTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTabController.swift; sourceTree = "<group>"; };
 		42632B932CB9C77B0028CC31 /* GSRAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRAPIResponse.swift; sourceTree = "<group>"; };
 		42632B942CB9C77B0028CC31 /* GSRBooking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRBooking.swift; sourceTree = "<group>"; };
 		42632B952CB9C77B0028CC31 /* GSRDateHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRDateHandler.swift; sourceTree = "<group>"; };
@@ -558,30 +503,6 @@
 		42632B9C2CB9C77B0028CC31 /* GSRTimeSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTimeSlot.swift; sourceTree = "<group>"; };
 		42632B9E2CB9C77B0028CC31 /* GSRGroupNetworkManager..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupNetworkManager..swift; sourceTree = "<group>"; };
 		42632B9F2CB9C77B0028CC31 /* GSRNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRNetworkManager.swift; sourceTree = "<group>"; };
-		42632BA12CB9C77B0028CC31 /* GSRManageGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRManageGroupViewModel.swift; sourceTree = "<group>"; };
-		42632BA22CB9C77B0028CC31 /* GSRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRViewModel.swift; sourceTree = "<group>"; };
-		42632BA42CB9C77B0028CC31 /* CreateGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupCell.swift; sourceTree = "<group>"; };
-		42632BA52CB9C77B0028CC31 /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
-		42632BA62CB9C77B0028CC31 /* GroupHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupHeaderCell.swift; sourceTree = "<group>"; };
-		42632BA72CB9C77B0028CC31 /* GroupIndividualSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupIndividualSettingView.swift; sourceTree = "<group>"; };
-		42632BA82CB9C77B0028CC31 /* GroupInviteUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupInviteUserCell.swift; sourceTree = "<group>"; };
-		42632BA92CB9C77B0028CC31 /* GroupManageButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupManageButtonCell.swift; sourceTree = "<group>"; };
-		42632BAA2CB9C77B0028CC31 /* GroupMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberCell.swift; sourceTree = "<group>"; };
-		42632BAB2CB9C77B0028CC31 /* GroupSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSettingsCell.swift; sourceTree = "<group>"; };
-		42632BAC2CB9C77B0028CC31 /* GSRColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRColorCell.swift; sourceTree = "<group>"; };
-		42632BAD2CB9C77B0028CC31 /* GSRGroupIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupIconView.swift; sourceTree = "<group>"; };
-		42632BAF2CB9C77B0028CC31 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
-		42632BB02CB9C77B0028CC31 /* GSRClosedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRClosedView.swift; sourceTree = "<group>"; };
-		42632BB12CB9C77B0028CC31 /* GSRLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationCell.swift; sourceTree = "<group>"; };
-		42632BB22CB9C77B0028CC31 /* GSRRangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRangeSlider.swift; sourceTree = "<group>"; };
-		42632BB32CB9C77B0028CC31 /* GSRTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTimeCell.swift; sourceTree = "<group>"; };
-		42632BB42CB9C77B0028CC31 /* NoReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoReservationsCell.swift; sourceTree = "<group>"; };
-		42632BB52CB9C77B0028CC31 /* ReservationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationCell.swift; sourceTree = "<group>"; };
-		42632BB62CB9C77B0028CC31 /* RoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCell.swift; sourceTree = "<group>"; };
-		42632BB82CB9C77B0028CC31 /* RangeSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
-		42632BB92CB9C77B0028CC31 /* TextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayer.swift; sourceTree = "<group>"; };
-		42632BBA2CB9C77B0028CC31 /* ThumbLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbLayer.swift; sourceTree = "<group>"; };
-		42632BBB2CB9C77B0028CC31 /* TrackLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackLayer.swift; sourceTree = "<group>"; };
 		42632BBE2CB9C77B0028CC31 /* CalendarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarAPI.swift; sourceTree = "<group>"; };
 		42632BBF2CB9C77B0028CC31 /* CalendarEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEvent.swift; sourceTree = "<group>"; };
 		42632BC02CB9C77B0028CC31 /* HomeCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCalendarCell.swift; sourceTree = "<group>"; };
@@ -592,17 +513,6 @@
 		42632BC72CB9C77B0028CC31 /* FeatureAnnouncement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureAnnouncement.swift; sourceTree = "<group>"; };
 		42632BC82CB9C77B0028CC31 /* HomeFeatureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCell.swift; sourceTree = "<group>"; };
 		42632BC92CB9C77B0028CC31 /* HomeFeatureCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeatureCellItem.swift; sourceTree = "<group>"; };
-		42632BCB2CB9C77B0028CC31 /* GSRGroupInviteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGroupInviteCell.swift; sourceTree = "<group>"; };
-		42632BCC2CB9C77B0028CC31 /* HomeGroupInvitesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCell.swift; sourceTree = "<group>"; };
-		42632BCD2CB9C77B0028CC31 /* HomeGroupInvitesCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGroupInvitesCellItem.swift; sourceTree = "<group>"; };
-		42632BCF2CB9C77B0028CC31 /* BookingRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingRowCell.swift; sourceTree = "<group>"; };
-		42632BD12CB9C77B0028CC31 /* HomeGSRBookingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRBookingButton.swift; sourceTree = "<group>"; };
-		42632BD22CB9C77B0028CC31 /* HomeGSRCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRCellItem.swift; sourceTree = "<group>"; };
-		42632BD32CB9C77B0028CC31 /* HomeStudyRoomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStudyRoomCell.swift; sourceTree = "<group>"; };
-		42632BD52CB9C77B0028CC31 /* HomeGSRLocationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRLocationsCell.swift; sourceTree = "<group>"; };
-		42632BD62CB9C77B0028CC31 /* HomeGSRLocationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGSRLocationsCellItem.swift; sourceTree = "<group>"; };
-		42632BD82CB9C77B0028CC31 /* HomeReservationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCell.swift; sourceTree = "<group>"; };
-		42632BD92CB9C77B0028CC31 /* HomeReservationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCellItem.swift; sourceTree = "<group>"; };
 		42632BDB2CB9C77B0028CC31 /* HomeLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLaundryCell.swift; sourceTree = "<group>"; };
 		42632BDC2CB9C77B0028CC31 /* HomeLaundryCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLaundryCellItem.swift; sourceTree = "<group>"; };
 		42632BDE2CB9C77B0028CC31 /* HomeNewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewsCell.swift; sourceTree = "<group>"; };
@@ -805,6 +715,8 @@
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73FE3A232D661468004E0E50 /* GSRCentralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRCentralView.swift; sourceTree = "<group>"; };
+		73FE3A252D6615D2004E0E50 /* GSRViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRViewControllerSwiftUI.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -1262,32 +1174,6 @@
 			path = General;
 			sourceTree = "<group>";
 		};
-		42632B8B2CB9C77B0028CC31 /* GSRGroups */ = {
-			isa = PBXGroup;
-			children = (
-				42632B862CB9C77B0028CC31 /* GSRGroupConfirmBookingController.swift */,
-				42632B872CB9C77B0028CC31 /* GSRGroupController.swift */,
-				42632B882CB9C77B0028CC31 /* GSRGroupInviteViewController.swift */,
-				42632B892CB9C77B0028CC31 /* GSRGroupNewIntialController.swift */,
-				42632B8A2CB9C77B0028CC31 /* GSRManageGroupController.swift */,
-			);
-			path = GSRGroups;
-			sourceTree = "<group>";
-		};
-		42632B922CB9C77B0028CC31 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				42632B8B2CB9C77B0028CC31 /* GSRGroups */,
-				42632B8C2CB9C77B0028CC31 /* GSRBookable.swift */,
-				42632B8D2CB9C77B0028CC31 /* GSRController.swift */,
-				42632B8E2CB9C77B0028CC31 /* GSRDeletable.swift */,
-				42632B8F2CB9C77B0028CC31 /* GSRLocationsController.swift */,
-				42632B902CB9C77B0028CC31 /* GSRReservationsController.swift */,
-				42632B912CB9C77B0028CC31 /* GSRTabController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		42632B9D2CB9C77B0028CC31 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1314,68 +1200,21 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		42632BA32CB9C77B0028CC31 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				42632BA12CB9C77B0028CC31 /* GSRManageGroupViewModel.swift */,
-				42632BA22CB9C77B0028CC31 /* GSRViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		42632BAE2CB9C77B0028CC31 /* GSRGroups */ = {
-			isa = PBXGroup;
-			children = (
-				42632BA42CB9C77B0028CC31 /* CreateGroupCell.swift */,
-				42632BA52CB9C77B0028CC31 /* GroupCell.swift */,
-				42632BA62CB9C77B0028CC31 /* GroupHeaderCell.swift */,
-				42632BA72CB9C77B0028CC31 /* GroupIndividualSettingView.swift */,
-				42632BA82CB9C77B0028CC31 /* GroupInviteUserCell.swift */,
-				42632BA92CB9C77B0028CC31 /* GroupManageButtonCell.swift */,
-				42632BAA2CB9C77B0028CC31 /* GroupMemberCell.swift */,
-				42632BAB2CB9C77B0028CC31 /* GroupSettingsCell.swift */,
-				42632BAC2CB9C77B0028CC31 /* GSRColorCell.swift */,
-				42632BAD2CB9C77B0028CC31 /* GSRGroupIconView.swift */,
-			);
-			path = GSRGroups;
-			sourceTree = "<group>";
-		};
 		42632BB72CB9C77B0028CC31 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				42632BAE2CB9C77B0028CC31 /* GSRGroups */,
-				42632BAF2CB9C77B0028CC31 /* EmptyView.swift */,
-				42632BB02CB9C77B0028CC31 /* GSRClosedView.swift */,
-				42632BB12CB9C77B0028CC31 /* GSRLocationCell.swift */,
-				42632BB22CB9C77B0028CC31 /* GSRRangeSlider.swift */,
-				42632BB32CB9C77B0028CC31 /* GSRTimeCell.swift */,
-				42632BB42CB9C77B0028CC31 /* NoReservationsCell.swift */,
-				42632BB52CB9C77B0028CC31 /* ReservationCell.swift */,
-				42632BB62CB9C77B0028CC31 /* RoomCell.swift */,
+				73FE3A252D6615D2004E0E50 /* GSRViewControllerSwiftUI.swift */,
+				73FE3A232D661468004E0E50 /* GSRCentralView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		42632BBC2CB9C77B0028CC31 /* ZMRangeSlider */ = {
-			isa = PBXGroup;
-			children = (
-				42632BB82CB9C77B0028CC31 /* RangeSlider.swift */,
-				42632BB92CB9C77B0028CC31 /* TextLayer.swift */,
-				42632BBA2CB9C77B0028CC31 /* ThumbLayer.swift */,
-				42632BBB2CB9C77B0028CC31 /* TrackLayer.swift */,
-			);
-			path = ZMRangeSlider;
 			sourceTree = "<group>";
 		};
 		42632BBD2CB9C77B0028CC31 /* GSR-Booking */ = {
 			isa = PBXGroup;
 			children = (
-				42632B922CB9C77B0028CC31 /* Controllers */,
 				42632B9D2CB9C77B0028CC31 /* Model */,
 				42632BA02CB9C77B0028CC31 /* Networking */,
-				42632BA32CB9C77B0028CC31 /* ViewModel */,
 				42632BB72CB9C77B0028CC31 /* Views */,
-				42632BBC2CB9C77B0028CC31 /* ZMRangeSlider */,
 			);
 			path = "GSR-Booking";
 			sourceTree = "<group>";
@@ -1409,53 +1248,6 @@
 				42632BC92CB9C77B0028CC31 /* HomeFeatureCellItem.swift */,
 			);
 			path = Feature;
-			sourceTree = "<group>";
-		};
-		42632BCE2CB9C77B0028CC31 /* Group Invites */ = {
-			isa = PBXGroup;
-			children = (
-				42632BCB2CB9C77B0028CC31 /* GSRGroupInviteCell.swift */,
-				42632BCC2CB9C77B0028CC31 /* HomeGroupInvitesCell.swift */,
-				42632BCD2CB9C77B0028CC31 /* HomeGroupInvitesCellItem.swift */,
-			);
-			path = "Group Invites";
-			sourceTree = "<group>";
-		};
-		42632BD02CB9C77B0028CC31 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				42632BCF2CB9C77B0028CC31 /* BookingRowCell.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		42632BD42CB9C77B0028CC31 /* GSR */ = {
-			isa = PBXGroup;
-			children = (
-				42632BD02CB9C77B0028CC31 /* Views */,
-				42632BD12CB9C77B0028CC31 /* HomeGSRBookingButton.swift */,
-				42632BD22CB9C77B0028CC31 /* HomeGSRCellItem.swift */,
-				42632BD32CB9C77B0028CC31 /* HomeStudyRoomCell.swift */,
-			);
-			path = GSR;
-			sourceTree = "<group>";
-		};
-		42632BD72CB9C77B0028CC31 /* GSR Locations */ = {
-			isa = PBXGroup;
-			children = (
-				42632BD52CB9C77B0028CC31 /* HomeGSRLocationsCell.swift */,
-				42632BD62CB9C77B0028CC31 /* HomeGSRLocationsCellItem.swift */,
-			);
-			path = "GSR Locations";
-			sourceTree = "<group>";
-		};
-		42632BDA2CB9C77B0028CC31 /* GSR Reservations */ = {
-			isa = PBXGroup;
-			children = (
-				42632BD82CB9C77B0028CC31 /* HomeReservationsCell.swift */,
-				42632BD92CB9C77B0028CC31 /* HomeReservationsCellItem.swift */,
-			);
-			path = "GSR Reservations";
 			sourceTree = "<group>";
 		};
 		42632BDD2CB9C77B0028CC31 /* Laundry */ = {
@@ -1511,10 +1303,6 @@
 				42632BC32CB9C77B0028CC31 /* Calendar */,
 				42632BC62CB9C77B0028CC31 /* Dining */,
 				42632BCA2CB9C77B0028CC31 /* Feature */,
-				42632BCE2CB9C77B0028CC31 /* Group Invites */,
-				42632BD42CB9C77B0028CC31 /* GSR */,
-				42632BD72CB9C77B0028CC31 /* GSR Locations */,
-				42632BDA2CB9C77B0028CC31 /* GSR Reservations */,
 				42632BDD2CB9C77B0028CC31 /* Laundry */,
 				42632BE22CB9C77B0028CC31 /* News */,
 				42632BEC2CB9C77B0028CC31 /* Post */,
@@ -2354,6 +2142,7 @@
 				42632C982CB9C77B0028CC31 /* OAuth2NetworkManager.swift in Sources */,
 				42632C992CB9C77B0028CC31 /* PennAuthRequestable.swift in Sources */,
 				421824092CCEB1370028E510 /* PennEventCellView.swift in Sources */,
+				73FE3A262D6615DA004E0E50 /* GSRViewControllerSwiftUI.swift in Sources */,
 				4218240A2CCEB1370028E510 /* PennEventsView.swift in Sources */,
 				4218240B2CCEB1370028E510 /* PennEventsViewerView.swift in Sources */,
 				42632C9A2CB9C77B0028CC31 /* PennLoginController.swift in Sources */,
@@ -2442,19 +2231,9 @@
 				42632CFA2CB9C77B0028CC31 /* KeychainAccessible+Extensions.swift in Sources */,
 				42632CFB2CB9C77B0028CC31 /* Protocols.swift in Sources */,
 				42632CFC2CB9C77B0028CC31 /* UserDefaults + Helpers.swift in Sources */,
-				42632CFD2CB9C77B0028CC31 /* GSRGroupConfirmBookingController.swift in Sources */,
-				42632CFE2CB9C77B0028CC31 /* GSRGroupController.swift in Sources */,
-				42632CFF2CB9C77B0028CC31 /* GSRGroupInviteViewController.swift in Sources */,
-				42632D002CB9C77B0028CC31 /* GSRGroupNewIntialController.swift in Sources */,
-				42632D012CB9C77B0028CC31 /* GSRManageGroupController.swift in Sources */,
-				42632D022CB9C77B0028CC31 /* GSRBookable.swift in Sources */,
-				42632D032CB9C77B0028CC31 /* GSRController.swift in Sources */,
 				421824032CCEB1320028E510 /* PennLocation.swift in Sources */,
 				421824042CCEB1320028E510 /* PennEventsViewModel.swift in Sources */,
-				42632D042CB9C77B0028CC31 /* GSRDeletable.swift in Sources */,
-				42632D052CB9C77B0028CC31 /* GSRLocationsController.swift in Sources */,
-				42632D062CB9C77B0028CC31 /* GSRReservationsController.swift in Sources */,
-				42632D072CB9C77B0028CC31 /* GSRTabController.swift in Sources */,
+				73FE3A242D661484004E0E50 /* GSRCentralView.swift in Sources */,
 				42632D082CB9C77B0028CC31 /* GSRAPIResponse.swift in Sources */,
 				42632D092CB9C77B0028CC31 /* GSRBooking.swift in Sources */,
 				89DF63072CEB9BBB00C4A015 /* NotificationDeviceTokenManager.swift in Sources */,
@@ -2469,30 +2248,6 @@
 				42632D122CB9C77B0028CC31 /* GSRGroupNetworkManager..swift in Sources */,
 				42632D132CB9C77B0028CC31 /* GSRNetworkManager.swift in Sources */,
 				42ABED2C2CE8EB9F006533CD /* ContactModel.swift in Sources */,
-				42632D142CB9C77B0028CC31 /* GSRManageGroupViewModel.swift in Sources */,
-				42632D152CB9C77B0028CC31 /* GSRViewModel.swift in Sources */,
-				42632D162CB9C77B0028CC31 /* CreateGroupCell.swift in Sources */,
-				42632D172CB9C77B0028CC31 /* GroupCell.swift in Sources */,
-				42632D182CB9C77B0028CC31 /* GroupHeaderCell.swift in Sources */,
-				42632D192CB9C77B0028CC31 /* GroupIndividualSettingView.swift in Sources */,
-				42632D1A2CB9C77B0028CC31 /* GroupInviteUserCell.swift in Sources */,
-				42632D1B2CB9C77B0028CC31 /* GroupManageButtonCell.swift in Sources */,
-				42632D1C2CB9C77B0028CC31 /* GroupMemberCell.swift in Sources */,
-				42632D1D2CB9C77B0028CC31 /* GroupSettingsCell.swift in Sources */,
-				42632D1E2CB9C77B0028CC31 /* GSRColorCell.swift in Sources */,
-				42632D1F2CB9C77B0028CC31 /* GSRGroupIconView.swift in Sources */,
-				42632D202CB9C77B0028CC31 /* EmptyView.swift in Sources */,
-				42632D212CB9C77B0028CC31 /* GSRClosedView.swift in Sources */,
-				42632D222CB9C77B0028CC31 /* GSRLocationCell.swift in Sources */,
-				42632D232CB9C77B0028CC31 /* GSRRangeSlider.swift in Sources */,
-				42632D242CB9C77B0028CC31 /* GSRTimeCell.swift in Sources */,
-				42632D252CB9C77B0028CC31 /* NoReservationsCell.swift in Sources */,
-				42632D262CB9C77B0028CC31 /* ReservationCell.swift in Sources */,
-				42632D272CB9C77B0028CC31 /* RoomCell.swift in Sources */,
-				42632D282CB9C77B0028CC31 /* RangeSlider.swift in Sources */,
-				42632D292CB9C77B0028CC31 /* TextLayer.swift in Sources */,
-				42632D2A2CB9C77B0028CC31 /* ThumbLayer.swift in Sources */,
-				42632D2B2CB9C77B0028CC31 /* TrackLayer.swift in Sources */,
 				42632D2C2CB9C77B0028CC31 /* CalendarAPI.swift in Sources */,
 				42632D2D2CB9C77B0028CC31 /* CalendarEvent.swift in Sources */,
 				42632D2E2CB9C77B0028CC31 /* HomeCalendarCell.swift in Sources */,
@@ -2503,17 +2258,6 @@
 				42632D332CB9C77B0028CC31 /* FeatureAnnouncement.swift in Sources */,
 				42632D342CB9C77B0028CC31 /* HomeFeatureCell.swift in Sources */,
 				42632D352CB9C77B0028CC31 /* HomeFeatureCellItem.swift in Sources */,
-				42632D362CB9C77B0028CC31 /* GSRGroupInviteCell.swift in Sources */,
-				42632D372CB9C77B0028CC31 /* HomeGroupInvitesCell.swift in Sources */,
-				42632D382CB9C77B0028CC31 /* HomeGroupInvitesCellItem.swift in Sources */,
-				42632D392CB9C77B0028CC31 /* BookingRowCell.swift in Sources */,
-				42632D3A2CB9C77B0028CC31 /* HomeGSRBookingButton.swift in Sources */,
-				42632D3B2CB9C77B0028CC31 /* HomeGSRCellItem.swift in Sources */,
-				42632D3C2CB9C77B0028CC31 /* HomeStudyRoomCell.swift in Sources */,
-				42632D3D2CB9C77B0028CC31 /* HomeGSRLocationsCell.swift in Sources */,
-				42632D3E2CB9C77B0028CC31 /* HomeGSRLocationsCellItem.swift in Sources */,
-				42632D3F2CB9C77B0028CC31 /* HomeReservationsCell.swift in Sources */,
-				42632D402CB9C77B0028CC31 /* HomeReservationsCellItem.swift in Sources */,
 				42632D412CB9C77B0028CC31 /* HomeLaundryCell.swift in Sources */,
 				42632D422CB9C77B0028CC31 /* HomeLaundryCellItem.swift in Sources */,
 				42632D432CB9C77B0028CC31 /* HomeNewsCell.swift in Sources */,

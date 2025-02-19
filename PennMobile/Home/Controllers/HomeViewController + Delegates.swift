@@ -109,16 +109,6 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController: GSRLocationSelectable {
-    func handleSelectedLocation(_ location: GSRLocation) {
-        let gc = GSRController()
-        gc.startingLocation = location
-        gc.title = "Study Room Booking"
-        navigationController?.pushViewController(gc, animated: true)
-        FirebaseAnalyticsManager.shared.trackEvent(action: "Tap Home GSR Location", result: "Tap Home GSR Location", content: "View \(location.name)")
-    }
-}
-
 extension HomeViewController: NewsArticleSelectable {
     func handleSelectedArticle(_ article: NewsArticle) {
         let nvc = NativeNewsViewController()

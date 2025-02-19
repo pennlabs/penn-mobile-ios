@@ -98,7 +98,10 @@ let features: [AppFeature] = [
         DiningView()
             .navigationTitle(Text("Dining"))
     },
-    AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey"), controller: GSRTabController.self),
+    AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey")) {
+        GSRCentralView()
+            .navigationTitle(Text("Group Study Rooms"))
+    },
     AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey"), controller: LaundryTableViewController.self),
     AppFeature(.news, name: "News", color: .baseRed, image: .app("News_Grey"), controller: NewsViewController.self),
     AppFeature(.contacts, shortName: "Contacts", longName: "Penn Contacts", color: .baseYellow, image: .app("Contacts_Grey")) {
