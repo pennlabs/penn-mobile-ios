@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1239C3F42D61C9C1001F8B6E /* QuickBookAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1239C3F32D61C9B2001F8B6E /* QuickBookAlertViewController.swift */; };
 		421823FC2CCEB12D0028E510 /* PennEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F92CCEB12D0028E510 /* PennEvent.swift */; };
 		421823FD2CCEB12D0028E510 /* MailComposerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */; };
 		421823FE2CCEB12D0028E510 /* PennEventsAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823FA2CCEB12D0028E510 /* PennEventsAPIManager.swift */; };
@@ -436,7 +435,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1239C3F32D61C9B2001F8B6E /* QuickBookAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookAlertViewController.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		421823F72CCEB12D0028E510 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
 		421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerCoordinator.swift; sourceTree = "<group>"; };
@@ -1283,7 +1281,6 @@
 		42632B922CB9C77B0028CC31 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				1239C3F32D61C9B2001F8B6E /* QuickBookAlertViewController.swift */,
 				42632B8B2CB9C77B0028CC31 /* GSRGroups */,
 				42632B8C2CB9C77B0028CC31 /* GSRBookable.swift */,
 				42632B8D2CB9C77B0028CC31 /* GSRController.swift */,
@@ -2508,7 +2505,6 @@
 				42632D2E2CB9C77B0028CC31 /* HomeCalendarCell.swift in Sources */,
 				42632D2F2CB9C77B0028CC31 /* HomeCalendarCellItem.swift in Sources */,
 				42632D302CB9C77B0028CC31 /* UniversityNotificationCell.swift in Sources */,
-				1239C3F42D61C9C1001F8B6E /* QuickBookAlertViewController.swift in Sources */,
 				42632D312CB9C77B0028CC31 /* HomeDiningCell.swift in Sources */,
 				42632D322CB9C77B0028CC31 /* HomeDiningCellItem.swift in Sources */,
 				42632D332CB9C77B0028CC31 /* FeatureAnnouncement.swift in Sources */,
