@@ -31,10 +31,10 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     
     fileprivate var allRooms: [GSRRoom]!
     
-    fileprivate let locationManager = CLLocationManager()
-    fileprivate var hasReceivedLocationUpdate = false
+//    fileprivate let locationManager = CLLocationManager()
+//    fileprivate var hasReceivedLocationUpdate = false
     
-    let mappingController = GSRMappingController()
+//    let mappingController = GSRMappingController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,7 +134,7 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
     }
     
     @objc fileprivate func findGSRButtonPressed() {
-        prefList = makePreference()
+//        prefList = makePreference()
         self.setupQuickBooking {
             self.setupSubmitAlert()
         }
@@ -186,15 +186,6 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         }
     }
     
-    fileprivate func makePreference() -> [GSRLocation] {
-        if prefLocation == nil {
-            return prefList
-        } else {
-            self.prefList.insert(self.prefLocation, at: 0)
-            return prefList
-        }
-    }
-    
     fileprivate func setupBook() {
         view.addSubview(bookButton)
         
@@ -227,13 +218,22 @@ class QuickBookingViewController: UIViewController, ShowsAlert {
         }
     }
     
-    public func getSoonestLocation() -> String {
-        return soonestLocation.name;
-    }
+    //    fileprivate func makePreference() -> [GSRLocation] {
+    //        if prefLocation == nil {
+    //            return prefList
+    //        } else {
+    //            self.prefList.insert(self.prefLocation, at: 0)
+    //            return prefList
+    //        }
+    //    }
     
-    public func getRoom() -> UILabel {
-        return roomLabel;
-    }
+//    public func getSoonestLocation() -> String {
+//        return soonestLocation.name;
+//    }
+//    
+//    public func getRoom() -> UILabel {
+//        return roomLabel;
+//    }
     
     //    public let GSRCoords = [
     //        (latitude: 39.95346818228411, longitude: -75.19802835987453, title: "Huntsman"),
