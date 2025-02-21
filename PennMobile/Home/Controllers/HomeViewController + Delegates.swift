@@ -14,61 +14,6 @@ import PennMobileShared
 
 extension HomeViewController: HomeViewModelDelegate {}
 
-// MARK: - Reservation Delegate
-extension HomeViewController: GSRDeletable {
-    func deleteReservation(_ bookingID: String) {
-        deleteReservation(bookingID) { (successful) in
-            if successful {
-                guard let reservationItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.reservations]).first as? HomeReservationsCellItem else { return }
-                reservationItem.reservations = reservationItem.reservations.filter { $0.bookingId != bookingID }
-                if reservationItem.reservations.isEmpty {
-                    self.removeItem(reservationItem)
-                } else {
-                    self.reloadItem(reservationItem)
-                }
-            }
-        }
-    }
-
-    func deleteReservation(_ reservation: GSRReservation) {
-        deleteReservation(reservation.bookingId)
-    }
-}
-
-// MARK: - GSR Quick Book Delegate
-extension HomeViewController: GSRBookable {
-    func handleBookingSelected(_ booking: GSRBooking) {
-        confirmBookingWanted(booking)
-    }
-
-    private func confirmBookingWanted(_ booking: GSRBooking) {
-        let message = "Booking \(booking.roomName) from \(booking.getLocalTimeString())"
-        let alert = UIAlertController(title: "Confirm Booking",
-                                      message: message,
-                                      preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(cancelAction)
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
-            self.handleBookingRequested(booking)
-        }))
-        present(alert, animated: true)
-    }
-
-    private func handleBookingRequested(_ booking: GSRBooking) {
-//        if GSRUser.hasSavedUser() {
-//            booking.user = GSRUser.getUser()
-//            submitBooking(for: booking) { (completion) in
-//                self.fetchCellData(for: [HomeItemTypes.instance.studyRoomBooking])
-//            }
-//        } else {
-//            let glc = GSRLoginController()
-//            glc.booking = booking
-//            let nvc = UINavigationController(rootViewController: glc)
-//            present(nvc, animated: true, completion: nil)
-//        }
-    }
-}
-
 // MARK: - URL Selected
 extension HomeViewController {
     func handleUrlPressed(urlStr: String, title: String, item: ModularTableViewItem, shouldLog: Bool) {
@@ -141,30 +86,6 @@ extension HomeViewController {
                 id = identifiableItem.id
             }
             FeedAnalyticsManager.shared.trackInteraction(cellType: cellType.jsonKey, index: index, id: id)
-        }
-    }
-}
-
-// MARK: - Invite delegate
-extension HomeViewController: GSRInviteSelectable {
-    func handleInviteSelected(_ invite: GSRGroupInvite, _ accept: Bool) {
-        GSRGroupNetworkManager.instance.respondToInvite(invite: invite, accept: accept) { (success) in
-            if success {
-                guard let inviteItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.invites]).first as? HomeGroupInvitesCellItem else { return }
-                inviteItem.invites = inviteItem.invites.filter { $0.id != invite.id }
-                DispatchQueue.main.async {
-                    if inviteItem.invites.isEmpty {
-                        self.removeItem(inviteItem)
-                    } else {
-                        self.reloadItem(inviteItem)
-                    }
-                }
-            } else {
-                let message = "An error occured when responding to this invite. Please try again later."
-                let alert = UIAlertController(title: invite.group, message: message, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
         }
     }
 }
