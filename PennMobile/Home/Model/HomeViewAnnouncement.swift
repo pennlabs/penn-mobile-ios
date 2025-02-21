@@ -16,7 +16,7 @@ struct HomeViewAnnouncement:  Identifiable {
     // For analytics
     let slug: String
     let disappearOnTap: Bool
-    var onTap: [() -> Void] = []
+    var onTap: [() async -> Void] = []
     @State var show = true
     
     init(analyticsSlug: String, disappearOnTap: Bool, priority: AnnouncementPriority = .medium, @ViewBuilder _ content: () -> any View, @ViewBuilder linkedView: () -> any View) {
@@ -51,9 +51,12 @@ struct HomeViewAnnouncement:  Identifiable {
                 }
             }
             .onTapGesture {
-                onTap.forEach {
-                    $0()
+                Task {
+                    await onTap.asyncMap {
+                        await $0()
+                    }
                 }
+                
                 if disappearOnTap {
                     withAnimation {
                         show = false
@@ -75,7 +78,7 @@ struct HomeViewAnnouncement:  Identifiable {
 //
 //    }
     
-    mutating func addTapListener(_ listener: @escaping () -> Void) {
+    mutating func addTapListener(_ listener: @escaping () async -> Void) {
         onTap.append(listener)
     }
     

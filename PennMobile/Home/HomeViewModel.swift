@@ -93,35 +93,41 @@ extension Optional {
         }
         
         async let announcementsTask = Task {
-            var announcements = await StandardHomeViewModel.announceable.asyncMap { feature in
-                    await feature.getHomeViewAnnouncements()
-            }.flatMap { $0 }
             
-            for (i, announcement) in announcements.enumerated() {
-                if let featureId = announcement.linkedFeature {
-                    announcements[i].addTapListener {
-                        Task {
-                            await MainActor.run {
-                                guard let nav = self.navigationManager else { return }
-                                let tabFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
-                                if tabFeatures.contains(.subletting) {
-                                    nav.currentTab = featureId.rawValue
-                                } else {
-                                    nav.currentTab = "More"
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
-                                        nav.path = .init([featureId])
-                                    }
+            await MainActor.run {
+                self.data.announcements = []
+            }
+            
+            _ = await StandardHomeViewModel.announceable.asyncMap { feature in
+                    await feature.getHomeViewAnnouncements()
+            }.flatMap({ $0 }).asyncMap { el in
+                let newAnnouncement: HomeViewAnnouncement
+                if let featureId = el.linkedFeature {
+                    var newEl = el
+                    newEl.addTapListener {
+                        await MainActor.run {
+                            guard let nav = self.navigationManager else { return }
+                            let tabFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
+                            if tabFeatures.contains(featureId) {
+                                nav.currentTab = featureId.rawValue
+                            } else {
+                                nav.currentTab = "More"
+                                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+                                    nav.path = .init([featureId])
                                 }
                             }
                         }
                     }
+                    newAnnouncement = newEl
+                } else {
+                    newAnnouncement = el
                 }
-            }
-            
-            
-            
-            await MainActor.run {
-                data.announcements = announcements
+                
+                await MainActor.run {
+                    self.data.announcements.append(newAnnouncement)
+                }
+                
+                return newAnnouncement
             }
         }
         
