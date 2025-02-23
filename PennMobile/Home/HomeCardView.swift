@@ -73,7 +73,7 @@ struct GenericPostCardView: View {
                 VStack(spacing: 0) {
                     KFImage(imageURL)
                         .resizable()
-                        .scaledToFill()
+                        .scaledToFit()
                     
                     content
                         .background(alignment: .top) {
