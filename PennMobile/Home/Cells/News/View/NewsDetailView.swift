@@ -80,10 +80,12 @@ struct NewsDetailView: View {
                     }) {
                         Text("Read more on DP+")
                             .font(.headline)
-                            .foregroundColor(.white)
+                            .fontWeight(.heavy)
+                            .foregroundColor(.primary)
                             .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.primary)
+                        // this is if we want the design choice of a button instead of just the text like it used to be
+//                            .padding()
+//                            .background(Color.primary)
                             .cornerRadius(10)
                             .padding(.horizontal)
                     }
