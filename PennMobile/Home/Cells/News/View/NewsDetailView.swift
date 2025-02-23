@@ -45,12 +45,12 @@ struct NewsDetailView: View {
                     KFImage(URL(string: article.dominantMedia.imageUrl))
                         .resizable()
                         .scaledToFill()
-                        .frame(width: geometry.size.width, height: 150 + max(0, minY))
+                        .frame(width: geometry.size.width, height: 100 + max(0, minY))
                         .offset(y: min(0, minY) * -2/3)
                         .allowsHitTesting(false)
                         .clipped()
                 }
-                .frame(height: 150)
+                .frame(height: 100)
                 .frame(maxWidth: .infinity)
                 .zIndex(2)
                 
