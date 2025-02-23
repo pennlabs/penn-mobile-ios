@@ -39,13 +39,19 @@ struct NewsDetailView: View {
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal)
                 
-                // image
-                KFImage(URL(string: article.dominantMedia.imageUrl))
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 250)
-                    .clipped()
-                    .frame(maxWidth: .infinity)
+                // image with zoom on scroll behavior like in DiningVenueDetailView
+                GeometryReader { geometry in
+                    let minY = geometry.frame(in: .global).minY
+                    KFImage(URL(string: article.dominantMedia.imageUrl))
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geometry.size.width, height: 150 + max(0, minY))
+                        .offset(y: min(0, minY) * -2/3)
+                        .allowsHitTesting(false)
+                        .clipped()
+                }
+                .frame(height: 150)
+                .frame(maxWidth: .infinity)
                 
                 // authors
                 Text("\(article.data.labsArticle.authors.map { $0.name }.joined(separator: ", ")) • \(article.published_at)")
