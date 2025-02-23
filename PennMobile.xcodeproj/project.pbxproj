@@ -180,8 +180,6 @@
 		42632D402CB9C77B0028CC31 /* HomeReservationsCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BD92CB9C77B0028CC31 /* HomeReservationsCellItem.swift */; };
 		42632D412CB9C77B0028CC31 /* HomeLaundryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BDB2CB9C77B0028CC31 /* HomeLaundryCell.swift */; };
 		42632D422CB9C77B0028CC31 /* HomeLaundryCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BDC2CB9C77B0028CC31 /* HomeLaundryCellItem.swift */; };
-		42632D4C2CB9C77B0028CC31 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BE92CB9C77B0028CC31 /* HomePostCell.swift */; };
-		42632D4D2CB9C77B0028CC31 /* HomePostCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BEA2CB9C77B0028CC31 /* HomePostCellItem.swift */; };
 		42632D4E2CB9C77B0028CC31 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BEB2CB9C77B0028CC31 /* Post.swift */; };
 		42632D4F2CB9C77B0028CC31 /* HomeFlingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BED2CB9C77B0028CC31 /* HomeFlingCell.swift */; };
 		42632D502CB9C77B0028CC31 /* HomeFlingCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632BEE2CB9C77B0028CC31 /* HomeFlingCellItem.swift */; };
@@ -601,8 +599,6 @@
 		42632BD92CB9C77B0028CC31 /* HomeReservationsCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReservationsCellItem.swift; sourceTree = "<group>"; };
 		42632BDB2CB9C77B0028CC31 /* HomeLaundryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLaundryCell.swift; sourceTree = "<group>"; };
 		42632BDC2CB9C77B0028CC31 /* HomeLaundryCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLaundryCellItem.swift; sourceTree = "<group>"; };
-		42632BE92CB9C77B0028CC31 /* HomePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCell.swift; sourceTree = "<group>"; };
-		42632BEA2CB9C77B0028CC31 /* HomePostCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePostCellItem.swift; sourceTree = "<group>"; };
 		42632BEB2CB9C77B0028CC31 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		42632BED2CB9C77B0028CC31 /* HomeFlingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCell.swift; sourceTree = "<group>"; };
 		42632BEE2CB9C77B0028CC31 /* HomeFlingCellItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlingCellItem.swift; sourceTree = "<group>"; };
@@ -1496,8 +1492,6 @@
 		42632BEC2CB9C77B0028CC31 /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				42632BE92CB9C77B0028CC31 /* HomePostCell.swift */,
-				42632BEA2CB9C77B0028CC31 /* HomePostCellItem.swift */,
 				42632BEB2CB9C77B0028CC31 /* Post.swift */,
 			);
 			path = Post;
@@ -2537,8 +2531,6 @@
 				42632D402CB9C77B0028CC31 /* HomeReservationsCellItem.swift in Sources */,
 				42632D412CB9C77B0028CC31 /* HomeLaundryCell.swift in Sources */,
 				42632D422CB9C77B0028CC31 /* HomeLaundryCellItem.swift in Sources */,
-				42632D4C2CB9C77B0028CC31 /* HomePostCell.swift in Sources */,
-				42632D4D2CB9C77B0028CC31 /* HomePostCellItem.swift in Sources */,
 				42632D4E2CB9C77B0028CC31 /* Post.swift in Sources */,
 				42632D4F2CB9C77B0028CC31 /* HomeFlingCell.swift in Sources */,
 				42632D502CB9C77B0028CC31 /* HomeFlingCellItem.swift in Sources */,
