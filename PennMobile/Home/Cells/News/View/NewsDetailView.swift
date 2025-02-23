@@ -54,7 +54,7 @@ struct NewsDetailView: View {
                     .padding(.horizontal)
                 
                 // article content
-                VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 22) {
                     ForEach(extractParagraphs(from: article.content), id: \.self) { paragraph in
                         Text(paragraph)
                             .font(.system(size: 16, weight: .regular))
