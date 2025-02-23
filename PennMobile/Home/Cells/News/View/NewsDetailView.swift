@@ -52,6 +52,7 @@ struct NewsDetailView: View {
                 }
                 .frame(height: 150)
                 .frame(maxWidth: .infinity)
+                .zIndex(2)
                 
                 // authors
                 Text("\(article.data.labsArticle.authors.map { $0.name }.joined(separator: ", ")) • \(article.published_at)")
