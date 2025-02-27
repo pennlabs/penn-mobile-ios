@@ -8,6 +8,7 @@
 //
 import Foundation
 import PennMobileShared
+import LabsPlatformSwift
 
 struct Account: Codable, Hashable {
     var pennid: Int
@@ -56,13 +57,22 @@ struct Major: Codable, Hashable {
 
 // MARK: - Static Functions
 extension Account {
-    static var isLoggedIn: Bool {
-        OAuth2NetworkManager.instance.hasRefreshToken() && getAccount() != nil
+    @MainActor static var isLoggedIn: Bool {
+        guard let _ = getAccount() else {
+            return false
+        }
+        if let platform = LabsPlatform.shared, !platform.isLoggedIn {
+            return false
+        }
+        return true
     }
 
     static func clear() {
         UserDefaults.standard.clearAccount()
         UserDefaults.standard.clearDiningBalance()
+        LabsKeychain.clearPlatformCredential()
+        LabsKeychain.deletePassword()
+        LabsKeychain.deletePennkey()
         KeychainAccessible.instance.removePennKey()
         KeychainAccessible.instance.removePassword()
         KeychainAccessible.instance.removePacCode()
@@ -77,7 +87,9 @@ extension Account {
     }
 
     static func saveAccount(_ thisAccount: Account) {
-        UserDefaults.standard.saveAccount(thisAccount)
+        Task { @MainActor in
+            UserDefaults.standard.saveAccount(thisAccount)
+        }
     }
 
     static func getAccount() -> Account? {

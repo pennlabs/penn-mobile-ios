@@ -140,21 +140,6 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
                 self.dismiss(successful: true)
                 return
             }
-            OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (account) in
-                guard let account = account else {
-                    self.dismiss(successful: false)
-                    return
-                }
-
-                UserDefaults.standard.saveAccount(account)
-                UserDefaults.standard.set(isInWharton: account.isInWharton)
-
-                UserDBManager.shared.syncUserSettings { (_) in
-                    self.saveAccount(account) {
-                        self.dismiss(successful: true)
-                    }
-                }
-            }
         }
     }
 

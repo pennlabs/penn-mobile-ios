@@ -8,6 +8,7 @@
 
 import Firebase
 import SwiftUI
+import LabsPlatformSwift
 
 @main
 struct PennMobile: App {
@@ -30,9 +31,9 @@ struct PennMobile: App {
         // Register to receive delegate actions from rich notifications
         UNUserNotificationCenter.current().delegate = delegate
 
-        FirebaseApp.configure()
-
         authManager.determineInitialState()
+        
+        FirebaseApp.configure()
 
         ControllerModel.shared.prepare()
         LaundryNotificationCenter.shared.prepare()
@@ -58,6 +59,11 @@ struct PennMobile: App {
                 .environmentObject(mockHomeViewModel)
             #endif
                 .accentColor(Color("navigation"))
+                .enableLabsPlatform(analyticsRoot: "pennmobile",
+                                    clientId: InfoPlistEnvironment.labsOauthClientId,
+                                    redirectUrl: "https://pennlabs.org/pennmobile/ios/callback/",
+                                    defaultLoginHandler: authManager.handlePlatformDefaultLogin,
+                                    authManager.handlePlatformLogin)
         }
         .onChange(of: authManager.state.isLoggedIn) { _ in
             homeViewModel.clearData()

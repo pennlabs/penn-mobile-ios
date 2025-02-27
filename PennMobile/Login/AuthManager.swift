@@ -7,9 +7,9 @@
 //
 
 import SwiftUI
+import LabsPlatformSwift
 
 enum AuthState: Equatable {
-    case notDetermined
     case loggedOut
     case guest
     case loggedIn(Account)
@@ -23,12 +23,12 @@ enum AuthState: Equatable {
     }
 }
 
+@MainActor
 class AuthManager: ObservableObject {
-    @Published private(set) var state = AuthState.notDetermined
+    @Published private(set) var state = AuthState.loggedOut
 
     static func shouldRequireLogin() -> Bool {
         if !Account.isLoggedIn {
-            // User is not logged in
             return true
         }
 
@@ -63,6 +63,38 @@ class AuthManager: ObservableObject {
             await OAuth2NetworkManager.instance.clearCurrentAccessToken()
         }
     }
+    
+    func handlePlatformLogin(res: Bool) async {
+        if res {
+            UserDefaults.standard.setLastLogin()
+            guard let account = await AuthManager.retrieveAccount() else {
+                self.state = .loggedOut
+                return
+            }
+            UserDefaults.standard.set(isInWharton: account.isInWharton)
+            UserDBManager.shared.syncUserSettings { (_) in
+                DispatchQueue.main.async {
+                    Account.saveAccount(account)
+                    self.determineInitialState()
+                }
+            }
+            
+            // get account using platform,
+            // mark as logged in
+        } else {
+            self.state = .loggedOut
+            // we are logged out.
+            // should we go to logged out state or guest state?
+        }
+        
+        
+    }
+    
+    func handlePlatformDefaultLogin() {
+        let account = Account(pennid: 12345678, firstName: "Ben", lastName: "Franklin", username: "bfranklin", email: "benfrank@wharton.upenn.edu", student: Student(major: [], school: []), groups: [], emails: [])
+        state = .loggedIn(account)
+        Account.saveAccount(account)
+    }
 
     func determineInitialState() {
         if AuthManager.shouldRequireLogin() {
@@ -89,15 +121,33 @@ class AuthManager: ObservableObject {
     
     func logOut() {
         state = .loggedOut
+        LabsPlatform.shared?.logoutPlatform()
+        
         AuthManager.clearAccountData()
+    }
+    
+    static func retrieveAccount() async -> Account? {
+        let url = URL(string: "https://platform.pennlabs.org/accounts/me/")!
+        guard let request = try? await URLRequest(url: url, mode: .legacy) else {
+            return nil
+        }
+
+        guard let (data, response) = try? await URLSession.shared.data(for: request),
+              let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            return nil
+        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+
+        let user = try? decoder.decode(Account.self, from: data)
+        return user
     }
 }
 
 extension AuthState: CustomDebugStringConvertible {
     var debugDescription: String {
         switch self {
-        case .notDetermined:
-            "Not determined"
         case .loggedOut:
             "Logged out"
         case .guest:

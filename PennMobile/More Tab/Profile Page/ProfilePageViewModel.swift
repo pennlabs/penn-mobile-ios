@@ -30,22 +30,16 @@ class ProfilePageViewModel: NSObject {
     }
 
     func fetchAccount() {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                return
-            }
-
-            OAuth2NetworkManager.instance.retrieveAccount(accessToken: token, {(account) in
-                if let account = account {
-                    Account.saveAccount(account)
-                    self.account = account
-                    self.setupProfileInfo()
-                    self.setupEducationInfo()
-                    DispatchQueue.main.async {
-                        (self.delegate as? ProfilePageViewController)?.tableView.reloadData()
-                    }
+        Task {
+            if let account = await AuthManager.retrieveAccount() {
+                Account.saveAccount(account)
+                self.account = account
+                self.setupProfileInfo()
+                self.setupEducationInfo()
+                DispatchQueue.main.async {
+                    (self.delegate as? ProfilePageViewController)?.tableView.reloadData()
                 }
-            })
+            }
         }
     }
 
