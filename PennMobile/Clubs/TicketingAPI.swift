@@ -43,24 +43,8 @@ class TicketingAPI {
         return URL(string: "\(baseURL)/api/tickets/\(pathComponent)/")
     }
     
-    func getSession() async throws -> URLSession {
-        guard let accessToken = try? await OAuth2NetworkManager.instance.getAccessToken() else {
-            throw NetworkingError.authenticationError
-        }
-        
-        // HACK: iOS doesn't preserve Authorization headers during redirects
-        // (It also doesn't support setting Authorization headers in general apparently)
-        let config = URLSessionConfiguration.default
-        config.httpAdditionalHeaders = [
-            "Authorization": "Bearer \(accessToken.value)",
-            "X-Authorization": "Bearer \(accessToken.value)"
-        ]
-        
-        return URLSession(configuration: config)
-    }
-    
     func getTicket(id: String) async throws -> Ticket? {
-        let session = try await getSession()
+        let session = try await URLSession(authenticationMode: .legacy)
         
         guard let url = ticketUrl(forId: id) else {
             return nil
@@ -76,7 +60,7 @@ class TicketingAPI {
     }
     
     @discardableResult func updateAttendance(id: String, to attended: Bool) async throws -> Ticket {
-        let session = try await getSession()
+        let session = try await URLSession(authenticationMode: .legacy)
         
         guard let url = ticketUrl(forId: id) else {
             throw ScannedTicket.InvalidReason.notFound

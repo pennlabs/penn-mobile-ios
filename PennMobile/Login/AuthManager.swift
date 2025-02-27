@@ -57,37 +57,28 @@ class AuthManager: ObservableObject {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
         Account.clear()
-        
-        Task {
-            await OAuth2NetworkManager.instance.clearRefreshToken()
-            await OAuth2NetworkManager.instance.clearCurrentAccessToken()
-        }
     }
     
     func handlePlatformLogin(res: Bool) async {
-        if res {
-            UserDefaults.standard.setLastLogin()
-            guard let account = await AuthManager.retrieveAccount() else {
-                self.state = .loggedOut
-                return
-            }
-            UserDefaults.standard.set(isInWharton: account.isInWharton)
-            UserDBManager.shared.syncUserSettings { (_) in
-                DispatchQueue.main.async {
-                    Account.saveAccount(account)
-                    self.determineInitialState()
-                }
-            }
-            
-            // get account using platform,
-            // mark as logged in
-        } else {
+        guard res else {
             self.state = .loggedOut
-            // we are logged out.
-            // should we go to logged out state or guest state?
+            return
         }
         
+        UserDefaults.standard.setLastLogin()
+        guard let account = await AuthManager.retrieveAccount() else {
+            self.state = .loggedOut
+            return
+        }
         
+        saveAndUpdatePreferences(account)
+        
+        UserDBManager.shared.syncUserSettings { (_) in
+            DispatchQueue.main.async {
+                Account.saveAccount(account)
+                self.determineInitialState()
+            }
+        }
     }
     
     func handlePlatformDefaultLogin() {
@@ -95,6 +86,7 @@ class AuthManager: ObservableObject {
         state = .loggedIn(account)
         Account.saveAccount(account)
     }
+    
 
     func determineInitialState() {
         if AuthManager.shouldRequireLogin() {
@@ -110,6 +102,7 @@ class AuthManager: ObservableObject {
             state = .loggedIn(Account.getAccount()!)
         }
     }
+    
 
     func enterGuestMode() {
         guard case .loggedOut = state else {
@@ -119,12 +112,14 @@ class AuthManager: ObservableObject {
         state = .guest
     }
     
+    
     func logOut() {
         state = .loggedOut
         LabsPlatform.shared?.logoutPlatform()
         
         AuthManager.clearAccountData()
     }
+    
     
     static func retrieveAccount() async -> Account? {
         let url = URL(string: "https://platform.pennlabs.org/accounts/me/")!
@@ -142,6 +137,26 @@ class AuthManager: ObservableObject {
 
         let user = try? decoder.decode(Account.self, from: data)
         return user
+    }
+    
+    
+    func saveAndUpdatePreferences(_ account: Account) {
+        UserDefaults.standard.set(isInWharton: account.isInWharton)
+        UserDBManager.shared.saveAccount(account) { (accountID) in
+            guard let accountID else { return }
+            UserDefaults.standard.set(accountID: accountID)
+            if account.isStudent {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    if UserDefaults.standard.getPreference(for: .collegeHouse) {
+                        CampusExpressNetworkManager.instance.updateHousingData()
+                    }
+                    Account.getDiningTransactions()
+                    Account.getAndSaveLaundryPreferences()
+                    Account.getAndSaveFitnessPreferences()
+                    Account.getPacCode()
+                }
+            }
+        }
     }
 }
 

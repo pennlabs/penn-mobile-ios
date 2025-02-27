@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import PennMobileShared
 import WidgetKit
+import LabsPlatformSwift
 
 class UserDBManager: NSObject, Requestable, SHA256Hashable {
     static let shared = UserDBManager()
@@ -23,20 +24,24 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
       - parameter params: A dictionary of parameters to attach to the POST request.
       - parameter callback: A callback containing the data and  response that the request receives.
     */
-    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: Any], callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                callback(nil, nil, nil)
+    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: Any], callback: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void) {
+        Task {
+            do {
+                guard let url = URL(string: url) else {
+                    callback(nil, nil, nil)
+                    return
+                }
+                
+                var request = try await URLRequest(url: url, mode: .legacy)
+                request.httpMethod = "POST"
+                request.httpBody = String.getPostString(params: params).data(using: .utf8)
+
+                let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
+                task.resume()
+            } catch {
+                callback(nil, nil, error)
                 return
             }
-
-            let url = URL(string: url)!
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "POST"
-            request.httpBody = String.getPostString(params: params).data(using: .utf8)
-
-            let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
-            task.resume()
         }
     }
 
@@ -65,12 +70,9 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
 // MARK: - Backend Login
 extension UserDBManager {
     func loginToBackend() {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else { return }
-
+        Task {
             let url = URL(string: "https://pennmobile.org/api/login")!
-            let request = URLRequest(url: url, accessToken: token)
-
+            guard let request = try? await URLRequest(url: url, mode: .legacy) else { return }
             let task = URLSession.shared.dataTask(with: request)
             task.resume()
         }
@@ -79,57 +81,32 @@ extension UserDBManager {
 
 // MARK: - Dining
 extension UserDBManager {
-    func fetchDiningPreferences(_ completion: @escaping(_ result: Result<[DiningVenue], NetworkingError>) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                // TODO: - Add network error handling for OAuth2
-                completion(.failure(.authenticationError))
-                return
-            }
-
+    func fetchDiningPreferences() async -> Result<[DiningVenue], NetworkingError> {
+        do {
             let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
-            let request = URLRequest(url: url, accessToken: token)
-
-            let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
-                guard let data = data else {
-                   if let error = error as? NetworkingError {
-                       completion(.failure(error))
-                   } else {
-                       completion(.failure(.other))
-                   }
-                   return
-                }
-
-                let diningVenueIds = JSON(data)["preferences"].arrayValue.map({ $0["venue_id"].int! })
-                let diningVenues = DiningAPI.instance.getVenues(with: diningVenueIds)
-                completion(.success(diningVenues))
-
+            let request = try await URLRequest(url: url, mode: .legacy)
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
+                return .failure(NetworkingError.serverError)
             }
-
-            task.resume()
+            let diningVenueIds = JSON(data)["preferences"].arrayValue.map({ $0["venue_id"].int! })
+            let diningVenues = DiningAPI.instance.getVenues(with: diningVenueIds)
+            return .success(diningVenues)
+        } catch {
+            return .failure(NetworkingError.authenticationError)
         }
     }
         
-    // Returns result because function that uses this isn't throwing
-    func fetchDiningPreferences() async -> Result<[DiningVenue], NetworkingError> {
-        return await withCheckedContinuation { continuation in
-            self.fetchDiningPreferences { result in
-                continuation.resume(returning: result)
-            }
-        }
-    }
 
     func saveDiningPreference(for venueIds: [Int]) {
         NotificationCenter.default.post(name: NSNotification.Name("favoritesUpdated"), object: nil)
-        let url = "https://pennmobile.org/api/dining/preferences/"
-
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            let url = URL(string: url)!
-            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+        let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
+        Task {
+            var request = (try? await URLRequest(url: url, mode: .legacy)) ?? URLRequest(url: url)
             request.httpMethod = "POST"
             request.httpBody = try? JSON(["venues": venueIds]).rawData()
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
             // Cache a user's favorite dining halls for use by dining hours widget.
             let diningVenues = DiningAPI.instance.getVenues(with: venueIds)
             Storage.store(diningVenues, to: .groupCaches, as: DiningAPI.favoritesCacheFileName)
@@ -151,12 +128,10 @@ extension UserDBManager {
     }
 
     func saveLaundryPreferences(for ids: [Int]) {
-        let url = "https://pennmobile.org/api/laundry/preferences/"
+        let url = URL(string: "https://pennmobile.org/api/laundry/preferences/")!
         let params = ["rooms": ids]
-
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            let url = URL(string: url)!
-            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+        Task {
+            var request = (try? await URLRequest(url: url, mode: .legacy)) ?? URLRequest(url: url)
             request.httpMethod = "POST"
 
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
