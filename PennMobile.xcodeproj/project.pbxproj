@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12836D2F2D6B982F005FBF85 /* QuickBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12836D2E2D6B9829005FBF85 /* QuickBookViewController.swift */; };
+		12836D312D6B9F94005FBF85 /* GSRBookable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12836D302D6B9F91005FBF85 /* GSRBookable.swift */; };
 		421823FC2CCEB12D0028E510 /* PennEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F92CCEB12D0028E510 /* PennEvent.swift */; };
 		421823FD2CCEB12D0028E510 /* MailComposerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */; };
 		421823FE2CCEB12D0028E510 /* PennEventsAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823FA2CCEB12D0028E510 /* PennEventsAPIManager.swift */; };
@@ -389,6 +391,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		12836D2E2D6B9829005FBF85 /* QuickBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookViewController.swift; sourceTree = "<group>"; };
+		12836D302D6B9F91005FBF85 /* GSRBookable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRBookable.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		421823F72CCEB12D0028E510 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
 		421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerCoordinator.swift; sourceTree = "<group>"; };
@@ -767,6 +771,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12836D2C2D6B9802005FBF85 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				12836D302D6B9F91005FBF85 /* GSRBookable.swift */,
+				12836D2E2D6B9829005FBF85 /* QuickBookViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		216640571EBADADA00746B8E = {
 			isa = PBXGroup;
 			children = (
@@ -1212,6 +1225,7 @@
 		42632BBD2CB9C77B0028CC31 /* GSR-Booking */ = {
 			isa = PBXGroup;
 			children = (
+				12836D2C2D6B9802005FBF85 /* Controller */,
 				42632B9D2CB9C77B0028CC31 /* Model */,
 				42632BA02CB9C77B0028CC31 /* Networking */,
 				42632BB72CB9C77B0028CC31 /* Views */,
@@ -2206,6 +2220,7 @@
 				42632CDC2CB9C77B0028CC31 /* DiningViewControllerSwiftUI.swift in Sources */,
 				42632CDD2CB9C77B0028CC31 /* DiningViewModelSwiftUI.swift in Sources */,
 				42632CDE2CB9C77B0028CC31 /* DiningCell.swift in Sources */,
+				12836D2F2D6B982F005FBF85 /* QuickBookViewController.swift in Sources */,
 				42632CE32CB9C77B0028CC31 /* FitnessRoomRow.swift in Sources */,
 				42632CE42CB9C77B0028CC31 /* FitnessSettingsView.swift in Sources */,
 				42632CE52CB9C77B0028CC31 /* FitnessView.swift in Sources */,
@@ -2335,6 +2350,7 @@
 				42632D912CB9C77B0028CC31 /* NotificationAPIModel.swift in Sources */,
 				42632D922CB9C77B0028CC31 /* NotificationsSetting.swift in Sources */,
 				42632D932CB9C77B0028CC31 /* NotificationsView.swift in Sources */,
+				12836D312D6B9F94005FBF85 /* GSRBookable.swift in Sources */,
 				42632D942CB9C77B0028CC31 /* NotificationsViewControllerSwiftUI.swift in Sources */,
 				42632D952CB9C77B0028CC31 /* NotificationViewModel.swift in Sources */,
 				42632D962CB9C77B0028CC31 /* NotificationPreference.swift in Sources */,
