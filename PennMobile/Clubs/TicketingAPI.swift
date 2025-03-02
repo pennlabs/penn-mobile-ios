@@ -44,7 +44,7 @@ class TicketingAPI {
     }
     
     func getTicket(id: String) async throws -> Ticket? {
-        let session = try await URLSession(authenticationMode: .legacy)
+        let session = try await URLSession(authenticationMode: .accessToken)
         
         guard let url = ticketUrl(forId: id) else {
             return nil
@@ -60,7 +60,7 @@ class TicketingAPI {
     }
     
     @discardableResult func updateAttendance(id: String, to attended: Bool) async throws -> Ticket {
-        let session = try await URLSession(authenticationMode: .legacy)
+        let session = try await URLSession(authenticationMode: .accessToken)
         
         guard let url = ticketUrl(forId: id) else {
             throw ScannedTicket.InvalidReason.notFound

@@ -32,7 +32,7 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
                     return
                 }
                 
-                var request = try await URLRequest(url: url, mode: .legacy)
+                var request = try await URLRequest(url: url, mode: .accessToken)
                 request.httpMethod = "POST"
                 request.httpBody = String.getPostString(params: params).data(using: .utf8)
 
@@ -72,7 +72,7 @@ extension UserDBManager {
     func loginToBackend() {
         Task {
             let url = URL(string: "https://pennmobile.org/api/login")!
-            guard let request = try? await URLRequest(url: url, mode: .legacy) else { return }
+            guard let request = try? await URLRequest(url: url, mode: .accessToken) else { return }
             let task = URLSession.shared.dataTask(with: request)
             task.resume()
         }
@@ -84,7 +84,7 @@ extension UserDBManager {
     func fetchDiningPreferences() async -> Result<[DiningVenue], NetworkingError> {
         do {
             let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
-            let request = try await URLRequest(url: url, mode: .legacy)
+            let request = try await URLRequest(url: url, mode: .accessToken)
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
                   httpResponse.statusCode == 200 else {
@@ -103,7 +103,7 @@ extension UserDBManager {
         NotificationCenter.default.post(name: NSNotification.Name("favoritesUpdated"), object: nil)
         let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
         Task {
-            var request = (try? await URLRequest(url: url, mode: .legacy)) ?? URLRequest(url: url)
+            var request = (try? await URLRequest(url: url, mode: .accessToken)) ?? URLRequest(url: url)
             request.httpMethod = "POST"
             request.httpBody = try? JSON(["venues": venueIds]).rawData()
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -131,7 +131,7 @@ extension UserDBManager {
         let url = URL(string: "https://pennmobile.org/api/laundry/preferences/")!
         let params = ["rooms": ids]
         Task {
-            var request = (try? await URLRequest(url: url, mode: .legacy)) ?? URLRequest(url: url)
+            var request = (try? await URLRequest(url: url, mode: .accessToken)) ?? URLRequest(url: url)
             request.httpMethod = "POST"
 
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")

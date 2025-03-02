@@ -123,7 +123,7 @@ class AuthManager: ObservableObject {
     
     static func retrieveAccount() async -> Account? {
         let url = URL(string: "https://platform.pennlabs.org/accounts/me/")!
-        guard let request = try? await URLRequest(url: url, mode: .legacy) else {
+        guard let request = try? await URLRequest(url: url, mode: .accessToken) else {
             return nil
         }
 

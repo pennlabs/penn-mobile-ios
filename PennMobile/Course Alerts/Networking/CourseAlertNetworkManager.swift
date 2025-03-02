@@ -188,7 +188,7 @@ extension CourseAlertNetworkManager {
     fileprivate func makeGetRequestWithAccessToken(url: String, callback: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void) {
         Task {
             let url = URL(string: url)!
-            guard let request = try? await URLRequest(url: url, mode: .legacy) else {
+            guard let request = try? await URLRequest(url: url, mode: .accessToken) else {
                 callback(nil, nil, nil)
                 return
             }
@@ -202,7 +202,7 @@ extension CourseAlertNetworkManager {
         self.getCSRFTokenCookie { (csrfToken) in
             Task {
                 let url = URL(string: url)!
-                guard var request = try? await URLRequest(url: url, mode: .legacy),
+                guard var request = try? await URLRequest(url: url, mode: .accessToken),
                 let csrfToken else {
                     callback(nil, nil, nil)
                     return
