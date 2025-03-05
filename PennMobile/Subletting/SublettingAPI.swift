@@ -8,6 +8,7 @@
 
 import UIKit
 import PennMobileShared
+import LabsPlatformSwift
 
 struct GenericErrorResponse: Decodable {
     let detail: String
@@ -45,9 +46,7 @@ public class SublettingAPI {
     public let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
     
     private func makeSubletRequest<C: Encodable, R: Decodable>(_ urlStr: String? = nil, url: URL? = nil, method: String, isContentJSON: Bool = false, content: C? = nil as String?, returnType: R.Type? = nil as String.Type?) async throws -> R? {
-        guard let accessToken = try? await OAuth2NetworkManager.instance.getAccessToken() else {
-            throw NetworkingError.authenticationError
-        }
+        let session = try await URLSession(authenticationMode: .accessToken)
         
         var urlReq = url
         if urlStr == nil && url == nil {
@@ -61,8 +60,6 @@ public class SublettingAPI {
         
         var request = URLRequest(url: urlReq!)
         request.httpMethod = method
-        request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "Authorization")
-        request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "X-Authorization")
         if isContentJSON {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
@@ -76,7 +73,7 @@ public class SublettingAPI {
             }
         }
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await session.data(for: request)
         
         if returnType != nil {
             if let errorResponse = try? Self.decoder.decode(GenericErrorResponse.self, from: data),
@@ -240,10 +237,6 @@ public class SublettingAPI {
     }
     
     public func uploadSubletImages(images: [UIImage], id: Int, progressHandler: @escaping (Double) -> Void) async throws -> [SubletImage] {
-        guard let accessToken = try? await OAuth2NetworkManager.instance.getAccessToken() else {
-            throw NetworkingError.authenticationError
-        }
-        
         guard let url = URL(string: "\(sublettingUrl)\(id)/images/") else {
             throw NetworkingError.serverError
         }
@@ -258,10 +251,8 @@ public class SublettingAPI {
             }
         }
         
-        var request = URLRequest(url: url)
+        var request = try await URLRequest(url: url, mode: .accessToken)
         request.httpMethod = "POST"
-        request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "Authorization")
-        request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "X-Authorization")
         request.setValue(multipartBody.contentType, forHTTPHeaderField: "Content-Type")
         request.httpBody = try multipartBody.assembleData()
         
