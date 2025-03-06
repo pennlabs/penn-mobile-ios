@@ -38,8 +38,10 @@ struct RefactorDiningHallStatusView: View {
                     Text(diningHall.name)
                         .font(.headline)
                         .bold()
-                    RefactorDiningHallHoursStack(hours: diningHall.mealsToday(), currentStatus: diningHall.currentStatus())
-                        .frame(maxHeight: 25)
+                    ScrollView(.horizontal) {
+                        RefactorDiningHallHoursStack(hours: diningHall.mealsToday(), currentStatus: diningHall.currentStatus())
+                            .frame(maxHeight: 25)
+                    }
                 }
                 .animation(.default)
             }

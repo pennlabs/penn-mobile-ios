@@ -63,8 +63,12 @@ public extension RefactorDiningHall {
     }
     
     func mealsToday() -> [RefactorDiningMeal] {
+        return self.mealsOnDate(Date.now.localTime)
+    }
+    
+    func mealsOnDate(_ date: Date) -> [RefactorDiningMeal] {
         return self.meals.filter { el in
-            return Calendar.current.isDateInToday(el.startTime.localTime)
+            return Calendar.current.isDate(el.startTime.localTime, equalTo: date, toGranularity: .day)
         }
     }
     

@@ -369,6 +369,8 @@
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
 		738A7BF22CEA67370060BFF0 /* RefactorDiningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */; };
+		7390B0C32D791ACE008766B5 /* RefactorDiningHallHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7390B0C22D791AC9008766B5 /* RefactorDiningHallHoursView.swift */; };
+		7390B0DF2D7958B7008766B5 /* CustomPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7390B0DE2D7958B4008766B5 /* CustomPicker.swift */; };
 		73E063302D389A460089FC65 /* RefactorDiningItemAllergenStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E0632F2D389A410089FC65 /* RefactorDiningItemAllergenStack.swift */; };
 		73E893052D3432D900DD2004 /* RefactorDiningBalanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */; };
 		73E893072D35705800DD2004 /* RefactorDiningHallStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E893062D35704700DD2004 /* RefactorDiningHallStatusView.swift */; };
@@ -819,6 +821,8 @@
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		738A7BF12CEA67330060BFF0 /* RefactorDiningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningView.swift; sourceTree = "<group>"; };
+		7390B0C22D791AC9008766B5 /* RefactorDiningHallHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningHallHoursView.swift; sourceTree = "<group>"; };
+		7390B0DE2D7958B4008766B5 /* CustomPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPicker.swift; sourceTree = "<group>"; };
 		73E0632F2D389A410089FC65 /* RefactorDiningItemAllergenStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningItemAllergenStack.swift; sourceTree = "<group>"; };
 		73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningBalanceView.swift; sourceTree = "<group>"; };
 		73E893062D35704700DD2004 /* RefactorDiningHallStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefactorDiningHallStatusView.swift; sourceTree = "<group>"; };
@@ -2128,6 +2132,7 @@
 		42632E262CB9C77B0028CC31 /* PennMobileShared */ = {
 			isa = PBXGroup;
 			children = (
+				7390B0DB2D79564E008766B5 /* Components */,
 				738A7BED2CEA656A0060BFF0 /* RefactorDining */,
 				42632DFF2CB9C77B0028CC31 /* Courses */,
 				42632E0B2CB9C77B0028CC31 /* Dining */,
@@ -2178,12 +2183,21 @@
 				73E893042D3432D400DD2004 /* RefactorDiningBalanceView.swift */,
 				73E893062D35704700DD2004 /* RefactorDiningHallStatusView.swift */,
 				73E8931A2D36E6B100DD2004 /* RefactorDiningHallDetailView.swift */,
+				7390B0C22D791AC9008766B5 /* RefactorDiningHallHoursView.swift */,
 				73E8931C2D37060800DD2004 /* RefactorDiningHallMenuSubview.swift */,
 				73E0632F2D389A410089FC65 /* RefactorDiningItemAllergenStack.swift */,
 				73E893182D36CAC900DD2004 /* RefactorDiningHallHoursStack.swift */,
 				73E893162D35F3C000DD2004 /* RefactorDiningHallExtensions.swift */,
 			);
 			path = RefactorDining;
+			sourceTree = "<group>";
+		};
+		7390B0DB2D79564E008766B5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7390B0DE2D7958B4008766B5 /* CustomPicker.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		73E8930A2D35718300DD2004 /* Models */ = {
@@ -2441,6 +2455,7 @@
 				42632CA22CB9C77B0028CC31 /* BuildingHoursCell.swift in Sources */,
 				42632CA32CB9C77B0028CC31 /* BuildingImageCell.swift in Sources */,
 				42632CA42CB9C77B0028CC31 /* BuildingMapCell.swift in Sources */,
+				7390B0C32D791ACE008766B5 /* RefactorDiningHallHoursView.swift in Sources */,
 				42632CA52CB9C77B0028CC31 /* BuildingSectionHeader.swift in Sources */,
 				42632CA62CB9C77B0028CC31 /* MenuTableView.swift in Sources */,
 				42632CA72CB9C77B0028CC31 /* BuildingProtocol.swift in Sources */,
@@ -2745,6 +2760,7 @@
 				42632E2D2CB9C77B0028CC31 /* DiningToken.swift in Sources */,
 				42632E2E2CB9C77B0028CC31 /* DiningVenue.swift in Sources */,
 				42632E2F2CB9C77B0028CC31 /* DiningVenue+Extensions.swift in Sources */,
+				7390B0DF2D7958B7008766B5 /* CustomPicker.swift in Sources */,
 				42632E302CB9C77B0028CC31 /* PastDiningBalances.swift in Sources */,
 				42632E312CB9C77B0028CC31 /* DiningAnalyticsViewModel.swift in Sources */,
 				42632E322CB9C77B0028CC31 /* DiningAPI.swift in Sources */,

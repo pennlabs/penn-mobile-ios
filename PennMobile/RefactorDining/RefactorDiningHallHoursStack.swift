@@ -16,18 +16,16 @@ struct RefactorDiningHallHoursStack: View {
     
     
     var body: some View {
-        ScrollView (.horizontal) {
-            HStack(spacing: 4) {
-                ForEach(hours) { meal in
-                    Text(meal.getHumanReadableHours())
-                        .foregroundStyle(meal == currentStatus?.relevantMeal ? currentStatus?.textColor ?? Color.primary : Color.primary)
-                        .font(.system(.caption, weight: .light))
-                        .padding(6)
-                        .background {
-                            RoundedRectangle(cornerRadius: 8)
-                                .foregroundStyle(meal == currentStatus?.relevantMeal ? currentStatus?.bgColor ?? Color.grey6 : Color.grey6)
-                        }
-                }
+        HStack(spacing: 4) {
+            ForEach(hours) { meal in
+                Text(meal.getHumanReadableHours())
+                    .foregroundStyle(meal == currentStatus?.relevantMeal ? currentStatus?.textColor ?? Color.primary : Color.primary)
+                    .font(.system(.caption, weight: .light))
+                    .padding(6)
+                    .background {
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundStyle(meal == currentStatus?.relevantMeal ? currentStatus?.bgColor ?? Color.grey6 : Color.grey6)
+                    }
             }
         }
     }

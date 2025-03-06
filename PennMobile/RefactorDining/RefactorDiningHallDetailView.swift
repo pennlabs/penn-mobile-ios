@@ -61,13 +61,9 @@ struct RefactorDiningHallDetailView: View {
                 .frame(height: UIScreen.main.bounds.height * 4/9)
                 
                 HStack (alignment: .center, spacing: 10) {
-                    Picker("Section", selection: self.$pickerIndex) {
-                        ForEach(0 ..< self.sectionTitle.count, id: \.self) {
-                            Text(self.sectionTitle[$0])
-                                .font(.system(.body, design: .serif))
-                        }
+                    CustomPicker(options: sectionTitle, selected: $pickerIndex) { item in
+                        Text(item)
                     }
-                    .pickerStyle(SegmentedPickerStyle())
                     
                     Button {
                         showMenu.toggle()
@@ -94,16 +90,14 @@ struct RefactorDiningHallDetailView: View {
                 
                 // Don't show an empty view if there are no menu items. Instead, just show the hours screen
                 // The subtracted index is to adjust for whether the "Menu" section in the picker exists
-                Group {
-                    if pickerIndex == 0 && hasMenu {
-                        RefactorDiningHallMenuSubview(hall: hall)
-                    } else if pickerIndex == 1 - (hasMenu ? 0 : 1) {
-                        //RefactorDiningHallHoursView()
-                        Text("Hours")
-                    } else if pickerIndex == 2 - (hasMenu ? 0 : 1) {
-                        //RefactorDiningHallLocationView()
-                        Text("Location")
-                    }
+                if pickerIndex == 0 && hasMenu {
+                    RefactorDiningHallMenuSubview(hall: hall)
+                } else if pickerIndex == 1 - (hasMenu ? 0 : 1) {
+                    RefactorDiningHallHoursView(hall: hall)
+                        .padding()
+                } else if pickerIndex == 2 - (hasMenu ? 0 : 1) {
+                    //RefactorDiningHallLocationView()
+                    Text("Location")
                 }
             }
             //        ScrollView(showsIndicators: false) {

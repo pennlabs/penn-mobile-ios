@@ -74,6 +74,7 @@ struct RefactorDiningHallMenuSubview: View {
             }
             Spacer()
             DatePicker("", selection: $vm.menuDate, in: Date.currentLocalDate...Date.currentLocalDate.add(minutes: 8640), displayedComponents: .date)
+                .foregroundStyle(Color("componentForeground"))
                 .padding()
             
         }
@@ -110,6 +111,7 @@ struct RefactorDiningHallMenuSubview: View {
                                 RefactorDiningStationHeader(station: sorted[index])
                                 RefactorDiningStationBody(station: sorted[index])
                             }
+                            .padding(.horizontal)
                             .environmentObject(vm)
                             .id(sorted[index].idVert)
                             .background {
@@ -226,32 +228,39 @@ struct RefactorDiningStationBody: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             ForEach(items) { item in
-                HStack(alignment: .center) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        
-                        Text(NSString(string: item.name).localizedCapitalized)
-                            .bold()
-                            .truncationMode(.tail)
-                        // dietary icons
-                        HStack(alignment: .center, spacing: 4) {
-                            RefactorDiningItemAllergenStack(item)
+                VStack(alignment: .leading) {
+                    HStack(alignment: .center) {
+                        VStack(alignment: .leading, spacing: 2) {
                             
-                            if let cals = item.nutritionInfo["Calories"] {
-                                if (!item.getAllergenImages().isEmpty) {
-                                    Text("•")
+                            Text(NSString(string: item.name).localizedCapitalized)
+                                .bold()
+                                .truncationMode(.tail)
+                            // dietary icons
+                            HStack(alignment: .center, spacing: 4) {
+                                RefactorDiningItemAllergenStack(item)
+                                
+                                if let cals = item.nutritionInfo["Calories"] {
+                                    if (!item.getAllergenImages().isEmpty) {
+                                        Text("•")
+                                    }
+                                    
+                                    Text("\(cals)cal")
                                 }
                                 
-                                Text("\(cals)cal")
+                                
                             }
-                            
-                            
                         }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .rotationEffect(Angle(degrees: vm.focusedItem == item ? 90 : 0))
                     }
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .rotationEffect(Angle(degrees: vm.focusedItem == item ? 90 : 0))
+                    
+                    if vm.focusedItem == item {
+                        NutritionLabelView(item: item)
+                            .contentTransition(.interpolate)
+                    }
+                    
                 }
-                .padding(.horizontal)
                 .onTapGesture {
                     withAnimation {
                         vm.setFocusedItem(vm.focusedItem == item ? nil : item)
@@ -260,5 +269,106 @@ struct RefactorDiningStationBody: View {
             }
         }
         .padding(.vertical)
+    }
+}
+
+struct NutritionLabelView: View {
+    let item: RefactorDiningItem
+    
+    var body: some View {
+        let nutritionData = item.nutritionInfo
+        VStack {
+            if !item.description.isEmpty {
+                Text("\"\(item.description)\"")
+                    .italic()
+                    .multilineTextAlignment(.center)
+                    .lineLimit(3)
+            }
+            
+            // Don't show the label if there is no calories given
+            // Since calories are the first piece of information given generally
+            if let cals = item.nutritionInfo["Calories"], cals != "" {
+                VStack(alignment: .leading, spacing: 4) {
+                    // Header
+                    Text("Nutrition Facts")
+                        .font(.system(size: 24, weight: .heavy))
+                        .padding(.bottom, 4)
+                    
+                    // Serving Size & Calories Row
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Serving Size")
+                                .font(.caption)
+                            Text(nutritionData["Serving Size"] ?? "")
+                                .font(.caption)
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 2) {
+                            Text("Calories")
+                                .font(.caption)
+                            Text(nutritionData["Calories"] ?? "")
+                                .font(.title)
+                                .fontWeight(.black)
+                        }
+                    }
+                    .padding(.vertical, 4)
+                    
+                    // Divider line similar to the label's rule
+                    Divider()
+                        .background(Color.black)
+                        .padding(.vertical, 2)
+                    
+                    // Nutrient details
+                    VStack(spacing: 2) {
+                        nutrientRow(title: "Total Fat", value: nutritionData["Total Fat"] ?? "")
+                        nutrientRow(title: "Saturated Fat", value: nutritionData["Saturated Fat"] ?? "")
+                        nutrientRow(title: "Trans Fat", value: nutritionData["Trans Fat"] ?? "")
+                        nutrientRow(title: "Cholesterol", value: nutritionData["Cholesterol"] ?? "")
+                        nutrientRow(title: "Sodium", value: nutritionData["Sodium"] ?? "")
+                        nutrientRow(title: "Total Carbohydrate", value: nutritionData["Total Carbohydrate"] ?? "")
+                        nutrientRow(title: "Dietary Fiber", value: nutritionData["Dietary Fiber"] ?? "")
+                        nutrientRow(title: "Sugars", value: nutritionData["Sugars"] ?? "")
+                        nutrientRow(title: "Protein", value: nutritionData["Protein"] ?? "")
+                    }
+                    
+                    
+                }
+                .padding(8)
+                // Mimic the bordered label look
+                .background(Color.white)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 2)
+                        .stroke(Color.black, lineWidth: 2)
+                )
+            }
+            if item.ingredients != "" {
+                // Ingredients Section
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Ingredients: \(item.ingredients)")
+                            .font(.caption)
+                            .multilineTextAlignment(.leading)
+                        
+                    }
+                    Spacer()
+                }
+            }
+        }
+        .padding()
+            
+        
+    }
+    
+    /// A helper function to build each nutrient row.
+    @ViewBuilder private func nutrientRow(title: String, value: String) -> some View {
+        if value != "" {
+            HStack {
+                Text(title)
+                    .font(.footnote)
+                Spacer()
+                Text(value)
+                    .font(.footnote)
+            }
+        }
     }
 }
