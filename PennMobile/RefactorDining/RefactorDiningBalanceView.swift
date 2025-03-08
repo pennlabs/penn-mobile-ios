@@ -10,11 +10,9 @@ import SwiftUI
 import PennMobileShared
 
 struct RefactorDiningBalanceView: View {
-    
     @State var showingAnalytics: Bool = false
     
     var body: some View {
-        
         Grid(horizontalSpacing: 12, verticalSpacing: 12) {
             GridRow {
                 BalanceCard(value: 120.20, type: .dollars, subtitle: "Dining Dollars", systemImage: "dollarsign.circle.fill")
@@ -22,25 +20,64 @@ struct RefactorDiningBalanceView: View {
             }
             GridRow {
                 BalanceCard(value: 10, type: .swipes, subtitle: "Guest Swipes", systemImage: "person.2.fill")
-                AnalyticsCard()
-                .frame(minHeight: 75)
-                .background(.ultraThickMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .shadow(radius: 4)
-                .onTapGesture {
-                    showingAnalytics = true
-                }
+                AnalyticsCard($showingAnalytics)
             }
         }
+        .blur(radius: Account.isLoggedIn ? 0 : 8)
+        .allowsHitTesting(Account.isLoggedIn)
         .sheet(isPresented: $showingAnalytics, onDismiss: { showingAnalytics = false}) {
             Text("Analytics!")
         }
+        .overlay {
+            // TODO: Check Campus Express instead of General Login
+            if !Account.isLoggedIn {
+                VStack {
+                    Text("Dining Analytics")
+                        .font(.title)
+                        .bold()
+                        .foregroundStyle(.blue)
+                    Text("Log in to see your dining balances and usage graphs.")
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.blue)
+                    
+                    Text("Log in with Campus Express")
+                        .bold()
+                        .foregroundStyle(.white)
+                        .padding(.horizontal)
+                        .padding(.vertical, 6)
+                        .background {
+                            Capsule()
+                                .foregroundStyle(.blue)
+                        }
+                        
+                        .padding()
+                        .onTapGesture {
+                            print("Login Handler")
+                        }
+                }
+                .shadow(radius: 1)
+                .background {
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Color.clear)
+                        .shadow(color: Color.black.opacity(0.2), radius: 4, x: 2, y: 2)
+                }
+                
+            }
+        }
+        
+        
+        
     }
 }
 
 struct AnalyticsCard: View {
+    @Binding var showing: Bool
+    
+    init(_ showing: Binding<Bool>) {
+        self._showing = showing
+    }
     var body: some View {
-        Group {
+        CardView {
             HStack {
                 Text("Analytics")
                     .font(.title2)
@@ -50,7 +87,11 @@ struct AnalyticsCard: View {
                     .padding(.trailing, 16)
             }
             .foregroundStyle(.blue)
-            .padding()
+            .padding(.vertical, 12)
+            .padding(.horizontal, 4)
+        }
+        .onTapGesture {
+            showing = true
         }
         
     }
@@ -76,7 +117,7 @@ struct BalanceCard: View {
     }
     
     var body: some View {
-        Group {
+        CardView {
             HStack {
                 Image(systemName: systemImage)
                     .font(.title2)
@@ -92,12 +133,11 @@ struct BalanceCard: View {
                 }
                 .multilineTextAlignment(.trailing)
                 .padding(.trailing, 8)
-            }.foregroundStyle(.blue)
+            }
+            .foregroundStyle(.blue)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 4)
         }
-        .frame(minHeight: 75)
-        .background(.ultraThickMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .shadow(radius: 4)
     }
 }
 
