@@ -73,7 +73,6 @@ struct RootView: View {
                                 if shouldEnd {
                                     withAnimation {
                                         self.toast = nil
-                                        toastOffset = 0.0
                                     }
                                 } else {
                                     withAnimation(.snappy) {
@@ -111,10 +110,12 @@ struct RootView: View {
                 if !Task.isCancelled {
                     withAnimation {
                         toast = nil
-                        toastOffset = 0.0
                     }
                 }
             }
+        }
+        .onChange(of: toast?.id) { _ in
+            toastOffset = 0.0
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active && BannerViewModel.isAprilFools {
