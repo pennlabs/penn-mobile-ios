@@ -12,6 +12,7 @@ struct RootView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var bannerViewModel: BannerViewModel
     @State var toast: ToastConfiguration?
+    @State var toastOffset: Double = 0.0
     @StateObject var popupManager = PopupManager()
     @Environment(\.scenePhase) var scenePhase
 
@@ -59,6 +60,27 @@ struct RootView: View {
                 ToastView(configuration: toast)
                     .transition(.opacity.combined(with: .move(edge: .top)))
                     .padding(.top)
+                    .offset(y: toastOffset)
+                    .gesture (
+                        DragGesture()
+                            .onChanged { drag in
+                                // Do not allow the offset to be made positive (go further down the page)
+                                toastOffset = drag.translation.height < 0 ? drag.translation.height : 0
+                            }
+                            .onEnded { drag in
+                                // End behavior calculated based on where the gesture ends (top edge of screen).
+                                let shouldEnd = drag.location.y < 25
+                                if shouldEnd {
+                                    withAnimation {
+                                        self.toast = nil
+                                    }
+                                } else {
+                                    withAnimation(.snappy) {
+                                        toastOffset = 0.0
+                                    }
+                                }
+                            }
+                    )
             }
         }
         .environment(\.presentToast) { configuration in
@@ -91,6 +113,9 @@ struct RootView: View {
                     }
                 }
             }
+        }
+        .onChange(of: toast?.id) { _ in
+            toastOffset = 0.0
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active && BannerViewModel.isAprilFools {
