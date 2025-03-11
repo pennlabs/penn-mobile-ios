@@ -9,8 +9,17 @@
 import SwiftUI
 
 struct GSRCentralView: View {
+    
+    @State var loggedIn = false
     var body: some View {
-        Text("TODO: Scaffolding")
+        if loggedIn {
+            Text("TODO: Scaffolding")
+                .navigationBarTitleDisplayMode(.inline)
+        } else {
+            GSRGuestLandingPage()
+                .navigationBarHidden(true)
+        }
+        
     }
 }
 
