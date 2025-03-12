@@ -65,7 +65,7 @@ struct PennMobile: App {
                                     defaultLoginHandler: authManager.handlePlatformDefaultLogin,
                                     authManager.handlePlatformLogin)
         }
-        .onChange(of: authManager.state.isLoggedIn) { _ in
+        .onChange(of: authManager.state.isLoggedIn) {
             homeViewModel.clearData()
         }
         .onChange(of: authManager.state) { state in

@@ -63,7 +63,7 @@ struct DiningMenuViewHeader: View {
             .onAppear {
                 internalSelection = selectedStation
             }
-            .onChange(of: selectedStation) { _ in
+            .onChange(of: selectedStation) {
                 internalSelection = selectedStation
             }
     }
@@ -87,13 +87,13 @@ struct DiningStationRowStack: View {
                     .background {
                         GeometryReader { proxy in
                             Spacer()
-                                .onChange(of: parentScrollOffset) { _ in
+                                .onChange(of: parentScrollOffset) {
                                     posDictionary.updateValue(proxy.frame(in: .global), forKey: station)
                                 }
                         }
                     }
             }
-            .onChange(of: parentScrollOffset) { _ in
+            .onChange(of: parentScrollOffset) {
                 if (checkDictionary) {
                     /// The most visible element is that which has the highest share of the viewport,
                     /// relative to its own height. If two elements are equally visible, the one whose
@@ -118,7 +118,7 @@ struct DiningStationRowStack: View {
                     }
                 }
             }
-            .onChange(of: currentMenu) { _ in
+            .onChange(of: currentMenu) {
                 posDictionary = [:]
             }
             .onChange(of: selectedStation) { new in
