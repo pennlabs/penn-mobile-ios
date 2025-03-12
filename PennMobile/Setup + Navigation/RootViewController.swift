@@ -11,6 +11,7 @@ import UIKit
 import SwiftUI
 import StoreKit
 import SwiftyJSON
+import LabsPlatformSwift
 
 // Source: https://medium.com/@stasost/ios-root-controller-navigation-3625eedbbff
 class RootViewController: UIViewController, NotificationRequestable, ShowsAlert {
@@ -146,8 +147,9 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
-        OAuth2NetworkManager.instance.clearRefreshToken()
-        OAuth2NetworkManager.instance.clearCurrentAccessToken()
+        if let platform = LabsPlatform.shared {
+            platform.logoutPlatform()
+        }
         Account.clear()
     }
 
