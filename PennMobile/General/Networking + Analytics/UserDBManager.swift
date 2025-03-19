@@ -206,7 +206,7 @@ extension UserDBManager {
 
     func getWhartonStatus(_ completion: @escaping (_ result: Result<Bool, NetworkingError>) -> Void) {
         let url = URL(string: "https://pennmobile.org/api/gsr/wharton/")!
-        Task {
+        Task { @MainActor in
             guard let request = try? await URLRequest(url: url, mode: .accessToken) else {
                 completion(.failure(.authenticationError))
                 return

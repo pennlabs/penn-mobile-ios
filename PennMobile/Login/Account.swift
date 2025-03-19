@@ -87,12 +87,11 @@ extension Account {
     }
 
     static func saveAccount(_ thisAccount: Account) {
-        Task { @MainActor in
-            UserDefaults.standard.saveAccount(thisAccount)
-        }
+        UserDefaults.standard.saveAccount(thisAccount)
     }
 
     static func getAccount() -> Account? {
+        UserDefaults.standard.synchronize()
         return UserDefaults.standard.getAccount()
     }
 }

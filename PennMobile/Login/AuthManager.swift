@@ -59,7 +59,7 @@ class AuthManager: ObservableObject {
         Account.clear()
     }
     
-    func handlePlatformLogin(res: Bool) async {
+    @MainActor func handlePlatformLogin(res: Bool) async {
         guard res else {
             self.state = .loggedOut
             return
@@ -71,14 +71,13 @@ class AuthManager: ObservableObject {
             return
         }
         
-        saveAndUpdatePreferences(account)
-        
+        await saveAndUpdatePreferences(account)
+            
         UserDBManager.shared.syncUserSettings { (_) in
-            DispatchQueue.main.async {
-                Account.saveAccount(account)
-                self.determineInitialState()
-            }
+            Account.saveAccount(account)
+            self.determineInitialState()
         }
+        
     }
     
     func handlePlatformDefaultLogin() {
@@ -89,17 +88,19 @@ class AuthManager: ObservableObject {
     
 
     func determineInitialState() {
-        if AuthManager.shouldRequireLogin() {
-            if case .guest = state {
-                state = .guest
-            } else {
-                if !Account.isLoggedIn {
-                    AuthManager.clearAccountData()
+        DispatchQueue.main.async {
+            if AuthManager.shouldRequireLogin() {
+                if case .guest = self.state {
+                    self.state = .guest
+                } else {
+                    if !Account.isLoggedIn {
+                        AuthManager.clearAccountData()
+                    }
+                    self.state = .loggedOut
                 }
-                state = .loggedOut
+            } else {
+                self.state = .loggedIn(Account.getAccount()!)
             }
-        } else {
-            state = .loggedIn(Account.getAccount()!)
         }
     }
     
@@ -116,8 +117,8 @@ class AuthManager: ObservableObject {
     func logOut() {
         state = .loggedOut
         LabsPlatform.shared?.logoutPlatform()
-        
         AuthManager.clearAccountData()
+        print("Cleared all user data")
     }
     
     
@@ -140,20 +141,27 @@ class AuthManager: ObservableObject {
     }
     
     
-    func saveAndUpdatePreferences(_ account: Account) {
-        UserDefaults.standard.set(isInWharton: account.isInWharton)
-        UserDBManager.shared.saveAccount(account) { (accountID) in
-            guard let accountID else { return }
-            UserDefaults.standard.set(accountID: accountID)
-            if account.isStudent {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                    if UserDefaults.standard.getPreference(for: .collegeHouse) {
-                        CampusExpressNetworkManager.instance.updateHousingData()
+    func saveAndUpdatePreferences(_ account: Account) async {
+        await withCheckedContinuation { continuation in
+            UserDefaults.standard.set(isInWharton: account.isInWharton)
+            UserDBManager.shared.saveAccount(account) { (accountID) in
+                guard let accountID else {
+                    continuation.resume()
+                    return
+                }
+                
+                UserDefaults.standard.set(accountID: accountID)
+                if account.isStudent {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        if UserDefaults.standard.getPreference(for: .collegeHouse) {
+                            CampusExpressNetworkManager.instance.updateHousingData()
+                        }
+                        Account.getDiningTransactions()
+                        Account.getAndSaveLaundryPreferences()
+                        Account.getAndSaveFitnessPreferences()
+                        Account.getPacCode()
+                        continuation.resume()
                     }
-                    Account.getDiningTransactions()
-                    Account.getAndSaveLaundryPreferences()
-                    Account.getAndSaveFitnessPreferences()
-                    Account.getPacCode()
                 }
             }
         }
