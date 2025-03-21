@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct GSRCentralView: View {
-    typealias Body = <#type#>
     
     @State var loggedIn = false
     private var locationModel = GSRLocationModel.shared
@@ -21,7 +20,7 @@ struct GSRCentralView: View {
         locationModel.prepare()
     }
     var body: some View {
-        if loggedin {
+        if loggedIn {
             NavigationView {
                 VStack {
                     Picker("Select", selection: $selectedTab) {
@@ -53,9 +52,6 @@ struct GSRCentralView: View {
             }
             .navigationTitle("GSR Booking")
             .navigationBarTitleDisplayMode(.inline)
-        } else {
-            GSRGuestLandingPage()
-                .navigationBarHidden(true)
         }
     }
 }
