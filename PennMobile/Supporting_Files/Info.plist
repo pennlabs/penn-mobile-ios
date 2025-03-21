@@ -53,8 +53,6 @@
 	<string>Contacts access is required to add emergency contacts</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Use Face ID instead of a password for authentication</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Enable to show your current location on the map</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Give Penn Mobile access to your photos to change your profile picutre</string>
 	<key>NSSupportsLiveActivities</key>
@@ -64,6 +62,10 @@
 		<string>ConfigureCoursesDayWidgetIntent</string>
 		<string>ConfigureDiningAnalyticsHomeWidgetIntent</string>
 		<string>ConfigureFitnessWidgetIntent</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>LibreBaskerville-Bold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
