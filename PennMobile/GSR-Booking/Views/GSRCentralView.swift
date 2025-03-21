@@ -61,12 +61,18 @@ enum GSRTab: Int, Equatable, CaseIterable {
     case book = 0
     case reservations = 1
     
-    var view: any View {
+    @ViewBuilder var view: any View {
         switch self {
         case .book:
-            return Text("Booking View")
+            VStack {
+                Text("Booking View")
+                NavigationLink("Test Booking") {
+                    GSRBookingView()
+                }
+            }
+                
         case .reservations:
-            return Image(systemName: "circle.fill")
+            Image(systemName: "circle.fill")
         }
     }
     
