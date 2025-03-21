@@ -6,7 +6,7 @@
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
 import Foundation
-import WebKit
+@preconcurrency import WebKit
 import PennMobileShared
 
 class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate {

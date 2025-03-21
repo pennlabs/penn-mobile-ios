@@ -136,7 +136,7 @@ struct CustomPopupView: View {
 }
 
 #Preview {
-    @StateObject var popupManager = PopupManager(
+    @Previewable @StateObject var popupManager = PopupManager(
         title: "Sample title",
         message: "This is a sample message.",
         button1: "See My Listings",

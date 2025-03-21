@@ -35,7 +35,7 @@ struct HomeView<Model: HomeViewModel>: View {
                                 .fontWeight(.bold)
                                 .background(GeometryReader { geometry in
                                     let minY = geometry.frame(in: .global).minY
-                                    Color.clear.onChange(of: minY) { minY in
+                                    Color.clear.onChange(of: minY) {
                                         showTitle = minY <= 16
                                     }
                                 })
@@ -88,8 +88,8 @@ struct HomeView<Model: HomeViewModel>: View {
                     .onAppear {
                         chooseSplashText(data: viewModel.data, for: context.date)
                     }
-                    .onChange(of: context.date) { date in
-                        chooseSplashText(data: viewModel.data, for: date)
+                    .onChange(of: context.date) {
+                        chooseSplashText(data: viewModel.data, for: context.date)
                     }
                 }
             }

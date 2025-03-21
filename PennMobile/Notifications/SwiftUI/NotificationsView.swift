@@ -23,7 +23,7 @@ struct NotificationsView: View, NotificationRequestable {
                 if NotificationPreference.visibleOptions.contains(setting.service) {
                     Section(footer: Text(setting.service.description)) {
                         Toggle(setting.service.title, isOn: $setting.enabled)
-                            .onChange(of: $setting.enabled.wrappedValue) { value in
+                            .onChange(of: $setting.enabled.wrappedValue) { _, value in
                                 Task.init(operation: { await notificationViewModel.requestChange(service: setting, toValue: value) })
                             }
                     }

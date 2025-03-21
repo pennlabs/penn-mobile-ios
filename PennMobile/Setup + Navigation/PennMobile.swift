@@ -59,7 +59,7 @@ struct PennMobile: App {
             #endif
                 .accentColor(Color("navigation"))
         }
-        .onChange(of: authManager.state.isLoggedIn) { _ in
+        .onChange(of: authManager.state.isLoggedIn) {
             homeViewModel.clearData()
         }
         .onChange(of: authManager.state) { state in

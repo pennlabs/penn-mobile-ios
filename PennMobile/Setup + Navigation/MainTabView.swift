@@ -63,7 +63,7 @@ struct MainTabView: View {
             .tag("More")
         }
         .id(tabBarFeatures)
-        .onChange(of: navigationManager.currentTab) { _ in
+        .onChange(of: navigationManager.currentTab) {
             navigationManager.resetPath()
         }
         .sheet(isPresented: $navigationManager.isConfiguringTabs) {

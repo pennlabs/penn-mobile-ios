@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WebKit
+@preconcurrency import WebKit
 import PennMobileShared
 
 class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate, SHA256Hashable {

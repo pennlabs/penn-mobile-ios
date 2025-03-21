@@ -9,7 +9,7 @@
 import Foundation
 
 /// A time that a course meets.
-public struct MeetingTime: Codable {
+public struct MeetingTime: Codable, Sendable {
     /// Weekday of the meeting time.
     ///
     /// 1 corresponds to Sunday, 7 corresponds to Saturday.
@@ -28,7 +28,7 @@ public struct MeetingTime: Codable {
     }
 }
 
-public struct Course: Codable {
+public struct Course: Codable, Sendable {
     /// Time zone to use in course calculations.
     public static let timezone = TimeZone(identifier: "America/New_York")
 
