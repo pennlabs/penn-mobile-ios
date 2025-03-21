@@ -31,15 +31,6 @@
 		42632C9C2CB9C77B0028CC31 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632AFE2CB9C77B0028CC31 /* BannerView.swift */; };
 		42632C9D2CB9C77B0028CC31 /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632AFF2CB9C77B0028CC31 /* BannerViewModel.swift */; };
 		42632C9E2CB9C77B0028CC31 /* UserEngagementPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B002CB9C77B0028CC31 /* UserEngagementPopupView.swift */; };
-		42632C9F2CB9C77B0028CC31 /* BuildingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B022CB9C77B0028CC31 /* BuildingCell.swift */; };
-		42632CA02CB9C77B0028CC31 /* BuildingFoodMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B032CB9C77B0028CC31 /* BuildingFoodMenuCell.swift */; };
-		42632CA12CB9C77B0028CC31 /* BuildingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B042CB9C77B0028CC31 /* BuildingHeaderCell.swift */; };
-		42632CA22CB9C77B0028CC31 /* BuildingHoursCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B052CB9C77B0028CC31 /* BuildingHoursCell.swift */; };
-		42632CA32CB9C77B0028CC31 /* BuildingImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B062CB9C77B0028CC31 /* BuildingImageCell.swift */; };
-		42632CA42CB9C77B0028CC31 /* BuildingMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B072CB9C77B0028CC31 /* BuildingMapCell.swift */; };
-		42632CA52CB9C77B0028CC31 /* BuildingSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B082CB9C77B0028CC31 /* BuildingSectionHeader.swift */; };
-		42632CA62CB9C77B0028CC31 /* MenuTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B092CB9C77B0028CC31 /* MenuTableView.swift */; };
-		42632CA72CB9C77B0028CC31 /* BuildingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B0B2CB9C77B0028CC31 /* BuildingProtocol.swift */; };
 		42632CA82CB9C77B0028CC31 /* ScannerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B112CB9C77B0028CC31 /* ScannerState.swift */; };
 		42632CA92CB9C77B0028CC31 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B132CB9C77B0028CC31 /* ScannerView.swift */; };
 		42632CAA2CB9C77B0028CC31 /* ScannerViewfinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B142CB9C77B0028CC31 /* ScannerViewfinder.swift */; };
@@ -88,9 +79,7 @@
 		42632CE32CB9C77B0028CC31 /* FitnessRoomRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B662CB9C77B0028CC31 /* FitnessRoomRow.swift */; };
 		42632CE42CB9C77B0028CC31 /* FitnessSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B672CB9C77B0028CC31 /* FitnessSettingsView.swift */; };
 		42632CE52CB9C77B0028CC31 /* FitnessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B682CB9C77B0028CC31 /* FitnessView.swift */; };
-		42632CE72CB9C77B0028CC31 /* AnnouncementHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B6B2CB9C77B0028CC31 /* AnnouncementHeaderView.swift */; };
 		42632CE82CB9C77B0028CC31 /* GenericControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B6C2CB9C77B0028CC31 /* GenericControllers.swift */; };
-		42632CE92CB9C77B0028CC31 /* MoveableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B6D2CB9C77B0028CC31 /* MoveableTableViewController.swift */; };
 		42632CEA2CB9C77B0028CC31 /* ModularTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B6F2CB9C77B0028CC31 /* ModularTableView.swift */; };
 		42632CEB2CB9C77B0028CC31 /* ModularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B702CB9C77B0028CC31 /* ModularTableViewCell.swift */; };
 		42632CEC2CB9C77B0028CC31 /* ModularTableViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632B712CB9C77B0028CC31 /* ModularTableViewItem.swift */; };
@@ -234,7 +223,6 @@
 		42632D7B2CB9C77B0028CC31 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C272CB9C77B0028CC31 /* PennCashNetworkManager.swift */; };
 		42632D7C2CB9C77B0028CC31 /* PennInTouchNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C282CB9C77B0028CC31 /* PennInTouchNetworkManager.swift */; };
 		42632D7D2CB9C77B0028CC31 /* AddressMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */; };
-		42632D7E2CB9C77B0028CC31 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2B2CB9C77B0028CC31 /* MapViewController.swift */; };
 		42632D802CB9C77B0028CC31 /* PacCodeNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */; };
 		42632D812CB9C77B0028CC31 /* PacCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */; };
 		42632D822CB9C77B0028CC31 /* ProfilePageNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C312CB9C77B0028CC31 /* ProfilePageNetworkManager.swift */; };
@@ -450,15 +438,6 @@
 		42632AFE2CB9C77B0028CC31 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		42632AFF2CB9C77B0028CC31 /* BannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModel.swift; sourceTree = "<group>"; };
 		42632B002CB9C77B0028CC31 /* UserEngagementPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEngagementPopupView.swift; sourceTree = "<group>"; };
-		42632B022CB9C77B0028CC31 /* BuildingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingCell.swift; sourceTree = "<group>"; };
-		42632B032CB9C77B0028CC31 /* BuildingFoodMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingFoodMenuCell.swift; sourceTree = "<group>"; };
-		42632B042CB9C77B0028CC31 /* BuildingHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingHeaderCell.swift; sourceTree = "<group>"; };
-		42632B052CB9C77B0028CC31 /* BuildingHoursCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingHoursCell.swift; sourceTree = "<group>"; };
-		42632B062CB9C77B0028CC31 /* BuildingImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingImageCell.swift; sourceTree = "<group>"; };
-		42632B072CB9C77B0028CC31 /* BuildingMapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingMapCell.swift; sourceTree = "<group>"; };
-		42632B082CB9C77B0028CC31 /* BuildingSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingSectionHeader.swift; sourceTree = "<group>"; };
-		42632B092CB9C77B0028CC31 /* MenuTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableView.swift; sourceTree = "<group>"; };
-		42632B0B2CB9C77B0028CC31 /* BuildingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildingProtocol.swift; sourceTree = "<group>"; };
 		42632B0E2CB9C77B0028CC31 /* ScannerDuplicate.ahap */ = {isa = PBXFileReference; lastKnownFileType = text; path = ScannerDuplicate.ahap; sourceTree = "<group>"; };
 		42632B0F2CB9C77B0028CC31 /* ScannerError.ahap */ = {isa = PBXFileReference; lastKnownFileType = text; path = ScannerError.ahap; sourceTree = "<group>"; };
 		42632B102CB9C77B0028CC31 /* ScannerInvalid.ahap */ = {isa = PBXFileReference; lastKnownFileType = text; path = ScannerInvalid.ahap; sourceTree = "<group>"; };
@@ -513,9 +492,7 @@
 		42632B662CB9C77B0028CC31 /* FitnessRoomRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessRoomRow.swift; sourceTree = "<group>"; };
 		42632B672CB9C77B0028CC31 /* FitnessSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessSettingsView.swift; sourceTree = "<group>"; };
 		42632B682CB9C77B0028CC31 /* FitnessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessView.swift; sourceTree = "<group>"; };
-		42632B6B2CB9C77B0028CC31 /* AnnouncementHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementHeaderView.swift; sourceTree = "<group>"; };
 		42632B6C2CB9C77B0028CC31 /* GenericControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericControllers.swift; sourceTree = "<group>"; };
-		42632B6D2CB9C77B0028CC31 /* MoveableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveableTableViewController.swift; sourceTree = "<group>"; };
 		42632B6F2CB9C77B0028CC31 /* ModularTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableView.swift; sourceTree = "<group>"; };
 		42632B702CB9C77B0028CC31 /* ModularTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewCell.swift; sourceTree = "<group>"; };
 		42632B712CB9C77B0028CC31 /* ModularTableViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularTableViewItem.swift; sourceTree = "<group>"; };
@@ -659,7 +636,6 @@
 		42632C272CB9C77B0028CC31 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
 		42632C282CB9C77B0028CC31 /* PennInTouchNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennInTouchNetworkManager.swift; sourceTree = "<group>"; };
 		42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressMapView.swift; sourceTree = "<group>"; };
-		42632C2B2CB9C77B0028CC31 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacCodeNetworkManager.swift; sourceTree = "<group>"; };
 		42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacCodeViewController.swift; sourceTree = "<group>"; };
 		42632C312CB9C77B0028CC31 /* ProfilePageNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageNetworkManager.swift; sourceTree = "<group>"; };
@@ -932,38 +908,6 @@
 			path = Banners;
 			sourceTree = "<group>";
 		};
-		42632B0A2CB9C77B0028CC31 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				42632B022CB9C77B0028CC31 /* BuildingCell.swift */,
-				42632B032CB9C77B0028CC31 /* BuildingFoodMenuCell.swift */,
-				42632B042CB9C77B0028CC31 /* BuildingHeaderCell.swift */,
-				42632B052CB9C77B0028CC31 /* BuildingHoursCell.swift */,
-				42632B062CB9C77B0028CC31 /* BuildingImageCell.swift */,
-				42632B072CB9C77B0028CC31 /* BuildingMapCell.swift */,
-				42632B082CB9C77B0028CC31 /* BuildingSectionHeader.swift */,
-				42632B092CB9C77B0028CC31 /* MenuTableView.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		42632B0C2CB9C77B0028CC31 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				42632B0B2CB9C77B0028CC31 /* BuildingProtocol.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		42632B0D2CB9C77B0028CC31 /* Buildings */ = {
-			isa = PBXGroup;
-			children = (
-				42632B0A2CB9C77B0028CC31 /* Cells */,
-				42632B0C2CB9C77B0028CC31 /* Models */,
-			);
-			path = Buildings;
-			sourceTree = "<group>";
-		};
 		42632B162CB9C77B0028CC31 /* Ticket Scanner */ = {
 			isa = PBXGroup;
 			children = (
@@ -1204,9 +1148,7 @@
 		42632B6E2CB9C77B0028CC31 /* Generics */ = {
 			isa = PBXGroup;
 			children = (
-				42632B6B2CB9C77B0028CC31 /* AnnouncementHeaderView.swift */,
 				42632B6C2CB9C77B0028CC31 /* GenericControllers.swift */,
-				42632B6D2CB9C77B0028CC31 /* MoveableTableViewController.swift */,
 			);
 			path = Generics;
 			sourceTree = "<group>";
@@ -1664,7 +1606,6 @@
 			isa = PBXGroup;
 			children = (
 				42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */,
-				42632C2B2CB9C77B0028CC31 /* MapViewController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -1872,7 +1813,6 @@
 			children = (
 				42632AFC2CB9C77B0028CC31 /* Auth */,
 				42632B012CB9C77B0028CC31 /* Banners */,
-				42632B0D2CB9C77B0028CC31 /* Buildings */,
 				42632B182CB9C77B0028CC31 /* Clubs */,
 				42632B1E2CB9C77B0028CC31 /* Contacts */,
 				42632B302CB9C77B0028CC31 /* Course Alerts */,
@@ -2361,15 +2301,6 @@
 				42632C9C2CB9C77B0028CC31 /* BannerView.swift in Sources */,
 				42632C9D2CB9C77B0028CC31 /* BannerViewModel.swift in Sources */,
 				42632C9E2CB9C77B0028CC31 /* UserEngagementPopupView.swift in Sources */,
-				42632C9F2CB9C77B0028CC31 /* BuildingCell.swift in Sources */,
-				42632CA02CB9C77B0028CC31 /* BuildingFoodMenuCell.swift in Sources */,
-				42632CA12CB9C77B0028CC31 /* BuildingHeaderCell.swift in Sources */,
-				42632CA22CB9C77B0028CC31 /* BuildingHoursCell.swift in Sources */,
-				42632CA32CB9C77B0028CC31 /* BuildingImageCell.swift in Sources */,
-				42632CA42CB9C77B0028CC31 /* BuildingMapCell.swift in Sources */,
-				42632CA52CB9C77B0028CC31 /* BuildingSectionHeader.swift in Sources */,
-				42632CA62CB9C77B0028CC31 /* MenuTableView.swift in Sources */,
-				42632CA72CB9C77B0028CC31 /* BuildingProtocol.swift in Sources */,
 				42632CA82CB9C77B0028CC31 /* ScannerState.swift in Sources */,
 				42632CA92CB9C77B0028CC31 /* ScannerView.swift in Sources */,
 				42632CAA2CB9C77B0028CC31 /* ScannerViewfinder.swift in Sources */,
@@ -2420,9 +2351,7 @@
 				42632CE32CB9C77B0028CC31 /* FitnessRoomRow.swift in Sources */,
 				42632CE42CB9C77B0028CC31 /* FitnessSettingsView.swift in Sources */,
 				42632CE52CB9C77B0028CC31 /* FitnessView.swift in Sources */,
-				42632CE72CB9C77B0028CC31 /* AnnouncementHeaderView.swift in Sources */,
 				42632CE82CB9C77B0028CC31 /* GenericControllers.swift in Sources */,
-				42632CE92CB9C77B0028CC31 /* MoveableTableViewController.swift in Sources */,
 				42632CEA2CB9C77B0028CC31 /* ModularTableView.swift in Sources */,
 				42632CEB2CB9C77B0028CC31 /* ModularTableViewCell.swift in Sources */,
 				42632CEC2CB9C77B0028CC31 /* ModularTableViewItem.swift in Sources */,
@@ -2570,7 +2499,6 @@
 				42632D7B2CB9C77B0028CC31 /* PennCashNetworkManager.swift in Sources */,
 				42632D7C2CB9C77B0028CC31 /* PennInTouchNetworkManager.swift in Sources */,
 				42632D7D2CB9C77B0028CC31 /* AddressMapView.swift in Sources */,
-				42632D7E2CB9C77B0028CC31 /* MapViewController.swift in Sources */,
 				42632D802CB9C77B0028CC31 /* PacCodeNetworkManager.swift in Sources */,
 				42632D812CB9C77B0028CC31 /* PacCodeViewController.swift in Sources */,
 				42632D822CB9C77B0028CC31 /* ProfilePageNetworkManager.swift in Sources */,
