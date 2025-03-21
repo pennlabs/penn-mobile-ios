@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GSRCentralView: View {
     
-    @State var loggedIn = false
+    @State var loggedIn = true
     private var locationModel = GSRLocationModel.shared
     @State private var locations = [GSRLocation]()
     @State private var selectedTab : String = "Book"
@@ -52,6 +52,9 @@ struct GSRCentralView: View {
             }
             .navigationTitle("GSR Booking")
             .navigationBarTitleDisplayMode(.inline)
+        } else {
+            GSRGuestLandingPage()
+            .navigationBarHidden(true)
         }
     }
 }
