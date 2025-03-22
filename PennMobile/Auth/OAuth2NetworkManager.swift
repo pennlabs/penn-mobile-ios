@@ -199,28 +199,6 @@ extension OAuth2NetworkManager {
     }
 }
 
-// MARK: - Retrieve Account
-extension OAuth2NetworkManager {
-    // TODO: Surely there's a better place to put this?
-    nonisolated func retrieveAccount(accessToken: AccessToken, _ callback: @escaping (_ user: Account?) -> Void) {
-        let url = URL(string: "https://platform.pennlabs.org/accounts/me/")!
-        let request = URLRequest(url: url, accessToken: accessToken)
-
-        let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-
-                let user = try? decoder.decode(Account.self, from: data)
-                callback(user)
-                return
-            }
-            callback(nil)
-        }
-        task.resume()
-    }
-}
-
 // MARK: - Save + Get Refresh Token
 extension OAuth2NetworkManager {
     nonisolated private var service: String {

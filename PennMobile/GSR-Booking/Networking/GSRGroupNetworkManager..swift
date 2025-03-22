@@ -231,31 +231,27 @@ extension GSRGroupNetworkManager {
 
 // MARK: - General Networking Functions
 extension GSRGroupNetworkManager {
-    fileprivate func makeGetRequestWithAccessToken(url: String, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                callback(nil, nil, nil)
+    fileprivate func makeGetRequestWithAccessToken(url: String, callback: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void) {
+        Task {
+            guard let url = URL(string: url), var request = try? await URLRequest(url: url, mode: .accessToken) else {
+                callback(nil,nil,nil)
                 return
             }
-
-            let url = URL(string: url)!
-            var request = URLRequest(url: url, accessToken: token)
+            
             request.httpMethod = "GET"
-
+            
             let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
             task.resume()
         }
     }
 
-    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: Any]?, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                callback(nil, nil, nil)
+    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: Any]?, callback: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void) {
+        Task {
+            guard let url = URL(string: url), var request = try? await URLRequest(url: url, mode: .accessToken) else {
+                callback(nil,nil,nil)
                 return
             }
-
-            let url = URL(string: url)!
-            var request = URLRequest(url: url, accessToken: token)
+            
             request.httpMethod = "POST"
             if let params = params,
                 let httpBody = try? JSONSerialization.data(withJSONObject: params, options: .prettyPrinted) {

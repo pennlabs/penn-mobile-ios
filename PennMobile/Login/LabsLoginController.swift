@@ -140,21 +140,6 @@ class LabsLoginController: PennLoginController, IndicatorEnabled, Requestable, S
                 self.dismiss(successful: true)
                 return
             }
-            OAuth2NetworkManager.instance.retrieveAccount(accessToken: accessToken) { (account) in
-                guard let account = account else {
-                    self.dismiss(successful: false)
-                    return
-                }
-
-                UserDefaults.standard.saveAccount(account)
-                UserDefaults.standard.set(isInWharton: account.isInWharton)
-
-                UserDBManager.shared.syncUserSettings { (_) in
-                    self.saveAccount(account) {
-                        self.dismiss(successful: true)
-                    }
-                }
-            }
         }
     }
 
@@ -202,82 +187,13 @@ extension LabsLoginController {
                         if UserDefaults.standard.getPreference(for: .collegeHouse) {
                             CampusExpressNetworkManager.instance.updateHousingData()
                         }
-                        self.getDiningTransactions()
-                        self.getAndSaveLaundryPreferences()
-                        self.getAndSaveFitnessPreferences()
-                        self.getPacCode()
+                        Account.getDiningTransactions()
+                        Account.getAndSaveLaundryPreferences()
+                        Account.getAndSaveFitnessPreferences()
+                        Account.getPacCode()
                     }
                 }
             }
-        }
-    }
-}
-
-// MARK: - Retrieve Other Account Information
-extension LabsLoginController {
-    fileprivate func getDiningTransactions() {
-        PennCashNetworkManager.instance.getTransactionHistory { data in
-            if let data = data, let str = String(bytes: data, encoding: .utf8) {
-                UserDBManager.shared.saveTransactionData(csvStr: str)
-                UserDefaults.standard.setLastTransactionRequest()
-            }
-        }
-    }
-
-    fileprivate func getAndSaveLaundryPreferences() {
-        UserDBManager.shared.getLaundryPreferences { rooms in
-            if let rooms = rooms {
-                UserDefaults.standard.setLaundryPreferences(to: rooms)
-            }
-        }
-    }
-    
-    fileprivate func getAndSaveFitnessPreferences() {
-        UserDBManager.shared.getFitnessPreferences { rooms in
-            if let rooms = rooms {
-                UserDefaults.standard.setFitnessPreferences(to: rooms)
-            }
-        }
-    }
-
-    fileprivate func getPacCode() {
-        PacCodeNetworkManager.instance.getPacCode { result in
-            switch result {
-            case .success(let pacCode):
-                KeychainAccessible.instance.savePacCode(pacCode)
-            case .failure:
-                return
-            }
-        }
-    }
-
-    fileprivate func getAndSaveNotificationAndPrivacyPreferences(_ completion: @escaping () -> Void) {
-        UserDBManager.shared.syncUserSettings { (_) in
-            completion()
-        }
-    }
-
-    fileprivate func obtainCoursePermission(_ callback: @escaping (_ granted: Bool) -> Void) {
-        self.hideActivity()
-        let title = "\"Penn Mobile\" Would Like To Access Your Courses"
-        let message = "Access is needed to display your course schedule on the app."
-        let alert = UIAlertController(title: title,
-                                      message: message,
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Don't Allow", style: .default, handler: { (_) in
-            callback(false)
-        }))
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
-            callback(true)
-        }))
-        present(alert, animated: true)
-    }
-}
-
-extension Set where Element == Degree {
-    func hasDegreeInWharton() -> Bool {
-        return self.contains { (degree) -> Bool in
-            return degree.schoolCode == "WH"
         }
     }
 }

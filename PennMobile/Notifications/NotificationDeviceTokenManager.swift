@@ -92,8 +92,6 @@ import OSLog
                     }
                 }
             }
-        case .notDetermined:
-            break
         }
     }
     

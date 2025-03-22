@@ -98,41 +98,31 @@ extension Optional {
         }
         
         async let postsTask: () = withCheckedContinuation { continuation in
-            OAuth2NetworkManager.instance.getAccessToken { token in
-                guard let token = token else {
+            let url = URL(string: "https://pennmobile.org/api/portal/posts/browse/")!
+            Task {
+                guard let request = try? await URLRequest(url: url, mode: .accessToken),
+                let (data, response) = try? await URLSession.shared.data(for: request),
+                let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200 else {
                     DispatchQueue.main.async {
                         self.data.posts = .success([])
                     }
                     continuation.resume()
                     return
                 }
-
-                let url = URLRequest(url: URL(string: "https://pennmobile.org/api/portal/posts/browse/")!, accessToken: token)
-
-                let task = URLSession.shared.dataTask(with: url) { data, _, _ in
-                    guard let data = data else {
-                        DispatchQueue.main.async {
-                            self.data.posts = .success([])
-                        }
-                        continuation.resume()
-                        return
+                
+                do {
+                    let posts = try JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data)
+                    DispatchQueue.main.async {
+                        self.data.posts = .success(posts)
                     }
-                    
-                    do {
-                        let posts = try JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data)
-                        DispatchQueue.main.async {
-                            self.data.posts = .success(posts)
-                        }
-                    } catch {
-                        DispatchQueue.main.async {
-                            self.data.posts = .failure(error)
-                        }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.data.posts = .failure(error)
                     }
-                    
-                    continuation.resume()
                 }
-
-                task.resume()
+                
+                continuation.resume()
             }
         }
         

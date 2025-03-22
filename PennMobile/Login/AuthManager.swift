@@ -7,9 +7,9 @@
 //
 
 import SwiftUI
+import LabsPlatformSwift
 
 enum AuthState: Equatable {
-    case notDetermined
     case loggedOut
     case guest
     case loggedIn(Account)
@@ -23,12 +23,12 @@ enum AuthState: Equatable {
     }
 }
 
+@MainActor
 class AuthManager: ObservableObject {
-    @Published private(set) var state = AuthState.notDetermined
+    @Published private(set) var state = AuthState.loggedOut
 
     static func shouldRequireLogin() -> Bool {
         if !Account.isLoggedIn {
-            // User is not logged in
             return true
         }
 
@@ -57,27 +57,53 @@ class AuthManager: ObservableObject {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
         Account.clear()
-        
-        Task {
-            await OAuth2NetworkManager.instance.clearRefreshToken()
-            await OAuth2NetworkManager.instance.clearCurrentAccessToken()
-        }
     }
+    
+    @MainActor func handlePlatformLogin(res: Bool) async {
+        guard res else {
+            self.state = .loggedOut
+            return
+        }
+        
+        UserDefaults.standard.setLastLogin()
+        guard let account = await AuthManager.retrieveAccount() else {
+            self.state = .loggedOut
+            return
+        }
+        
+        await saveAndUpdatePreferences(account)
+            
+        UserDBManager.shared.syncUserSettings { (_) in
+            Account.saveAccount(account)
+            self.determineInitialState()
+        }
+        
+    }
+    
+    func handlePlatformDefaultLogin() {
+        let account = Account(pennid: 12345678, firstName: "Ben", lastName: "Franklin", username: "bfranklin", email: "benfrank@wharton.upenn.edu", student: Student(major: [], school: []), groups: [], emails: [])
+        state = .loggedIn(account)
+        Account.saveAccount(account)
+    }
+    
 
     func determineInitialState() {
-        if AuthManager.shouldRequireLogin() {
-            if case .guest = state {
-                state = .guest
-            } else {
-                if !Account.isLoggedIn {
-                    AuthManager.clearAccountData()
+        DispatchQueue.main.async {
+            if AuthManager.shouldRequireLogin() {
+                if case .guest = self.state {
+                    self.state = .guest
+                } else {
+                    if !Account.isLoggedIn {
+                        AuthManager.clearAccountData()
+                    }
+                    self.state = .loggedOut
                 }
-                state = .loggedOut
+            } else {
+                self.state = .loggedIn(Account.getAccount()!)
             }
-        } else {
-            state = .loggedIn(Account.getAccount()!)
         }
     }
+    
 
     func enterGuestMode() {
         guard case .loggedOut = state else {
@@ -87,17 +113,64 @@ class AuthManager: ObservableObject {
         state = .guest
     }
     
+    
     func logOut() {
         state = .loggedOut
+        LabsPlatform.shared?.logoutPlatform()
         AuthManager.clearAccountData()
+        print("Cleared all user data")
+    }
+    
+    
+    static func retrieveAccount() async -> Account? {
+        let url = URL(string: "https://platform.pennlabs.org/accounts/me/")!
+        guard let request = try? await URLRequest(url: url, mode: .accessToken) else {
+            return nil
+        }
+
+        guard let (data, response) = try? await URLSession.shared.data(for: request),
+              let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            return nil
+        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+
+        let user = try? decoder.decode(Account.self, from: data)
+        return user
+    }
+    
+    
+    func saveAndUpdatePreferences(_ account: Account) async {
+        await withCheckedContinuation { continuation in
+            UserDefaults.standard.set(isInWharton: account.isInWharton)
+            UserDBManager.shared.saveAccount(account) { (accountID) in
+                guard let accountID else {
+                    continuation.resume()
+                    return
+                }
+                
+                UserDefaults.standard.set(accountID: accountID)
+                if account.isStudent {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        if UserDefaults.standard.getPreference(for: .collegeHouse) {
+                            CampusExpressNetworkManager.instance.updateHousingData()
+                        }
+                        Account.getDiningTransactions()
+                        Account.getAndSaveLaundryPreferences()
+                        Account.getAndSaveFitnessPreferences()
+                        Account.getPacCode()
+                        continuation.resume()
+                    }
+                }
+            }
+        }
     }
 }
 
 extension AuthState: CustomDebugStringConvertible {
     var debugDescription: String {
         switch self {
-        case .notDetermined:
-            "Not determined"
         case .loggedOut:
             "Logged out"
         case .guest:
