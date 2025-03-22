@@ -10,35 +10,29 @@ import SwiftUI
 
 struct GSRRoomAvailabilityRow: View {
     let room: GSRRoom
-    @State var selectedSlots: [GSRTimeSlot] = []
+    @EnvironmentObject var vm: GSRViewModel
+    //@Environment(\.presentToast) var presentToast
     
     var body: some View {
         HStack(spacing: 0) {
             ForEach(room.availability, id: \.self) { slot in
                 Rectangle()
                     .frame(width: 80, height: 42)
-                    .foregroundStyle(selectedSlots.filter({ $0.hashValue == slot.hashValue }).isEmpty ? slot.color : Color("gsrBlue"))
+                    .foregroundStyle(vm.selectedTimeslots.filter({ $0.1.hashValue == slot.hashValue }).isEmpty ? slot.color : Color("gsrBlue"))
                     .onTapGesture {
                         withAnimation(.snappy(duration: 0.2)) {
-                            handleSelection(slot)
+                            do {
+                                try vm.handleTimeslotGesture(slot: slot, room: room)
+                            } catch {
+//                                presentToast(ToastConfiguration({
+//                                    Text(error.localizedDescription)
+//                                }))
+                            }
                         }
                     }
             }
         }
         .clipShape(.rect(cornerRadius: 4))
-    }
-    
-    func handleSelection(_ slot: GSRTimeSlot) {
-        // Remove from selection on click idk just basic logic
-        if selectedSlots.contains(where: { $0.hashValue == slot.hashValue}) {
-            selectedSlots.removeAll(where: { $0.hashValue == slot.hashValue})
-            return
-        }
-        
-        if slot.isAvailable {
-            selectedSlots.append(slot)
-            return
-        }
     }
 }
 

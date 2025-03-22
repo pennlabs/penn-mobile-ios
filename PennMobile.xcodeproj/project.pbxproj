@@ -326,6 +326,7 @@
 		730548132D8DDF75003FD988 /* GSRRoomAvailabilityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730548122D8DDF70003FD988 /* GSRRoomAvailabilityRow.swift */; };
 		730548152D8DF733003FD988 /* TimeSlotDottedLinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730548142D8DF728003FD988 /* TimeSlotDottedLinesView.swift */; };
 		736DABD02D8E479C00C93BA5 /* GSRTimeCardRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABCF2D8E478A00C93BA5 /* GSRTimeCardRow.swift */; };
+		736DABD22D8F557000C93BA5 /* GSRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABD12D8F556A00C93BA5 /* GSRViewModel.swift */; };
 		737935E02D7972C100E8DD77 /* GSRGuestLandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737935DF2D7972BF00E8DD77 /* GSRGuestLandingPage.swift */; };
 		73FE3A242D661484004E0E50 /* GSRCentralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE3A232D661468004E0E50 /* GSRCentralView.swift */; };
 		73FE3A262D6615DA004E0E50 /* GSRViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE3A252D6615D2004E0E50 /* GSRViewControllerSwiftUI.swift */; };
@@ -724,6 +725,7 @@
 		730548122D8DDF70003FD988 /* GSRRoomAvailabilityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRoomAvailabilityRow.swift; sourceTree = "<group>"; };
 		730548142D8DF728003FD988 /* TimeSlotDottedLinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlotDottedLinesView.swift; sourceTree = "<group>"; };
 		736DABCF2D8E478A00C93BA5 /* GSRTimeCardRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTimeCardRow.swift; sourceTree = "<group>"; };
+		736DABD12D8F556A00C93BA5 /* GSRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRViewModel.swift; sourceTree = "<group>"; };
 		737935DF2D7972BF00E8DD77 /* GSRGuestLandingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGuestLandingPage.swift; sourceTree = "<group>"; };
 		73FE3A232D661468004E0E50 /* GSRCentralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRCentralView.swift; sourceTree = "<group>"; };
 		73FE3A252D6615D2004E0E50 /* GSRViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRViewControllerSwiftUI.swift; sourceTree = "<group>"; };
@@ -1227,6 +1229,7 @@
 		42632BBD2CB9C77B0028CC31 /* GSR-Booking */ = {
 			isa = PBXGroup;
 			children = (
+				736DABD12D8F556A00C93BA5 /* GSRViewModel.swift */,
 				42632B9D2CB9C77B0028CC31 /* Model */,
 				42632BA02CB9C77B0028CC31 /* Networking */,
 				42632BB72CB9C77B0028CC31 /* Views */,
@@ -2314,6 +2317,7 @@
 				42632D692CB9C77B0028CC31 /* LaundryMachineCell.swift in Sources */,
 				42632D6A2CB9C77B0028CC31 /* LaundryMachinesView.swift in Sources */,
 				42632D6B2CB9C77B0028CC31 /* LaundryMachineCellTappable.swift in Sources */,
+				736DABD22D8F557000C93BA5 /* GSRViewModel.swift in Sources */,
 				42632D6C2CB9C77B0028CC31 /* LaundryTableViewController.swift in Sources */,
 				42632D6D2CB9C77B0028CC31 /* RoomSelectionViewController.swift in Sources */,
 				42632D6E2CB9C77B0028CC31 /* LaundryNotificationCenter.swift in Sources */,

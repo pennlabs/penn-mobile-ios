@@ -9,14 +9,12 @@
 import SwiftUI
 
 struct GSRBookingView: View {
-    let tempRooms: [GSRRoom]
-    @State var tempDisabled = true
     
     static var pickerOptions: [Date] = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now.localTime) }
     static var locationOptions: [GSRLocation] = [GSRLocation(lid: "ASDF", gid: 123, name: "Weigle", kind: .libcal, imageUrl: "https://google.com")]
     
-    @State var selectedLoc = GSRBookingView.locationOptions.first!
-    @State var selectedDate = GSRBookingView.pickerOptions.first!
+    @EnvironmentObject var vm: GSRViewModel
+    
     var body: some View {
         VStack {
             Picker("Location", selection: $selectedLoc) {
@@ -83,7 +81,6 @@ struct GSRBookingView: View {
             HStack(spacing: 12) {
                 Button {
                     withAnimation(.snappy(duration: 0.2)) {
-                        tempDisabled.toggle()
                     }
                 } label: {
                     Label("Find me a room", systemImage: "wand.and.sparkles")
@@ -99,7 +96,7 @@ struct GSRBookingView: View {
 
                 }
                 
-                if !tempDisabled {
+                if !vm.selectedTimeslots.isEmpty {
                     Button {
                         
                     } label: {

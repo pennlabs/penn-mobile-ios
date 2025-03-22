@@ -14,6 +14,7 @@ struct GSRCentralView: View {
     
     @State var loggedIn = false
     @State var selectedTab: GSRTab = GSRTab.book
+    @StateObject var vm = GSRViewModel()
     
     var body: some View {
         if loggedIn || GSRCentralView.debug {
@@ -40,6 +41,7 @@ struct GSRCentralView: View {
                 TabView(selection: $selectedTab) {
                     ForEach(GSRTab.allCases, id: \.rawValue) { tab in
                         AnyView(tab.view)
+                            .environmentObject(vm)
                             .tag(tab)
                     }
                 }
@@ -64,9 +66,7 @@ enum GSRTab: Int, Equatable, CaseIterable {
     @ViewBuilder var view: any View {
         switch self {
         case .book:
-            VStack {
-                Text("Booking View")
-            }
+            GSRBookingView()
                 
         case .reservations:
             Image(systemName: "circle.fill")
