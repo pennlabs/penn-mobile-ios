@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GSRRoom: Codable {
+struct GSRRoom: Codable, Hashable, Identifiable {
     let roomName: String
     let id: Int
     var availability: [GSRTimeSlot]

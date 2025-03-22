@@ -66,9 +66,6 @@ enum GSRTab: Int, Equatable, CaseIterable {
         case .book:
             VStack {
                 Text("Booking View")
-                NavigationLink("Test Booking") {
-                    GSRBookingView()
-                }
             }
                 
         case .reservations:
