@@ -101,7 +101,7 @@ struct DiningVenueDetailMenuView: View {
                 }
             }
         }
-        .onChange(of: menuDate) { _ in
+        .onChange(of: menuDate) {
             Task.init() {
                 await diningVM.refreshMenus(cache: true, at: menuDate)
                 menus = diningVM.diningMenus[venue.id]?.menus ?? []
@@ -109,7 +109,7 @@ struct DiningVenueDetailMenuView: View {
             }
         }
         
-        .onChange(of: currentMenu) { _ in
+        .onChange(of: currentMenu) {
             print((currentMenu?.service ?? "no menu") + " on " + menuDate.description)
             selectedStation = nil
         }

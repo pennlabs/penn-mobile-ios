@@ -47,7 +47,7 @@ struct AIChatView: View {
                                     Spacer()
                                 }.id(msg.id)
                             }
-                        }.onChange(of: vm.thread) { _ in
+                        }.onChange(of: vm.thread) {
                             withAnimation {
                                 proxy.scrollTo(vm.thread.last?.id ?? nil, anchor: .top)
                             }
