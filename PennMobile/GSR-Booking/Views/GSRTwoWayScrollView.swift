@@ -14,7 +14,7 @@ struct GSRTwoWayScrollView: View {
     
     var body: some View {
         ScrollView([.vertical, .horizontal], showsIndicators: false) {
-            LazyVStack(alignment: .leading, spacing: 32, pinnedViews: .sectionHeaders) {
+            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
                 Section {
                     LazyHStack(alignment: .center, spacing: 0, pinnedViews: .sectionHeaders) {
                         Section {
@@ -27,6 +27,7 @@ struct GSRTwoWayScrollView: View {
                             .overlay {
                                 TimeSlotDottedLinesView()
                             }
+                            .offset(x: -8)
                         } header: {
                             HStack(alignment: .center, spacing: 0) {
                                 VStack(alignment: .center, spacing: 32) {
@@ -44,13 +45,18 @@ struct GSRTwoWayScrollView: View {
                     }
                     
                 } header: {
-                    GSRTimeCardRow()
-                        .frame(height: 42)
-                        .offset(x: -40 + roomTitleOffset)
-                        .background {
-                            Rectangle()
-                                .foregroundStyle(Color(UIColor.systemBackground))
-                        }
+                    VStack(alignment: .center, spacing: 0) {
+                        GSRTimeCardRow()
+                            .offset(x: -40)
+                            .padding(.top)
+                        TimeSlotDottedLinesView()
+                            .frame(height: 16)
+                    }
+                    .offset(x: roomTitleOffset)
+                    .background {
+                        Rectangle()
+                            .foregroundStyle(Color(UIColor.systemBackground))
+                    }
                 }
             }
         }
