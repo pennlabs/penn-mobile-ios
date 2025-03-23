@@ -16,6 +16,7 @@ class GSRNetworkManager {
     static let bookingUrl = "https://pennmobile.org/api/gsr/book/"
     static let reservationURL = "https://pennmobile.org/api/gsr/reservations/"
     static let cancelURL = "https://pennmobile.org/api/gsr/cancel/"
+    static let isWhartonURL = "https://pennmobile.org/api/gsr/wharton/"
     
     static func getLocations() async throws -> [GSRLocation] {
         let url = URL(string: GSRNetworkManager.locationsUrl)!
@@ -110,4 +111,24 @@ class GSRNetworkManager {
             throw NetworkingError.serverError
         }
     }
+    
+    static func whartonAllowed() async throws -> Bool {
+        let url = URL(string: GSRNetworkManager.isWhartonURL)!
+        let request = try await URLRequest(url: url, mode: .accessToken)
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else {
+            throw NetworkingError.serverError
+        }
+        
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let res = try decoder.decode(IsWhartonAPIResponse.self, from: data)
+        return res.isWharton
+    }
+    
+    struct IsWhartonAPIResponse: Codable {
+        let isWharton: Bool
+    }
 }
+

@@ -9,51 +9,35 @@
 import SwiftUI
 
 struct GSRTimeCardRow: View {
-    let start: Date
-    let end: Date
+    @EnvironmentObject var vm: GSRViewModel
     var body: some View {
-        HStack(spacing: 0) {
-            ForEach(getIntermediateSlots(), id: \.self) { time in
-                Text(getTimeString(time))
-                    .font(.body)
-                    .frame(width: 80)
+        if let first = vm.roomsAtSelectedLocation.first {
+            HStack(spacing: 0) {
+                let relevantAvailability: [GSRTimeSlot] = first.availability.filter {
+                    let cal = Calendar.current
+                    return cal.isDate($0.startTime, inSameDayAs: vm.selectedDate) || cal.isDate($0.endTime, inSameDayAs: vm.selectedDate)
+                }
+                if let firstSlot = relevantAvailability.first {
+                    Text(getTimeString(firstSlot.startTime))
+                        .frame(width: 80)
+                    ForEach(relevantAvailability, id: \.self) { slot in
+                        Text(getTimeString(slot.endTime))
+                            .frame(width: 80)
+                    }
+                }
+                
+                
             }
         }
         
     }
     
-    func countIntermediateSlots() -> Int {
-        return getIntermediateSlots().count
-    }
-    
-    func getIntermediateSlots() -> [Date] {
-        var times: [Date] = []
-        var currentDate = start
-        while currentDate < end {
-            times.append(currentDate)
-            currentDate = currentDate.addingTimeInterval(1800) // 1800 seconds = 30 minutes
-        }
-            
-        // Add the last interval if it's within the end date
-        if currentDate <= end {
-            times.append(currentDate)
-        }
-
-        return times
-    }
-    
     func getTimeString(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm"
+        formatter.dateFormat = "h:mm a"
         formatter.amSymbol = "AM"
         formatter.pmSymbol = "PM"
 
         return formatter.string(from: date)
-    }
-}
-
-#Preview {
-    ScrollView {
-        GSRTimeCardRow(start: Calendar.current.date(bySettingHour: 1, minute: 0, second: 0, of: Date.now)!, end: Calendar.current.date(bySettingHour: 23, minute: 00, second: 0, of: Date.now)!)
     }
 }

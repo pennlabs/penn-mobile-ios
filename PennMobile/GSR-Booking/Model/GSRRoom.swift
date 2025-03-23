@@ -26,13 +26,12 @@ extension Array where Element == GSRRoom {
                 max = lastEndTime
             }
         }
-
         return (min, max)
     }
 }
 
 extension GSRRoom {
-    func addMissingTimeslots(minDate: Date, maxDate: Date) -> [GSRTimeSlot] {
+    func withMissingTimeslots(minDate: Date, maxDate: Date) -> GSRRoom {
         var newTimes = [GSRTimeSlot]()
 
         // Fill in early slots
@@ -72,6 +71,6 @@ extension GSRRoom {
             }
         }
 
-        return newTimes
+        return GSRRoom(roomName: self.roomName, id: self.id, availability: newTimes)
     }
 }

@@ -31,14 +31,8 @@ class GSRLocationModel {
     // JM: this is a bit strange of a design.
     func prepare() {
         DispatchQueue.main.async {
-            GSRNetworkManager.instance.getLocations { result in
-                switch result {
-                case .success(let locations):
-                    self.locations = locations
-                case .failure:
-                    // TODO handle error
-                    break
-                }
+            Task {
+                self.locations = (try? await GSRNetworkManager.getLocations()) ?? []
             }
         }
     }

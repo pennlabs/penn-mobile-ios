@@ -11,11 +11,15 @@ import SwiftUI
 struct GSRRoomAvailabilityRow: View {
     let room: GSRRoom
     @EnvironmentObject var vm: GSRViewModel
-    //@Environment(\.presentToast) var presentToast
+    @Environment(\.presentToast) var presentToast
     
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(room.availability, id: \.self) { slot in
+            let relevantAvailability: [GSRTimeSlot] = room.availability.filter {
+                let cal = Calendar.current
+                return cal.isDate($0.startTime, inSameDayAs: vm.selectedDate) || cal.isDate($0.endTime, inSameDayAs: vm.selectedDate)
+            }
+            ForEach(relevantAvailability, id: \.self) { slot in
                 Rectangle()
                     .frame(width: 80, height: 42)
                     .foregroundStyle(vm.selectedTimeslots.filter({ $0.1.hashValue == slot.hashValue }).isEmpty ? slot.color : Color("gsrBlue"))
@@ -24,9 +28,9 @@ struct GSRRoomAvailabilityRow: View {
                             do {
                                 try vm.handleTimeslotGesture(slot: slot, room: room)
                             } catch {
-//                                presentToast(ToastConfiguration({
-//                                    Text(error.localizedDescription)
-//                                }))
+                                presentToast(ToastConfiguration({
+                                    Text(error.localizedDescription)
+                                }))
                             }
                         }
                     }

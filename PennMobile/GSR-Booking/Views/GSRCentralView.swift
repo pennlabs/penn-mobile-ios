@@ -38,16 +38,23 @@ struct GSRCentralView: View {
                 Rectangle()
                     .frame(maxHeight: 2)
                     .foregroundStyle(Color(UIColor.systemGray))
-                TabView(selection: $selectedTab) {
-                    ForEach(GSRTab.allCases, id: \.rawValue) { tab in
-                        AnyView(tab.view)
-                            .environmentObject(vm)
-                            .tag(tab)
+                Group {
+                    switch selectedTab {
+                    case .book:
+                        if let first = vm.availableLocations.first {
+                            GSRBookingView(selectedLocInternal: first)
+                        }
+                        
+                    case .reservations:
+                        Image(systemName: "circle.fill")
                     }
                 }
-                .tabViewStyle(.page)
+                .environmentObject(vm)
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
+                .onAppear {
+                    vm.checkWhartonStatus()
+                }
             }
             .ignoresSafeArea(edges: .horizontal)
         } else {
@@ -62,16 +69,6 @@ struct GSRCentralView: View {
 enum GSRTab: Int, Equatable, CaseIterable {
     case book = 0
     case reservations = 1
-    
-    @ViewBuilder var view: any View {
-        switch self {
-        case .book:
-            GSRBookingView()
-                
-        case .reservations:
-            Image(systemName: "circle.fill")
-        }
-    }
     
     var titleText: String {
         switch self {

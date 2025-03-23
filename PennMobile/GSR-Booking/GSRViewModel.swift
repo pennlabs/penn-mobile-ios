@@ -10,14 +10,27 @@ import Foundation
 import PennMobileShared
 
 class GSRViewModel: ObservableObject {
-    @Published var selectedLocation: GSRLocation? {
-        didSet {
-            onLocationChange(oldLocation: oldValue, newLocation: newValue)
-        }
-    }
+    @Published var selectedLocation: GSRLocation?
     @Published var roomsAtSelectedLocation: [GSRRoom] = []
-    @Published var selectedDate: Date?
+    @Published var selectedDate: Date
     @Published var selectedTimeslots: [(GSRRoom, GSRTimeSlot)] = []
+    @Published var availableLocations: [GSRLocation] = []
+    @Published var datePickerOptions: [Date]
+    @Published var isWharton: Bool = false
+    
+    init() {
+        let options = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now) }
+        datePickerOptions = options
+        selectedDate = options.first!
+        DispatchQueue.main.async {
+            Task {
+                self.availableLocations = (try? await GSRNetworkManager.getLocations()) ?? []
+                self.isWharton = (try? await GSRNetworkManager.whartonAllowed()) ?? false
+                return
+            }
+        }
+        
+    }
     
     
     
@@ -27,17 +40,21 @@ class GSRViewModel: ObservableObject {
     
     func handleTimeslotGesture(slot: GSRTimeSlot, room: GSRRoom) throws {
         guard slot.isAvailable else { return }
-        
-        // 90 minute check assumes 30 minute bookings
-        if selectedTimeslots.count == 3 {
-            throw GSRValidationError.over90Minutes
+        if selectedTimeslots.contains(where: {$0.0 == room && $0.1 == slot}) {
+            selectedTimeslots.removeAll(where: {$0.0 == room && $0.1 == slot})
+            return
         }
-        
+ 
         let proposedTimeslots = selectedTimeslots + [(room, slot)]
         do {
             try validateSelectedTimeslots(proposedTimeslots)
         } catch {
             resetBooking()
+        }
+        
+        // 90 minute check assumes 30 minute bookings
+        if selectedTimeslots.count == 3 {
+            throw GSRValidationError.over90Minutes
         }
         
         selectedTimeslots.append((room, slot))
@@ -80,12 +97,37 @@ class GSRViewModel: ObservableObject {
         
     }
     
-    private func onLocationChange(oldLocation: GSRLocation?, newLocation: GSRLocation?) {
+    func setLocation(to location: GSRLocation) throws {
         resetBooking()
-        guard let newLocation else { return }
         DispatchQueue.main.async {
-            GSRNetworkManager.instance.getAvailability(lid: newLocation.lid, gid: newLocation.gid) { res in
+            Task {
+                if location.kind == .wharton && !self.isWharton {
+                    throw GSRValidationError.notInWharton
+                }
                 
+                let unfilteredLoc = try await GSRNetworkManager.getAvailability(for: location, startDate: self.selectedDate, endDate: Calendar.current.date(byAdding: .day, value: 1, to: self.selectedDate)!)
+                let nonEmptyRooms = unfilteredLoc.filter {
+                    !$0.availability.isEmpty
+                }
+
+                let (min, max) = nonEmptyRooms.getMinMaxDates()
+                self.roomsAtSelectedLocation = nonEmptyRooms.map {
+                    if let min, let max {
+                        return $0.withMissingTimeslots(minDate: min, maxDate: max)
+                    } else {
+                        let times = $0.availability.sorted(by: {$0.startTime < $1.startTime})
+                        return $0.withMissingTimeslots(minDate: times.first!.startTime, maxDate: times.last!.startTime)
+                    }
+                }
+                self.selectedLocation = location
+            }
+        }
+    }
+    
+    func checkWhartonStatus() {
+        DispatchQueue.main.async {
+            Task {
+                self.isWharton = (try? await GSRNetworkManager.whartonAllowed()) ?? false
             }
         }
     }
@@ -95,6 +137,7 @@ class GSRViewModel: ObservableObject {
         case differentRooms
         case splitTimeSlots
         case bookingInPast
+        case notInWharton
         
         var errorDescription: String? {
             switch self {
@@ -106,6 +149,8 @@ class GSRViewModel: ObservableObject {
                 return "You must create a single, concurrent reservation."
             case .bookingInPast:
                 return "This timeslot is already elapsed."
+            case .notInWharton:
+                return "You must be a Wharton student to view this location."
             }
         }
     }
