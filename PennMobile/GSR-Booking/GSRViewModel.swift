@@ -40,12 +40,13 @@ class GSRViewModel: ObservableObject {
     
     func handleTimeslotGesture(slot: GSRTimeSlot, room: GSRRoom) throws {
         guard slot.isAvailable else { return }
+        var adding: Bool = true
         if selectedTimeslots.contains(where: {$0.0 == room && $0.1 == slot}) {
             selectedTimeslots.removeAll(where: {$0.0 == room && $0.1 == slot})
-            return
+            adding = false
         }
  
-        let proposedTimeslots = selectedTimeslots + [(room, slot)]
+        let proposedTimeslots = selectedTimeslots + (adding ? [(room, slot)] : [])
         do {
             try validateSelectedTimeslots(proposedTimeslots)
         } catch {
@@ -57,12 +58,14 @@ class GSRViewModel: ObservableObject {
             throw GSRValidationError.over90Minutes
         }
         
-        selectedTimeslots.append((room, slot))
+        if adding {
+            selectedTimeslots.append((room, slot))
+        }
     }
     
     private func validateSelectedTimeslots(_ slots: [(GSRRoom, GSRTimeSlot)]) throws {
         // Same room check
-        guard let (room, slot) = slots.first else { return }
+        guard let (room, _) = slots.first else { return }
         let sameRoom: Result<GSRRoom, GSRValidationError> = slots.reduce(.success(room)) { (result, slot) in
             guard case .success(let room) = result else {
                 return result
