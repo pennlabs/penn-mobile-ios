@@ -119,14 +119,14 @@ extension HomeViewController: GSRLocationSelectable {
     }
 }
 
-extension HomeViewController: NewsArticleSelectable {
-    func handleSelectedArticle(_ article: NewsArticle) {
-        let nvc = NativeNewsViewController()
-        nvc.article = article
-        nvc.title = "News"
-        navigationController?.pushViewController(nvc, animated: true)
-    }
-}
+//extension HomeViewController: NewsArticleSelectable {
+//    func handleSelectedArticle(_ article: NewsArticle) {
+//        let nvc = NativeNewsViewController()
+//        nvc.article = article
+//        nvc.title = "News"
+//        navigationController?.pushViewController(nvc, animated: true)
+//    }
+//}
 
 extension HomeViewController: FeatureNavigatable {
     func navigateToFeature(feature: Feature, item: ModularTableViewItem) {
