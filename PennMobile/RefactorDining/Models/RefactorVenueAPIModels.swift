@@ -97,7 +97,7 @@ struct VenueAPIMeal: Codable, Comparable {
         
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        formatter.timeZone = .init(identifier: "EST")
+        formatter.timeZone = TimeZone(identifier: "America/New_York")
         
         guard let startTimeStr = try? container.decode(String.self, forKey: .startTime),
               let startTime = formatter.date(from: startTimeStr) else {
@@ -108,8 +108,8 @@ struct VenueAPIMeal: Codable, Comparable {
             throw DecodingError.valueNotFound(String.self, DecodingError.Context(codingPath: [CodingKeys.endTime], debugDescription: "End time invalid"))
         }
         
-        self.startTime = startTime
-        self.endTime = endTime
+        self.startTime = startTime.localTime
+        self.endTime = endTime.localTime
         self.message = try container.decode(String.self, forKey: .message)
         self.label = try container.decode(String.self, forKey: .label)
     }

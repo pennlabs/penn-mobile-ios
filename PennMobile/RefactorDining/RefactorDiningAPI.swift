@@ -74,7 +74,8 @@ public final class RefactorDiningAPI: Sendable {
         
         var allVenueMeals: [VenueAPIMeal] = []
         
-        //give each meal an the venueId of it's parent venue
+        // give each meal an the venueId of its parent venue
+        // w efficiency
         for i in 0..<modVenueData.count {
             for j in 0..<modVenueData[i].schedule.count {
                 for k in 0..<modVenueData[i].schedule[j].meals.count {
@@ -96,7 +97,7 @@ public final class RefactorDiningAPI: Sendable {
             
             if let venueMin = venueMeals.min, let menuMin = menuMeals.min {
                 //The same meal
-                if venueMin.venueId == menuMin.venue.venueId && venueMin.startTime.localTime == menuMin.startTime.localTime && venueMin.endTime.localTime == menuMin.endTime.localTime {
+                if venueMin.venueId == menuMin.venue.venueId && venueMin.startTime == menuMin.startTime && venueMin.endTime == menuMin.endTime {
                     let venueMeal = venueMeals.removeMin()
                     let menuMeal = menuMeals.removeMin()
                     let combined = combineMeals(venueMeal: venueMeal, menuMeal: menuMeal)
