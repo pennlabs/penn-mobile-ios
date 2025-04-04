@@ -100,7 +100,7 @@ let features: [AppFeature] = [
     },
     AppFeature(.gsr, shortName: "GSR", longName: "GSR Booking", color: .baseGreen, image: .app("GSR_Grey")) {
         GSRCentralView()
-            .navigationTitle(Text("Group Study Rooms"))
+            .navigationTitle(Text("GSR Booking"))
     },
     AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey"), controller: LaundryTableViewController.self),
     AppFeature(.news, name: "News", color: .baseRed, image: .app("News_Grey"), controller: NewsViewController.self),

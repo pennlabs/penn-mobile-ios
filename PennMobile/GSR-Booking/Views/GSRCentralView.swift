@@ -11,7 +11,6 @@ import SwiftUI
 struct GSRCentralView: View {
     static let debug = true
     
-    
     @State var loggedIn = false
     @State var selectedTab: GSRTab = GSRTab.book
     @StateObject var vm = GSRViewModel()
@@ -41,9 +40,14 @@ struct GSRCentralView: View {
                 Group {
                     switch selectedTab {
                     case .book:
-                        if let first = vm.availableLocations.first {
-                            GSRBookingView(selectedLocInternal: first)
+                        List(vm.availableLocations, id: \.lid) { location in
+                            NavigationLink(destination: EmptyFile()) {
+                                GSRLocationCell(location: location)
+                            }
                         }
+                        .listStyle(PlainListStyle())
+
+                        
                         
                     case .reservations:
                         Image(systemName: "circle.fill")
@@ -59,11 +63,9 @@ struct GSRCentralView: View {
             .ignoresSafeArea(edges: .horizontal)
         } else {
             GSRGuestLandingPage()
-                .navigationBarHidden(true)
+            .navigationBarHidden(true)
         }
     }
-    
-    
 }
 
 enum GSRTab: Int, Equatable, CaseIterable {

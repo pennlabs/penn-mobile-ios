@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12836D2F2D6B982F005FBF85 /* QuickBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12836D2E2D6B9829005FBF85 /* QuickBookViewController.swift */; };
+		12836D312D6B9F94005FBF85 /* GSRBookable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12836D302D6B9F91005FBF85 /* GSRBookable.swift */; };
+		12836D352D74D853005FBF85 /* EmptyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12836D342D74D84E005FBF85 /* EmptyFile.swift */; };
+		12836D372D74DE2D005FBF85 /* GSRLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12836D362D74DE29005FBF85 /* GSRLocationCell.swift */; };
 		421823FC2CCEB12D0028E510 /* PennEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F92CCEB12D0028E510 /* PennEvent.swift */; };
 		421823FD2CCEB12D0028E510 /* MailComposerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */; };
 		421823FE2CCEB12D0028E510 /* PennEventsAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421823FA2CCEB12D0028E510 /* PennEventsAPIManager.swift */; };
@@ -398,6 +402,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		12836D2E2D6B9829005FBF85 /* QuickBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookViewController.swift; sourceTree = "<group>"; };
+		12836D302D6B9F91005FBF85 /* GSRBookable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRBookable.swift; sourceTree = "<group>"; };
+		12836D342D74D84E005FBF85 /* EmptyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFile.swift; sourceTree = "<group>"; };
+		12836D362D74DE29005FBF85 /* GSRLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRLocationCell.swift; sourceTree = "<group>"; };
 		216640601EBADADA00746B8E /* PennMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PennMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		421823F72CCEB12D0028E510 /* EventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventType.swift; sourceTree = "<group>"; };
 		421823F82CCEB12D0028E510 /* MailComposerCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerCoordinator.swift; sourceTree = "<group>"; };
@@ -785,6 +793,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		12836D2C2D6B9802005FBF85 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				12836D302D6B9F91005FBF85 /* GSRBookable.swift */,
+				12836D2E2D6B9829005FBF85 /* QuickBookViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		216640571EBADADA00746B8E = {
 			isa = PBXGroup;
 			children = (
@@ -1222,6 +1239,8 @@
 			isa = PBXGroup;
 			children = (
 				730548122D8DDF70003FD988 /* GSRRoomAvailabilityRow.swift */,
+				12836D342D74D84E005FBF85 /* EmptyFile.swift */,
+				12836D362D74DE29005FBF85 /* GSRLocationCell.swift */,
 				73FE3A252D6615D2004E0E50 /* GSRViewControllerSwiftUI.swift */,
 				73FE3A232D661468004E0E50 /* GSRCentralView.swift */,
 				736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */,
@@ -1238,6 +1257,7 @@
 			isa = PBXGroup;
 			children = (
 				736DABD12D8F556A00C93BA5 /* GSRViewModel.swift */,
+				12836D2C2D6B9802005FBF85 /* Controller */,
 				42632B9D2CB9C77B0028CC31 /* Model */,
 				42632BA02CB9C77B0028CC31 /* Networking */,
 				42632BB72CB9C77B0028CC31 /* Views */,
@@ -2188,6 +2208,7 @@
 				42632CA62CB9C77B0028CC31 /* MenuTableView.swift in Sources */,
 				42632CA72CB9C77B0028CC31 /* BuildingProtocol.swift in Sources */,
 				42632CA82CB9C77B0028CC31 /* ScannerState.swift in Sources */,
+				12836D372D74DE2D005FBF85 /* GSRLocationCell.swift in Sources */,
 				42632CA92CB9C77B0028CC31 /* ScannerView.swift in Sources */,
 				42632CAA2CB9C77B0028CC31 /* ScannerViewfinder.swift in Sources */,
 				42632CAB2CB9C77B0028CC31 /* ScannerViewModel.swift in Sources */,
@@ -2235,6 +2256,7 @@
 				42632CDC2CB9C77B0028CC31 /* DiningViewControllerSwiftUI.swift in Sources */,
 				42632CDD2CB9C77B0028CC31 /* DiningViewModelSwiftUI.swift in Sources */,
 				42632CDE2CB9C77B0028CC31 /* DiningCell.swift in Sources */,
+				12836D2F2D6B982F005FBF85 /* QuickBookViewController.swift in Sources */,
 				42632CE32CB9C77B0028CC31 /* FitnessRoomRow.swift in Sources */,
 				42632CE42CB9C77B0028CC31 /* FitnessSettingsView.swift in Sources */,
 				42632CE52CB9C77B0028CC31 /* FitnessView.swift in Sources */,
@@ -2369,6 +2391,7 @@
 				737935E02D7972C100E8DD77 /* GSRGuestLandingPage.swift in Sources */,
 				42632D922CB9C77B0028CC31 /* NotificationsSetting.swift in Sources */,
 				42632D932CB9C77B0028CC31 /* NotificationsView.swift in Sources */,
+				12836D312D6B9F94005FBF85 /* GSRBookable.swift in Sources */,
 				42632D942CB9C77B0028CC31 /* NotificationsViewControllerSwiftUI.swift in Sources */,
 				42632D952CB9C77B0028CC31 /* NotificationViewModel.swift in Sources */,
 				42632D962CB9C77B0028CC31 /* NotificationPreference.swift in Sources */,
@@ -2388,6 +2411,7 @@
 				42632DA02CB9C77B0028CC31 /* AIChatView.swift in Sources */,
 				42632DA12CB9C77B0028CC31 /* AIChatViewModel.swift in Sources */,
 				42632DA22CB9C77B0028CC31 /* ChatMessage.swift in Sources */,
+				12836D352D74D853005FBF85 /* EmptyFile.swift in Sources */,
 				42632DA32CB9C77B0028CC31 /* ChatMessageView.swift in Sources */,
 				42632DA42CB9C77B0028CC31 /* PollQuestion.swift in Sources */,
 				42632DA52CB9C77B0028CC31 /* PollsNetworkManager.swift in Sources */,
