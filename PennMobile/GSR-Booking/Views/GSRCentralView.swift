@@ -10,14 +10,47 @@ import SwiftUI
 
 struct GSRCentralView: View {
     
-    @State var loggedIn = false
+    @State var loggedIn = true
+    private var locationModel = GSRLocationModel.shared
+    @State private var locations = [GSRLocation]()
+    @State private var selectedTab : String = "Book"
+    private let tabs = ["Book", "Reservations"]
+    
+    init(){
+        locationModel.prepare()
+    }
     var body: some View {
         if loggedIn {
-            Text("TODO: Scaffolding")
-                .navigationBarTitleDisplayMode(.inline)
+            VStack {
+                Picker("Select", selection: $selectedTab) {
+                    ForEach(tabs, id: \.self) { tab in
+                        Text(tab).tag(tab)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.top, 0)
+                
+                if selectedTab == "Book" {
+                    List(locationModel.getLocations(), id: \.lid) { location in
+                        NavigationLink(destination: EmptyFile()) {
+                            GSRLocationCell(location: location)
+                        }
+                    }
+                    .listStyle(PlainListStyle())
+                } else {
+                    Text("No current GSR Reservations")
+                        .foregroundColor(.gray)
+                        .padding()
+                }
+            }
+            .onAppear {
+                locationModel.prepare()
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            
         } else {
             GSRGuestLandingPage()
-                .navigationBarHidden(true)
+            .navigationBarHidden(true)
         }
         
     }

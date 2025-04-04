@@ -36,3 +36,4 @@ class GSRViewControllerSwiftUI: GenericViewController {
         self.tabBarController?.title = "GSR Booking"
     }
 }
+
