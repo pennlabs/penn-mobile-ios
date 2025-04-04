@@ -21,41 +21,38 @@ struct GSRCentralView: View {
     }
     var body: some View {
         if loggedIn {
-            NavigationView {
-                VStack {
-                    Picker("Select", selection: $selectedTab) {
-                        ForEach(tabs, id: \.self) { tab in
-                            Text(tab).tag(tab)
-                        }
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding(.top, 0)
-                    
-                    if selectedTab == "Book" {
-                        List(locationModel.getLocations(), id: \.lid) { location in
-                            NavigationLink(destination: EmptyFile()) {
-                                GSRLocationCell(location: location)
-                                .frame(maxHeight: .infinity)
-                            }
-                            .listRowBackground(Color.black)
-                        }
-                        .listStyle(PlainListStyle())
-                    } else {
-                        Text("No current GSR Reservations")
-                            .foregroundColor(.gray)
-                            .padding()
+            VStack {
+                Picker("Select", selection: $selectedTab) {
+                    ForEach(tabs, id: \.self) { tab in
+                        Text(tab).tag(tab)
                     }
                 }
-                .onAppear {
-                    locationModel.prepare()
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.top, 0)
+                
+                if selectedTab == "Book" {
+                    List(locationModel.getLocations(), id: \.lid) { location in
+                        NavigationLink(destination: EmptyFile()) {
+                            GSRLocationCell(location: location)
+                        }
+                    }
+                    .listStyle(PlainListStyle())
+                } else {
+                    Text("No current GSR Reservations")
+                        .foregroundColor(.gray)
+                        .padding()
                 }
             }
-            .navigationTitle("GSR Booking")
+            .onAppear {
+                locationModel.prepare()
+            }
             .navigationBarTitleDisplayMode(.inline)
+            
         } else {
             GSRGuestLandingPage()
             .navigationBarHidden(true)
         }
+        
     }
 }
 
