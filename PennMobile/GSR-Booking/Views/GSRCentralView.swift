@@ -40,8 +40,11 @@ struct GSRCentralView: View {
                 Group {
                     switch selectedTab {
                     case .book:
-                        List(vm.availableLocations, id: \.lid) { location in
-                            NavigationLink(destination: EmptyFile()) {
+                        List(vm.availableLocations, id: \.self) { location in
+                            NavigationLink {
+                                GSRBookingView(selectedLocInternal: location)
+                                    .environmentObject(vm)
+                            } label: {
                                 GSRLocationCell(location: location)
                             }
                         }
@@ -55,7 +58,6 @@ struct GSRCentralView: View {
                 }
                 .environmentObject(vm)
                 .navigationBarTitleDisplayMode(.inline)
-                .padding()
                 .onAppear {
                     vm.checkWhartonStatus()
                 }

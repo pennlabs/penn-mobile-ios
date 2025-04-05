@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+import SwiftUI
 import PennMobileShared
 
 class GSRViewModel: ObservableObject {
@@ -35,32 +37,42 @@ class GSRViewModel: ObservableObject {
     
     
     func resetBooking() {
-        selectedTimeslots = []
+        withAnimation(.spring(duration: 0.2)) {
+            self.selectedTimeslots = []
+        }
     }
     
     func handleTimeslotGesture(slot: GSRTimeSlot, room: GSRRoom) throws {
         guard slot.isAvailable else { return }
+        let generator = UIImpactFeedbackGenerator(style: .medium)
+        generator.prepare()
+        var newSelected = selectedTimeslots
         var adding: Bool = true
-        if selectedTimeslots.contains(where: {$0.0 == room && $0.1 == slot}) {
-            selectedTimeslots.removeAll(where: {$0.0 == room && $0.1 == slot})
+        if newSelected.contains(where: {$0.0 == room && $0.1 == slot}) {
+            newSelected.removeAll(where: {$0.0 == room && $0.1 == slot})
             adding = false
         }
  
-        let proposedTimeslots = selectedTimeslots + (adding ? [(room, slot)] : [])
+        let proposedTimeslots = newSelected + (adding ? [(room, slot)] : [])
         do {
             try validateSelectedTimeslots(proposedTimeslots)
         } catch {
-            resetBooking()
+            newSelected = []
         }
         
         // 90 minute check assumes 30 minute bookings
-        if selectedTimeslots.count == 3 {
+        if newSelected.count == 3 {
             throw GSRValidationError.over90Minutes
         }
         
         if adding {
-            selectedTimeslots.append((room, slot))
+            newSelected.append((room, slot))
         }
+        generator.impactOccurred()
+        withAnimation(.spring(duration: 0.2)) {
+            self.selectedTimeslots = newSelected
+        }
+        
     }
     
     private func validateSelectedTimeslots(_ slots: [(GSRRoom, GSRTimeSlot)]) throws {
@@ -101,14 +113,14 @@ class GSRViewModel: ObservableObject {
     }
     
     func setLocation(to location: GSRLocation) throws {
-        resetBooking()
         DispatchQueue.main.async {
+            self.resetBooking()
             Task {
                 if location.kind == .wharton && !self.isWharton {
                     throw GSRValidationError.notInWharton
                 }
                 
-                let unfilteredLoc = try await GSRNetworkManager.getAvailability(for: location, startDate: self.selectedDate, endDate: Calendar.current.date(byAdding: .day, value: 1, to: self.selectedDate)!)
+                let unfilteredLoc = try await GSRNetworkManager.getAvailability(for: location, startDate: self.datePickerOptions.first!, endDate: self.datePickerOptions.last!)
                 let nonEmptyRooms = unfilteredLoc.filter {
                     !$0.availability.isEmpty
                 }
@@ -124,6 +136,14 @@ class GSRViewModel: ObservableObject {
                 }
                 self.selectedLocation = location
             }
+        }
+    }
+    
+    func getRelevantAvailability(room: GSRRoom? = nil) -> [GSRTimeSlot] {
+        guard let currRoom = room ?? self.roomsAtSelectedLocation.first else { return [] }
+        return currRoom.availability.filter {
+            let cal = Calendar.current
+            return cal.isDate($0.startTime, inSameDayAs: self.selectedDate)
         }
     }
     

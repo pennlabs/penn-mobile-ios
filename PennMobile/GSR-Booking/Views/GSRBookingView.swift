@@ -9,10 +9,6 @@
 import SwiftUI
 
 struct GSRBookingView: View {
-    
-    
-    
-    
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
     @State var selectedLocInternal: GSRLocation
@@ -25,6 +21,7 @@ struct GSRBookingView: View {
                     Text(loc.name)
                 }
             }
+            .padding(.horizontal)
             
             Picker("Date", selection: $vm.selectedDate) {
                 ForEach(vm.datePickerOptions, id: \.self) { option in
@@ -32,9 +29,8 @@ struct GSRBookingView: View {
                 }
             }
             .pickerStyle(.segmented)
-            if vm.roomsAtSelectedLocation.count != 0 {
-                GSRTwoWayScrollView()
-            }
+            .padding(.horizontal)
+            GSRTwoWayScrollView()
             Spacer()
             GSRBookingToolbarView() 
             

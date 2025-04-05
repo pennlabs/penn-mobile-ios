@@ -13,14 +13,11 @@ struct GSRTimeCardRow: View {
     var body: some View {
         if let first = vm.roomsAtSelectedLocation.first {
             HStack(spacing: 0) {
-                let relevantAvailability: [GSRTimeSlot] = first.availability.filter {
-                    let cal = Calendar.current
-                    return cal.isDate($0.startTime, inSameDayAs: vm.selectedDate) || cal.isDate($0.endTime, inSameDayAs: vm.selectedDate)
-                }
-                if let firstSlot = relevantAvailability.first {
+                let avail = vm.getRelevantAvailability()
+                if let firstSlot = avail.first {
                     Text(getTimeString(firstSlot.startTime))
                         .frame(width: 80)
-                    ForEach(relevantAvailability, id: \.self) { slot in
+                    ForEach(avail, id: \.self) { slot in
                         Text(getTimeString(slot.endTime))
                             .frame(width: 80)
                     }

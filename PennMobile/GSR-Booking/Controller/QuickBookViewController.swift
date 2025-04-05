@@ -55,33 +55,35 @@ class QuickBookViewController: UIViewController, ShowsAlert {
         let group = DispatchGroup()
         var foundAvailableRoom = false
         
-        GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
-            defer {
-                group.leave()
-            }
-            
-            switch result {
-            case .success(let rooms):
-                if !rooms.isEmpty {
-                    self.allRooms = rooms
-                    self.getSoonestTimeSlot()
-                    foundAvailableRoom = true
-                }
-            case .failure:
-                present(toast: .apiError)
-            }
-        }
-        if !foundAvailableRoom && location == self.locations.last {
-            present(toast: .apiError)
-        }
-        group.notify(queue: DispatchQueue.main) {
-            if foundAvailableRoom {
-                completion()
-                self.setupSubmitAlert(location: location)
-            } else {
-                self.present(toast: .apiError)
-            }
-        }
+        completion()
+        
+//        GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
+//            defer {
+//                group.leave()
+//            }
+//            
+//            switch result {
+//            case .success(let rooms):
+//                if !rooms.isEmpty {
+//                    self.allRooms = rooms
+//                    self.getSoonestTimeSlot()
+//                    foundAvailableRoom = true
+//                }
+//            case .failure:
+//                present(toast: .apiError)
+//            }
+//        }
+//        if !foundAvailableRoom && location == self.locations.last {
+//            present(toast: .apiError)
+//        }
+//        group.notify(queue: DispatchQueue.main) {
+//            if foundAvailableRoom {
+//                completion()
+//                self.setupSubmitAlert(location: location)
+//            } else {
+//                self.present(toast: .apiError)
+//            }
+//        }
     }
     
     private func getSoonestTimeSlot() {
