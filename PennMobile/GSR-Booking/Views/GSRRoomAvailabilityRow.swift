@@ -16,9 +16,10 @@ struct GSRRoomAvailabilityRow: View {
     var body: some View {
         HStack(spacing: 0) {
             ForEach(vm.getRelevantAvailability(room: room), id: \.self) { slot in
+                let isSelected = !vm.selectedTimeslots.filter({ $0.1.hashValue == slot.hashValue }).isEmpty
                 Rectangle()
                     .frame(width: 80, height: 42)
-                    .foregroundStyle(vm.selectedTimeslots.filter({ $0.1.hashValue == slot.hashValue }).isEmpty ? slot.color : Color("gsrBlue"))
+                    .foregroundStyle(isSelected ? Color("gsrBlue") : slot.color)
                     .onTapGesture {
                         do {
                             try vm.handleTimeslotGesture(slot: slot, room: room)

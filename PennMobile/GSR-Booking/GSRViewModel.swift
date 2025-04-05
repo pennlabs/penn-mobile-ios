@@ -44,8 +44,6 @@ class GSRViewModel: ObservableObject {
     
     func handleTimeslotGesture(slot: GSRTimeSlot, room: GSRRoom) throws {
         guard slot.isAvailable else { return }
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.prepare()
         var newSelected = selectedTimeslots
         var adding: Bool = true
         if newSelected.contains(where: {$0.0 == room && $0.1 == slot}) {
@@ -68,7 +66,6 @@ class GSRViewModel: ObservableObject {
         if adding {
             newSelected.append((room, slot))
         }
-        generator.impactOccurred()
         withAnimation(.spring(duration: 0.2)) {
             self.selectedTimeslots = newSelected
         }

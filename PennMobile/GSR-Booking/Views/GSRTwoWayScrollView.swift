@@ -26,6 +26,7 @@ struct GSRTwoWayScrollView: View {
                         .overlay {
                             TimeSlotDottedLinesView()
                         }
+                        
                     } header: {
                         VStack(alignment: .center, spacing: 0) {
                             GSRTimeCardRow()
@@ -41,6 +42,7 @@ struct GSRTwoWayScrollView: View {
                         
                     }
                 }
+                
             }
         }
         
@@ -48,9 +50,7 @@ struct GSRTwoWayScrollView: View {
 //        ScrollView([.vertical, .horizontal], showsIndicators: false) {
 //            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
 //                Section {
-//                    LazyHStack(alignment: .center, spacing: 0, pinnedViews: .sectionHeaders) {
-//                        
-//                    }
+//
 //                    
 //                } header: {
 //HStack {
