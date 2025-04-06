@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import PennMobileShared
 
 /// A sublet listing.
 /// 
@@ -15,24 +16,24 @@ import SwiftUI
 /// `SubletData` contains the properties that are set by the user when creating a listing,
 /// and `Sublet` contains the remainder.
 @dynamicMemberLookup
-public struct Sublet: Identifiable, Codable, Hashable, Sendable {
-    public let subletID: Int
-    public var data: SubletData
-    public var subletter: Int
-    public var offers: [SubletOffer]?
-    public var images: [SubletImage]
+struct Sublet: Identifiable, Codable, Hashable, Sendable {
+    let subletID: Int
+    var data: SubletData
+    var subletter: Int
+    var offers: [SubletOffer]?
+    var images: [SubletImage]
     
     // These are for updating the UI properly since the data can be updated without the id being updated
-    public var lastUpdated: Date
-    public var id: String {
+    var lastUpdated: Date
+    var id: String {
         "\(subletID)-\(lastUpdated.timeIntervalSinceReferenceDate)"
     }
 
-    public subscript<T>(dynamicMember keyPath: KeyPath<SubletData, T>) -> T {
+    subscript<T>(dynamicMember keyPath: KeyPath<SubletData, T>) -> T {
         data[keyPath: keyPath]
     }
 
-    public init(subletID: Int, data: SubletData, subletter: Int, offers: [SubletOffer]? = nil, images: [SubletImage], lastUpdated: Date = Date()) {
+    init(subletID: Int, data: SubletData, subletter: Int, offers: [SubletOffer]? = nil, images: [SubletImage], lastUpdated: Date = Date()) {
         self.subletID = subletID
         self.data = data
         self.subletter = subletter
@@ -41,7 +42,7 @@ public struct Sublet: Identifiable, Codable, Hashable, Sendable {
         self.lastUpdated = lastUpdated
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let subletID = try container.decode(Int.self, forKey: .subletID)
         let data = try SubletData(from: decoder)
@@ -53,7 +54,7 @@ public struct Sublet: Identifiable, Codable, Hashable, Sendable {
         self.init(subletID: subletID, data: data, subletter: subletter, offers: offers, images: images, lastUpdated: lastUpdated)
     }
     
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case subletID = "id"
         case subletter
         case offers
@@ -61,7 +62,7 @@ public struct Sublet: Identifiable, Codable, Hashable, Sendable {
         case lastUpdated
     }
     
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(subletID, forKey: .subletID)
         try data.encode(to: encoder)
@@ -71,34 +72,34 @@ public struct Sublet: Identifiable, Codable, Hashable, Sendable {
         try container.encode(lastUpdated, forKey: .lastUpdated)
     }
     
-    public static func ==(lhs: Sublet, rhs: Sublet) -> Bool {
+    static func ==(lhs: Sublet, rhs: Sublet) -> Bool {
         return lhs.subletID == rhs.subletID
     }
 
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(subletID)
     }
 }
 
 @dynamicMemberLookup
-public struct SubletDraft: Identifiable, Codable, Hashable {
-    public let id: UUID
-    public var data: SubletData
-    public var images: [UIImage]
-    public var compressedImages = [UIImage: Data]()
+struct SubletDraft: Identifiable, Codable, Hashable {
+    let id: UUID
+    var data: SubletData
+    var images: [UIImage]
+    var compressedImages = [UIImage: Data]()
 
-    public subscript<T>(dynamicMember keyPath: KeyPath<SubletData, T>) -> T {
+    subscript<T>(dynamicMember keyPath: KeyPath<SubletData, T>) -> T {
         data[keyPath: keyPath]
     }
 
-    public init(id: UUID = UUID(), data: SubletData, images: [UIImage], compressedImages: [UIImage: Data] = [:]) {
+    init(id: UUID = UUID(), data: SubletData, images: [UIImage], compressedImages: [UIImage: Data] = [:]) {
         self.id = id
         self.data = data
         self.images = images
         self.compressedImages = compressedImages
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let data = try SubletData(from: decoder)
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -117,7 +118,7 @@ public struct SubletDraft: Identifiable, Codable, Hashable {
         self.init(id: id, data: data, images: images, compressedImages: compressedImages)
     }
     
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try data.encode(to: encoder)
@@ -125,39 +126,39 @@ public struct SubletDraft: Identifiable, Codable, Hashable {
         try container.encode(imageData, forKey: .images)
     }
 
-    public enum CodingKeys: String, CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id
         case images
     }
     
-    public static func ==(lhs: SubletDraft, rhs: SubletDraft) -> Bool {
+    static func ==(lhs: SubletDraft, rhs: SubletDraft) -> Bool {
         return lhs.id == rhs.id
     }
 
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
 
-public struct SubletData: Codable, Sendable {
-    public var amenities: [String]
-    public var title: String
-    public var address: String?
-    public var beds: Int?
-    public var baths: Double?
-    public var description: String?
-    public var externalLink: String? // Optional since not returned in get all sublets
-    public var price: Int
-    public var negotiable: Bool
-    public var expiresAt: Date? // Optional since not returned in get all sublets
-    public var startDate: Day
-    public var endDate: Day
+struct SubletData: Codable, Sendable {
+    var amenities: [String]
+    var title: String
+    var address: String?
+    var beds: Int?
+    var baths: Double?
+    var description: String?
+    var externalLink: String? // Optional since not returned in get all sublets
+    var price: Int
+    var negotiable: Bool
+    var expiresAt: Date? // Optional since not returned in get all sublets
+    var startDate: Day
+    var endDate: Day
     
     enum CodingKeys: String, CodingKey {
         case amenities, title, address, beds, baths, description, externalLink, price, negotiable, expiresAt, startDate, endDate
     }
     
-    public init(amenities: [String], title: String, address: String? = nil, beds: Int? = nil, baths: Double? = nil, description: String? = nil, externalLink: String? = nil, price: Int, negotiable: Bool, expiresAt: Date? = nil, startDate: Day, endDate: Day) {
+    init(amenities: [String], title: String, address: String? = nil, beds: Int? = nil, baths: Double? = nil, description: String? = nil, externalLink: String? = nil, price: Int, negotiable: Bool, expiresAt: Date? = nil, startDate: Day, endDate: Day) {
         self.amenities = amenities
         self.title = title
         self.address = address
@@ -173,7 +174,7 @@ public struct SubletData: Codable, Sendable {
         
     }
 
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.amenities = try container.decodeIfPresent([String].self, forKey: .amenities) ?? []
@@ -194,7 +195,7 @@ public struct SubletData: Codable, Sendable {
         self.endDate = try container.decode(Day.self, forKey: .endDate)
     }
     
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(amenities, forKey: .amenities)
         try container.encode(title, forKey: .title)
@@ -213,7 +214,7 @@ public struct SubletData: Codable, Sendable {
     }
 }
 
-public extension SubletData {
+extension SubletData {
     init() {
         amenities = []
         title = ""
@@ -227,24 +228,24 @@ public extension SubletData {
     }
 }
 
-public struct SubletImage: Identifiable, Codable, Hashable, Sendable {
-    public let id: Int
-    public let imageUrl: String
+struct SubletImage: Identifiable, Codable, Hashable, Sendable {
+    let id: Int
+    let imageUrl: String
 }
 
 @dynamicMemberLookup
-public struct SubletOffer: Identifiable, Codable, Hashable, Sendable {
-    public let id: Int
-    public let createdDate: Date
-    public let user: Int
-    public let sublet: Int
-    public let data: SubletOfferData
+struct SubletOffer: Identifiable, Codable, Hashable, Sendable {
+    let id: Int
+    let createdDate: Date
+    let user: Int
+    let sublet: Int
+    let data: SubletOfferData
     
-    public subscript<T>(dynamicMember keyPath: KeyPath<SubletOfferData, T>) -> T {
+    subscript<T>(dynamicMember keyPath: KeyPath<SubletOfferData, T>) -> T {
         data[keyPath: keyPath]
     }
     
-    public init(id: Int, data: SubletOfferData, createdDate: Date, user: Int, sublet: Int) {
+    init(id: Int, data: SubletOfferData, createdDate: Date, user: Int, sublet: Int) {
         self.id = id
         self.data = data
         self.createdDate = createdDate
@@ -252,7 +253,7 @@ public struct SubletOffer: Identifiable, Codable, Hashable, Sendable {
         self.sublet = sublet
     }
     
-    public init(from decoder: Decoder) throws {
+    init(from decoder: Decoder) throws {
         let data = try SubletOfferData(from: decoder)
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -264,14 +265,14 @@ public struct SubletOffer: Identifiable, Codable, Hashable, Sendable {
         self.init(id: id, data: data, createdDate: createdDate, user: user, sublet: sublet)
     }
     
-    public enum CodingKeys: CodingKey {
+    enum CodingKeys: CodingKey {
         case id
         case createdDate
         case user
         case sublet
     }
     
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id, forKey: .id)
         try data.encode(to: encoder)
@@ -280,29 +281,29 @@ public struct SubletOffer: Identifiable, Codable, Hashable, Sendable {
         try container.encode(sublet, forKey: .sublet)
     }
 
-    public static func ==(lhs: SubletOffer, rhs: SubletOffer) -> Bool {
+    static func ==(lhs: SubletOffer, rhs: SubletOffer) -> Bool {
         return lhs.id == rhs.id
     }
 
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
 
-public struct SubletOfferData: Codable, Sendable {
-    public var email: String
-    public var phoneNumber: String
-    public var message: String?
+struct SubletOfferData: Codable, Sendable {
+    var email: String
+    var phoneNumber: String
+    var message: String?
 }
 
-public extension SubletOfferData {
+extension SubletOfferData {
     init() {
         email = ""
         phoneNumber = ""
     }
 }
 
-public extension Sublet {
+extension Sublet {
     static let mock = Self(
         subletID: 0,
         data: .init(

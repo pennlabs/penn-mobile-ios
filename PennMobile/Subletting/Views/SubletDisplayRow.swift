@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Kingfisher
-import PennMobileShared
 
 struct SubletDisplayRow: View {
     let sublet: Sublet

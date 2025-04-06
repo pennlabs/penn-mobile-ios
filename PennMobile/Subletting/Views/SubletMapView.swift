@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import PennMobileShared
 
 struct SubletMapView: View {
     let sublet: Sublet

@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import PennMobileShared
 
 struct CandidateRow: View {
     let offer: SubletOffer

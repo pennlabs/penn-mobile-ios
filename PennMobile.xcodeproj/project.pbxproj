@@ -16,6 +16,7 @@
 		421824092CCEB1370028E510 /* PennEventCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824052CCEB1370028E510 /* PennEventCellView.swift */; };
 		4218240A2CCEB1370028E510 /* PennEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824062CCEB1370028E510 /* PennEventsView.swift */; };
 		4218240B2CCEB1370028E510 /* PennEventsViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421824072CCEB1370028E510 /* PennEventsViewerView.swift */; };
+		425471AD2DA086D90005BA3F /* PennForms in Frameworks */ = {isa = PBXBuildFile; productRef = 425471AC2DA086D90005BA3F /* PennForms */; };
 		42632C8F2CB9C77B0028CC31 /* ScannerDuplicate.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0E2CB9C77B0028CC31 /* ScannerDuplicate.ahap */; };
 		42632C902CB9C77B0028CC31 /* ScannerError.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B0F2CB9C77B0028CC31 /* ScannerError.ahap */; };
 		42632C912CB9C77B0028CC31 /* ScannerInvalid.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 42632B102CB9C77B0028CC31 /* ScannerInvalid.ahap */; };
@@ -338,14 +339,14 @@
 		42632E432CB9C77B0028CC31 /* LaundryMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E1D2CB9C77B0028CC31 /* LaundryMachine.swift */; };
 		42632E442CB9C77B0028CC31 /* Multipart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E1F2CB9C77B0028CC31 /* Multipart.swift */; };
 		42632E452CB9C77B0028CC31 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E202CB9C77B0028CC31 /* NetworkingError.swift */; };
-		42632E462CB9C77B0028CC31 /* SubletDisplayBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */; };
-		42632E472CB9C77B0028CC31 /* SublettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E232CB9C77B0028CC31 /* SublettingModels.swift */; };
 		4273BCFF2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		4273BD012BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		4273BD022BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		42ABED2A2CE8EB8D006533CD /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED292CE8EB8D006533CD /* ContactsView.swift */; };
 		42ABED2C2CE8EB9F006533CD /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED2B2CE8EB9F006533CD /* ContactModel.swift */; };
 		42D89D552CE94FC9005DFFD4 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */; };
+		42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E232CB9C77B0028CC31 /* SublettingModels.swift */; };
+		42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */; };
 		6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */; };
 		6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6CA1ACDA271D2D5000EDB967 /* Kingfisher */; };
 		6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */; };
@@ -356,7 +357,6 @@
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
-		734BED9B2D9DE4B700964811 /* PennForms in Frameworks */ = {isa = PBXBuildFile; productRef = 734BED9A2D9DE4B700964811 /* PennForms */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -795,7 +795,7 @@
 			files = (
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
-				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
+				425471AD2DA086D90005BA3F /* PennForms in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
 				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
 				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
@@ -1773,28 +1773,13 @@
 			path = "Setup + Navigation";
 			sourceTree = "<group>";
 		};
-		42632C7C2CB9C77B0028CC31 /* Listings */ = {
-			isa = PBXGroup;
-			children = (
-				42632C7A2CB9C77B0028CC31 /* MyListingsActivity.swift */,
-				42632C7B2CB9C77B0028CC31 /* NewListingForm.swift */,
-			);
-			path = Listings;
-			sourceTree = "<group>";
-		};
 		42632C862CB9C77B0028CC31 /* Subletting */ = {
 			isa = PBXGroup;
 			children = (
-				42632C7C2CB9C77B0028CC31 /* Listings */,
-				42632C7D2CB9C77B0028CC31 /* MarketplaceFilterView.swift */,
-				42632C7E2CB9C77B0028CC31 /* MarketplaceView.swift */,
-				42632C7F2CB9C77B0028CC31 /* SubletCandidatesView.swift */,
-				42632C802CB9C77B0028CC31 /* SubletDetailView.swift */,
-				42632C812CB9C77B0028CC31 /* SubletDisplayRow.swift */,
-				42632C822CB9C77B0028CC31 /* SubletInterestForm.swift */,
-				42632C832CB9C77B0028CC31 /* SubletMapView.swift */,
+				42F7E77F2DA2E59A0009F9B6 /* Views */,
 				42632C842CB9C77B0028CC31 /* SublettingAPI.swift */,
 				42632C852CB9C77B0028CC31 /* SublettingViewModel.swift */,
+				42632E232CB9C77B0028CC31 /* SublettingModels.swift */,
 			);
 			path = Subletting;
 			sourceTree = "<group>";
@@ -2030,15 +2015,6 @@
 			path = "Networking + Analytics";
 			sourceTree = "<group>";
 		};
-		42632E242CB9C77B0028CC31 /* Subletting */ = {
-			isa = PBXGroup;
-			children = (
-				42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */,
-				42632E232CB9C77B0028CC31 /* SublettingModels.swift */,
-			);
-			path = Subletting;
-			sourceTree = "<group>";
-		};
 		42632E262CB9C77B0028CC31 /* PennMobileShared */ = {
 			isa = PBXGroup;
 			children = (
@@ -2048,10 +2024,26 @@
 				42632E1B2CB9C77B0028CC31 /* General */,
 				42632E1E2CB9C77B0028CC31 /* Laundry */,
 				42632E212CB9C77B0028CC31 /* Networking + Analytics */,
-				42632E242CB9C77B0028CC31 /* Subletting */,
 				42632E252CB9C77B0028CC31 /* PennMobileShared.h */,
 			);
 			path = PennMobileShared;
+			sourceTree = "<group>";
+		};
+		42F7E77F2DA2E59A0009F9B6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				42632C7E2CB9C77B0028CC31 /* MarketplaceView.swift */,
+				42632C7D2CB9C77B0028CC31 /* MarketplaceFilterView.swift */,
+				42632C802CB9C77B0028CC31 /* SubletDetailView.swift */,
+				42632C7F2CB9C77B0028CC31 /* SubletCandidatesView.swift */,
+				42632C812CB9C77B0028CC31 /* SubletDisplayRow.swift */,
+				42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */,
+				42632C832CB9C77B0028CC31 /* SubletMapView.swift */,
+				42632C7A2CB9C77B0028CC31 /* MyListingsActivity.swift */,
+				42632C7B2CB9C77B0028CC31 /* NewListingForm.swift */,
+				42632C822CB9C77B0028CC31 /* SubletInterestForm.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		6C392E3727B5BDF20097640B /* Config */ = {
@@ -2116,7 +2108,7 @@
 				895A1AB42CB98E9000E161AE /* XLPagerTabStrip */,
 				895A1AB72CB98F5000E161AE /* ScrollableGraphView */,
 				895A1ABA2CB98F7100E161AE /* SCLAlertView */,
-				734BED9A2D9DE4B700964811 /* PennForms */,
+				425471AC2DA086D90005BA3F /* PennForms */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -2215,7 +2207,7 @@
 				895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */,
 				895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
 				895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
-				734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */,
+				425471AB2DA086D90005BA3F /* XCLocalSwiftPackageReference "../PennForms" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
@@ -2489,6 +2481,7 @@
 				42632D712CB9C77B0028CC31 /* RoomSelectionView.swift in Sources */,
 				42632D722CB9C77B0028CC31 /* Account.swift in Sources */,
 				42632D732CB9C77B0028CC31 /* AuthManager.swift in Sources */,
+				42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */,
 				42632D742CB9C77B0028CC31 /* CampusExpressLoginController.swift in Sources */,
 				42632D752CB9C77B0028CC31 /* CampusExpressNetworkManager.swift in Sources */,
 				42632D762CB9C77B0028CC31 /* Degree.swift in Sources */,
@@ -2554,6 +2547,7 @@
 				42632DB12CB9C77B0028CC31 /* AppDelegate+NotificationExtension.swift in Sources */,
 				42632DB22CB9C77B0028CC31 /* ControllerModel.swift in Sources */,
 				42632DB32CB9C77B0028CC31 /* Environment.swift in Sources */,
+				42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */,
 				42632DB42CB9C77B0028CC31 /* Features.swift in Sources */,
 				42632DB52CB9C77B0028CC31 /* MainTabView.swift in Sources */,
 				42632DB62CB9C77B0028CC31 /* PennMobile.swift in Sources */,
@@ -2611,8 +2605,6 @@
 				42632E432CB9C77B0028CC31 /* LaundryMachine.swift in Sources */,
 				42632E442CB9C77B0028CC31 /* Multipart.swift in Sources */,
 				42632E452CB9C77B0028CC31 /* NetworkingError.swift in Sources */,
-				42632E462CB9C77B0028CC31 /* SubletDisplayBox.swift in Sources */,
-				42632E472CB9C77B0028CC31 /* SublettingModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3078,6 +3070,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		425471AB2DA086D90005BA3F /* XCLocalSwiftPackageReference "../PennForms" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../PennForms;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -3093,14 +3092,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.0.0;
-			};
-		};
-		734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pennlabs/PennForms";
-			requirement = {
-				branch = main;
-				kind = branch;
 			};
 		};
 		895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */ = {
@@ -3154,6 +3145,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		425471AC2DA086D90005BA3F /* PennForms */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PennForms;
+		};
 		6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
@@ -3188,11 +3183,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		734BED9A2D9DE4B700964811 /* PennForms */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */;
-			productName = PennForms;
 		};
 		8932694C28FC79FB003D4BF9 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;

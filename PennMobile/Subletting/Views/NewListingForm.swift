@@ -115,7 +115,10 @@ struct NewListingForm: View {
                 }
                 
                 DateField(date: $subletData.expiresAt, title: "Listing Expiry Date")
-                    .validator(.required)
+                    .validator([
+                        AnyValidator(.required),
+                        AnyValidator(AtMostValidator(value: subletData.startDate, { "Must be no later than \($0)" }))
+                    ])
                 
                 TagSelector(selection: $selectedAmenities, tags: $sublettingViewModel.amenities, title: "Amenities")
                 
@@ -217,7 +220,6 @@ struct NewListingForm: View {
                                             sublet!.images = sublet!.images.filter { image in
                                                 existingImages.contains(image.imageUrl)
                                             }
-                                            sublet!.lastUpdated = Date()
                                             sublettingViewModel.updateSublet(sublet: sublet!)
                                         } catch let error {
                                             print("Error deleting sublet images: \(error)")
@@ -258,7 +260,6 @@ struct NewListingForm: View {
                                                 self.progress = progress
                                             }
                                         }
-                                        sublet!.lastUpdated = Date()
                                         sublettingViewModel.updateSublet(sublet: sublet!)
                                     } catch let error {
                                         print("Error uploading sublet images: \(error)")

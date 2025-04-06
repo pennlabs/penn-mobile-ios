@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Kingfisher
-import PennMobileShared
 
 struct SubletDetailView: View {
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
@@ -55,16 +54,18 @@ struct SubletDetailView: View {
                     .frame(minHeight: proxy.size.height)
                     .clipped()
                     .contentShape(.rect)
-                    .gesture(
+                    .simultaneousGesture(
                         DragGesture()
                             .onEnded { value in
-                                if value.translation.width < 0 {
-                                    withAnimation {
-                                        selectedTab = "Candidates"
-                                    }
-                                } else if value.translation.width > 0 {
-                                    withAnimation {
-                                        selectedTab = "Details"
+                                if abs(value.translation.width) > abs(value.translation.height) {
+                                    if value.translation.width < 0 {
+                                        withAnimation {
+                                            selectedTab = "Candidates"
+                                        }
+                                    } else if value.translation.width > 0 {
+                                        withAnimation {
+                                            selectedTab = "Details"
+                                        }
                                     }
                                 }
                             }
