@@ -335,6 +335,7 @@
 		736DABD42D8FB4E800C93BA5 /* GSRTwoWayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */; };
 		736DABD62D8FB55B00C93BA5 /* GSRBookingToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABD52D8FB55600C93BA5 /* GSRBookingToolbarView.swift */; };
 		737935E02D7972C100E8DD77 /* GSRGuestLandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737935DF2D7972BF00E8DD77 /* GSRGuestLandingPage.swift */; };
+		73AF72902DA43C0500389D80 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 73AF728F2DA43C0500389D80 /* Lottie */; };
 		73FE3A242D661484004E0E50 /* GSRCentralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE3A232D661468004E0E50 /* GSRCentralView.swift */; };
 		73FE3A262D6615DA004E0E50 /* GSRViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73FE3A252D6615D2004E0E50 /* GSRViewControllerSwiftUI.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
@@ -754,6 +755,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73AF72902DA43C0500389D80 /* Lottie in Frameworks */,
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				7356504F2D6F870600FFBD8C /* LabsPlatformSwift in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
@@ -2012,6 +2014,7 @@
 				895A1AB72CB98F5000E161AE /* ScrollableGraphView */,
 				895A1ABA2CB98F7100E161AE /* SCLAlertView */,
 				7356504E2D6F870600FFBD8C /* LabsPlatformSwift */,
+				73AF728F2DA43C0500389D80 /* Lottie */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -2112,6 +2115,7 @@
 				895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
 				895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
 				7356504D2D6F870600FFBD8C /* XCLocalSwiftPackageReference "../LabsPlatformSwift" */,
+				73AF728E2DA43C0500389D80 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
@@ -2978,6 +2982,14 @@
 				minimumVersion = 10.0.0;
 			};
 		};
+		73AF728E2DA43C0500389D80 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.1;
+			};
+		};
 		895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/xmartlabs/XLPagerTabStrip";
@@ -3075,6 +3087,11 @@
 		7356504E2D6F870600FFBD8C /* LabsPlatformSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LabsPlatformSwift;
+		};
+		73AF728F2DA43C0500389D80 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73AF728E2DA43C0500389D80 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 		8932694C28FC79FB003D4BF9 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
