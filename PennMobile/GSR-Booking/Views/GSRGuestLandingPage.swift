@@ -8,6 +8,7 @@
 
 import SwiftUI
 import MapKit
+import LabsPlatformSwift
 
 struct GSRGuestLandingPage: View {
     static let latOffset = 0.00005
@@ -61,13 +62,15 @@ struct GSRGuestLandingPage: View {
                     .padding(.bottom, 48)
                 Text("Sign in to use GSR Booking")
                     .italic()
-                Capsule()
-                    .foregroundStyle(.thinMaterial)
-                    .overlay {
-                        Text("Sign In")
-                            .foregroundStyle(.background)
-                    }
-                    .frame(maxWidth: 150, maxHeight: 50)
+                Button {
+                    LabsPlatform.shared?.loginWithPlatform()
+                } label: {
+                    Text("Sign In")
+                        .foregroundStyle(.background)
+                }
+                .buttonStyle(.borderedProminent)
+                .buttonBorderShape(.capsule)
+                .frame(maxWidth: 150, maxHeight: 50)
                 Spacer()
             }
             .padding(.vertical, 16)

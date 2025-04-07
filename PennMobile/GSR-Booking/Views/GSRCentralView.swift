@@ -9,14 +9,12 @@
 import SwiftUI
 
 struct GSRCentralView: View {
-    static let debug = true
-    
-    @State var loggedIn = false
     @State var selectedTab: GSRTab = GSRTab.book
     @StateObject var vm = GSRViewModel()
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
-        if loggedIn || GSRCentralView.debug {
+        if authManager.state.isLoggedIn {
             VStack {
                 HStack {
                     Spacer()
