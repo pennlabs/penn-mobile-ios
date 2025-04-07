@@ -73,11 +73,11 @@ struct Sublet: Identifiable, Codable, Hashable, Sendable {
     }
     
     static func ==(lhs: Sublet, rhs: Sublet) -> Bool {
-        return lhs.subletID == rhs.subletID
+        return lhs.id == rhs.id
     }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(subletID)
+        hasher.combine(id)
     }
 }
 
