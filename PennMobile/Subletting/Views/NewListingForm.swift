@@ -12,7 +12,7 @@ import PennMobileShared
 import OrderedCollections
 
 struct URLValidator: Validator {
-    let message: String? = "Enter a valid URL"
+    let message: (Input?) -> String? = { _ in "Enter a valid URL" }
     
     func isValid(_ input: String?) -> Bool {
         guard let input, !input.isEmpty else { return true }
@@ -117,7 +117,7 @@ struct NewListingForm: View {
                 DateField(date: $subletData.expiresAt, title: "Listing Expiry Date")
                     .validator([
                         AnyValidator(.required),
-                        AnyValidator(AtMostValidator(value: subletData.startDate, { "Must be no later than \($0)" }))
+                        AnyValidator(AtMostValidator(value: startDate ?? (endDate ?? Date.distantFuture), "Must be before listing start date"))
                     ])
                 
                 TagSelector(selection: $selectedAmenities, tags: $sublettingViewModel.amenities, title: "Amenities")

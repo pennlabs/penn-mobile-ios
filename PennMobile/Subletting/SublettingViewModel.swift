@@ -232,6 +232,9 @@ struct MarketplaceFilterData: Codable {
         var updatedSublet = sublet
         updatedSublet.lastUpdated = Date()
         sublets[updatedSublet.subletID] = updatedSublet
+        if let expiresAt = updatedSublet.expiresAt, expiresAt < Date() {
+            filteredIDs.removeAll { $0 == sublet.subletID }
+        }
     }
     
     func getSublet(subletID: Int) -> Sublet? {
