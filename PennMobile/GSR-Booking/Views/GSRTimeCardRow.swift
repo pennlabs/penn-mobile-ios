@@ -15,10 +15,10 @@ struct GSRTimeCardRow: View {
             HStack(spacing: 0) {
                 let avail = vm.getRelevantAvailability()
                 if let firstSlot = avail.first {
-                    Text(getTimeString(firstSlot.startTime))
+                    Text(firstSlot.startTime.gsrTimeString)
                         .frame(width: 80)
                     ForEach(avail, id: \.self) { slot in
-                        Text(getTimeString(slot.endTime))
+                        Text(slot.endTime.gsrTimeString)
                             .frame(width: 80)
                     }
                 }
@@ -27,14 +27,5 @@ struct GSRTimeCardRow: View {
             }
         }
         
-    }
-    
-    func getTimeString(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        formatter.amSymbol = "AM"
-        formatter.pmSymbol = "PM"
-
-        return formatter.string(from: date)
     }
 }

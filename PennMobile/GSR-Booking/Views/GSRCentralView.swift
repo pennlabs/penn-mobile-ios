@@ -23,6 +23,7 @@ struct GSRCentralView: View {
                     ForEach(GSRTab.allCases, id: \.rawValue) { tab in
                         Text(tab.titleText)
                             .foregroundStyle(selectedTab == tab ? Color("baseLabsBlue") : Color.primary)
+                            .font(.title3)
                             // make hit target larger using horizontal padding
                             .padding(.horizontal, 12)
                             .padding(.vertical, 4)
@@ -40,13 +41,14 @@ struct GSRCentralView: View {
                 Group {
                     switch selectedTab {
                     case .book:
-                        List(vm.availableLocations, id: \.self) { location in
-                            NavigationLink {
-                                GSRBookingView(selectedLocInternal: location)
-                                    .environmentObject(vm)
-                            } label: {
+                        List(vm.availableLocations.standardGSRSort, id: \.self) { location in
+                            NavigationLink(value: location) {
                                 GSRLocationCell(location: location)
                             }
+                        }
+                        .navigationDestination(for: GSRLocation.self) { loc in
+                            GSRBookingView(selectedLocInternal: loc)
+                                .environmentObject(vm)
                         }
                         .listStyle(PlainListStyle())
 

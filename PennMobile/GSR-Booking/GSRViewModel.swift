@@ -18,7 +18,10 @@ class GSRViewModel: ObservableObject {
     @Published var selectedTimeslots: [(GSRRoom, GSRTimeSlot)] = []
     @Published var availableLocations: [GSRLocation] = []
     @Published var datePickerOptions: [Date]
+    @Published var recentBooking: GSRBooking?
     @Published var isWharton: Bool = false
+    @Published var isLoadingAvailability = false
+    @Published var showSuccessfulBookingAlert = false
     
     init() {
         let options = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now) }
@@ -66,9 +69,11 @@ class GSRViewModel: ObservableObject {
         if adding {
             newSelected.append((room, slot))
         }
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         withAnimation(.spring(duration: 0.2)) {
             self.selectedTimeslots = newSelected
         }
+        
         
     }
     
@@ -109,31 +114,58 @@ class GSRViewModel: ObservableObject {
         
     }
     
-    func setLocation(to location: GSRLocation) throws {
-        DispatchQueue.main.async {
-            self.resetBooking()
-            Task {
-                if location.kind == .wharton && !self.isWharton {
-                    throw GSRValidationError.notInWharton
-                }
-                
-                let unfilteredLoc = try await GSRNetworkManager.getAvailability(for: location, startDate: self.datePickerOptions.first!, endDate: self.datePickerOptions.last!)
-                let nonEmptyRooms = unfilteredLoc.filter {
-                    !$0.availability.isEmpty
-                }
+    @MainActor func setLocation(to location: GSRLocation) async throws {
+        if location.kind == .wharton && !self.isWharton {
+            throw GSRValidationError.notInWharton
+        }
+        self.selectedLocation = location
+        self.resetBooking()
+        try await self.updateAvailability()
+    }
+    
+    @MainActor func updateAvailability() async throws {
+        self.isLoadingAvailability = true
+        self.roomsAtSelectedLocation = []
+        
+        guard let loc = self.selectedLocation else {
+            self.isLoadingAvailability = false
+            return
+        }
+        
+        let avail = try await GSRNetworkManager.getAvailability(for: loc, startDate: self.selectedDate, endDate: Calendar.current.date(byAdding: .day, value: 1, to: self.selectedDate)!)
 
-                let (min, max) = nonEmptyRooms.getMinMaxDates()
-                self.roomsAtSelectedLocation = nonEmptyRooms.map {
-                    if let min, let max {
-                        return $0.withMissingTimeslots(minDate: min, maxDate: max)
-                    } else {
-                        let times = $0.availability.sorted(by: {$0.startTime < $1.startTime})
-                        return $0.withMissingTimeslots(minDate: times.first!.startTime, maxDate: times.last!.startTime)
-                    }
-                }
-                self.selectedLocation = location
+        let (min, max) = avail.getMinMaxDates()
+        self.roomsAtSelectedLocation = avail.map {
+            if let min, let max {
+                return $0.withMissingTimeslots(minDate: min, maxDate: max)
+            } else {
+                let times = $0.availability.sorted(by: {$0.startTime < $1.startTime})
+                return $0.withMissingTimeslots(minDate: times.first!.startTime, maxDate: times.last!.startTime)
             }
         }
+        
+        self.isLoadingAvailability = false
+    }
+    
+    @MainActor func book() async throws {
+        guard let loc = self.selectedLocation, !self.selectedTimeslots.isEmpty else { return }
+        if loc.kind == .wharton && !self.isWharton {
+            throw GSRValidationError.notInWharton
+        }
+        try self.validateSelectedTimeslots(self.selectedTimeslots)
+        
+        let sorted = self.selectedTimeslots.sorted { el1, el2 in
+            return el1.1.startTime < el2.1.startTime
+        }
+        let room = sorted.first!.0
+        let start = sorted.first!.1.startTime
+        let end = sorted.last!.1.endTime
+        let booking = GSRBooking(gid: loc.gid, startTime: start, endTime: end, id: room.id, roomName: room.roomName)
+        
+        try await GSRNetworkManager.makeBooking(for: booking)
+        self.recentBooking = booking
+        self.showSuccessfulBookingAlert = true
+        
     }
     
     func getRelevantAvailability(room: GSRRoom? = nil) -> [GSRTimeSlot] {
@@ -173,5 +205,60 @@ class GSRViewModel: ObservableObject {
                 return "You must be a Wharton student to view this location."
             }
         }
+    }
+}
+
+extension Array where Element == GSRLocation {
+    var standardGSRSort: [GSRLocation] {
+        let sort = self.sorted { el1, el2 in
+            // Appease Wharton Board
+            if el1.name == "Huntsman" { return true }
+            
+            if el1.kind == .wharton && el2.kind == .libcal {
+                return true
+            }
+            
+            return el1.name < el2.name
+        }
+        return sort
+    }
+}
+
+extension Date {
+    var gsrTimeString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+
+        return formatter.string(from: self)
+    }
+    
+    var localizedGSRText: String {
+        if Calendar.current.isDateInToday(self) {
+            return "Today"
+        }
+        
+        let weekday = Calendar.current.component(.weekday, from: self)
+        let abbreviations = [
+            1: "S", // Sunday
+            2: "M", // Monday
+            3: "T", // Tuesday
+            4: "W", // Wednesday
+            5: "R", // Thursday
+            6: "F", // Friday
+            7: "S"  // Saturday
+        ]
+            
+        return abbreviations[weekday] ?? ""
+    }
+    
+    var floorHalfHour: Date {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: self)
+        
+        var roundedMinutes = (components.minute! / 30) * 30
+        
+        return calendar.date(bySettingHour: components.hour!, minute: roundedMinutes, second: 0, of: self)!
     }
 }

@@ -11,13 +11,14 @@ import SwiftUI
 struct GSRBookingView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
+    @EnvironmentObject var nav: NavigationManager
     @State var selectedLocInternal: GSRLocation
     
     
     var body: some View {
         VStack {
             Picker("Location", selection: $selectedLocInternal) {
-                ForEach(vm.availableLocations, id: \.self) { loc in
+                ForEach(vm.availableLocations.standardGSRSort, id: \.self) { loc in
                     Text(loc.name)
                 }
             }
@@ -30,63 +31,67 @@ struct GSRBookingView: View {
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
-            GSRTwoWayScrollView()
-            Spacer()
-            GSRBookingToolbarView() 
+            
+            if !vm.isLoadingAvailability {
+                GSRTwoWayScrollView()
+                Spacer()
+                GSRBookingToolbarView()
+            } else {
+                VStack {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                }
+            }
             
             
         }
             .navigationTitle("Choose a Time Slot")
             .onChange(of: selectedLocInternal) { old, new in
-                do {
-                    try vm.setLocation(to: new)
-                } catch {
-                    presentToast(ToastConfiguration({
-                        Text(error.localizedDescription)
-                    }))
-                    withAnimation {
-                        selectedLocInternal = old
+                Task {
+                    do {
+                        try await vm.setLocation(to: new)
+                    } catch {
+                        presentToast(ToastConfiguration({
+                            Text(error.localizedDescription)
+                        }))
+                        withAnimation {
+                            selectedLocInternal = old
+                        }
+                    }
+                }
+            }
+            .onChange(of: vm.selectedDate) {
+                Task { @MainActor in
+                    do {
+                        try await vm.updateAvailability()
+                    } catch {
+                        presentToast(ToastConfiguration({
+                            Text(error.localizedDescription)
+                        }))
                     }
                 }
             }
             .onAppear {
-                do {
-                    try vm.setLocation(to: selectedLocInternal)
-                } catch {
-                    presentToast(ToastConfiguration({
-                        Text(error.localizedDescription)
-                    }))
+                Task {
+                    do {
+                        try await vm.setLocation(to: selectedLocInternal)
+                    } catch {
+                        presentToast(ToastConfiguration({
+                            Text(error.localizedDescription)
+                        }))
+                    }
                 }
             }
-    }
-}
-
-extension Date {
-    var localizedGSRText: String {
-        if Calendar.current.isDateInToday(self) {
-            return "Today"
-        }
-        
-        let weekday = Calendar.current.component(.weekday, from: self)
-        let abbreviations = [
-            1: "S", // Sunday
-            2: "M", // Monday
-            3: "T", // Tuesday
-            4: "W", // Wednesday
-            5: "R", // Thursday
-            6: "F", // Friday
-            7: "S"  // Saturday
-        ]
-            
-        return abbreviations[weekday] ?? ""
-    }
-    
-    var floorHalfHour: Date {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: self)
-        
-        var roundedMinutes = (components.minute! / 30) * 30
-        
-        return calendar.date(bySettingHour: components.hour!, minute: roundedMinutes, second: 0, of: self)!
+            .alert("Booking Successful", isPresented: $vm.showSuccessfulBookingAlert, presenting: vm.recentBooking) { _ in
+                Button("Okay") {
+                    vm.showSuccessfulBookingAlert = false
+                    nav.path.removeLast()
+                    
+                }
+                Button("View Booking") {}
+            } message: { booking in
+                Text("You've successfully made a reservation for \(booking.roomName)")
+            }
     }
 }

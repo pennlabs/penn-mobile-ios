@@ -10,6 +10,7 @@ import SwiftUI
 
 struct GSRBookingToolbarView: View {
     @EnvironmentObject var vm: GSRViewModel
+    @Environment(\.presentToast) var presentToast
     @State var startedQuickBook = false
     
     var body: some View {
@@ -70,7 +71,15 @@ struct GSRBookingToolbarView: View {
             
             if !vm.selectedTimeslots.isEmpty {
                 Button {
-                    
+                    Task {
+                        do {
+                            try await vm.book()
+                        } catch {
+                            presentToast(ToastConfiguration({
+                                Text(error.localizedDescription)
+                            }))
+                        }
+                    }
                 } label: {
                     Text("Book")
                         .font(.body)
@@ -88,5 +97,6 @@ struct GSRBookingToolbarView: View {
             }
         }
         .background(.background)
+        
     }
 }
