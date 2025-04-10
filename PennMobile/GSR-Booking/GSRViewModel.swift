@@ -22,7 +22,6 @@ class GSRViewModel: ObservableObject {
     @Published var isWharton: Bool = false
     @Published var isLoadingAvailability = false
     @Published var showSuccessfulBookingAlert = false
-    
     init() {
         let options = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now) }
         datePickerOptions = options
@@ -135,12 +134,9 @@ class GSRViewModel: ObservableObject {
         let avail = try await GSRNetworkManager.getAvailability(for: loc, startDate: self.selectedDate, endDate: Calendar.current.date(byAdding: .day, value: 1, to: self.selectedDate)!)
 
         let (min, max) = avail.getMinMaxDates()
-        self.roomsAtSelectedLocation = avail.map {
-            if let min, let max {
+        if let min, let max {
+            self.roomsAtSelectedLocation = avail.map {
                 return $0.withMissingTimeslots(minDate: min, maxDate: max)
-            } else {
-                let times = $0.availability.sorted(by: {$0.startTime < $1.startTime})
-                return $0.withMissingTimeslots(minDate: times.first!.startTime, maxDate: times.last!.startTime)
             }
         }
         
