@@ -329,6 +329,7 @@
 		730547F32D8DD4B2003FD988 /* GSRBookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730547F22D8DD4AF003FD988 /* GSRBookingView.swift */; };
 		730548132D8DDF75003FD988 /* GSRRoomAvailabilityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730548122D8DDF70003FD988 /* GSRRoomAvailabilityRow.swift */; };
 		730548152D8DF733003FD988 /* TimeSlotDottedLinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730548142D8DF728003FD988 /* TimeSlotDottedLinesView.swift */; };
+		734A8E7C2DA4848100BD5F55 /* RoomFinderSelectionPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A8E7B2DA4847D00BD5F55 /* RoomFinderSelectionPanel.swift */; };
 		7356504F2D6F870600FFBD8C /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7356504E2D6F870600FFBD8C /* LabsPlatformSwift */; };
 		736DABD02D8E479C00C93BA5 /* GSRTimeCardRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABCF2D8E478A00C93BA5 /* GSRTimeCardRow.swift */; };
 		736DABD22D8F557000C93BA5 /* GSRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABD12D8F556A00C93BA5 /* GSRViewModel.swift */; };
@@ -735,6 +736,7 @@
 		730547F22D8DD4AF003FD988 /* GSRBookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRBookingView.swift; sourceTree = "<group>"; };
 		730548122D8DDF70003FD988 /* GSRRoomAvailabilityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRoomAvailabilityRow.swift; sourceTree = "<group>"; };
 		730548142D8DF728003FD988 /* TimeSlotDottedLinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlotDottedLinesView.swift; sourceTree = "<group>"; };
+		734A8E7B2DA4847D00BD5F55 /* RoomFinderSelectionPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomFinderSelectionPanel.swift; sourceTree = "<group>"; };
 		736DABCF2D8E478A00C93BA5 /* GSRTimeCardRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTimeCardRow.swift; sourceTree = "<group>"; };
 		736DABD12D8F556A00C93BA5 /* GSRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRViewModel.swift; sourceTree = "<group>"; };
 		736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTwoWayScrollView.swift; sourceTree = "<group>"; };
@@ -1246,6 +1248,7 @@
 				736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */,
 				730547F22D8DD4AF003FD988 /* GSRBookingView.swift */,
 				736DABD52D8FB55600C93BA5 /* GSRBookingToolbarView.swift */,
+				734A8E7B2DA4847D00BD5F55 /* RoomFinderSelectionPanel.swift */,
 				730548142D8DF728003FD988 /* TimeSlotDottedLinesView.swift */,
 				736DABCF2D8E478A00C93BA5 /* GSRTimeCardRow.swift */,
 				737935DF2D7972BF00E8DD77 /* GSRGuestLandingPage.swift */,
@@ -2295,6 +2298,7 @@
 				42632D0D2CB9C77B0028CC31 /* GSRLocation.swift in Sources */,
 				42632D0E2CB9C77B0028CC31 /* GSRLocationModel.swift in Sources */,
 				42632D0F2CB9C77B0028CC31 /* GSRReservation.swift in Sources */,
+				734A8E7C2DA4848100BD5F55 /* RoomFinderSelectionPanel.swift in Sources */,
 				42632D102CB9C77B0028CC31 /* GSRRoom.swift in Sources */,
 				42632D112CB9C77B0028CC31 /* GSRTimeSlot.swift in Sources */,
 				42632D122CB9C77B0028CC31 /* GSRGroupNetworkManager..swift in Sources */,

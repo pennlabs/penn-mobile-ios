@@ -13,36 +13,56 @@ struct GSRTwoWayScrollView: View {
     let roomTitleOffset: CGFloat = 60
     
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
-                    Section {
-                        VStack(alignment: .leading, spacing: 32) {
-                            ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
-                                GSRRoomAvailabilityRow(room: room)
+        ScrollView(.vertical, showsIndicators: false) {
+            ZStack(alignment: .topLeading) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
+                        Section {
+                            VStack(alignment: .leading, spacing: 32) {
+                                Color.clear
+                                    .frame(height: 0)
+                                ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
+                                    GSRRoomAvailabilityRow(room: room)
+                                }
+                                Spacer()
                             }
+                            //                        .overlay {
+                            //                            TimeSlotDottedLinesView()
+                            //                        }
+                            
+                        }
+                        //                    header: {
+                        //                        VStack(alignment: .center, spacing: 0) {
+                        //                            GSRTimeCardRow()
+                        //                                .padding(.top)
+                        //                            TimeSlotDottedLinesView()
+                        //                                .frame(height: 16)
+                        //                        }
+                        //                        .offset(x: -40)
+                        //                        .background {
+                        //                            Rectangle()
+                        //                                .foregroundStyle(Color(UIColor.systemBackground))
+                        //                        }
+                        //
+                        //                    }
+                    }
+                    
+                }
+                VStack(alignment: .leading, spacing: 80) {
+                    ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
+                        VStack(alignment: .leading, spacing: 0) {
+                            Divider()
                             Spacer()
+                            Text(room.roomName)
+                                .padding(.horizontal, 4)
+                                .font(.caption)
+                                .fontWeight(.medium)
+                            Divider()
                         }
-                        .overlay {
-                            TimeSlotDottedLinesView()
-                        }
-                        
-                    } header: {
-                        VStack(alignment: .center, spacing: 0) {
-                            GSRTimeCardRow()
-                                .padding(.top)
-                            TimeSlotDottedLinesView()
-                                .frame(height: 16)
-                        }
-                        .offset(x: -40)
-                        .background {
-                            Rectangle()
-                                .foregroundStyle(Color(UIColor.systemBackground))
-                        }
-                        
+                        .frame(height: 32)
+                        .tag(room)
                     }
                 }
-                
             }
         }
         

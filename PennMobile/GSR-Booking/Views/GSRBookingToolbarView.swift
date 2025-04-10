@@ -15,60 +15,6 @@ struct GSRBookingToolbarView: View {
     
     var body: some View {
         HStack(spacing: 12) {
-            Button {
-                withAnimation(.snappy(duration: 0.2)) {
-                    startedQuickBook = true
-                    DispatchQueue.main.schedule(after: .init(.now().advanced(by: .seconds(4)))) {
-                        withAnimation {
-                            startedQuickBook = false
-                        }
-                    }
-                }
-            } label: {
-                Label("Find me a room", systemImage: "wand.and.sparkles")
-                    .font(.body)
-                    .foregroundStyle(Color(UIColor.systemGray))
-                    .opacity(startedQuickBook ? 0 : 1)
-                    .padding(8)
-                    .background {
-                        RoundedRectangle(cornerRadius: 8)
-                            .foregroundStyle(Color.white)
-                            .shadow(radius: 2)
-                    }
-                    .allowsHitTesting(!startedQuickBook)
-                    .overlay {
-                        if startedQuickBook {
-                            HStack {
-                                Button {
-                                    withAnimation {
-                                        startedQuickBook = false
-                                    }
-                                } label: {
-                                    Text("30")
-                                }
-                                Divider()
-                                Button {
-                                    withAnimation {
-                                        startedQuickBook = false
-                                    }
-                                } label: {
-                                    Text("60")
-                                }
-                                Divider()
-                                Button {
-                                    withAnimation {
-                                        startedQuickBook = false
-                                    }
-                                } label: {
-                                    Text("90")
-                                }
-                            }
-                            .foregroundStyle(Color(UIColor.systemGray))
-                            .padding(8)
-                        }
-                    }
-            }
-            
             if !vm.selectedTimeslots.isEmpty {
                 Button {
                     Task {
@@ -85,18 +31,30 @@ struct GSRBookingToolbarView: View {
                         .font(.body)
                         .bold()
                         .foregroundStyle(Color.white)
-                        .padding(8)
+                        .padding(12)
                         .padding(.horizontal, 24)
                         .background {
-                            RoundedRectangle(cornerRadius: 8)
+                            RoundedRectangle(cornerRadius: 12)
                                 .foregroundStyle(Color("gsrBlue"))
                                 .shadow(radius: 2)
                         }
                 }
                 .transition(.move(edge: .trailing).combined(with: .opacity))
+            } else {
+                RoomFinderSelectionPanel(isEnabled: $startedQuickBook)
+                .transition(.move(edge: .leading).combined(with: .opacity))
             }
         }
-        .background(.background)
+        .fullScreenCover(isPresented: $startedQuickBook) {
+            Rectangle()
+                .foregroundStyle(Color.black.opacity(0.001))
+                .onTapGesture {
+                    withAnimation(.snappy(duration: 0.2)) {
+                        startedQuickBook = false
+                    }
+                }
+            .presentationBackground(.black.opacity(0.0))
+        }
         
     }
 }

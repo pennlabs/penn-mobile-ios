@@ -34,8 +34,13 @@ struct GSRBookingView: View {
             
             if !vm.isLoadingAvailability {
                 GSRTwoWayScrollView()
-                Spacer()
-                GSRBookingToolbarView()
+                    .overlay {
+                        VStack {
+                            Spacer()
+                            GSRBookingToolbarView()
+                                .padding(24)
+                        }
+                    }
             } else {
                 VStack {
                     Spacer()
