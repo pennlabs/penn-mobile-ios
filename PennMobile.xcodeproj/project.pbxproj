@@ -368,7 +368,7 @@
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
-		7356504F2D6F870600FFBD8C /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7356504E2D6F870600FFBD8C /* LabsPlatformSwift */; };
+		735CC0442DA9BD8A006941D0 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 735CC0432DA9BD8A006941D0 /* LabsPlatformSwift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -819,7 +819,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
-				7356504F2D6F870600FFBD8C /* LabsPlatformSwift in Frameworks */,
+				735CC0442DA9BD8A006941D0 /* LabsPlatformSwift in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
 				898DB4912B2E7AA20027CC8F /* PennForms in Frameworks */,
@@ -2179,7 +2179,7 @@
 				895A1AB42CB98E9000E161AE /* XLPagerTabStrip */,
 				895A1AB72CB98F5000E161AE /* ScrollableGraphView */,
 				895A1ABA2CB98F7100E161AE /* SCLAlertView */,
-				7356504E2D6F870600FFBD8C /* LabsPlatformSwift */,
+				735CC0432DA9BD8A006941D0 /* LabsPlatformSwift */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -2279,7 +2279,7 @@
 				895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */,
 				895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
 				895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
-				7356504D2D6F870600FFBD8C /* XCLocalSwiftPackageReference "../LabsPlatformSwift" */,
+				735CC0422DA9BD8A006941D0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
@@ -3154,13 +3154,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		7356504D2D6F870600FFBD8C /* XCLocalSwiftPackageReference "../LabsPlatformSwift" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../LabsPlatformSwift;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -3176,6 +3169,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.0.0;
+			};
+		};
+		735CC0422DA9BD8A006941D0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pennlabs/labs-platform-swift";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 		895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */ = {
@@ -3272,8 +3273,9 @@
 			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
-		7356504E2D6F870600FFBD8C /* LabsPlatformSwift */ = {
+		735CC0432DA9BD8A006941D0 /* LabsPlatformSwift */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 735CC0422DA9BD8A006941D0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */;
 			productName = LabsPlatformSwift;
 		};
 		8932694C28FC79FB003D4BF9 /* SwiftyJSON */ = {
