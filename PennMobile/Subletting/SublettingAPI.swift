@@ -49,17 +49,11 @@ class SublettingAPI {
             throw NetworkingError.authenticationError
         }
         
-        var urlReq = url
-        if urlStr == nil && url == nil {
+        guard let urlReq = url ?? urlStr.flatMap(URL.init(string:)) else {
             throw NetworkingError.serverError
-        } else if urlStr != nil {
-            guard let urlVal = URL(string: urlStr!) else {
-                throw NetworkingError.serverError
-            }
-            urlReq = urlVal
         }
         
-        var request = URLRequest(url: urlReq!)
+        var request = URLRequest(url: urlReq)
         request.httpMethod = method
         request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "Authorization")
         request.setValue("Bearer \(accessToken.value)", forHTTPHeaderField: "X-Authorization")
@@ -67,7 +61,7 @@ class SublettingAPI {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         
-        if content != nil {
+        if let content {
             do {
                 let jsonData = try Self.encoder.encode(content)
                 request.httpBody = jsonData
@@ -78,7 +72,7 @@ class SublettingAPI {
         
         let (data, response) = try await URLSession.shared.data(for: request)
         
-        if returnType != nil {
+        if let returnType {
             if let errorResponse = try? Self.decoder.decode(GenericErrorResponse.self, from: data),
                let error = NetworkingError(rawValue: errorResponse.detail) {
                 throw error
@@ -89,8 +83,8 @@ class SublettingAPI {
             throw NetworkingError.serverError
         }
         
-        if returnType != nil {
-            return try Self.decoder.decode(returnType!, from: data)
+        if let returnType {
+            return try Self.decoder.decode(returnType, from: data)
         } else {
             return nil
         }

@@ -177,9 +177,9 @@ struct SubletDetailOnly: View {
                         .foregroundColor(.secondary)
                 }
                 
-                if sublet.address != nil && !sublet.address!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                if let address = sublet.address, !address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     HStack {
-                        Text(sublet.address!)
+                        Text(address)
                             .font(.subheadline)
                         
                         NavigationLink(value: SublettingPage.subletMapView(sublet)) {
@@ -292,13 +292,13 @@ struct SubletDetailOnly: View {
                 .padding(.horizontal)
             }
             
-            if sublet.description != nil {
+            if let description = sublet.description, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 Divider()
                 VStack(alignment: .leading) {
                     Text("Description")
                         .font(.subheadline)
                         .bold()
-                    Text(sublet.description!)
+                    Text(description)
                         .font(.subheadline)
                 }
                 .padding(.horizontal)
@@ -380,7 +380,7 @@ struct SubletDetailToolbar: View {
                 .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5), value: isSaved)
             }
             
-            if let link = sublet.data.externalLink, URL(string: link) != nil {
+            if let link = sublet.data.externalLink, let _ = URL(string: link) {
                 Button(action: {
                     showExternalLink = true
                 }) {

@@ -64,8 +64,8 @@ struct CandidateRow: View {
             }
             .font(.subheadline)
             
-            if offer.message != nil && !offer.message!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                Text("\"\(offer.message!)\"")
+            if let message = offer.message, !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                Text("\"\(message)\"")
             }
             
             Text("Submitted \(formatDate(offer.createdDate))")
