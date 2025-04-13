@@ -54,14 +54,7 @@ struct LoggedOutView: View {
                 image
             }
         }
-        .sheet(isPresented: $isPresentingLoginSheet) {
-            LabsLoginView { success in
-                if success {
-                    authManager.determineInitialState()
-                }
-            }
-            .edgesIgnoringSafeArea(.all)
-        }.navigationTitle("Course Schedule")
+        .navigationTitle("Course Schedule")
     }
 }
 

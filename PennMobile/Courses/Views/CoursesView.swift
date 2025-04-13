@@ -8,6 +8,7 @@
 
 import SwiftUI
 import PennMobileShared
+import LabsPlatformSwift
 
 /// View for the weekly schedule, assuming courses have been loaded.
 struct WeekView: View {
@@ -34,6 +35,7 @@ struct WeekView: View {
 /// View for the Course Schedule page.
 struct CoursesView: View {
     @EnvironmentObject var coursesViewModel: CoursesViewModel
+    @EnvironmentObject var authManager: AuthManager
     @State var date = Date()
     @State var isPresentingLoginSheet = false
 
@@ -52,7 +54,7 @@ struct CoursesView: View {
                 .padding()
                 .onAppear {
                     if case PathAtPennError.noTokenFound(_) = error {
-                        isPresentingLoginSheet = true
+                        LabsPlatform.shared?.loginWithPlatform()
                     }
                 }
             case .some(.success(let courses)):
@@ -62,15 +64,13 @@ struct CoursesView: View {
             _ = try? await coursesViewModel.fetchCourses()
         }.refreshable {
             _ = try? await coursesViewModel.fetchCourses(forceNetwork: true)
-        }.sheet(isPresented: $isPresentingLoginSheet) {
-            LabsLoginView { success in
-                if success {
-                    coursesViewModel.coursesResult = nil
-                    Task {
-                        try? await coursesViewModel.fetchCourses(forceNetwork: true)
-                    }
-                }
+        }.onChange(of: authManager.state) { _, new in
+            guard case .loggedIn(_) = new else { return }
+            coursesViewModel.coursesResult = nil
+            Task {
+                try? await coursesViewModel.fetchCourses(forceNetwork: true)
             }
-        }.navigationTitle("Course Schedule")
+        }
+        .navigationTitle("Course Schedule")
     }
 }
