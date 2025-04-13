@@ -560,6 +560,24 @@ public extension String {
                 .compare(otherVersionComponents.joined(separator: versionDelimiter), options: .numeric) // <6>
         }
     }
+    
+    static func getPostString(params: [String: Any]) -> String {
+        let characterSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
+        let parameterArray = params.map { key, value -> String in
+            let escapedKey = key.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
+            if let strValue = value as? String {
+                let escapedValue = strValue.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
+                return "\(escapedKey)=\(escapedValue)"
+            } else if let arr = value as? [Any] {
+                let str = arr.map { String(describing: $0).addingPercentEncoding(withAllowedCharacters: characterSet) ?? "" }.joined(separator: ",")
+                return "\(escapedKey)=\(str)"
+            } else {
+                return "\(escapedKey)=\(value)"
+            }
+        }
+        let encodedParams = parameterArray.joined(separator: "&")
+        return encodedParams
+    }
 
     // https://stackoverflow.com/questions/37048759/swift-display-html-data-in-a-label-or-textview
     var htmlToAttributedString: NSAttributedString? {

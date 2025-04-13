@@ -24,7 +24,6 @@
 		42632C942CB9C77B0028CC31 /* sample-dining-venue.json in Resources */ = {isa = PBXBuildFile; fileRef = 42632B522CB9C77B0028CC31 /* sample-dining-venue.json */; };
 		42632C952CB9C77B0028CC31 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 42632C872CB9C77B0028CC31 /* GoogleService-Info.plist */; };
 		42632C972CB9C77B0028CC31 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42632C8C2CB9C77B0028CC31 /* Assets.xcassets */; };
-		42632C982CB9C77B0028CC31 /* OAuth2NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632AF92CB9C77B0028CC31 /* OAuth2NetworkManager.swift */; };
 		42632C992CB9C77B0028CC31 /* PennAuthRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632AFA2CB9C77B0028CC31 /* PennAuthRequestable.swift */; };
 		42632C9A2CB9C77B0028CC31 /* PennLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632AFB2CB9C77B0028CC31 /* PennLoginController.swift */; };
 		42632C9B2CB9C77B0028CC31 /* BannerDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632AFD2CB9C77B0028CC31 /* BannerDescription.swift */; };
@@ -227,8 +226,6 @@
 		42632D742CB9C77B0028CC31 /* CampusExpressLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C202CB9C77B0028CC31 /* CampusExpressLoginController.swift */; };
 		42632D752CB9C77B0028CC31 /* CampusExpressNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C212CB9C77B0028CC31 /* CampusExpressNetworkManager.swift */; };
 		42632D762CB9C77B0028CC31 /* Degree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C222CB9C77B0028CC31 /* Degree.swift */; };
-		42632D772CB9C77B0028CC31 /* LabsLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C232CB9C77B0028CC31 /* LabsLoginController.swift */; };
-		42632D782CB9C77B0028CC31 /* LabsLoginSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C242CB9C77B0028CC31 /* LabsLoginSwiftUI.swift */; };
 		42632D792CB9C77B0028CC31 /* LoggedOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C252CB9C77B0028CC31 /* LoggedOutView.swift */; };
 		42632D7A2CB9C77B0028CC31 /* PathAtPennNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C262CB9C77B0028CC31 /* PathAtPennNetworkManager.swift */; };
 		42632D7B2CB9C77B0028CC31 /* PennCashNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C272CB9C77B0028CC31 /* PennCashNetworkManager.swift */; };
@@ -236,7 +233,6 @@
 		42632D7D2CB9C77B0028CC31 /* AddressMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */; };
 		42632D7E2CB9C77B0028CC31 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2B2CB9C77B0028CC31 /* MapViewController.swift */; };
 		42632D802CB9C77B0028CC31 /* PacCodeNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */; };
-		42632D812CB9C77B0028CC31 /* PacCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */; };
 		42632D822CB9C77B0028CC31 /* ProfilePageNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C312CB9C77B0028CC31 /* ProfilePageNetworkManager.swift */; };
 		42632D832CB9C77B0028CC31 /* InfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C332CB9C77B0028CC31 /* InfoTableViewController.swift */; };
 		42632D842CB9C77B0028CC31 /* InfoTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C342CB9C77B0028CC31 /* InfoTableViewModel.swift */; };
@@ -249,7 +245,6 @@
 		42632D8B2CB9C77B0028CC31 /* MoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3C2CB9C77B0028CC31 /* MoreCell.swift */; };
 		42632D8C2CB9C77B0028CC31 /* MoreHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3D2CB9C77B0028CC31 /* MoreHeaderView.swift */; };
 		42632D8D2CB9C77B0028CC31 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3E2CB9C77B0028CC31 /* MoreView.swift */; };
-		42632D8E2CB9C77B0028CC31 /* MoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C3F2CB9C77B0028CC31 /* MoreViewController.swift */; };
 		42632D8F2CB9C77B0028CC31 /* ProfileRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C402CB9C77B0028CC31 /* ProfileRowView.swift */; };
 		42632D902CB9C77B0028CC31 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C422CB9C77B0028CC31 /* NewsViewController.swift */; };
 		42632D912CB9C77B0028CC31 /* NotificationAPIModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C442CB9C77B0028CC31 /* NotificationAPIModel.swift */; };
@@ -444,7 +439,6 @@
 		421824052CCEB1370028E510 /* PennEventCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventCellView.swift; sourceTree = "<group>"; };
 		421824062CCEB1370028E510 /* PennEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsView.swift; sourceTree = "<group>"; };
 		421824072CCEB1370028E510 /* PennEventsViewerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennEventsViewerView.swift; sourceTree = "<group>"; };
-		42632AF92CB9C77B0028CC31 /* OAuth2NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2NetworkManager.swift; sourceTree = "<group>"; };
 		42632AFA2CB9C77B0028CC31 /* PennAuthRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennAuthRequestable.swift; sourceTree = "<group>"; };
 		42632AFB2CB9C77B0028CC31 /* PennLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennLoginController.swift; sourceTree = "<group>"; };
 		42632AFD2CB9C77B0028CC31 /* BannerDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerDescription.swift; sourceTree = "<group>"; };
@@ -653,8 +647,6 @@
 		42632C202CB9C77B0028CC31 /* CampusExpressLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusExpressLoginController.swift; sourceTree = "<group>"; };
 		42632C212CB9C77B0028CC31 /* CampusExpressNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusExpressNetworkManager.swift; sourceTree = "<group>"; };
 		42632C222CB9C77B0028CC31 /* Degree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Degree.swift; sourceTree = "<group>"; };
-		42632C232CB9C77B0028CC31 /* LabsLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginController.swift; sourceTree = "<group>"; };
-		42632C242CB9C77B0028CC31 /* LabsLoginSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabsLoginSwiftUI.swift; sourceTree = "<group>"; };
 		42632C252CB9C77B0028CC31 /* LoggedOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggedOutView.swift; sourceTree = "<group>"; };
 		42632C262CB9C77B0028CC31 /* PathAtPennNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAtPennNetworkManager.swift; sourceTree = "<group>"; };
 		42632C272CB9C77B0028CC31 /* PennCashNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PennCashNetworkManager.swift; sourceTree = "<group>"; };
@@ -662,7 +654,6 @@
 		42632C2A2CB9C77B0028CC31 /* AddressMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressMapView.swift; sourceTree = "<group>"; };
 		42632C2B2CB9C77B0028CC31 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacCodeNetworkManager.swift; sourceTree = "<group>"; };
-		42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacCodeViewController.swift; sourceTree = "<group>"; };
 		42632C312CB9C77B0028CC31 /* ProfilePageNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageNetworkManager.swift; sourceTree = "<group>"; };
 		42632C332CB9C77B0028CC31 /* InfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewController.swift; sourceTree = "<group>"; };
 		42632C342CB9C77B0028CC31 /* InfoTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewModel.swift; sourceTree = "<group>"; };
@@ -675,7 +666,6 @@
 		42632C3C2CB9C77B0028CC31 /* MoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreCell.swift; sourceTree = "<group>"; };
 		42632C3D2CB9C77B0028CC31 /* MoreHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreHeaderView.swift; sourceTree = "<group>"; };
 		42632C3E2CB9C77B0028CC31 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
-		42632C3F2CB9C77B0028CC31 /* MoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreViewController.swift; sourceTree = "<group>"; };
 		42632C402CB9C77B0028CC31 /* ProfileRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRowView.swift; sourceTree = "<group>"; };
 		42632C422CB9C77B0028CC31 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		42632C442CB9C77B0028CC31 /* NotificationAPIModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPIModel.swift; sourceTree = "<group>"; };
@@ -916,7 +906,6 @@
 		42632AFC2CB9C77B0028CC31 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				42632AF92CB9C77B0028CC31 /* OAuth2NetworkManager.swift */,
 				42632AFA2CB9C77B0028CC31 /* PennAuthRequestable.swift */,
 				42632AFB2CB9C77B0028CC31 /* PennLoginController.swift */,
 			);
@@ -1652,8 +1641,6 @@
 				42632C202CB9C77B0028CC31 /* CampusExpressLoginController.swift */,
 				42632C212CB9C77B0028CC31 /* CampusExpressNetworkManager.swift */,
 				42632C222CB9C77B0028CC31 /* Degree.swift */,
-				42632C232CB9C77B0028CC31 /* LabsLoginController.swift */,
-				42632C242CB9C77B0028CC31 /* LabsLoginSwiftUI.swift */,
 				42632C252CB9C77B0028CC31 /* LoggedOutView.swift */,
 				42632C262CB9C77B0028CC31 /* PathAtPennNetworkManager.swift */,
 				42632C272CB9C77B0028CC31 /* PennCashNetworkManager.swift */,
@@ -1675,7 +1662,6 @@
 			isa = PBXGroup;
 			children = (
 				42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */,
-				42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */,
 			);
 			path = "PAC Code";
 			sourceTree = "<group>";
@@ -1712,7 +1698,6 @@
 				42632C3C2CB9C77B0028CC31 /* MoreCell.swift */,
 				42632C3D2CB9C77B0028CC31 /* MoreHeaderView.swift */,
 				42632C3E2CB9C77B0028CC31 /* MoreView.swift */,
-				42632C3F2CB9C77B0028CC31 /* MoreViewController.swift */,
 				42632C402CB9C77B0028CC31 /* ProfileRowView.swift */,
 			);
 			path = "More Tab";
@@ -2355,7 +2340,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42632C982CB9C77B0028CC31 /* OAuth2NetworkManager.swift in Sources */,
 				42632C992CB9C77B0028CC31 /* PennAuthRequestable.swift in Sources */,
 				421824092CCEB1370028E510 /* PennEventCellView.swift in Sources */,
 				4218240A2CCEB1370028E510 /* PennEventsView.swift in Sources */,
@@ -2567,8 +2551,6 @@
 				42632D742CB9C77B0028CC31 /* CampusExpressLoginController.swift in Sources */,
 				42632D752CB9C77B0028CC31 /* CampusExpressNetworkManager.swift in Sources */,
 				42632D762CB9C77B0028CC31 /* Degree.swift in Sources */,
-				42632D772CB9C77B0028CC31 /* LabsLoginController.swift in Sources */,
-				42632D782CB9C77B0028CC31 /* LabsLoginSwiftUI.swift in Sources */,
 				42632D792CB9C77B0028CC31 /* LoggedOutView.swift in Sources */,
 				42632D7A2CB9C77B0028CC31 /* PathAtPennNetworkManager.swift in Sources */,
 				42632D7B2CB9C77B0028CC31 /* PennCashNetworkManager.swift in Sources */,
@@ -2576,7 +2558,6 @@
 				42632D7D2CB9C77B0028CC31 /* AddressMapView.swift in Sources */,
 				42632D7E2CB9C77B0028CC31 /* MapViewController.swift in Sources */,
 				42632D802CB9C77B0028CC31 /* PacCodeNetworkManager.swift in Sources */,
-				42632D812CB9C77B0028CC31 /* PacCodeViewController.swift in Sources */,
 				42632D822CB9C77B0028CC31 /* ProfilePageNetworkManager.swift in Sources */,
 				42632D832CB9C77B0028CC31 /* InfoTableViewController.swift in Sources */,
 				42632D842CB9C77B0028CC31 /* InfoTableViewModel.swift in Sources */,
@@ -2589,7 +2570,6 @@
 				42632D8B2CB9C77B0028CC31 /* MoreCell.swift in Sources */,
 				42632D8C2CB9C77B0028CC31 /* MoreHeaderView.swift in Sources */,
 				42632D8D2CB9C77B0028CC31 /* MoreView.swift in Sources */,
-				42632D8E2CB9C77B0028CC31 /* MoreViewController.swift in Sources */,
 				42632D8F2CB9C77B0028CC31 /* ProfileRowView.swift in Sources */,
 				42632D902CB9C77B0028CC31 /* NewsViewController.swift in Sources */,
 				42632D912CB9C77B0028CC31 /* NotificationAPIModel.swift in Sources */,

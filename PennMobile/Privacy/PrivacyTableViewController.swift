@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LabsPlatformSwift
 
 protocol PrivacyViewControllerChangedPreference: AnyObject {
     func changed(option: PrivacyOption, givePermission: Bool)
@@ -44,13 +45,7 @@ extension PrivacyViewController: PrivacyViewControllerChangedPreference {
                 // Don't ask user to login if it's been less than 10 minutes since last login
                 self.changePermission(option: option, givePermission: givePermission)
             } else {
-                let llc = LabsLoginController(fetchAllInfo: false, shouldRetrieveRefreshToken: false) { (success) in
-                    if success {
-                        self.changePermission(option: option, givePermission: givePermission)
-                    }
-                }
-                let nvc = UINavigationController(rootViewController: llc)
-                self.present(nvc, animated: true, completion: nil)
+                LabsPlatform.shared?.loginWithPlatform()
             }
         } else {
             self.changePermission(option: option, givePermission: givePermission)

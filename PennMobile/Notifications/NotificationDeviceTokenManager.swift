@@ -108,7 +108,7 @@ import OSLog
             Self.logger.info("Uploading notification token")
            
             let url = url(for: token)
-            var request = try await URLRequest(authenticatedUrl: url)
+            var request = try await URLRequest(url: url, mode: .accessToken)
             request.httpMethod = "POST"
             
             struct TokenUploadRequest: Encodable {
