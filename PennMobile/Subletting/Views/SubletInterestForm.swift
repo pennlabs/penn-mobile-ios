@@ -44,7 +44,6 @@ struct SubletInterestForm: View {
                                 let offer = try await SublettingAPI.instance.makeOffer(offerData: offerData, id: sublet.subletID)
                                 var updatedSublet = sublet
                                 updatedSublet.offers = (updatedSublet.offers ?? []) + [offer]
-                                updatedSublet.lastUpdated = Date()
                                 sublettingViewModel.addApplied(sublet: updatedSublet)
                                 print("Made offer with id \(offer.id) for sublet \(sublet.subletID)")
                                 

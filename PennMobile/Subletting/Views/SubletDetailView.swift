@@ -8,7 +8,6 @@
 
 import SwiftUI
 import Kingfisher
-import PennMobileShared
 
 struct SubletDetailView: View {
     @EnvironmentObject var sublettingViewModel: SublettingViewModel
@@ -55,16 +54,18 @@ struct SubletDetailView: View {
                     .frame(minHeight: proxy.size.height)
                     .clipped()
                     .contentShape(.rect)
-                    .gesture(
+                    .simultaneousGesture(
                         DragGesture()
                             .onEnded { value in
-                                if value.translation.width < 0 {
-                                    withAnimation {
-                                        selectedTab = "Candidates"
-                                    }
-                                } else if value.translation.width > 0 {
-                                    withAnimation {
-                                        selectedTab = "Details"
+                                if abs(value.translation.width) > abs(value.translation.height) {
+                                    if value.translation.width < 0 {
+                                        withAnimation {
+                                            selectedTab = "Candidates"
+                                        }
+                                    } else if value.translation.width > 0 {
+                                        withAnimation {
+                                            selectedTab = "Details"
+                                        }
                                     }
                                 }
                             }
@@ -176,9 +177,9 @@ struct SubletDetailOnly: View {
                         .foregroundColor(.secondary)
                 }
                 
-                if sublet.address != nil && !sublet.address!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                if let address = sublet.address, !address.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     HStack {
-                        Text(sublet.address!)
+                        Text(address)
                             .font(.subheadline)
                         
                         NavigationLink(value: SublettingPage.subletMapView(sublet)) {
@@ -291,13 +292,13 @@ struct SubletDetailOnly: View {
                 .padding(.horizontal)
             }
             
-            if sublet.description != nil {
+            if let description = sublet.description, !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 Divider()
                 VStack(alignment: .leading) {
                     Text("Description")
                         .font(.subheadline)
                         .bold()
-                    Text(sublet.description!)
+                    Text(description)
                         .font(.subheadline)
                 }
                 .padding(.horizontal)
@@ -379,7 +380,7 @@ struct SubletDetailToolbar: View {
                 .animation(.spring(response: 0.3, dampingFraction: 0.5, blendDuration: 0.5), value: isSaved)
             }
             
-            if let link = sublet.data.externalLink, URL(string: link) != nil {
+            if let link = sublet.data.externalLink, let _ = URL(string: link) {
                 Button(action: {
                     showExternalLink = true
                 }) {

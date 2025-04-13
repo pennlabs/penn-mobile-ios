@@ -12,7 +12,7 @@ import PennMobileShared
 import OrderedCollections
 
 struct URLValidator: Validator {
-    let message: String? = "Enter a valid URL"
+    let message: (Input?) -> String? = { _ in "Enter a valid URL" }
     
     func isValid(_ input: String?) -> Bool {
         guard let input, !input.isEmpty else { return true }
@@ -115,7 +115,10 @@ struct NewListingForm: View {
                 }
                 
                 DateField(date: $subletData.expiresAt, title: "Listing Expiry Date")
-                    .validator(.required)
+                    .validator([
+                        AnyValidator(.required),
+                        AnyValidator(AtMostValidator(value: startDate ?? (endDate ?? Date.distantFuture), "Must be before listing start date"))
+                    ])
                 
                 TagSelector(selection: $selectedAmenities, tags: $sublettingViewModel.amenities, title: "Amenities")
                 
@@ -125,36 +128,7 @@ struct NewListingForm: View {
                     HStack {
                         Button(action: {
                             if isNew {
-                                var data = subletData
-                                if let price {
-                                    data.price = price
-                                }
-                                if let negotiable {
-                                    data.negotiable = negotiable
-                                }
-                                if let startDate {
-                                    data.startDate = Day(date: startDate)
-                                }
-                                if let endDate {
-                                    data.endDate = Day(date: endDate)
-                                }
-                                data.amenities = Array(selectedAmenities)
-                                
-                                if let draftID {
-                                    sublettingViewModel.drafts.removeAll(where: { $0.id == draftID })
-                                }
-                                sublettingViewModel.drafts.append(SubletDraft(data: data, images: images))
-                                
-                                popupManager.set(
-                                    title: "Draft Saved!",
-                                    message: "Your draft has been saved. You can edit it further on the drafts tab.",
-                                    button1: "See My Drafts",
-                                    action1: {
-                                        navigationManager.path.removeLast(2)
-                                        navigationManager.path.append(SublettingPage.myListings(.drafts))
-                                    }
-                                )
-                                popupManager.show()
+                                saveDraft()
                             } else {
                                 navigationManager.path.removeLast()
                             }
@@ -175,113 +149,9 @@ struct NewListingForm: View {
                                 )
                         }
                         .padding(.top, 30)
+                        
                         Button(action: {
-                            guard formState.isValid, images.count + existingImages.count > 0 else {
-                                showValidationErrors = true
-                                return
-                            }
-                            
-                            guard let negotiable, let price, let startDate, let endDate else {
-                                showValidationErrors = true
-                                return
-                            }
-                            
-                            var data = subletData
-                            data.price = price
-                            data.negotiable = negotiable
-                            data.startDate = Day(date: startDate)
-                            data.endDate = Day(date: endDate)
-                            data.amenities = Array(selectedAmenities)
-                            
-                            if let link = data.externalLink, let url = URL(string: link) {
-                                if url.scheme == nil {
-                                    let newUrl = "https://\(link)"
-                                    if URL(string: newUrl) != nil {
-                                        data.externalLink = newUrl
-                                    }
-                                }
-                            }
-                            
-                            Task {
-                                var sublet = originalSublet
-
-                                // Remove old images
-                                if !isNew && sublet != nil {
-                                    let imagesToDelete = sublet!.images.filter { image in
-                                        !existingImages.contains(image.imageUrl)
-                                    }
-
-                                    if !imagesToDelete.isEmpty {
-                                        do {
-                                            try await SublettingAPI.instance.deleteSubletImages(images: imagesToDelete)
-                                            sublet!.images = sublet!.images.filter { image in
-                                                existingImages.contains(image.imageUrl)
-                                            }
-                                            sublet!.lastUpdated = Date()
-                                            sublettingViewModel.updateSublet(sublet: sublet!)
-                                        } catch let error {
-                                            print("Error deleting sublet images: \(error)")
-                                        }
-                                    }
-                                }
-                                
-                                // Upload new data (except images)
-                                do {
-                                    if isNew {
-                                        sublet = try await SublettingAPI.instance.createSublet(subletData: data)
-                                        sublettingViewModel.addListing(sublet: sublet!)
-                                        if let draftID {
-                                            sublettingViewModel.drafts.removeAll(where: { $0.id == draftID })
-                                        }
-                                    } else if sublet != nil {
-                                        sublet = try await SublettingAPI.instance.patchSublet(id: sublet!.subletID, data: data)
-                                        sublettingViewModel.updateSublet(sublet: sublet!)
-                                    }
-                                } catch let error {
-                                    print("Couldn't \(isNew ? "create" : "update") sublet: \(error)")
-                                    popupManager.set(
-                                        image: Image(systemName: "exclamationmark.2"),
-                                        title: "Uh oh!",
-                                        message: "Failed to \(isNew ? "create" : "update") the sublet.",
-                                        button1: "Close"
-                                    )
-                                    popupManager.show()
-                                    return
-                                }
-                                
-                                // Upload new images
-                                if sublet != nil {
-                                    do {
-                                        popupManager.disableBackground = true
-                                        sublet!.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet!.subletID) { progress in
-                                            withAnimation {
-                                                self.progress = progress
-                                            }
-                                        }
-                                        sublet!.lastUpdated = Date()
-                                        sublettingViewModel.updateSublet(sublet: sublet!)
-                                    } catch let error {
-                                        print("Error uploading sublet images: \(error)")
-                                    }
-                                    self.progress = nil
-                                    popupManager.disableBackground = false
-                                }
-                                    
-                                popupManager.set(
-                                    title: "Listing \(isNew ? "Posted" : "Updated")!",
-                                    message: "\(isNew ? "Your listing is now on the marketplace. " : "")You'll be notified when candidates are interested in subletting!",
-                                    button1: "\(isNew ? "See My Listings" : "See Sublet Details")",
-                                    action1: {
-                                        if isNew {
-                                            navigationManager.path.removeLast(2)
-                                            navigationManager.path.append(SublettingPage.myListings(.posted))
-                                        } else {
-                                            navigationManager.path.removeLast(1)
-                                        }
-                                    }
-                                )
-                                popupManager.show()
-                            }
+                            saveOrPost(formState: formState)
                         }) {
                             Text(isNew ? "Post" : "Save")
                                 .font(.title3)
@@ -353,7 +223,7 @@ struct NewListingForm: View {
             }
         }
         .overlay {
-            if let progress = progress {
+            if let progress {
                 UploadingOverlay(progress: progress, title: "Uploading...", message: "Your listing is being uploaded to the marketplace. Please wait a moment.")
             }
         }
@@ -371,6 +241,146 @@ struct NewListingForm: View {
             }
         }
         .scrollDismissesKeyboard(.interactively)
+    }
+    
+    func saveDraft() {
+        var data = subletData
+        if let price {
+            data.price = price
+        }
+        if let negotiable {
+            data.negotiable = negotiable
+        }
+        if let startDate {
+            data.startDate = Day(date: startDate)
+        }
+        if let endDate {
+            data.endDate = Day(date: endDate)
+        }
+        data.amenities = Array(selectedAmenities)
+        
+        if let draftID {
+            sublettingViewModel.drafts.removeAll(where: { $0.id == draftID })
+        }
+        sublettingViewModel.drafts.append(SubletDraft(data: data, images: images))
+        
+        popupManager.set(
+            title: "Draft Saved!",
+            message: "Your draft has been saved. You can edit it further on the drafts tab.",
+            button1: "See My Drafts",
+            action1: {
+                navigationManager.path.removeLast(2)
+                navigationManager.path.append(SublettingPage.myListings(.drafts))
+            }
+        )
+        popupManager.show()
+    }
+    
+    func saveOrPost(formState: FormState) {
+        guard formState.isValid, images.count + existingImages.count > 0 else {
+            showValidationErrors = true
+            return
+        }
+        
+        guard let negotiable, let price, let startDate, let endDate else {
+            showValidationErrors = true
+            return
+        }
+        
+        var data = subletData
+        data.price = price
+        data.negotiable = negotiable
+        data.startDate = Day(date: startDate)
+        data.endDate = Day(date: endDate)
+        data.amenities = Array(selectedAmenities)
+        
+        if let link = data.externalLink, let url = URL(string: link) {
+            if url.scheme == nil {
+                let newUrl = "https://\(link)"
+                if let _ = URL(string: newUrl) {
+                    data.externalLink = newUrl
+                }
+            }
+        }
+        
+        Task {
+            var sublet = originalSublet
+            
+            // Remove old images
+            if !isNew && sublet != nil {
+                let imagesToDelete = sublet!.images.filter { image in
+                    !existingImages.contains(image.imageUrl)
+                }
+                
+                if !imagesToDelete.isEmpty {
+                    do {
+                        try await SublettingAPI.instance.deleteSubletImages(images: imagesToDelete)
+                        sublet!.images = sublet!.images.filter { image in
+                            existingImages.contains(image.imageUrl)
+                        }
+                        sublettingViewModel.updateSublet(sublet: sublet!)
+                    } catch let error {
+                        print("Error deleting sublet images: \(error)")
+                    }
+                }
+            }
+            
+            // Upload new data (except images)
+            do {
+                if isNew {
+                    sublet = try await SublettingAPI.instance.createSublet(subletData: data)
+                    sublettingViewModel.addListing(sublet: sublet!)
+                    if let draftID {
+                        sublettingViewModel.drafts.removeAll(where: { $0.id == draftID })
+                    }
+                } else if sublet != nil {
+                    sublet = try await SublettingAPI.instance.patchSublet(id: sublet!.subletID, data: data)
+                    sublettingViewModel.updateSublet(sublet: sublet!)
+                }
+            } catch let error {
+                print("Couldn't \(isNew ? "create" : "update") sublet: \(error)")
+                popupManager.set(
+                    image: Image(systemName: "exclamationmark.2"),
+                    title: "Uh oh!",
+                    message: "Failed to \(isNew ? "create" : "update") the sublet.",
+                    button1: "Close"
+                )
+                popupManager.show()
+                return
+            }
+            
+            // Upload new images
+            if sublet != nil {
+                do {
+                    popupManager.disableBackground = true
+                    sublet!.images = try await SublettingAPI.instance.uploadSubletImages(images: images, id: sublet!.subletID) { progress in
+                        withAnimation {
+                            self.progress = progress
+                        }
+                    }
+                    sublettingViewModel.updateSublet(sublet: sublet!)
+                } catch let error {
+                    print("Error uploading sublet images: \(error)")
+                }
+                self.progress = nil
+                popupManager.disableBackground = false
+            }
+            
+            popupManager.set(
+                title: "Listing \(isNew ? "Posted" : "Updated")!",
+                message: "\(isNew ? "Your listing is now on the marketplace. " : "")You'll be notified when candidates are interested in subletting!",
+                button1: "\(isNew ? "See My Listings" : "See Sublet Details")",
+                action1: {
+                    if isNew {
+                        navigationManager.path.removeLast(2)
+                        navigationManager.path.append(SublettingPage.myListings(.posted))
+                    } else {
+                        navigationManager.path.removeLast(1)
+                    }
+                }
+            )
+            popupManager.show()
+        }
     }
 }
 

@@ -10,14 +10,14 @@ import Foundation
 import SwiftUI
 import Kingfisher
 
-public struct SubletDisplayBox: View {
+struct SubletDisplayBox: View {
     let sublet: Sublet
     
-    public init(sublet: Sublet) {
+    init(sublet: Sublet) {
         self.sublet = sublet
     }
     
-    public var body: some View {
+    var body: some View {
         VStack {
             KFImage(URL(string: sublet.images.count > 0 ? sublet.images[0].imageUrl : ""))
                 .placeholder {
