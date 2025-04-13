@@ -15,7 +15,6 @@ class PacCodeNetworkManager {
 }
 
 extension PacCodeNetworkManager: PennAuthRequestable {
-
     private var pacURL: String {
         return "https://penncard.apps.upenn.edu/penncard/jsp/fast2.do?fastStart=pacExpress"
     }
@@ -26,7 +25,6 @@ extension PacCodeNetworkManager: PennAuthRequestable {
 
     func getPacCode(callback: @escaping (_ result: Result<String, NetworkingError>) -> Void ) {
         makeAuthRequest(targetUrl: pacURL, shibbolethUrl: shibbolethUrl) { (data, _, error) in
-
             guard let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) else {
                 if let error = error as? NetworkingError {
                     callback(.failure(error))
@@ -71,7 +69,5 @@ extension PacCodeNetworkManager: PennAuthRequestable {
         } else {
             throw NetworkingError.parsingError
         }
-
     }
-
 }

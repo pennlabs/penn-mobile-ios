@@ -65,69 +65,73 @@ extension PathAtPennNetworkManager {
         } catch PathAtPennError.noTokenFound(let body) {
             logger.warning("Reauthenticating user for Path@Penn")
             
-            // Attempt to reauthenticate the user
-            guard let pennkey = KeychainAccessible.instance.getPennKey(),
-                  let password = KeychainAccessible.instance.getPassword() else {
-                throw PathAtPennError.pennkeyCredentialsNotStored
-            }
-            
-            var urlComponents = URLComponents()
-            urlComponents.queryItems = [
-                URLQueryItem(name: "j_username", value: pennkey),
-                URLQueryItem(name: "j_password", value: password),
-                URLQueryItem(name: "_eventId_proceed", value: "")
-            ]
-            
-            guard let requestBody = urlComponents.percentEncodedQuery?.data(using: .utf8) else {
-                throw PathAtPennError.invalidRequestBody
-            }
-            
-            let authorizeDOM = try SwiftSoup.parse(body)
-            guard let form = try authorizeDOM.getElementById("loginform") else {
-                throw PathAtPennError.noExecutionFound
-            }
-            
-            let loginStr = try form.attr("action")
-            guard let loginURL = URL(string: loginStr, relativeTo: URL(string: "https://weblogin.pennkey.upenn.edu")!) else {
-                throw PathAtPennError.noExecutionFound
-            }
-            
-            var request = URLRequest(url: loginURL)
-            request.httpMethod = "POST"
-            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-            request.httpBody = requestBody
-            
-            let (data, response) = try await URLSession.shared.data(for: request)
-            let twoFactorStr = try String(data: data, encoding: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
-            let twoFactorDOM = try SwiftSoup.parse(twoFactorStr)
-            let twoFactorURL = try response.url.unwrap(orThrow: PathAtPennError.noExecutionFound)
-            
-            urlComponents = URLComponents()
-            let formFields = ["tx", "parent", "_xsrf"]
-            
-            urlComponents.queryItems = try formFields.map { name in
-                guard let element = try twoFactorDOM.getElementsByAttributeValue("name", name).first() else {
-                    throw PathAtPennError.noExecutionFound
-                }
-                
-                return try URLQueryItem(name: name, value: element.val())
-            }
-            
-            guard let twoFactorRequestBody = urlComponents.percentEncodedQuery?.data(using: .utf8) else {
-                throw PathAtPennError.invalidRequestBody
-            }
-            
-            request = URLRequest(url: twoFactorURL)
-            request.httpMethod = "POST"
-            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-            request.httpBody = twoFactorRequestBody
-            
-            let (_, _) = try await URLSession.shared.data(for: request)
+            let (_, _) = try await doPennLoginWith2FA(body: body)
             
             return try await getTokenWithoutReauthenticating()
         } catch {
             throw error
         }
+    }
+    
+    func doPennLoginWith2FA(body: String) async throws -> (Data, URLResponse) {
+        // Attempt to reauthenticate the user
+        guard let pennkey = KeychainAccessible.instance.getPennKey(),
+              let password = KeychainAccessible.instance.getPassword() else {
+            throw PathAtPennError.pennkeyCredentialsNotStored
+        }
+        
+        var urlComponents = URLComponents()
+        urlComponents.queryItems = [
+            URLQueryItem(name: "j_username", value: pennkey),
+            URLQueryItem(name: "j_password", value: password),
+            URLQueryItem(name: "_eventId_proceed", value: "")
+        ]
+        
+        guard let requestBody = urlComponents.percentEncodedQuery?.data(using: .utf8) else {
+            throw PathAtPennError.invalidRequestBody
+        }
+        
+        let authorizeDOM = try SwiftSoup.parse(body)
+        guard let form = try authorizeDOM.getElementById("loginform") else {
+            throw PathAtPennError.noExecutionFound
+        }
+        
+        let loginStr = try form.attr("action")
+        guard let loginURL = URL(string: loginStr, relativeTo: URL(string: "https://weblogin.pennkey.upenn.edu")!) else {
+            throw PathAtPennError.noExecutionFound
+        }
+        
+        var request = URLRequest(url: loginURL)
+        request.httpMethod = "POST"
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpBody = requestBody
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let twoFactorStr = try String(data: data, encoding: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
+        let twoFactorDOM = try SwiftSoup.parse(twoFactorStr)
+        let twoFactorURL = try response.url.unwrap(orThrow: PathAtPennError.noExecutionFound)
+        
+        urlComponents = URLComponents()
+        let formFields = ["tx", "parent", "_xsrf"]
+        
+        urlComponents.queryItems = try formFields.map { name in
+            guard let element = try twoFactorDOM.getElementsByAttributeValue("name", name).first() else {
+                throw PathAtPennError.noExecutionFound
+            }
+            
+            return try URLQueryItem(name: name, value: element.val())
+        }
+        
+        guard let twoFactorRequestBody = urlComponents.percentEncodedQuery?.data(using: .utf8) else {
+            throw PathAtPennError.invalidRequestBody
+        }
+        
+        request = URLRequest(url: twoFactorURL)
+        request.httpMethod = "POST"
+        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpBody = twoFactorRequestBody
+        
+        return try await URLSession.shared.data(for: request)
     }
 }
 
