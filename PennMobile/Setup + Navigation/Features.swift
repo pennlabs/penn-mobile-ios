@@ -125,7 +125,10 @@ let features: [AppFeature] = [
         MarketplaceView()
             .navigationTitle(Text("Marketplace"))
     },
-    AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock"), controller: PacCodeViewController.self),
+    AppFeature(.pac, shortName: "PAC", longName: "PAC Code", color: .grey5, image: .system("lock")) {
+        PacCodeView()
+            .navigationTitle(Text("PAC Code"))
+    },
     AppFeature(.ticketScanner, shortName: "Scanner", longName: "Ticket Scanner", color: .basePurple, image: .system("qrcode.viewfinder")) {
         ScannerView()
             .navigationTitle(Text("Scanner"))

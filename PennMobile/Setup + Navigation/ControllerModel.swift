@@ -62,7 +62,6 @@ class ControllerModel: NSObject {
         vcDictionary[.preferences] = PreferencesViewController()
         vcDictionary[.privacy] = PrivacyViewController()
         vcDictionary[.courseSchedule] = CoursesViewController()
-        vcDictionary[.pacCode] = PacCodeViewController()
         vcDictionary[.courseAlerts] = CourseAlertController()
         vcDictionary[.headlineNews] = NativeNewsViewController()
     }

@@ -346,6 +346,7 @@
 		42ABED2A2CE8EB8D006533CD /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED292CE8EB8D006533CD /* ContactsView.swift */; };
 		42ABED2C2CE8EB9F006533CD /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED2B2CE8EB9F006533CD /* ContactModel.swift */; };
 		42D89D552CE94FC9005DFFD4 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */; };
+		42DFB8102DAD359D00571DA6 /* PacCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DFB80F2DAD359D00571DA6 /* PacCodeView.swift */; };
 		6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */; };
 		6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6CA1ACDA271D2D5000EDB967 /* Kingfisher */; };
 		6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */; };
@@ -776,6 +777,7 @@
 		42ABED292CE8EB8D006533CD /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		42ABED2B2CE8EB9F006533CD /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
+		42DFB80F2DAD359D00571DA6 /* PacCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacCodeView.swift; sourceTree = "<group>"; };
 		6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationDevelopment.xcconfig; sourceTree = "<group>"; };
 		6C1991BD27B5CA8500BBB402 /* NotificationRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationRelease.xcconfig; sourceTree = "<group>"; };
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
@@ -1615,6 +1617,7 @@
 			children = (
 				42632C2E2CB9C77B0028CC31 /* PacCodeNetworkManager.swift */,
 				42632C2F2CB9C77B0028CC31 /* PacCodeViewController.swift */,
+				42DFB80F2DAD359D00571DA6 /* PacCodeView.swift */,
 			);
 			path = "PAC Code";
 			sourceTree = "<group>";
@@ -2521,6 +2524,7 @@
 				42632D932CB9C77B0028CC31 /* NotificationsView.swift in Sources */,
 				42632D942CB9C77B0028CC31 /* NotificationsViewControllerSwiftUI.swift in Sources */,
 				42632D952CB9C77B0028CC31 /* NotificationViewModel.swift in Sources */,
+				42DFB8102DAD359D00571DA6 /* PacCodeView.swift in Sources */,
 				42632D962CB9C77B0028CC31 /* NotificationPreference.swift in Sources */,
 				42632D972CB9C77B0028CC31 /* NotificationRequestable.swift in Sources */,
 				42632D982CB9C77B0028CC31 /* NotificationsTableViewCell.swift in Sources */,

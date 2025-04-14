@@ -153,6 +153,38 @@ extension ShowsAlert where Self: UIViewController {
     }
 }
 
+struct MyAlert {
+    let title: String
+    let message: String
+}
+
+protocol ShowsAlertForError2 {
+    func getAlert<T>(result: Result<T, NetworkingError>, title: String) -> MyAlert
+}
+
+extension ShowsAlertForError2 {
+    func getAlert<T>(result: Result<T, NetworkingError>, title: String) -> MyAlert {
+        switch result {
+        case .success(_):
+            return MyAlert(title: "Refresh Complete!", message: "Your \(title) has been refreshed.")
+        case .failure(.noInternet):
+            return MyAlert(title: "Network Error", message: "You appear to be offline.\nPlease try again later.")
+        case .failure(.parsingError):
+            return MyAlert(title: "Uh oh!", message: "Something went wrong. Please try again later.")
+        case .failure(.serverError):
+            return MyAlert(title: "Uh oh!", message: "Penn's \(title) servers are currently not updating. We hope this will be fixed shortly.")
+        case .failure(.jsonError):
+            return MyAlert(title: "Uh oh!", message: "Something went wrong. Please try again later.")
+        case .failure(.authenticationError):
+            return MyAlert(title: "Login Error", message: "Unable to authenticate.\nPlease login again.")
+        case .failure(.alreadyExists):
+            return MyAlert(title: "Uh oh!", message: "Something went wrong. It seems to already exist.")
+        case .failure(.other):
+            return MyAlert(title: "Login Error", message: "Unable to authenticate.\nPlease login again.")
+        }
+    }
+}
+
 protocol ShowsAlertForError: ShowsAlert {
     func showRefreshAlertForError<T>(result: Result<T, NetworkingError>, title: String, success: @escaping (T) -> Void, noInternet: (() -> Void)?, parsingError: (() -> Void)?, serverError: (() -> Void)?, jsonError: (() -> Void)?, authenticationError: (() -> Void)?, other: (() -> Void)?)
 }
@@ -176,13 +208,13 @@ extension ShowsAlertForError {
             self.showAlert(withMsg: "Something went wrong. Please try again later.", title: "Uh oh!", completion: jsonError)
 
         case .failure(.authenticationError):
-            self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
+            self.showAlert(withMsg: "Unable to authenticate.\nPlease login again.", title: "Login Error", completion: authenticationError)
             
         case .failure(.alreadyExists):
             self.showAlert(withMsg: "Something went wrong. It seems to already exist.", title: "Uh oh!", completion: other)
 
         case .failure(.other):
-            self.showAlert(withMsg: "Unable to access your courses.\nPlease login again.", title: "Login Error", completion: authenticationError)
+            self.showAlert(withMsg: "Unable to authenticate.\nPlease login again.", title: "Login Error", completion: authenticationError)
         }
     }
 }

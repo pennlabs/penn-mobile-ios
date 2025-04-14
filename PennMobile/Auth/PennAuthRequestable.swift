@@ -24,7 +24,6 @@ extension PennAuthRequestable {
         let url = URL(string: targetUrl)!
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-
             if let error = error, (error as NSError).code == -1009 {
                 completionHandler(nil, nil, NetworkingError.noInternet)
                 return
