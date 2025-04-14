@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Lottie
 
 struct GSRBookingView: View {
     @EnvironmentObject var vm: GSRViewModel
@@ -42,9 +43,14 @@ struct GSRBookingView: View {
                         }
                     }
             } else {
-                VStack {
+                
+                VStack(alignment: .center) {
                     Spacer()
-                    ProgressView()
+                    LottieView {
+                      try await DotLottieFile.named("gsr-loading")
+                    }
+                    .playing(loopMode: .autoReverse)
+                    .frame(width: 250, height: 250)
                     Spacer()
                 }
             }

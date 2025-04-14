@@ -132,12 +132,18 @@ class GSRViewModel: ObservableObject {
         }
         
         let avail = try await GSRNetworkManager.getAvailability(for: loc, startDate: self.selectedDate, endDate: Calendar.current.date(byAdding: .day, value: 1, to: self.selectedDate)!)
+        
+        
 
         let (min, max) = avail.getMinMaxDates()
-        if let min, let max {
-            self.roomsAtSelectedLocation = avail.map {
-                return $0.withMissingTimeslots(minDate: min, maxDate: max)
-            }
+        
+        guard let min, let max else {
+            self.isLoadingAvailability = false
+            return
+        }
+        
+        self.roomsAtSelectedLocation = avail.map {
+            return $0.withMissingTimeslots(minDate: min, maxDate: max)
         }
         
         self.isLoadingAvailability = false
