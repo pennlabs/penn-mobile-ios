@@ -34,14 +34,33 @@ struct GSRBookingView: View {
             .padding(.horizontal)
             
             if !vm.isLoadingAvailability {
-                GSRTwoWayScrollView()
-                    .overlay {
-                        VStack {
-                            Spacer()
-                            GSRBookingToolbarView()
-                                .padding(24)
+                if vm.hasAvailableBooking {
+                    GSRTwoWayScrollView()
+                        .overlay {
+                            VStack {
+                                Spacer()
+                                GSRBookingToolbarView()
+                                    .padding(24)
+                            }
                         }
+                } else {
+                    VStack {
+                        Spacer()
+                        Image("EmptyStateGSR")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200)
+                        Text("No rooms available")
+                            .font(.title2)
+                            .fontWeight(.light)
+                        Spacer()
                     }
+                    
+                    
+                }
+                
+                
+                
             } else {
                 
                 VStack(alignment: .center) {

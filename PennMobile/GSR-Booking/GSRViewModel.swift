@@ -22,6 +22,11 @@ class GSRViewModel: ObservableObject {
     @Published var isWharton: Bool = false
     @Published var isLoadingAvailability = false
     @Published var showSuccessfulBookingAlert = false
+    
+    var hasAvailableBooking: Bool {
+        return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })
+    }
+    
     init() {
         let options = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now) }
         datePickerOptions = options
@@ -33,7 +38,6 @@ class GSRViewModel: ObservableObject {
                 return
             }
         }
-        
     }
     
     
