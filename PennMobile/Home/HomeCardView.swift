@@ -129,44 +129,44 @@ struct PostCardView: View {
     }
 }
 
-struct NewsCardView: View {
-    var article: NewsArticle
-    
-    var abstract: String? {
-        try? SwiftSoup.parse(article.abstract).text()
-    }
-    
-    var body: some View {
-        NavigationLink {
-            NewsDetailView(article: article)
-                .navigationTitle(Text("News"))
-        } label: {
-            GenericPostCardView(
-                icon: Image(systemName: "newspaper"),
-                source: "The Daily Pennsylvanian",
-                title: article.headline,
-                description: abstract,
-                imageURL: URL(string: article.dominantMedia.imageUrl),
-                dateLabel: "\(article.published_at)"
-            )
-        }
-        .buttonStyle(PlainButtonStyle())
-    }
-}
+//struct NewsCardView: View {
+//    var article: NewsArticle
+//    
+//    var abstract: String? {
+//        try? SwiftSoup.parse(article.abstract).text()
+//    }
+//    
+//    var body: some View {
+//        NavigationLink {
+//            NewsDetailView(article: article)
+//                .navigationTitle(Text("News"))
+//        } label: {
+//            GenericPostCardView(
+//                icon: Image(systemName: "newspaper"),
+//                source: "The Daily Pennsylvanian",
+//                title: article.headline,
+//                description: abstract,
+//                imageURL: URL(string: article.dominantMedia.imageUrl),
+//                dateLabel: "\(article.published_at)"
+//            )
+//        }
+//        .buttonStyle(PlainButtonStyle())
+//    }
+//}
 
-struct NewsDetailView: UIViewControllerRepresentable {
-    var article: NewsArticle
-    
-    func makeUIViewController(context: Context) -> NativeNewsViewController {
-        let controller = NativeNewsViewController()
-        updateUIViewController(controller, context: context)
-        return controller
-    }
-    
-    func updateUIViewController(_ uiViewController: NativeNewsViewController, context: Context) {
-        uiViewController.article = article
-    }
-}
+//struct NewsDetailView: UIViewControllerRepresentable {
+//    var article: NewsArticle
+//    
+//    func makeUIViewController(context: Context) -> NativeNewsViewController {
+//        let controller = NativeNewsViewController()
+//        updateUIViewController(controller, context: context)
+//        return controller
+//    }
+//    
+//    func updateUIViewController(_ uiViewController: NativeNewsViewController, context: Context) {
+//        uiViewController.article = article
+//    }
+//}
 
 @available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
