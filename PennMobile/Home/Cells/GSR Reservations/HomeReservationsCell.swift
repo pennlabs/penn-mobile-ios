@@ -112,6 +112,11 @@ extension HomeReservationsCell {
 
 // MARK: - UITableViewDelegate
 extension HomeReservationsCell: ReservationCellDelegate {
+    func shareReservation(_ reservation: GSRReservation) {
+        guard let del = delegate as? ReservationCellDelegate else { return }
+        del.shareReservation(reservation)
+    }
+    
     func deleteReservation(_ reservation: GSRReservation) {
         guard let delegate = delegate as? ReservationCellDelegate else { return }
         delegate.deleteReservation(reservation)

@@ -25,6 +25,18 @@ struct PennLocation: Identifiable {
 }
 
 extension PennLocation {
+    static let pennGSRLocation: [String: PennLocation] = [
+        "Huntsman": PennLocation(name: "Huntsman", coordinate: CLLocationCoordinate2D(latitude: 39.95307761065585, longitude: -75.19817525836665)),
+        "Academic Research": PennLocation(name: "ARB", coordinate: CLLocationCoordinate2D(latitude: 39.95129828577706, longitude: -75.19683445915696)),
+        "Biotech Commons": PennLocation(name: "Biotech Commons", coordinate: CLLocationCoordinate2D(latitude: 39.9495964, longitude: -75.1982764)),
+        "Education Commons": PennLocation(name: "Education Commons", coordinate: CLLocationCoordinate2D(latitude: 39.9504639, longitude: -75.1918546)),
+        "Weigle": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
+        "Levin Building": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
+        "Lippincott": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
+        "Van Pelt": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
+        "Perelman Center": PennLocation(name: "PCPSE", coordinate: CLLocationCoordinate2D(latitude: 39.9534167, longitude: -75.1993981))
+    ]
+    
     static let pennEventLocations: [PennLocation] = [
         // Dorms / Dining
         PennLocation(name: "Harrison", coordinate: CLLocationCoordinate2D(latitude: 39.9519532049742, longitude: -75.20112202851995)),

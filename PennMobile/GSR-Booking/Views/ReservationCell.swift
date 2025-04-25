@@ -10,6 +10,7 @@ import UIKit
 
 protocol ReservationCellDelegate {
     func deleteReservation(_ reservation: GSRReservation)
+    func shareReservation(_ reservation: GSRReservation)
 }
 
 class ReservationCell: UITableViewCell {
@@ -39,6 +40,10 @@ class ReservationCell: UITableViewCell {
     @objc func handleDeletePressed(_ sender: Any) {
         self.delegate.deleteReservation(reservation)
     }
+    
+    @objc func handleSharePressed(_ sender: Any) {   // <-- NEW
+            delegate.shareReservation(reservation)
+        }
 
     // MARK: - UI Elements
     fileprivate var safeArea: UIView!
@@ -46,6 +51,7 @@ class ReservationCell: UITableViewCell {
     fileprivate var dateLabel: UILabel!
     fileprivate var timeLabel: UILabel!
     fileprivate var deleteButton: UIButton!
+    fileprivate var shareButton: UIButton!
     fileprivate var buildingImageView: UIImageView!
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -104,6 +110,9 @@ extension ReservationCell {
         addSubview(dateLabel)
         deleteButton = getDeleteButton()
         addSubview(deleteButton)
+        
+        shareButton = getShareButton()        
+        addSubview(shareButton)
 
         locationLabel.snp.makeConstraints { (make) in
             make.top.equalTo(buildingImageView.snp.top).offset(-2)
@@ -127,6 +136,13 @@ extension ReservationCell {
             make.width.equalTo(94)
             make.height.equalTo(24)
             make.leading.equalTo(locationLabel.snp.leading)
+            make.bottom.equalTo(buildingImageView.snp.bottom)
+        }
+        
+        shareButton.snp.makeConstraints { make in
+            make.width.equalTo(94)
+            make.height.equalTo(24)
+            make.leading.equalTo(deleteButton.snp.trailing).offset(8)
             make.bottom.equalTo(buildingImageView.snp.bottom)
         }
     }
@@ -164,6 +180,19 @@ extension ReservationCell {
         button.setTitle("Delete", for: .normal)
         button.addTarget(self, action: #selector(handleDeletePressed(_:)), for: .touchUpInside)
         button.backgroundColor = .baseRed
+        button.layer.cornerRadius = 4
+        button.titleLabel?.font = .secondaryTitleFont
+        button.titleLabel?.textColor = .white
+        button.tintColor = .white
+        button.titleLabel?.textAlignment = .center
+        return button
+    }
+    
+    private func getShareButton() -> UIButton {
+        let button = UIButton(type: .system)
+        button.setTitle("Share", for: .normal)
+        button.addTarget(self, action: #selector(handleSharePressed(_:)), for: .touchUpInside)
+        button.backgroundColor = .baseLabsBlue
         button.layer.cornerRadius = 4
         button.titleLabel?.font = .secondaryTitleFont
         button.titleLabel?.textColor = .white

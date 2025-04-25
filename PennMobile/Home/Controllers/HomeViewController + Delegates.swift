@@ -29,6 +29,14 @@ extension HomeViewController: GSRDeletable {
             }
         }
     }
+    
+    func shareReservation(_ reservation: GSRReservation) {
+       let userName = Account.getAccount()?.firstName ?? "Guest"
+       let shareModel = GSRShareModel(userName: userName, reservation: reservation)
+       guard let url = shareModel.encodedURL() else { return }
+       let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+       present(activityVC, animated: true)
+   }
 
     func deleteReservation(_ reservation: GSRReservation) {
         deleteReservation(reservation.bookingId)

@@ -97,6 +97,22 @@ extension GSRReservationsController: ReservationCellDelegate {
             }
         }
     }
+    
+    // <-- ADD THIS:
+    func shareReservation(_ reservation: GSRReservation) {
+            // 1) Gather the user's first name
+        let userName = Account.getAccount()?.firstName ?? "Guest"
+
+            // 2) Create a share model
+        let shareModel = GSRShareModel(userName: userName, reservation: reservation)
+
+            // 3) Build link: gsr://share?data=<base64>
+        guard let url = shareModel.encodedURL() else { return }
+
+            // 4) Show share sheet
+        let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+        present(activityVC, animated: true)
+    }
 
     func confirmDelete(_ callback: @escaping () -> Void) {
         let alertController = UIAlertController(title: "Are you sure?", message: "Please confirm that you wish to delete this booking.", preferredStyle: .alert)

@@ -379,6 +379,10 @@
 		89DF63072CEB9BBB00C4A015 /* NotificationDeviceTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF63062CEB9BB400C4A015 /* NotificationDeviceTokenManager.swift */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
 		89EA262F290F958B008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
+		9279407D2D74475700A92E83 /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9279407C2D74475000A92E83 /* DeepLinkManager.swift */; };
+		9279407F2D744ABA00A92E83 /* GSRShareDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9279407E2D744AB100A92E83 /* GSRShareDetailView.swift */; };
+		927940A42D846E2200A92E83 /* GoogleCalendarLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927940A32D846E2200A92E83 /* GoogleCalendarLink.swift */; };
+		927940A62D846E3100A92E83 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927940A52D846E3100A92E83 /* CalendarHelper.swift */; };
 		F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftSoup */; };
 		F2568A762413534F00561295 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F2568A752413534F00561295 /* SnapKit */; };
 /* End PBXBuildFile section */
@@ -810,6 +814,10 @@
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		89DF63062CEB9BB400C4A015 /* NotificationDeviceTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDeviceTokenManager.swift; sourceTree = "<group>"; };
 		89EA262D290F9411008F26CF /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		9279407C2D74475000A92E83 /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
+		9279407E2D744AB100A92E83 /* GSRShareDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRShareDetailView.swift; sourceTree = "<group>"; };
+		927940A32D846E2200A92E83 /* GoogleCalendarLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCalendarLink.swift; sourceTree = "<group>"; };
+		927940A52D846E3100A92E83 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -958,6 +966,7 @@
 		42632B0D2CB9C77B0028CC31 /* Buildings */ = {
 			isa = PBXGroup;
 			children = (
+				42632B2F2CB9C77B0028CC31 /* Views */,
 				42632B0A2CB9C77B0028CC31 /* Cells */,
 				42632B0C2CB9C77B0028CC31 /* Models */,
 			);
@@ -1046,7 +1055,6 @@
 				42632B222CB9C77B0028CC31 /* Controllers */,
 				42632B272CB9C77B0028CC31 /* Model */,
 				42632B292CB9C77B0028CC31 /* Networking */,
-				42632B2F2CB9C77B0028CC31 /* Views */,
 			);
 			path = "Course Alerts";
 			sourceTree = "<group>";
@@ -1277,6 +1285,8 @@
 		42632B922CB9C77B0028CC31 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				927940A52D846E3100A92E83 /* CalendarHelper.swift */,
+				927940A32D846E2200A92E83 /* GoogleCalendarLink.swift */,
 				42632B8B2CB9C77B0028CC31 /* GSRGroups */,
 				42632B8C2CB9C77B0028CC31 /* GSRBookable.swift */,
 				42632B8D2CB9C77B0028CC31 /* GSRController.swift */,
@@ -1291,6 +1301,7 @@
 		42632B9D2CB9C77B0028CC31 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9279407C2D74475000A92E83 /* DeepLinkManager.swift */,
 				42632B932CB9C77B0028CC31 /* GSRAPIResponse.swift */,
 				42632B942CB9C77B0028CC31 /* GSRBooking.swift */,
 				42632B952CB9C77B0028CC31 /* GSRDateHandler.swift */,
@@ -1352,6 +1363,7 @@
 				42632BB42CB9C77B0028CC31 /* NoReservationsCell.swift */,
 				42632BB52CB9C77B0028CC31 /* ReservationCell.swift */,
 				42632BB62CB9C77B0028CC31 /* RoomCell.swift */,
+				9279407E2D744AB100A92E83 /* GSRShareDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2358,6 +2370,7 @@
 				4218240B2CCEB1370028E510 /* PennEventsViewerView.swift in Sources */,
 				42632C9A2CB9C77B0028CC31 /* PennLoginController.swift in Sources */,
 				42632C9B2CB9C77B0028CC31 /* BannerDescription.swift in Sources */,
+				927940A62D846E3100A92E83 /* CalendarHelper.swift in Sources */,
 				42632C9C2CB9C77B0028CC31 /* BannerView.swift in Sources */,
 				42632C9D2CB9C77B0028CC31 /* BannerViewModel.swift in Sources */,
 				42632C9E2CB9C77B0028CC31 /* UserEngagementPopupView.swift in Sources */,
@@ -2370,6 +2383,7 @@
 				42632CA52CB9C77B0028CC31 /* BuildingSectionHeader.swift in Sources */,
 				42632CA62CB9C77B0028CC31 /* MenuTableView.swift in Sources */,
 				42632CA72CB9C77B0028CC31 /* BuildingProtocol.swift in Sources */,
+				9279407F2D744ABA00A92E83 /* GSRShareDetailView.swift in Sources */,
 				42632CA82CB9C77B0028CC31 /* ScannerState.swift in Sources */,
 				42632CA92CB9C77B0028CC31 /* ScannerView.swift in Sources */,
 				42632CAA2CB9C77B0028CC31 /* ScannerViewfinder.swift in Sources */,
@@ -2534,6 +2548,7 @@
 				42632D572CB9C77B0028CC31 /* DiningCellSettingsController.swift in Sources */,
 				42632D582CB9C77B0028CC31 /* HomeViewController.swift in Sources */,
 				42632D592CB9C77B0028CC31 /* HomeViewController + Delegates.swift in Sources */,
+				9279407D2D74475700A92E83 /* DeepLinkManager.swift in Sources */,
 				42632D5A2CB9C77B0028CC31 /* HomeCellItem.swift in Sources */,
 				42632D5B2CB9C77B0028CC31 /* HomeItemTypes.swift in Sources */,
 				42632D5C2CB9C77B0028CC31 /* HomeTableViewModel.swift in Sources */,
@@ -2629,6 +2644,7 @@
 				42632DB42CB9C77B0028CC31 /* Features.swift in Sources */,
 				42632DB52CB9C77B0028CC31 /* MainTabView.swift in Sources */,
 				42632DB62CB9C77B0028CC31 /* PennMobile.swift in Sources */,
+				927940A42D846E2200A92E83 /* GoogleCalendarLink.swift in Sources */,
 				42632DB72CB9C77B0028CC31 /* RootView.swift in Sources */,
 				42632DB82CB9C77B0028CC31 /* RootViewController.swift in Sources */,
 				42632DB92CB9C77B0028CC31 /* SplashViewController.swift in Sources */,

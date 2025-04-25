@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct RootView: View {
     @EnvironmentObject var authManager: AuthManager
@@ -14,7 +15,12 @@ struct RootView: View {
     @State var toast: ToastConfiguration?
     @StateObject var popupManager = PopupManager()
     @Environment(\.scenePhase) var scenePhase
+    @EnvironmentObject var deepLinkManager: DeepLinkManager
+    @State private var currentShare: GSRShareModel?
+    @State private var showShareDetail = false
+    @State private var cancellables = Set<AnyCancellable>()
 
+    
     var isOnLogoutScreen: Bool {
         switch authManager.state {
         case .loggedOut:
@@ -52,6 +58,24 @@ struct RootView: View {
             default:
                 fatalError("Unhandled auth manager state: \(authManager.state)")
             }
+        }
+        .onAppear {
+           if let alreadyResolved = deepLinkManager.lastResolvedLink {
+               currentShare = alreadyResolved
+               showShareDetail = true
+           }
+           deepLinkManager.$lastResolvedLink
+               .sink { shareModel in
+                   guard let share = shareModel else { return }
+                   currentShare = share
+                   showShareDetail = true
+               }
+               .store(in: &cancellables)
+        }
+        .sheet(isPresented: $showShareDetail) {
+           if let model = currentShare {
+               GSRShareDetailView(model: model)
+           }
         }
         .animation(.default, value: isOnLogoutScreen)
         .overlay(alignment: .top) {
