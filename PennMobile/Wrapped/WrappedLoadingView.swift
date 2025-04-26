@@ -36,12 +36,16 @@ struct WrappedLoadingView: WrappedStage {
     }
     
     var body: some View {
-        ProgressView(value: progress)
-            .onAppear {
-                Task {
-                    await start()
-                }
+        LottieView {
+          try await DotLottieFile.named("WrappedLoading")
+        }
+        .playing(loopMode: .autoReverse)
+        .frame(width: 250, height: 250)
+        .onAppear {
+            Task {
+                await start()
             }
+        }
     }
 }
 
