@@ -32,8 +32,15 @@ struct WrappedContainerView: WrappedStage {
         }
         .overlay {
             VStack {
-                Spacer()
-                HStack (spacing: 0){
+                HStack (spacing: 0) {
+                    Button {
+                        containerVM.reset()
+                        onFinish(false)
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .padding(.trailing)
+                    }
                     ForEach(containerVM.units, id:\.self) { unit in
                         GeometryReader { proxy in
                             ZStack {
@@ -49,10 +56,16 @@ struct WrappedContainerView: WrappedStage {
                                         .foregroundStyle(.white)
                                 }
                             }
-                        }.padding(.horizontal, 1)
+                        }.padding(.horizontal, 2)
+                        .frame(height: 2)
                     }
                 }
-            }.foregroundColor(.white)
+                .padding(.top)
+                .shadow(radius: 1)
+                Spacer()
+            }
+            .foregroundColor(.white)
+            .padding(.horizontal)
         }
         .onLongPressGesture(perform: {
             containerVM.pause()

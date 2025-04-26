@@ -34,8 +34,14 @@ struct WrappedHomeScreenExperience: View {
                             }
                         },
                         WrappedContainerView(activeState: .active) { res in
-                            //potentially go to finishing page, but close for right now.
-                            vm.showWrapped = false
+                            // true result means finished without cancel, false means cancelled
+                            if res {
+                                //potentially go to finishing page, but close for right now.
+                                vm.showWrapped = false
+                            } else {
+                                vm.showWrapped = false
+                            }
+                            
                         }
                         
                     ])
