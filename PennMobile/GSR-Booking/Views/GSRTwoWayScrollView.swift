@@ -16,9 +16,11 @@ struct GSRTwoWayScrollView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             //ZStack(alignment: .topLeading) {
             ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
+                LazyVStack(alignment: .center, spacing: 0, pinnedViews: .sectionHeaders) {
                     Section {
-                        VStack(alignment: .leading, spacing: 32) {
+                        VStack(alignment: .center, spacing: 32) {
+                            Color.clear
+                                .frame(height: 0)
                             ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
                                 GSRRoomAvailabilityRow(room: room)
                             }
@@ -35,7 +37,6 @@ struct GSRTwoWayScrollView: View {
                             TimeSlotDottedLinesView()
                                 .frame(height: 16)
                         }
-                        .offset(x: -40)
                         .background {
                             Rectangle()
                                 .foregroundStyle(Color(UIColor.systemBackground))

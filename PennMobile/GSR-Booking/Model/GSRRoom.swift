@@ -28,6 +28,10 @@ extension Array where Element == GSRRoom {
         }
         return (min, max)
     }
+    
+    func hasAvailableAt(_ startTime: Date) -> Bool {
+        return !self.filter({ $0.availability.contains(where: { $0.startTime == startTime && $0.isAvailable }) }).isEmpty
+    }
 }
 
 extension GSRRoom {

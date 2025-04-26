@@ -16,12 +16,25 @@ struct GSRTimeCardRow: View {
                 let avail = vm.getRelevantAvailability()
                 if let firstSlot = avail.first {
                     Text(firstSlot.startTime.gsrTimeString)
+                        .font(.callout)
+                        .padding(4)
+                        .background {
+                            RoundedRectangle(cornerRadius: 4)
+                                .foregroundStyle(vm.roomsAtSelectedLocation.hasAvailableAt(firstSlot.startTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                        }
                         .frame(width: 80)
                     ForEach(avail, id: \.self) { slot in
                         Text(slot.endTime.gsrTimeString)
+                            .font(.callout)
+                            .padding(4)
+                            .background {
+                                RoundedRectangle(cornerRadius: 4)
+                                    .foregroundStyle(vm.roomsAtSelectedLocation.hasAvailableAt(slot.endTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                            }
                             .frame(width: 80)
                     }
                 }
+                    
                 
                 
             }

@@ -26,6 +26,12 @@ struct GSRRoomAvailabilityRow: View {
                                     .foregroundStyle(.white)
                             }
                         }
+                        .overlay {
+                            if !slot.isAvailable {
+                               UnavailableTextureOverlay()
+                           }
+                        }
+
                 }
                 .onTapGesture {
                     do {

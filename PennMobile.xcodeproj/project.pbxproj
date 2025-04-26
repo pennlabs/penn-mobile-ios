@@ -331,6 +331,7 @@
 		730548152D8DF733003FD988 /* TimeSlotDottedLinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730548142D8DF728003FD988 /* TimeSlotDottedLinesView.swift */; };
 		734A8E7C2DA4848100BD5F55 /* RoomFinderSelectionPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734A8E7B2DA4847D00BD5F55 /* RoomFinderSelectionPanel.swift */; };
 		7356504F2D6F870600FFBD8C /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7356504E2D6F870600FFBD8C /* LabsPlatformSwift */; };
+		735AFA042DBC881F00753F63 /* UnavailableTextureOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 735AFA032DBC881800753F63 /* UnavailableTextureOverlay.swift */; };
 		736DABD02D8E479C00C93BA5 /* GSRTimeCardRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABCF2D8E478A00C93BA5 /* GSRTimeCardRow.swift */; };
 		736DABD22D8F557000C93BA5 /* GSRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABD12D8F556A00C93BA5 /* GSRViewModel.swift */; };
 		736DABD42D8FB4E800C93BA5 /* GSRTwoWayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */; };
@@ -738,6 +739,7 @@
 		730548122D8DDF70003FD988 /* GSRRoomAvailabilityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRRoomAvailabilityRow.swift; sourceTree = "<group>"; };
 		730548142D8DF728003FD988 /* TimeSlotDottedLinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlotDottedLinesView.swift; sourceTree = "<group>"; };
 		734A8E7B2DA4847D00BD5F55 /* RoomFinderSelectionPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomFinderSelectionPanel.swift; sourceTree = "<group>"; };
+		735AFA032DBC881800753F63 /* UnavailableTextureOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnavailableTextureOverlay.swift; sourceTree = "<group>"; };
 		736DABCF2D8E478A00C93BA5 /* GSRTimeCardRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTimeCardRow.swift; sourceTree = "<group>"; };
 		736DABD12D8F556A00C93BA5 /* GSRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRViewModel.swift; sourceTree = "<group>"; };
 		736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTwoWayScrollView.swift; sourceTree = "<group>"; };
@@ -1242,6 +1244,7 @@
 		42632BB72CB9C77B0028CC31 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				735AFA032DBC881800753F63 /* UnavailableTextureOverlay.swift */,
 				730548122D8DDF70003FD988 /* GSRRoomAvailabilityRow.swift */,
 				12836D342D74D84E005FBF85 /* EmptyFile.swift */,
 				12836D362D74DE29005FBF85 /* GSRLocationCell.swift */,
@@ -2263,6 +2266,7 @@
 				42632CDC2CB9C77B0028CC31 /* DiningViewControllerSwiftUI.swift in Sources */,
 				42632CDD2CB9C77B0028CC31 /* DiningViewModelSwiftUI.swift in Sources */,
 				42632CDE2CB9C77B0028CC31 /* DiningCell.swift in Sources */,
+				735AFA042DBC881F00753F63 /* UnavailableTextureOverlay.swift in Sources */,
 				12836D2F2D6B982F005FBF85 /* QuickBookViewController.swift in Sources */,
 				42632CE32CB9C77B0028CC31 /* FitnessRoomRow.swift in Sources */,
 				42632CE42CB9C77B0028CC31 /* FitnessSettingsView.swift in Sources */,
