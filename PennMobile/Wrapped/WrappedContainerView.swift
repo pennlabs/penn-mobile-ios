@@ -13,94 +13,88 @@ struct WrappedContainerView: WrappedStage {
     
     @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var vm: WrappedExperienceViewModel
+    @EnvironmentObject var containerVM: WrappedContainerViewModel
     let id: UUID = UUID()
     var onFinish: (Bool) -> Void
     
     var body: some View {
-        
-        
-        if vm.containerVM != nil {
-            @ObservedObject var viewModel = vm.containerVM!
-            ZStack {
-                Color(red: 0.1, green: 0.1, blue: 0.1)
-                    .ignoresSafeArea()
-                TabView(selection: $viewModel.activeUnit) {
-                    ForEach(vm.containerVM!.units) { unit in
-                        WrappedUnitView(unit: unit, vm: vm.containerVM!)
-                            .tag(unit)
-                    }
-                }
-                
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .ignoresSafeArea()
-                
-                VStack {
-                    Spacer()
-                    HStack (spacing: 0){
-                        ForEach(vm.containerVM!.units, id:\.self) { unit in
-                            GeometryReader { proxy in
-                                ZStack {
+        TabView(selection: $containerVM.activeUnit) {
+            ForEach(containerVM.units) { unit in
+                WrappedUnitView(unit: unit, vm: containerVM)
+                    .tag(unit)
+            }
+        }
+        .allowsHitTesting(false)
+        .tabViewStyle(.page(indexDisplayMode: .never))
+        .ignoresSafeArea()
+        .background {
+            Color(red: 0.1, green: 0.1, blue: 0.1)
+        }
+        .overlay {
+            VStack {
+                Spacer()
+                HStack (spacing: 0){
+                    ForEach(containerVM.units, id:\.self) { unit in
+                        GeometryReader { proxy in
+                            ZStack {
+                                Rectangle()
+                                    .size(width: CGFloat((Float(proxy.size.width))), height: 2)
+                                    .cornerRadius(1)
+                                    .foregroundStyle(.white.opacity(0.5))
+                                if unit.id <= containerVM.activeUnit.id {
                                     Rectangle()
-                                        .size(width: CGFloat((Float(proxy.size.width))), height: 2)
+                                        .size(width: unit.id < containerVM.activeUnit.id ? proxy.size.width :
+                                                CGFloat((Float(proxy.size.width) * Float(containerVM.activeUnitProgress))), height: 2)
                                         .cornerRadius(1)
-                                        .foregroundStyle(.white.opacity(0.5))
-                                    if unit.id <= vm.containerVM!.activeUnit.id {
-                                        Rectangle()
-                                            .size(width: unit.id < vm.containerVM!.activeUnit.id ? proxy.size.width :
-                                                    CGFloat((Float(proxy.size.width) * Float(vm.containerVM!.activeUnitProgress))), height: 2)
-                                            .cornerRadius(1)
-                                            .foregroundStyle(.white)
-                                    }
+                                        .foregroundStyle(.white)
                                 }
-                            }.padding(.horizontal, 1)
-                        }
+                            }
+                        }.padding(.horizontal, 1)
                     }
-                }.foregroundColor(.white)
-            }
-            .onLongPressGesture(perform: {
-                vm.containerVM!.pause()
-                UIImpactFeedbackGenerator(style: .soft).impactOccurred()
-            }, onPressingChanged: { pressed in
-                if !pressed && vm.containerVM!.state == .paused {
-                    vm.containerVM!.play()
                 }
-            })
-            .onTapGesture { location in
-                if (location.x > 150) {
-                    vm.containerVM!.next()
+            }.foregroundColor(.white)
+        }
+        .onLongPressGesture(perform: {
+            containerVM.pause()
+            UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+        }, onPressingChanged: { pressed in
+            if !pressed && containerVM.state == .paused {
+                containerVM.play()
+            }
+        })
+        .onTapGesture { location in
+            if (location.x > 150) {
+                containerVM.next()
+            } else {
+                if (containerVM.activeUnitProgress > 0.2) {
+                    containerVM.restartCurrent()
                 } else {
-                    if (vm.containerVM!.activeUnitProgress > 0.2) {
-                        vm.containerVM!.restartCurrent()
-                    } else {
-                        vm.containerVM!.previous()
-                    }
-                    
+                    containerVM.previous()
                 }
+                
             }
-            .onAppear {
-                vm.containerVM!.reset()
-                vm.containerVM!.play()
+        }
+        .onAppear {
+            containerVM.reset()
+            containerVM.play()
+        }
+        .onChange(of: scenePhase) { new in
+            switch (new) {
+            case .background, .inactive:
+                containerVM.pause()
+                break;
+            case .active:
+                containerVM.play()
+                break;
+            @unknown default:
+                break;
             }
-            .onChange(of: scenePhase) { new in
-                switch (new) {
-                case .background, .inactive:
-                    vm.containerVM!.pause()
-                    break;
-                case .active:
-                    vm.containerVM!.play()
-                    break;
-                @unknown default:
-                    break;
-                }
+        }
+        .onChange(of: containerVM.state) { new in
+            if (new == .finished) {
+                containerVM.reset()
+                onFinish(true)
             }
-            .onChange(of: vm.containerVM!.state) { new in
-                if (new == .finished) {
-                    onFinish(true)
-                }
-            }
-        
-        } else {
-            Text("Error!")
         }
     }
     

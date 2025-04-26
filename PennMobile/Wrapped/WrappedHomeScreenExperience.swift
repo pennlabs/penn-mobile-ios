@@ -34,8 +34,10 @@ struct WrappedHomeScreenExperience: View {
                             }
                         },
                         WrappedContainerView(activeState: .active) { res in
-                            
+                            //potentially go to finishing page, but close for right now.
+                            vm.showWrapped = false
                         }
+                        
                     ])
                     .environmentObject(vm)
                 }

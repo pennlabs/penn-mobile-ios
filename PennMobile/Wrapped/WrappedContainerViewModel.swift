@@ -94,7 +94,6 @@ class WrappedContainerViewModel: ObservableObject {
     
     func next() {
         guard let newActiveUnit = nextUnit else {
-            reset()
             state = .finished
             return
         }

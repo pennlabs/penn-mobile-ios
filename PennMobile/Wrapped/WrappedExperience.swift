@@ -17,11 +17,16 @@ public struct WrappedExperience: View {
     }
     
     public var body: some View {
-        TabView(selection: $vm.wrappedExperienceState) {
-            ForEach(stages, id: \.id) { stage in
-                AnyView(stage)
-                    .tag(stage.activeState)
+        if let active = stages.first(where: {$0.activeState == vm.wrappedExperienceState}) {
+            Group {
+                if let cVM = vm.containerVM {
+                    AnyView(active)
+                        .environmentObject(cVM)
+                } else {
+                    AnyView(active)
+                }
             }
+            .tag(active.activeState)
         }
     }
 }
