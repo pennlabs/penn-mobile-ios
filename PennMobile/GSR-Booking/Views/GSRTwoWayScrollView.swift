@@ -10,7 +10,7 @@ import SwiftUI
 struct GSRTwoWayScrollView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
-    let roomTitleOffset: CGFloat = 60
+    let roomTitleOffset: CGFloat = 80
     
     // Pin the time card header to the scrollview
     @State var scrollViewCenterDisplacementValue: CGFloat = 0.0
@@ -22,8 +22,9 @@ struct GSRTwoWayScrollView: View {
                 GSRTimeCardRow()
                     .padding(.top)
                 TimeSlotDottedLinesView()
-                    .frame(height: 16)
+                    .frame(height: 32)
             }
+            .padding(.trailing, 48)
             .background {
                 GeometryReader { proxy in
                     Rectangle()
@@ -37,44 +38,48 @@ struct GSRTwoWayScrollView: View {
 
             ScrollView(.vertical, showsIndicators: false) {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    VStack(alignment: .center, spacing: 48) {
+                    HStack(spacing: 0) {
                         Color.clear
-                            .frame(height: 0)
-                        ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
-                            GSRRoomAvailabilityRow(room: room)
+                            .frame(width: roomTitleOffset)
+                        VStack(alignment: .center, spacing: 48) {
+                            ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
+                                GSRRoomAvailabilityRow(room: room)
+                            }
+                            Spacer()
                         }
-                        Spacer()
-                    }
-                    .overlay {
-                        TimeSlotDottedLinesView()
-                    }
-                    .padding(.horizontal, 40)
-                    .background {
-                        GeometryReader { proxy in
-                            Color.clear
-                                .onChange(of: proxy.frame(in: .global).midX) { old, new in
-                                    scrollViewCenterDisplacementValue += new - old
-                                }
-                                .onAppear {
-                                    self.totalCenterOffset += proxy.frame(in: .global).midX
-                                }
+                        .overlay {
+                            TimeSlotDottedLinesView()
                         }
-                        
+                        .padding(.trailing, 48)
+                        .background {
+                            GeometryReader { proxy in
+                                Color.clear
+                                    .onChange(of: proxy.frame(in: .global).midX) { old, new in
+                                        scrollViewCenterDisplacementValue += new - old
+                                    }
+                                    .onAppear {
+                                        self.totalCenterOffset += proxy.frame(in: .global).midX
+                                    }
+                            }
+                        }
                     }
                 }
                 .overlay(alignment: .topLeading) {
-                    VStack(alignment: .leading, spacing: 60) {
+                    VStack(alignment: .center, spacing: 48) {
                         ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
-                            VStack(alignment: .leading, spacing: 0) {
-                                Spacer()
-                                Text(room.roomName)
-                                    .padding(.horizontal, 4)
-                                    .font(.caption)
-                                    .fontWeight(.medium)
-                            }
-                            .padding(8)
-                            .frame(height: 48)
-                            .tag(room)
+                            Text(room.roomName)
+                                .lineLimit(3)
+                                .multilineTextAlignment(.center)
+                                .font(.caption)
+                                .padding(4)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .foregroundStyle(.background)
+                                }
+                                .fontWeight(.medium)
+                                .padding(.horizontal)
+                                .frame(width: roomTitleOffset, height: 60)
+                                .tag(room)
                         }
                     }
                 }
