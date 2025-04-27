@@ -12,71 +12,73 @@ struct GSRTwoWayScrollView: View {
     @Environment(\.presentToast) var presentToast
     let roomTitleOffset: CGFloat = 60
     
+    // Pin the time card header to the scrollview
+    @State var scrollViewCenterDisplacementValue: CGFloat = 0.0
+    @State var totalCenterOffset: CGFloat = 0.0
+    
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            //ZStack(alignment: .topLeading) {
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(alignment: .center, spacing: 0, pinnedViews: .sectionHeaders) {
-                    Section {
-                        VStack(alignment: .center, spacing: 32) {
-                            Color.clear
-                                .frame(height: 0)
-                            ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
-                                GSRRoomAvailabilityRow(room: room)
-                            }
-                            Spacer()
+        VStack(alignment: .center, spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
+                GSRTimeCardRow()
+                    .padding(.top)
+                TimeSlotDottedLinesView()
+                    .frame(height: 16)
+            }
+            .background {
+                GeometryReader { proxy in
+                    Rectangle()
+                        .foregroundStyle(Color(UIColor.systemBackground))
+                        .onAppear {
+                            self.totalCenterOffset -= proxy.frame(in: .global).midX
                         }
-                        .overlay {
-                            TimeSlotDottedLinesView()
-                        }
-                        
-                    } header: {
-                        VStack(alignment: .center, spacing: 0) {
-                            GSRTimeCardRow()
-                                .padding(.top)
-                            TimeSlotDottedLinesView()
-                                .frame(height: 16)
-                        }
-                        .background {
-                            Rectangle()
-                                .foregroundStyle(Color(UIColor.systemBackground))
-                        }
-                    }
-                    .padding(.horizontal)
                 }
             }
-            .overlay(alignment: .topLeading) {
-                VStack(alignment: .leading, spacing: 60) {
-                    ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
-                        VStack(alignment: .leading, spacing: 0) {
-                            Spacer()
-                            Text(room.roomName)
-                                .padding(.horizontal, 4)
-                                .font(.caption)
-                                .fontWeight(.medium)
+            .offset(x: totalCenterOffset + scrollViewCenterDisplacementValue)
+
+            ScrollView(.vertical, showsIndicators: false) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    VStack(alignment: .center, spacing: 48) {
+                        Color.clear
+                            .frame(height: 0)
+                        ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
+                            GSRRoomAvailabilityRow(room: room)
                         }
-                        .frame(height: 32)
-                        .tag(room)
+                        Spacer()
+                    }
+                    .overlay {
+                        TimeSlotDottedLinesView()
+                    }
+                    .padding(.horizontal, 40)
+                    .background {
+                        GeometryReader { proxy in
+                            Color.clear
+                                .onChange(of: proxy.frame(in: .global).midX) { old, new in
+                                    scrollViewCenterDisplacementValue += new - old
+                                }
+                                .onAppear {
+                                    self.totalCenterOffset += proxy.frame(in: .global).midX
+                                }
+                        }
+                        
+                    }
+                }
+                .overlay(alignment: .topLeading) {
+                    VStack(alignment: .leading, spacing: 60) {
+                        ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
+                            VStack(alignment: .leading, spacing: 0) {
+                                Spacer()
+                                Text(room.roomName)
+                                    .padding(.horizontal, 4)
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                            }
+                            .padding(8)
+                            .frame(height: 48)
+                            .tag(room)
+                        }
                     }
                 }
             }
         }
-        
-        
-//        ScrollView([.vertical, .horizontal], showsIndicators: false) {
-//            LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
-//                Section {
-//
-//                    
-//                } header: {
-//HStack {
-
-//        Spacer()
-//    }
-//
-//                }
-//            }
-//        }
-//        .scrollBounceBehavior(.basedOnSize)
     }
 }

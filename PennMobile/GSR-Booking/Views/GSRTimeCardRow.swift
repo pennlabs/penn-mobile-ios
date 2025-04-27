@@ -17,26 +17,37 @@ struct GSRTimeCardRow: View {
                 if let firstSlot = avail.first {
                     Text(firstSlot.startTime.gsrTimeString)
                         .font(.callout)
+                        .foregroundStyle(firstSlot.startTime == vm.sortedStartTime ? .white : .primary)
                         .padding(4)
                         .background {
                             RoundedRectangle(cornerRadius: 4)
-                                .foregroundStyle(vm.roomsAtSelectedLocation.hasAvailableAt(firstSlot.startTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                                .foregroundStyle(firstSlot.startTime == vm.sortedStartTime ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(firstSlot.startTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                        }
+                        .onTapGesture {
+                            withAnimation(.snappy(duration: 0.3)) {
+                                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                vm.handleSortAction(to: firstSlot.startTime)
+                            }
                         }
                         .frame(width: 80)
                     ForEach(avail, id: \.self) { slot in
                         Text(slot.endTime.gsrTimeString)
                             .font(.callout)
+                            .foregroundStyle(slot.endTime == vm.sortedStartTime ? .white : .primary)
                             .padding(4)
                             .background {
                                 RoundedRectangle(cornerRadius: 4)
-                                    .foregroundStyle(vm.roomsAtSelectedLocation.hasAvailableAt(slot.endTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                                    .foregroundStyle(slot.endTime == vm.sortedStartTime ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(slot.endTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                            }
+                            .onTapGesture {
+                                withAnimation(.snappy(duration: 0.3)) {
+                                    UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                                    vm.handleSortAction(to: slot.endTime)
+                                }
                             }
                             .frame(width: 80)
                     }
                 }
-                    
-                
-                
             }
         }
         

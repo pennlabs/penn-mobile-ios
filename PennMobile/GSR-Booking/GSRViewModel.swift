@@ -22,6 +22,7 @@ class GSRViewModel: ObservableObject {
     @Published var isWharton: Bool = false
     @Published var isLoadingAvailability = false
     @Published var showSuccessfulBookingAlert = false
+    @Published var sortedStartTime: Date? = nil
     
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })
@@ -76,8 +77,28 @@ class GSRViewModel: ObservableObject {
         withAnimation(.spring(duration: 0.2)) {
             self.selectedTimeslots = newSelected
         }
+    }
+    
+    func handleSortAction(to startTime: Date) {
+        if self.sortedStartTime != nil && startTime == self.sortedStartTime {
+            self.sortedStartTime = nil
+            self.roomsAtSelectedLocation.sort(by: { $0.roomName < $1.roomName })
+            return
+        }
         
+        guard self.roomsAtSelectedLocation.hasAvailableAt(startTime) else {
+            return
+        }
         
+        self.sortedStartTime = startTime
+        self.roomsAtSelectedLocation.sort(by: { rm1, rm2 in
+            let rm1Avail = !rm1.availability.filter({ $0.startTime == startTime && $0.isAvailable }).isEmpty
+            let rm2Avail = !rm2.availability.filter({ $0.startTime == startTime && $0.isAvailable }).isEmpty
+            if rm1Avail && !rm2Avail { return true }
+            if !rm1Avail && rm2Avail { return false }
+            
+            return rm1.roomName < rm2.roomName
+        })
     }
     
     private func validateSelectedTimeslots(_ slots: [(GSRRoom, GSRTimeSlot)]) throws {

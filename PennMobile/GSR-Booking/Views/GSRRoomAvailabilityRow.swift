@@ -31,7 +31,6 @@ struct GSRRoomAvailabilityRow: View {
                                UnavailableTextureOverlay()
                            }
                         }
-
                 }
                 .onTapGesture {
                     do {
