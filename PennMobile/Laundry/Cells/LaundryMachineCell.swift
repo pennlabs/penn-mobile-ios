@@ -106,7 +106,7 @@ class LaundryMachineCell: UICollectionViewCell {
         } else {
             timerLabel.text = ""
         }
-        idLabel.text = "#\(machine.id)"
+//        idLabel.text = "#\(machine.id)"
 
         bellView.isHidden = !machine.isUnderNotification()
     }

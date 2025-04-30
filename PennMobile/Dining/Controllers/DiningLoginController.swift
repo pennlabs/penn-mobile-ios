@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WebKit
+@preconcurrency import WebKit
 import PennMobileShared
 
 class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate, SHA256Hashable {
@@ -29,15 +29,15 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .uiBackground
 
         navigationItem.title = "Campus Express Authorization"
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
 
-        webView = WKWebView(frame: view.bounds)
+        webView = WKWebView(frame: .zero)
         webView.navigationDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(webView)
+        view = webView
 
         var url = URL(string: urlStr)!
         url.appendQueryItem(name: "response_type", value: "code")
@@ -146,6 +146,12 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
         _ webView: WKWebView,
         decidePolicyFor navigationAction: WKNavigationAction,
         decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        let request = navigationAction.request
+        guard let _ = request.url else {
+            decisionHandler(.allow)
+            return
+        }
+        
         if navigationAction.navigationType == .formSubmitted,
            webView.url?.absoluteString.contains(loginScreen) == true {
             activityIndicator.startAnimating()
