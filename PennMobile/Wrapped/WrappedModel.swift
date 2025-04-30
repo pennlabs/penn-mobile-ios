@@ -10,16 +10,23 @@ import Foundation
 
 public struct WrappedModel: Codable {
     let semester: String
-    let pages: [WrappedAPIUnit]
+    // Designed to be optional for forwards compatability
+    // (making pages an optional field was a design discussion for disabling wrapped between semesters)
+    let pages: [WrappedAPIUnit]?
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.semester = try values.decode(String.self, forKey: .semester)
-        let pagesRaw = try values.decode(SafeWrappedArray.self, forKey: .pages)
-        if pagesRaw.elements.isEmpty {
+        let pagesRaw = try values.decodeIfPresent(SafeWrappedArray.self, forKey: .pages)
+        guard let raw = pagesRaw else {
+            self.pages = nil
+            return
+        }
+        
+        if raw.elements.isEmpty {
             self.pages = []
         } else {
-            self.pages = pagesRaw.elements
+            self.pages = raw.elements
         }
     }
     

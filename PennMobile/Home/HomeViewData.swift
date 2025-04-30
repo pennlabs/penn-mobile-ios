@@ -72,14 +72,10 @@ struct HomeViewData {
             }
             
             if case .some(.success(let wrappedData)) = self.wrapped {
-                // TODO WRAPPED
-                // this pages.count could later become if wrappedData.pages != nil (pages being optional)
-                if wrappedData.pages.count > 0 {
+                if let pages = wrappedData.pages, pages.count > 0 {
                     WrappedHomeScreenExperience(with: wrappedData)
                 }
             }
-            
-            
             
              if showSublettingBanner {
                 HomeSublettingBanner {

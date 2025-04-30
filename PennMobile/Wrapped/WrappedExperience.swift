@@ -19,6 +19,9 @@ public struct WrappedExperience: View {
     public var body: some View {
         if let active = stages.first(where: {$0.activeState == vm.wrappedExperienceState}) {
             Group {
+                // Note, this offers little protection in the case where a stage that expects
+                // a view model doesn't get it. Rather, the onus is on the developer to
+                // ensure such views are placed after the VM is created.
                 if let cVM = vm.containerVM {
                     AnyView(active)
                         .environmentObject(cVM)

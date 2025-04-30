@@ -14,7 +14,6 @@ struct RootView: View {
     @State var toast: ToastConfiguration?
     @StateObject var popupManager = PopupManager()
     @Environment(\.scenePhase) var scenePhase
-    @State var wrappedActive: Bool = false
 
     var isOnLogoutScreen: Bool {
         switch authManager.state {
