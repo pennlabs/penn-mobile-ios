@@ -11,7 +11,11 @@ import Foundation
 struct GSRRoom: Codable, Hashable, Identifiable {
     let roomName: String
     let id: Int
-    var availability: [GSRTimeSlot]
+    var availability: [ GSRTimeSlot]
+    
+    var roomNameShort: String {
+        self.roomName.split(separator: ":").first?.trimmingCharacters(in: .whitespaces) ?? roomName
+    }
 }
 
 extension Array where Element == GSRRoom {

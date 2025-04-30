@@ -67,7 +67,7 @@ struct GSRTwoWayScrollView: View {
                 .overlay(alignment: .topLeading) {
                     VStack(alignment: .center, spacing: 48) {
                         ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
-                            Text(room.roomName)
+                            Text(room.roomNameShort)
                                 .lineLimit(3)
                                 .multilineTextAlignment(.center)
                                 .font(.caption)
