@@ -19,37 +19,36 @@ struct WrappedHomeScreenExperience: View {
     
     
     var body: some View {
-        ZStack {
+        Button {
+            vm.startExperience()
+        } label: {
             Image("WrappedBanner")
                 .resizable()
                 .scaledToFit()
                 .padding(.horizontal)
-                .fullScreenCover(isPresented: $vm.showWrapped) {
-                    WrappedExperience([
-                        WrappedLoadingView(activeState: .loading) { res in
-                            if res {
-                                vm.finishedLoading()
-                            } else {
-                                vm.error(error: WrappedLoadingError())
-                            }
-                        },
-                        WrappedContainerView(activeState: .active) { res in
-                            // true result means finished without cancel, false means cancelled
-                            if res {
-                                //potentially go to finishing page, but close for right now.
-                                vm.showWrapped = false
-                            } else {
-                                vm.showWrapped = false
-                            }
-                            
-                        }
-                        
-                    ])
-                    .environmentObject(vm)
-                }
         }
-        .onTapGesture {
-            vm.startExperience()
+        .fullScreenCover(isPresented: $vm.showWrapped) {
+            WrappedExperience([
+                WrappedLoadingView(activeState: .loading) { res in
+                    if res {
+                        vm.finishedLoading()
+                    } else {
+                        vm.error(error: WrappedLoadingError())
+                    }
+                },
+                WrappedContainerView(activeState: .active) { res in
+                    // true result means finished without cancel, false means cancelled
+                    if res {
+                        //potentially go to finishing page, but close for right now.
+                        vm.showWrapped = false
+                    } else {
+                        vm.showWrapped = false
+                    }
+                    
+                }
+                
+            ])
+            .environmentObject(vm)
         }
     }
 }

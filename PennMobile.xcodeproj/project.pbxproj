@@ -368,7 +368,6 @@
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
-		730669EC2CF39816004C7271 /* WrappedSemesterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730669EB2CF3980D004C7271 /* WrappedSemesterState.swift */; };
 		73066A092CF4E54E004C7271 /* WrappedExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73066A082CF4E53F004C7271 /* WrappedExperience.swift */; };
 		73066A0B2CF4E6AF004C7271 /* WrappedExperienceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73066A0A2CF4E6AA004C7271 /* WrappedExperienceViewModel.swift */; };
 		73066A0D2CF4E9F3004C7271 /* WrappedStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73066A0C2CF4E9F2004C7271 /* WrappedStage.swift */; };
@@ -818,7 +817,6 @@
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		730669EB2CF3980D004C7271 /* WrappedSemesterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedSemesterState.swift; sourceTree = "<group>"; };
 		73066A082CF4E53F004C7271 /* WrappedExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedExperience.swift; sourceTree = "<group>"; };
 		73066A0A2CF4E6AA004C7271 /* WrappedExperienceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedExperienceViewModel.swift; sourceTree = "<group>"; };
 		73066A0C2CF4E9F2004C7271 /* WrappedStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedStage.swift; sourceTree = "<group>"; };
@@ -2167,7 +2165,6 @@
 				73066A0A2CF4E6AA004C7271 /* WrappedExperienceViewModel.swift */,
 				73066A0C2CF4E9F2004C7271 /* WrappedStage.swift */,
 				73066A082CF4E53F004C7271 /* WrappedExperience.swift */,
-				730669EB2CF3980D004C7271 /* WrappedSemesterState.swift */,
 				73E7A06E2CF1B9AE007BC1E3 /* WrappedHomeScreenExperience.swift */,
 				73066A0E2CF4EFD3004C7271 /* WrappedLoadingView.swift */,
 				73E7A04D2CF15B0B007BC1E3 /* WrappedModel.swift */,
@@ -2557,7 +2554,6 @@
 				42632D382CB9C77B0028CC31 /* HomeGroupInvitesCellItem.swift in Sources */,
 				42632D392CB9C77B0028CC31 /* BookingRowCell.swift in Sources */,
 				42632D3A2CB9C77B0028CC31 /* HomeGSRBookingButton.swift in Sources */,
-				730669EC2CF39816004C7271 /* WrappedSemesterState.swift in Sources */,
 				42632D3B2CB9C77B0028CC31 /* HomeGSRCellItem.swift in Sources */,
 				42632D3C2CB9C77B0028CC31 /* HomeStudyRoomCell.swift in Sources */,
 				42632D3D2CB9C77B0028CC31 /* HomeGSRLocationsCell.swift in Sources */,

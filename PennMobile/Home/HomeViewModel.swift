@@ -182,36 +182,15 @@ extension Optional {
                         continuation.resume()
                         return
                     }
-                    
-                    do {
-                        let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
-                        DispatchQueue.main.async {
-                            
-                            // THIS HAS A BUG:
-                            // the case where the user opens PM, receives their latest wrapped, then doesn't open until next semester
-                            
-                            // wait, is this a bug? consider that if the semester is always sent with the /current endpoint, then that active/unviewed state can sit in memory and not affect?
-                            
-                            
-                            let currState: WrappedSemesterState? = WrappedSemesterState(rawValue: UserDefaults.standard.integer(forKey: HomeViewData.wrappedSemesters + wrapped.semester))
-                            
-                            if currState == .active {
-                                UserDefaults.standard.set(wrapped.pages.count > 0 ? WrappedSemesterState.active.rawValue : WrappedSemesterState.inactive.rawValue,
-                                                          forKey: HomeViewData.wrappedSemesters + wrapped.semester)
-                            } else {
-                                UserDefaults.standard.set(wrapped.pages.count > 0 ? WrappedSemesterState.newUnviewed.rawValue : WrappedSemesterState.inactive.rawValue,
-                                                          forKey: HomeViewData.wrappedSemesters + wrapped.semester)
-                            }
-                            
+                    DispatchQueue.main.async {
+                        do {
+                            let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
                             self.data.wrapped = .success(wrapped)
-                            
-                        }
-                    } catch {
-                        DispatchQueue.main.async {
+                        } catch {
                             self.data.wrapped = .failure(error)
                         }
+                        continuation.resume()
                     }
-                    continuation.resume()
                 }
                 task.resume()
             }
