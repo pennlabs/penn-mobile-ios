@@ -23,8 +23,6 @@ struct HomeViewData {
     var onStartSubletting: (() -> Void)?
     var onDismissSubletting: (() -> Void)?
     
-    static let wrappedSemesters = "wrappedSemester."
-    
     func splashText(for date: Date) -> String {
         let intro = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"].randomElement()!
         if let firstName {

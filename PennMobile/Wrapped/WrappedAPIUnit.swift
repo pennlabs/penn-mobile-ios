@@ -15,7 +15,7 @@ public struct WrappedAPIUnit: Identifiable, Codable {
         lhs.id == rhs.id
     }
     
-    public let id = UUID()
+    public let id: Int
     let time: TimeInterval?
     let lottieUrl: URL
     let values: [String:String]
@@ -24,6 +24,7 @@ public struct WrappedAPIUnit: Identifiable, Codable {
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let durationString = try container.decodeIfPresent(String.self, forKey: .time)
+        self.id = try container.decode(Int.self, forKey: .id)
         self.time = durationString != nil ? WrappedAPIUnit.timeInterval(from: durationString!) : nil
         self.name = try container.decode(String.self, forKey: .name)
         self.lottieUrl = try container.decode(URL.self, forKey: .lottieUrl)
@@ -41,6 +42,7 @@ public struct WrappedAPIUnit: Identifiable, Codable {
     }
     
     enum CodingKeys: String, CodingKey {
+        case id = "id"
         case name = "name"
         case lottieUrl = "template_path"
         case values = "combined_stats"

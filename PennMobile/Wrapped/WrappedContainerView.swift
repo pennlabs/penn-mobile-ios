@@ -33,14 +33,6 @@ struct WrappedContainerView: WrappedStage {
         .overlay {
             VStack {
                 HStack (spacing: 0) {
-                    Button {
-                        containerVM.reset()
-                        onFinish(false)
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.title2)
-                            .padding(.trailing)
-                    }
                     ForEach(containerVM.units, id:\.self) { unit in
                         GeometryReader { proxy in
                             ZStack {
@@ -58,6 +50,14 @@ struct WrappedContainerView: WrappedStage {
                             }
                         }.padding(.horizontal, 2)
                         .frame(height: 2)
+                    }
+                    Button {
+                        containerVM.reset()
+                        onFinish(false)
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .padding(.leading)
                     }
                 }
                 .padding(.top)

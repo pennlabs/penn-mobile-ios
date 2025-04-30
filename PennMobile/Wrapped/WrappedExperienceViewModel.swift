@@ -28,7 +28,6 @@ public class WrappedExperienceViewModel: ObservableObject {
     }
     
     func startExperience() {
-        UserDefaults.standard.set(WrappedSemesterState.active.rawValue, forKey: HomeViewData.wrappedSemesters + model.semester)
         wrappedExperienceState = .loading
     }
     

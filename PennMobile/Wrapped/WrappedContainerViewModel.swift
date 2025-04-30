@@ -99,7 +99,6 @@ class WrappedContainerViewModel: ObservableObject {
         }
         
         activeUnit = newActiveUnit
-        
     }
     
     func previous() {
