@@ -35,6 +35,17 @@ public struct WrappedModel: Decodable {
             await newPage.loadAnimation()
             return newPage
         }
+        
+        // Fail if duplicate ID (note: this silently fails)
+        // There should be exactly one of every ID
+        guard newPages.compactMap({ el in
+            newPages.count(where: { $0.id == el.id })
+        }).filter({ $0 != 1 }).isEmpty else {
+            print("Wrapped duplicate IDs detected. Check the model.")
+            self.pages = []
+            return
+        }
+        
         self.pages = newPages.filter({ $0.lottie != nil }).sorted(by: { $0.id < $1.id })
     }
 }
