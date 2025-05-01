@@ -61,16 +61,16 @@ struct WrappedContainerView: WrappedStage {
                             .padding(.leading)
                     }
                 }
-                .padding(.top)
+                .padding(.top, 72)
                 .shadow(radius: 1)
                 Spacer()
             }
             .foregroundColor(.white)
             .padding(.horizontal)
         }
-        .onLongPressGesture(perform: {
-            containerVM.pause()
+        .onLongPressGesture(minimumDuration: 0.15, perform: {
             UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+            containerVM.pause()
         }, onPressingChanged: { pressed in
             if !pressed && containerVM.state == .paused {
                 containerVM.play()

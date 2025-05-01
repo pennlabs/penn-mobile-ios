@@ -55,6 +55,7 @@ struct WrappedHomeScreenExperience: View {
                 
             ])
             .environmentObject(vm)
+            .ignoresSafeArea()
         }
     }
 }
