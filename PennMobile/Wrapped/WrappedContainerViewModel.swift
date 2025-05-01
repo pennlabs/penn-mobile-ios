@@ -112,7 +112,7 @@ class WrappedContainerViewModel: ObservableObject {
     
     func update() {
         if let lastFireDate = lastFire {
-            activeUnitProgress += ((timer?.fireDate.timeIntervalSince(lastFireDate) ?? 0.0) / activeUnit.time)
+            activeUnitProgress += ((timer?.fireDate.timeIntervalSince(lastFireDate) ?? 0.0) / activeUnit.time!)
         }
         lastFire = timer?.fireDate ?? nil
     }

@@ -9,6 +9,8 @@ import SwiftUI
 import Foundation
 
 struct WrappedContainerView: WrappedStage {
+    static let swipeTransitionEnabled = true
+     
     var activeState: WrappedExperienceState
     
     @Environment(\.scenePhase) var scenePhase
@@ -24,7 +26,7 @@ struct WrappedContainerView: WrappedStage {
                     .tag(unit)
             }
         }
-        .allowsHitTesting(false)
+        .allowsHitTesting(Self.swipeTransitionEnabled)
         .tabViewStyle(.page(indexDisplayMode: .never))
         .ignoresSafeArea()
         .background {

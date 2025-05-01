@@ -366,7 +366,6 @@
 		73E7A0292CF158A4007BC1E3 /* WrappedUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A0252CF158A4007BC1E3 /* WrappedUnitView.swift */; };
 		73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 73E7A02B2CF158F3007BC1E3 /* Lottie */; };
 		73E7A04E2CF15B0E007BC1E3 /* WrappedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A04D2CF15B0B007BC1E3 /* WrappedModel.swift */; };
-		73E7A0522CF18157007BC1E3 /* WrappedAPIUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A0512CF18153007BC1E3 /* WrappedAPIUnit.swift */; };
 		73E7A06F2CF1B9B3007BC1E3 /* WrappedHomeScreenExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A06E2CF1B9AE007BC1E3 /* WrappedHomeScreenExperience.swift */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
@@ -802,7 +801,6 @@
 		73E7A0242CF158A4007BC1E3 /* WrappedUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedUnit.swift; sourceTree = "<group>"; };
 		73E7A0252CF158A4007BC1E3 /* WrappedUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedUnitView.swift; sourceTree = "<group>"; };
 		73E7A04D2CF15B0B007BC1E3 /* WrappedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedModel.swift; sourceTree = "<group>"; };
-		73E7A0512CF18153007BC1E3 /* WrappedAPIUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedAPIUnit.swift; sourceTree = "<group>"; };
 		73E7A06E2CF1B9AE007BC1E3 /* WrappedHomeScreenExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedHomeScreenExperience.swift; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -2111,7 +2109,6 @@
 				73E7A0222CF158A4007BC1E3 /* WrappedContainerView.swift */,
 				73E7A0232CF158A4007BC1E3 /* WrappedContainerViewModel.swift */,
 				73E7A0242CF158A4007BC1E3 /* WrappedUnit.swift */,
-				73E7A0512CF18153007BC1E3 /* WrappedAPIUnit.swift */,
 				73E7A0252CF158A4007BC1E3 /* WrappedUnitView.swift */,
 			);
 			path = Wrapped;
@@ -2530,7 +2527,6 @@
 				42632D652CB9C77B0028CC31 /* AddLaundryCell.swift in Sources */,
 				42632D662CB9C77B0028CC31 /* LaundryCell.swift in Sources */,
 				42632D672CB9C77B0028CC31 /* LaundryCell + Graph.swift in Sources */,
-				73E7A0522CF18157007BC1E3 /* WrappedAPIUnit.swift in Sources */,
 				42632D682CB9C77B0028CC31 /* LaundryGraphView.swift in Sources */,
 				42632D692CB9C77B0028CC31 /* LaundryMachineCell.swift in Sources */,
 				42632D6A2CB9C77B0028CC31 /* LaundryMachinesView.swift in Sources */,

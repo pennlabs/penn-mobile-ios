@@ -175,7 +175,7 @@ extension Optional {
                 let url = URLRequest(url: URL(string: "https://pennmobile.org/api/wrapped/semester/2025S/")!, accessToken: token)
 
                 let task = URLSession.shared.dataTask(with: url) { data, response, _ in
-                    guard let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 else {
+                    guard let httpResponse = response as? HTTPURLResponse, let data, httpResponse.statusCode == 200 else {
                         DispatchQueue.main.async {
                             self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
                         }

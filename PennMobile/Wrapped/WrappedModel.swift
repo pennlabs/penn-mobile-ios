@@ -8,54 +8,33 @@
 
 import Foundation
 
-public struct WrappedModel: Codable {
+public struct WrappedModel: Decodable {
     let semester: String
     // Designed to be optional for forwards compatability
     // (making pages an optional field was a design discussion for disabling wrapped between semesters)
-    let pages: [WrappedAPIUnit]?
+    var pages: [WrappedUnit]
     
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         self.semester = try values.decode(String.self, forKey: .semester)
-        let pagesRaw = try values.decodeIfPresent(SafeWrappedArray.self, forKey: .pages)
-        guard let raw = pagesRaw else {
-            self.pages = nil
-            return
-        }
-        
-        if raw.elements.isEmpty {
-            self.pages = []
-        } else {
-            self.pages = raw.elements
-        }
+        self.pages = try values.decodeIfPresent([WrappedUnit].self, forKey: .pages) ?? []
     }
     
-    public init(semester: String, pages: [WrappedAPIUnit]) {
+    public init(semester: String, pages: [WrappedUnit]) {
         self.pages = pages
         self.semester = semester
     }
-}
-
-struct Empty: Decodable {}
-
-struct SafeWrappedArray: Decodable {
-    let elements: [WrappedAPIUnit]
-
-    init(from decoder: Decoder) throws {
-        var container = try decoder.unkeyedContainer()
-        var tempElements: [WrappedAPIUnit] = []
-        
-
-        while !container.isAtEnd {
-            do {
-                let element = try container.decode(WrappedAPIUnit.self)
-                tempElements.append(element)
-            } catch {
-                // The decoder only advances elements on a successful call, so calling decodeNil advances the
-                // decoder in the event that one is unsuccessful.
-                _ = try? container.decode(Empty.self)
-            }
+    
+    enum CodingKeys: String, CodingKey {
+        case pages, semester
+    }
+    
+    mutating func loadModel() async {
+        var newPages: [WrappedUnit] = await self.pages.asyncMap { page in
+            var newPage = page
+            await newPage.loadAnimation()
+            return newPage
         }
-        self.elements = tempElements
+        self.pages = newPages.filter({ $0.lottie != nil }).sorted(by: { $0.id < $1.id })
     }
 }

@@ -72,7 +72,7 @@ struct HomeViewData {
             }
             
             if case .some(.success(let wrappedData)) = self.wrapped {
-                if let pages = wrappedData.pages, pages.count > 0 {
+                if !wrappedData.semester.isEmpty && wrappedData.pages.count > 0 {
                     WrappedHomeScreenExperience(with: wrappedData)
                 }
             }

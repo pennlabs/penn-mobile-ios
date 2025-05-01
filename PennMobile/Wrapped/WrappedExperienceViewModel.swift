@@ -10,7 +10,7 @@ import Foundation
 
 public class WrappedExperienceViewModel: ObservableObject {
     
-    let model: WrappedModel
+    var model: WrappedModel
     @Published var wrappedExperienceState: WrappedExperienceState = .inactive {
         didSet {
             showWrapped = wrappedExperienceState != .inactive
@@ -31,8 +31,12 @@ public class WrappedExperienceViewModel: ObservableObject {
         wrappedExperienceState = .loading
     }
     
+    func loadModel() async {
+        await self.model.loadModel()
+    }
+    
     func finishedLoading() {
-        containerVM = WrappedContainerViewModel(units: wrappedUnits)
+        containerVM = WrappedContainerViewModel(units: model.pages)
         wrappedExperienceState = .active
     }
     

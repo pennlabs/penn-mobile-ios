@@ -19,19 +19,8 @@ struct WrappedLoadingView: WrappedStage {
     @State var progress: Double = 0
     
     func start() async {
-        var units: [WrappedUnit] = []
-        if let pages = vm.model.pages {
-            for page in pages {
-                let val = await LottieAnimation.loadedFrom(url: page.lottieUrl)
-                if let anim = val {
-                    units.append(WrappedUnit(id: page.id, time: page.time, lottie: anim, values: page.values))
-                }
-                
-                progress += 1 / Double(pages.count)
-            }
-            vm.wrappedUnits = units.sorted(by: { $0.id < $1.id })
-        }
-        onFinish(!units.isEmpty)
+        await vm.loadModel()
+        onFinish(!vm.model.pages.isEmpty)
     }
     
     var body: some View {
