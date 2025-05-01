@@ -9,7 +9,7 @@ import SwiftUI
 import Foundation
 
 struct WrappedContainerView: WrappedStage {
-    static let swipeTransitionEnabled = true
+    static let swipeTransitionEnabled = false
      
     var activeState: WrappedExperienceState
     
