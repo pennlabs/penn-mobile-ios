@@ -6,7 +6,6 @@
 //  Copyright © 2024 PennLabs. All rights reserved.
 //
 
-import PennMobileShared
 import SwiftUI
 
 extension SublettingViewModel.ListingsTabs {
