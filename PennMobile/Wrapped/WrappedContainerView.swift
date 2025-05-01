@@ -43,10 +43,9 @@ struct WrappedContainerView: WrappedStage {
                                     .cornerRadius(1)
                                     .foregroundStyle(.white.opacity(0.5))
                                 if unit.id <= containerVM.activeUnit.id {
-                                    Rectangle()
+                                    RoundedRectangle(cornerRadius: 1)
                                         .size(width: unit.id < containerVM.activeUnit.id ? proxy.size.width :
                                                 CGFloat((Float(proxy.size.width) * Float(containerVM.activeUnitProgress))), height: 2)
-                                        .cornerRadius(1)
                                         .foregroundStyle(.white)
                                 }
                             }
@@ -78,7 +77,7 @@ struct WrappedContainerView: WrappedStage {
             }
         })
         .onTapGesture { location in
-            if (location.x > 150) {
+            if location.x > 150 {
                 containerVM.next()
             } else {
                 if (containerVM.activeUnitProgress > 0.2) {

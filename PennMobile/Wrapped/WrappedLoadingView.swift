@@ -29,10 +29,8 @@ struct WrappedLoadingView: WrappedStage {
         }
         .playing(loopMode: .autoReverse)
         .frame(width: 250, height: 250)
-        .onAppear {
-            Task {
-                await start()
-            }
+        .task {
+            await start()
         }
     }
 }

@@ -17,15 +17,14 @@ class WrappedContainerViewModel: ObservableObject {
     @Published var activeUnit: WrappedUnit {
         didSet {
             activeUnitProgress = 0.0
-            self.nextUnit = units.sorted(by: {$0.id < $1.id}).filter({$0.id > activeUnit.id}).first
-            self.prevUnit = units.sorted(by: {$0.id > $1.id}).filter({$0.id < activeUnit.id}).first
+            self.nextUnit = units.filter({$0.id > activeUnit.id}).sorted(by: {$0.id < $1.id}).first
+            self.prevUnit = units.filter({$0.id < activeUnit.id}).sorted(by: {$0.id > $1.id}).first
         }
     }
     @Published var nextUnit: WrappedUnit?
     @Published var prevUnit: WrappedUnit?
     @Published var activeUnitProgress: CGFloat = 0.0 {
         didSet {
-            print(activeUnitProgress)
             if activeUnitProgress >= 1 {
                 withAnimation {
                     next()
@@ -49,7 +48,7 @@ class WrappedContainerViewModel: ObservableObject {
                 activeUnitPlaybackMode = .paused(at: .currentFrame)
                 
             case .playing:
-                timer = Timer.scheduledTimer(withTimeInterval: 0.0, repeats: true) {_ in
+                timer = Timer.scheduledTimer(withTimeInterval: (1 / activeUnit.lottie!.framerate), repeats: true) {_ in
                     self.update()
                 }
                 activeUnitPlaybackMode = .playing(.toProgress(1, loopMode: .loop))
