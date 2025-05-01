@@ -3149,6 +3149,8 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.5.0;
+				};
+		};
 		734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pennlabs/PennForms";
@@ -3247,6 +3249,7 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
 		734BED9A2D9DE4B700964811 /* PennForms */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */;
