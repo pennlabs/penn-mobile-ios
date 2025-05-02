@@ -172,7 +172,7 @@ extension Optional {
                     return
                 }
 
-                let url = URLRequest(url: URL(string: "https://pennmobile.org/api/wrapped/semester/2025S-public/")!, accessToken: token)
+                let url = URLRequest(url: URL(string: "https://pennmobile.org/api/wrapped/semester/2024F/")!, accessToken: token)
 
                 let task = URLSession.shared.dataTask(with: url) { data, response, _ in
                     guard let httpResponse = response as? HTTPURLResponse, let data, httpResponse.statusCode == 200 else {

@@ -22,6 +22,8 @@ struct WrappedUnitView: View {
         GeometryReader { proxy in
             LottieView(animation: unit.lottie!)
                 .textProvider(DictionaryTextProvider(unit.values))
+                // TODO: Define a custom font provider conforming class that fetches fonts dynamically from backend.
+                .fontProvider(DefaultFontProvider())
                 .playbackMode(vm.activeUnit == unit ? vm.activeUnitPlaybackMode : .paused(at:.currentFrame))
                 .currentProgress(vm.activeUnit == unit ? normalizedProgress : 0)
                 .rotation3DEffect(
