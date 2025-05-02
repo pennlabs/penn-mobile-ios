@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftUI
+import Lottie
 
 struct WrappedHomeScreenExperience: View {
     
@@ -22,10 +23,13 @@ struct WrappedHomeScreenExperience: View {
         Button {
             vm.startExperience()
         } label: {
-            Image("WrappedBanner")
-                .resizable()
-                .scaledToFit()
-                .padding(.horizontal)
+            LottieView {
+              try await DotLottieFile.named("WrappedBannerAnim")
+            }
+            .playing(loopMode: .loop)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .shadow(color: Color.black.opacity(0.2), radius: 4, x: 2, y: 2)
+            .padding(.horizontal)
         }
         .fullScreenCover(isPresented: $vm.showWrapped) {
             WrappedExperience([
