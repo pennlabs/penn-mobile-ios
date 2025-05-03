@@ -74,7 +74,7 @@ jobs:
       - name: Build app
         run: bundle exec fastlane ci_build
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: /artifacts/PennMobile.ipa
@@ -91,7 +91,7 @@ jobs:
           ${{ secrets.FASTLANE_JSON_KEY }}
           EOF
       - name: Download Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: /artifacts/PennMobile.ipa
