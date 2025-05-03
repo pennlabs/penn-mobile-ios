@@ -36,7 +36,7 @@ platform :ios do
     
     build_app(
         scheme: "PennMobile",
-        output_name: "/artifacts/PennMobile.ipa",
+        output_name: "PennMobile.ipa",
         export_options: {
             provisioningProfiles: {
                 "org.pennlabs.PennMobile" => "Penn Mobile - Distribution",
@@ -50,7 +50,7 @@ platform :ios do
     pilot(
       app_identifier: "org.pennlabs.PennMobile",
       api_key_path: "api_key.json",
-      ipa: "/artifacts/PennMobile.ipa",
+      ipa: "PennMobile.ipa",
       distribute_external: true,
       groups: "Penn Labs",
       changelog: "Test experimental features of Penn Mobile",

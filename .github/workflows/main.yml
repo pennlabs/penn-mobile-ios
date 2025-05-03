@@ -82,7 +82,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: /artifacts/PennMobile.ipa
+          path: PennMobile.ipa
   upload:
     needs: build
     if: github.ref == 'refs/heads/main'
@@ -99,12 +99,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build
-          path: /artifacts/PennMobile.ipa
+          path: PennMobile.ipa
       - name: Upload to TestFlight
         run: bundle exec fastlane ci_pilot
   cleanup:
     runs-on: macos-15
     needs: [build, upload]
+    if: always()
     steps:
       - name: Delete artifacts
         uses: geekyeggo/delete-artifact@v5
