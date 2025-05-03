@@ -28,13 +28,15 @@ platform :ios do
     pilot(app_identifier: "org.pennlabs.PennMobile", api_key: api_key)
   end
 
-  lane :ci_beta do
+  lane :ci_build do
     ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
     increment_build_number({
       build_number: latest_testflight_build_number(api_key_path: "api_key.json", app_identifier: "org.pennlabs.PennMobile") + 1
     })
+    
     build_app(
         scheme: "PennMobile",
+        output_name: "PennMobile.ipa",
         export_options: {
             provisioningProfiles: {
                 "org.pennlabs.PennMobile" => "Penn Mobile - Distribution",
@@ -42,9 +44,13 @@ platform :ios do
             }
         }
     )
+  end
+
+  lane :ci_pilot do
     pilot(
       app_identifier: "org.pennlabs.PennMobile",
       api_key_path: "api_key.json",
+      ipa: "PennMobile.ipa",
       distribute_external: true,
       groups: "Penn Labs",
       changelog: "Test experimental features of Penn Mobile",
