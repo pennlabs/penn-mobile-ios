@@ -104,14 +104,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build
-          path: /penn-mobile-ios/PennMobile.ipa
-      - name: Upload to TestFlight
-        run: bundle exec fastlane ci_pilot
-      - name: Download Artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: /penn-mobile-ios/penn-mobile-ios/PennMobile.ipa
       - name: Upload to TestFlight
         run: bundle exec fastlane ci_pilot
   cleanup:
