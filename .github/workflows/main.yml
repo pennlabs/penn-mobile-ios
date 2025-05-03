@@ -82,7 +82,7 @@ jobs:
           path: PennMobile.ipa
   upload:
     needs: build
-    if: github.ref == 'refs/heads/jon0/play-with-ci'
+    if: github.ref == 'refs/heads/main'
     runs-on: macos-15
     steps:
       - name: Select Xcode 16
