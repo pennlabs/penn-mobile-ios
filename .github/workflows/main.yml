@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, jon0/play-with-ci]
 
   workflow_dispatch:
 
@@ -26,11 +26,6 @@ jobs:
         run: |
           cat << EOF > PennMobile/Supporting_Files/GoogleService-Info.plist 
           ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
-          EOF
-      - name: Create fastlane API key json
-        run: |
-          cat << EOF > api_key.json
-          ${{ secrets.FASTLANE_JSON_KEY }}
           EOF
       - name: Cache SPM
         uses: actions/cache@v4
@@ -77,4 +72,35 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_WIDGET_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: Build app
-        run: bundle exec fastlane ci_beta
+        run: bundle exec fastlane ci_build
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: /artifacts/PennMobile.ipa
+  upload:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: macos-15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Create fastlane API key json
+        run: |
+          cat << EOF > api_key.json
+          ${{ secrets.FASTLANE_JSON_KEY }}
+          EOF
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: /artifacts/PennMobile.ipa
+      - name: Upload to TestFlight
+        run: bundle exec fastlane ci_pilot
+  cleanup:
+    runs-on: macos-15
+    steps:
+      - name: Delete artifacts
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: build
