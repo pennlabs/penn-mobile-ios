@@ -2,10 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, jon0/play-with-ci]
-
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: macos-15
@@ -85,7 +82,7 @@ jobs:
           path: PennMobile.ipa
   upload:
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/jon0/play-with-ci'
     runs-on: macos-15
     steps:
       - name: Checkout repository
