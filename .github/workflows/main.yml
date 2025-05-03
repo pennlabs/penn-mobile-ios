@@ -85,8 +85,16 @@ jobs:
     if: github.ref == 'refs/heads/jon0/play-with-ci'
     runs-on: macos-15
     steps:
+      - name: Select Xcode 16
+        # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
+        run: sudo xcode-select -s '/Applications/Xcode_16.0.app/Contents/Developer'
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.0'
+          bundler-cache: true
       - name: Create fastlane API key json
         run: |
           cat << EOF > api_key.json
