@@ -343,6 +343,9 @@
 		4273BD022BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		42ABED2A2CE8EB8D006533CD /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED292CE8EB8D006533CD /* ContactsView.swift */; };
 		42ABED2C2CE8EB9F006533CD /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42ABED2B2CE8EB9F006533CD /* ContactModel.swift */; };
+		42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42D89D552CE94FC9005DFFD4 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */; };
 		42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E232CB9C77B0028CC31 /* SublettingModels.swift */; };
 		42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */; };
@@ -806,6 +809,8 @@
 		4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
 		42ABED292CE8EB8D006533CD /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		42ABED2B2CE8EB9F006533CD /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
+		42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
+		42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/iOSSupport/System/Library/Frameworks/ActivityKit.framework; sourceTree = DEVELOPER_DIR; };
 		42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
 		42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SublettingPage.swift; sourceTree = "<group>"; };
 		6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationDevelopment.xcconfig; sourceTree = "<group>"; };
@@ -854,6 +859,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */,
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
 				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
@@ -873,6 +879,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */,
 				6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */,
 				6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */,
 			);
@@ -882,6 +889,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */,
 				8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */,
 				8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */,
 				8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */,
@@ -2124,6 +2132,8 @@
 		6D2C4E8629C0A2D81734AD99 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */,
+				42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */,
 				8932693428FC75A5003D4BF9 /* WidgetKit.framework */,
 				8932693628FC75A5003D4BF9 /* SwiftUI.framework */,
 			);
@@ -2283,7 +2293,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1610;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
 					2166405F1EBADADA00746B8E = {
@@ -2802,6 +2812,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CF_BUNDLE_SHORT_VERSION_STRING = 8.1.2;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -2863,6 +2874,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CF_BUNDLE_SHORT_VERSION_STRING = 8.1.2;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -3103,7 +3115,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING)";
+				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU59R57FGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -3145,7 +3157,7 @@
 				CODE_SIGN_ENTITLEMENTS = Widget/WidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING)";
+				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = VU59R57FGM;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

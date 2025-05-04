@@ -8,8 +8,10 @@
 
 import Foundation
 import UserNotifications
-import ActivityKit
 import PennMobileShared
+#if canImport(ActivityKit)
+import ActivityKit
+#endif
 
 class LaundryNotificationCenter {
 
