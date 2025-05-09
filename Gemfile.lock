@@ -220,7 +220,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  fastlane (~> 2.227, >= 2.227.1)
+  fastlane (~> 2.227)
 
 BUNDLED WITH
    2.6.2
