@@ -17,7 +17,7 @@ final class HomePostCellItem: HomeCellItem {
             guard let request = try? await URLRequest(url: url, mode: .accessToken),
                   let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 completion([])
                 return
             }

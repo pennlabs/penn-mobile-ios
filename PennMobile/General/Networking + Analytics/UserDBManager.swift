@@ -67,34 +67,22 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
     }
 }
 
-// MARK: - Backend Login
-extension UserDBManager {
-    func loginToBackend() {
-        Task {
-            let url = URL(string: "https://pennmobile.org/api/login")!
-            guard let request = try? await URLRequest(url: url, mode: .accessToken) else { return }
-            let task = URLSession.shared.dataTask(with: request)
-            task.resume()
-        }
-    }
-}
-
 // MARK: - Dining
 extension UserDBManager {
-    func fetchDiningPreferences() async -> Result<[DiningVenue], NetworkingError> {
+    func fetchDiningPreferences() async -> Result<[DiningVenue], any Error> {
         do {
             let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
             let request = try await URLRequest(url: url, mode: .accessToken)
-            guard let (data, response) = try? await URLSession.shared.data(for: request),
-                  let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
                 return .failure(NetworkingError.serverError)
             }
             let diningVenueIds = JSON(data)["preferences"].arrayValue.map({ $0["venue_id"].int! })
             let diningVenues = DiningAPI.instance.getVenues(with: diningVenueIds)
             return .success(diningVenues)
         } catch {
-            return .failure(NetworkingError.authenticationError)
+            return .failure(error)
         }
     }
         
@@ -176,7 +164,7 @@ extension UserDBManager {
             let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, _) in
                 var accountID: String?
                 if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
+                    if (200..<300).contains(httpResponse.statusCode) {
                         if let data = data, NSString(data: data, encoding: String.Encoding.utf8.rawValue) != nil {
                             let json = JSON(data)
                             accountID = json["account_id"].string
@@ -196,7 +184,7 @@ extension UserDBManager {
         request.httpMethod = "POST"
         let task = URLSession.shared.dataTask(with: request, completionHandler: { (_, response, _) in
             if let httpResponse = response as? HTTPURLResponse {
-                completion(httpResponse.statusCode == 200)
+                completion((200..<300).contains(httpResponse.statusCode))
             } else {
                 completion(false)
             }
@@ -214,7 +202,7 @@ extension UserDBManager {
             
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 completion(.failure(.serverError))
                 return
             }
@@ -246,7 +234,7 @@ extension UserDBManager {
         let url = "\(baseUrl)/housing"
         let params = ["html": html]
         makePostRequestWithAccessToken(url: url, params: params) { (data, response, _) in
-            if let data = data, let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            if let data = data, let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 if let result = try? decoder.decode(HousingResult.self, from: data) {
@@ -282,7 +270,7 @@ extension UserDBManager {
             
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 completion?(false)
                 return
             }
@@ -294,7 +282,7 @@ extension UserDBManager {
     func deleteHousingData(_ completion: (( _ success: Bool) -> Void)? = nil) {
         let url = "\(baseUrl)/housing/delete"
         makePostRequestWithAccessToken(url: url, params: [:]) { (_, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) {
                 completion?(true)
             } else {
                 completion?(false)
@@ -315,7 +303,7 @@ extension UserDBManager {
             
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 completion(.failure(.serverError))
                 return
             }
@@ -344,7 +332,7 @@ extension UserDBManager {
             
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 || httpResponse.statusCode == 201 else {
+                  (200..<300).contains(httpResponse.statusCode) || httpResponse.statusCode == 201 else {
                 callback?(false)
                 return
             }
@@ -381,7 +369,7 @@ extension UserDBManager {
             guard var request = try? await URLRequest(url: url, mode: .accessToken),
                 let (data, response) = try? await URLSession.shared.data(for: request),
                 let httpResponse = response as? HTTPURLResponse,
-                httpResponse.statusCode == 200,
+                (200..<300).contains(httpResponse.statusCode),
                 let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) else {
                     callback(false, nil, nil)
                     return
@@ -417,7 +405,7 @@ extension UserDBManager {
             
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 callback?(false)
                 return
             }
@@ -446,7 +434,7 @@ extension UserDBManager {
     func deleteAcademicInfo(_ completion: (( _ success: Bool) -> Void)? = nil) {
         let url = "\(baseUrl)/account/degrees/delete"
         makePostRequestWithAccessToken(url: url, params: [:]) { (_, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) {
                 completion?(true)
             } else {
                 completion?(false)
@@ -473,7 +461,7 @@ extension UserDBManager {
             
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 completion?(false)
                 return
             }
@@ -520,7 +508,7 @@ extension UserDBManager {
             
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 callback(nil)
                 return
             }

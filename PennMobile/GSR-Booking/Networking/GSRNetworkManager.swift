@@ -24,7 +24,7 @@ class GSRNetworkManager: NSObject, Requestable {
         let url = URL(string: self.locationsUrl)!
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse, let data = data, (200..<300).contains(httpResponse.statusCode) {
 
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -61,7 +61,7 @@ class GSRNetworkManager: NSObject, Requestable {
             guard let request = try? await URLRequest(url: url, mode: .accessToken),
                   let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 completion(.failure(.serverError))
                 return
             }
@@ -113,7 +113,7 @@ class GSRNetworkManager: NSObject, Requestable {
             
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 completion(.failure(.serverError))
                 return
             }
@@ -131,7 +131,7 @@ extension GSRNetworkManager {
             guard let request = try? await URLRequest(url: url, mode: .accessToken),
                   let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 completion(.failure(.serverError))
                 return
             }
@@ -165,7 +165,7 @@ extension GSRNetworkManager {
             
             guard let (data, response) = try? await URLSession.shared.data(for: request),
                   let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
+                  (200..<300).contains(httpResponse.statusCode) else {
                 completion(.failure(.serverError))
                 return
             }

@@ -12,7 +12,6 @@ import LabsPlatformSwift
 struct LoggedOutView: View {
     @EnvironmentObject var authManager: AuthManager
     @Environment(\.colorScheme) var colorScheme
-    @State var isPresentingLoginSheet = false
     let platform = LabsPlatform.shared
 
     var body: some View {

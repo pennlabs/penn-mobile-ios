@@ -62,12 +62,14 @@ class AuthManager: ObservableObject {
     @MainActor func handlePlatformLogin(res: Bool) async {
         guard res else {
             self.state = .loggedOut
+            FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Platform")
             return
         }
         
         UserDefaults.standard.setLastLogin()
         guard let account = await AuthManager.retrieveAccount() else {
             self.state = .loggedOut
+            FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Mobile Backend Account Fetch")
             return
         }
         
@@ -75,6 +77,7 @@ class AuthManager: ObservableObject {
             
         UserDBManager.shared.syncUserSettings { (_) in
             Account.saveAccount(account)
+            FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
             self.determineInitialState()
         }
         
@@ -88,7 +91,7 @@ class AuthManager: ObservableObject {
     
 
     func determineInitialState() {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             if AuthManager.shouldRequireLogin() {
                 if case .guest = self.state {
                     self.state = .guest
@@ -130,7 +133,7 @@ class AuthManager: ObservableObject {
 
         guard let (data, response) = try? await URLSession.shared.data(for: request),
               let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
+              (200..<300).contains(httpResponse.statusCode) else {
             return nil
         }
         let decoder = JSONDecoder()

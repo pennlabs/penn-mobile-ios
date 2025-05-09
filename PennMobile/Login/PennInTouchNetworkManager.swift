@@ -28,7 +28,7 @@ extension PennInTouchNetworkManager {
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
                 if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
+                    if (200..<300).contains(httpResponse.statusCode) {
                         if let data = data, let html = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as String? {
                             let degrees = try? self.parseDegrees(from: html)
                             callback(degrees)

@@ -81,7 +81,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
                 callback(false, error)
                 return
             }
-            callback(status.statusCode == 200, error)
+            callback((200..<300).contains(status.statusCode), error)
         }
     }
 
@@ -109,7 +109,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
                 callback(false, error)
                 return
             }
-            callback(status.statusCode == 200, error)
+            callback((200..<300).contains(status.statusCode), error)
         }
     }
 
@@ -204,7 +204,7 @@ class GSRGroupNetworkManager: NSObject, Requestable {
                 return
             }
 
-            callback(status.statusCode == 200)
+            callback((200..<300).contains(status.statusCode))
         }
     }
 }

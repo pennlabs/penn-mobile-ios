@@ -20,7 +20,7 @@ final class HomeGSRLocationsCellItem: HomeCellItem {
             guard let request = try? await URLRequest(url: url, mode: .accessToken),
                let (data, response) = try? await URLSession.shared.data(for: request),
                let httpResponse = response as? HTTPURLResponse,
-               httpResponse.statusCode == 200 else {
+               (200..<300).contains(httpResponse.statusCode) else {
                     if GSRLocationModel.shared.getLocations().count > 2 {
                         let locationSlice = GSRLocationModel.shared.getLocations().shuffle().prefix(upTo: 3)
                             completion([HomeGSRLocationsCellItem(locations: Array(locationSlice))])
