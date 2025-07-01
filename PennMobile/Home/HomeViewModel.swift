@@ -152,6 +152,41 @@ extension Optional {
             }
         }
         
+        async let wrappedTask: () = withCheckedContinuation { continuation in
+            OAuth2NetworkManager.instance.getAccessToken { token in
+                guard let token = token else {
+                    DispatchQueue.main.async {
+                        self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
+                    }
+                    continuation.resume()
+                    return
+                }
+
+                let url = URLRequest(url: URL(string: "https://pennmobile.org/api/wrapped/semester/2025S-public/")!, accessToken: token)
+
+                let task = URLSession.shared.dataTask(with: url) { data, response, _ in
+                    guard let httpResponse = response as? HTTPURLResponse, let data, httpResponse.statusCode == 200 else {
+                        DispatchQueue.main.async {
+                            self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
+                        }
+                        continuation.resume()
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        do {
+                            let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
+                            self.data.wrapped = .success(wrapped)
+                        } catch {
+                            self.data.wrapped = .failure(error)
+                        }
+                        continuation.resume()
+                    }
+                }
+                task.resume()
+            }
+        }
+        
+        _ = await wrappedTask
         _ = await pollsTask
         _ = await postsTask
         _ = await newsArticlesTask

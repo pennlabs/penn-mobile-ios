@@ -6,10 +6,12 @@
 //  Copyright © 2022 PennLabs. All rights reserved.
 //
 
-import ActivityKit
 import WidgetKit
 import SwiftUI
 import PennMobileShared
+#if canImport(ActivityKit)
+import ActivityKit
+#endif
 
 extension LaundryMachine {
     var iconColor: Color {

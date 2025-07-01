@@ -172,12 +172,13 @@ extension GSRController: GSRViewModelDelegate {
                     switch result {
                     case .success(let rooms):
                         self.viewModel.updateData(with: rooms)
-                        self.refreshDataUI()
-                        self.rangeSlider.reload()
-                        self.refreshBarButton()
                     case .failure:
+                        self.viewModel.updateData(with: [])
                         self.present(toast: .apiError)
                     }
+                    self.refreshDataUI()
+                    self.rangeSlider.reload()
+                    self.refreshBarButton()
                 }
             }
         }
