@@ -230,15 +230,8 @@ class SublettingAPI {
         }
     }
     
-<<<<<<< HEAD
     public func uploadSubletImages(images: [UIImage], id: Int, progressHandler: @escaping (Double) -> Void) async throws -> [SubletImage] {
-=======
-    func uploadSubletImages(images: [UIImage], id: Int, progressHandler: @escaping (Double) -> Void) async throws -> [SubletImage] {
-        guard let accessToken = try? await OAuth2NetworkManager.instance.getAccessToken() else {
-            throw NetworkingError.authenticationError
-        }
         
->>>>>>> main
         guard let url = URL(string: "\(sublettingUrl)\(id)/images/") else {
             throw NetworkingError.serverError
         }
