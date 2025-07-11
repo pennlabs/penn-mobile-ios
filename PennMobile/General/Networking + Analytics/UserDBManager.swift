@@ -365,7 +365,7 @@ extension UserDBManager {
             let privacy: PrivacyPreferences
         }
         
-        Task {
+        Task { @MainActor in
             guard var request = try? await URLRequest(url: url, mode: .accessToken),
                 let (data, response) = try? await URLSession.shared.data(for: request),
                 let httpResponse = response as? HTTPURLResponse,

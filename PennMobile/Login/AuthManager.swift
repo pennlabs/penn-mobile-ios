@@ -67,19 +67,29 @@ class AuthManager: ObservableObject {
         }
         
         UserDefaults.standard.setLastLogin()
-        guard let account = await AuthManager.retrieveAccount() else {
-            self.state = .loggedOut
-            FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Mobile Backend Account Fetch")
-            return
+        
+        // Update account if able, else just default to the one we have
+        
+        if let account = await AuthManager.retrieveAccount() {
+            await saveAndUpdatePreferences(account)
+            await withCheckedContinuation { continuation in
+                UserDBManager.shared.syncUserSettings { (_) in
+                    Account.saveAccount(account)
+                    continuation.resume()
+                }
+            }
+        } else {
+            guard let _ = Account.getAccount() else {
+                self.state = .loggedOut
+                FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Mobile Backend Account Fetch")
+                return
+            }
         }
         
-        await saveAndUpdatePreferences(account)
-            
-        UserDBManager.shared.syncUserSettings { (_) in
-            Account.saveAccount(account)
-            FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
-            self.determineInitialState()
-        }
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
+        self.determineInitialState()
+        
+        
         
     }
     
@@ -90,20 +100,18 @@ class AuthManager: ObservableObject {
     }
     
 
-    func determineInitialState() {
-        Task { @MainActor in
-            if AuthManager.shouldRequireLogin() {
-                if case .guest = self.state {
-                    self.state = .guest
-                } else {
-                    if !Account.isLoggedIn {
-                        AuthManager.clearAccountData()
-                    }
-                    self.state = .loggedOut
-                }
+    @MainActor func determineInitialState() {
+        if AuthManager.shouldRequireLogin() {
+            if case .guest = self.state {
+                self.state = .guest
             } else {
-                self.state = .loggedIn(Account.getAccount()!)
+                if !Account.isLoggedIn {
+                    AuthManager.clearAccountData()
+                }
+                self.state = .loggedOut
             }
+        } else {
+            self.state = .loggedIn(Account.getAccount()!)
         }
     }
     
