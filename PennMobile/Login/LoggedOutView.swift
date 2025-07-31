@@ -12,7 +12,6 @@ import LabsPlatformSwift
 struct LoggedOutView: View {
     @EnvironmentObject var authManager: AuthManager
     @Environment(\.colorScheme) var colorScheme
-    @State var isPresentingLoginSheet = false
     let platform = LabsPlatform.shared
 
     var body: some View {
@@ -54,14 +53,7 @@ struct LoggedOutView: View {
                 image
             }
         }
-        .sheet(isPresented: $isPresentingLoginSheet) {
-            LabsLoginView { success in
-                if success {
-                    authManager.determineInitialState()
-                }
-            }
-            .edgesIgnoringSafeArea(.all)
-        }.navigationTitle("Course Schedule")
+        .navigationTitle("Course Schedule")
     }
 }
 

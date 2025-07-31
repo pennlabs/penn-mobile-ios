@@ -14,7 +14,7 @@ struct GenericErrorResponse: Decodable {
     let detail: String
 }
 
-public class SublettingAPI {
+class SublettingAPI {
     private static let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
@@ -40,31 +40,25 @@ public class SublettingAPI {
         })
     )
     
-    public static let instance = SublettingAPI()
-    public let offersUrl = "https://pennmobile.org/api/sublet/offers/"
-    public let favoritesUrl = "https://pennmobile.org/api/sublet/"
-    public let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
+    static let instance = SublettingAPI()
+    let offersUrl = "https://pennmobile.org/api/sublet/offers/"
+    let favoritesUrl = "https://pennmobile.org/api/sublet/"
+    let sublettingUrl = "https://pennmobile.org/api/sublet/properties/"
     
     private func makeSubletRequest<C: Encodable, R: Decodable>(_ urlStr: String? = nil, url: URL? = nil, method: String, isContentJSON: Bool = false, content: C? = nil as String?, returnType: R.Type? = nil as String.Type?) async throws -> R? {
         let session = try await URLSession(authenticationMode: .accessToken)
         
-        var urlReq = url
-        if urlStr == nil && url == nil {
+        guard let urlReq = url ?? urlStr.flatMap(URL.init(string:)) else {
             throw NetworkingError.serverError
-        } else if urlStr != nil {
-            guard let urlVal = URL(string: urlStr!) else {
-                throw NetworkingError.serverError
-            }
-            urlReq = urlVal
         }
         
-        var request = URLRequest(url: urlReq!)
+        var request = URLRequest(url: urlReq)
         request.httpMethod = method
         if isContentJSON {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         
-        if content != nil {
+        if let content {
             do {
                 let jsonData = try Self.encoder.encode(content)
                 request.httpBody = jsonData
@@ -75,7 +69,7 @@ public class SublettingAPI {
         
         let (data, response) = try await session.data(for: request)
         
-        if returnType != nil {
+        if let returnType {
             if let errorResponse = try? Self.decoder.decode(GenericErrorResponse.self, from: data),
                let error = NetworkingError(rawValue: errorResponse.detail) {
                 throw error
@@ -86,14 +80,14 @@ public class SublettingAPI {
             throw NetworkingError.serverError
         }
         
-        if returnType != nil {
-            return try Self.decoder.decode(returnType!, from: data)
+        if let returnType {
+            return try Self.decoder.decode(returnType, from: data)
         } else {
             return nil
         }
     }
     
-    public func createSublet(subletData: SubletData) async throws -> Sublet {
+    func createSublet(subletData: SubletData) async throws -> Sublet {
         if let result = try await makeSubletRequest(sublettingUrl, method: "POST", isContentJSON: true, content: subletData, returnType: Sublet.self) {
             return result
         } else {
@@ -101,11 +95,11 @@ public class SublettingAPI {
         }
     }
     
-    public func deleteSublet(id: Int) async throws {
+    func deleteSublet(id: Int) async throws {
         _ = try await makeSubletRequest("\(sublettingUrl)\(id)/", method: "DELETE")
     }
     
-    public func patchSublet(id: Int, data: SubletData) async throws -> Sublet {
+    func patchSublet(id: Int, data: SubletData) async throws -> Sublet {
         if let result = try await makeSubletRequest("\(sublettingUrl)\(id)/", method: "PATCH", isContentJSON: true, content: data, returnType: Sublet.self) {
             return result
         } else {
@@ -113,7 +107,7 @@ public class SublettingAPI {
         }
     }
     
-    public func getSublets(queryParameters: [String: String]? = nil) async throws -> [Sublet] {
+    func getSublets(queryParameters: [String: String]? = nil) async throws -> [Sublet] {
         var urlComponents = URLComponents(string: sublettingUrl)!
 
         if let queryParameters = queryParameters, !queryParameters.isEmpty {
@@ -131,7 +125,7 @@ public class SublettingAPI {
         }
     }
     
-    public func getSubletDetails(id: Int, withOffers: Bool = true) async throws -> Sublet {
+    func getSubletDetails(id: Int, withOffers: Bool = true) async throws -> Sublet {
         if var result = try await makeSubletRequest("\(sublettingUrl)\(id)/", method: "GET", returnType: Sublet.self) {
             if withOffers {
                 result.offers = try? await getSubletOffers(id: id)
@@ -142,7 +136,7 @@ public class SublettingAPI {
         }
     }
     
-    public func getSubletDetails(sublets: [Sublet], withOffers: Bool = false) async throws -> [Sublet] {
+    func getSubletDetails(sublets: [Sublet], withOffers: Bool = false) async throws -> [Sublet] {
         return await withTaskGroup(of: Sublet.self) { group in
             var outputSublets: [Sublet] = []
             outputSublets.reserveCapacity(sublets.count)
@@ -160,15 +154,15 @@ public class SublettingAPI {
         }
     }
     
-    public func favoriteSublet(id: Int) async throws {
+    func favoriteSublet(id: Int) async throws {
         _ = try await makeSubletRequest("\(sublettingUrl)\(id)/favorites/", method: "POST")
     }
     
-    public func unfavoriteSublet(id: Int) async throws {
+    func unfavoriteSublet(id: Int) async throws {
         _ = try await makeSubletRequest("\(sublettingUrl)\(id)/favorites/", method: "DELETE")
     }
     
-    public func getFavorites() async throws -> [Sublet] {
+    func getFavorites() async throws -> [Sublet] {
         if let result = try await makeSubletRequest("\(favoritesUrl)favorites/", method: "GET", returnType: [Sublet].self) {
             return result
         } else {
@@ -176,7 +170,7 @@ public class SublettingAPI {
         }
     }
     
-    public func getAmenities() async throws -> [String] {
+    func getAmenities() async throws -> [String] {
         if let result = try await makeSubletRequest("\(favoritesUrl)amenities/", method: "GET", returnType: [String].self) {
             return result.sorted { $0.lowercased() < $1.lowercased() }
         } else {
@@ -184,7 +178,7 @@ public class SublettingAPI {
         }
     }
     
-    public func getUserOffers() async throws -> [SubletOffer] {
+    func getUserOffers() async throws -> [SubletOffer] {
         if let result = try await makeSubletRequest("\(offersUrl)", method: "GET", returnType: [SubletOffer].self) {
             return result
         } else {
@@ -192,7 +186,7 @@ public class SublettingAPI {
         }
     }
     
-    public func getSubletOffers(id: Int) async throws -> [SubletOffer] {
+    func getSubletOffers(id: Int) async throws -> [SubletOffer] {
         if let result = try await makeSubletRequest("\(sublettingUrl)\(id)/offers/", method: "GET", returnType: [SubletOffer].self) {
             return result
         } else {
@@ -200,7 +194,7 @@ public class SublettingAPI {
         }
     }
     
-    public func makeOffer(offerData: SubletOfferData, id: Int) async throws -> SubletOffer {
+    func makeOffer(offerData: SubletOfferData, id: Int) async throws -> SubletOffer {
         if let result = try await makeSubletRequest("\(sublettingUrl)\(id)/offers/", method: "POST", isContentJSON: true, content: offerData, returnType: SubletOffer.self) {
             return result
         } else {
@@ -208,11 +202,11 @@ public class SublettingAPI {
         }
     }
     
-    public func deleteOffer(offerData: SubletOfferData, id: Int) async throws {
+    func deleteOffer(offerData: SubletOfferData, id: Int) async throws {
         _ = try await makeSubletRequest("\(sublettingUrl)\(id)/offers/", method: "DELETE", isContentJSON: true, content: offerData)
     }
     
-    public func getAppliedSublets() async throws -> [Sublet] {
+    func getAppliedSublets() async throws -> [Sublet] {
         let offers = try await self.getUserOffers()
         
         return await withTaskGroup(of: Sublet?.self) { group in
@@ -237,6 +231,7 @@ public class SublettingAPI {
     }
     
     public func uploadSubletImages(images: [UIImage], id: Int, progressHandler: @escaping (Double) -> Void) async throws -> [SubletImage] {
+        
         guard let url = URL(string: "\(sublettingUrl)\(id)/images/") else {
             throw NetworkingError.serverError
         }
@@ -302,11 +297,11 @@ public class SublettingAPI {
         }
     }
     
-    public func deleteSubletImage(imageID: Int) async throws {
+    func deleteSubletImage(imageID: Int) async throws {
         _ = try await makeSubletRequest("\(sublettingUrl)images/\(imageID)/", method: "DELETE")
     }
     
-    public func deleteSubletImages(images: [SubletImage]) async throws {
+    func deleteSubletImages(images: [SubletImage]) async throws {
         return await withTaskGroup(of: Void.self) { group in
             for image in images {
                 group.addTask {

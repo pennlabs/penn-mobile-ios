@@ -147,9 +147,7 @@ class RootViewController: UIViewController, NotificationRequestable, ShowsAlert 
     func clearAccountData() {
         HTTPCookieStorage.shared.removeCookies(since: Date(timeIntervalSince1970: 0))
         UserDefaults.standard.clearAll()
-        if let platform = LabsPlatform.shared {
-            platform.logoutPlatform()
-        }
+        LabsPlatform.shared?.logoutPlatform()
         Account.clear()
     }
 

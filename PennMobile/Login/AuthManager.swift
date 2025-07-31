@@ -62,21 +62,34 @@ class AuthManager: ObservableObject {
     @MainActor func handlePlatformLogin(res: Bool) async {
         guard res else {
             self.state = .loggedOut
+            FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Platform")
             return
         }
         
         UserDefaults.standard.setLastLogin()
-        guard let account = await AuthManager.retrieveAccount() else {
-            self.state = .loggedOut
-            return
+        
+        // Update account if able, else just default to the one we have
+        
+        if let account = await AuthManager.retrieveAccount() {
+            await saveAndUpdatePreferences(account)
+            await withCheckedContinuation { continuation in
+                UserDBManager.shared.syncUserSettings { (_) in
+                    Account.saveAccount(account)
+                    continuation.resume()
+                }
+            }
+        } else {
+            guard let _ = Account.getAccount() else {
+                self.state = .loggedOut
+                FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Mobile Backend Account Fetch")
+                return
+            }
         }
         
-        await saveAndUpdatePreferences(account)
-            
-        UserDBManager.shared.syncUserSettings { (_) in
-            Account.saveAccount(account)
-            self.determineInitialState()
-        }
+        FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
+        self.determineInitialState()
+        
+        
         
     }
     
@@ -87,20 +100,18 @@ class AuthManager: ObservableObject {
     }
     
 
-    func determineInitialState() {
-        DispatchQueue.main.async {
-            if AuthManager.shouldRequireLogin() {
-                if case .guest = self.state {
-                    self.state = .guest
-                } else {
-                    if !Account.isLoggedIn {
-                        AuthManager.clearAccountData()
-                    }
-                    self.state = .loggedOut
-                }
+    @MainActor func determineInitialState() {
+        if AuthManager.shouldRequireLogin() {
+            if case .guest = self.state {
+                self.state = .guest
             } else {
-                self.state = .loggedIn(Account.getAccount()!)
+                if !Account.isLoggedIn {
+                    AuthManager.clearAccountData()
+                }
+                self.state = .loggedOut
             }
+        } else {
+            self.state = .loggedIn(Account.getAccount()!)
         }
     }
     
@@ -130,7 +141,7 @@ class AuthManager: ObservableObject {
 
         guard let (data, response) = try? await URLSession.shared.data(for: request),
               let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
+              (200..<300).contains(httpResponse.statusCode) else {
             return nil
         }
         let decoder = JSONDecoder()

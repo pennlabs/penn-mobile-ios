@@ -105,7 +105,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 return
             }
 
-            callback(status.statusCode == 200, "DONE", error)
+            callback((200..<300).contains(status.statusCode), "DONE", error)
         }
     }
 
@@ -157,7 +157,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 return
             }
 
-            callback(status.statusCode == 200, error)
+            callback((200..<300).contains(status.statusCode), error)
         }
     }
 
@@ -171,7 +171,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                     return
                 }
                 
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                guard let response = response as? HTTPURLResponse, (200..<300).contains(response.statusCode) else {
                     continuation.resume(throwing: NetworkingError.serverError)
                     return
                 }

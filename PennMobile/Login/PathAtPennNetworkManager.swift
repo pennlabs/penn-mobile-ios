@@ -179,7 +179,7 @@ extension PathAtPennNetworkManager {
             throw PathAtPennError.notHttpResponse
         }
 
-        guard response.statusCode == 200 else {
+        guard (200..<300).contains(response.statusCode) else {
             throw PathAtPennError.unexpectedStatus(response.statusCode)
         }
 
@@ -216,7 +216,7 @@ extension PathAtPennNetworkManager {
             throw PathAtPennError.notHttpResponse
         }
 
-        guard response.statusCode == 200 else {
+        guard (200..<300).contains(response.statusCode) else {
             throw PathAtPennError.unexpectedStatus(response.statusCode)
         }
 

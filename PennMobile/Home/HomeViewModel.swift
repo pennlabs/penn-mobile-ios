@@ -103,7 +103,7 @@ extension Optional {
                 guard let request = try? await URLRequest(url: url, mode: .accessToken),
                 let (data, response) = try? await URLSession.shared.data(for: request),
                 let httpResponse = response as? HTTPURLResponse,
-                httpResponse.statusCode == 200 else {
+                (200..<300).contains(httpResponse.statusCode) else {
                     DispatchQueue.main.async {
                         self.data.posts = .success([])
                     }
@@ -152,6 +152,34 @@ extension Optional {
             }
         }
         
+        async let wrappedTask = Task {
+            let url = URL(string: "https://pennmobile.org/api/wrapped/semester/2025S-public/")!
+            guard let req = try? await URLRequest(url: url, mode: .accessToken) else {
+                DispatchQueue.main.async {
+                    self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
+                }
+                return
+            }
+                let task = URLSession.shared.dataTask(with: url) { data, response, _ in
+                    guard let httpResponse = response as? HTTPURLResponse, let data, httpResponse.statusCode == 200 else {
+                        DispatchQueue.main.async {
+                            self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
+                        }
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        do {
+                            let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
+                            self.data.wrapped = .success(wrapped)
+                        } catch {
+                            self.data.wrapped = .failure(error)
+                        }
+                    }
+                }
+                task.resume()
+        }
+        
+        _ = await wrappedTask
         _ = await pollsTask
         _ = await postsTask
         _ = await newsArticlesTask

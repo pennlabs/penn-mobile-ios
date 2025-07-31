@@ -6,8 +6,10 @@
 //  Copyright © 2022 PennLabs. All rights reserved.
 //
 
-import ActivityKit
 import Foundation
+#if canImport(ActivityKit)
+import ActivityKit
+#endif
 
 public struct LaundryAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
