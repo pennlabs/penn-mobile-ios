@@ -46,6 +46,7 @@ struct GSRCentralView: View {
                         }
                         .navigationDestination(for: GSRLocation.self) { loc in
                             GSRBookingView(selectedLocInternal: loc)
+                                .frame(width: UIScreen.main.bounds.width)
                                 .environmentObject(vm)
                         }
                         .listStyle(PlainListStyle())
