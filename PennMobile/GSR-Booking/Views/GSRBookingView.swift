@@ -14,6 +14,8 @@ struct GSRBookingView: View {
     @Environment(\.presentToast) var presentToast
     @EnvironmentObject var nav: NavigationManager
     @State var selectedLocInternal: GSRLocation
+    @State var showSettings: Bool = false
+    @State var settingsPopoverAttachmentPoint: CGPoint? = nil
     
     
     var body: some View {
@@ -77,6 +79,25 @@ struct GSRBookingView: View {
             
         }
             .navigationTitle("Choose a Time Slot")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        print("settings")
+                        self.showSettings = true
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                    .popover(isPresented: $showSettings, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
+                        VStack {
+                            Toggle(isOn: $vm.settings.shouldShowFullyUnavailableRooms) {
+                                Text("Show Unavailable Rooms")
+                            }
+                        }
+                        .padding()
+                        .presentationCompactAdaptation(.popover)
+                    }
+                }
+            }
             .onChange(of: selectedLocInternal) { old, new in
                 Task {
                     do {

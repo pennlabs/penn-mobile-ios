@@ -8,7 +8,10 @@
 
 import Foundation
 
-struct GSRReservation: Codable, Equatable {
+struct GSRReservation: Codable, Equatable, Identifiable {
+    var id: String {
+        return bookingId
+    }
     let bookingId: String
     let gsr: GSRLocation
     let roomId: Int

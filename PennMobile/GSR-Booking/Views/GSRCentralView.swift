@@ -54,7 +54,7 @@ struct GSRCentralView: View {
                         
                         
                     case .reservations:
-                        Image(systemName: "circle.fill")
+                        ReservationsView()
                     }
                 }
                 .environmentObject(vm)

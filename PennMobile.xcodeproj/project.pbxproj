@@ -348,6 +348,7 @@
 		736DABD42D8FB4E800C93BA5 /* GSRTwoWayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */; };
 		736DABD62D8FB55B00C93BA5 /* GSRBookingToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736DABD52D8FB55600C93BA5 /* GSRBookingToolbarView.swift */; };
 		737935E02D7972C100E8DD77 /* GSRGuestLandingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 737935DF2D7972BF00E8DD77 /* GSRGuestLandingPage.swift */; };
+		73924D142E55FFB7002F2E51 /* ReservationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73924D132E55FFB0002F2E51 /* ReservationsView.swift */; };
 		73E7A0262CF158A4007BC1E3 /* WrappedContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A0232CF158A4007BC1E3 /* WrappedContainerViewModel.swift */; };
 		73E7A0272CF158A4007BC1E3 /* WrappedContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A0222CF158A4007BC1E3 /* WrappedContainerView.swift */; };
 		73E7A0282CF158A4007BC1E3 /* WrappedUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E7A0242CF158A4007BC1E3 /* WrappedUnit.swift */; };
@@ -770,6 +771,7 @@
 		736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRTwoWayScrollView.swift; sourceTree = "<group>"; };
 		736DABD52D8FB55600C93BA5 /* GSRBookingToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRBookingToolbarView.swift; sourceTree = "<group>"; };
 		737935DF2D7972BF00E8DD77 /* GSRGuestLandingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRGuestLandingPage.swift; sourceTree = "<group>"; };
+		73924D132E55FFB0002F2E51 /* ReservationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationsView.swift; sourceTree = "<group>"; };
 		73E7A0222CF158A4007BC1E3 /* WrappedContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedContainerView.swift; sourceTree = "<group>"; };
 		73E7A0232CF158A4007BC1E3 /* WrappedContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedContainerViewModel.swift; sourceTree = "<group>"; };
 		73E7A0242CF158A4007BC1E3 /* WrappedUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedUnit.swift; sourceTree = "<group>"; };
@@ -1243,6 +1245,7 @@
 		42632BB72CB9C77B0028CC31 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				73924D132E55FFB0002F2E51 /* ReservationsView.swift */,
 				735AFA032DBC881800753F63 /* UnavailableTextureOverlay.swift */,
 				730548122D8DDF70003FD988 /* GSRRoomAvailabilityRow.swift */,
 				12836D342D74D84E005FBF85 /* EmptyFile.swift */,
@@ -2352,6 +2355,7 @@
 				42632D0A2CB9C77B0028CC31 /* GSRDateHandler.swift in Sources */,
 				42632D0B2CB9C77B0028CC31 /* GSRGroup.swift in Sources */,
 				42632D0C2CB9C77B0028CC31 /* GSRGroupUser.swift in Sources */,
+				73924D142E55FFB7002F2E51 /* ReservationsView.swift in Sources */,
 				42632D0D2CB9C77B0028CC31 /* GSRLocation.swift in Sources */,
 				42632D0E2CB9C77B0028CC31 /* GSRLocationModel.swift in Sources */,
 				42632D0F2CB9C77B0028CC31 /* GSRReservation.swift in Sources */,

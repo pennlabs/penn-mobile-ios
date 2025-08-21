@@ -11,6 +11,26 @@ import UIKit
 import SwiftUI
 import PennMobileShared
 
+
+extension GSRViewModel {
+    struct Settings: Equatable {
+        static func == (lhs: GSRViewModel.Settings, rhs: GSRViewModel.Settings) -> Bool {
+            lhs.shouldShowFullyUnavailableRooms == rhs.shouldShowFullyUnavailableRooms
+            && lhs.shouldShowLegacyUI == rhs.shouldShowLegacyUI
+        }
+        
+        // Should the user be shown rooms that have no availability
+        @AppStorage("gsr.settings.showFullyUnavailableRooms") var shouldShowFullyUnavailableRooms: Bool = false
+        @AppStorage("gsr.settings.showLegacyUI") var shouldShowLegacyUI: Bool = false
+        
+        // Function called in an onChange listener to Settings struct
+        @MainActor func settingsChanged() {
+            // Check for changes
+            print("changed!")
+        }
+    }
+}
+
 class GSRViewModel: ObservableObject {
     @Published var selectedLocation: GSRLocation?
     @Published var roomsAtSelectedLocation: [GSRRoom] = []
@@ -23,6 +43,8 @@ class GSRViewModel: ObservableObject {
     @Published var isLoadingAvailability = false
     @Published var showSuccessfulBookingAlert = false
     @Published var sortedStartTime: Date? = nil
+    @Published var currentReservations: [GSRReservation] = []
+    @Published var settings: GSRViewModel.Settings = Settings()
     
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })
@@ -36,6 +58,7 @@ class GSRViewModel: ObservableObject {
             Task {
                 self.availableLocations = (try? await GSRNetworkManager.getLocations()) ?? []
                 self.isWharton = (try? await GSRNetworkManager.whartonAllowed()) ?? false
+                self.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
                 return
             }
         }
@@ -66,8 +89,13 @@ class GSRViewModel: ObservableObject {
         }
         
         // 90 minute check assumes 30 minute bookings
-        if newSelected.count == 3 {
+        if newSelected.count == 3 && self.selectedLocation?.kind ?? .wharton == .wharton {
             throw GSRValidationError.over90Minutes
+        }
+        
+        // 90 minute check assumes 30 minute bookings
+        if newSelected.count == 4 && self.selectedLocation?.kind ?? .libcal == .libcal {
+            throw GSRValidationError.over120Minutes
         }
         
         if adding {
@@ -82,7 +110,7 @@ class GSRViewModel: ObservableObject {
     func handleSortAction(to startTime: Date) {
         if self.sortedStartTime != nil && startTime == self.sortedStartTime {
             self.sortedStartTime = nil
-            self.roomsAtSelectedLocation.sort(by: { $0.roomName < $1.roomName })
+            self.roomsAtSelectedLocation.sort(by: { $0 < $1 })
             return
         }
         
@@ -97,7 +125,7 @@ class GSRViewModel: ObservableObject {
             if rm1Avail && !rm2Avail { return true }
             if !rm1Avail && rm2Avail { return false }
             
-            return rm1.roomName < rm2.roomName
+            return rm1 < rm2
         })
     }
     
@@ -169,7 +197,7 @@ class GSRViewModel: ObservableObject {
         
         self.roomsAtSelectedLocation = avail.map {
             return $0.withMissingTimeslots(minDate: min, maxDate: max)
-        }
+        }.sorted(by: { $0 < $1 })
         
         self.isLoadingAvailability = false
     }
@@ -192,7 +220,7 @@ class GSRViewModel: ObservableObject {
         try await GSRNetworkManager.makeBooking(for: booking)
         self.recentBooking = booking
         self.showSuccessfulBookingAlert = true
-        
+        self.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
     }
     
     func getRelevantAvailability(room: GSRRoom? = nil) -> [GSRTimeSlot] {
@@ -213,6 +241,7 @@ class GSRViewModel: ObservableObject {
     
     enum GSRValidationError: Error, LocalizedError {
         case over90Minutes
+        case over120Minutes
         case differentRooms
         case splitTimeSlots
         case bookingInPast
@@ -220,8 +249,10 @@ class GSRViewModel: ObservableObject {
         
         var errorDescription: String? {
             switch self {
+            case .over120Minutes:
+                return "You cannot create a booking for more than 120 minutes at this location."
             case .over90Minutes:
-                return "You cannot create a booking for more than 90 minutes."
+                return "You cannot create a booking for more than 90 minutes at this location."
             case .differentRooms:
                 return "You cannot book two separate rooms at the same time."
             case .splitTimeSlots:

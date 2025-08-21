@@ -11,12 +11,17 @@ import SwiftUI
 struct GSRTimeCardRow: View {
     @EnvironmentObject var vm: GSRViewModel
     var body: some View {
-        if let first = vm.roomsAtSelectedLocation.first {
+        let relevantRooms = vm.roomsAtSelectedLocation.filter {
+            vm.settings.shouldShowFullyUnavailableRooms || $0.availability.contains(where: { $0.isAvailable })
+        }
+        
+        if let first = relevantRooms.first {
             HStack(spacing: 0) {
                 let avail = vm.getRelevantAvailability()
                 if let firstSlot = avail.first {
                     Text(firstSlot.startTime.gsrTimeString)
                         .font(.callout)
+                        .multilineTextAlignment(.center)
                         .foregroundStyle(firstSlot.startTime == vm.sortedStartTime ? .white : .primary)
                         .padding(4)
                         .background {
@@ -33,6 +38,7 @@ struct GSRTimeCardRow: View {
                     ForEach(avail, id: \.self) { slot in
                         Text(slot.endTime.gsrTimeString)
                             .font(.callout)
+                            .multilineTextAlignment(.center)
                             .foregroundStyle(slot.endTime == vm.sortedStartTime ? .white : .primary)
                             .padding(4)
                             .background {
