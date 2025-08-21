@@ -13,6 +13,7 @@ struct GSRBookingView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
     @EnvironmentObject var nav: NavigationManager
+    @Binding var centralTab: GSRTab
     @State var selectedLocInternal: GSRLocation
     @State var showSettings: Bool = false
     @State var settingsPopoverAttachmentPoint: CGPoint? = nil
@@ -140,7 +141,11 @@ struct GSRBookingView: View {
                     nav.path.removeLast()
                     
                 }
-                Button("View Booking") {}
+                Button("View Booking") {
+                    vm.showSuccessfulBookingAlert = false
+                    nav.path.removeLast()
+                    centralTab = .reservations
+                }
             } message: { booking in
                 Text("You've successfully made a reservation for \(booking.roomName)")
             }

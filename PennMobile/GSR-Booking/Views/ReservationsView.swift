@@ -13,17 +13,31 @@ struct ReservationsView: View {
     @EnvironmentObject var vm: GSRViewModel
     
     var body: some View {
-        ScrollView {
-            VStack {
-                ForEach(vm.currentReservations) { res in
-                    ReservationCell(reservation: res)
-                    Divider()
+        if !vm.currentReservations.isEmpty {
+            ScrollView {
+                VStack {
+                    ForEach(vm.currentReservations) { res in
+                        ReservationCell(reservation: res)
+                        Divider()
+                    }
                 }
+                .padding()
+            }
+            .refreshable {
+                vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
+            }
+        } else {
+            VStack {
+                Text("You have no upcoming reservations.")
+                    .font(.title)
+                    .fontWeight(.light)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(Color(UIColor.systemGray))
+                Spacer()
             }
             .padding()
-        }
-        .refreshable {
-            vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
+            
+            
         }
         
         

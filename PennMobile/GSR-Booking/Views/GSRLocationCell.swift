@@ -30,6 +30,8 @@ struct GSRLocationCell: View {
                 .font(.system(size: 18))
                 .padding(.leading, 16)
             Spacer()
+            Image(systemName: "chevron.right")
+                .bold()
         }
         .frame(height: height)
         .cornerRadius(8)

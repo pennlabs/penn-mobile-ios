@@ -178,6 +178,8 @@ class GSRViewModel: ObservableObject {
     @MainActor func updateAvailability() async throws {
         self.isLoadingAvailability = true
         self.roomsAtSelectedLocation = []
+        self.selectedTimeslots = []
+        self.sortedStartTime = nil
         
         guard let loc = self.selectedLocation else {
             self.isLoadingAvailability = false
