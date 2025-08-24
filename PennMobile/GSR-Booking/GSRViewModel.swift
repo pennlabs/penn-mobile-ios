@@ -68,6 +68,9 @@ class GSRViewModel: ObservableObject {
     
     func handleTimeslotGesture(slot: GSRTimeSlot, room: GSRRoom) throws {
         guard slot.isAvailable else { return }
+        // Consider a timeslot gesture as a transaction, of sorts
+        // Regardless of if they're adding or removing we have to validate the transaction before
+        // committing it to the actual state `self.selectedTimeslots`
         var newSelected = selectedTimeslots
         var adding: Bool = true
         if newSelected.contains(where: {$0.0 == room && $0.1 == slot}) {
@@ -82,10 +85,11 @@ class GSRViewModel: ObservableObject {
             newSelected = []
         }
         
-        if newSelected.count > self.selectedLocation?.kind.maxConsecutiveBookings ?? 3 {
+        // This case is handled separately of the validate function, because it shouldn't reset the booking,
+        // it should instead have a toast appear.
+        if newSelected.count == self.selectedLocation?.kind.maxConsecutiveBookings ?? 3 {
             throw GSRValidationError.overLimit(limit: (self.selectedLocation?.kind.maxConsecutiveBookings ?? 3) * 30)
         }
-        
         if adding {
             newSelected.append((room, slot))
         }
@@ -208,9 +212,10 @@ class GSRViewModel: ObservableObject {
         let booking = GSRBooking(gid: loc.gid, startTime: start, endTime: end, id: room.id, roomName: room.roomName)
         
         try await GSRNetworkManager.makeBooking(for: booking)
+        // This recentBooking field is for a future implementation of a GSR Booking Detail View
         self.recentBooking = booking
-        self.showSuccessfulBookingAlert = true
         self.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
+        self.showSuccessfulBookingAlert = true
     }
     
     func getRelevantAvailability(room: GSRRoom? = nil) -> [GSRTimeSlot] {
