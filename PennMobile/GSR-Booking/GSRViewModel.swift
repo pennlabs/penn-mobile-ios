@@ -22,12 +22,6 @@ extension GSRViewModel {
         // Should the user be shown rooms that have no availability
         @AppStorage("gsr.settings.showFullyUnavailableRooms") var shouldShowFullyUnavailableRooms: Bool = false
         @AppStorage("gsr.settings.showLegacyUI") var shouldShowLegacyUI: Bool = false
-        
-        // Function called in an onChange listener to Settings struct
-        @MainActor func settingsChanged() {
-            // Check for changes
-            print("changed!")
-        }
     }
 }
 
@@ -88,14 +82,8 @@ class GSRViewModel: ObservableObject {
             newSelected = []
         }
         
-        // 90 minute check assumes 30 minute bookings
-        if newSelected.count == 3 && self.selectedLocation?.kind ?? .wharton == .wharton {
-            throw GSRValidationError.over90Minutes
-        }
-        
-        // 90 minute check assumes 30 minute bookings
-        if newSelected.count == 4 && self.selectedLocation?.kind ?? .libcal == .libcal {
-            throw GSRValidationError.over120Minutes
+        if newSelected.count > self.selectedLocation?.kind.maxConsecutiveBookings ?? 3 {
+            throw GSRValidationError.overLimit(limit: (self.selectedLocation?.kind.maxConsecutiveBookings ?? 3) * 30)
         }
         
         if adding {
@@ -199,7 +187,7 @@ class GSRViewModel: ObservableObject {
         
         self.roomsAtSelectedLocation = avail.map {
             return $0.withMissingTimeslots(minDate: min, maxDate: max)
-        }.sorted(by: { $0 < $1 })
+        }.sorted()
         
         self.isLoadingAvailability = false
     }
@@ -242,8 +230,7 @@ class GSRViewModel: ObservableObject {
     }
     
     enum GSRValidationError: Error, LocalizedError {
-        case over90Minutes
-        case over120Minutes
+        case overLimit(limit: Int)
         case differentRooms
         case splitTimeSlots
         case bookingInPast
@@ -251,10 +238,8 @@ class GSRViewModel: ObservableObject {
         
         var errorDescription: String? {
             switch self {
-            case .over120Minutes:
-                return "You cannot create a booking for more than 120 minutes at this location."
-            case .over90Minutes:
-                return "You cannot create a booking for more than 90 minutes at this location."
+            case .overLimit(let limit):
+                return "You cannot create a booking for more than \(limit) minutes at this location."
             case .differentRooms:
                 return "You cannot book two separate rooms at the same time."
             case .splitTimeSlots:

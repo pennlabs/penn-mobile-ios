@@ -61,11 +61,7 @@ struct GSRBookingView: View {
                     
                     
                 }
-                
-                
-                
             } else {
-                
                 VStack(alignment: .center) {
                     Spacer()
                     LottieView {
@@ -83,7 +79,6 @@ struct GSRBookingView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        print("settings")
                         self.showSettings = true
                     } label: {
                         Image(systemName: "gearshape")
