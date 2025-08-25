@@ -38,14 +38,21 @@ struct GSRBookingView: View {
             
             if !vm.isLoadingAvailability {
                 if vm.hasAvailableBooking {
-                    GSRTwoWayScrollView()
-                        .overlay {
-                            VStack {
-                                Spacer()
-                                GSRBookingToolbarView()
-                                    .padding(24)
+                    if !vm.settings.calendarView {
+                        GSRTwoWayScrollView()
+                            .overlay {
+                                VStack {
+                                    Spacer()
+                                    GSRBookingToolbarView()
+                                        .padding(24)
+                                }
                             }
+                    } else {
+                        ScrollView(showsIndicators: false) {
+                            GSRCalendarBookingView()
+                                .padding()
                         }
+                    }
                 } else {
                     VStack {
                         Spacer()
@@ -87,6 +94,9 @@ struct GSRBookingView: View {
                         VStack {
                             Toggle(isOn: $vm.settings.shouldShowFullyUnavailableRooms) {
                                 Text("Show Unavailable Rooms")
+                            }
+                            Toggle(isOn: $vm.settings.calendarView) {
+                                Text("Use Calendar View")
                             }
                         }
                         .padding()

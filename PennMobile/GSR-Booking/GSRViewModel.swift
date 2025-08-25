@@ -22,6 +22,7 @@ extension GSRViewModel {
         // Should the user be shown rooms that have no availability
         @AppStorage("gsr.settings.showFullyUnavailableRooms") var shouldShowFullyUnavailableRooms: Bool = false
         @AppStorage("gsr.settings.showLegacyUI") var shouldShowLegacyUI: Bool = false
+        @AppStorage("gsr.settings.useCalendarView") var calendarView: Bool = false
     }
 }
 
@@ -39,6 +40,19 @@ class GSRViewModel: ObservableObject {
     @Published var sortedStartTime: Date? = nil
     @Published var currentReservations: [GSRReservation] = []
     @Published var settings: GSRViewModel.Settings = Settings()
+    
+    func roomsAvailable(startingAt: Date, consecutiveSlots: Int) -> [GSRRoom] {
+        // This function is slow asf, can probably optimize
+        return roomsAtSelectedLocation.filter { room in
+            for i in 0..<consecutiveSlots {
+                let hasRoom = room.availability.contains { slot in
+                    slot.startTime == startingAt.add(minutes: i * 30) && slot.isAvailable
+                }
+                if !hasRoom { return false }
+            }
+            return true
+        }
+    }
     
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })

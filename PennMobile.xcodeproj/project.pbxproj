@@ -320,6 +320,7 @@
 		73066A0B2CF4E6AF004C7271 /* WrappedExperienceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73066A0A2CF4E6AA004C7271 /* WrappedExperienceViewModel.swift */; };
 		73066A0D2CF4E9F3004C7271 /* WrappedStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73066A0C2CF4E9F2004C7271 /* WrappedStage.swift */; };
 		73066A0F2CF4EFEE004C7271 /* WrappedLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73066A0E2CF4EFD3004C7271 /* WrappedLoadingView.swift */; };
+		730D449F2E5B93D9008B0286 /* GSRCalendarBookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730D449E2E5B93D0008B0286 /* GSRCalendarBookingView.swift */; };
 		733781AF2DC588B90056A532 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7337819A2DC588B90056A532 /* OFL.txt */; };
 		733781B02DC588B90056A532 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7337819B2DC588B90056A532 /* Poppins-Black.ttf */; };
 		733781B12DC588B90056A532 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7337819C2DC588B90056A532 /* Poppins-BlackItalic.ttf */; };
@@ -745,6 +746,7 @@
 		73066A0A2CF4E6AA004C7271 /* WrappedExperienceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedExperienceViewModel.swift; sourceTree = "<group>"; };
 		73066A0C2CF4E9F2004C7271 /* WrappedStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedStage.swift; sourceTree = "<group>"; };
 		73066A0E2CF4EFD3004C7271 /* WrappedLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedLoadingView.swift; sourceTree = "<group>"; };
+		730D449E2E5B93D0008B0286 /* GSRCalendarBookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRCalendarBookingView.swift; sourceTree = "<group>"; };
 		7337819A2DC588B90056A532 /* OFL.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
 		7337819B2DC588B90056A532 /* Poppins-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Black.ttf"; sourceTree = "<group>"; };
 		7337819C2DC588B90056A532 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
@@ -1252,6 +1254,7 @@
 				12836D362D74DE29005FBF85 /* GSRLocationCell.swift */,
 				73FE3A252D6615D2004E0E50 /* GSRViewControllerSwiftUI.swift */,
 				73FE3A232D661468004E0E50 /* GSRCentralView.swift */,
+				730D449E2E5B93D0008B0286 /* GSRCalendarBookingView.swift */,
 				736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */,
 				730547F22D8DD4AF003FD988 /* GSRBookingView.swift */,
 				736DABD52D8FB55600C93BA5 /* GSRBookingToolbarView.swift */,
@@ -2356,6 +2359,7 @@
 				42632D0B2CB9C77B0028CC31 /* GSRGroup.swift in Sources */,
 				42632D0C2CB9C77B0028CC31 /* GSRGroupUser.swift in Sources */,
 				73924D142E55FFB7002F2E51 /* ReservationsView.swift in Sources */,
+				730D449F2E5B93D9008B0286 /* GSRCalendarBookingView.swift in Sources */,
 				42632D0D2CB9C77B0028CC31 /* GSRLocation.swift in Sources */,
 				42632D0E2CB9C77B0028CC31 /* GSRLocationModel.swift in Sources */,
 				42632D0F2CB9C77B0028CC31 /* GSRReservation.swift in Sources */,
