@@ -22,11 +22,11 @@ struct GSRTimeCardRow: View {
                     Text(firstSlot.startTime.gsrTimeString)
                         .font(.callout)
                         .multilineTextAlignment(.center)
-                        .foregroundStyle(firstSlot.startTime == vm.sortedStartTime ? .white : .primary)
+                        .foregroundStyle(vm.sortedStartTime.contains(where: { $0 == firstSlot.startTime }) ? .white : .primary)
                         .padding(4)
                         .background {
                             RoundedRectangle(cornerRadius: 4)
-                                .foregroundStyle(firstSlot.startTime == vm.sortedStartTime ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(firstSlot.startTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                                .foregroundStyle(vm.sortedStartTime.contains(where: { $0 == firstSlot.startTime }) ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(firstSlot.startTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
                         }
                         .onTapGesture {
                             withAnimation(.snappy(duration: 0.3)) {
@@ -39,11 +39,11 @@ struct GSRTimeCardRow: View {
                         Text(slot.endTime.gsrTimeString)
                             .font(.callout)
                             .multilineTextAlignment(.center)
-                            .foregroundStyle(slot.endTime == vm.sortedStartTime ? .white : .primary)
+                            .foregroundStyle(vm.sortedStartTime.contains(where: { $0 == slot.endTime }) ? .white : .primary)
                             .padding(4)
                             .background {
                                 RoundedRectangle(cornerRadius: 4)
-                                    .foregroundStyle(slot.endTime == vm.sortedStartTime ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(slot.endTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                                    .foregroundStyle(vm.sortedStartTime.contains(where: { $0 == slot.endTime }) ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(slot.endTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
                             }
                             .onTapGesture {
                                 withAnimation(.snappy(duration: 0.3)) {

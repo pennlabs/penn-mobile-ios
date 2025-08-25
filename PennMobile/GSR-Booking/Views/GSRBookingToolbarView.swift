@@ -52,6 +52,23 @@ struct GSRBookingToolbarView: View {
                                 }
                         }
                         .transition(.move(edge: .trailing).combined(with: .opacity))
+                    } else if !vm.sortedStartTime.isEmpty {
+                        Button {
+                            withAnimation(.snappy(duration: 0.3)) {
+                                vm.clearSortedFilters()
+                            }
+                        } label: {
+                            Label("Reset Filters", systemImage: "trash")
+                                .font(.body)
+                                .foregroundStyle(Color(UIColor.systemGray))
+                                .padding(12)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .foregroundStyle(Color.white)
+                                        .shadow(radius: 2)
+                                }
+                        }
+                        .transition(.move(edge: .leading).combined(with: .opacity))
                     }
 //                    } else {
 //                        RoomFinderSelectionPanel(isEnabled: $startedQuickBook)

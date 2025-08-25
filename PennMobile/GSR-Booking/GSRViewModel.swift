@@ -36,7 +36,7 @@ class GSRViewModel: ObservableObject {
     @Published var isWharton: Bool = false
     @Published var isLoadingAvailability = false
     @Published var showSuccessfulBookingAlert = false
-    @Published var sortedStartTime: Date? = nil
+    @Published var sortedStartTime: [Date] = []
     @Published var currentReservations: [GSRReservation] = []
     @Published var settings: GSRViewModel.Settings = Settings()
     
@@ -99,21 +99,29 @@ class GSRViewModel: ObservableObject {
         }
     }
     
+    func clearSortedFilters() {
+        self.sortedStartTime.removeAll()
+        self.roomsAtSelectedLocation.sort()
+    }
+    
     func handleSortAction(to startTime: Date) {
-        if self.sortedStartTime != nil && startTime == self.sortedStartTime {
-            self.sortedStartTime = nil
-            self.roomsAtSelectedLocation.sort(by: { $0 < $1 })
-            return
-        }
-        
         guard self.roomsAtSelectedLocation.hasAvailableAt(startTime) else {
             return
         }
         
-        self.sortedStartTime = startTime
+        if self.sortedStartTime.contains(where: { $0 == startTime }) {
+            self.sortedStartTime.removeAll(where: { $0 == startTime })
+        } else {
+            self.sortedStartTime.append(startTime)
+        }
+        
         self.roomsAtSelectedLocation.sort(by: { rm1, rm2 in
-            let rm1Avail = !rm1.availability.filter({ $0.startTime == startTime && $0.isAvailable }).isEmpty
-            let rm2Avail = !rm2.availability.filter({ $0.startTime == startTime && $0.isAvailable }).isEmpty
+            var rm1Avail = true
+            var rm2Avail = true
+            for sortDate in self.sortedStartTime {
+                rm1Avail = rm1Avail && rm1.availability.contains(where: { $0.startTime == sortDate && $0.isAvailable })
+                rm2Avail = rm2Avail && rm2.availability.contains(where: { $0.startTime == sortDate && $0.isAvailable })
+            }
             if rm1Avail && !rm2Avail { return true }
             if !rm1Avail && rm2Avail { return false }
             
@@ -171,7 +179,7 @@ class GSRViewModel: ObservableObject {
         self.isLoadingAvailability = true
         self.roomsAtSelectedLocation = []
         self.selectedTimeslots = []
-        self.sortedStartTime = nil
+        self.sortedStartTime = []
         
         guard let loc = self.selectedLocation else {
             self.isLoadingAvailability = false
