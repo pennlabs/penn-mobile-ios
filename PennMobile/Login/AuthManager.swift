@@ -173,6 +173,8 @@ class AuthManager: ObservableObject {
                         Account.getPacCode()
                         continuation.resume()
                     }
+                } else {
+                    continuation.resume()
                 }
             }
         }
