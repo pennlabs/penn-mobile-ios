@@ -58,8 +58,6 @@ class GSRViewModel: ObservableObject {
         }
     }
     
-    
-    
     func resetBooking() {
         withAnimation(.spring(duration: 0.2)) {
             self.selectedTimeslots = []
@@ -224,6 +222,8 @@ class GSRViewModel: ObservableObject {
         self.recentBooking = booking
         self.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
         self.showSuccessfulBookingAlert = true
+        self.selectedTimeslots.removeAll()
+        self.clearSortedFilters()
     }
     
     func getRelevantAvailability(room: GSRRoom? = nil) -> [GSRTimeSlot] {
