@@ -15,46 +15,61 @@ struct GSRCentralView: View {
     
     var body: some View {
         if authManager.state.isLoggedIn {
-            VStack {
-                HStack {
-                    Spacer()
-                    ForEach(GSRTab.allCases, id: \.rawValue) { tab in
-                        Text(tab.titleText)
-                            .foregroundStyle(selectedTab == tab ? Color("baseLabsBlue") : Color.primary)
-                            .font(.title3)
-                            // make hit target larger using horizontal padding
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 4)
-                            .onTapGesture {
-                                withAnimation {
-                                    selectedTab = tab
-                                }
-                            }
+            VStack(spacing: 0) {
+                VStack {
+                    HStack {
                         Spacer()
+                        ForEach(GSRTab.allCases, id: \.rawValue) { tab in
+                            Text(tab.titleText)
+                                .foregroundStyle(selectedTab == tab ? Color("baseLabsBlue") : Color.primary)
+                                .font(.title3)
+                            // make hit target larger using horizontal padding
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 4)
+                                .onTapGesture {
+                                    withAnimation(.snappy(duration: 0.3)) {
+                                        selectedTab = tab
+                                    }
+                                }
+                            Spacer()
+                        }
                     }
+                    Rectangle()
+                        .frame(maxHeight: 1)
+                        .foregroundStyle(Color(UIColor.systemGray))
                 }
-                Rectangle()
-                    .frame(maxHeight: 2)
-                    .foregroundStyle(Color(UIColor.systemGray))
                 Group {
                     switch selectedTab {
                     case .book:
-                        List(vm.availableLocations.standardGSRSort, id: \.self) { location in
-                            NavigationLink(value: location) {
-                                GSRLocationCell(location: location)
+                        // This is so convoluted because the divider ListView was adding
+                        // was ugly
+                        ScrollView(showsIndicators: false) {
+                            if let first = vm.availableLocations.standardGSRSort.first {
+                                NavigationLink(value: first) {
+                                    GSRLocationCell(location: first)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                            if vm.availableLocations.standardGSRSort.count > 1 {
+                                ForEach(vm.availableLocations.standardGSRSort.suffix(from: 1), id: \.self) { location in
+                                    Divider()
+                                    NavigationLink(value: location) {
+                                        GSRLocationCell(location: location)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
                             }
                         }
+                        .padding(.horizontal)
                         .navigationDestination(for: GSRLocation.self) { loc in
-                            GSRBookingView(selectedLocInternal: loc)
+                            GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
                                 .frame(width: UIScreen.main.bounds.width)
                                 .environmentObject(vm)
                         }
-                        .listStyle(PlainListStyle())
-
-                        
-                        
+                        .transition(.blurReplace)
                     case .reservations:
-                        Image(systemName: "circle.fill")
+                        ReservationsView()
+                            .transition(.blurReplace)
                     }
                 }
                 .environmentObject(vm)

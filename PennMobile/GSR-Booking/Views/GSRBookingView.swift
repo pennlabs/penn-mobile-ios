@@ -13,7 +13,10 @@ struct GSRBookingView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
     @EnvironmentObject var nav: NavigationManager
+    @Binding var centralTab: GSRTab
     @State var selectedLocInternal: GSRLocation
+    @State var showSettings: Bool = false
+    @State var settingsPopoverAttachmentPoint: CGPoint? = nil
     
     
     var body: some View {
@@ -58,11 +61,7 @@ struct GSRBookingView: View {
                     
                     
                 }
-                
-                
-                
             } else {
-                
                 VStack(alignment: .center) {
                     Spacer()
                     LottieView {
@@ -77,6 +76,24 @@ struct GSRBookingView: View {
             
         }
             .navigationTitle("Choose a Time Slot")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        self.showSettings = true
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                    .popover(isPresented: $showSettings, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
+                        VStack {
+                            Toggle(isOn: $vm.settings.shouldShowFullyUnavailableRooms) {
+                                Text("Show Unavailable Rooms")
+                            }
+                        }
+                        .padding()
+                        .presentationCompactAdaptation(.popover)
+                    }
+                }
+            }
             .onChange(of: selectedLocInternal) { old, new in
                 Task {
                     do {
@@ -119,7 +136,11 @@ struct GSRBookingView: View {
                     nav.path.removeLast()
                     
                 }
-                Button("View Booking") {}
+                Button("View Booking") {
+                    vm.showSuccessfulBookingAlert = false
+                    nav.path.removeLast()
+                    centralTab = .reservations
+                }
             } message: { booking in
                 Text("You've successfully made a reservation for \(booking.roomName)")
             }

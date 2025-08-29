@@ -17,6 +17,10 @@ struct GSRTwoWayScrollView: View {
     @State var totalCenterOffset: CGFloat = 0.0
     
     var body: some View {
+        let relevantRooms = vm.roomsAtSelectedLocation.filter {
+            vm.settings.shouldShowFullyUnavailableRooms || $0.availability.contains(where: { $0.isAvailable })
+        }
+        
         VStack(alignment: .center, spacing: 0) {
             VStack(alignment: .center, spacing: 0) {
                 GSRTimeCardRow()
@@ -42,7 +46,7 @@ struct GSRTwoWayScrollView: View {
                         Color.clear
                             .frame(width: roomTitleOffset)
                         VStack(alignment: .center, spacing: 48) {
-                            ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
+                            ForEach(relevantRooms, id: \.self) { room in
                                 GSRRoomAvailabilityRow(room: room)
                             }
                             Spacer()
@@ -66,7 +70,7 @@ struct GSRTwoWayScrollView: View {
                 }
                 .overlay(alignment: .topLeading) {
                     VStack(alignment: .center, spacing: 48) {
-                        ForEach(vm.roomsAtSelectedLocation, id: \.self) { room in
+                        ForEach(relevantRooms, id: \.self) { room in
                             Text(room.roomNameShort)
                                 .lineLimit(3)
                                 .multilineTextAlignment(.center)

@@ -11,17 +11,22 @@ import SwiftUI
 struct GSRTimeCardRow: View {
     @EnvironmentObject var vm: GSRViewModel
     var body: some View {
-        if let first = vm.roomsAtSelectedLocation.first {
+        let relevantRooms = vm.roomsAtSelectedLocation.filter {
+            vm.settings.shouldShowFullyUnavailableRooms || $0.availability.contains(where: { $0.isAvailable })
+        }
+        
+        if let first = relevantRooms.first {
             HStack(spacing: 0) {
                 let avail = vm.getRelevantAvailability()
                 if let firstSlot = avail.first {
                     Text(firstSlot.startTime.gsrTimeString)
                         .font(.callout)
-                        .foregroundStyle(firstSlot.startTime == vm.sortedStartTime ? .white : .primary)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(vm.sortedStartTime.contains(where: { $0 == firstSlot.startTime }) ? .white : .primary)
                         .padding(4)
                         .background {
                             RoundedRectangle(cornerRadius: 4)
-                                .foregroundStyle(firstSlot.startTime == vm.sortedStartTime ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(firstSlot.startTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                                .foregroundStyle(vm.sortedStartTime.contains(where: { $0 == firstSlot.startTime }) ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(firstSlot.startTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
                         }
                         .onTapGesture {
                             withAnimation(.snappy(duration: 0.3)) {
@@ -33,11 +38,12 @@ struct GSRTimeCardRow: View {
                     ForEach(avail, id: \.self) { slot in
                         Text(slot.endTime.gsrTimeString)
                             .font(.callout)
-                            .foregroundStyle(slot.endTime == vm.sortedStartTime ? .white : .primary)
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(vm.sortedStartTime.contains(where: { $0 == slot.endTime }) ? .white : .primary)
                             .padding(4)
                             .background {
                                 RoundedRectangle(cornerRadius: 4)
-                                    .foregroundStyle(slot.endTime == vm.sortedStartTime ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(slot.endTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
+                                    .foregroundStyle(vm.sortedStartTime.contains(where: { $0 == slot.endTime }) ? Color("gsrBlue") : vm.roomsAtSelectedLocation.hasAvailableAt(slot.endTime) ? Color("gsrAvailable") : Color("gsrUnavailable"))
                             }
                             .onTapGesture {
                                 withAnimation(.snappy(duration: 0.3)) {

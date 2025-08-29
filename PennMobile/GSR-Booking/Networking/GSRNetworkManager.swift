@@ -106,7 +106,7 @@ class GSRNetworkManager {
         request.httpMethod = "POST"
         request.httpBody = try JSONSerialization.data(withJSONObject: ["booking_id": reservation.bookingId])
         
-        let (_, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw NetworkingError.serverError
         }
