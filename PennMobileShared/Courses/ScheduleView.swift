@@ -55,7 +55,8 @@ public extension Array where Element == Course {
     func filterByDate(_ date: Date) -> [Course] {
         filter {
             if let start = $0.startDate, let end = $0.endDate {
-                return start <= date && date <= end.addingTimeInterval(24 * 60 * 60)
+                // Show courses beginning seven days before start of semester
+                return start.addingTimeInterval(-1 * 7 * 24 * 60 * 60) <= date && date <= end.addingTimeInterval(24 * 60 * 60)
             } else {
                 return false
             }
