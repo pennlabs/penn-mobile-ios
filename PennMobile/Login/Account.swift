@@ -8,6 +8,7 @@
 //
 import Foundation
 import PennMobileShared
+import LabsPlatformSwift
 
 struct Account: Codable, Hashable {
     var pennid: Int
@@ -56,13 +57,22 @@ struct Major: Codable, Hashable {
 
 // MARK: - Static Functions
 extension Account {
-    static var isLoggedIn: Bool {
-        OAuth2NetworkManager.instance.hasRefreshToken() && getAccount() != nil
+    @MainActor static var isLoggedIn: Bool {
+        guard let _ = getAccount() else {
+            return false
+        }
+        if let platform = LabsPlatform.shared, !platform.isLoggedIn {
+            return false
+        }
+        return true
     }
 
     static func clear() {
         UserDefaults.standard.clearAccount()
         UserDefaults.standard.clearDiningBalance()
+        LabsKeychain.clearPlatformCredential()
+        LabsKeychain.deletePassword()
+        LabsKeychain.deletePennkey()
         KeychainAccessible.instance.removePennKey()
         KeychainAccessible.instance.removePassword()
         KeychainAccessible.instance.removePacCode()
@@ -81,6 +91,60 @@ extension Account {
     }
 
     static func getAccount() -> Account? {
+        UserDefaults.standard.synchronize()
         return UserDefaults.standard.getAccount()
+    }
+}
+
+// MARK: - Retrieve Other Account Information
+extension Account {
+    static func getDiningTransactions() {
+        PennCashNetworkManager.instance.getTransactionHistory { data in
+            if let data = data, let str = String(bytes: data, encoding: .utf8) {
+                UserDBManager.shared.saveTransactionData(csvStr: str)
+                UserDefaults.standard.setLastTransactionRequest()
+            }
+        }
+    }
+
+    static func getAndSaveLaundryPreferences() {
+        UserDBManager.shared.getLaundryPreferences { rooms in
+            if let rooms = rooms {
+                UserDefaults.standard.setLaundryPreferences(to: rooms)
+            }
+        }
+    }
+    
+    static func getAndSaveFitnessPreferences() {
+        UserDBManager.shared.getFitnessPreferences { rooms in
+            if let rooms = rooms {
+                UserDefaults.standard.setFitnessPreferences(to: rooms)
+            }
+        }
+    }
+
+    static func getPacCode() {
+        PacCodeNetworkManager.instance.getPacCode { result in
+            switch result {
+            case .success(let pacCode):
+                KeychainAccessible.instance.savePacCode(pacCode)
+            case .failure:
+                return
+            }
+        }
+    }
+
+    static func getAndSaveNotificationAndPrivacyPreferences(_ completion: @escaping () -> Void) {
+        UserDBManager.shared.syncUserSettings { (_) in
+            completion()
+        }
+    }
+}
+
+extension Set where Element == Degree {
+    func hasDegreeInWharton() -> Bool {
+        return self.contains { (degree) -> Bool in
+            return degree.schoolCode == "WH"
+        }
     }
 }

@@ -55,14 +55,12 @@ class ControllerModel: NSObject {
         vcDictionary[.dining] = DiningViewControllerSwiftUI()
         vcDictionary[.studyRoomBooking] = GSRTabController()
         vcDictionary[.laundry] = LaundryTableViewController()
-        vcDictionary[.more] = MoreViewController()
         vcDictionary[.news] = NewsViewController()
         vcDictionary[.about] = AboutViewController()
         vcDictionary[.notifications] = NotificationsViewControllerSwiftUI()
         vcDictionary[.preferences] = PreferencesViewController()
         vcDictionary[.privacy] = PrivacyViewController()
         vcDictionary[.courseSchedule] = CoursesViewController()
-        vcDictionary[.pacCode] = PacCodeViewController()
         vcDictionary[.courseAlerts] = CourseAlertController()
         vcDictionary[.headlineNews] = NativeNewsViewController()
     }
@@ -77,20 +75,6 @@ class ControllerModel: NSObject {
     var tabFeatures: [Feature] {
         get {
             return UserDefaults.standard.getTabPreferences()
-        }
-    }
-
-    // Features in MoreViewController:
-    var moreFeatures: [Feature] {
-        get {
-            let tabPreferences = UserDefaults.standard.getTabPreferences()
-            return dynamicFeatures.filter { !tabPreferences.contains($0) } + [.about]
-        }
-    }
-
-    var moreIcons: [UIImage] {
-        get {
-            return moreFeatures.map { featureIcons[$0] ?? #imageLiteral(resourceName: "logo-small") }
         }
     }
 

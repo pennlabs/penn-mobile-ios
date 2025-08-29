@@ -7,11 +7,11 @@
 //
 
 import SwiftUI
+import LabsPlatformSwift
 
 struct LoggedOutView: View {
     @EnvironmentObject var authManager: AuthManager
     @Environment(\.colorScheme) var colorScheme
-    @State var isPresentingLoginSheet = false
 
     var body: some View {
         VStack(spacing: 90) {
@@ -23,7 +23,7 @@ struct LoggedOutView: View {
 
             VStack(spacing: 15) {
                 Button("Log in with PennKey") {
-                    isPresentingLoginSheet = true
+                    LabsPlatform.shared?.loginWithPlatform()
                 }
                 .buttonStyle(LoginButtonStyle(isProminent: true))
 
@@ -52,14 +52,7 @@ struct LoggedOutView: View {
                 image
             }
         }
-        .sheet(isPresented: $isPresentingLoginSheet) {
-            LabsLoginView { success in
-                if success {
-                    authManager.determineInitialState()
-                }
-            }
-            .edgesIgnoringSafeArea(.all)
-        }.navigationTitle("Course Schedule")
+        .navigationTitle("Course Schedule")
     }
 }
 

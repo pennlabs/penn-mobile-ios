@@ -50,23 +50,21 @@ class InfoTableViewModel: NSObject {
 
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(account) {
-            OAuth2NetworkManager.instance.getAccessToken { (token) in
-                guard let token = token else { return }
-
-                var request = URLRequest(url: URL(string: "https://platform.pennlabs.org/accounts/me")!, accessToken: token)
-                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-                request.httpBody = data
-                request.httpMethod = "PATCH"
-
-                let str = String(decoding: data, as: UTF8.self)
-                print(str)
-
-                let task = URLSession.shared.dataTask(with: request, completionHandler: {data, response, _ in
-                    print(response ?? "")
-                    print(String(decoding: data!, as: UTF8.self))
-
-                })
-                task.resume()
+            let url = URL(string: "https://platform.pennlabs.org/accounts/me")!
+            Task {
+                if var request = try? await URLRequest(url: url, mode: .accessToken) {
+                    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                    request.httpBody = data
+                    request.httpMethod = "PATCH"
+                    
+                    guard let (data, response) = try? await URLSession.shared.data(for: request) else {
+                        print("Failed to update account.")
+                        return
+                    }
+                    
+                    print(response)
+                    print(String(data: data, encoding: .utf8) ?? "")
+                }
             }
         }
     }

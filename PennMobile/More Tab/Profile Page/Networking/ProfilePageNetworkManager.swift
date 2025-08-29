@@ -21,7 +21,7 @@ class ProfilePageNetworkManager: NSObject, Requestable {
         let url = URL(string: self.schoolsURL)!
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse, let data = data, (200..<300).contains(httpResponse.statusCode) {
 
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -41,7 +41,7 @@ class ProfilePageNetworkManager: NSObject, Requestable {
         let url = URL(string: self.majorsURL)!
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse, let data = data, (200..<300).contains(httpResponse.statusCode) {
 
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase

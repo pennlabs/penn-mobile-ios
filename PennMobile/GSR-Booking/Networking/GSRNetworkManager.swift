@@ -24,7 +24,7 @@ class GSRNetworkManager: NSObject, Requestable {
         let url = URL(string: self.locationsUrl)!
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse, let data = data, (200..<300).contains(httpResponse.statusCode) {
 
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -45,39 +45,36 @@ class GSRNetworkManager: NSObject, Requestable {
     }
 
     func getAvailability(lid: String, gid: Int, startDate: String? = nil, endDate: String? = nil, completion: @escaping (Result<[GSRRoom], NetworkingError>) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { token in
-            var url = URL(string: "\(self.availUrl)")!
-            url.appendPathComponent(lid)
-            url.appendPathComponent("\(gid)")
+        var url = URL(string: "\(self.availUrl)")!
+        url.appendPathComponent(lid)
+        url.appendPathComponent("\(gid)")
+        
+        if let startDate = startDate {
+            url.appendQueryItem(name: "start", value: startDate)
+        }
 
-            if let startDate = startDate {
-                url.appendQueryItem(name: "start", value: startDate)
+        if let endDate = endDate {
+            url.appendQueryItem(name: "end", value: endDate)
+        }
+        
+        Task {
+            guard let request = try? await URLRequest(url: url, mode: .accessToken),
+                  let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion(.failure(.serverError))
+                return
             }
-
-            if let endDate = endDate {
-                url.appendQueryItem(name: "end", value: endDate)
+            
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            decoder.dateDecodingStrategy = .iso8601
+            guard let gsrAvailability = try? decoder.decode(GSRAvailabilityAPIResponse.self, from: data) else {
+                completion(.failure(.parsingError))
+                return
             }
-
-            let request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
-
-            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
-                if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        decoder.dateDecodingStrategy = .iso8601
-                        let response = try decoder.decode(GSRAvailabilityAPIResponse.self, from: data)
-
-                        completion(.success(response.rooms))
-                    } catch {
-                        completion(.failure(.parsingError))
-                    }
-                } else {
-                    completion(.failure(.serverError))
-                }
-            }
-
-            task.resume()
+            
+            completion(.success(gsrAvailability.rooms))
         }
     }
 
@@ -94,9 +91,13 @@ class GSRNetworkManager: NSObject, Requestable {
     }
 
     func makeBooking(for booking: GSRBooking, _ completion: @escaping (Result<Void, NetworkingError>) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            let url = URL(string: self.bookingUrl)!
-            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+        let url = URL(string: self.bookingUrl)!
+        Task {
+            guard var request = try? await URLRequest(url: url, mode: .accessToken) else {
+                completion(.failure(.authenticationError))
+                return
+            }
+            
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -109,18 +110,15 @@ class GSRNetworkManager: NSObject, Requestable {
             encoder.dateEncodingStrategy = .formatted(dateFormatter)
 
             request.httpBody = try? encoder.encode(booking)
-
-            let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (_, response, _) in
-                if let response = response as? HTTPURLResponse {
-                    if response.statusCode == 200 {
-                        completion(.success(()))
-                    } else {
-                        completion(.failure(.serverError))
-                    }
-                }
-            })
-
-            task.resume()
+            
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion(.failure(.serverError))
+                return
+            }
+            
+            completion(.success(()))
         }
     }
 }
@@ -128,34 +126,25 @@ class GSRNetworkManager: NSObject, Requestable {
 // MARK: - Get Reservatoins
 extension GSRNetworkManager {
     func getReservations(_ completion: @escaping (_ reservations: Result<[GSRReservation], NetworkingError>) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { token in
-            guard let token = token else {
-                completion(.failure(.authenticationError))
+        let url = URL(string: self.reservationURL)!
+        Task {
+            guard let request = try? await URLRequest(url: url, mode: .accessToken),
+                  let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion(.failure(.serverError))
                 return
             }
-
-            let url = URL(string: self.reservationURL)!
-            let request = URLRequest(url: url, accessToken: token)
-
-            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
-                if let httpResponse = response as? HTTPURLResponse, let data = data, httpResponse.statusCode == 200 {
-
-                    let decoder = JSONDecoder()
-                    decoder.dateDecodingStrategy = .iso8601
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-
-                    do {
-                        let reservations = try decoder.decode([GSRReservation].self, from: data)
-                        completion(.success(reservations))
-                    } catch {
-                        completion(.failure(.parsingError))
-                    }
-                } else {
-                    completion(.failure(.other))
-                }
+            
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            decoder.dateDecodingStrategy = .iso8601
+            guard let reservations = try? decoder.decode([GSRReservation].self, from: data) else {
+                completion(.failure(.parsingError))
+                return
             }
-
-            task.resume()
+            
+            completion(.success(reservations))
         }
     }
 }
@@ -163,28 +152,25 @@ extension GSRNetworkManager {
 // MARK: - Delete Reservation
 extension GSRNetworkManager {
     func deleteReservation(bookingId: String, _ completion: @escaping (Result<Void, NetworkingError>) -> Void ) {
-        OAuth2NetworkManager.instance.getAccessToken { token in
-            guard let token = token else {
+        let url = URL(string: self.cancelURL)!
+        Task {
+            guard var request = try? await URLRequest(url: url, mode: .accessToken) else {
                 completion(.failure(.authenticationError))
                 return
             }
-
-            let url = URL(string: self.cancelURL)!
-            var request = URLRequest(url: url, accessToken: token)
+            
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpMethod = "POST"
             request.httpBody = try? JSONSerialization.data(withJSONObject: ["booking_id": bookingId])
-
-            let task = URLSession.shared.dataTask(with: request) { (data, response, _) in
-                if let httpResponse = response as? HTTPURLResponse, data != nil, httpResponse.statusCode == 200 {
-
-                    completion(.success(()))
-                } else {
-                    completion(.failure(.serverError))
-                }
+            
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion(.failure(.serverError))
+                return
             }
-
-            task.resume()
+            
+            completion(.success(()))
         }
     }
 }

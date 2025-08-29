@@ -20,7 +20,7 @@ class DiningViewModelSwiftUI: ObservableObject {
     @Published var diningMenus = DiningAPI.instance.getMenus()
 
     @Published var diningVenuesIsLoading = false
-    @Published var alertType: NetworkingError?
+    @Published var alertType: (any Error)?
 
     @Published var diningBalance = (try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)) ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
 

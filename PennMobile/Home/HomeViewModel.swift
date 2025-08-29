@@ -98,41 +98,31 @@ extension Optional {
         }
         
         async let postsTask: () = withCheckedContinuation { continuation in
-            OAuth2NetworkManager.instance.getAccessToken { token in
-                guard let token = token else {
+            let url = URL(string: "https://pennmobile.org/api/portal/posts/browse/")!
+            Task {
+                guard let request = try? await URLRequest(url: url, mode: .accessToken),
+                let (data, response) = try? await URLSession.shared.data(for: request),
+                let httpResponse = response as? HTTPURLResponse,
+                (200..<300).contains(httpResponse.statusCode) else {
                     DispatchQueue.main.async {
                         self.data.posts = .success([])
                     }
                     continuation.resume()
                     return
                 }
-
-                let url = URLRequest(url: URL(string: "https://pennmobile.org/api/portal/posts/browse/")!, accessToken: token)
-
-                let task = URLSession.shared.dataTask(with: url) { data, _, _ in
-                    guard let data = data else {
-                        DispatchQueue.main.async {
-                            self.data.posts = .success([])
-                        }
-                        continuation.resume()
-                        return
+                
+                do {
+                    let posts = try JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data)
+                    DispatchQueue.main.async {
+                        self.data.posts = .success(posts)
                     }
-                    
-                    do {
-                        let posts = try JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data)
-                        DispatchQueue.main.async {
-                            self.data.posts = .success(posts)
-                        }
-                    } catch {
-                        DispatchQueue.main.async {
-                            self.data.posts = .failure(error)
-                        }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.data.posts = .failure(error)
                     }
-                    
-                    continuation.resume()
                 }
-
-                task.resume()
+                
+                continuation.resume()
             }
         }
         
@@ -162,24 +152,19 @@ extension Optional {
             }
         }
         
-        async let wrappedTask: () = withCheckedContinuation { continuation in
-            OAuth2NetworkManager.instance.getAccessToken { token in
-                guard let token = token else {
-                    DispatchQueue.main.async {
-                        self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
-                    }
-                    continuation.resume()
-                    return
+        async let wrappedTask = Task {
+            let url = URL(string: "https://pennmobile.org/api/wrapped/semester/2025S-public/")!
+            guard let req = try? await URLRequest(url: url, mode: .accessToken) else {
+                DispatchQueue.main.async {
+                    self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
                 }
-
-                let url = URLRequest(url: URL(string: "https://pennmobile.org/api/wrapped/semester/2025S-public/")!, accessToken: token)
-
+                return
+            }
                 let task = URLSession.shared.dataTask(with: url) { data, response, _ in
                     guard let httpResponse = response as? HTTPURLResponse, let data, httpResponse.statusCode == 200 else {
                         DispatchQueue.main.async {
                             self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
                         }
-                        continuation.resume()
                         return
                     }
                     DispatchQueue.main.async {
@@ -189,11 +174,9 @@ extension Optional {
                         } catch {
                             self.data.wrapped = .failure(error)
                         }
-                        continuation.resume()
                     }
                 }
                 task.resume()
-            }
         }
         
         _ = await wrappedTask

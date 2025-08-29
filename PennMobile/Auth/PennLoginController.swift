@@ -147,7 +147,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             self.activityIndicator.stopAnimating()
         }
 
-        if self.isSuccessfulRedirect(url: url.absoluteString, hasReferer: true), response.statusCode == 200 {
+        if self.isSuccessfulRedirect(url: url.absoluteString, hasReferer: true), (200..<300).contains(response.statusCode) {
             self.handleSuccessfulNavigation(webView) { (policy) in
                 decisionHandler(policy == WKNavigationActionPolicy.allow ? WKNavigationResponsePolicy.allow : WKNavigationResponsePolicy.cancel)
             }
