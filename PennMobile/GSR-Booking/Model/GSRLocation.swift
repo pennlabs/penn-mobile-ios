@@ -8,15 +8,24 @@
 
 import Foundation
 
-struct GSRLocation: Codable, Equatable {
+struct GSRLocation: Codable, Equatable, Hashable {
     let lid: String
     let gid: Int
     let name: String
     let kind: GSRServiceType
     let imageUrl: String
 
-    enum GSRServiceType: String, Codable {
+    enum GSRServiceType: String, Codable, Hashable {
         case wharton = "WHARTON"
         case libcal = "LIBCAL"
+        
+        var maxConsecutiveBookings: Int {
+            switch self {
+            case .wharton:
+                return 3
+            case .libcal:
+                return 4
+            }
+        }
     }
 }

@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct GSRTimeSlot: Codable, Equatable {
+struct GSRTimeSlot: Codable, Equatable, Hashable, Identifiable {
+    let id = UUID()
     let startTime: Date
     let endTime: Date
     var isAvailable: Bool = true
@@ -16,5 +18,9 @@ struct GSRTimeSlot: Codable, Equatable {
     enum CodingKeys: CodingKey {
         case startTime
         case endTime
+    }
+    
+    var color: Color {
+        isAvailable ? Color("gsrAvailable") : Color("gsrUnavailable")
     }
 }

@@ -90,7 +90,7 @@ class PennLoginController: UIViewController, WKUIDelegate, WKNavigationDelegate 
             decisionHandler(.allow)
             return
         }
-        
+            
         if navigationAction.navigationType == .formSubmitted,
            webView.url?.absoluteString.contains(loginScreen) == true {
             activityIndicator.startAnimating()
