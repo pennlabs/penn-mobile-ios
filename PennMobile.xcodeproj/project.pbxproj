@@ -299,7 +299,13 @@
 		42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42D89D552CE94FC9005DFFD4 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */; };
+		42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E232CB9C77B0028CC31 /* SublettingModels.swift */; };
+		42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */; };
+		42F7E7852DA2F70C0009F9B6 /* SublettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */; };
 		42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E232CB9C77B0028CC31 /* SublettingModels.swift */; };
 		42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */; };
 		42F7E7852DA2F70C0009F9B6 /* SublettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */; };
@@ -731,7 +737,10 @@
 		42ABED2B2CE8EB9F006533CD /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
 		42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/iOSSupport/System/Library/Frameworks/ActivityKit.framework; sourceTree = DEVELOPER_DIR; };
+		42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
+		42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/iOSSupport/System/Library/Frameworks/ActivityKit.framework; sourceTree = DEVELOPER_DIR; };
 		42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
+		42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SublettingPage.swift; sourceTree = "<group>"; };
 		42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SublettingPage.swift; sourceTree = "<group>"; };
 		6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationDevelopment.xcconfig; sourceTree = "<group>"; };
 		6C1991BD27B5CA8500BBB402 /* NotificationRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationRelease.xcconfig; sourceTree = "<group>"; };
@@ -793,9 +802,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */,
+				42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */,
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				735CC0442DA9BD8A006941D0 /* LabsPlatformSwift in Frameworks */,
+				735CC0442DA9BD8A006941D0 /* LabsPlatformSwift in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
+				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
 				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
@@ -806,6 +818,7 @@
 				895A1AB52CB98E9000E161AE /* XLPagerTabStrip in Frameworks */,
 				895A1AB82CB98F5000E161AE /* ScrollableGraphView in Frameworks */,
 				73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */,
+				73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -813,6 +826,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */,
 				42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */,
 				6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */,
 				6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */,
@@ -823,6 +837,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */,
 				42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */,
 				8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */,
 				8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */,
@@ -1675,8 +1690,11 @@
 			isa = PBXGroup;
 			children = (
 				42F7E77F2DA2E59A0009F9B6 /* Views */,
+				42F7E77F2DA2E59A0009F9B6 /* Views */,
 				42632C842CB9C77B0028CC31 /* SublettingAPI.swift */,
 				42632C852CB9C77B0028CC31 /* SublettingViewModel.swift */,
+				42632E232CB9C77B0028CC31 /* SublettingModels.swift */,
+				42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */,
 				42632E232CB9C77B0028CC31 /* SublettingModels.swift */,
 				42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */,
 			);
@@ -1722,6 +1740,7 @@
 				42632C792CB9C77B0028CC31 /* Setup + Navigation */,
 				42632C862CB9C77B0028CC31 /* Subletting */,
 				42632C8B2CB9C77B0028CC31 /* Supporting_Files */,
+				73E7A0212CF158A1007BC1E3 /* Wrapped */,
 				73E7A0212CF158A1007BC1E3 /* Wrapped */,
 				42632C8C2CB9C77B0028CC31 /* Assets.xcassets */,
 				42632C8D2CB9C77B0028CC31 /* PennMobile.entitlements */,
@@ -1946,6 +1965,23 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		42F7E77F2DA2E59A0009F9B6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				42632C7E2CB9C77B0028CC31 /* MarketplaceView.swift */,
+				42632C7D2CB9C77B0028CC31 /* MarketplaceFilterView.swift */,
+				42632C802CB9C77B0028CC31 /* SubletDetailView.swift */,
+				42632C7F2CB9C77B0028CC31 /* SubletCandidatesView.swift */,
+				42632C812CB9C77B0028CC31 /* SubletDisplayRow.swift */,
+				42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */,
+				42632C832CB9C77B0028CC31 /* SubletMapView.swift */,
+				42632C7A2CB9C77B0028CC31 /* MyListingsActivity.swift */,
+				42632C7B2CB9C77B0028CC31 /* NewListingForm.swift */,
+				42632C822CB9C77B0028CC31 /* SubletInterestForm.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		6C392E3727B5BDF20097640B /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -1962,10 +1998,64 @@
 			children = (
 				42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */,
 				42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */,
+				42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */,
+				42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */,
 				8932693428FC75A5003D4BF9 /* WidgetKit.framework */,
 				8932693628FC75A5003D4BF9 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		733781AD2DC588B90056A532 /* Poppins */ = {
+			isa = PBXGroup;
+			children = (
+				7337819A2DC588B90056A532 /* OFL.txt */,
+				7337819B2DC588B90056A532 /* Poppins-Black.ttf */,
+				7337819C2DC588B90056A532 /* Poppins-BlackItalic.ttf */,
+				7337819D2DC588B90056A532 /* Poppins-Bold.ttf */,
+				7337819E2DC588B90056A532 /* Poppins-BoldItalic.ttf */,
+				7337819F2DC588B90056A532 /* Poppins-ExtraBold.ttf */,
+				733781A02DC588B90056A532 /* Poppins-ExtraBoldItalic.ttf */,
+				733781A12DC588B90056A532 /* Poppins-ExtraLight.ttf */,
+				733781A22DC588B90056A532 /* Poppins-ExtraLightItalic.ttf */,
+				733781A32DC588B90056A532 /* Poppins-Italic.ttf */,
+				733781A42DC588B90056A532 /* Poppins-Light.ttf */,
+				733781A52DC588B90056A532 /* Poppins-LightItalic.ttf */,
+				733781A62DC588B90056A532 /* Poppins-Medium.ttf */,
+				733781A72DC588B90056A532 /* Poppins-MediumItalic.ttf */,
+				733781A82DC588B90056A532 /* Poppins-Regular.ttf */,
+				733781A92DC588B90056A532 /* Poppins-SemiBold.ttf */,
+				733781AA2DC588B90056A532 /* Poppins-SemiBoldItalic.ttf */,
+				733781AB2DC588B90056A532 /* Poppins-Thin.ttf */,
+				733781AC2DC588B90056A532 /* Poppins-ThinItalic.ttf */,
+			);
+			path = Poppins;
+			sourceTree = "<group>";
+		};
+		733781AE2DC588B90056A532 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				733781AD2DC588B90056A532 /* Poppins */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		73E7A0212CF158A1007BC1E3 /* Wrapped */ = {
+			isa = PBXGroup;
+			children = (
+				733781AE2DC588B90056A532 /* Fonts */,
+				73066A0A2CF4E6AA004C7271 /* WrappedExperienceViewModel.swift */,
+				73066A0C2CF4E9F2004C7271 /* WrappedStage.swift */,
+				73066A082CF4E53F004C7271 /* WrappedExperience.swift */,
+				73E7A06E2CF1B9AE007BC1E3 /* WrappedHomeScreenExperience.swift */,
+				73066A0E2CF4EFD3004C7271 /* WrappedLoadingView.swift */,
+				73E7A04D2CF15B0B007BC1E3 /* WrappedModel.swift */,
+				73E7A0222CF158A4007BC1E3 /* WrappedContainerView.swift */,
+				73E7A0232CF158A4007BC1E3 /* WrappedContainerViewModel.swift */,
+				73E7A0242CF158A4007BC1E3 /* WrappedUnit.swift */,
+				73E7A0252CF158A4007BC1E3 /* WrappedUnitView.swift */,
+			);
+			path = Wrapped;
 			sourceTree = "<group>";
 		};
 		733781AD2DC588B90056A532 /* Poppins */ = {
@@ -2065,6 +2155,9 @@
 				735CC0432DA9BD8A006941D0 /* LabsPlatformSwift */,
 				73E7A02B2CF158F3007BC1E3 /* Lottie */,
 				734BED9A2D9DE4B700964811 /* PennForms */,
+				735CC0432DA9BD8A006941D0 /* LabsPlatformSwift */,
+				73E7A02B2CF158F3007BC1E3 /* Lottie */,
+				734BED9A2D9DE4B700964811 /* PennForms */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -2123,6 +2216,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
 					2166405F1EBADADA00746B8E = {
@@ -2166,6 +2260,9 @@
 				735CC0422DA9BD8A006941D0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */,
 				73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */,
+				735CC0422DA9BD8A006941D0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */,
+				73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
@@ -2191,6 +2288,25 @@
 				42632C922CB9C77B0028CC31 /* ScannerValid.ahap in Resources */,
 				42632C932CB9C77B0028CC31 /* mock_menu.json in Resources */,
 				42632C942CB9C77B0028CC31 /* sample-dining-venue.json in Resources */,
+				733781AF2DC588B90056A532 /* OFL.txt in Resources */,
+				733781B02DC588B90056A532 /* Poppins-Black.ttf in Resources */,
+				733781B12DC588B90056A532 /* Poppins-BlackItalic.ttf in Resources */,
+				733781B22DC588B90056A532 /* Poppins-Bold.ttf in Resources */,
+				733781B32DC588B90056A532 /* Poppins-BoldItalic.ttf in Resources */,
+				733781B42DC588B90056A532 /* Poppins-ExtraBold.ttf in Resources */,
+				733781B52DC588B90056A532 /* Poppins-ExtraBoldItalic.ttf in Resources */,
+				733781B62DC588B90056A532 /* Poppins-ExtraLight.ttf in Resources */,
+				733781B72DC588B90056A532 /* Poppins-ExtraLightItalic.ttf in Resources */,
+				733781B82DC588B90056A532 /* Poppins-Italic.ttf in Resources */,
+				733781B92DC588B90056A532 /* Poppins-Light.ttf in Resources */,
+				733781BA2DC588B90056A532 /* Poppins-LightItalic.ttf in Resources */,
+				733781BB2DC588B90056A532 /* Poppins-Medium.ttf in Resources */,
+				733781BC2DC588B90056A532 /* Poppins-MediumItalic.ttf in Resources */,
+				733781BD2DC588B90056A532 /* Poppins-Regular.ttf in Resources */,
+				733781BE2DC588B90056A532 /* Poppins-SemiBold.ttf in Resources */,
+				733781BF2DC588B90056A532 /* Poppins-SemiBoldItalic.ttf in Resources */,
+				733781C02DC588B90056A532 /* Poppins-Thin.ttf in Resources */,
+				733781C12DC588B90056A532 /* Poppins-ThinItalic.ttf in Resources */,
 				733781AF2DC588B90056A532 /* OFL.txt in Resources */,
 				733781B02DC588B90056A532 /* Poppins-Black.ttf in Resources */,
 				733781B12DC588B90056A532 /* Poppins-BlackItalic.ttf in Resources */,
@@ -2389,7 +2505,12 @@
 				42632D502CB9C77B0028CC31 /* HomeFlingCellItem.swift in Sources */,
 				42632D512CB9C77B0028CC31 /* HomeUpdateCellItem.swift in Sources */,
 				73E7A06F2CF1B9B3007BC1E3 /* WrappedHomeScreenExperience.swift in Sources */,
+				73E7A06F2CF1B9B3007BC1E3 /* WrappedHomeScreenExperience.swift in Sources */,
 				42632D522CB9C77B0028CC31 /* HomeCellConformable.swift in Sources */,
+				73E7A0262CF158A4007BC1E3 /* WrappedContainerViewModel.swift in Sources */,
+				73E7A0272CF158A4007BC1E3 /* WrappedContainerView.swift in Sources */,
+				73E7A0282CF158A4007BC1E3 /* WrappedUnit.swift in Sources */,
+				73E7A0292CF158A4007BC1E3 /* WrappedUnitView.swift in Sources */,
 				73E7A0262CF158A4007BC1E3 /* WrappedContainerViewModel.swift in Sources */,
 				73E7A0272CF158A4007BC1E3 /* WrappedContainerView.swift in Sources */,
 				73E7A0282CF158A4007BC1E3 /* WrappedUnit.swift in Sources */,
@@ -2400,6 +2521,7 @@
 				42632D562CB9C77B0028CC31 /* BuildingMapWebviewController.swift in Sources */,
 				42632D572CB9C77B0028CC31 /* DiningCellSettingsController.swift in Sources */,
 				42632D582CB9C77B0028CC31 /* HomeViewController.swift in Sources */,
+				73066A092CF4E54E004C7271 /* WrappedExperience.swift in Sources */,
 				73066A092CF4E54E004C7271 /* WrappedExperience.swift in Sources */,
 				42632D592CB9C77B0028CC31 /* HomeViewController + Delegates.swift in Sources */,
 				42632D5A2CB9C77B0028CC31 /* HomeCellItem.swift in Sources */,
@@ -2412,6 +2534,7 @@
 				42632D612CB9C77B0028CC31 /* HomeView.swift in Sources */,
 				42632D622CB9C77B0028CC31 /* HomeViewData.swift in Sources */,
 				42632D632CB9C77B0028CC31 /* HomeViewModel.swift in Sources */,
+				73066A0F2CF4EFEE004C7271 /* WrappedLoadingView.swift in Sources */,
 				73066A0F2CF4EFEE004C7271 /* WrappedLoadingView.swift in Sources */,
 				42632D642CB9C77B0028CC31 /* Model.swift in Sources */,
 				42632D652CB9C77B0028CC31 /* AddLaundryCell.swift in Sources */,
@@ -2432,6 +2555,7 @@
 				42632D712CB9C77B0028CC31 /* RoomSelectionView.swift in Sources */,
 				42632D722CB9C77B0028CC31 /* Account.swift in Sources */,
 				42632D732CB9C77B0028CC31 /* AuthManager.swift in Sources */,
+				42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */,
 				42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */,
 				42632D742CB9C77B0028CC31 /* CampusExpressLoginController.swift in Sources */,
 				42632D752CB9C77B0028CC31 /* CampusExpressNetworkManager.swift in Sources */,
@@ -2462,6 +2586,7 @@
 				42632D932CB9C77B0028CC31 /* NotificationsView.swift in Sources */,
 				12836D312D6B9F94005FBF85 /* GSRBookable.swift in Sources */,
 				42632D942CB9C77B0028CC31 /* NotificationsViewControllerSwiftUI.swift in Sources */,
+				73066A0B2CF4E6AF004C7271 /* WrappedExperienceViewModel.swift in Sources */,
 				73066A0B2CF4E6AF004C7271 /* WrappedExperienceViewModel.swift in Sources */,
 				42632D952CB9C77B0028CC31 /* NotificationViewModel.swift in Sources */,
 				42632D962CB9C77B0028CC31 /* NotificationPreference.swift in Sources */,
@@ -2501,6 +2626,7 @@
 				42632DB22CB9C77B0028CC31 /* ControllerModel.swift in Sources */,
 				42632DB32CB9C77B0028CC31 /* Environment.swift in Sources */,
 				42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */,
+				42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */,
 				42632DB42CB9C77B0028CC31 /* Features.swift in Sources */,
 				42632DB52CB9C77B0028CC31 /* MainTabView.swift in Sources */,
 				42632DB62CB9C77B0028CC31 /* PennMobile.swift in Sources */,
@@ -2516,6 +2642,7 @@
 				42632DC02CB9C77B0028CC31 /* SubletCandidatesView.swift in Sources */,
 				42632DC12CB9C77B0028CC31 /* SubletDetailView.swift in Sources */,
 				42632DC22CB9C77B0028CC31 /* SubletDisplayRow.swift in Sources */,
+				73066A0D2CF4E9F3004C7271 /* WrappedStage.swift in Sources */,
 				73066A0D2CF4E9F3004C7271 /* WrappedStage.swift in Sources */,
 				42632DC32CB9C77B0028CC31 /* SubletInterestForm.swift in Sources */,
 				42632DC42CB9C77B0028CC31 /* SubletMapView.swift in Sources */,
@@ -2640,6 +2767,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -2702,6 +2830,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2756,6 +2885,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Penn Mobile - Development";
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -2796,6 +2926,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "Penn Mobile - Distribution";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Penn Mobile - Distribution";
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2813,7 +2944,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING)";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2832,7 +2963,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -2844,7 +2975,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -2862,7 +2993,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING)";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2881,7 +3012,7 @@
 					"@loader_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
 				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
 				MTL_FAST_MATH = YES;
@@ -2890,7 +3021,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

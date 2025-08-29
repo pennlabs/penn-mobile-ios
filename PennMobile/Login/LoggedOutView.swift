@@ -24,7 +24,7 @@ struct LoggedOutView: View {
 
             VStack(spacing: 15) {
                 Button("Log in with PennKey") {
-                    platform?.loginWithPlatform()
+                    LabsPlatform.shared?.loginWithPlatform()
                 }
                 .buttonStyle(LoginButtonStyle(isProminent: true))
 
