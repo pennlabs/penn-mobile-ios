@@ -35,5 +35,6 @@ struct GSRLocationCell: View {
         }
         .frame(height: height)
         .cornerRadius(8)
+        .contentShape(.rect)
     }
 }

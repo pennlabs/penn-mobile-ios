@@ -45,7 +45,7 @@ struct GSRTwoWayScrollView: View {
                     HStack(spacing: 0) {
                         Color.clear
                             .frame(width: roomTitleOffset)
-                        VStack(alignment: .center, spacing: 48) {
+                        LazyVStack(alignment: .center, spacing: 48) {
                             ForEach(relevantRooms, id: \.self) { room in
                                 GSRRoomAvailabilityRow(room: room)
                             }
@@ -58,7 +58,7 @@ struct GSRTwoWayScrollView: View {
                         .background {
                             GeometryReader { proxy in
                                 Color.clear
-                                    .onChange(of: proxy.frame(in: .global).midX) { old, new in
+                                    .onChange(of: proxy.frame(in: .scrollView).midX) { old, new in
                                         scrollViewCenterDisplacementValue += new - old
                                     }
                                     .onAppear {
@@ -69,7 +69,7 @@ struct GSRTwoWayScrollView: View {
                     }
                 }
                 .overlay(alignment: .topLeading) {
-                    VStack(alignment: .center, spacing: 48) {
+                    LazyVStack(alignment: .leading, spacing: 48) {
                         ForEach(relevantRooms, id: \.self) { room in
                             Text(room.roomNameShort)
                                 .lineLimit(3)
