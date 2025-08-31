@@ -69,11 +69,10 @@ struct GSRBookingToolbarView: View {
                                 }
                         }
                         .transition(.move(edge: .leading).combined(with: .opacity))
+                    } else {
+                        RoomFinderSelectionPanel(isEnabled: $startedQuickBook)
+                            .transition(.move(edge: .leading).combined(with: .opacity))
                     }
-//                    } else {
-//                        RoomFinderSelectionPanel(isEnabled: $startedQuickBook)
-//                            .transition(.move(edge: .leading).combined(with: .opacity))
-//                    }
                 }
             }
         }

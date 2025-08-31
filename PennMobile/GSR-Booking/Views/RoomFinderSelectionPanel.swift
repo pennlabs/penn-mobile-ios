@@ -36,53 +36,32 @@ struct RoomFinderSelectionPanel: View {
             if let expectedWidth, isEnabled {
                 
                 VStack {
+                    Spacer()
                     Text("Duration")
-                    HStack(alignment: .center, spacing: -4) {
-                        Spacer()
-                        Picker("", selection: $minTimeRequirement) {
-                            ForEach(durationOptions, id: \.self) { option in
-                                Text("\(String(option))m")
-                                    .tag(option)
+                        .foregroundColor(Color("gsrBlue"))
+                    Picker("", selection: $minTimeRequirement) {
+                        ForEach(durationOptions, id: \.self) { option in
+                            Text("\(String(option))m")
+                                .tag(option)
                             }
-                            .font(.caption)
-                            .foregroundStyle(Color("gsrBlue"))
-                        }
-                        .pickerStyle(.menu)
-                        Text("to")
-                            .font(.caption)
-                        Picker("", selection: $maxTimeRequirement) {
-                            ForEach(durationOptions, id: \.self) { option in
-                                Text("\(String(option))m")
-                                    .tag(option)
-                            }
-                            .font(.caption)
-                            .foregroundStyle(Color("gsrBlue"))
-                        }
-                        .pickerStyle(.menu)
-                        Spacer()
+                        .font(.caption)
+                        .foregroundStyle(Color("gsrBlue"))
                     }
+                    .pickerStyle(.menu)
+                    Spacer()
                     Divider()
+                    Spacer()
                     Text("Time")
-                    HStack(alignment: .center, spacing: -4) {
-                        Picker("", selection: $earliestTimeRequirement) {
-                            ForEach(vm.getRelevantAvailability()) { slot in
-                                Text(formatter.string(from: slot.startTime))
-                                    .tag(slot.startTime)
-                            }
-                            .font(.caption)
-                            .foregroundStyle(Color("gsrBlue"))
+                        .foregroundColor(Color("gsrBlue"))
+                    Picker("", selection: $earliestTimeRequirement) {
+                        ForEach(vm.getRelevantAvailability()) { slot in
+                            Text(formatter.string(from: slot.startTime))
+                                .tag(slot.startTime)
                         }
-                        Text("to")
-                            .font(.caption)
-                        Picker("", selection: $latestTimeRequirement) {
-                            ForEach(vm.getRelevantAvailability()) { slot in
-                                Text(formatter.string(from: slot.endTime))
-                                    .tag(slot.endTime)
-                            }
-                            .font(.caption)
-                            .foregroundStyle(Color("gsrBlue"))
-                        }
+                        .font(.caption)
+                        .foregroundStyle(Color("gsrBlue"))
                     }
+                    Spacer()
                 }
                 .mask {
                     RoundedRectangle(cornerRadius: 12).frame(width: expectedWidth, height: expectedWidth)
@@ -104,7 +83,7 @@ struct RoomFinderSelectionPanel: View {
             } label: {
                 Label("Find me a room", systemImage: "wand.and.sparkles")
                     .font(.body)
-                    .foregroundStyle(isEnabled ? Color.white : Color(UIColor.systemGray))
+                    .foregroundStyle(isEnabled ? Color.white : Color(Color.black))
                     .padding(12)
                     .background {
                         RoundedRectangle(cornerRadius: 12)
