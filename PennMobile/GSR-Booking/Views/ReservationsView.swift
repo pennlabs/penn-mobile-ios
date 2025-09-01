@@ -76,9 +76,7 @@ struct ReservationCell: View {
                     do {
                         try await GSRNetworkManager.deleteReservation(reservation)
                     } catch {
-                        presentToast(.init({
-                            Text("Unable to delete this reservation. Is it currently in progress?")
-                        }))
+                        presentToast(.init(message: "Unable to delete this reservation. Is it currently in progress?"))
                     }
                     let newReservations = (try? await GSRNetworkManager.getReservations()) ?? []
                     vm.currentReservations = newReservations

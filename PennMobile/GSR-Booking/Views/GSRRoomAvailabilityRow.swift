@@ -17,9 +17,7 @@ struct GSRRoomAvailabilityRow: View {
         do {
             try vm.handleTimeslotGesture(slot: slot, room: room)
         } catch {
-            presentToast(ToastConfiguration({
-                Text(error.localizedDescription)
-            }))
+            presentToast(.init(message: "\(error.localizedDescription)"))
         }
     }
     

@@ -100,9 +100,7 @@ struct GSRBookingView: View {
                     do {
                         try await vm.setLocation(to: new)
                     } catch {
-                        presentToast(ToastConfiguration({
-                            Text(error.localizedDescription)
-                        }))
+                        presentToast(.init(message: "\(error.localizedDescription)"))
                         withAnimation {
                             selectedLocInternal = old
                         }
@@ -114,9 +112,7 @@ struct GSRBookingView: View {
                     do {
                         try await vm.updateAvailability()
                     } catch {
-                        presentToast(ToastConfiguration({
-                            Text(error.localizedDescription)
-                        }))
+                        presentToast(.init(message: "\(error.localizedDescription)"))
                     }
                 }
             }
@@ -125,9 +121,7 @@ struct GSRBookingView: View {
                     do {
                         try await vm.setLocation(to: selectedLocInternal)
                     } catch {
-                        presentToast(ToastConfiguration({
-                            Text(error.localizedDescription)
-                        }))
+                        presentToast(.init(message: "\(error.localizedDescription)"))
                     }
                 }
             }
