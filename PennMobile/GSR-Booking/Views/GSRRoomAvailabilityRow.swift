@@ -13,10 +13,30 @@ struct GSRRoomAvailabilityRow: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
     
+    func handleGesture(slot: GSRTimeSlot, room: GSRRoom) {
+        do {
+            try vm.handleTimeslotGesture(slot: slot, room: room)
+        } catch {
+            presentToast(ToastConfiguration({
+                Text(error.localizedDescription)
+            }))
+        }
+    }
+    
     var body: some View {
         HStack(spacing: 0) {
             ForEach(vm.getRelevantAvailability(room: room), id: \.self) { slot in
                 let isSelected = !vm.selectedTimeslots.filter({ $0.1.hashValue == slot.hashValue }).isEmpty
+                let timeStr: String = slot.startTime.formatted(date: .omitted, time: .shortened)
+                
+                let valueDescription = if isSelected {
+                    "Chosen"
+                } else if slot.isAvailable {
+                    "Free"
+                } else {
+                    "Unavailable"
+                }
+                
                 ZStack(alignment: .center) {
                     Rectangle()
                         .foregroundStyle(isSelected ? Color("gsrBlue") : slot.color)
@@ -31,16 +51,16 @@ struct GSRRoomAvailabilityRow: View {
                                UnavailableTextureOverlay()
                            }
                         }
+                        .animation(.spring(duration: 0.2), value: isSelected)
                 }
+                .accessibilityElement()
+                .accessibilityLabel(Text("\(timeStr) in \(room.roomNameShort)"))
+                .accessibilityValue(valueDescription)
+                .accessibilityAddTraits(.isToggle)
                 .onTapGesture {
-                    do {
-                        try vm.handleTimeslotGesture(slot: slot, room: room)
-                    } catch {
-                        presentToast(ToastConfiguration({
-                            Text(error.localizedDescription)
-                        }))
-                    }
+                    handleGesture(slot: slot, room: room)
                 }
+                .disabled(!slot.isAvailable)
                 .frame(width: 80, height: 60)
             }
         }

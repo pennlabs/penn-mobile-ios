@@ -82,6 +82,7 @@ struct GSRBookingView: View {
                         self.showSettings = true
                     } label: {
                         Image(systemName: "gearshape")
+                            .accessibilityLabel("Settings")
                     }
                     .popover(isPresented: $showSettings, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
                         VStack {
