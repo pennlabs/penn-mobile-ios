@@ -48,8 +48,15 @@ struct GSRTwoWayScrollView: View {
                         LazyVStack(alignment: .center, spacing: 48) {
                             ForEach(relevantRooms, id: \.self) { room in
                                 GSRRoomAvailabilityRow(room: room)
+                                    .accessibilityElement(children: .contain)
+                                    .accessibilityLabel(room.roomNameShort)
                             }
                             Spacer()
+                        }
+                        .accessibilityRotor("Rooms") {
+                            ForEach(relevantRooms, id: \.self) { room in
+                                AccessibilityRotorEntry(room.roomNameShort, id: room)
+                            }
                         }
                         .overlay {
                             TimeSlotDottedLinesView()
@@ -84,10 +91,13 @@ struct GSRTwoWayScrollView: View {
                                 .padding(.horizontal)
                                 .frame(width: roomTitleOffset, height: 60)
                                 .tag(room)
+                                .accessibilityHidden(true)
                         }
                     }
                 }
             }
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Timeslot Selector")
     }
 }
