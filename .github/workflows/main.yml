@@ -2,17 +2,19 @@ name: CI
 
 on:
   push:
-    branches: [main]
-
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: macos-15
     steps:
-      - name: Select Xcode 16
+      - name: Select Xcode 16.4
+        # This could be the source of error for versioning issues in CI.
+        # With the release of Xcode 26.1, GH is being more aggressive in removing version support in macOS runners:
+        # https://github.com/actions/runner-images/issues/12541
+        # https://github.com/actions/runner-images/issues/12758
+
         # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
-        run: sudo xcode-select -s '/Applications/Xcode_16.0.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Create Config File
@@ -27,11 +29,6 @@ jobs:
           cat << EOF > PennMobile/Supporting_Files/GoogleService-Info.plist 
           ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
           EOF
-      - name: Create fastlane API key json
-        run: |
-          cat << EOF > api_key.json
-          ${{ secrets.FASTLANE_JSON_KEY }}
-          EOF
       - name: Cache SPM
         uses: actions/cache@v4
         with:
@@ -44,6 +41,11 @@ jobs:
         with:
           ruby-version: '3.3.0'
           bundler-cache: true
+      - name: Create fastlane API key json
+        run: |
+          cat << EOF > api_key.json
+          ${{ secrets.FASTLANE_JSON_KEY }}
+          EOF
       - name: Install the Apple certificate and provisioning profile
         env:
           BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
@@ -77,4 +79,44 @@ jobs:
           cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
           cp $PP_WIDGET_PATH ~/Library/MobileDevice/Provisioning\ Profiles
       - name: Build app
-        run: bundle exec fastlane ci_beta
+        run: bundle exec fastlane ci_build
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: PennMobile.ipa
+  upload:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: macos-15
+    steps:
+      - name: Select Xcode 16
+        # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
+        run: sudo xcode-select -s '/Applications/Xcode_16.0.app/Contents/Developer'
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.0'
+          bundler-cache: true
+      - name: Create fastlane API key json
+        run: |
+          cat << EOF > api_key.json
+          ${{ secrets.FASTLANE_JSON_KEY }}
+          EOF
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+      - name: Upload to TestFlight
+        run: bundle exec fastlane ci_pilot
+  cleanup:
+    runs-on: macos-15
+    needs: [build, upload]
+    if: always()
+    steps:
+      - name: Delete artifacts
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: build

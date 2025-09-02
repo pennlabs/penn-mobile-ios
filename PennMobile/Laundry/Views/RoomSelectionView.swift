@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 protocol RoomSelectionViewDelegate: AnyObject {
     func updateSelectedRooms(for rooms: [LaundryRoom])
@@ -32,11 +33,7 @@ class RoomSelectionView: UIView, IndicatorEnabled {
     // Views
     fileprivate var tableView: UITableView = UITableView()
     fileprivate lazy var searchBar = UISearchBar()
-    fileprivate let emptyView: EmptyView = {
-        let ev = EmptyView()
-        ev.isHidden = true
-        return ev
-    }()
+    fileprivate let emptyView: EmptyView = EmptyView().hidden() as! EmptyView
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,13 +66,10 @@ extension RoomSelectionView {
         self.backgroundColor = UIColor.uiBackground
         addSubview(searchBar)
         addSubview(tableView)
-        addSubview(emptyView)
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        emptyView.translatesAutoresizingMaskIntoConstraints = false
         setUpSearchBar()
         setUpTableView()
-        setUpEmptyView()
     }
 
     fileprivate func setUpSearchBar() {
@@ -96,10 +90,6 @@ extension RoomSelectionView {
         _ = tableView.anchor(searchBar.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.tableView.allowsMultipleSelection = true
-    }
-
-    fileprivate func setUpEmptyView() {
-        _ = emptyView.anchor(tableView.topAnchor, left: tableView.leftAnchor, bottom: tableView.bottomAnchor, right: tableView.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 0)
     }
 
     fileprivate func setupCurrentSort() {
@@ -327,7 +317,6 @@ extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
 // MARK: Functions implementing EmptyView
 extension RoomSelectionView {
     internal func showEmptyViewIfNeeded() {
-        emptyView.isHidden = !currentResults.isEmpty
         tableView.isHidden = currentResults.isEmpty
     }
 }

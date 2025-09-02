@@ -64,30 +64,6 @@ extension DiningViewControllerSwiftUI: TabBarShowable {
     }
 }
 
-extension GSRController: TabBarShowable {
-    func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "GSR_Grey")
-        let selectedImage = UIImage(named: "GSR_Blue")
-        return UITabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
-    }
-}
-
-extension GSRLocationsController: TabBarShowable {
-    func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "GSR_Grey")
-        let selectedImage = UIImage(named: "GSR_Blue")
-        return UITabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
-    }
-}
-
-extension GSRTabController: TabBarShowable {
-    func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "GSR_Grey")
-        let selectedImage = UIImage(named: "GSR_Blue")
-        return UITabBarItem(title: "GSR", image: normalImage, selectedImage: selectedImage)
-    }
-}
-
 extension LaundryTableViewController: TabBarShowable {
     func getTabBarItem() -> UITabBarItem {
         let normalImage = UIImage(named: "Laundry_Grey")
@@ -109,13 +85,5 @@ extension NewsViewController: TabBarShowable {
         let normalImage = UIImage(named: "News_Grey")
         let selectedImage = UIImage(named: "News_Blue")
         return UITabBarItem(title: "News", image: normalImage, selectedImage: selectedImage)
-    }
-}
-
-extension MoreViewController: TabBarShowable {
-    func getTabBarItem() -> UITabBarItem {
-        let normalImage = UIImage(named: "More_Grey")
-        let selectedImage = UIImage(named: "More_Blue")
-        return UITabBarItem(title: "More", image: normalImage, selectedImage: selectedImage)
     }
 }

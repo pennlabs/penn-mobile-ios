@@ -1,0 +1,105 @@
+//
+//  GSRCentralView.swift
+//  PennMobile
+//
+//  Created by Jonathan Melitski on 2/19/25.
+//  Copyright © 2025 PennLabs. All rights reserved.
+//
+
+import SwiftUI
+
+struct GSRCentralView: View {
+    @State var selectedTab: GSRTab = GSRTab.book
+    @StateObject var vm = GSRViewModel()
+    @EnvironmentObject var authManager: AuthManager
+    
+    var body: some View {
+        if authManager.state.isLoggedIn {
+            VStack(spacing: 0) {
+                VStack {
+                    HStack {
+                        Spacer()
+                        ForEach(GSRTab.allCases, id: \.rawValue) { tab in
+                            Text(tab.titleText)
+                                .foregroundStyle(selectedTab == tab ? Color("baseLabsBlue") : Color.primary)
+                                .font(.title3)
+                            // make hit target larger using horizontal padding
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 4)
+                                .onTapGesture {
+                                    withAnimation(.snappy(duration: 0.3)) {
+                                        selectedTab = tab
+                                    }
+                                }
+                            Spacer()
+                        }
+                    }
+                    Rectangle()
+                        .frame(maxHeight: 1)
+                        .foregroundStyle(Color(UIColor.systemGray))
+                }
+                Group {
+                    switch selectedTab {
+                    case .book:
+                        // This is so convoluted because the divider ListView was adding
+                        // was ugly
+                        ScrollView(showsIndicators: false) {
+                            if let first = vm.availableLocations.standardGSRSort.first {
+                                NavigationLink(value: first) {
+                                    GSRLocationCell(location: first)
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                            }
+                            if vm.availableLocations.standardGSRSort.count > 1 {
+                                ForEach(vm.availableLocations.standardGSRSort.suffix(from: 1), id: \.self) { location in
+                                    Divider()
+                                    NavigationLink(value: location) {
+                                        GSRLocationCell(location: location)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }
+                            }
+                        }
+                        .padding(.horizontal)
+                        .navigationDestination(for: GSRLocation.self) { loc in
+                            GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
+                                .frame(width: UIScreen.main.bounds.width)
+                                .environmentObject(vm)
+                        }
+                        .transition(.blurReplace)
+                    case .reservations:
+                        ReservationsView()
+                            .transition(.blurReplace)
+                    }
+                }
+                .environmentObject(vm)
+                .navigationBarTitleDisplayMode(.inline)
+                .onAppear {
+                    vm.checkWhartonStatus()
+                }
+            }
+            .ignoresSafeArea(edges: .horizontal)
+        } else {
+            GSRGuestLandingPage()
+            .navigationBarHidden(true)
+        }
+    }
+}
+
+enum GSRTab: Int, Equatable, CaseIterable {
+    case book = 0
+    case reservations = 1
+    
+    var titleText: String {
+        switch self {
+        case .book:
+            "Book"
+        case .reservations:
+            "Reservations"
+        }
+    }
+}
+
+#Preview {
+    GSRCentralView()
+}

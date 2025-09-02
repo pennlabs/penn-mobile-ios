@@ -139,41 +139,31 @@ extension Optional {
         }
         
         async let postsTask: () = withCheckedContinuation { continuation in
-            OAuth2NetworkManager.instance.getAccessToken { token in
-                guard let token = token else {
+            let url = URL(string: "https://pennmobile.org/api/portal/posts/browse/")!
+            Task {
+                guard let request = try? await URLRequest(url: url, mode: .accessToken),
+                let (data, response) = try? await URLSession.shared.data(for: request),
+                let httpResponse = response as? HTTPURLResponse,
+                (200..<300).contains(httpResponse.statusCode) else {
                     DispatchQueue.main.async {
                         self.data.posts = .success([])
                     }
                     continuation.resume()
                     return
                 }
-
-                let url = URLRequest(url: URL(string: "https://pennmobile.org/api/portal/posts/browse/")!, accessToken: token)
-
-                let task = URLSession.shared.dataTask(with: url) { data, _, _ in
-                    guard let data = data else {
-                        DispatchQueue.main.async {
-                            self.data.posts = .success([])
-                        }
-                        continuation.resume()
-                        return
+                
+                do {
+                    let posts = try JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data)
+                    DispatchQueue.main.async {
+                        self.data.posts = .success(posts)
                     }
-                    
-                    do {
-                        let posts = try JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data)
-                        DispatchQueue.main.async {
-                            self.data.posts = .success(posts)
-                        }
-                    } catch {
-                        DispatchQueue.main.async {
-                            self.data.posts = .failure(error)
-                        }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.data.posts = .failure(error)
                     }
-                    
-                    continuation.resume()
                 }
-
-                task.resume()
+                
+                continuation.resume()
             }
         }
         
@@ -203,7 +193,38 @@ extension Optional {
             }
         }
         
+<<<<<<< HEAD
         _ = await announcementsTask
+=======
+        async let wrappedTask = Task {
+            let url = URL(string: "https://pennmobile.org/api/wrapped/semester/2025S-public/")!
+            guard let req = try? await URLRequest(url: url, mode: .accessToken) else {
+                DispatchQueue.main.async {
+                    self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
+                }
+                return
+            }
+                let task = URLSession.shared.dataTask(with: url) { data, response, _ in
+                    guard let httpResponse = response as? HTTPURLResponse, let data, httpResponse.statusCode == 200 else {
+                        DispatchQueue.main.async {
+                            self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
+                        }
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        do {
+                            let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
+                            self.data.wrapped = .success(wrapped)
+                        } catch {
+                            self.data.wrapped = .failure(error)
+                        }
+                    }
+                }
+                task.resume()
+        }
+        
+        _ = await wrappedTask
+>>>>>>> 0462f70989ac4aae40fe7e536a7715f2cd80e299
         _ = await pollsTask
         _ = await postsTask
         _ = await newsArticlesTask

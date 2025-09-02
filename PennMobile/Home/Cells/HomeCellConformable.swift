@@ -12,11 +12,8 @@ import UIKit
 protocol HomeCellDelegate: ModularTableViewCellDelegate,
     LaundryMachineCellTappable,
     DiningCellSelectable,
-    GSRBookingSelectable,
     URLSelectable,
-    ReservationCellDelegate,
-    FeatureNavigatable,
-    GSRInviteSelectable {}
+    FeatureNavigatable {}
 
 protocol HomeCellConformable: ModularTableViewCell where Self: UITableViewCell {
     var cardView: UIView! { get }

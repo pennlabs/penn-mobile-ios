@@ -17,6 +17,7 @@ struct HomeViewData {
     var posts: Result<[Post], Error>?
     var announcements: [HomeViewAnnouncement] = []
     var newsArticles: Result<[NewsArticle], Error>?
+    var wrapped: Result<WrappedModel, Error>?
     var events: [CalendarEvent] = []
     
     var onPollResponse: ((Int, Int) -> Void)?
@@ -69,6 +70,12 @@ struct HomeViewData {
                 ProgressView()
                     .controlSize(.large)
                     .padding(.bottom)
+            }
+            
+            if case .some(.success(let wrappedData)) = self.wrapped {
+                if !wrappedData.semester.isEmpty && wrappedData.pages.count > 0 {
+                    WrappedHomeScreenExperience(with: wrappedData)
+                }
             }
             
              if showSublettingBanner {

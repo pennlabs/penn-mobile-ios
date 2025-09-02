@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import LabsPlatformSwift
 
 private struct PennLink: View, Identifiable {
     let title: LocalizedStringKey
@@ -44,7 +45,6 @@ struct MoreView: View {
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var bannerViewModel: BannerViewModel
     
-    @State var isPresentingLoginSheet = false
     @State var isLoggingOut = false
     
     var body: some View {
@@ -78,7 +78,7 @@ struct MoreView: View {
                     }
                 } else {
                     Button {
-                        isPresentingLoginSheet = true
+                        LabsPlatform.shared?.loginWithPlatform()
                     } label: {
                         ProfileRowView(account: nil)
                     }
@@ -142,14 +142,6 @@ struct MoreView: View {
         }
         .navigationTitle(Text("More"))
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $isPresentingLoginSheet) {
-            LabsLoginView { success in
-                if success {
-                    authManager.determineInitialState()
-                }
-            }
-            .edgesIgnoringSafeArea(.all)
-        }
         .alert(Text("Are you sure you want to log out?"), isPresented: $isLoggingOut) {
             Button(role: .cancel) {
                 isLoggingOut = false

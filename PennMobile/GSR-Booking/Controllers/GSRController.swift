@@ -9,6 +9,7 @@
 import UIKit
 import WebKit
 import PennMobileShared
+import LabsPlatformSwift
 
 class GSRController: GenericViewController, IndicatorEnabled, ShowsAlert, LegacyToastPresentingViewController {
 
@@ -171,12 +172,13 @@ extension GSRController: GSRViewModelDelegate {
                     switch result {
                     case .success(let rooms):
                         self.viewModel.updateData(with: rooms)
-                        self.refreshDataUI()
-                        self.rangeSlider.reload()
-                        self.refreshBarButton()
                     case .failure:
+                        self.viewModel.updateData(with: [])
                         self.present(toast: .apiError)
                     }
+                    self.refreshDataUI()
+                    self.rangeSlider.reload()
+                    self.refreshBarButton()
                 }
             }
         }
@@ -235,15 +237,7 @@ extension GSRController: GSRBookable {
 
                     alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: {_ in }))
                     alertController.addAction(UIAlertAction(title: "Login", style: .default, handler: { _ in
-                        let llc = LabsLoginController { (_) in
-                            DispatchQueue.main.async {
-                                self.submitBooking(for: GSRBooking(gid: gid, startTime: first.startTime, endTime: last.endTime, id: id, roomName: roomName))
-                            }
-                        }
-
-                        let nvc = UINavigationController(rootViewController: llc)
-
-                        self.present(nvc, animated: true, completion: nil)
+                        LabsPlatform.shared?.loginWithPlatform()
                     }))
 
                     present(alertController, animated: true, completion: nil)
