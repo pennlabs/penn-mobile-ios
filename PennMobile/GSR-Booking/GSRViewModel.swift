@@ -59,7 +59,9 @@ class GSRViewModel: ObservableObject {
     }
     
     func resetBooking() {
-        self.selectedTimeslots = []
+        withAnimation(.spring(duration: 0.2)) {
+            self.selectedTimeslots = []
+        }
     }
     
     func handleTimeslotGesture(slot: GSRTimeSlot, room: GSRRoom) throws {
@@ -90,7 +92,10 @@ class GSRViewModel: ObservableObject {
             newSelected.append((room, slot))
         }
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        self.selectedTimeslots = newSelected
+        
+        withAnimation(.spring(duration: 0.2)) {
+            self.selectedTimeslots = newSelected
+        }
     }
     
     func clearSortedFilters() {

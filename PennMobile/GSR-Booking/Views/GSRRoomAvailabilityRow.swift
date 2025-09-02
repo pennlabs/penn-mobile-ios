@@ -49,7 +49,6 @@ struct GSRRoomAvailabilityRow: View {
                                UnavailableTextureOverlay()
                            }
                         }
-                        .animation(.spring(duration: 0.2), value: isSelected)
                 }
                 .accessibilityElement()
                 .accessibilityLabel(Text("\(timeStr) in \(room.roomNameShort)"))
