@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1231A9EF2E67725B007D5372 /* RoomSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1231A9EE2E67725B007D5372 /* RoomSelectionView.swift */; };
 		12836D2F2D6B982F005FBF85 /* QuickBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12836D2E2D6B9829005FBF85 /* QuickBookViewController.swift */; };
 		12836D312D6B9F94005FBF85 /* GSRBookable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12836D302D6B9F91005FBF85 /* GSRBookable.swift */; };
 		12836D352D74D853005FBF85 /* EmptyFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12836D342D74D84E005FBF85 /* EmptyFile.swift */; };
@@ -168,6 +167,7 @@
 		42632D6E2CB9C77B0028CC31 /* LaundryNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C162CB9C77B0028CC31 /* LaundryNotificationCenter.swift */; };
 		42632D6F2CB9C77B0028CC31 /* LaundryRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C172CB9C77B0028CC31 /* LaundryRoom.swift */; };
 		42632D702CB9C77B0028CC31 /* LaundryAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C192CB9C77B0028CC31 /* LaundryAPIService.swift */; };
+		42632D712CB9C77B0028CC31 /* RoomSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C1B2CB9C77B0028CC31 /* RoomSelectionView.swift */; };
 		42632D722CB9C77B0028CC31 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C1E2CB9C77B0028CC31 /* Account.swift */; };
 		42632D732CB9C77B0028CC31 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C1F2CB9C77B0028CC31 /* AuthManager.swift */; };
 		42632D742CB9C77B0028CC31 /* CampusExpressLoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632C202CB9C77B0028CC31 /* CampusExpressLoginController.swift */; };
@@ -299,7 +299,13 @@
 		42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42D89D552CE94FC9005DFFD4 /* ContactRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */; };
+		42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E232CB9C77B0028CC31 /* SublettingModels.swift */; };
+		42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */; };
+		42F7E7852DA2F70C0009F9B6 /* SublettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */; };
 		42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E232CB9C77B0028CC31 /* SublettingModels.swift */; };
 		42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */; };
 		42F7E7852DA2F70C0009F9B6 /* SublettingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */; };
@@ -422,7 +428,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1231A9EE2E67725B007D5372 /* RoomSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoomSelectionView.swift; path = PennMobile/Laundry/RoomSelectionView.swift; sourceTree = SOURCE_ROOT; };
 		12836D2E2D6B9829005FBF85 /* QuickBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickBookViewController.swift; sourceTree = "<group>"; };
 		12836D302D6B9F91005FBF85 /* GSRBookable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRBookable.swift; sourceTree = "<group>"; };
 		12836D342D74D84E005FBF85 /* EmptyFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyFile.swift; sourceTree = "<group>"; };
@@ -582,6 +587,7 @@
 		42632C162CB9C77B0028CC31 /* LaundryNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryNotificationCenter.swift; sourceTree = "<group>"; };
 		42632C172CB9C77B0028CC31 /* LaundryRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryRoom.swift; sourceTree = "<group>"; };
 		42632C192CB9C77B0028CC31 /* LaundryAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaundryAPIService.swift; sourceTree = "<group>"; };
+		42632C1B2CB9C77B0028CC31 /* RoomSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSelectionView.swift; sourceTree = "<group>"; };
 		42632C1E2CB9C77B0028CC31 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		42632C1F2CB9C77B0028CC31 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		42632C202CB9C77B0028CC31 /* CampusExpressLoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusExpressLoginController.swift; sourceTree = "<group>"; };
@@ -731,7 +737,10 @@
 		42ABED2B2CE8EB9F006533CD /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
 		42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
 		42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/iOSSupport/System/Library/Frameworks/ActivityKit.framework; sourceTree = DEVELOPER_DIR; };
+		42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
+		42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/iOSSupport/System/Library/Frameworks/ActivityKit.framework; sourceTree = DEVELOPER_DIR; };
 		42D89D542CE94FC9005DFFD4 /* ContactRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRowView.swift; sourceTree = "<group>"; };
+		42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SublettingPage.swift; sourceTree = "<group>"; };
 		42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SublettingPage.swift; sourceTree = "<group>"; };
 		6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationDevelopment.xcconfig; sourceTree = "<group>"; };
 		6C1991BD27B5CA8500BBB402 /* NotificationRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationRelease.xcconfig; sourceTree = "<group>"; };
@@ -1475,7 +1484,7 @@
 		42632C1C2CB9C77B0028CC31 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				1231A9EE2E67725B007D5372 /* RoomSelectionView.swift */,
+				42632C1B2CB9C77B0028CC31 /* RoomSelectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1681,8 +1690,11 @@
 			isa = PBXGroup;
 			children = (
 				42F7E77F2DA2E59A0009F9B6 /* Views */,
+				42F7E77F2DA2E59A0009F9B6 /* Views */,
 				42632C842CB9C77B0028CC31 /* SublettingAPI.swift */,
 				42632C852CB9C77B0028CC31 /* SublettingViewModel.swift */,
+				42632E232CB9C77B0028CC31 /* SublettingModels.swift */,
+				42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */,
 				42632E232CB9C77B0028CC31 /* SublettingModels.swift */,
 				42F7E7842DA2F70C0009F9B6 /* SublettingPage.swift */,
 			);
@@ -1728,6 +1740,7 @@
 				42632C792CB9C77B0028CC31 /* Setup + Navigation */,
 				42632C862CB9C77B0028CC31 /* Subletting */,
 				42632C8B2CB9C77B0028CC31 /* Supporting_Files */,
+				73E7A0212CF158A1007BC1E3 /* Wrapped */,
 				73E7A0212CF158A1007BC1E3 /* Wrapped */,
 				42632C8C2CB9C77B0028CC31 /* Assets.xcassets */,
 				42632C8D2CB9C77B0028CC31 /* PennMobile.entitlements */,
@@ -1952,6 +1965,23 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		42F7E77F2DA2E59A0009F9B6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				42632C7E2CB9C77B0028CC31 /* MarketplaceView.swift */,
+				42632C7D2CB9C77B0028CC31 /* MarketplaceFilterView.swift */,
+				42632C802CB9C77B0028CC31 /* SubletDetailView.swift */,
+				42632C7F2CB9C77B0028CC31 /* SubletCandidatesView.swift */,
+				42632C812CB9C77B0028CC31 /* SubletDisplayRow.swift */,
+				42632E222CB9C77B0028CC31 /* SubletDisplayBox.swift */,
+				42632C832CB9C77B0028CC31 /* SubletMapView.swift */,
+				42632C7A2CB9C77B0028CC31 /* MyListingsActivity.swift */,
+				42632C7B2CB9C77B0028CC31 /* NewListingForm.swift */,
+				42632C822CB9C77B0028CC31 /* SubletInterestForm.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		6C392E3727B5BDF20097640B /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -1968,10 +1998,64 @@
 			children = (
 				42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */,
 				42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */,
+				42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */,
+				42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */,
 				8932693428FC75A5003D4BF9 /* WidgetKit.framework */,
 				8932693628FC75A5003D4BF9 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		733781AD2DC588B90056A532 /* Poppins */ = {
+			isa = PBXGroup;
+			children = (
+				7337819A2DC588B90056A532 /* OFL.txt */,
+				7337819B2DC588B90056A532 /* Poppins-Black.ttf */,
+				7337819C2DC588B90056A532 /* Poppins-BlackItalic.ttf */,
+				7337819D2DC588B90056A532 /* Poppins-Bold.ttf */,
+				7337819E2DC588B90056A532 /* Poppins-BoldItalic.ttf */,
+				7337819F2DC588B90056A532 /* Poppins-ExtraBold.ttf */,
+				733781A02DC588B90056A532 /* Poppins-ExtraBoldItalic.ttf */,
+				733781A12DC588B90056A532 /* Poppins-ExtraLight.ttf */,
+				733781A22DC588B90056A532 /* Poppins-ExtraLightItalic.ttf */,
+				733781A32DC588B90056A532 /* Poppins-Italic.ttf */,
+				733781A42DC588B90056A532 /* Poppins-Light.ttf */,
+				733781A52DC588B90056A532 /* Poppins-LightItalic.ttf */,
+				733781A62DC588B90056A532 /* Poppins-Medium.ttf */,
+				733781A72DC588B90056A532 /* Poppins-MediumItalic.ttf */,
+				733781A82DC588B90056A532 /* Poppins-Regular.ttf */,
+				733781A92DC588B90056A532 /* Poppins-SemiBold.ttf */,
+				733781AA2DC588B90056A532 /* Poppins-SemiBoldItalic.ttf */,
+				733781AB2DC588B90056A532 /* Poppins-Thin.ttf */,
+				733781AC2DC588B90056A532 /* Poppins-ThinItalic.ttf */,
+			);
+			path = Poppins;
+			sourceTree = "<group>";
+		};
+		733781AE2DC588B90056A532 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				733781AD2DC588B90056A532 /* Poppins */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		73E7A0212CF158A1007BC1E3 /* Wrapped */ = {
+			isa = PBXGroup;
+			children = (
+				733781AE2DC588B90056A532 /* Fonts */,
+				73066A0A2CF4E6AA004C7271 /* WrappedExperienceViewModel.swift */,
+				73066A0C2CF4E9F2004C7271 /* WrappedStage.swift */,
+				73066A082CF4E53F004C7271 /* WrappedExperience.swift */,
+				73E7A06E2CF1B9AE007BC1E3 /* WrappedHomeScreenExperience.swift */,
+				73066A0E2CF4EFD3004C7271 /* WrappedLoadingView.swift */,
+				73E7A04D2CF15B0B007BC1E3 /* WrappedModel.swift */,
+				73E7A0222CF158A4007BC1E3 /* WrappedContainerView.swift */,
+				73E7A0232CF158A4007BC1E3 /* WrappedContainerViewModel.swift */,
+				73E7A0242CF158A4007BC1E3 /* WrappedUnit.swift */,
+				73E7A0252CF158A4007BC1E3 /* WrappedUnitView.swift */,
+			);
+			path = Wrapped;
 			sourceTree = "<group>";
 		};
 		733781AD2DC588B90056A532 /* Poppins */ = {
@@ -2131,6 +2215,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1620;
 				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
@@ -2429,7 +2514,6 @@
 				73E7A0262CF158A4007BC1E3 /* WrappedContainerViewModel.swift in Sources */,
 				73E7A0272CF158A4007BC1E3 /* WrappedContainerView.swift in Sources */,
 				73E7A0282CF158A4007BC1E3 /* WrappedUnit.swift in Sources */,
-				1231A9EF2E67725B007D5372 /* RoomSelectionView.swift in Sources */,
 				73E7A0292CF158A4007BC1E3 /* WrappedUnitView.swift in Sources */,
 				42632D532CB9C77B0028CC31 /* HomeCellHeader.swift in Sources */,
 				42632D542CB9C77B0028CC31 /* HomeCellProtocols.swift in Sources */,
@@ -2468,6 +2552,7 @@
 				730547F32D8DD4B2003FD988 /* GSRBookingView.swift in Sources */,
 				42632D6F2CB9C77B0028CC31 /* LaundryRoom.swift in Sources */,
 				42632D702CB9C77B0028CC31 /* LaundryAPIService.swift in Sources */,
+				42632D712CB9C77B0028CC31 /* RoomSelectionView.swift in Sources */,
 				42632D722CB9C77B0028CC31 /* Account.swift in Sources */,
 				42632D732CB9C77B0028CC31 /* AuthManager.swift in Sources */,
 				42F7E7802DA2E7440009F9B6 /* SublettingModels.swift in Sources */,
