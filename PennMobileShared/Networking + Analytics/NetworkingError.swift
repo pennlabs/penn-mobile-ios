@@ -6,7 +6,7 @@
 //  Copyright © 2022 PennLabs. All rights reserved.
 //
 
-public enum NetworkingError: String, Error {
+public enum NetworkingError: String, LocalizedError {
     case noInternet
     case parsingError
     case serverError
@@ -15,7 +15,7 @@ public enum NetworkingError: String, Error {
     case alreadyExists = "Offer already exists"
     case other
     
-    public var localizedDescription: String {
+    public var errorDescription: String? {
         let localizationValue: String.LocalizationValue = switch self {
         case .noInternet:
             "The Internet connection appears to be offline. Connect to the Internet, then try again."
