@@ -6,13 +6,13 @@
 //  Copyright © 2022 PennLabs. All rights reserved.
 //
 
-public enum NetworkingError: String, LocalizedError {
+public enum NetworkingError: LocalizedError {
     case noInternet
     case parsingError
     case serverError
-    case jsonError = "JSON error"
-    case authenticationError = "Unable to authenticate"
-    case alreadyExists = "Offer already exists"
+    case jsonError
+    case authenticationError
+    case alreadyExists
     case other
     
     public var errorDescription: String? {
