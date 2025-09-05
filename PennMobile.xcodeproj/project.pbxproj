@@ -365,6 +365,10 @@
 		895A1AB52CB98E9000E161AE /* XLPagerTabStrip in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1AB42CB98E9000E161AE /* XLPagerTabStrip */; };
 		895A1AB82CB98F5000E161AE /* ScrollableGraphView in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1AB72CB98F5000E161AE /* ScrollableGraphView */; };
 		895A1ABB2CB98F7100E161AE /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1ABA2CB98F7100E161AE /* SCLAlertView */; };
+		89862CAB2E6B8EB200B1CDB1 /* DeepLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89862CAA2E6B8EB200B1CDB1 /* DeepLinkManager.swift */; };
+		89862CAE2E6B8EBF00B1CDB1 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89862CAC2E6B8EBF00B1CDB1 /* CalendarHelper.swift */; };
+		89862CAF2E6B8EBF00B1CDB1 /* GoogleCalendarLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89862CAD2E6B8EBF00B1CDB1 /* GoogleCalendarLink.swift */; };
+		89862CB12E6B8EF100B1CDB1 /* GSRShareDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89862CB02E6B8EF100B1CDB1 /* GSRShareDetailView.swift */; };
 		89DF63072CEB9BBB00C4A015 /* NotificationDeviceTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF63062CEB9BB400C4A015 /* NotificationDeviceTokenManager.swift */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
 		89EA262F290F958B008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
@@ -783,6 +787,10 @@
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		89862CAA2E6B8EB200B1CDB1 /* DeepLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkManager.swift; sourceTree = "<group>"; };
+		89862CAC2E6B8EBF00B1CDB1 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
+		89862CAD2E6B8EBF00B1CDB1 /* GoogleCalendarLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCalendarLink.swift; sourceTree = "<group>"; };
+		89862CB02E6B8EF100B1CDB1 /* GSRShareDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSRShareDetailView.swift; sourceTree = "<group>"; };
 		89DF63062CEB9BB400C4A015 /* NotificationDeviceTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDeviceTokenManager.swift; sourceTree = "<group>"; };
 		89EA262D290F9411008F26CF /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -846,6 +854,8 @@
 			children = (
 				12836D302D6B9F91005FBF85 /* GSRBookable.swift */,
 				12836D2E2D6B9829005FBF85 /* QuickBookViewController.swift */,
+				89862CAC2E6B8EBF00B1CDB1 /* CalendarHelper.swift */,
+				89862CAD2E6B8EBF00B1CDB1 /* GoogleCalendarLink.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1225,6 +1235,7 @@
 		42632B9D2CB9C77B0028CC31 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				89862CAA2E6B8EB200B1CDB1 /* DeepLinkManager.swift */,
 				42632B932CB9C77B0028CC31 /* GSRAPIResponse.swift */,
 				42632B942CB9C77B0028CC31 /* GSRBooking.swift */,
 				42632B952CB9C77B0028CC31 /* GSRDateHandler.swift */,
@@ -1259,6 +1270,7 @@
 				73FE3A252D6615D2004E0E50 /* GSRViewControllerSwiftUI.swift */,
 				73FE3A232D661468004E0E50 /* GSRCentralView.swift */,
 				736DABD32D8FB4E400C93BA5 /* GSRTwoWayScrollView.swift */,
+				89862CB02E6B8EF100B1CDB1 /* GSRShareDetailView.swift */,
 				730547F22D8DD4AF003FD988 /* GSRBookingView.swift */,
 				736DABD52D8FB55600C93BA5 /* GSRBookingToolbarView.swift */,
 				734A8E7B2DA4847D00BD5F55 /* RoomFinderSelectionPanel.swift */,
@@ -2494,6 +2506,8 @@
 				42632D8C2CB9C77B0028CC31 /* MoreHeaderView.swift in Sources */,
 				42632D8D2CB9C77B0028CC31 /* MoreView.swift in Sources */,
 				42632D8F2CB9C77B0028CC31 /* ProfileRowView.swift in Sources */,
+				89862CAE2E6B8EBF00B1CDB1 /* CalendarHelper.swift in Sources */,
+				89862CAF2E6B8EBF00B1CDB1 /* GoogleCalendarLink.swift in Sources */,
 				42632D902CB9C77B0028CC31 /* NewsViewController.swift in Sources */,
 				42632D912CB9C77B0028CC31 /* NotificationAPIModel.swift in Sources */,
 				737935E02D7972C100E8DD77 /* GSRGuestLandingPage.swift in Sources */,
@@ -2522,6 +2536,7 @@
 				42632DA12CB9C77B0028CC31 /* AIChatViewModel.swift in Sources */,
 				42632DA22CB9C77B0028CC31 /* ChatMessage.swift in Sources */,
 				12836D352D74D853005FBF85 /* EmptyFile.swift in Sources */,
+				89862CAB2E6B8EB200B1CDB1 /* DeepLinkManager.swift in Sources */,
 				42632DA32CB9C77B0028CC31 /* ChatMessageView.swift in Sources */,
 				42632DA42CB9C77B0028CC31 /* PollQuestion.swift in Sources */,
 				42632DA52CB9C77B0028CC31 /* PollsNetworkManager.swift in Sources */,
@@ -2542,6 +2557,7 @@
 				42632DB32CB9C77B0028CC31 /* Environment.swift in Sources */,
 				42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */,
 				42F7E7812DA2E7550009F9B6 /* SubletDisplayBox.swift in Sources */,
+				89862CB12E6B8EF100B1CDB1 /* GSRShareDetailView.swift in Sources */,
 				42632DB42CB9C77B0028CC31 /* Features.swift in Sources */,
 				42632DB52CB9C77B0028CC31 /* MainTabView.swift in Sources */,
 				42632DB62CB9C77B0028CC31 /* PennMobile.swift in Sources */,
