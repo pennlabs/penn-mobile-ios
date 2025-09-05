@@ -11,10 +11,18 @@ import SwiftUI
 struct ToastConfiguration {
     var id: UUID
     var content: any View
+    var accessibilityAnnouncement: String.LocalizationValue
     
-    init(id: UUID = UUID(), @ViewBuilder _ content: () -> any View) {
+    init(id: UUID = UUID(), @ViewBuilder _ content: () -> any View, accessibilityAnnouncement: String.LocalizationValue) {
         self.id = id
         self.content = content()
+        self.accessibilityAnnouncement = accessibilityAnnouncement
+    }
+
+    init(id: UUID = UUID(), message: String.LocalizationValue) {
+        self.id = id
+        self.content = Text(LocalizedStringResource(message))
+        self.accessibilityAnnouncement = message
     }
 }
 
@@ -73,21 +81,27 @@ extension UIViewController {
 }
 
 extension ToastConfiguration {
-    static let noInternet = ToastConfiguration {
-        Text("No Internet Connection")
+    func postAccessibilityAnnouncement() {
+        var string = AttributedString(localized: accessibilityAnnouncement)
+        AccessibilityNotification.Announcement(string)
+            .post()
     }
+}
+
+extension ToastConfiguration {
+    static let noInternet = ToastConfiguration(message: "No Internet Connection")
     
-    static let apiError = ToastConfiguration {
+    static let apiError = ToastConfiguration({
         VStack {
             Text("Unable to connect to the API.")
             Text("Please refresh and try again.")
         }
-    }
+    }, accessibilityAnnouncement: "Unable to connect to the API. Please refresh and try again.")
     
-    static let laundryDown = ToastConfiguration {
+    static let laundryDown = ToastConfiguration({
         VStack {
             Text("We're currently unable to contact Penn's laundry servers.")
             Text("We hope this will be fixed shortly.")
         }
-    }
+    }, accessibilityAnnouncement: "We're currently unable to contact Penn's laundry servers. We hope this will be fixed shortly.")
 }

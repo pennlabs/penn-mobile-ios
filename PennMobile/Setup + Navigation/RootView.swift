@@ -105,9 +105,15 @@ struct RootView: View {
                                 }
                             }
                     )
+                    .accessibilityElement(children: .combine)
+                    .accessibilityAction {
+                        self.toast = nil
+                    }
+                    .accessibilityHint("Dismisses the toast")
             }
         }
         .environment(\.presentToast) { configuration in
+            toast?.postAccessibilityAnnouncement()
             withAnimation {
                 toast = configuration
             }
