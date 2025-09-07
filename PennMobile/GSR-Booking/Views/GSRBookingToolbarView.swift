@@ -33,9 +33,7 @@ struct GSRBookingToolbarView: View {
                                 do {
                                     try await vm.book()
                                 } catch {
-                                    presentToast(ToastConfiguration({
-                                        Text(error.localizedDescription)
-                                    }))
+                                    presentToast(ToastConfiguration(message: "\(error.localizedDescription)"))
                                 }
                             }
                         } label: {

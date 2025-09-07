@@ -82,6 +82,7 @@ struct GSRBookingView: View {
                         self.showSettings = true
                     } label: {
                         Image(systemName: "gearshape")
+                            .accessibilityLabel("Settings")
                     }
                     .popover(isPresented: $showSettings, attachmentAnchor: .point(.bottom), arrowEdge: .bottom) {
                         VStack {
@@ -99,9 +100,7 @@ struct GSRBookingView: View {
                     do {
                         try await vm.setLocation(to: new)
                     } catch {
-                        presentToast(ToastConfiguration({
-                            Text(error.localizedDescription)
-                        }))
+                        presentToast(.init(message: "\(error.localizedDescription)"))
                         withAnimation {
                             selectedLocInternal = old
                         }
@@ -113,9 +112,7 @@ struct GSRBookingView: View {
                     do {
                         try await vm.updateAvailability()
                     } catch {
-                        presentToast(ToastConfiguration({
-                            Text(error.localizedDescription)
-                        }))
+                        presentToast(.init(message: "\(error.localizedDescription)"))
                     }
                 }
             }
@@ -124,9 +121,7 @@ struct GSRBookingView: View {
                     do {
                         try await vm.setLocation(to: selectedLocInternal)
                     } catch {
-                        presentToast(ToastConfiguration({
-                            Text(error.localizedDescription)
-                        }))
+                        presentToast(.init(message: "\(error.localizedDescription)"))
                     }
                 }
             }

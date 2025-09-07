@@ -92,6 +92,7 @@ class GSRViewModel: ObservableObject {
             newSelected.append((room, slot))
         }
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        
         withAnimation(.spring(duration: 0.2)) {
             self.selectedTimeslots = newSelected
         }
