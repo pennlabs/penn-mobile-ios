@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import PennMobileShared
 import WidgetKit
+import LabsPlatformSwift
 
 class UserDBManager: NSObject, Requestable, SHA256Hashable {
     static let shared = UserDBManager()
@@ -23,20 +24,24 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
       - parameter params: A dictionary of parameters to attach to the POST request.
       - parameter callback: A callback containing the data and  response that the request receives.
     */
-    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: Any], callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                callback(nil, nil, nil)
+    fileprivate func makePostRequestWithAccessToken(url: String, params: [String: Any], callback: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void) {
+        Task {
+            do {
+                guard let url = URL(string: url) else {
+                    callback(nil, nil, nil)
+                    return
+                }
+                
+                var request = try await URLRequest(url: url, mode: .accessToken)
+                request.httpMethod = "POST"
+                request.httpBody = String.getPostString(params: params).data(using: .utf8)
+
+                let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
+                task.resume()
+            } catch {
+                callback(nil, nil, error)
                 return
             }
-
-            let url = URL(string: url)!
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "POST"
-            request.httpBody = String.getPostString(params: params).data(using: .utf8)
-
-            let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
-            task.resume()
         }
     }
 
@@ -62,74 +67,34 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
     }
 }
 
-// MARK: - Backend Login
-extension UserDBManager {
-    func loginToBackend() {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else { return }
-
-            let url = URL(string: "https://pennmobile.org/api/login")!
-            let request = URLRequest(url: url, accessToken: token)
-
-            let task = URLSession.shared.dataTask(with: request)
-            task.resume()
-        }
-    }
-}
-
 // MARK: - Dining
 extension UserDBManager {
-    func fetchDiningPreferences(_ completion: @escaping(_ result: Result<[DiningVenue], NetworkingError>) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                // TODO: - Add network error handling for OAuth2
-                completion(.failure(.authenticationError))
-                return
-            }
-
+    func fetchDiningPreferences() async -> Result<[DiningVenue], any Error> {
+        do {
             let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
-            let request = URLRequest(url: url, accessToken: token)
-
-            let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
-                guard let data = data else {
-                   if let error = error as? NetworkingError {
-                       completion(.failure(error))
-                   } else {
-                       completion(.failure(.other))
-                   }
-                   return
-                }
-
-                let diningVenueIds = JSON(data)["preferences"].arrayValue.map({ $0["venue_id"].int! })
-                let diningVenues = DiningAPI.instance.getVenues(with: diningVenueIds)
-                completion(.success(diningVenues))
-
+            let request = try await URLRequest(url: url, mode: .accessToken)
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                return .failure(NetworkingError.serverError)
             }
-
-            task.resume()
+            let diningVenueIds = JSON(data)["preferences"].arrayValue.map({ $0["venue_id"].int! })
+            let diningVenues = DiningAPI.instance.getVenues(with: diningVenueIds)
+            return .success(diningVenues)
+        } catch {
+            return .failure(error)
         }
     }
         
-    // Returns result because function that uses this isn't throwing
-    func fetchDiningPreferences() async -> Result<[DiningVenue], NetworkingError> {
-        return await withCheckedContinuation { continuation in
-            self.fetchDiningPreferences { result in
-                continuation.resume(returning: result)
-            }
-        }
-    }
 
     func saveDiningPreference(for venueIds: [Int]) {
         NotificationCenter.default.post(name: NSNotification.Name("favoritesUpdated"), object: nil)
-        let url = "https://pennmobile.org/api/dining/preferences/"
-
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            let url = URL(string: url)!
-            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+        let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
+        Task {
+            var request = (try? await URLRequest(url: url, mode: .accessToken)) ?? URLRequest(url: url)
             request.httpMethod = "POST"
             request.httpBody = try? JSON(["venues": venueIds]).rawData()
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
             // Cache a user's favorite dining halls for use by dining hours widget.
             let diningVenues = DiningAPI.instance.getVenues(with: venueIds)
             Storage.store(diningVenues, to: .groupCaches, as: DiningAPI.favoritesCacheFileName)
@@ -151,12 +116,10 @@ extension UserDBManager {
     }
 
     func saveLaundryPreferences(for ids: [Int]) {
-        let url = "https://pennmobile.org/api/laundry/preferences/"
+        let url = URL(string: "https://pennmobile.org/api/laundry/preferences/")!
         let params = ["rooms": ids]
-
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            let url = URL(string: url)!
-            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+        Task {
+            var request = (try? await URLRequest(url: url, mode: .accessToken)) ?? URLRequest(url: url)
             request.httpMethod = "POST"
 
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -168,10 +131,9 @@ extension UserDBManager {
     }
 
     func getLaundryPreferences(_ callback: @escaping (_ rooms: [Int]?) -> Void) {
-        let url = "https://pennmobile.org/api/laundry/preferences/"
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            let url = URL(string: url)!
-            let request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+        let url = URL(string: "https://pennmobile.org/api/laundry/preferences/")!
+        Task {
+            var request = (try? await URLRequest(url: url, mode: .accessToken)) ?? URLRequest(url: url)
 
             let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
                 if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
@@ -202,7 +164,7 @@ extension UserDBManager {
             let task = URLSession.shared.dataTask(with: request, completionHandler: { (data, response, _) in
                 var accountID: String?
                 if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
+                    if (200..<300).contains(httpResponse.statusCode) {
                         if let data = data, NSString(data: data, encoding: String.Encoding.utf8.rawValue) != nil {
                             let json = JSON(data)
                             accountID = json["account_id"].string
@@ -222,7 +184,7 @@ extension UserDBManager {
         request.httpMethod = "POST"
         let task = URLSession.shared.dataTask(with: request, completionHandler: { (_, response, _) in
             if let httpResponse = response as? HTTPURLResponse {
-                completion(httpResponse.statusCode == 200)
+                completion((200..<300).contains(httpResponse.statusCode))
             } else {
                 completion(false)
             }
@@ -231,28 +193,25 @@ extension UserDBManager {
     }
 
     func getWhartonStatus(_ completion: @escaping (_ result: Result<Bool, NetworkingError>) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
+        let url = URL(string: "https://pennmobile.org/api/gsr/wharton/")!
+        Task { @MainActor in
+            guard let request = try? await URLRequest(url: url, mode: .accessToken) else {
                 completion(.failure(.authenticationError))
                 return
             }
-
-            let url = URL(string: "https://pennmobile.org/api/gsr/wharton/")!
-            let request = URLRequest(url: url, accessToken: token)
-
-            let task = URLSession.shared.dataTask(with: request) { data, _, _ in
-                guard let data = data else {
-                    completion(.failure(.serverError))
-                    return
-                }
-
-                if let isWharton = try? JSON(data: data)["is_wharton"].bool {
-                    completion(.success(isWharton))
-                } else {
-                    completion(.failure(.serverError))
-                }
+            
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion(.failure(.serverError))
+                return
             }
-            task.resume()
+            
+            if let isWharton = try? JSON(data: data)["is_wharton"].bool {
+                completion(.success(isWharton))
+            } else {
+                completion(.failure(.serverError))
+            }
         }
     }
 }
@@ -275,7 +234,7 @@ extension UserDBManager {
         let url = "\(baseUrl)/housing"
         let params = ["html": html]
         makePostRequestWithAccessToken(url: url, params: params) { (data, response, _) in
-            if let data = data, let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            if let data = data, let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 if let result = try? decoder.decode(HousingResult.self, from: data) {
@@ -294,38 +253,36 @@ extension UserDBManager {
             completion?(true)
             return
         }
-
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
+        
+        let url = URL(string: "\(self.baseUrl)/housing/all")!
+        Task {
+            guard var request = try? await URLRequest(url: url, mode: .accessToken) else {
                 completion?(false)
                 return
             }
-
-            let url = URL(string: "\(self.baseUrl)/housing/all")!
-            var request = URLRequest(url: url, accessToken: token)
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+            
             let jsonEncoder = JSONEncoder()
             jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
             let jsonData = try? jsonEncoder.encode(housingResults)
             request.httpBody = jsonData
-
-            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                    completion?(true)
-                } else {
-                    completion?(false)
-                }
+            
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion?(false)
+                return
             }
-            task.resume()
+            
+            completion?(true)
         }
     }
 
     func deleteHousingData(_ completion: (( _ success: Bool) -> Void)? = nil) {
         let url = "\(baseUrl)/housing/delete"
         makePostRequestWithAccessToken(url: url, params: [:]) { (_, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) {
                 completion?(true)
             } else {
                 completion?(false)
@@ -337,53 +294,50 @@ extension UserDBManager {
 // MARK: - Privacy and Notification Settings
 extension UserDBManager {
     func fetchNotificationSettings(_ completion: @escaping (_ result: Result<[NotificationSetting], NetworkingError>) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
+        let url = URL(string: "https://pennmobile.org/api/user/notifications/settings/")!
+        Task {
+            guard let request = try? await URLRequest(url: url, mode: .accessToken) else {
                 completion(.failure(.authenticationError))
                 return
             }
-
-            let url = URL(string: "https://pennmobile.org/api/user/notifications/settings/")!
-            let request = URLRequest(url: url, accessToken: token)
-
-            let task = URLSession.shared.dataTask(with: request) { data, _, _ in
-                guard let data = data else {
-                    completion(.failure(.serverError))
-                    return
-                }
-
-                let decoder = JSONDecoder()
-                if let notifSettings = try? decoder.decode([NotificationSetting].self, from: data) {
-                    completion(.success(notifSettings))
-                } else {
-                    completion(.failure(.parsingError))
-                }
+            
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion(.failure(.serverError))
+                return
             }
-            task.resume()
+            
+            let decoder = JSONDecoder()
+            if let notifSettings = try? decoder.decode([NotificationSetting].self, from: data) {
+                completion(.success(notifSettings))
+            } else {
+                completion(.failure(.parsingError))
+            }
         }
     }
 
     func updateNotificationSetting(id: Int, service: String, enabled: Bool, _ callback: ((_ success: Bool) -> Void)?) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token, let payload = try? JSONSerialization.data(withJSONObject: ["service": service, "enabled": enabled]) else {
+        let url = URL(string: "https://pennmobile.org/api/user/notifications/settings/\(id)/")!
+        Task {
+            guard var request = try? await URLRequest(url: url, mode: .accessToken),
+                  let payload = try? JSONSerialization.data(withJSONObject: ["service": service, "enabled": enabled]) else {
                 callback?(false)
                 return
             }
-
-            let url = URL(string: "https://pennmobile.org/api/user/notifications/settings/\(id)/")!
-            var request = URLRequest(url: url, accessToken: token)
+            
             request.httpMethod = "PATCH"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = payload
-
-            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
-                if let httpResponse = response as? HTTPURLResponse {
-                    callback?(httpResponse.statusCode == 200 || httpResponse.statusCode == 201)
-                } else {
-                    callback?(false)
-                }
+            
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) || httpResponse.statusCode == 201 else {
+                callback?(false)
+                return
             }
-            task.resume()
+            
+            callback?(true)
         }
     }
 
@@ -404,28 +358,23 @@ extension UserDBManager {
 
     func fetchUserSettings(_ callback: @escaping (_ success: Bool, _ privacyPreferences: PrivacyPreferences?, _ notificationPreferences: NotificationPreferences?) -> Void) {
 
-        let urlRoute = "\(baseUrl)/account/settings"
+        let url = URL(string: "\(baseUrl)/account/settings")!
 
         struct CodableUserSettings: Codable {
             let notifications: NotificationPreferences
             let privacy: PrivacyPreferences
         }
-
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            if let token = token {
-                let url = URL(string: urlRoute)!
-                let request = URLRequest(url: url, accessToken: token)
-                let task = URLSession.shared.dataTask(with: request) { (data, _, error) in
-                    if error == nil, let data = data, let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) {
-                        callback(true, settings.privacy, settings.notifications)
-                    } else {
-                        callback(false, nil, nil)
-                    }
-                }
-                task.resume()
-            } else {
-                callback(false, nil, nil)
+        
+        Task { @MainActor in
+            guard var request = try? await URLRequest(url: url, mode: .accessToken),
+                let (data, response) = try? await URLSession.shared.data(for: request),
+                let httpResponse = response as? HTTPURLResponse,
+                (200..<300).contains(httpResponse.statusCode),
+                let settings = try? JSONDecoder().decode(CodableUserSettings.self, from: data) else {
+                    callback(false, nil, nil)
+                    return
             }
+            callback(true, settings.privacy, settings.notifications)
         }
     }
 
@@ -442,106 +391,26 @@ extension UserDBManager {
     }
 
     private func saveUserSettingsDictionary(route: String, params: [String: Bool], _ callback: ((_ success: Bool) -> Void)?) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token, let payload = try? JSONEncoder().encode(params) else {
+        let url = URL(string: route)!
+        Task {
+            guard var request = try? await URLRequest(url: url, mode: .accessToken),
+                  let payload = try? JSONEncoder().encode(params) else {
                 callback?(false)
                 return
             }
-
-            let url = URL(string: route)!
-            var request = URLRequest(url: url, accessToken: token)
+            
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = payload
-            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
-                if let httpResponse = response as? HTTPURLResponse {
-                    callback?(httpResponse.statusCode == 200)
-                } else {
-                    callback?(false)
-                }
-            }
-            task.resume()
-        }
-    }
-}
-
-// MARK: - Push Notifications
-extension UserDBManager {
-    // Gets the notification token information using the access token.
-    func getNotificationId(_ completion: @escaping (_ result: Result<[GetNotificationID], NetworkingError>) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                completion(.failure(.authenticationError))
-                return
-            }
-            let url = URL(string: "https://pennmobile.org/api/user/notifications/tokens/")!
-            var params: [String: Any] = [
-                "dev": false
-            ]
-
-            #if DEBUG
-                params["dev"] = true
-            #endif
-
-            let request = URLRequest(url: url, accessToken: token)
-            let task = URLSession.shared.dataTask(with: request) { data, _, _ in
-                guard let data = data else {
-                    completion(.failure(.serverError))
-                    return
-                }
-
-                let decoder = JSONDecoder()
-                if let response = try?
-                    decoder.decode([GetNotificationID].self, from: data) {
-                    completion(.success(response))
-                } else {
-                    completion(.failure(.parsingError))
-                }
-            }
-            task.resume()
-        }
-    }
-
-    // Updates device token.
-    func savePushNotificationDeviceToken(deviceToken: String, notifId: Int, _ completion: (() -> Void)? = nil) {
-        Task {
-            defer { completion?() }
             
-            struct DeviceTokenRequestBody: Encodable {
-                var kind: String
-                var token: String
-                var dev: Bool
-            }
-            
-            guard let url = URL(string: "https://pennmobile.org/api/user/notifications/tokens/\(notifId)/") else {
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                callback?(false)
                 return
             }
             
-            var body = DeviceTokenRequestBody(kind: "IOS", token: deviceToken, dev: false)
-            
-#if DEBUG
-            body.dev = true
-#endif
-            
-            guard let token = try? await OAuth2NetworkManager.instance.getAccessToken() else {
-                return
-            }
-            
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "PUT"
-            
-            // If serializing a simple JSON object fails something is really wrong
-            request.httpBody = try! JSONEncoder().encode(body)
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            _ = try? await URLSession.shared.data(for: request)
-        }
-    }
-
-    func clearPushNotificationDeviceToken(_ completion: (() -> Void)? = nil) {
-        let url = "\(baseUrl)/notifications/register"
-        makePostRequestWithAccessToken(url: url, params: [:]) { (_, _, _) in
-            completion?()
+            callback?(true)
         }
     }
 }
@@ -565,7 +434,7 @@ extension UserDBManager {
     func deleteAcademicInfo(_ completion: (( _ success: Bool) -> Void)? = nil) {
         let url = "\(baseUrl)/account/degrees/delete"
         makePostRequestWithAccessToken(url: url, params: [:]) { (_, response, _) in
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+            if let httpResponse = response as? HTTPURLResponse, (200..<300).contains(httpResponse.statusCode) {
                 completion?(true)
             } else {
                 completion?(false)
@@ -574,30 +443,30 @@ extension UserDBManager {
     }
 
     func saveAcademicInfo(_ degrees: Set<Degree>, _ completion: (( _ success: Bool) -> Void)? = nil) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
+        let url = URL(string: "\(self.baseUrl)/account/degrees")!
+        
+        Task {
+            guard var request = try? await URLRequest(url: url, mode: .accessToken) else {
                 completion?(false)
                 return
             }
-
-            let url = URL(string: "\(self.baseUrl)/account/degrees")!
-            var request = URLRequest(url: url, accessToken: token)
+            
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
+            
             let jsonEncoder = JSONEncoder()
             jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
             let jsonData = try? jsonEncoder.encode(degrees)
             request.httpBody = jsonData
-
-            let task = URLSession.shared.dataTask(with: request) { (_, response, _) in
-                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
-                    completion?(true)
-                } else {
-                    completion?(false)
-                }
+            
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion?(false)
+                return
             }
-            task.resume()
+            
+            completion?(true)
         }
     }
 }
@@ -611,36 +480,44 @@ extension UserDBManager {
     }
 
     func saveFitnessPreferences(for ids: [Int]) {
-        let url = "https://pennmobile.org/api/fitness/preferences/"
+        let url = URL(string: "https://pennmobile.org/api/fitness/preferences/")!
         let params = ["rooms": ids]
-
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            let url = URL(string: url)!
-            var request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
+        
+        Task {
+            guard var request = try? await URLRequest(url: url, mode: .accessToken) else {
+                return
+            }
+            
             request.httpMethod = "POST"
-
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = try? JSON(params).rawData()
-
-            let task = URLSession.shared.dataTask(with: request)
-            task.resume()
+            
+            let _ = try? await URLSession.shared.data(for: request)
         }
+
+
     }
 
     func getFitnessPreferences(_ callback: @escaping (_ rooms: [Int]?) -> Void) {
-        let url = "https://pennmobile.org/api/fitness/preferences/"
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            let url = URL(string: url)!
-            let request = token != nil ? URLRequest(url: url, accessToken: token!) : URLRequest(url: url)
-
-            let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
-                if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
-                    callback(rooms.compactMap { $0 as? Int })
-                    return
-                }
+        let url = URL(string: "https://pennmobile.org/api/fitness/preferences/")!
+        Task {
+            guard var request = try? await URLRequest(url: url, mode: .accessToken) else {
                 callback(nil)
+                return
             }
-            task.resume()
+            
+            guard let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                callback(nil)
+                return
+            }
+            
+            if let rooms = JSON(data)["rooms"].arrayObject {
+                callback(rooms.compactMap { $0 as? Int })
+                return
+            }
+            callback(nil)
         }
     }
 }

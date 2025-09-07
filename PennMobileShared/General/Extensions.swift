@@ -350,14 +350,14 @@ public extension Date {
     static var startOfSemester: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: "2024-08-27")!
+        return formatter.date(from: "2025-08-26")!
 
     }
 
     static var endOfSemester: Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.date(from: "2024-12-19")!
+        return formatter.date(from: "2025-12-18")!
     }
 }
 
@@ -560,6 +560,24 @@ public extension String {
                 .compare(otherVersionComponents.joined(separator: versionDelimiter), options: .numeric) // <6>
         }
     }
+    
+    static func getPostString(params: [String: Any]) -> String {
+        let characterSet = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
+        let parameterArray = params.map { key, value -> String in
+            let escapedKey = key.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
+            if let strValue = value as? String {
+                let escapedValue = strValue.addingPercentEncoding(withAllowedCharacters: characterSet) ?? ""
+                return "\(escapedKey)=\(escapedValue)"
+            } else if let arr = value as? [Any] {
+                let str = arr.map { String(describing: $0).addingPercentEncoding(withAllowedCharacters: characterSet) ?? "" }.joined(separator: ",")
+                return "\(escapedKey)=\(str)"
+            } else {
+                return "\(escapedKey)=\(value)"
+            }
+        }
+        let encodedParams = parameterArray.joined(separator: "&")
+        return encodedParams
+    }
 
     // https://stackoverflow.com/questions/37048759/swift-display-html-data-in-a-label-or-textview
     var htmlToAttributedString: NSAttributedString? {
@@ -709,7 +727,7 @@ public extension View {
     }
 }
 
-extension CLLocationCoordinate2D: Identifiable {
+extension CLLocationCoordinate2D: @retroactive Identifiable {
     public var id: String {
         return "\(latitude)-\(longitude)"
     }

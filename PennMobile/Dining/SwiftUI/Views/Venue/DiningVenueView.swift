@@ -181,7 +181,7 @@ struct CustomHeader: View {
     @State var showMissingDiningTokenAlert = false
     @State var showDiningLoginView = false
     @State var buttonAngle: Angle = .zero
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
     func showCorrectAlert () -> Alert {
@@ -191,7 +191,7 @@ struct CustomHeader: View {
             return Alert(title: Text("\"Penn Mobile\" requires you to login to Campus Express to use this feature."),
                          message: Text("Would you like to continue to campus express?"),
                          primaryButton: .default(Text("Continue"), action: {showDiningLoginView = true}),
-                         secondaryButton: .cancel({ presentationMode.wrappedValue.dismiss() }))
+                         secondaryButton: .cancel({ dismiss() }))
         }
     }
 
@@ -260,27 +260,8 @@ struct CustomHeader: View {
         .onChange(of: isRefreshing) { refreshing in
             animateButton(refreshing: refreshing)
         }
-
-        // Note: The Alert view is soon to be deprecated, but .alert(_:isPresented:presenting:actions:message:) is available in iOS15+
         .alert(isPresented: $showMissingDiningTokenAlert) {
             showCorrectAlert()
         }
-
-        // iOS 15+ implementation
-        /* .alert(Account.isLoggedIn ? "\"Penn Mobile\" requires you to login to Campus Express to use this feature." : "You must log in to access this feature.", isPresented: $showMissingDiningTokenAlert
-        ) {
-            if (!Account.isLoggedIn) {
-                Button("OK") {}
-            } else {
-                Button("Continue") { showDiningLoginView = true }
-                Button("Cancel") { presentationMode.wrappedValue.dismiss() }
-            }
-        } message: {
-            if (!Account.isLoggedIn) {
-                Text("Please login on the \"More\" tab.")
-            } else {
-                Text("Would you like to continue to Campus Express?")
-            }
-        } */
     }
 }

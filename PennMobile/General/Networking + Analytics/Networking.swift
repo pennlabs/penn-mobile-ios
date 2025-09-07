@@ -111,7 +111,7 @@ extension Requestable {
                 // indicates that user is unable to connect to internet
                 callback?(nil, nil, error, nil)
             } else if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 200 {
+                if (200..<300).contains(httpResponse.statusCode) {
                     if let data = data, NSString(data: data, encoding: String.Encoding.utf8.rawValue) != nil {
                         if let json = ((try? JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary) as NSDictionary??) {
                             // data recieved and parsed successfully

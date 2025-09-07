@@ -12,23 +12,22 @@ import UIKit
 
 final class HomePostCellItem: HomeCellItem {
     static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
-        OAuth2NetworkManager.instance.getAccessToken { token in
-            guard let token = token else { completion([]); return }
-
-            let url = URLRequest(url: URL(string: "https://pennmobile.org/api/portal/posts/browse/")!, accessToken: token)
-
-            let task = URLSession.shared.dataTask(with: url) { data, _, _ in
-                guard let data = data else { completion([]); return }
-
-                if let posts = try? JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data) {
-
-                    completion(posts.map({return HomePostCellItem(post: $0)}))
-                } else {
-                    completion([])
-                }
+        let url = URL(string: "https://pennmobile.org/api/portal/posts/browse/")!
+        Task {
+            guard let request = try? await URLRequest(url: url, mode: .accessToken),
+                  let (data, response) = try? await URLSession.shared.data(for: request),
+                  let httpResponse = response as? HTTPURLResponse,
+                  (200..<300).contains(httpResponse.statusCode) else {
+                completion([])
+                return
             }
-
-            task.resume()
+            
+            if let posts = try? JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601).decode([Post].self, from: data) {
+                completion(posts.map({return HomePostCellItem(post: $0)}))
+            } else {
+                completion([])
+            }
+            
         }
     }
 

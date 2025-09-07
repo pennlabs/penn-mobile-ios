@@ -45,11 +45,12 @@ class PathAtPennNetworkManager {
 // MARK: - Path@Penn Authentication
 
 extension PathAtPennNetworkManager {
-    static private let oauthURL = URL(string: "https://idp.pennkey.upenn.edu/idp/profile/oidc/authorize?response_type=code&scope=openid+email+profile&client_id=courses.upenn.edu%2Fsam_rMReby8Vl3M1BiyVWMAT&redirect_uri=https%3A%2F%2Fcourses.upenn.edu%2Fsam%2Fcodetotoken")!
+    static private let oauthURL = URL(string: "https://3scale-public-prod-path-authentication-anon.apps.k8s.upenn.edu/api/v1/leepfrogAuthn/login")!
 
     private func getTokenWithoutReauthenticating() async throws -> String {
         let (data, _) = try await URLSession.shared.data(from: PathAtPennNetworkManager.oauthURL)
         let str = try String(data: data, encoding: .utf8).unwrap(orThrow: PathAtPennError.corruptString)
+
         let matches = str.getMatches(for: "value: \"(.*)\"")
         let token = try matches.first.unwrap(orThrow: PathAtPennError.noTokenFound(str))
         
@@ -121,7 +122,7 @@ extension PathAtPennNetworkManager {
             request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
             request.httpBody = twoFactorRequestBody
             
-            let (postData, postResponse) = try await URLSession.shared.data(for: request)
+            let (_, _) = try await URLSession.shared.data(for: request)
             
             return try await getTokenWithoutReauthenticating()
         } catch {
@@ -178,7 +179,7 @@ extension PathAtPennNetworkManager {
             throw PathAtPennError.notHttpResponse
         }
 
-        guard response.statusCode == 200 else {
+        guard (200..<300).contains(response.statusCode) else {
             throw PathAtPennError.unexpectedStatus(response.statusCode)
         }
 
@@ -215,7 +216,7 @@ extension PathAtPennNetworkManager {
             throw PathAtPennError.notHttpResponse
         }
 
-        guard response.statusCode == 200 else {
+        guard (200..<300).contains(response.statusCode) else {
             throw PathAtPennError.unexpectedStatus(response.statusCode)
         }
 

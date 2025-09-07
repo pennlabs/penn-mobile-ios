@@ -8,6 +8,7 @@
 import Foundation
 import SwiftyJSON
 import PennMobileShared
+import LabsPlatformSwift
 
 struct Response: Decodable {
     let message: String
@@ -104,7 +105,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 return
             }
 
-            callback(status.statusCode == 200, "DONE", error)
+            callback((200..<300).contains(status.statusCode), "DONE", error)
         }
     }
 
@@ -156,7 +157,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                 return
             }
 
-            callback(status.statusCode == 200, error)
+            callback((200..<300).contains(status.statusCode), error)
         }
     }
 
@@ -170,7 +171,7 @@ class CourseAlertNetworkManager: NSObject, Requestable {
                     return
                 }
                 
-                guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                guard let response = response as? HTTPURLResponse, (200..<300).contains(response.statusCode) else {
                     continuation.resume(throwing: NetworkingError.serverError)
                     return
                 }
@@ -184,45 +185,35 @@ class CourseAlertNetworkManager: NSObject, Requestable {
 
 // MARK: - General Networking Functions
 extension CourseAlertNetworkManager {
-    fileprivate func makeGetRequestWithAccessToken(url: String, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
+    fileprivate func makeGetRequestWithAccessToken(url: String, callback: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void) {
+        Task {
+            let url = URL(string: url)!
+            guard let request = try? await URLRequest(url: url, mode: .accessToken) else {
                 callback(nil, nil, nil)
                 return
             }
-
-            let url = URL(string: url)!
-            var request = URLRequest(url: url, accessToken: token)
-            request.httpMethod = "GET"
-
+            
             let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
             task.resume()
         }
     }
 
-    fileprivate func makeAuthenticatedRequest(url: String, requestType: RequestType, params: [String: Any]?, callback: @escaping (Data?, URLResponse?, Error?) -> Void) {
-
-        OAuth2NetworkManager.instance.getAccessToken { (token) in
-            guard let token = token else {
-                callback(nil, nil, nil)
-                return
-            }
-
-            self.getCSRFTokenCookie { (csrfToken) in
-
-                guard let csrfToken = csrfToken else {
+    fileprivate func makeAuthenticatedRequest(url: String, requestType: RequestType, params: [String: Any]?, callback: @Sendable @escaping (Data?, URLResponse?, Error?) -> Void) {
+        self.getCSRFTokenCookie { (csrfToken) in
+            Task {
+                let url = URL(string: url)!
+                guard var request = try? await URLRequest(url: url, mode: .accessToken),
+                let csrfToken else {
                     callback(nil, nil, nil)
                     return
                 }
-
-                let url = URL(string: url)!
 
                 let jar = HTTPCookieStorage.shared
                 let cookieHeaderField = ["Set-Cookie": "csrftoken=\(csrfToken)"]
                 let cookies = HTTPCookie.cookies(withResponseHeaderFields: cookieHeaderField, for: url)
                 jar.setCookies(cookies, for: url, mainDocumentURL: url)
 
-                var request = URLRequest(url: url, accessToken: token)
+                
 
                 switch requestType {
                 case .POST:
@@ -244,11 +235,8 @@ extension CourseAlertNetworkManager {
 
                 let task = URLSession.shared.dataTask(with: request, completionHandler: callback)
                 task.resume()
-
             }
-
         }
-
     }
 
     fileprivate func getCSRFTokenCookie(_ callback: @escaping (_ csrfToken: String?) -> Void) {
