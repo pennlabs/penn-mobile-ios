@@ -20,7 +20,7 @@ struct RoomFinderSelectionPanel: View {
     @State var maxTimeRequirement: Int?
     @State var earliestTimeRequirement: Date?
     @State var latestTimeRequirement: Date?
-    
+            
     let formatter = DateFormatter()
     
     init(isEnabled: Binding<Bool>) {
@@ -75,15 +75,22 @@ struct RoomFinderSelectionPanel: View {
                 .transition(.move(edge: .bottom).combined(with: .opacity))
                 
             }
-                
             Button {
                 withAnimation(.snappy(duration: 0.2)) {
                     isEnabled.toggle()
                 }
+                let vc = QuickBookViewController()
+                vc.setupQuickBooking(
+                    location: vm.selectedLocation!,
+                    duration: minTimeRequirement!,
+                    time: earliestTimeRequirement!
+                ) {
+                    print("finished")
+                }
             } label: {
                 Label("Find me a room", systemImage: "wand.and.sparkles")
                     .font(.body)
-                    .foregroundStyle(isEnabled ? Color.white : Color(Color.black))
+                    .foregroundStyle(isEnabled ? Color.white : Color.black)
                     .padding(12)
                     .background {
                         RoundedRectangle(cornerRadius: 12)

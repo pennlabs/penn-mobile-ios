@@ -20,11 +20,10 @@ class QuickBookViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    internal func setupQuickBooking(location: GSRLocation, completion: @escaping () -> Void) {
+    internal func setupQuickBooking(location: GSRLocation, duration: Int, time: Date, _ completion: @escaping () -> Void) {
         self.location = location
-        if let best = getSoonestTimeSlot() {
+        if let best = getSoonestTimeSlot(duration: duration, time: time) {
             self.soonestDetails = best
-            completion()
         }
         let group = DispatchGroup()
         var foundAvailableRoom = false
@@ -60,7 +59,7 @@ class QuickBookViewController: UIViewController {
 //        }
     }
     
-    private func getSoonestTimeSlot() -> (slot: GSRTimeSlot, room: GSRRoom)? {
+    private func getSoonestTimeSlot(duration: Int, time: Date) -> (slot: GSRTimeSlot, room: GSRRoom)? {
         let formatter = DateFormatter()
         var current: (slot: GSRTimeSlot, room: GSRRoom)?
         var start : Date! = .distantFuture
@@ -84,7 +83,7 @@ class QuickBookViewController: UIViewController {
 }
 
 extension QuickBookViewController: GSRBookable {
-    @objc internal func quickBook() {
+    internal func quickBook() {
         if !Account.isLoggedIn {
             self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
         } else {
