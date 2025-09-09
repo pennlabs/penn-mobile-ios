@@ -15,15 +15,6 @@ struct ContactRowView: View {
     var body: some View {
         HStack {
             Button(action: {
-                call(number: contact.phoneFiltered)
-            }) {
-                Image("phone")
-                    .resizable()
-                    .frame(width: 30, height: 30)
-            }
-            .buttonStyle(.plain)
-            
-            Button(action: {
                 withAnimation {
                     isExpanded.toggle()
                 }
@@ -44,6 +35,19 @@ struct ContactRowView: View {
                     }
                     
                     Spacer()
+                    
+                    Button(action: {
+                        call(number: contact.phoneFiltered)
+                    }) {
+                        HStack {
+                            Image(systemName: "phone.fill")
+                            Text("Call")
+                                .fontWeight(.medium)
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.green)
+                    .fixedSize(horizontal: true, vertical: true)
                     
                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                         .foregroundColor(.gray)
