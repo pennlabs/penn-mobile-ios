@@ -85,7 +85,7 @@ struct DiningVenueDetailMenuView: View {
                         }
                     }.pickerStyle(MenuPickerStyle())
                 } else {
-                    Text("Closed For Today")
+                    Text("No Menu Data")
                 }
                 DatePicker("", selection: $menuDate, in: Date.currentLocalDate...Date.currentLocalDate.add(minutes: 8640), displayedComponents: .date)
                 
