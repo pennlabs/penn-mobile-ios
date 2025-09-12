@@ -365,6 +365,7 @@
 		895A1AB52CB98E9000E161AE /* XLPagerTabStrip in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1AB42CB98E9000E161AE /* XLPagerTabStrip */; };
 		895A1AB82CB98F5000E161AE /* ScrollableGraphView in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1AB72CB98F5000E161AE /* ScrollableGraphView */; };
 		895A1ABB2CB98F7100E161AE /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1ABA2CB98F7100E161AE /* SCLAlertView */; };
+		89C3AEFC2E74C232002C979E /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89C3AEFB2E74C22E002C979E /* FeatureFlags.swift */; };
 		89DF63072CEB9BBB00C4A015 /* NotificationDeviceTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89DF63062CEB9BB400C4A015 /* NotificationDeviceTokenManager.swift */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
 		89EA262F290F958B008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
@@ -783,6 +784,7 @@
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		89C3AEFB2E74C22E002C979E /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		89DF63062CEB9BB400C4A015 /* NotificationDeviceTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDeviceTokenManager.swift; sourceTree = "<group>"; };
 		89EA262D290F9411008F26CF /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1924,6 +1926,7 @@
 		42632E262CB9C77B0028CC31 /* PennMobileShared */ = {
 			isa = PBXGroup;
 			children = (
+				89C3AEFA2E74C226002C979E /* Feature Flags */,
 				42632DFF2CB9C77B0028CC31 /* Courses */,
 				42632E0B2CB9C77B0028CC31 /* Dining */,
 				42632E0F2CB9C77B0028CC31 /* Fitness */,
@@ -2024,6 +2027,14 @@
 				73E7A0252CF158A4007BC1E3 /* WrappedUnitView.swift */,
 			);
 			path = Wrapped;
+			sourceTree = "<group>";
+		};
+		89C3AEFA2E74C226002C979E /* Feature Flags */ = {
+			isa = PBXGroup;
+			children = (
+				89C3AEFB2E74C22E002C979E /* FeatureFlags.swift */,
+			);
+			path = "Feature Flags";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2592,6 +2603,7 @@
 				42632E3A2CB9C77B0028CC31 /* Extensions.swift in Sources */,
 				42632E3B2CB9C77B0028CC31 /* KeychainAccessible.swift in Sources */,
 				42632E3C2CB9C77B0028CC31 /* MeterView.swift in Sources */,
+				89C3AEFC2E74C232002C979E /* FeatureFlags.swift in Sources */,
 				42632E3D2CB9C77B0028CC31 /* PhoneNumberFormat.swift in Sources */,
 				42632E3E2CB9C77B0028CC31 /* SearchBar.swift in Sources */,
 				42632E3F2CB9C77B0028CC31 /* SecureStore.swift in Sources */,
