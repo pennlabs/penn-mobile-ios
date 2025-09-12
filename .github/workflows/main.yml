@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - name: Select Xcode 26.0 RC
         # This could be the source of error for versioning issues in CI.
