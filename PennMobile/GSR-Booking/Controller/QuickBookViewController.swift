@@ -6,114 +6,66 @@
 //  Copyright © 2025 PennLabs. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
+import PennMobileShared
 
-class QuickBookViewController: UIViewController, ShowsAlert {
+class QuickBookViewController: UIViewController {
     
-    var locations: [GSRLocation] = GSRLocationModel.shared.getLocations()
-    fileprivate var prefList: [GSRLocation] = []
     fileprivate var location: GSRLocation!
-    
+    fileprivate var soonestDetails: (slot: GSRTimeSlot, room: GSRRoom)?
     fileprivate var soonestStartTimeString: String!
     fileprivate var soonestEndTimeString: String!
-    fileprivate var soonestTimeSlot: GSRTimeSlot!
-    fileprivate var soonestRoom: GSRRoom!
-    fileprivate var min: Date! = Date.distantFuture
-    
     fileprivate var allRooms: [GSRRoom]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    internal func setupSubmitAlert(location: GSRLocation){
-        let alert = UIAlertController(title: "Quick Book GSR", message: """
-            Soonest available GSR:
-            Time Slot: \(soonestStartTimeString!) to \(soonestEndTimeString!)
-            Room: \(soonestRoom.roomName)
-            Location: \(location.name)
-            
-            Quickly book the soonest available room in any location on campus.
-            """, preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
-        alert.addAction(cancelAction)
-        
-        let acceptAction = UIAlertAction(title: "Accept", style: .default) { _ in
-            self.quickBook()
-        }
-        
-        alert.addAction(acceptAction)
-        
-        DispatchQueue.main.async {
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    internal func setupQuickBooking(location: GSRLocation, completion: @escaping () -> Void) {
+    @MainActor
+    internal func setupQuickBooking(location: GSRLocation, duration: Int, time: Date) async throws{
         self.location = location
-        let group = DispatchGroup()
-        var foundAvailableRoom = false
         
-        completion()
-        
-//        GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
-//            defer {
-//                group.leave()
-//            }
-//            
-//            switch result {
-//            case .success(let rooms):
-//                if !rooms.isEmpty {
-//                    self.allRooms = rooms
-//                    self.getSoonestTimeSlot()
-//                    foundAvailableRoom = true
-//                }
-//            case .failure:
-//                present(toast: .apiError)
-//            }
-//        }
-//        if !foundAvailableRoom && location == self.locations.last {
-//            present(toast: .apiError)
-//        }
-//        group.notify(queue: DispatchQueue.main) {
-//            if foundAvailableRoom {
-//                completion()
-//                self.setupSubmitAlert(location: location)
-//            } else {
-//                self.present(toast: .apiError)
-//            }
-//        }
+        do {
+            let avail = try await GSRNetworkManager.getAvailability(for: location, startDate: Date.now, endDate: Date.now)
+            self.allRooms = avail
+            soonestDetails = getSoonestTimeSlot(duration: duration, time: time)
+        } catch {
+            print(error)
+        }
     }
     
-    private func getSoonestTimeSlot() {
-        
+    private func getSoonestTimeSlot(duration: Int, time: Date) -> (slot: GSRTimeSlot, room: GSRRoom)? {
         let formatter = DateFormatter()
+        var current: (slot: GSRTimeSlot, room: GSRRoom)?
+        var start : Date! = .distantFuture
         formatter.timeZone = TimeZone.current
         formatter.dateFormat = "HH:mm"
         for room in allRooms {
             guard let availability = room.availability.first(where: { $0.startTime >= Date() }) else {
                 continue
             }
-            let startTime = availability.startTime
             
-            if startTime < min {
-                min = startTime
-                soonestStartTimeString = formatter.string(from: startTime)
+            if availability.startTime < start {
+                current = (availability, room)
+                start = availability.startTime
+                soonestStartTimeString = formatter.string(from: availability.startTime)
                 soonestEndTimeString = formatter.string(from: availability.endTime)
-                soonestTimeSlot = availability
-                soonestRoom = room
             }
         }
+
+        return current
     }
 }
 
 extension QuickBookViewController: GSRBookable {
-    @objc internal func quickBook() {
+    internal func quickBook() {
         if !Account.isLoggedIn {
             self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
         } else {
-            submitBooking(for: GSRBooking(gid: location.gid, startTime: soonestTimeSlot.startTime, endTime: soonestTimeSlot.endTime, id: soonestRoom.id, roomName: soonestRoom.roomName))
+            let timeSlot :GSRTimeSlot = soonestDetails!.slot
+            let timeRoom :GSRRoom = soonestDetails!.room
+            submitBooking(for: GSRBooking(gid: location.gid, startTime: timeSlot.startTime, endTime: timeSlot.endTime, id: timeRoom.id, roomName: timeRoom.roomName))
         }
     }
 }
