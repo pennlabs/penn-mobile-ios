@@ -34,7 +34,6 @@ struct RoomFinderSelectionPanel: View {
         VStack {
             Spacer()
             if let expectedWidth, isEnabled {
-                
                 VStack {
                     Spacer()
                     Text("Duration")
@@ -79,14 +78,15 @@ struct RoomFinderSelectionPanel: View {
                 withAnimation(.snappy(duration: 0.2)) {
                     isEnabled.toggle()
                 }
-                let vc = QuickBookViewController()
-                vc.setupQuickBooking(
-                    location: vm.selectedLocation!,
-                    duration: minTimeRequirement!,
-                    time: earliestTimeRequirement!
-                ) {
-                    print("finished")
+                guard let location = vm.selectedLocation, let duration = minTimeRequirement, let time = earliestTimeRequirement else {
+                    return
                 }
+                Task {
+                    do {
+                      let vc = QuickBookViewController()
+                      try await vc.setupQuickBooking(location: location, duration: duration, time: time)
+                    } catch { print(error) }
+                  }
             } label: {
                 Label("Find me a room", systemImage: "wand.and.sparkles")
                     .font(.body)

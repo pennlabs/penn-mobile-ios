@@ -6,7 +6,9 @@
 //  Copyright © 2025 PennLabs. All rights reserved.
 //
 
+import Foundation
 import SwiftUI
+import PennMobileShared
 
 class QuickBookViewController: UIViewController {
     
@@ -20,43 +22,17 @@ class QuickBookViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    internal func setupQuickBooking(location: GSRLocation, duration: Int, time: Date, _ completion: @escaping () -> Void) {
+    @MainActor
+    internal func setupQuickBooking(location: GSRLocation, duration: Int, time: Date) async throws{
         self.location = location
-        if let best = getSoonestTimeSlot(duration: duration, time: time) {
-            self.soonestDetails = best
+        
+        do {
+            let avail = try await GSRNetworkManager.getAvailability(for: location, startDate: Date.now, endDate: Date.now)
+            self.allRooms = avail
+            soonestDetails = getSoonestTimeSlot(duration: duration, time: time)
+        } catch {
+            print(error)
         }
-        let group = DispatchGroup()
-        var foundAvailableRoom = false
-        
-        completion()
-        
-//        GSRNetworkManager.instance.getAvailability(lid: location.lid, gid: location.gid, startDate: nil) { [self] result in
-//            defer {
-//                group.leave()
-//            }
-//            
-//            switch result {
-//            case .success(let rooms):
-//                if !rooms.isEmpty {
-//                    self.allRooms = rooms
-//                    self.getSoonestTimeSlot()
-//                    foundAvailableRoom = true
-//                }
-//            case .failure:
-//                present(toast: .apiError)
-//            }
-//        }
-//        if !foundAvailableRoom && location == self.locations.last {
-//            present(toast: .apiError)
-//        }
-//        group.notify(queue: DispatchQueue.main) {
-//            if foundAvailableRoom {
-//                completion()
-//                self.setupSubmitAlert(location: location)
-//            } else {
-//                self.present(toast: .apiError)
-//            }
-//        }
     }
     
     private func getSoonestTimeSlot(duration: Int, time: Date) -> (slot: GSRTimeSlot, room: GSRRoom)? {
@@ -87,8 +63,8 @@ extension QuickBookViewController: GSRBookable {
         if !Account.isLoggedIn {
             self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
         } else {
-            var timeSlot :GSRTimeSlot = soonestDetails!.slot
-            var timeRoom :GSRRoom = soonestDetails!.room
+            let timeSlot :GSRTimeSlot = soonestDetails!.slot
+            let timeRoom :GSRRoom = soonestDetails!.room
             submitBooking(for: GSRBooking(gid: location.gid, startTime: timeSlot.startTime, endTime: timeSlot.endTime, id: timeRoom.id, roomName: timeRoom.roomName))
         }
     }
