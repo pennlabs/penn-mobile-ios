@@ -16,6 +16,7 @@ public enum RolloutChannel {
     case appStore
     case testflight
     case experimental
+    case adHoc
 }
 
 public enum FeatureFlagState {
@@ -31,7 +32,7 @@ public enum FeatureFlagState {
             switch channel {
             case .appStore:
                 true
-            case .experimental:
+            case .experimental, .adHoc:
                 false
             default:
                 false
@@ -55,7 +56,7 @@ private func determineInitialFeatureFlagState(name: String, channel: RolloutChan
     }
     
     let defaultsKey = featureFlagDefaultsKey(name: name)
-    if UserDefaults.group.object(forKey: name) != nil {
+    if UserDefaults.group.object(forKey: defaultsKey) != nil {
         return .overriden(UserDefaults.group.bool(forKey: name))
     }
     
