@@ -33,7 +33,6 @@ class RoomSelectionView: UIView, IndicatorEnabled {
     // Views
     fileprivate var tableView: UITableView = UITableView()
     fileprivate lazy var searchBar = UISearchBar()
-    fileprivate let emptyView: EmptyView = EmptyView().hidden() as! EmptyView
 
     override init(frame: CGRect) {
         super.init(frame: frame)

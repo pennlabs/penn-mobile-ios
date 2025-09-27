@@ -42,7 +42,7 @@ extension Optional {
     }
     
     func populateSublettingBannerData() {
-        data.showSublettingBanner = !UserDefaults.standard.bool(forKey: Self.sublettingBannerKey)
+        // data.showSublettingBanner = !UserDefaults.standard.bool(forKey: Self.sublettingBannerKey)
         data.onStartSubletting = { [weak self] in
             if let self, let navigationManager {
                 let tabFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()

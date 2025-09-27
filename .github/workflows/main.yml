@@ -2,19 +2,22 @@ name: CI
 
 on:
   push:
+    branches:
+      - 'main'
+  pull_request:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
-      - name: Select Xcode 16.4
+      - name: Select Xcode 26.0
         # This could be the source of error for versioning issues in CI.
         # With the release of Xcode 26.1, GH is being more aggressive in removing version support in macOS runners:
         # https://github.com/actions/runner-images/issues/12541
         # https://github.com/actions/runner-images/issues/12758
 
         # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
-        run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_26.app/Contents/Developer'
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Create Config File
@@ -85,6 +88,7 @@ jobs:
         with:
           name: build
           path: PennMobile.ipa
+          retention-days: 14
   upload:
     needs: build
     if: github.ref == 'refs/heads/main'
@@ -111,12 +115,3 @@ jobs:
           name: build
       - name: Upload to TestFlight
         run: bundle exec fastlane ci_pilot
-  cleanup:
-    runs-on: macos-15
-    needs: [build, upload]
-    if: always()
-    steps:
-      - name: Delete artifacts
-        uses: geekyeggo/delete-artifact@v5
-        with:
-          name: build
