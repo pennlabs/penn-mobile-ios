@@ -24,7 +24,7 @@ extension Optional {
 @MainActor class StandardHomeViewModel: HomeViewModel {
     static let sublettingBannerKey = "sublettingBannerDismissed"
     
-    static let announceable: [HomeViewAnnounceable] = [DiningViewModelSwiftUI.instance]
+    static let announceable: [HomeViewAnnounceable] = []
     
     @Published private(set) var data = HomeViewData()
     var isFetching = false
@@ -193,9 +193,8 @@ extension Optional {
             }
         }
         
-<<<<<<< HEAD
+        
         _ = await announcementsTask
-=======
         async let wrappedTask = Task {
             let url = URL(string: "https://pennmobile.org/api/wrapped/semester/2025S-public/")!
             guard let req = try? await URLRequest(url: url, mode: .accessToken) else {
@@ -224,7 +223,6 @@ extension Optional {
         }
         
         _ = await wrappedTask
->>>>>>> 0462f70989ac4aae40fe7e536a7715f2cd80e299
         _ = await pollsTask
         _ = await postsTask
         _ = await newsArticlesTask
