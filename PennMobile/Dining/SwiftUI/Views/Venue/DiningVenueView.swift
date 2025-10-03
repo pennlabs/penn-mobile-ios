@@ -206,6 +206,14 @@ struct CustomHeader: View {
             }
         }
     }
+    
+    var background: Color {
+        if #available(iOS 26.0, *) {
+            Color.clear
+        } else {
+            Color(UIColor.uiBackground)
+        }
+    }
 
     var body: some View {
         let isRefreshing: Bool
@@ -247,7 +255,7 @@ struct CustomHeader: View {
         }
         .padding()
         .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-        .background(Color(UIColor.uiBackground))
+        .background(background)
         // Default Text Case for Header is Caps Lock
         .textCase(nil)
         .sheet(isPresented: $showDiningLoginView) {

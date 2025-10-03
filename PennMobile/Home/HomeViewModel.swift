@@ -24,6 +24,8 @@ extension Optional {
 @MainActor class StandardHomeViewModel: HomeViewModel {
     static let sublettingBannerKey = "sublettingBannerDismissed"
     
+    static let announceable: [HomeViewAnnounceable] = []
+    
     @Published private(set) var data = HomeViewData()
     var isFetching = false
     var lastFetch: Date?
@@ -90,6 +92,45 @@ extension Optional {
             self?.respondToPoll(questionId: question, optionId: option)
         }
         
+        async let announcementsTask = Task {
+            
+            await MainActor.run {
+                self.data.announcements = []
+            }
+            
+            _ = await StandardHomeViewModel.announceable.asyncMap { feature in
+                    await feature.getHomeViewAnnouncements()
+            }.flatMap({ $0 }).asyncMap { el in
+                let newAnnouncement: HomeViewAnnouncement
+                if let featureId = el.linkedFeature {
+                    var newEl = el
+                    newEl.addTapListener {
+                        await MainActor.run {
+                            guard let nav = self.navigationManager else { return }
+                            let tabFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
+                            if tabFeatures.contains(featureId) {
+                                nav.currentTab = featureId.rawValue
+                            } else {
+                                nav.currentTab = "More"
+                                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250)) {
+                                    nav.path = .init([featureId])
+                                }
+                            }
+                        }
+                    }
+                    newAnnouncement = newEl
+                } else {
+                    newAnnouncement = el
+                }
+                
+                await MainActor.run {
+                    self.data.announcements.append(newAnnouncement)
+                }
+                
+                return newAnnouncement
+            }
+        }
+        
         async let pollsTask = Task {
             let polls = await PollsNetworkManager.instance.getActivePolls().mapError { $0 as Error }
             await MainActor.run {
@@ -152,6 +193,8 @@ extension Optional {
             }
         }
         
+        
+        _ = await announcementsTask
         async let wrappedTask = Task {
             let url = URL(string: "https://pennmobile.org/api/wrapped/semester/2025S-public/")!
             guard let req = try? await URLRequest(url: url, mode: .accessToken) else {
