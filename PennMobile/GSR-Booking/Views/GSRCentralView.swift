@@ -43,30 +43,54 @@ struct GSRCentralView: View {
                     case .book:
                         // This is so convoluted because the divider ListView was adding
                         // was ugly
-                        ScrollView(showsIndicators: false) {
-                            if let first = vm.availableLocations.standardGSRSort.first {
-                                NavigationLink(value: first) {
-                                    GSRLocationCell(location: first)
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
-                            if vm.availableLocations.standardGSRSort.count > 1 {
-                                ForEach(vm.availableLocations.standardGSRSort.suffix(from: 1), id: \.self) { location in
-                                    Divider()
-                                    NavigationLink(value: location) {
-                                        GSRLocationCell(location: location)
+                        ZStack (alignment: .bottomTrailing){
+                            ScrollView(showsIndicators: false) {
+                                if let first = vm.availableLocations.standardGSRSort.first {
+                                    NavigationLink(value: first) {
+                                        GSRLocationCell(location: first)
                                     }
                                     .buttonStyle(PlainButtonStyle())
                                 }
+                                if vm.availableLocations.standardGSRSort.count > 1 {
+                                    ForEach(vm.availableLocations.standardGSRSort.suffix(from: 1), id: \.self) { location in
+                                        Divider()
+                                        NavigationLink(value: location) {
+                                            GSRLocationCell(location: location)
+                                        }
+                                        .buttonStyle(PlainButtonStyle())
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                            .navigationDestination(for: GSRLocation.self) { loc in
+                                GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
+                                    .frame(width: UIScreen.main.bounds.width)
+                                    .environmentObject(vm)
+                            }
+                            .transition(.blurReplace)
+                            Button {
+                                vm.isMapView.toggle()
+                            } label : {
+                                Label {
+                                    Text(vm.isMapView ? "List View" : "Map View")
+                                } icon: {
+                                    Image(systemName: vm.isMapView ? "list.bullet": "map.fill" )
+                                }
+                                .foregroundColor(Color.primary)
+                                .frame(minWidth: 125, minHeight: 20, alignment: .center)
+                            }
+                            .padding(.horizontal, 12.5)
+                            .padding(.vertical, 14)
+                            .background {
+                                Capsule()
+                                    .fill(.ultraThinMaterial)
+                            }
+                            .overlay {
+                                Capsule().stroke(.secondary)
                             }
                         }
-                        .padding(.horizontal)
-                        .navigationDestination(for: GSRLocation.self) { loc in
-                            GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
-                                .frame(width: UIScreen.main.bounds.width)
-                                .environmentObject(vm)
-                        }
-                        .transition(.blurReplace)
+                        .padding(.trailing, 20)
+                        .padding(.bottom, 20)
                     case .reservations:
                         ReservationsView()
                             .transition(.blurReplace)
