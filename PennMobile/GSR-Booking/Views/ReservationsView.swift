@@ -13,12 +13,22 @@ struct ReservationsView: View {
     @EnvironmentObject var vm: GSRViewModel
     
     var body: some View {
+        let groupedReservations = Dictionary(grouping: vm.currentReservations) { res in
+            Calendar.current.startOfDay(for: res.start)
+        }
+        
         if !vm.currentReservations.isEmpty {
             ScrollView {
-                VStack {
-                    ForEach(vm.currentReservations) { res in
-                        ReservationCell(reservation: res)
-                        Divider()
+                VStack(alignment: .leading) {
+                    ForEach(groupedReservations.keys.sorted(), id: \.self) { date in
+                        // Header
+                        Text(date.gsrReservationsViewHeaderString)
+                            .font(.largeTitle)
+                            .bold()
+                        ForEach(groupedReservations[date] ?? []) { res in
+                            ReservationCell(reservation: res)
+                            Divider()
+                        }
                     }
                 }
                 .padding()
@@ -40,6 +50,24 @@ struct ReservationsView: View {
             
         }
         
+        
+    }
+}
+
+extension Date {
+    var gsrReservationsViewHeaderString: String {
+        if Calendar.current.isDateInToday(self) {
+            return "Today"
+        }
+        
+        if Calendar.current.isDateInTomorrow(self) {
+            return "Tomorrow"
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter.string(from: self)
         
     }
 }

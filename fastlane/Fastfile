@@ -30,9 +30,18 @@ platform :ios do
 
   lane :ci_build do
     ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
-    increment_build_number({
-      build_number: latest_testflight_build_number(api_key_path: "api_key.json", app_identifier: "org.pennlabs.PennMobile") + 1
-    })
+    # Use Philadelphia's timezone (America/New_York) for build number: YYYYMMDD.HHMMSS
+    previous_tz = ENV['TZ']
+    begin
+      ENV['TZ'] = 'America/New_York'
+      date_build_number = Time.now.strftime("%Y%m%d.%H%M%S")
+    ensure
+      ENV['TZ'] = previous_tz
+    end
+
+    increment_build_number(
+      build_number: date_build_number
+    )
     
     build_app(
         scheme: "PennMobile",
