@@ -19,6 +19,7 @@ struct GSRBookingView: View {
     @State var settingsPopoverAttachmentPoint: CGPoint? = nil
     
     
+    
     var body: some View {
         VStack {
             Picker("Location", selection: $selectedLocInternal) {
