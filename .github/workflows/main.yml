@@ -10,14 +10,14 @@ jobs:
   build:
     runs-on: macos-26
     steps:
-      - name: Select Xcode 26.0
+      - name: Select Xcode 26.0.1
         # This could be the source of error for versioning issues in CI.
         # With the release of Xcode 26.1, GH is being more aggressive in removing version support in macOS runners:
         # https://github.com/actions/runner-images/issues/12541
         # https://github.com/actions/runner-images/issues/12758
 
         # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
-        run: sudo xcode-select -s '/Applications/Xcode_26.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_26.0.1.app/Contents/Developer'
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Create Config File
