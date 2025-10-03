@@ -8,6 +8,7 @@
 
 import SwiftUI
 import LabsPlatformSwift
+import PennMobileShared
 
 private struct PennLink: View, Identifiable {
     let title: LocalizedStringKey
@@ -85,6 +86,16 @@ struct MoreView: View {
                 }
             } header: {
                 Text("Account")
+            }
+            
+            if FeatureFlags.shared.showFeatureFlagSettings {
+                Section {
+                    NavigationLink("Feature Flags") {
+                        FeatureFlagSettingsView()
+                    }
+                } header: {
+                    Text("Development")
+                }
             }
             
             Section {
