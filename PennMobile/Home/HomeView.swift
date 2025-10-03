@@ -53,7 +53,7 @@ struct HomeView<Model: HomeViewModel>: View {
                         .padding(.bottom)
                         .multilineTextAlignment(.center)
                         
-                        if FeatureFlags.testFeatureFlag {
+                        if FeatureFlags.shared.testFeatureFlag {
                             Text("The test feature flag is enabled!")
                                 .padding(.bottom)
                         }
