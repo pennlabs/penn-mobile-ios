@@ -14,7 +14,7 @@ public enum FeatureFlags {
 
 public enum RolloutChannel {
     case appStore
-    case testflight
+    case testFlight
     case experimental
     case adHoc
 }
@@ -24,18 +24,25 @@ public enum FeatureFlagState {
     case overriden(Bool)
     case `default`
     
+    private static let isDevVersion = Bundle.main.bundleIdentifier?.contains(/^org\.pennlabs\.PennMobile\.dev(\.|$)/) ?? false
+    
+    // TODO: Find a long-term replacement for this
+    private static let isTestFlight = Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
+    
     func isOn(channel: RolloutChannel) -> Bool {
         switch self {
         case .environmentVariable(let value), .overriden(let value):
-            value
+            return value
         case .default:
             switch channel {
             case .appStore:
-                true
-            case .experimental, .adHoc:
-                false
-            default:
-                false
+                return true
+            case .testFlight:
+                return Self.isDevVersion || Self.isTestFlight
+            case .experimental:
+                return Self.isDevVersion
+            case .adHoc:
+                return false
             }
         }
     }
