@@ -13,52 +13,76 @@ import PennMobileShared
 class QuickBookViewController: UIViewController {
     
     fileprivate var location: GSRLocation!
-    fileprivate var soonestDetails: (slot: GSRTimeSlot, room: GSRRoom)?
-    fileprivate var soonestStartTimeString: String!
-    fileprivate var soonestEndTimeString: String!
+    fileprivate var soonestDetails: QuickRoomDetails?
     fileprivate var allRooms: [GSRRoom]!
     
-    // Callbacks to allow SwiftUI to react to quick book results
+    fileprivate struct QuickRoomDetails {
+        var slot: GSRTimeSlot
+        var room: GSRRoom
+    }
+    
     var onQuickBookSuccess: ((GSRBooking) -> Void)?
-    var onQuickBookFailure: ((Error) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     @MainActor
-    internal func setupQuickBooking(location: GSRLocation, duration: Int, time: Date) async throws{
+    internal func populateSoonestTimeslot(location: GSRLocation, duration: Int, time: Date) async throws{
         self.location = location
-        
-        do {
-            let avail = try await GSRNetworkManager.getAvailability(for: location, startDate: Date.now, endDate: Date.now)
-            self.allRooms = avail
-            soonestDetails = getSoonestTimeSlot(duration: duration, time: time)
-        } catch {
-            print(error)
-        }
+        let avail = try await GSRNetworkManager.getAvailability(for: location, startDate: Date.now, endDate: Date.now)
+        self.allRooms = avail
+        soonestDetails = getSoonestTimeSlot(duration: duration, time: time)
     }
     
-    private func getSoonestTimeSlot(duration: Int, time: Date) -> (slot: GSRTimeSlot, room: GSRRoom)? {
-        let formatter = DateFormatter()
-        var current: (slot: GSRTimeSlot, room: GSRRoom)?
-        var start : Date! = .distantFuture
-        formatter.timeZone = TimeZone.current
-        formatter.dateFormat = "HH:mm"
-        for room in allRooms {
-            guard let availability = room.availability.first(where: { $0.startTime >= Date() }) else {
-                continue
+    private func getSoonestTimeSlot(duration: Int, time: Date) -> QuickRoomDetails? {
+        guard let rooms = allRooms, !rooms.isEmpty else { return nil }
+        var bestDetails: QuickRoomDetails?
+        var bestStart: Date = .distantFuture
+        
+        for room in rooms {
+            let slots = room.availability
+                .sorted(by: { $0.startTime < $1.startTime })
+                .filter { $0.isAvailable && $0.startTime >= time }
+            
+            for slot in slots {
+                let slotMinutes = Int(slot.endTime.timeIntervalSince(slot.startTime) / 60)
+                if slotMinutes == duration {
+                    if slot.startTime < bestStart {
+                        bestDetails = QuickRoomDetails(slot: slot, room: room)
+                        bestStart = slot.startTime
+                    }
+                }
             }
             
-            if availability.startTime < start {
-                current = (availability, room)
-                start = availability.startTime
-                soonestStartTimeString = formatter.string(from: availability.startTime)
-                soonestEndTimeString = formatter.string(from: availability.endTime)
+            let count = slots.count
+            var i = 0
+            while i < count {
+                let startSlot = slots[i]
+                var sumMinutes = 0
+                var lastEnd = startSlot.startTime
+                var j = i
+                
+                while j < count && sumMinutes < duration {
+                    let s = slots[j]
+                    if s.startTime != lastEnd { break }
+                    let minutes = Int(s.endTime.timeIntervalSince(s.startTime) / 60)
+                    sumMinutes += minutes
+                    lastEnd = s.endTime
+                    j += 1
+                }
+                
+                if sumMinutes == duration {
+                    let composed = GSRTimeSlot(startTime: startSlot.startTime, endTime: lastEnd, isAvailable: true)
+                    if composed.startTime < bestStart {
+                        bestDetails = QuickRoomDetails(slot: composed, room: room)
+                        bestStart = composed.startTime
+                    }
+                }
+                i += 1
             }
         }
-
-        return current
+        return bestDetails
     }
 }
 
@@ -77,22 +101,16 @@ extension QuickBookViewController: GSRBookable {
         let timeRoom: GSRRoom = details.room
         let booking = GSRBooking(gid: location.gid, startTime: timeSlot.startTime, endTime: timeSlot.endTime, id: timeRoom.id, roomName: timeRoom.roomName)
 
-        // If a SwiftUI callback is provided, handle booking with async API and inform the caller.
         if let onQuickBookSuccess = onQuickBookSuccess {
             Task { @MainActor in
                 do {
                     try await GSRNetworkManager.makeBooking(for: booking)
                     onQuickBookSuccess(booking)
                 } catch {
-                    if let onQuickBookFailure = self.onQuickBookFailure {
-                        onQuickBookFailure(error)
-                    } else {
-                        self.showAlert(withMsg: error.localizedDescription, title: "Booking Failed", completion: nil)
-                    }
+                    self.showAlert(withMsg: error.localizedDescription, title: "Booking Failed", completion: nil)
                 }
             }
         } else {
-            // Fallback to legacy flow if no callback is set
             submitBooking(for: booking)
         }
     }

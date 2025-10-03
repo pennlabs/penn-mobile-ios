@@ -78,36 +78,27 @@ struct RoomFinderSelectionPanel: View {
                 withAnimation(.snappy(duration: 0.2)) {
                     isEnabled.toggle()
                 }
-                guard let location = vm.selectedLocation, let duration = minTimeRequirement, let time = earliestTimeRequirement else {
-                    return
-                }
-                Task { @MainActor in
-                    let vc = QuickBookViewController()
-                    do {
-                        try await vc.setupQuickBooking(location: location, duration: duration, time: time)
-                    } catch {
-                        print(error)
+                if (!isEnabled) {
+                    guard let location = vm.selectedLocation, let duration = minTimeRequirement, let time = earliestTimeRequirement else {
                         return
                     }
-
-                    // Wire callbacks so SwiftUI can present success like GSRBookingView
-                    vc.onQuickBookSuccess = { booking in
-                        // Update view model to trigger the success alert in SwiftUI
-                        vm.recentBooking = booking
-                        Task {
-                            vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
-                        }
-                        vm.showSuccessfulBookingAlert = true
-                    }
-                    vc.onQuickBookFailure = { error in
-                        // Present toast on failure similar to other flows
-                        if let presentToast = (Environment(\.presentToast).wrappedValue as? (ToastConfiguration) -> Void) {
+                    Task { @MainActor in
+                        let vc = QuickBookViewController()
+                        do {
+                            try await vc.populateSoonestTimeslot(location: location, duration: duration, time: time)
+                        } catch {
                             print(error)
+                            return
                         }
+                        vc.onQuickBookSuccess = { booking in
+                            vm.recentBooking = booking
+                            Task {
+                                vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
+                            }
+                            vm.showSuccessfulBookingAlert = true
+                        }
+                        vc.quickBook()
                     }
-
-                    // Trigger the booking
-                    vc.quickBook()
                 }
             } label: {
                 Label("Find me a room", systemImage: "wand.and.sparkles")
