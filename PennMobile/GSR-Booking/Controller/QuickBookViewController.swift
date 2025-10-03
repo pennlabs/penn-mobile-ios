@@ -18,6 +18,10 @@ class QuickBookViewController: UIViewController {
     fileprivate var soonestEndTimeString: String!
     fileprivate var allRooms: [GSRRoom]!
     
+    // Callbacks to allow SwiftUI to react to quick book results
+    var onQuickBookSuccess: ((GSRBooking) -> Void)?
+    var onQuickBookFailure: ((Error) -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -61,11 +65,35 @@ class QuickBookViewController: UIViewController {
 extension QuickBookViewController: GSRBookable {
     internal func quickBook() {
         if !Account.isLoggedIn {
-            self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: {self.navigationController?.popViewController(animated: true)})
+            self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: { self.navigationController?.popViewController(animated: true) })
+            return
+        }
+        guard let details = soonestDetails, let location = self.location else {
+            self.showAlert(withMsg: "No available time slots found.", title: "Unavailable", completion: nil)
+            return
+        }
+
+        let timeSlot: GSRTimeSlot = details.slot
+        let timeRoom: GSRRoom = details.room
+        let booking = GSRBooking(gid: location.gid, startTime: timeSlot.startTime, endTime: timeSlot.endTime, id: timeRoom.id, roomName: timeRoom.roomName)
+
+        // If a SwiftUI callback is provided, handle booking with async API and inform the caller.
+        if let onQuickBookSuccess = onQuickBookSuccess {
+            Task { @MainActor in
+                do {
+                    try await GSRNetworkManager.makeBooking(for: booking)
+                    onQuickBookSuccess(booking)
+                } catch {
+                    if let onQuickBookFailure = self.onQuickBookFailure {
+                        onQuickBookFailure(error)
+                    } else {
+                        self.showAlert(withMsg: error.localizedDescription, title: "Booking Failed", completion: nil)
+                    }
+                }
+            }
         } else {
-            let timeSlot :GSRTimeSlot = soonestDetails!.slot
-            let timeRoom :GSRRoom = soonestDetails!.room
-            submitBooking(for: GSRBooking(gid: location.gid, startTime: timeSlot.startTime, endTime: timeSlot.endTime, id: timeRoom.id, roomName: timeRoom.roomName))
+            // Fallback to legacy flow if no callback is set
+            submitBooking(for: booking)
         }
     }
 }

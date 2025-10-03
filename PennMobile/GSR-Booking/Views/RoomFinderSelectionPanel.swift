@@ -81,12 +81,34 @@ struct RoomFinderSelectionPanel: View {
                 guard let location = vm.selectedLocation, let duration = minTimeRequirement, let time = earliestTimeRequirement else {
                     return
                 }
-                Task {
+                Task { @MainActor in
+                    let vc = QuickBookViewController()
                     do {
-                      let vc = QuickBookViewController()
-                      try await vc.setupQuickBooking(location: location, duration: duration, time: time)
-                    } catch { print(error) }
-                  }
+                        try await vc.setupQuickBooking(location: location, duration: duration, time: time)
+                    } catch {
+                        print(error)
+                        return
+                    }
+
+                    // Wire callbacks so SwiftUI can present success like GSRBookingView
+                    vc.onQuickBookSuccess = { booking in
+                        // Update view model to trigger the success alert in SwiftUI
+                        vm.recentBooking = booking
+                        Task {
+                            vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
+                        }
+                        vm.showSuccessfulBookingAlert = true
+                    }
+                    vc.onQuickBookFailure = { error in
+                        // Present toast on failure similar to other flows
+                        if let presentToast = (Environment(\.presentToast).wrappedValue as? (ToastConfiguration) -> Void) {
+                            print(error)
+                        }
+                    }
+
+                    // Trigger the booking
+                    vc.quickBook()
+                }
             } label: {
                 Label("Find me a room", systemImage: "wand.and.sparkles")
                     .font(.body)
@@ -131,3 +153,4 @@ struct RoomFinderSelectionPanel: View {
         }
     }
 }
+
