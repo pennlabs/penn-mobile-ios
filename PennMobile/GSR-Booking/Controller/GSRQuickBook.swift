@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 import PennMobileShared
 
-class QuickBookViewController: UIViewController {
+class GSRQuickBook {
     
     fileprivate var location: GSRLocation?
     fileprivate var soonestDetails: QuickRoomDetails?
@@ -22,11 +22,7 @@ class QuickBookViewController: UIViewController {
     }
     
     var onQuickBookSuccess: ((GSRBooking) -> Void)?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
+
     @MainActor
     internal func populateSoonestTimeslot(location: GSRLocation, duration: Int, time: Date) async throws{
         self.location = location
@@ -85,14 +81,17 @@ class QuickBookViewController: UIViewController {
     }
 }
 
-extension QuickBookViewController: GSRBookable {
-    internal func quickBook() {
-        if !Account.isLoggedIn {
-            self.showAlert(withMsg: "You are not logged in!", title: "Error", completion: { self.navigationController?.popViewController(animated: true) })
-            return
-        }
+extension GSRQuickBook: GSRBookable {
+    func showAlert(withMsg: String, title: String, completion: (() -> Void)?) {
+        return
+    }
+    
+    func showOption(withMsg: String, title: String, onAccept: (() -> Void)?, onCancel: (() -> Void)?) {
+        return
+    }
+    
+    @MainActor internal func quickBook() {
         guard let details = soonestDetails, let location = self.location else {
-            self.showAlert(withMsg: "No available time slots found.", title: "Unavailable", completion: nil)
             return
         }
 
@@ -106,11 +105,9 @@ extension QuickBookViewController: GSRBookable {
                     try await GSRNetworkManager.makeBooking(for: booking)
                     onQuickBookSuccess(booking)
                 } catch {
-                    self.showAlert(withMsg: error.localizedDescription, title: "Booking Failed", completion: nil)
+                    print(error)
                 }
             }
-        } else {
-            submitBooking(for: booking)
         }
     }
 }

@@ -83,21 +83,21 @@ struct RoomFinderSelectionPanel: View {
                         return
                     }
                     Task { @MainActor in
-                        let vc = QuickBookViewController()
+                        let qb = GSRQuickBook()
                         do {
-                            try await vc.populateSoonestTimeslot(location: location, duration: duration, time: time)
+                            try await qb.populateSoonestTimeslot(location: location, duration: duration, time: time)
                         } catch {
                             print(error)
                             return
                         }
-                        vc.onQuickBookSuccess = { booking in
+                        qb.onQuickBookSuccess = { booking in
                             vm.recentBooking = booking
                             Task {
                                 vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
                             }
                             vm.showSuccessfulBookingAlert = true
                         }
-                        vc.quickBook()
+                        qb.quickBook()
                     }
                 }
             } label: {
