@@ -12,9 +12,9 @@ import PennMobileShared
 
 class QuickBookViewController: UIViewController {
     
-    fileprivate var location: GSRLocation!
+    fileprivate var location: GSRLocation?
     fileprivate var soonestDetails: QuickRoomDetails?
-    fileprivate var allRooms: [GSRRoom]!
+    fileprivate var allRooms: [GSRRoom] = []
     
     fileprivate struct QuickRoomDetails {
         var slot: GSRTimeSlot
@@ -36,11 +36,10 @@ class QuickBookViewController: UIViewController {
     }
     
     private func getSoonestTimeSlot(duration: Int, time: Date) -> QuickRoomDetails? {
-        guard let rooms = allRooms, !rooms.isEmpty else { return nil }
         var bestDetails: QuickRoomDetails?
         var bestStart: Date = .distantFuture
         
-        for room in rooms {
+        for room in allRooms {
             let slots = room.availability
                 .sorted(by: { $0.startTime < $1.startTime })
                 .filter { $0.isAvailable && $0.startTime >= time }
