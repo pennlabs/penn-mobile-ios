@@ -11,7 +11,7 @@ import UIKit
 import SwiftyJSON
 import PennMobileShared
 
-class LaundryRoom: Codable {
+class LaundryRoom: Codable, Hashable {
 
     static let directory = "laundryHallData-v2.json"
 
@@ -115,6 +115,13 @@ class LaundryRoom: Codable {
 extension LaundryRoom: Equatable {
     static func == (lhs: LaundryRoom, rhs: LaundryRoom) -> Bool {
         return lhs.id == rhs.id
+    }
+}
+
+// MARK: - Hashable
+extension LaundryRoom {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
 
