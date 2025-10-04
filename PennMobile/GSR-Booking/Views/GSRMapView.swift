@@ -8,6 +8,7 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
 
 struct GSRMapView : View {
     @EnvironmentObject var vm: GSRViewModel
@@ -20,8 +21,11 @@ struct GSRMapView : View {
             span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
         )
     )
+    private let locationManager = CLLocationManager()
+    
     var body : some View {
         Map(position: $position) {
+            UserAnnotation()
             ForEach(vm.availableLocations.standardGSRSort, id: \.self) { location in
                 if let loc = PennLocation.pennGSRLocation[location.name] {
                     Annotation("", coordinate: loc.coordinate) {
@@ -56,6 +60,13 @@ struct GSRMapView : View {
             
         }
         .ignoresSafeArea(.all)
+        .onAppear {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        .mapControls {
+            MapUserLocationButton()
+            MapCompass()
+        }
         .navigationDestination(for: GSRLocation.self) { loc in
             GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
                 .frame(width: UIScreen.main.bounds.width)
