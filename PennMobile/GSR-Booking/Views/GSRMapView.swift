@@ -21,6 +21,11 @@ struct GSRMapView : View {
             span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
         )
     )
+    
+    static let mapBounds = (
+        northEast: CLLocationCoordinate2D(latitude: 39.9560, longitude: -75.1885),
+        southWest: CLLocationCoordinate2D(latitude: 39.9475, longitude: -75.2050)
+    )
     private let locationManager = CLLocationManager()
     
     var body : some View {
@@ -40,7 +45,8 @@ struct GSRMapView : View {
                                 }
                                 .frame(width: 44, height: 44)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-
+                                .allowsHitTesting(false)
+                                
                                 Text(location.name)
                                     .font(.caption2.weight(.semibold))
                                     .lineLimit(1)
