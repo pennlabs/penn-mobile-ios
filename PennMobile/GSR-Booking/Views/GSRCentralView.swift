@@ -43,7 +43,7 @@ struct GSRCentralView: View {
                     case .book:
                         ZStack (alignment: .bottomTrailing){
                             if (vm.isMapView) {
-                                GSRMapView()
+                                GSRMapView(selectedTab: $selectedTab)
                                     .environmentObject(vm)
                             } else {
                                 GSRListView(selectedTab: $selectedTab)
