@@ -41,46 +41,27 @@ struct GSRCentralView: View {
                 Group {
                     switch selectedTab {
                     case .book:
-                        // This is so convoluted because the divider ListView was adding
-                        // was ugly
                         ZStack (alignment: .bottomTrailing){
-                            ScrollView(showsIndicators: false) {
-                                if let first = vm.availableLocations.standardGSRSort.first {
-                                    NavigationLink(value: first) {
-                                        GSRLocationCell(location: first)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                }
-                                if vm.availableLocations.standardGSRSort.count > 1 {
-                                    ForEach(vm.availableLocations.standardGSRSort.suffix(from: 1), id: \.self) { location in
-                                        Divider()
-                                        NavigationLink(value: location) {
-                                            GSRLocationCell(location: location)
-                                        }
-                                        .buttonStyle(PlainButtonStyle())
-                                    }
-                                }
-                            }
-                            .padding(.horizontal)
-                            .navigationDestination(for: GSRLocation.self) { loc in
-                                GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
-                                    .frame(width: UIScreen.main.bounds.width)
+                            if (vm.isMapView) {
+                                GSRMapView()
+                                    .environmentObject(vm)
+                            } else {
+                                GSRListView(selectedTab: $selectedTab)
                                     .environmentObject(vm)
                             }
-                            .transition(.blurReplace)
                             Button {
                                 vm.isMapView.toggle()
                             } label : {
                                 Label {
                                     Text(vm.isMapView ? "List View" : "Map View")
                                 } icon: {
-                                    Image(systemName: vm.isMapView ? "list.bullet": "map.fill" )
+                                    Image(systemName: vm.isMapView ? "list.bullet": "map.fill")
                                 }
                                 .foregroundColor(Color.primary)
                                 .frame(minWidth: 125, minHeight: 20, alignment: .center)
+                                .padding(.horizontal, 12.5)
+                                .padding(.vertical, 14)
                             }
-                            .padding(.horizontal, 12.5)
-                            .padding(.vertical, 14)
                             .background {
                                 Capsule()
                                     .fill(.ultraThinMaterial)
@@ -88,9 +69,10 @@ struct GSRCentralView: View {
                             .overlay {
                                 Capsule().stroke(.secondary)
                             }
+                            .padding(.trailing, 20)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.trailing, 20)
-                        .padding(.bottom, 20)
+                        
                     case .reservations:
                         ReservationsView()
                             .transition(.blurReplace)
@@ -102,6 +84,19 @@ struct GSRCentralView: View {
                     vm.checkWhartonStatus()
                 }
             }
+            /*
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        withAnimation {
+                            vm.isMapView.toggle()
+                        }
+                    } label: {
+                        Image(systemName: vm.isMapView ? "list.bullet": "map.fill")
+                    }
+                }
+            }
+             */
             .ignoresSafeArea(edges: .horizontal)
         } else {
             GSRGuestLandingPage()
