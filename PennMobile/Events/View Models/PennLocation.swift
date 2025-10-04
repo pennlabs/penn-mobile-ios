@@ -34,7 +34,7 @@ extension PennLocation {
             "Levin Building": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.949730, longitude: -75.199541)),
             "Lippincott": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.1939)),
             "Van Pelt": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
-            "Perelman Center": PennLocation(name: "PCPSE", coordinate: CLLocationCoordinate2D(latitude: 39.9534167, longitude: -75.1993981))
+            "Perelman Center": PennLocation(name: "PCPSE", coordinate: CLLocationCoordinate2D(latitude: 39.953440, longitude: -75.194495))
         ]
     
     static let pennEventLocations: [PennLocation] = [
