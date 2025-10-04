@@ -30,11 +30,13 @@ extension PennLocation {
             "Academic Research": PennLocation(name: "ARB", coordinate: CLLocationCoordinate2D(latitude: 39.95129828577706, longitude: -75.19683445915696)),
             "Biotech Commons": PennLocation(name: "Biotech Commons", coordinate: CLLocationCoordinate2D(latitude: 39.9495964, longitude: -75.1982764)),
             "Education Commons": PennLocation(name: "Education Commons", coordinate: CLLocationCoordinate2D(latitude: 39.950675, longitude: -75.189802)),
-            "Weigle": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
+            "Weigle": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952637, longitude: -75.1945)),
             "Levin Building": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.949730, longitude: -75.199541)),
-            "Lippincott": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.1939)),
+            "Lippincott": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.9526363, longitude: -75.1942)),
             "Van Pelt": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
-            "Perelman Center": PennLocation(name: "PCPSE", coordinate: CLLocationCoordinate2D(latitude: 39.953440, longitude: -75.194495))
+            "Perelman Center": PennLocation(name: "PCPSE", coordinate: CLLocationCoordinate2D(latitude: 39.953440, longitude: -75.194495)),
+            "Penn Museum Library": PennLocation(name: "Penn Museum Library", coordinate: CLLocationCoordinate2D(latitude: 39.949344, longitude: -75.191482)),
+            "Albrecht Music Library": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.1939))
         ]
     
     static let pennEventLocations: [PennLocation] = [
