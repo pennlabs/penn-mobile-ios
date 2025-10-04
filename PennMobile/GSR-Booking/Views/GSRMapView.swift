@@ -20,10 +20,9 @@ struct GSRMapView : View {
             span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
         )
     )
-    
     var body : some View {
         Map(position: $position) {
-            ForEach(vm.availableLocations, id: \.lid) { location in
+            ForEach(vm.availableLocations.standardGSRSort, id: \.self) { location in
                 if let loc = PennLocation.pennGSRLocation[location.name] {
                     Annotation("", coordinate: loc.coordinate) {
                         NavigationLink(value: location) {
