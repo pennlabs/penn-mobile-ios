@@ -13,7 +13,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
     
     var presentToast: ToastPresentationCallback?
 
-    internal var rooms = [LaundryRoom]()
+    internal var rooms = [OldLaundryRoom]()
 
     fileprivate let laundryCell = "laundryCell"
     fileprivate let addLaundryCell = "addLaundry"
@@ -35,7 +35,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
 
         tableView.tableFooterView = getFooterViewForTable()
 
-        rooms = LaundryRoom.getPreferences()
+        rooms = OldLaundryRoom.getPreferences()
 
         registerHeadersAndCells()
         prepareRefreshControl()
@@ -54,7 +54,7 @@ class LaundryTableViewController: GenericTableViewController, IndicatorEnabled, 
             self.hideActivity()
 
             // Check if laundry is working
-            LaundryAPIService.instance.checkIfWorking { (isWorking) in
+            OldLaundryAPIService.instance.checkIfWorking { (isWorking) in
                 DispatchQueue.main.async {
                     if let isWorking = isWorking, !isWorking {
                         self.tableView.tableHeaderView = self.getHeaderViewForTable()
@@ -173,7 +173,7 @@ extension LaundryTableViewController {
                     completion()
                 }
             } else {
-                LaundryAPIService.instance.fetchLaundryData(for: self.rooms) { (rooms) in
+                OldLaundryAPIService.instance.fetchLaundryData(for: self.rooms) { (rooms) in
                     DispatchQueue.main.async {
                         if let rooms = rooms {
                             self.rooms = rooms
@@ -190,11 +190,11 @@ extension LaundryTableViewController {
 
 // MARK: - room Selection Delegate
 extension LaundryTableViewController: RoomSelectionVCDelegate {
-    func saveSelection(for rooms: [LaundryRoom]) {
-        LaundryRoom.setPreferences(for: rooms)
+    func saveSelection(for rooms: [OldLaundryRoom]) {
+        OldLaundryRoom.setPreferences(for: rooms)
         self.rooms = rooms
         self.tableView.reloadData()
-        LaundryAPIService.instance.fetchLaundryData(for: rooms) { (rooms) in
+        OldLaundryAPIService.instance.fetchLaundryData(for: rooms) { (rooms) in
             DispatchQueue.main.async {
                 if let rooms = rooms {
                     self.rooms = rooms
@@ -208,10 +208,10 @@ extension LaundryTableViewController: RoomSelectionVCDelegate {
 
 // MARK: - Laundry Cell Delegate
 extension LaundryTableViewController: LaundryCellDelegate {
-    internal func deleteLaundryCell(for room: LaundryRoom) {
+    internal func deleteLaundryCell(for room: OldLaundryRoom) {
         if let index = rooms.firstIndex(of: room) {
             rooms.remove(at: index)
-            LaundryRoom.setPreferences(for: rooms)
+            OldLaundryRoom.setPreferences(for: rooms)
             UserDBManager.shared.saveLaundryPreferences(for: rooms)
             tableView.reloadData()
             sendUpdateNotification(for: rooms)
@@ -221,7 +221,7 @@ extension LaundryTableViewController: LaundryCellDelegate {
 
 // MARK: - Home Page Notification
 extension LaundryTableViewController {
-    fileprivate func sendUpdateNotification(for rooms: [LaundryRoom]) {
+    fileprivate func sendUpdateNotification(for rooms: [OldLaundryRoom]) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: "LaundryUpdateNotification"), object: rooms)
     }
 }

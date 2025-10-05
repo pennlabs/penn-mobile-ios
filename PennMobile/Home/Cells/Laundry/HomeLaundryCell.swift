@@ -28,7 +28,7 @@ final class HomeLaundryCell: UITableViewCell, HomeCellConformable {
     fileprivate var safeArea: HomeCellSafeArea = HomeCellSafeArea()
     fileprivate var header: HomeCellHeader = HomeCellHeader()
 
-    var room: LaundryRoom!
+    var room: OldLaundryRoom!
     fileprivate var washerView: LaundryMachinesView!
     fileprivate var dryerView: LaundryMachinesView!
 

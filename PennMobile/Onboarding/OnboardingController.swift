@@ -177,8 +177,8 @@ class OnboardingController: UIViewController, UICollectionViewDataSource, UIColl
 }
 
 extension OnboardingController: SelectionCellDelegate {
-    func saveSelection(for rooms: [LaundryRoom]) {
-        LaundryRoom.setPreferences(for: rooms)
+    func saveSelection(for rooms: [OldLaundryRoom]) {
+        OldLaundryRoom.setPreferences(for: rooms)
         terminateOnboarding()
         UserDBManager.shared.saveLaundryPreferences(for: rooms)
     }

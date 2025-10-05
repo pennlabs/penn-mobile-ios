@@ -10,7 +10,7 @@ import UIKit
 
 protocol SelectionCellDelegate: AnyObject {
     func handleCancel()
-    func saveSelection(for rooms: [LaundryRoom])
+    func saveSelection(for rooms: [OldLaundryRoom])
 }
 
 class SelectionCell: UICollectionViewCell, RoomSelectionViewDelegate {
@@ -54,7 +54,7 @@ class SelectionCell: UICollectionViewCell, RoomSelectionViewDelegate {
     }
 
     // Need to use titleView (instead of title) to prevent buggy behavior where the title shifts position
-    func updateSelectedRooms(for rooms: [LaundryRoom]) {
+    func updateSelectedRooms(for rooms: [OldLaundryRoom]) {
         let label = navigationBar.topItem?.titleView as! UILabel
         label.text = "\(rooms.count)/\(selectionView.maxNumRooms) Chosen"
         navigationBar.topItem?.titleView = label

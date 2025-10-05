@@ -239,7 +239,7 @@ extension HomeViewController: DiningCellSettingsDelegate {
 // MARK: - Notification Updating
 extension HomeViewController {
     @objc fileprivate func updateLaundryItemForPreferences(_ sender: Notification) {
-        if let laundryRooms = sender.object as? [LaundryRoom] {
+        if let laundryRooms = sender.object as? [OldLaundryRoom] {
             if laundryRooms.count == 0 {
                 if let laundryItem = self.tableViewModel.getItems(for: [HomeItemTypes.instance.laundry]).first {
                     removeItem(laundryItem)

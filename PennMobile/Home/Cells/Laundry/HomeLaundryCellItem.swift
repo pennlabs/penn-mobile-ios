@@ -17,7 +17,7 @@ final class HomeLaundryCellItem: HomeCellItem {
     static func getHomeCellItem(_ completion: @escaping (([HomeCellItem]) -> Void)) {
         UserDBManager.shared.getLaundryPreferences { result in
             if let ids = result, ids.count > 0 {
-                LaundryAPIService.instance.fetchLaundryData(for: ids) { rooms in
+                OldLaundryAPIService.instance.fetchLaundryData(for: ids) { rooms in
                     if let rooms = rooms, rooms.count > 0 {
                         completion([HomeLaundryCellItem(room: rooms[0])])
                     } else {
@@ -30,9 +30,9 @@ final class HomeLaundryCellItem: HomeCellItem {
         }
     }
 
-    var room: LaundryRoom
+    var room: OldLaundryRoom
 
-    init(room: LaundryRoom) {
+    init(room: OldLaundryRoom) {
         self.room = room
     }
 
@@ -55,13 +55,13 @@ final class HomeLaundryCellItem: HomeCellItem {
 extension HomeLaundryCellItem {
     convenience init(json: JSON) throws {
         let id = json["room_id"].intValue
-        let room: LaundryRoom
-        if let laundryRoom = LaundryRoom.getLaundryHall(for: id) {
+        let room: OldLaundryRoom
+        if let laundryRoom = OldLaundryRoom.getLaundryHall(for: id) {
             room = laundryRoom
-        } else if let laundryRoom = LaundryRoom.getPreferences().first {
+        } else if let laundryRoom = OldLaundryRoom.getPreferences().first {
             room = laundryRoom
         } else {
-            room = LaundryRoom.getDefaultRoom()
+            room = OldLaundryRoom.getDefaultRoom()
         }
         self.init(room: room)
     }

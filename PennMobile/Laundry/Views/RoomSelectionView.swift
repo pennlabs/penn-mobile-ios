@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 
 protocol RoomSelectionViewDelegate: AnyObject {
-    func updateSelectedRooms(for rooms: [LaundryRoom])
+    func updateSelectedRooms(for rooms: [OldLaundryRoom])
     func handleFailureToLoadDictionary()
 }
 
@@ -21,11 +21,11 @@ class RoomSelectionView: UIView, IndicatorEnabled {
 
     let maxNumRooms = 3
 
-    public fileprivate(set) var chosenRooms = [LaundryRoom]()
+    public fileprivate(set) var chosenRooms = [OldLaundryRoom]()
 
     // buildings and currentResult to update TableView
-    fileprivate var buildings = [String: [LaundryRoom]]()
-    fileprivate var currentResults = [String: [LaundryRoom]]()
+    fileprivate var buildings = [String: [OldLaundryRoom]]()
+    fileprivate var currentResults = [String: [OldLaundryRoom]]()
 
     // current sort for the headers
     fileprivate var currentSort: [String]!
@@ -43,7 +43,7 @@ class RoomSelectionView: UIView, IndicatorEnabled {
         self.tableView.dataSource = self
     }
 
-    public func prepare(with rooms: [LaundryRoom]?) {
+    public func prepare(with rooms: [OldLaundryRoom]?) {
         if let chosenRooms = rooms {
             self.chosenRooms = chosenRooms
         }
@@ -117,7 +117,7 @@ extension RoomSelectionView {
     }
 
     fileprivate func setupDictionaries() {
-        guard let roomsDict: [Int: LaundryRoom] = LaundryAPIService.instance.idToRooms else {
+        guard let roomsDict: [Int: OldLaundryRoom] = OldLaundryAPIService.instance.idToRooms else {
             attemptToLoadDictionary()
             return
         }
@@ -126,7 +126,7 @@ extension RoomSelectionView {
             let building = room.building
             if building != "Unknown" {
                 if buildings[building] == nil {
-                    var roomsForBuilding = [LaundryRoom]()
+                    var roomsForBuilding = [OldLaundryRoom]()
                     roomsForBuilding.append(room)
                     buildings[building] = roomsForBuilding
                 } else {
@@ -164,7 +164,7 @@ extension RoomSelectionView {
         }
     }
 
-    private func getCurrentIndex(for room: LaundryRoom) -> IndexPath? {
+    private func getCurrentIndex(for room: OldLaundryRoom) -> IndexPath? {
         if let section = currentSort.firstIndex(where: { (building) -> Bool in
             return building == room.building
         }), let rooms = currentResults[room.building] {
@@ -177,7 +177,7 @@ extension RoomSelectionView {
 
     fileprivate func attemptToLoadDictionary() {
         showActivity()
-        LaundryAPIService.instance.loadIds { (success) in
+        OldLaundryAPIService.instance.loadIds { (success) in
             DispatchQueue.main.async {
                 self.hideActivity()
                 if !success {
@@ -283,12 +283,12 @@ extension RoomSelectionView: UISearchBarDelegate, UISearchDisplayDelegate {
             return
         }
 
-        currentResults = [String: [LaundryRoom]]()
+        currentResults = [String: [OldLaundryRoom]]()
         for (building, laundryRooms) in buildings {
             if building.lowercased().contains(searchText.lowercased()) {
                 currentResults[building] = laundryRooms
             } else {
-                var toAdd: [LaundryRoom]  = []
+                var toAdd: [OldLaundryRoom]  = []
                 for room in laundryRooms {
                     if room.name.lowercased().contains(searchText.lowercased()) {
                         toAdd.append(room)

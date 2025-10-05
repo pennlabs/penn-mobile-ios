@@ -12,7 +12,7 @@ import ScrollableGraphView
 // MARK: - Laundry Cell Delegate
 
 protocol LaundryCellDelegate: AnyObject, LaundryMachineCellTappable {
-    func deleteLaundryCell(for room: LaundryRoom)
+    func deleteLaundryCell(for room: OldLaundryRoom)
 }
 
 // MARK: - Laundry Cell
@@ -21,7 +21,7 @@ class LaundryCell: UITableViewCell {
 
     weak var delegate: LaundryCellDelegate?
 
-    var room: LaundryRoom! {
+    var room: OldLaundryRoom! {
         didSet {
             roomLabel.text = room.building.uppercased()
             roomFloorLabel.text = room.name

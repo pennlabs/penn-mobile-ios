@@ -38,7 +38,7 @@ struct PennMobile: App {
         ControllerModel.shared.prepare()
         LaundryNotificationCenter.shared.prepare()
         GSRLocationModel.shared.prepare()
-        LaundryAPIService.instance.prepare {}
+        OldLaundryAPIService.instance.prepare {}
 
         migrateDataToGroupContainer()
         

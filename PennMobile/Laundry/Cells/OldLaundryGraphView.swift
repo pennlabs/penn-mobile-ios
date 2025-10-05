@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import ScrollableGraphView
 
-final class LaundryGraphView: UIView {
+final class OldLaundryGraphView: UIView {
     fileprivate var usageData: [Double]!
     fileprivate var graphData = Array(repeating: 0.0, count: 27)
 
@@ -32,7 +32,7 @@ final class LaundryGraphView: UIView {
 }
 
 // MARK: - Animation Logic
-extension LaundryGraphView {
+extension OldLaundryGraphView {
     func reload(with newUsageData: [Double]?) {
         reloadDottedLineLayer() // refresh the dotted line that indicates current time
         dayLabel.text = Date.currentDayOfWeek
@@ -85,14 +85,14 @@ extension LaundryGraphView {
 }
 
 // MARK: - UIScrollViewDelegate
-extension LaundryGraphView: UIScrollViewDelegate {
+extension OldLaundryGraphView: UIScrollViewDelegate {
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         animateGraph()
     }
 }
 
 // MARK: - ScrollableGraphViewDataSource
-extension LaundryGraphView: ScrollableGraphViewDataSource {
+extension OldLaundryGraphView: ScrollableGraphViewDataSource {
     func numberOfPoints() -> Int {
         return graphData.count
     }
@@ -126,7 +126,7 @@ extension LaundryGraphView: ScrollableGraphViewDataSource {
 }
 
 // MARK: - Prepare UI
-extension LaundryGraphView {
+extension OldLaundryGraphView {
     fileprivate func prepareUI() {
         prepareGraphLabel()
         prepareDayLabel()
