@@ -17,9 +17,7 @@ public class FeatureFlags {
     @FeatureFlagDefinition("TEST_FEATURE_FLAG", channel: .adHoc) public var testFeatureFlag
     
     @MainActor public var showFeatureFlagSettings: Bool {
-        if RolloutChannel.current >= .testFlight || alwaysShowFeatureFlagSettings {
-            return true
-        } else if RolloutChannel.override != nil {
+        if RolloutChannel.current >= .testFlight || alwaysShowFeatureFlagSettings || RolloutChannel.override != nil {
             return true
         } else {
             return configurableFlags.contains(where: {
