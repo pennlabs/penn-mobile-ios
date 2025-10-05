@@ -39,7 +39,7 @@ public enum RolloutChannel: Int, Comparable, CaseIterable, Hashable {
     case experimental = 3
     case adHoc = 4
     
-    public static let configurable = [RolloutChannel.appStore, .testFlight, .experimental]
+    public static let configurable: [RolloutChannel] = [.appStore, .testFlight, .experimental]
     
     public var name: LocalizedStringKey {
         switch self {
