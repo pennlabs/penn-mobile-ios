@@ -28,6 +28,8 @@ struct FeatureFlagSettingsView: View {
         }
     })
     
+    @State var isConfirmingExit = false
+    
     var body: some View {
         List {
             Section {
@@ -69,8 +71,13 @@ struct FeatureFlagSettingsView: View {
                     }
                 }
                 
-                Button("Exit App & Apply Changes") {
-                    exit(0)
+                Button("Exit App & Apply Changes...", role: .destructive) {
+                    isConfirmingExit = true
+                }
+                .confirmationDialog("Are you sure you want to terminate Penn Mobile?", isPresented: $isConfirmingExit, titleVisibility: .visible) {
+                    Button("Exit App", role: .destructive) {
+                        exit(0)
+                    }
                 }
             }
             
