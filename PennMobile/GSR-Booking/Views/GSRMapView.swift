@@ -39,21 +39,23 @@ struct GSRMapView : View {
                                 } placeholder: {
                                     ProgressView()
                                 }
-                                .frame(width: 44, height: 44)
+                                .frame(width: 45, height: 45)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .allowsHitTesting(false)
                                 
                                 Text(location.name)
                                     .font(.caption2.weight(.semibold))
-                                    .lineLimit(1)
+                                    .multilineTextAlignment(.center)
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .padding(.horizontal, 8)
                                     .padding(.vertical, 4)
                                     .contentShape(Rectangle())
                                     .background(.ultraThinMaterial)
                                     .cornerRadius(8)
+                                    .frame(maxWidth: 100)
                             }
                             .padding(1)
-                            
+                            .frame(maxWidth: 100, maxHeight: 50)
                         }
                         .buttonStyle(.plain)
                     }
