@@ -22,10 +22,6 @@ struct GSRMapView : View {
         )
     )
     
-    static let mapBounds = (
-        northEast: CLLocationCoordinate2D(latitude: 39.9560, longitude: -75.1885),
-        southWest: CLLocationCoordinate2D(latitude: 39.9475, longitude: -75.2050)
-    )
     private let locationManager = CLLocationManager()
     
     var body : some View {
@@ -81,3 +77,6 @@ struct GSRMapView : View {
         .transition(.blurReplace)
     }
 }
+
+
+
