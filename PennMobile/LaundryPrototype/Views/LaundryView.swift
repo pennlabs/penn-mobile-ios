@@ -11,12 +11,50 @@ import SwiftUI
 struct LaundryView: View {
     
     @State var rooms: Set<LaundryRoom> = []
+    @State private var isShowingSelect: Bool = false
+    
+    var selectionMessage: String {
+        if rooms.count == 0 {
+            return "No laundry rooms selected"
+        } else {
+            return "\(rooms.count) of 3 rooms selected"
+        }
+    }
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack(spacing: 6) {
+                Text(selectionMessage)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Button(action: {
+                    isShowingSelect = true
+                }) {
+                    Text("Select a room")
+                        .font(.subheadline)
+                        .bold()
+                }
+            }.padding(.top, 30)
+        }
+        .navigationTitle("Laundry")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isShowingSelect = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+        }
+        .sheet(isPresented: $isShowingSelect) {
+            LaundrySelectView(isShowingSelect: $isShowingSelect)
+        }
     }
 }
 
 #Preview {
-    LaundryView()
+    NavigationStack {
+        LaundryView()
+    }
 }

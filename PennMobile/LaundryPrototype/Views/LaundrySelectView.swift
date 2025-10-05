@@ -9,11 +9,36 @@
 import SwiftUI
 
 struct LaundrySelectView: View {
+    
+    @Binding var isShowingSelect: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack {
+                Text("Hello, World!")
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Cancel") {
+                        // TODO: Implement logic.
+                        isShowingSelect = false
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Save") {
+                        isShowingSelect = false
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.blue)
+                }
+            }
+            .navigationTitle("0/3 Chosen")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        
     }
 }
 
 #Preview {
-    LaundrySelectView()
+    LaundrySelectView(isShowingSelect: .constant(true))
 }
