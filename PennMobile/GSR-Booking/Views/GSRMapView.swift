@@ -41,7 +41,7 @@ struct GSRMapView : View {
                                 }
                                 .frame(width: 45, height: 45)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                                
+             
                                 Text(location.name)
                                     .font(.caption2.weight(.semibold))
                                     .multilineTextAlignment(.center)
@@ -59,7 +59,6 @@ struct GSRMapView : View {
                         }
                         .buttonStyle(.plain)
                     }
-                    
                 }
             }
             
