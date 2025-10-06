@@ -196,14 +196,14 @@ extension Optional {
         
         _ = await announcementsTask
         async let wrappedTask = Task {
-            let url = URL(string: "https://pennmobile.org/api/wrapped/semester/2025S-public/")!
+            let url = URL(string: "https://pennmobile.org/api/wrapped/semester/current/")!
             guard let req = try? await URLRequest(url: url, mode: .accessToken) else {
                 DispatchQueue.main.async {
                     self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
                 }
                 return
             }
-                let task = URLSession.shared.dataTask(with: url) { data, response, _ in
+                let task = URLSession.shared.dataTask(with: req) { data, response, _ in
                     guard let httpResponse = response as? HTTPURLResponse, let data, httpResponse.statusCode == 200 else {
                         DispatchQueue.main.async {
                             self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
