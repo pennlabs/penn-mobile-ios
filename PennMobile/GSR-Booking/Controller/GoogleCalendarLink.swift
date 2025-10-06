@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GoogleCalendarLink {
+enum GoogleCalendarLink {
     static func makeURL(title: String, location: String, start: Date, end: Date) -> URL? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMdd'T'HHmmss'Z'"

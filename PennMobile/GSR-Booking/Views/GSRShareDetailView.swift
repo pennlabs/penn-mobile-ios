@@ -23,7 +23,8 @@ struct GSRShareDetailView: View {
     
     private var dateFormatter: DateFormatter {
         let df = DateFormatter()
-        df.dateFormat = "MM/dd/yy"
+        df.dateStyle = .short
+        df.timeStyle = .none
         return df
     }
 
@@ -134,7 +135,7 @@ struct GSRShareDetailView: View {
                     }
                     Button {
                         if let url = GoogleCalendarLink.makeURL(
-                            title: "GSR Booking: \(gsrLocation + " " + (room ?? ""))",
+                            title: "GSR Booking: \(gsrLocation) \(room ?? "")",
                             location: gsrLocation,
                             start: model.reservation.start,
                             end: model.reservation.end

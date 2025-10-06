@@ -25,7 +25,7 @@ struct CalendarHelper {
                 event.location = location
                 event.startDate = start
                 event.endDate = end
-                event.notes = "Created by PennMobile"
+                event.notes = "Created by Penn Mobile"
                 event.calendar = eventStore.defaultCalendarForNewEvents
 
                 do {
