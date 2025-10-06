@@ -13,6 +13,8 @@ struct GSRLocationCell: View {
     let height: CGFloat = 100
     
     fileprivate var location: GSRLocation
+
+    @State private var availabilityCount: Int? = nil
     
     init(location: GSRLocation) {
         self.location = location
@@ -26,9 +28,39 @@ struct GSRLocationCell: View {
                 .frame(width: 120, height: 80)
                 .scaledToFill()
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-            Text(location.name)
-                .font(.system(size: 18))
-                .padding(.leading, 16)
+            VStack (alignment: .leading, spacing: 6){
+                Text(location.name)
+                    .font(.system(size: 18))
+                if let count = availabilityCount {
+                    if (count == 0) {
+                        Text("None Available")
+                            .font(.system(size: 12))
+                            .foregroundColor(.baseRed)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(.ultraThinMaterial)
+                            )
+                    } else {
+                        HStack {
+                            Image(systemName:"circle.fill")
+                            Text("\(count) open")
+                        }
+                        .font(.system(size: 12))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .foregroundColor(.baseGreen)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(.ultraThinMaterial)
+                        )
+                    }
+                } else {
+                    ProgressView()
+                }
+            }
+            .padding(.leading, 16)
             Spacer()
             Image(systemName: "chevron.right")
                 .bold()
@@ -36,5 +68,17 @@ struct GSRLocationCell: View {
         .frame(height: height)
         .cornerRadius(8)
         .contentShape(.rect)
+        .task {
+            await loadAvailability()
+        }
+    }
+    
+    private func loadAvailability() async {
+        do {
+            let count = try await GSRAvailability.getGSRSCurrentlyOpen(location: location)
+            availabilityCount = count
+        } catch {
+            availabilityCount = nil
+        }
     }
 }

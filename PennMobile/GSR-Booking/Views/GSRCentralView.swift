@@ -84,19 +84,6 @@ struct GSRCentralView: View {
                     vm.checkWhartonStatus()
                 }
             }
-            /*
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button {
-                        withAnimation {
-                            vm.isMapView.toggle()
-                        }
-                    } label: {
-                        Image(systemName: vm.isMapView ? "list.bullet": "map.fill")
-                    }
-                }
-            }
-             */
             .ignoresSafeArea(edges: .horizontal)
         } else {
             GSRGuestLandingPage()
