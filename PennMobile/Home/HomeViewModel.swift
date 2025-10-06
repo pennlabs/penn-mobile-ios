@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 extension Optional {
     mutating func makeNilIfError<Success, Failure: Error>() where Wrapped == Result<Success, Failure> {
@@ -195,25 +196,18 @@ extension Optional {
         
         
         _ = await announcementsTask
-        async let wrappedTask = Task {
+        async let wrappedTask = Task { @MainActor in
             let url = URL(string: "https://pennmobile.org/api/wrapped/semester/current/")!
-            guard let req = try? await URLRequest(url: url, mode: .accessToken),
-                  let (data, response) = try? await URLSession.shared.data(for: req),
-                  let httpResponse = response as? HTTPURLResponse,
-                  httpResponse.statusCode == 200 else {
-                DispatchQueue.main.async {
-                    self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
+            do {
+                let req = try await URLRequest(url: url, mode: .accessToken)
+                let (data, response) = try await URLSession.shared.data(for: req)
+                guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+                    throw NetworkingError.serverError
                 }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                do {
-                    let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
-                    self.data.wrapped = .success(wrapped)
-                } catch {
-                    self.data.wrapped = .failure(error)
-                }
+                let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
+                self.data.wrapped = .success(wrapped)
+            } catch {
+                self.data.wrapped = .failure(error)
             }
         }
         
