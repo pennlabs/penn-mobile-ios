@@ -197,29 +197,24 @@ extension Optional {
         _ = await announcementsTask
         async let wrappedTask = Task {
             let url = URL(string: "https://pennmobile.org/api/wrapped/semester/current/")!
-            guard let req = try? await URLRequest(url: url, mode: .accessToken) else {
+            guard let req = try? await URLRequest(url: url, mode: .accessToken),
+                  let (data, response) = try? await URLSession.shared.data(for: req),
+                  let httpResponse = response as? HTTPURLResponse,
+                  httpResponse.statusCode == 200 else {
                 DispatchQueue.main.async {
                     self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
                 }
                 return
             }
-                let task = URLSession.shared.dataTask(with: req) { data, response, _ in
-                    guard let httpResponse = response as? HTTPURLResponse, let data, httpResponse.statusCode == 200 else {
-                        DispatchQueue.main.async {
-                            self.data.wrapped = .success(WrappedModel(semester: "", pages: []))
-                        }
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        do {
-                            let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
-                            self.data.wrapped = .success(wrapped)
-                        } catch {
-                            self.data.wrapped = .failure(error)
-                        }
-                    }
+            
+            DispatchQueue.main.async {
+                do {
+                    let wrapped = try JSONDecoder().decode(WrappedModel.self, from: data)
+                    self.data.wrapped = .success(wrapped)
+                } catch {
+                    self.data.wrapped = .failure(error)
                 }
-                task.resume()
+            }
         }
         
         _ = await wrappedTask
