@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LaundryView: View {
     
-    @State var rooms: Set<LaundryRoom> = []
+    @State var rooms: Set<LaundryHallID> = []
     @State private var isShowingSelect: Bool = false
     
     var selectionMessage: String {
