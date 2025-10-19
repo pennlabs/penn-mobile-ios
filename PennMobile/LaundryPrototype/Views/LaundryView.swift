@@ -10,17 +10,18 @@ import SwiftUI
 
 struct LaundryView: View {
     
-    @State var rooms: Set<LaundryHallID> = []
+    @StateObject private var laundryViewModel: LaundryViewModel = LaundryViewModel()
     @State private var isShowingSelect: Bool = false
     
     var selectionMessage: String {
-        if rooms.count == 0 {
-            return "No laundry rooms selected"
-        } else {
-            return "\(rooms.count) of 3 rooms selected"
-        }
+//        if laundryHallIds.isEmpty {
+//            return "No laundry rooms selected"
+//        } else {
+//            return "\(laundryHallIds.count) of 3 rooms selected"
+//        }
+        return "TODO"
     }
-    
+        
     var body: some View {
         ScrollView {
             VStack(spacing: 6) {
@@ -49,6 +50,9 @@ struct LaundryView: View {
         }
         .sheet(isPresented: $isShowingSelect) {
             LaundrySelectView(isShowingSelect: $isShowingSelect)
+        }
+        .task {
+            await laundryViewModel.loadLaundryHalls()
         }
     }
 }

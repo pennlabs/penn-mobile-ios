@@ -6,17 +6,19 @@
 //  Copyright © 2025 PennLabs. All rights reserved.
 //
 
+import PennMobileShared
 import SwiftUI
 
 struct LaundrySelectView: View {
     
+    @State private var searchText: String = ""
     @Binding var isShowingSelect: Bool
     
     var body: some View {
         NavigationStack {
             VStack {
                 Text("Hello, World!")
-            }
+            }.searchable(text: $searchText)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Cancel") {

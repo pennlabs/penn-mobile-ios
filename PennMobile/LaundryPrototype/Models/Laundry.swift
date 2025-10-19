@@ -6,25 +6,15 @@
 //  Copyright © 2025 PennLabs. All rights reserved.
 //
 
-struct LaundryHallID: Codable, Hashable {
+struct LaundryHallId: Codable, Hashable {
     let name: String
-    let hallID: Int
+    let hallId: Int
     let location: String
     
     enum CodingKeys: String, CodingKey {
         case name
-        case hallID = "hall_id"
+        case hallId = "hall_id"
         case location
-    }
-}
-
-struct LaundryAPIStatus: Codable, Hashable {
-    let isWorking: Bool
-    let errorMessage: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case isWorking = "is_working"
-        case errorMessage = "error_msg"
     }
 }
 
