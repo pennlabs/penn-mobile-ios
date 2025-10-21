@@ -13,15 +13,20 @@ import Playgrounds
 @MainActor
 final class LaundryAPIService {
     
+    // MARK: - API Endpoints
     static let laundryUsageURL: URL = URL(string: "https://pennmobile.org/api/laundry/rooms/")!
     static let laundryIdURL: URL = URL(string: "https://pennmobile.org/api/laundry/halls/ids")!
     
+    // MARK: - Fetch Laundry Hall Ids
+    /// Fetches the list of laundry hall identifiers from the API
     static func getLaundryHallIdData() async throws -> [LaundryHallId] {
         let (data, _) = try await URLSession.shared.data(from: laundryIdURL)
         let decoded = try JSONDecoder().decode([LaundryHallId].self, from: data)
         return decoded
     }
     
+    // MARK: - Fetch Laundry Hall Usage
+    /// Fetches the laundry hall usage details for a given hall ID
     static func getLaundryHallUsage(for hall_id: Int) async throws -> LaundryHallUsage {
         let url: URL = URL(string: "https://pennmobile.org/api/laundry/rooms/\(hall_id)")!
         let (data, _) = try await URLSession.shared.data(from: url)
@@ -29,6 +34,8 @@ final class LaundryAPIService {
         return decoded
     }
 }
+
+// MARK: - Playgrounds
 
 #Playground("getLaundryHallIdData") {
     do {

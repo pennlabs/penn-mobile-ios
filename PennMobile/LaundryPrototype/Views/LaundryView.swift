@@ -10,18 +10,18 @@ import SwiftUI
 
 struct LaundryView: View {
     
+    // MARK: - Properties
     @StateObject private var laundryViewModel: LaundryViewModel = LaundryViewModel()
     @State private var isShowingSelect: Bool = false
     
-    var selectionMessage: String {
-//        if laundryHallIds.isEmpty {
-//            return "No laundry rooms selected"
-//        } else {
-//            return "\(laundryHallIds.count) of 3 rooms selected"
-//        }
-        return "TODO"
+    // MARK: - Computed Properteies
+    private var selectionMessage: String {
+        let count = laundryViewModel.selectedHalls.count
+        if count == 0 { return "No laundry rooms selected" }
+        return "\(count) room\(count > 1 ? "s" : "") selected"
     }
-        
+    
+    // MARK: - Body
     var body: some View {
         ScrollView {
             VStack(spacing: 6) {
@@ -49,7 +49,7 @@ struct LaundryView: View {
             }
         }
         .sheet(isPresented: $isShowingSelect) {
-            LaundrySelectView(isShowingSelect: $isShowingSelect)
+            LaundrySelectView(isShowingSelect: $isShowingSelect).environmentObject(laundryViewModel)
         }
         .task {
             await laundryViewModel.loadLaundryHalls()
@@ -57,6 +57,7 @@ struct LaundryView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     NavigationStack {
         LaundryView()
