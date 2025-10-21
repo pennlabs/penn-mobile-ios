@@ -80,8 +80,19 @@ struct GSRCentralView: View {
                 }
                 .environmentObject(vm)
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear {
-                    vm.checkWhartonStatus()
+            }
+            .toolbar {
+                // should we always show the refresh icon?
+                if vm.shouldShowRefreshIcon || selectedTab == .reservations {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button {
+                            Task {
+                                await vm.getInitialState()
+                            }
+                        } label: {
+                            Image(systemName: "arrow.clockwise")
+                        }
+                    }
                 }
             }
             /*

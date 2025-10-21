@@ -40,6 +40,7 @@ class GSRViewModel: ObservableObject {
     @Published var currentReservations: [GSRReservation] = []
     @Published var settings: GSRViewModel.Settings = Settings()
     @Published var isMapView: Bool = false
+    @Published var shouldShowRefreshIcon: Bool = false
     
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })
@@ -49,13 +50,22 @@ class GSRViewModel: ObservableObject {
         let options = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now) }
         datePickerOptions = options
         selectedDate = options.first!
-        DispatchQueue.main.async {
-            Task {
-                self.availableLocations = (try? await GSRNetworkManager.getLocations()) ?? []
-                self.isWharton = (try? await GSRNetworkManager.whartonAllowed()) ?? false
-                self.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
-                return
+        Task(operation: self.getInitialState)
+    }
+    
+    @MainActor func getInitialState() async {
+        do {
+            self.availableLocations = try await GSRNetworkManager.getLocations()
+            self.isWharton = try await GSRNetworkManager.whartonAllowed()
+            self.currentReservations = try await GSRNetworkManager.getReservations()
+            self.shouldShowRefreshIcon = false
+        } catch {
+            if let authError = error as? NetworkingError, authError.rawValue == NetworkingError.authenticationError.rawValue {
+                ToastView.sharedCallback?(.init(message: "Unable to fetch data due to invalid login state. Try to log out and log back into Penn Mobile."))
+            } else {
+                ToastView.sharedCallback?(.init(message: "Unable to fetch GSR data."))
             }
+            self.shouldShowRefreshIcon = true
         }
     }
     
@@ -239,7 +249,12 @@ class GSRViewModel: ObservableObject {
     func checkWhartonStatus() {
         DispatchQueue.main.async {
             Task {
-                self.isWharton = (try? await GSRNetworkManager.whartonAllowed()) ?? false
+                do {
+                    self.isWharton = try await GSRNetworkManager.whartonAllowed()
+                } catch {
+                    self.isWharton = false
+                    ToastView.sharedCallback?(.init(message: "Unable to fetch Wharton status. Please try again."))
+                }
             }
         }
     }
