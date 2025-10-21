@@ -130,11 +130,3 @@ struct RootView: View {
         }
     }
 }
-
-struct TabBarControllerView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> TabBarController {
-        return TabBarController()
-    }
-
-    func updateUIViewController(_ uiViewController: TabBarController, context: Context) {}
-}
