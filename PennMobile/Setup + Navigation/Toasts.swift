@@ -27,6 +27,8 @@ struct ToastConfiguration {
 }
 
 struct ToastView: View {
+    static var sharedCallback: ToastPresentationCallback? = nil
+    
     var configuration: ToastConfiguration
     
     var body: some View {

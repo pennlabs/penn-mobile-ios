@@ -27,6 +27,15 @@ struct RootView: View {
     
     let timer = Timer.publish(every: 30, on: .main, in: .default).autoconnect()
     
+    var toastExecutor: ToastPresentationCallback {
+        return { @MainActor configuration in
+            self.toast?.postAccessibilityAnnouncement()
+            withAnimation {
+                self.toast = configuration
+            }
+        }
+    }
+    
     var body: some View {
         Group {
             switch authManager.state {
@@ -88,12 +97,7 @@ struct RootView: View {
                     .accessibilityHint("Dismisses the toast")
             }
         }
-        .environment(\.presentToast) { configuration in
-            toast?.postAccessibilityAnnouncement()
-            withAnimation {
-                toast = configuration
-            }
-        }
+        .environment(\.presentToast, self.toastExecutor)
         .overlay {
             ZStack {
                 if popupManager.disableBackground {
@@ -119,6 +123,9 @@ struct RootView: View {
                     }
                 }
             }
+        }
+        .task {
+            ToastView.sharedCallback = self.toastExecutor
         }
         .onChange(of: toast?.id) { _ in
             toastOffset = 0.0
