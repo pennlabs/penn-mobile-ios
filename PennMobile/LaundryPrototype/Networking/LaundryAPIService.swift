@@ -22,10 +22,10 @@ final class LaundryAPIService {
         return decoded
     }
     
-    static func getLaundryHallUsage(for hall_id: Int) async throws -> LaundryHallUsage {
+    static func getLaundryHallUsage(for hall_id: Int) async throws -> LaundryHallUsageResponse {
         let url: URL = URL(string: "https://pennmobile.org/api/laundry/rooms/\(hall_id)")!
         let (data, _) = try await URLSession.shared.data(from: url)
-        let decoded = try JSONDecoder().decode(LaundryHallUsage.self, from: data)
+        let decoded = try JSONDecoder().decode(LaundryHallUsageResponse.self, from: data)
         return decoded
     }
 }

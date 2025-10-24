@@ -18,10 +18,30 @@ struct LaundryView: View {
         return "\(laundryViewModel.selectedHalls.count) of 3 rooms selected"
     }
     
+    private var sortedSelectedHalls: [Int] {
+        guard case let .success(halls) = laundryViewModel.laundryHallIds else { return [] }
+        let selected = halls.filter { laundryViewModel.selectedHalls.contains($0.hallId) }
+        
+        return selected.sorted {
+            if $0.location == $1.location {
+                return $0.name < $1.name
+            }
+            return $0.location < $1.location
+        }.map { $0.hallId }
+    }
+    
     var body: some View {
         ScrollView {
-            if(laundryViewModel.selectedHalls.count <  3) {
-                VStack(spacing: 6) {
+            VStack(spacing: 6) {
+                ForEach(sortedSelectedHalls, id: \.self) { hallId in
+                    HomeCardView {
+                        LaundryRoomView(hallId: hallId)
+                            .environmentObject(laundryViewModel)
+                            .task { await laundryViewModel.loadLaundryHallUsage(for: hallId) }
+                    }
+                    .padding(.bottom, 16)
+                }
+                if(laundryViewModel.selectedHalls.count <  3) {
                     Text(selectionMessage)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -32,8 +52,8 @@ struct LaundryView: View {
                             .font(.subheadline)
                             .bold()
                     }
-                }.padding(.top, 30)
-            }
+                }
+            }.padding(.top, 32)
         }
         .navigationTitle("Laundry")
         .navigationBarTitleDisplayMode(.inline)
@@ -50,6 +70,12 @@ struct LaundryView: View {
             LaundrySelectView(isShowingSelect: $isShowingSelect).environmentObject(laundryViewModel)
         }
         .task {
+            await laundryViewModel.loadLaundryHalls()
+        }
+        .refreshable {
+            if case .loading = laundryViewModel.laundryHallIds {
+                return
+            }
             await laundryViewModel.loadLaundryHalls()
         }
     }

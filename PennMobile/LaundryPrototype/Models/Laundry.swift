@@ -18,7 +18,7 @@ struct LaundryHallId: Codable, Hashable {
     }
 }
 
-struct LaundryHallUsage: Codable, Hashable {
+struct LaundryHallUsageResponse: Codable, Hashable {
     let rooms: [LaundryRoom]
 }
 
