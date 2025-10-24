@@ -13,23 +13,18 @@ import SwiftUI
 @MainActor
 final class LaundryViewModel: ObservableObject {
     
-    // MARK: - Properties
     @Published var laundryHallIds: ResultWithLoading<[LaundryHallId]> = .loading
     @Published var hallUsages: [Int: ResultWithLoading<LaundryHallUsage>] = [:] // key: hall_id
     @Published var selectedHalls: Set<Int> = []
     
-    // MARK: - AppStorage
     @AppStorage("selectedLaundryHallIds") private var selectedHallsData: Data = Data()
     
-    // MARK: - Constants
     let maxSelection: Int = 3
     
-    // MARK: - Initialization
     init() {
         loadSelectedHalls()
     }
     
-    // MARK: - Laundry Halls Fetching
     func loadLaundryHalls() async {
         laundryHallIds = .loading
         do {
@@ -50,7 +45,6 @@ final class LaundryViewModel: ObservableObject {
         }
     }
     
-    // MARK: - Selection Management
     func toggleSelection(_ hallId: Int) {
         if selectedHalls.contains(hallId) {
             selectedHalls.remove(hallId)
@@ -77,7 +71,6 @@ final class LaundryViewModel: ObservableObject {
         selectedHalls
     }
     
-    // MARK: - Persistence
     private func saveSelectedHalls() {
         if let encoded = try? JSONEncoder().encode(Array(selectedHalls)) {
             selectedHallsData = encoded

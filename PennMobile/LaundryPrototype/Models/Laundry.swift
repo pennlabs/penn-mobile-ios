@@ -6,7 +6,6 @@
 //  Copyright © 2025 PennLabs. All rights reserved.
 //
 
-// MARK: - Laundry Hall Identifier
 struct LaundryHallId: Codable, Hashable {
     let name: String
     let hallId: Int
@@ -19,12 +18,10 @@ struct LaundryHallId: Codable, Hashable {
     }
 }
 
-// MARK: - Laundry Hall Usage
 struct LaundryHallUsage: Codable, Hashable {
     let rooms: [LaundryRoom]
 }
 
-// MARK: - Laundry Room
 struct LaundryRoom: Codable, Hashable {
     let machines: Machines
     let hallName: String
@@ -41,14 +38,12 @@ struct LaundryRoom: Codable, Hashable {
     }
 }
 
-// MARK: - Laundry Machine
 struct Machines: Codable, Hashable {
     let washers: MachineStatus
     let dryers: MachineStatus
     let details: [MachineDetail]
 }
 
-// MARK: - Laundry Machine Status
 struct MachineStatus: Codable, Hashable {
     let open: Int
     let running: Int
@@ -64,7 +59,6 @@ struct MachineStatus: Codable, Hashable {
     }
 }
 
-// MARK: - Laundry Machine Details
 struct MachineDetail: Codable, Hashable {
     let id: String
     let type: String
@@ -77,7 +71,6 @@ struct MachineDetail: Codable, Hashable {
     }
 }
 
-// MARK: - Laundry Hall Usage Data
 struct UsageData: Codable, Hashable {
     let hallName: String
     let location: String

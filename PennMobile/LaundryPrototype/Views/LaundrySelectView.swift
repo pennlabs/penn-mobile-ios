@@ -6,19 +6,16 @@
 //  Copyright © 2025 PennLabs. All rights reserved.
 //
 
-// TODO: Fix transparent toolbar and selection (list appears behind when scrolling).
 import PennMobileShared
 import SwiftUI
 
 struct LaundrySelectView: View {
     
-    // MARK: - Properties
     @Binding var isShowingSelect: Bool
     @State private var searchText: String = ""
     @State private var tempSelectedHallIds: Set<Int> = []
     @EnvironmentObject var viewModel: LaundryViewModel
     
-    // MARK: - Computer Properties
     private var groupedHalls: [String: [LaundryHallId]] {
         guard case let .success(halls) = viewModel.laundryHallIds else { return [:] }
         
@@ -36,20 +33,14 @@ struct LaundrySelectView: View {
     }
     
     private var selectionCountText: String {
-        "\(min(tempSelectedHallIds.count, viewModel.maxSelection))/\(viewModel.maxSelection) Chosen"
+        "\(min(tempSelectedHallIds.count, viewModel.maxSelection))/\(viewModel.maxSelection) Selected"
     }
     
-    // MARK: - Body
     var body: some View {
         NavigationStack {
             contentView
                 .navigationTitle(selectionCountText)
                 .navigationBarTitleDisplayMode(.inline)
-                .searchable(
-                    text: $searchText,
-                    placement: .navigationBarDrawer(displayMode: .always),
-                    prompt: "Search..."
-                )
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button("Cancel") { isShowingSelect = false }
@@ -69,7 +60,6 @@ struct LaundrySelectView: View {
         }
     }
     
-    // MARK: - Content View
     @ViewBuilder
     private var contentView: some View {
         switch viewModel.laundryHallIds {
@@ -112,12 +102,14 @@ struct LaundrySelectView: View {
                     }
                 }
             }
-            .listStyle(.plain)
+            .searchable (
+                text: $searchText,
+                prompt: "Search..."
+            )
         }
     }
 }
 
-// MARK: - Preview
 #Preview {
     LaundrySelectView(isShowingSelect: .constant(true))
         .environmentObject(LaundryViewModel())

@@ -10,32 +10,30 @@ import SwiftUI
 
 struct LaundryView: View {
     
-    // MARK: - Properties
     @StateObject private var laundryViewModel: LaundryViewModel = LaundryViewModel()
     @State private var isShowingSelect: Bool = false
     
-    // MARK: - Computed Properteies
     private var selectionMessage: String {
-        let count = laundryViewModel.selectedHalls.count
-        if count == 0 { return "No laundry rooms selected" }
-        return "\(count) room\(count > 1 ? "s" : "") selected"
+        if laundryViewModel.selectedHalls.count == 0 { return "No laundry rooms selected" }
+        return "\(laundryViewModel.selectedHalls.count) of 3 rooms selected"
     }
     
-    // MARK: - Body
     var body: some View {
         ScrollView {
-            VStack(spacing: 6) {
-                Text(selectionMessage)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                Button(action: {
-                    isShowingSelect = true
-                }) {
-                    Text("Select a room")
+            if(laundryViewModel.selectedHalls.count <  3) {
+                VStack(spacing: 6) {
+                    Text(selectionMessage)
                         .font(.subheadline)
-                        .bold()
-                }
-            }.padding(.top, 30)
+                        .foregroundStyle(.secondary)
+                    Button(action: {
+                        isShowingSelect = true
+                    }) {
+                        Text("Select a room")
+                            .font(.subheadline)
+                            .bold()
+                    }
+                }.padding(.top, 30)
+            }
         }
         .navigationTitle("Laundry")
         .navigationBarTitleDisplayMode(.inline)
@@ -57,7 +55,6 @@ struct LaundryView: View {
     }
 }
 
-// MARK: - Preview
 #Preview {
     NavigationStack {
         LaundryView()

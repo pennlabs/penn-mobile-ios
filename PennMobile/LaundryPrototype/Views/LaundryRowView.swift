@@ -11,13 +11,11 @@ import SwiftUI
 
 struct LaundryRowView: View {
     
-    // MARK: - Properties
     let hall: LaundryHallId
     let isSelected: Bool
     let canSelect: Bool
     let toggle: () -> Void
     
-    // MARK: - Body
     var body: some View {
         HStack {
             Text(hall.name)
@@ -38,7 +36,6 @@ struct LaundryRowView: View {
     }
 }
 
-// MARK: - Preview
 #Preview {
     LaundryRowView(hall: LaundryHallId(name: "Penn Labs", hallId: 1, location: "Huntsman"), isSelected: true, canSelect: true) {}
 }
