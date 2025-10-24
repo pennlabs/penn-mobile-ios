@@ -26,11 +26,27 @@
 			<key>CFBundleURLIconFile</key>
 			<string></string>
 			<key>CFBundleURLName</key>
-			<string></string>
+			<string>org.pennlabs.PennMobile.dev</string>
 			<key>CFBundleURLSchemes</key>
-			<array/>
+			<array>
+				<string>https</string>
+			</array>
+			<key>CFBundleURLTypes</key>
+			<array>
+				<dict>
+					<key>CFBundleURLName</key>
+					<string></string>
+				</dict>
+			</array>
 		</dict>
-		<dict/>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>https</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>6656</string>
@@ -53,8 +69,6 @@
 	<string>Contacts access is required to add emergency contacts</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Use Face ID instead of a password for authentication</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Enable to show your current location on the map</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Give Penn Mobile access to your photos to change your profile picutre</string>
 	<key>NSSupportsLiveActivities</key>
