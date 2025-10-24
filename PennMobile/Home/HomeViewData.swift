@@ -15,6 +15,7 @@ struct HomeViewData {
     
     var polls: Result<[PollQuestion], Error>?
     var posts: Result<[Post], Error>?
+    var announcements: [HomeViewAnnouncement] = []
     var newsArticles: Result<[NewsArticle], Error>?
     var wrapped: Result<WrappedModel, Error>?
     var events: [CalendarEvent] = []
@@ -84,6 +85,16 @@ struct HomeViewData {
                     onDismissSubletting?()
                 }
              }
+            
+            
+            ForEach(announcements.sorted(by: {$0.priority > $1.priority})) { announcement in
+//                if let view = announcement.linkedView {
+//                    NavigationLink(destination: AnyView(view)) { announcement }
+//                } else {
+//                    announcement
+//                }
+                announcement.getBody()
+            }
             
             if case .some(.success(let polls)) = polls {
                 ForEach(polls) { poll in

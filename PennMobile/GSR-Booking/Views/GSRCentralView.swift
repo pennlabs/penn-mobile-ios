@@ -41,32 +41,38 @@ struct GSRCentralView: View {
                 Group {
                     switch selectedTab {
                     case .book:
-                        // This is so convoluted because the divider ListView was adding
-                        // was ugly
-                        ScrollView(showsIndicators: false) {
-                            if let first = vm.availableLocations.standardGSRSort.first {
-                                NavigationLink(value: first) {
-                                    GSRLocationCell(location: first)
-                                }
-                                .buttonStyle(PlainButtonStyle())
+                        ZStack (alignment: .bottomTrailing){
+                            if (vm.isMapView) {
+                                GSRMapView(selectedTab: $selectedTab)
+                                    .environmentObject(vm)
+                            } else {
+                                GSRListView(selectedTab: $selectedTab)
+                                    .environmentObject(vm)
                             }
-                            if vm.availableLocations.standardGSRSort.count > 1 {
-                                ForEach(vm.availableLocations.standardGSRSort.suffix(from: 1), id: \.self) { location in
-                                    Divider()
-                                    NavigationLink(value: location) {
-                                        GSRLocationCell(location: location)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
+                            Button {
+                                vm.isMapView.toggle()
+                            } label : {
+                                Label {
+                                    Text(vm.isMapView ? "List View" : "Map View")
+                                } icon: {
+                                    Image(systemName: vm.isMapView ? "list.bullet": "map.fill")
                                 }
+                                .foregroundColor(Color.primary)
+                                .frame(minWidth: 125, minHeight: 20, alignment: .center)
+                                .padding(.horizontal, 12.5)
+                                .padding(.vertical, 14)
                             }
+                            .background {
+                                Capsule()
+                                    .fill(.ultraThinMaterial)
+                            }
+                            .overlay {
+                                Capsule().stroke(.secondary)
+                            }
+                            .padding(.trailing, 20)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
-                        .navigationDestination(for: GSRLocation.self) { loc in
-                            GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
-                                .frame(width: UIScreen.main.bounds.width)
-                                .environmentObject(vm)
-                        }
-                        .transition(.blurReplace)
+                        
                     case .reservations:
                         ReservationsView()
                             .transition(.blurReplace)
@@ -78,6 +84,19 @@ struct GSRCentralView: View {
                     vm.checkWhartonStatus()
                 }
             }
+            /*
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        withAnimation {
+                            vm.isMapView.toggle()
+                        }
+                    } label: {
+                        Image(systemName: vm.isMapView ? "list.bullet": "map.fill")
+                    }
+                }
+            }
+             */
             .ignoresSafeArea(edges: .horizontal)
         } else {
             GSRGuestLandingPage()

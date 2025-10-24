@@ -39,6 +39,7 @@ class GSRViewModel: ObservableObject {
     @Published var sortedStartTime: [Date] = []
     @Published var currentReservations: [GSRReservation] = []
     @Published var settings: GSRViewModel.Settings = Settings()
+    @Published var isMapView: Bool = false
     
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })

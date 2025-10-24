@@ -20,7 +20,7 @@ struct RoomFinderSelectionPanel: View {
     @State var maxTimeRequirement: Int?
     @State var earliestTimeRequirement: Date?
     @State var latestTimeRequirement: Date?
-    
+            
     let formatter = DateFormatter()
     
     init(isEnabled: Binding<Bool>) {
@@ -34,55 +34,33 @@ struct RoomFinderSelectionPanel: View {
         VStack {
             Spacer()
             if let expectedWidth, isEnabled {
-                
                 VStack {
+                    Spacer()
                     Text("Duration")
-                    HStack(alignment: .center, spacing: -4) {
-                        Spacer()
-                        Picker("", selection: $minTimeRequirement) {
-                            ForEach(durationOptions, id: \.self) { option in
-                                Text("\(String(option))m")
-                                    .tag(option)
+                        .foregroundColor(Color("gsrBlue"))
+                    Picker("", selection: $minTimeRequirement) {
+                        ForEach(durationOptions, id: \.self) { option in
+                            Text("\(String(option))m")
+                                .tag(option)
                             }
-                            .font(.caption)
-                            .foregroundStyle(Color("gsrBlue"))
-                        }
-                        .pickerStyle(.menu)
-                        Text("to")
-                            .font(.caption)
-                        Picker("", selection: $maxTimeRequirement) {
-                            ForEach(durationOptions, id: \.self) { option in
-                                Text("\(String(option))m")
-                                    .tag(option)
-                            }
-                            .font(.caption)
-                            .foregroundStyle(Color("gsrBlue"))
-                        }
-                        .pickerStyle(.menu)
-                        Spacer()
+                        .font(.caption)
+                        .foregroundStyle(Color("gsrBlue"))
                     }
+                    .pickerStyle(.menu)
+                    Spacer()
                     Divider()
+                    Spacer()
                     Text("Time")
-                    HStack(alignment: .center, spacing: -4) {
-                        Picker("", selection: $earliestTimeRequirement) {
-                            ForEach(vm.getRelevantAvailability()) { slot in
-                                Text(formatter.string(from: slot.startTime))
-                                    .tag(slot.startTime)
-                            }
-                            .font(.caption)
-                            .foregroundStyle(Color("gsrBlue"))
+                        .foregroundColor(Color("gsrBlue"))
+                    Picker("", selection: $earliestTimeRequirement) {
+                        ForEach(vm.getRelevantAvailability()) { slot in
+                            Text(formatter.string(from: slot.startTime))
+                                .tag(slot.startTime)
                         }
-                        Text("to")
-                            .font(.caption)
-                        Picker("", selection: $latestTimeRequirement) {
-                            ForEach(vm.getRelevantAvailability()) { slot in
-                                Text(formatter.string(from: slot.endTime))
-                                    .tag(slot.endTime)
-                            }
-                            .font(.caption)
-                            .foregroundStyle(Color("gsrBlue"))
-                        }
+                        .font(.caption)
+                        .foregroundStyle(Color("gsrBlue"))
                     }
+                    Spacer()
                 }
                 .mask {
                     RoundedRectangle(cornerRadius: 12).frame(width: expectedWidth, height: expectedWidth)
@@ -96,15 +74,36 @@ struct RoomFinderSelectionPanel: View {
                 .transition(.move(edge: .bottom).combined(with: .opacity))
                 
             }
-                
             Button {
                 withAnimation(.snappy(duration: 0.2)) {
                     isEnabled.toggle()
                 }
+                if (!isEnabled) {
+                    guard let location = vm.selectedLocation, let duration = minTimeRequirement, let time = earliestTimeRequirement else {
+                        return
+                    }
+                    Task { @MainActor in
+                        let qb = GSRQuickBook()
+                        do {
+                            try await qb.populateSoonestTimeslot(location: location, duration: duration, time: time)
+                        } catch {
+                            print(error)
+                            return
+                        }
+                        qb.onQuickBookSuccess = { booking in
+                            vm.recentBooking = booking
+                            Task {
+                                vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
+                            }
+                            vm.showSuccessfulBookingAlert = true
+                        }
+                        qb.quickBook()
+                    }
+                }
             } label: {
                 Label("Find me a room", systemImage: "wand.and.sparkles")
                     .font(.body)
-                    .foregroundStyle(isEnabled ? Color.white : Color(UIColor.systemGray))
+                    .foregroundStyle(isEnabled ? Color.white : Color.black)
                     .padding(12)
                     .background {
                         RoundedRectangle(cornerRadius: 12)
@@ -145,3 +144,4 @@ struct RoomFinderSelectionPanel: View {
         }
     }
 }
+
