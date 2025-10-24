@@ -11,7 +11,7 @@ import PennMobileShared
 import SwiftUI
 
 @MainActor
-final class LaundryViewModel: ObservableObject {
+class LaundryViewModel: ObservableObject {
     
     @Published var laundryHallIds: ResultWithLoading<[LaundryHallId]> = .loading
     @Published var hallUsages: [Int: ResultWithLoading<LaundryHallUsageResponse>] = [:] // key: hall_id
@@ -56,6 +56,11 @@ final class LaundryViewModel: ObservableObject {
     
     func setSelectedHalls(_ halls: Set<Int>) {
         selectedHalls = halls
+        saveSelectedHalls()
+    }
+    
+    func removeSelectedHall(_ hallId: Int) {
+        selectedHalls.remove(hallId)
         saveSelectedHalls()
     }
     

@@ -71,10 +71,6 @@ struct LaundryCatalogView: View {
                     }
                 }
             }
-            .searchable (
-                text: $searchText,
-                prompt: "Search..."
-            )
         }
     }
 }

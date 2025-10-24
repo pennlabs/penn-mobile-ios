@@ -11,7 +11,7 @@ import Foundation
 import Playgrounds
 
 @MainActor
-final class LaundryAPIService {
+class LaundryAPIService {
     
     static let laundryIdURL: URL = URL(string: "https://pennmobile.org/api/laundry/halls/ids")!
     static let laundryUsageURL: URL = URL(string: "https://pennmobile.org/api/laundry/rooms/")!

@@ -37,7 +37,6 @@ struct LaundryView: View {
                     HomeCardView {
                         LaundryRoomView(hallId: hallId)
                             .environmentObject(laundryViewModel)
-                            .task { await laundryViewModel.loadLaundryHallUsage(for: hallId) }
                     }
                     .padding(.bottom, 16)
                 }

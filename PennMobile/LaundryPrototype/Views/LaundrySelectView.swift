@@ -40,6 +40,11 @@ struct LaundrySelectView: View {
                         .tint(.blue)
                     }
                 }
+                .searchable (
+                    text: $searchText,
+                    placement: .navigationBarDrawer(displayMode: .always),
+                    prompt: "Search..."
+                )
                 .onAppear {
                     tempSelectedHallIds = laundryViewModel.currentSelectedHalls()
                 }
