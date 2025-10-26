@@ -16,7 +16,7 @@ struct GSRShareModel: Codable {
 /// Observed by SwiftUI to detect new deep links.
 class DeepLinkManager: ObservableObject {
     @Published var lastResolvedLink: GSRShareModel?
-
+    
     /// Attempt to parse a domain-based link like:
     /// https://pennmobile.org/ios/gsr/share?data=<base64>
     func handleOpenURL(_ url: URL) {
