@@ -33,19 +33,22 @@ struct GSRLocationCell: View {
                     .font(.system(size: 18))
                 if let count = availabilityCount {
                     if (count == 0) {
-                        Text("None Available")
-                            .font(.system(size: 12))
-                            .foregroundColor(.baseRed)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(.ultraThinMaterial)
-                            )
+                        HStack {
+                            Image(systemName:"circle.fill")
+                            Text("All reserved")
+                        }
+                        .font(.system(size: 12))
+                        .foregroundColor(.baseRed)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(.ultraThinMaterial)
+                        )
                     } else {
                         HStack {
                             Image(systemName:"circle.fill")
-                            Text("\(count) open")
+                            Text("\(count) open now")
                         }
                         .font(.system(size: 12))
                         .padding(.horizontal, 8)
