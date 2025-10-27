@@ -14,23 +14,23 @@ struct GSRListView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            if let first = vm.availableLocations.standardGSRSort.first {
-                NavigationLink(value: first) {
-                    GSRLocationCell(location: first)
-                }
-                .buttonStyle(PlainButtonStyle())
-            }
-            if vm.availableLocations.standardGSRSort.count > 1 {
-                ForEach(vm.availableLocations.standardGSRSort.suffix(from: 1), id: \.self) { location in
-                    Divider()
-                    NavigationLink(value: location) {
-                        GSRLocationCell(location: location)
+            VStack(spacing: 0) {
+                if vm.availableLocations.standardGSRSort.count > 1 {
+                    ForEach(vm.availableLocations.standardGSRSort.indices, id: \.self) { index in
+                        let location = vm.availableLocations.standardGSRSort[index]
+                        if (index >= 1) { // no divider on first cell
+                            Divider()
+                        }
+                        NavigationLink(value: location) {
+                            GSRLocationCell(location: location)
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
-                    .buttonStyle(PlainButtonStyle())
                 }
             }
+            .padding(.horizontal)
+            .padding(.bottom, 60)
         }
-        .padding(.horizontal)
         .navigationDestination(for: GSRLocation.self) { loc in
             GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
                 .frame(width: UIScreen.main.bounds.width)
