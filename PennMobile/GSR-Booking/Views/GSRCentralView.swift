@@ -8,6 +8,25 @@
 
 import SwiftUI
 
+struct MapViewButtonStyle: ButtonStyle {
+    @ViewBuilder func makeBody(configuration: Configuration) -> some View {
+        if #available(iOS 26.0, *) {
+            configuration.label
+                .glassEffect(.regular.interactive(), in: .capsule)
+                .contentShape(.capsule)
+        } else {
+            configuration.label
+                .background {
+                    Capsule()
+                        .fill(.ultraThinMaterial)
+                }
+                .overlay {
+                    Capsule().stroke(.secondary)
+                }
+        }
+    }
+}
+
 struct GSRCentralView: View {
     @State var selectedTab: GSRTab = GSRTab.book
     @StateObject var vm = GSRViewModel()
