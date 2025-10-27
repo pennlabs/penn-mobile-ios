@@ -76,18 +76,13 @@ struct GSRCentralView: View {
                                 } icon: {
                                     Image(systemName: vm.isMapView ? "list.bullet": "map.fill")
                                 }
-                                .foregroundColor(Color.primary)
+                                .contentTransition(.symbolEffect(.replace))
+                                .animation(.snappy, value: vm.isMapView)
                                 .frame(minWidth: 125, minHeight: 20, alignment: .center)
                                 .padding(.horizontal, 12.5)
                                 .padding(.vertical, 14)
                             }
-                            .background {
-                                Capsule()
-                                    .fill(.ultraThinMaterial)
-                            }
-                            .overlay {
-                                Capsule().stroke(.secondary)
-                            }
+                            .buttonStyle(MapViewButtonStyle())
                             .padding(.trailing, 20)
                             .padding(.bottom, 20)
                         }
