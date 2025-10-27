@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GSRAvailability {
+enum GSRAvailability {
     static func getGSRSCurrentlyOpen(location: GSRLocation) async throws -> Int {
         let avail = try await GSRNetworkManager.getAvailability(for: location, startDate: Date.now, endDate: Date.now)
         let interval = 30 * 60 // 30 mins * 60 seconds

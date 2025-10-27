@@ -11,10 +11,13 @@ import Kingfisher
 
 struct GSRLocationCell: View {
     let height: CGFloat = 100
+    let refreshInterval: TimeInterval = 60 // seconds
     
     fileprivate var location: GSRLocation
 
     @State private var availabilityCount: Int? = nil
+    @State private var lastRefreshed: Date? = nil
+    
     
     init(location: GSRLocation) {
         self.location = location
@@ -35,7 +38,7 @@ struct GSRLocationCell: View {
                     if (count == 0) {
                         HStack {
                             Image(systemName:"circle.fill")
-                            Text("All reserved")
+                            Text("All currently reserved")
                         }
                         .font(.system(size: 12))
                         .foregroundColor(.baseRed)
@@ -72,7 +75,22 @@ struct GSRLocationCell: View {
         .cornerRadius(8)
         .contentShape(.rect)
         .task {
+            await loadAvailabilityIfNeeded()
+        }
+    }
+    
+    // cache availability and only load once per interval
+    private func loadAvailabilityIfNeeded() async {
+        let now = Date()
+        if let last = lastRefreshed {
+            if now.timeIntervalSince(last) > refreshInterval {
+                await loadAvailability()
+                lastRefreshed = now
+            }
+        } else {
+            // if nil then refresh (first time)
             await loadAvailability()
+            lastRefreshed = now
         }
     }
     
