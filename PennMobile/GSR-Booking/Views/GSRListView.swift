@@ -28,9 +28,9 @@ struct GSRListView: View {
                     }
                 }
             }
+            .padding(.horizontal)
+            .padding(.bottom, 60)
         }
-        .padding(.horizontal)
-        .padding(.bottom, 60)
         .navigationDestination(for: GSRLocation.self) { loc in
             GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
                 .frame(width: UIScreen.main.bounds.width)
