@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Kingfisher
+import PennMobileShared
 
 struct GSRLocationCell: View {
     let height: CGFloat = 100
@@ -62,7 +63,7 @@ struct GSRLocationCell: View {
                                 .fill(.ultraThinMaterial)
                         )
                     }
-                } else {
+                } else if FeatureFlags.shared.gsrAvailabilityLabels {
                     ProgressView()
                 }
             }
@@ -75,7 +76,9 @@ struct GSRLocationCell: View {
         .cornerRadius(8)
         .contentShape(.rect)
         .task {
-            await loadAvailabilityIfNeeded()
+            if FeatureFlags.shared.gsrAvailabilityLabels {
+                await loadAvailabilityIfNeeded()
+            }
         }
     }
     
