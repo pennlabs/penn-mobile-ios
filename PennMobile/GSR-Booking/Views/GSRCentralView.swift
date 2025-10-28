@@ -14,8 +14,10 @@ struct GSRCentralView: View {
     @EnvironmentObject var authManager: AuthManager
     @Environment(\.presentToast) var presentToast
     @State var showErrorRefresh: Bool = false
+    @State var refreshButtonDisabled: Bool = false
     
     @Sendable func handleInitialState() async {
+        self.refreshButtonDisabled = true
         do {
             try await vm.fetchInitialState()
             withAnimation {
@@ -27,6 +29,7 @@ struct GSRCentralView: View {
                 self.showErrorRefresh = true
             }
         }
+        self.refreshButtonDisabled = false
     }
     
     var body: some View {
@@ -105,6 +108,7 @@ struct GSRCentralView: View {
                             } label: {
                                 Image(systemName: "arrow.clockwise")
                             }
+                            .disabled(refreshButtonDisabled)
                         }
                     }
                 }
