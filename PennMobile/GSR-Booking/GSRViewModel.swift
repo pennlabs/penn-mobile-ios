@@ -52,9 +52,19 @@ class GSRViewModel: ObservableObject {
     }
     
     @MainActor func fetchInitialState() async throws {
-        self.availableLocations = try await GSRNetworkManager.getLocations()
-        self.isWharton = try await GSRNetworkManager.whartonAllowed()
-        self.currentReservations = try await GSRNetworkManager.getReservations()
+        try await withThrowingTaskGroup(of: Void.self, returning: Void.self) { group in
+            group.addTask { @MainActor in
+                self.availableLocations = try await GSRNetworkManager.getLocations()
+            }
+            group.addTask { @MainActor in
+                self.isWharton = try await GSRNetworkManager.whartonAllowed()
+            }
+            group.addTask { @MainActor in
+                self.currentReservations = try await GSRNetworkManager.getReservations()
+            }
+            
+            for try await _ in group {}
+        }
     }
     
     func resetBooking() {
