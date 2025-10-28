@@ -12,6 +12,22 @@ struct GSRCentralView: View {
     @State var selectedTab: GSRTab = GSRTab.book
     @StateObject var vm = GSRViewModel()
     @EnvironmentObject var authManager: AuthManager
+    @Environment(\.presentToast) var presentToast
+    @State var showErrorRefresh: Bool = false
+    
+    @Sendable func handleInitialState() async {
+        do {
+            try await vm.fetchInitialState()
+            withAnimation {
+                self.showErrorRefresh = false
+            }
+        } catch {
+            presentToast(.init(message: String.LocalizationValue(error.localizedDescription)))
+            withAnimation {
+                self.showErrorRefresh = true
+            }
+        }
+    }
     
     var body: some View {
         if authManager.state.isLoggedIn {
@@ -80,8 +96,17 @@ struct GSRCentralView: View {
                 }
                 .environmentObject(vm)
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear {
-                    vm.checkWhartonStatus()
+                .task(handleInitialState)
+                .toolbar {
+                    if showErrorRefresh {
+                        ToolbarItem(placement: .primaryAction) {
+                            Button {
+                                Task(operation: handleInitialState)
+                            } label: {
+                                Image(systemName: "arrow.clockwise")
+                            }
+                        }
+                    }
                 }
             }
             .ignoresSafeArea(edges: .horizontal)

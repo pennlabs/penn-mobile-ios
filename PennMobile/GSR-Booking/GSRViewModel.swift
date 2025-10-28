@@ -51,12 +51,15 @@ class GSRViewModel: ObservableObject {
         selectedDate = options.first!
         DispatchQueue.main.async {
             Task {
-                self.availableLocations = (try? await GSRNetworkManager.getLocations()) ?? []
-                self.isWharton = (try? await GSRNetworkManager.whartonAllowed()) ?? false
-                self.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
-                return
+                
             }
         }
+    }
+    
+    @MainActor func fetchInitialState() async throws {
+        self.availableLocations = try await GSRNetworkManager.getLocations()
+        self.isWharton = try await GSRNetworkManager.whartonAllowed()
+        self.currentReservations = try await GSRNetworkManager.getReservations()
     }
     
     func resetBooking() {
