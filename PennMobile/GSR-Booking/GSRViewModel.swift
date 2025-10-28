@@ -48,12 +48,7 @@ class GSRViewModel: ObservableObject {
     init() {
         let options = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now) }
         datePickerOptions = options
-        selectedDate = options.first!
-        DispatchQueue.main.async {
-            Task {
-                
-            }
-        }
+        selectedDate = options[0] // Today
     }
     
     @MainActor func fetchInitialState() async throws {
