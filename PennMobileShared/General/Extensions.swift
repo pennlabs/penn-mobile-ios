@@ -782,5 +782,5 @@ public extension String {
 }
 
 public extension UserDefaults {
-    static let group = UserDefaults(suiteName: Storage.appGroupID)!
+    nonisolated(unsafe) static let group = UserDefaults(suiteName: Storage.appGroupID)!
 }

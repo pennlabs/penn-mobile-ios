@@ -8,7 +8,10 @@
 
 import SwiftUI
 
-public class FeatureFlags {
+// Sendable conformance requires us to have immutable references to the FeatureFlagDefinition
+// property wrappers, which we can't express in code. However, since we're never mutating
+// these references, it's safe to use @unchecked Sendable here
+public final class FeatureFlags: @unchecked Sendable {
     private init() {}
     public static let shared = FeatureFlags()
     @MainActor public internal(set) var configurableFlags = [FeatureFlagDefinition]()
@@ -34,7 +37,7 @@ public class FeatureFlags {
     }
 }
 
-public enum RolloutChannel: Int, Comparable, CaseIterable, Hashable {
+public enum RolloutChannel: Int, Comparable, CaseIterable, Hashable, Sendable {
     case appStore = 1
     case testFlight = 2
     case experimental = 3
@@ -94,14 +97,14 @@ public enum RolloutChannel: Int, Comparable, CaseIterable, Hashable {
         .appStore
     }
     
-    public static var overrideDefaultsKey = "featureFlagChannelOverride"
+    public static let overrideDefaultsKey = "featureFlagChannelOverride"
     
     static let override = RolloutChannel(rawValue: UserDefaults.group.integer(forKey: overrideDefaultsKey))
     
     public static let current = override ?? inferred
 }
 
-public enum FeatureFlagState {
+public enum FeatureFlagState: Sendable {
     case environmentVariable(Bool)
     case overriden(Bool)
     case `default`
@@ -139,7 +142,7 @@ private func determineInitialFeatureFlagState(name: String, channel: RolloutChan
 }
 
 @propertyWrapper
-public class FeatureFlagDefinition: Identifiable, Hashable {
+public final class FeatureFlagDefinition: Identifiable, Hashable, Sendable {
     public let name: String
     public let channel: RolloutChannel
     public let state: FeatureFlagState
