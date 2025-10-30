@@ -14,7 +14,7 @@ struct SubletDisplayRow: View {
     let images: [UIImage]?
     let isApplied: Bool
     var isSubletter: Bool {
-        Account.getAccount()?.pennid == sublet.subletter
+        Account.current?.pennid == sublet.subletter
     }
     @State var messageExpanded: Bool = false
     

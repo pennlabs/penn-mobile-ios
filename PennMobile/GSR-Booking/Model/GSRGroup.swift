@@ -70,7 +70,7 @@ struct GSRGroup: Decodable, Comparable {
 
         if let members: [GSRGroupMember] = try keyedContainer.decodeIfPresent([GSRGroupMember].self, forKey: .members) {
             self.members = members
-            guard let pennkey = Account.getAccount()?.username else { // this feels wrong :(
+            guard let pennkey = Account.current?.username else { // this feels wrong :(
                 print("user not signed in")
                 return
             }

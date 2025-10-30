@@ -11,6 +11,20 @@ import PennMobileShared
 import LabsPlatformSwift
 
 struct Account: Codable, Hashable {
+    static var current: Account? = UserDefaults.standard.getAccount() {
+        didSet {
+            if let account = Self.current {
+                UserDefaults.standard.saveAccount(account)
+            } else {
+                UserDefaults.standard.clearAccount()
+            }
+        }
+    }
+    
+    static var isLoggedIn: Bool {
+        return Self.current != nil
+    }
+    
     var pennid: Int
     var firstName: String?
     var lastName: String?
@@ -57,18 +71,7 @@ struct Major: Codable, Hashable {
 
 // MARK: - Static Functions
 extension Account {
-    @MainActor static var isLoggedIn: Bool {
-        guard let _ = getAccount() else {
-            return false
-        }
-        if let platform = LabsPlatform.shared, !platform.isLoggedIn {
-            return false
-        }
-        return true
-    }
-
     static func clear() {
-        UserDefaults.standard.clearAccount()
         UserDefaults.standard.clearDiningBalance()
         LabsKeychain.clearPlatformCredential()
         LabsKeychain.deletePassword()
@@ -84,15 +87,7 @@ extension Account {
         Storage.remove(DiningAnalyticsViewModel.planStartDateDirectory, from: .groupDocuments)
         Storage.remove(DiningBalance.directory, from: .groupCaches)
         Storage.remove(DiningVenue.favoritesDirectory, from: .caches)
-    }
-
-    static func saveAccount(_ thisAccount: Account) {
-        UserDefaults.standard.saveAccount(thisAccount)
-    }
-
-    static func getAccount() -> Account? {
-        UserDefaults.standard.synchronize()
-        return UserDefaults.standard.getAccount()
+        Self.current = nil
     }
 }
 
