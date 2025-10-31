@@ -12,13 +12,9 @@ import PennMobileShared
 
 struct GSRLocationCell: View {
     let height: CGFloat = 100
-    let refreshInterval: TimeInterval = 60 // seconds
-    
+    let refreshInterval: TimeInterval = 90 // seconds, how often to poll
     fileprivate var location: GSRLocation
-
-    @State private var availabilityCount: Int? = nil
-    @State private var lastRefreshed: Date? = nil
-    
+    @EnvironmentObject var vm: GSRViewModel
     
     init(location: GSRLocation) {
         self.location = location
@@ -35,7 +31,7 @@ struct GSRLocationCell: View {
             VStack (alignment: .leading, spacing: 6){
                 Text(location.name)
                     .font(.system(size: 18))
-                if let count = availabilityCount {
+                if let count = vm.gsrGetLastPulledAvailability[location.gid]?.availCount {
                     if (count == 0) {
                         HStack {
                             Image(systemName:"circle.fill")
@@ -77,7 +73,10 @@ struct GSRLocationCell: View {
         .contentShape(.rect)
         .task {
             if FeatureFlags.shared.gsrAvailabilityLabels {
-                await loadAvailabilityIfNeeded()
+                while !Task.isCancelled {
+                    await loadAvailabilityIfNeeded()
+                    try? await Task.sleep(for: .seconds(refreshInterval))
+                }
             }
         }
     }
@@ -85,24 +84,30 @@ struct GSRLocationCell: View {
     // cache availability and only load once per interval
     private func loadAvailabilityIfNeeded() async {
         let now = Date()
+        let availCache = vm.gsrGetLastPulledAvailability[location.gid]
+        let lastRefreshed = availCache?.lastRefreshed
         if let last = lastRefreshed {
             if now.timeIntervalSince(last) > refreshInterval {
-                await loadAvailability()
-                lastRefreshed = now
-            }
+                let count = await loadAvailability()
+                if let count { // only update count if its not nil
+                    vm.gsrGetLastPulledAvailability[location.gid] = (availCount: count, lastRefreshed: now)
+                }
+            } // otherwise just use cached val
         } else {
             // if nil then refresh (first time)
-            await loadAvailability()
-            lastRefreshed = now
+            let count = await loadAvailability()
+            if let count {
+                vm.gsrGetLastPulledAvailability[location.gid] = (availCount: count, lastRefreshed: now)
+            }
         }
     }
     
-    private func loadAvailability() async {
+    private func loadAvailability() async -> Int? {
         do {
             let count = try await GSRAvailability.getGSRSCurrentlyOpen(location: location)
-            availabilityCount = count
+            return count
         } catch {
-            availabilityCount = nil
+            return nil
         }
     }
 }
