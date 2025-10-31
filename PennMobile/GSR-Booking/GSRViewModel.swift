@@ -25,6 +25,7 @@ extension GSRViewModel {
     }
 }
 
+@MainActor
 class GSRViewModel: ObservableObject {
     @Published var selectedLocation: GSRLocation?
     @Published var roomsAtSelectedLocation: [GSRRoom] = []
@@ -40,6 +41,9 @@ class GSRViewModel: ObservableObject {
     @Published var currentReservations: [GSRReservation] = []
     @Published var settings: GSRViewModel.Settings = Settings()
     @Published var isMapView: Bool = false
+    
+    @Published var gsrToLastPulledAvailability: [Int: (availCount: Int, lastRefreshed: Date)] = [:]
+    
     
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })

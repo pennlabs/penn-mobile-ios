@@ -27,6 +27,9 @@ struct GSRListView: View {
                         .buttonStyle(PlainButtonStyle())
                     }
                 }
+                else {
+                    ProgressView()
+                }
             }
             .padding(.horizontal)
             .padding(.bottom, 60)
