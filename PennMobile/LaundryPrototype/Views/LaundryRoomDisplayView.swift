@@ -29,7 +29,7 @@ struct LaundryRoomDisplayView: View {
                         laundryViewModel.removeSelectedHall(hallId)
                     }) {
                         Image(systemName: "xmark")
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.gray)
                             .bold()
                     }
                 }
@@ -38,11 +38,11 @@ struct LaundryRoomDisplayView: View {
             HStack {
                 Text("Washers")
                     .font(.subheadline)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primary)
                 Spacer()
                 Text("\(room.machines.washers.open) out of \(room.usageData.totalNumberOfWashers) open")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .bold()
             }
             ScrollView(.horizontal, showsIndicators: false) {
@@ -57,11 +57,11 @@ struct LaundryRoomDisplayView: View {
             HStack {
                 Text("Dryers")
                     .font(.subheadline)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primary)
                 Spacer()
                 Text("\(room.machines.dryers.open) out of \(room.usageData.totalNumberOfDryers) open")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .bold()
             }
             ScrollView(.horizontal, showsIndicators: false) {
@@ -76,11 +76,11 @@ struct LaundryRoomDisplayView: View {
             HStack {
                 Text("Popular Times")
                     .font(.subheadline)
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.primary)
                 Spacer()
                 Text("\(Date.currentDayOfWeek)")
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .bold()
             }
             LaundryGraphView(usageData: room.usageData)

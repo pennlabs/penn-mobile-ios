@@ -50,7 +50,7 @@ struct LaundryCatalogView: View {
                 ForEach(sortedLocations, id: \.self) { location in
                     Section(header: Text(location)
                         .font(.headline)
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                     ) {
                         ForEach(groupedHalls[location] ?? [], id: \.hallId) { hall in
                             let isSelected = tempSelectedHallIds.contains(hall.hallId)

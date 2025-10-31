@@ -20,11 +20,11 @@ struct LaundryRowView: View {
         HStack {
             Text(hall.name)
                 .font(.body)
-                .foregroundColor(.primary)
+                .foregroundStyle(.primary)
             Spacer()
             if isSelected {
                 Image(systemName: "checkmark")
-                    .foregroundColor(.blue)
+                    .foregroundStyle(.blue)
             }
         }
         .padding(.vertical, 4)

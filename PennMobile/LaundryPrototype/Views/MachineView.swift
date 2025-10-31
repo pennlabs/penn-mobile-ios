@@ -23,7 +23,7 @@ struct MachineView: View {
                 Text("\(detail.timeRemaining)")
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
             }
         }
     }
