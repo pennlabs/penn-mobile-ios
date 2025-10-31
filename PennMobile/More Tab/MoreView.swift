@@ -102,7 +102,9 @@ struct MoreView: View {
                 Section {
                     Button("Force Refresh and Quit") {
                         LabsPlatform.shared?.debugForceRefresh()
-                        exit(0)
+                        DispatchQueue.main.schedule(after: .init(.now().advanced(by: /*.seconds(20)*/ .milliseconds(500)))) {
+                            exit(0)
+                        }
                     }
                     Button("Force Refresh Now") {
                         LabsPlatform.shared?.debugForceRefresh()

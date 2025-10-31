@@ -75,7 +75,7 @@ class AuthManager: ObservableObject {
         do {
             let account = try await AuthManager.retrieveAccount()
             Account.current = account
-            saveAndUpdatePreferences(account)
+            await saveAndUpdatePreferences(account)
             
             // Support legacy UserDBManager
             await withCheckedContinuation { continuation in
@@ -152,7 +152,7 @@ class AuthManager: ObservableObject {
     }
     
     
-    func saveAndUpdatePreferences(_ account: Account) {
+    func saveAndUpdatePreferences(_ account: Account) async {
         UserDefaults.standard.set(isInWharton: account.isInWharton)
         UserDBManager.shared.saveAccount(account) { (accountID) in
             guard let accountID else {

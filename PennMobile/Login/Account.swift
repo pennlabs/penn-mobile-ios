@@ -21,7 +21,7 @@ struct Account: Codable, Hashable {
         }
     }
     
-    static var isLoggedIn: Bool {
+    @MainActor static var isLoggedIn: Bool {
         return Self.current != nil
     }
     
