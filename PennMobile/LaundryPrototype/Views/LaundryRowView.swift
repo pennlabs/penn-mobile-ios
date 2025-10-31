@@ -24,7 +24,7 @@ struct LaundryRowView: View {
             Spacer()
             if isSelected {
                 Image(systemName: "checkmark")
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(.tint)
             }
         }
         .padding(.vertical, 4)
