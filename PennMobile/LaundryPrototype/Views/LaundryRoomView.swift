@@ -15,14 +15,6 @@ struct LaundryRoomView: View {
     
     var body: some View {
         VStack {
-            if laundryViewModel.isSelected(hallId) {
-                Button(action: {
-                    laundryViewModel.removeSelectedHall(hallId)
-                }) {
-                    Image(systemName: "minus.circle.fill")
-                }
-                .buttonStyle(.bordered)
-            }
             switch laundryViewModel.hallUsages[hallId] {
             case .some(.loading), .none:
                 ProgressView("Loading usage...")
@@ -38,12 +30,8 @@ struct LaundryRoomView: View {
                     .buttonStyle(.borderedProminent)
                 }
             case .some(.success(let usage)):
-                if let first = usage.rooms.first {
-                    VStack {
-                        Text("Hello")
-                        Text("Washers: \(first.usageData.totalNumberOfWashers)")
-                        Text("Dryers: \(first.usageData.totalNumberOfDryers)")
-                    }
+                if let room = usage.rooms.first {
+                    LaundryRoomDisplayView(hallId: hallId, room: room)
                 }
             }
         }

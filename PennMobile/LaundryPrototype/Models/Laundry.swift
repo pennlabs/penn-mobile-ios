@@ -61,13 +61,38 @@ struct MachineStatus: Codable, Hashable {
 
 struct MachineDetail: Codable, Hashable {
     let id: String
-    let type: String
-    let status: String
+    let type: MachineType
+    let status: Status
     let timeRemaining: Int
     
     enum CodingKeys: String, CodingKey {
         case id, type, status
         case timeRemaining = "time_remaining"
+    }
+    
+    enum MachineType: String, Codable {
+        case washer, dryer
+    }
+    
+    enum Status: String, Codable {
+        case available = "AVAILABLE"
+        case complete = "COMPLETE"
+        case inUse = "IN_USE"
+        case error = "ERROR"
+        case networkError = "NETWORK_ERROR"
+        case unavailable = "UNAVAILABLE"
+        case unknown
+        
+        func imageName(for type: MachineType) -> String {
+            switch self {
+            case .available, .complete:
+                return type == .washer ? "washer_open" : "dryer_open"
+            case .inUse:
+                return type == .washer ? "washer_busy" : "dryer_busy"
+            case .error, .networkError, .unavailable, .unknown:
+                return type == .washer ? "washer_broken" : "dryer_broken"
+            }
+        }
     }
 }
 
