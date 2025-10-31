@@ -25,12 +25,12 @@ struct LaundryRoom: Codable, Hashable {
 }
 
 struct Machines: Codable, Hashable {
-    let washers: MachineStatus
-    let dryers: MachineStatus
+    let washers: MachineStatusSummary
+    let dryers: MachineStatusSummary
     let details: [MachineDetail]
 }
 
-struct MachineStatus: Codable, Hashable {
+struct MachineStatusSummary: Codable, Hashable {
     let open: Int
     let running: Int
     let outOfOrder: Int
