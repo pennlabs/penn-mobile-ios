@@ -10,7 +10,7 @@ import SwiftUI
 
 struct GSRCentralView: View {
     @State var selectedTab: GSRTab = GSRTab.book
-    @State var vm = GSRViewModel()
+    @StateObject var vm = GSRViewModel()
     @EnvironmentObject var authManager: AuthManager
     @Environment(\.presentToast) var presentToast
     @State var showErrorRefresh: Bool = false
