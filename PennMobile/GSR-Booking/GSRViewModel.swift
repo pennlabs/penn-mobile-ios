@@ -39,6 +39,7 @@ class GSRViewModel: ObservableObject {
     @Published var sortedStartTime: [Date] = []
     @Published var currentReservations: [GSRReservation] = []
     @Published var settings: GSRViewModel.Settings = Settings()
+    @Published var isMapView: Bool = false
     
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })
@@ -47,14 +48,22 @@ class GSRViewModel: ObservableObject {
     init() {
         let options = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now) }
         datePickerOptions = options
-        selectedDate = options.first!
-        DispatchQueue.main.async {
-            Task {
-                self.availableLocations = (try? await GSRNetworkManager.getLocations()) ?? []
-                self.isWharton = (try? await GSRNetworkManager.whartonAllowed()) ?? false
-                self.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
-                return
+        selectedDate = options[0] // Today
+    }
+    
+    @MainActor func fetchInitialState() async throws {
+        try await withThrowingTaskGroup(of: Void.self, returning: Void.self) { group in
+            group.addTask { @MainActor in
+                self.availableLocations = try await GSRNetworkManager.getLocations()
             }
+            group.addTask { @MainActor in
+                self.isWharton = try await GSRNetworkManager.whartonAllowed()
+            }
+            group.addTask { @MainActor in
+                self.currentReservations = try await GSRNetworkManager.getReservations()
+            }
+            
+            for try await _ in group {}
         }
     }
     

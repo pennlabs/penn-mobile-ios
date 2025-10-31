@@ -790,3 +790,7 @@ public extension String {
         return formatter.string(from: NSNumber(value: value)) ?? ""
     }
 }
+
+public extension UserDefaults {
+    nonisolated(unsafe) static let group = UserDefaults(suiteName: Storage.appGroupID)!
+}

@@ -15,8 +15,6 @@ import WidgetKit
 import PennMobileShared
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var tabBarController: TabBarController!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         application.registerForRemoteNotifications()
@@ -60,11 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.backgroundTaskID = UIBackgroundTaskIdentifier.invalid
         }
     }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        rootViewController.applicationWillEnterForeground()
-    }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
     }
 
@@ -73,20 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: OnboardingDelegate {
-    func handleFinishedOnboarding() {
-    }
-}
-
 // Global access of rootview to handle navigations
 extension AppDelegate {
     @available(*, deprecated, message: "Do not use AppDelegate as a singleton")
     static var shared: AppDelegate {
         fatalError("Could not get AppDelegate")
-    }
-
-    var rootViewController: RootViewController {
-        fatalError("Could not get rootViewController")
     }
 }
 

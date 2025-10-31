@@ -12,6 +12,25 @@ struct GSRCentralView: View {
     @State var selectedTab: GSRTab = GSRTab.book
     @StateObject var vm = GSRViewModel()
     @EnvironmentObject var authManager: AuthManager
+    @Environment(\.presentToast) var presentToast
+    @State var showErrorRefresh: Bool = false
+    @State var refreshButtonDisabled: Bool = false
+    
+    @Sendable func handleInitialState() async {
+        self.refreshButtonDisabled = true
+        do {
+            try await vm.fetchInitialState()
+            withAnimation {
+                self.showErrorRefresh = false
+            }
+        } catch {
+            presentToast(.init(message: String.LocalizationValue(error.localizedDescription)))
+            withAnimation {
+                self.showErrorRefresh = true
+            }
+        }
+        self.refreshButtonDisabled = false
+    }
     
     var body: some View {
         if authManager.state.isLoggedIn {
@@ -41,32 +60,38 @@ struct GSRCentralView: View {
                 Group {
                     switch selectedTab {
                     case .book:
-                        // This is so convoluted because the divider ListView was adding
-                        // was ugly
-                        ScrollView(showsIndicators: false) {
-                            if let first = vm.availableLocations.standardGSRSort.first {
-                                NavigationLink(value: first) {
-                                    GSRLocationCell(location: first)
-                                }
-                                .buttonStyle(PlainButtonStyle())
+                        ZStack (alignment: .bottomTrailing){
+                            if (vm.isMapView) {
+                                GSRMapView(selectedTab: $selectedTab)
+                                    .environmentObject(vm)
+                            } else {
+                                GSRListView(selectedTab: $selectedTab)
+                                    .environmentObject(vm)
                             }
-                            if vm.availableLocations.standardGSRSort.count > 1 {
-                                ForEach(vm.availableLocations.standardGSRSort.suffix(from: 1), id: \.self) { location in
-                                    Divider()
-                                    NavigationLink(value: location) {
-                                        GSRLocationCell(location: location)
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
+                            Button {
+                                vm.isMapView.toggle()
+                            } label : {
+                                Label {
+                                    Text(vm.isMapView ? "List View" : "Map View")
+                                } icon: {
+                                    Image(systemName: vm.isMapView ? "list.bullet": "map.fill")
                                 }
+                                .foregroundColor(Color.primary)
+                                .frame(minWidth: 125, minHeight: 20, alignment: .center)
+                                .padding(.horizontal, 12.5)
+                                .padding(.vertical, 14)
                             }
+                            .background {
+                                Capsule()
+                                    .fill(.ultraThinMaterial)
+                            }
+                            .overlay {
+                                Capsule().stroke(.secondary)
+                            }
+                            .padding(.trailing, 20)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.horizontal)
-                        .navigationDestination(for: GSRLocation.self) { loc in
-                            GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
-                                .frame(width: UIScreen.main.bounds.width)
-                                .environmentObject(vm)
-                        }
-                        .transition(.blurReplace)
+                        
                     case .reservations:
                         ReservationsView()
                             .transition(.blurReplace)
@@ -74,8 +99,18 @@ struct GSRCentralView: View {
                 }
                 .environmentObject(vm)
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear {
-                    vm.checkWhartonStatus()
+                .task(handleInitialState)
+                .toolbar {
+                    if showErrorRefresh {
+                        ToolbarItem(placement: .primaryAction) {
+                            Button {
+                                Task(operation: handleInitialState)
+                            } label: {
+                                Image(systemName: "arrow.clockwise")
+                            }
+                            .disabled(refreshButtonDisabled)
+                        }
+                    }
                 }
             }
             .ignoresSafeArea(edges: .horizontal)

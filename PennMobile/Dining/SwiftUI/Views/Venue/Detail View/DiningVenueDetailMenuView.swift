@@ -79,9 +79,10 @@ struct DiningVenueDetailMenuView: View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             HStack {
                 if currentMenu != nil {
-                    Picker("Menu", selection: Binding($currentMenu)!) {
+                    Picker("Menu", selection: $currentMenu) {
                         ForEach(menus, id: \.self) { menu in
                             Text(menu.service)
+                                .tag(menu)
                         }
                     }.pickerStyle(MenuPickerStyle())
                 } else {
