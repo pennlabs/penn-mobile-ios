@@ -40,7 +40,7 @@ struct LaundryRoomDisplayView: View {
                     .font(.subheadline)
                     .foregroundColor(.primary)
                 Spacer()
-                Text("\(room.machines.washers.open) out of \(room.machines.washers.open + room.machines.washers.running) open")
+                Text("\(room.machines.washers.open) out of \(room.machines.washers.total) open")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .bold()
@@ -59,7 +59,7 @@ struct LaundryRoomDisplayView: View {
                     .font(.subheadline)
                     .foregroundColor(.primary)
                 Spacer()
-                Text("\(room.machines.dryers.open) out of \(room.machines.dryers.open + room.machines.dryers.running) open")
+                Text("\(room.machines.dryers.open) out of \(room.machines.dryers.total) open")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .bold()
@@ -83,6 +83,7 @@ struct LaundryRoomDisplayView: View {
                     .foregroundColor(.secondary)
                     .bold()
             }
+            LaundryGraphView(usageData: room.usageData)
         }
     }
 }

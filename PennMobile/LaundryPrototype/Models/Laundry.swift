@@ -57,6 +57,10 @@ struct MachineStatus: Codable, Hashable {
         case offline
         case timeRemaining = "time_remaining"
     }
+    
+    var total: Int {
+        open + running + outOfOrder + offline
+    }
 }
 
 struct MachineDetail: Codable, Hashable {
