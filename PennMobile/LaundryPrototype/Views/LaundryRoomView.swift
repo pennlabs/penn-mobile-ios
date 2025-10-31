@@ -36,8 +36,5 @@ struct LaundryRoomView: View {
             }
         }
         .padding()
-        .task(id: hallId) {
-            await laundryViewModel.loadLaundryHallUsage(for: hallId)
-        }
     }
 }

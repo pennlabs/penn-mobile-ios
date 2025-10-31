@@ -14,8 +14,14 @@ import SwiftUI
 class LaundryViewModel: ObservableObject {
     
     @Published var laundryHallIds: ResultWithLoading<[LaundryHallInfo]> = .loading
-    @Published var hallUsages: [Int: ResultWithLoading<LaundryHallUsageResponse>] = [:] // key: hall_id
-    @Published var selectedHalls: Set<Int> = []
+    @Published var hallUsages: [Int: ResultWithLoading<LaundryHallUsageResponse>] = [:] // key: hallId
+    @Published var selectedHalls: Set<Int> = [] {
+        didSet {
+            Task {
+                await self.loadSelectedLaundryHallUsage()
+            }
+        }
+    }
     
     @AppStorage("selectedLaundryHallIds") private var selectedHallsData: Data = Data()
     
@@ -32,6 +38,12 @@ class LaundryViewModel: ObservableObject {
             laundryHallIds = .success(halls)
         } catch {
             laundryHallIds = .failure(error)
+        }
+    }
+    
+    func loadSelectedLaundryHallUsage() async {
+        for hallId in selectedHalls {
+            await loadLaundryHallUsage(for: hallId)
         }
     }
     
