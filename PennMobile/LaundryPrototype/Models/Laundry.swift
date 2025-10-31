@@ -6,7 +6,7 @@
 //  Copyright © 2025 PennLabs. All rights reserved.
 //
 
-struct LaundryHallId: Codable, Hashable {
+struct LaundryHallInfo: Codable, Hashable {
     let name: String
     let hallId: Int
     let location: String

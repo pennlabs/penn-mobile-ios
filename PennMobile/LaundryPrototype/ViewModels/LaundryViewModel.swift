@@ -13,7 +13,7 @@ import SwiftUI
 @MainActor
 class LaundryViewModel: ObservableObject {
     
-    @Published var laundryHallIds: ResultWithLoading<[LaundryHallId]> = .loading
+    @Published var laundryHallIds: ResultWithLoading<[LaundryHallInfo]> = .loading
     @Published var hallUsages: [Int: ResultWithLoading<LaundryHallUsageResponse>] = [:] // key: hall_id
     @Published var selectedHalls: Set<Int> = []
     

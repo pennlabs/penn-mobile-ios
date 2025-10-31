@@ -11,7 +11,7 @@ import SwiftUI
 
 struct LaundryRowView: View {
     
-    let hall: LaundryHallId
+    let hall: LaundryHallInfo
     let isSelected: Bool
     let canSelect: Bool
     let toggle: () -> Void
@@ -37,5 +37,5 @@ struct LaundryRowView: View {
 }
 
 #Preview {
-    LaundryRowView(hall: LaundryHallId(name: "Penn Labs", hallId: 1, location: "Huntsman"), isSelected: true, canSelect: true) {}
+    LaundryRowView(hall: LaundryHallInfo(name: "Penn Labs", hallId: 1, location: "Huntsman"), isSelected: true, canSelect: true) {}
 }

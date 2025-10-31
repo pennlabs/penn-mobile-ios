@@ -16,9 +16,9 @@ class LaundryAPIService {
     static let laundryIdURL: URL = URL(string: "https://pennmobile.org/api/laundry/halls/ids")!
     static let laundryUsageURL: URL = URL(string: "https://pennmobile.org/api/laundry/rooms/")!
     
-    static func getLaundryHallIdData() async throws -> [LaundryHallId] {
+    static func getLaundryHallIdData() async throws -> [LaundryHallInfo] {
         let (data, _) = try await URLSession.shared.data(from: laundryIdURL)
-        let decoded = try JSONDecoder().decode([LaundryHallId].self, from: data)
+        let decoded = try JSONDecoder().decode([LaundryHallInfo].self, from: data)
         return decoded
     }
     

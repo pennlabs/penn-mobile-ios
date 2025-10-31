@@ -14,7 +14,7 @@ struct LaundryCatalogView: View {
     @Binding var tempSelectedHallIds: Set<Int>
     @Binding var searchText: String
     
-    private var groupedHalls: [String: [LaundryHallId]] {
+    private var groupedHalls: [String: [LaundryHallInfo]] {
         guard case let .success(halls) = laundryViewModel.laundryHallIds else { return [:] }
         
         let filtered = halls.filter { hall in
