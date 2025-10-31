@@ -21,7 +21,10 @@ struct LaundryGraphView: View {
     private var fillBottom: Color { .baseLabsBlue.opacity(0.1) }
     private let xLabel: String = "Hour"
     private let yLabel: String = "Load"
+    private let currentLabel: String = "Current Hour"
     private let displayRange: ClosedRange<Double> = 0...1.5
+    private let currentHour = Date().hour
+
     
     var body: some View {
         Chart {
@@ -46,9 +49,8 @@ struct LaundryGraphView: View {
                 .foregroundStyle(lineColor)
             }
             
-            let currentHour = Date().hour
             if series.contains(where: { $0.hour == currentHour }) {
-                RuleMark(x: .value("Current Hour", currentHour))
+                RuleMark(x: .value(currentLabel, currentHour))
                     .lineStyle(StrokeStyle(lineWidth: 1, dash: [5]))
                     .foregroundStyle(.secondary)
             }
