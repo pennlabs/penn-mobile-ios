@@ -22,6 +22,8 @@ public final class FeatureFlags: @unchecked Sendable {
     @FeatureFlagDefinition("GSR_AVAILABILITY_LABELS", channel: .testFlight) public var gsrAvailabilityLabels
     @FeatureFlagDefinition("GSR_QUICK_BOOK", channel: .testFlight) public var gsrQuickBook
     
+    @FeatureFlagDefinition("LAUNDRY_REVAMP", channel: .testFlight) public var laundryRevamp
+    
     @MainActor public var showFeatureFlagSettings: Bool {
         if RolloutChannel.current >= .testFlight || alwaysShowFeatureFlagSettings || RolloutChannel.override != nil {
             return true
