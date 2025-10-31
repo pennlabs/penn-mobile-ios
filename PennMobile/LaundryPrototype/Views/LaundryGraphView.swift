@@ -67,6 +67,5 @@ struct LaundryGraphView: View {
         .chartYAxis(.hidden)
         .chartYScale(domain: displayRange)
         .frame(height: 120)
-        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 }
