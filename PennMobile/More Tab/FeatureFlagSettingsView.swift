@@ -10,11 +10,7 @@ import PennMobileShared
 import SwiftUI
 
 struct FeatureFlagSettingsView: View {
-    @State var channelOverride: RolloutChannel? = RolloutChannel(rawValue: UserDefaults.group.integer(forKey: RolloutChannel.overrideDefaultsKey)) {
-        didSet {
-            UserDefaults.group.set(channelOverride?.rawValue, forKey: RolloutChannel.overrideDefaultsKey)
-        }
-    }
+    @State var channelOverride: RolloutChannel? = RolloutChannel(rawValue: UserDefaults.group.integer(forKey: RolloutChannel.overrideDefaultsKey))
     
     var currentChannel: RolloutChannel {
         channelOverride ?? RolloutChannel.inferred
@@ -69,6 +65,9 @@ struct FeatureFlagSettingsView: View {
                         }
                         .tag(RolloutChannel?.some(channel))
                     }
+                }
+                .onChange(of: channelOverride, initial: false) {
+                    UserDefaults.group.set(channelOverride?.rawValue, forKey: RolloutChannel.overrideDefaultsKey)
                 }
                 
                 Button("Exit App & Apply Changes...", role: .destructive) {
