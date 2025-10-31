@@ -29,7 +29,7 @@ struct SubletInterestForm: View {
                 
                 ComponentWrapper {
                     Button(action: {
-                        guard let phoneNumberInt, let email = Account.getAccount()?.email else {
+                        guard let phoneNumberInt, let email = Account.current?.email else {
                             return
                         }
                         if String(phoneNumberInt).count != 10 {

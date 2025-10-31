@@ -21,6 +21,7 @@ public final class FeatureFlags: @unchecked Sendable {
     
     @FeatureFlagDefinition("GSR_AVAILABILITY_LABELS", channel: .testFlight) public var gsrAvailabilityLabels
     @FeatureFlagDefinition("GSR_QUICK_BOOK", channel: .testFlight) public var gsrQuickBook
+    @FeatureFlagDefinition("SHOW_AUTH_SETTINGS", channel: .experimental) public var showAuthSettings
     
     @FeatureFlagDefinition("LAUNDRY_REVAMP", channel: .experimental) public var laundryRevamp
     

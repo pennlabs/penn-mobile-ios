@@ -35,7 +35,7 @@ class InfoTableViewModel: NSObject {
 
     func updateAccount() {
 
-        var account = Account.getAccount()!
+        var account = Account.current!
         var student = account.student
 
         if isMajors {
@@ -46,7 +46,7 @@ class InfoTableViewModel: NSObject {
 
         account.student = student
 
-        Account.saveAccount(account)
+        Account.current = account
 
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(account) {
@@ -76,7 +76,7 @@ class InfoTableViewModel: NSObject {
                 case .success(let schools):
                     self.schools = schools
                     self.filteredSchools = schools
-                    self.selectedSchools = Set(Account.getAccount()!.student.school)
+                    self.selectedSchools = Set(Account.current!.student.school)
                     self.delegate.reloadTableData()
                 case .failure:
                     break
@@ -92,7 +92,7 @@ class InfoTableViewModel: NSObject {
                 case .success(let majors):
                     self.majors = majors
                     self.filteredMajors = majors
-                    self.selectedMajors = Set(Account.getAccount()!.student.major)
+                    self.selectedMajors = Set(Account.current!.student.major)
                     self.delegate.reloadTableData()
                 case .failure:
                     break

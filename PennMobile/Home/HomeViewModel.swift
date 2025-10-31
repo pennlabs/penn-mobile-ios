@@ -66,7 +66,7 @@ extension Optional {
     }
     
     func fetchData(force: Bool) async throws {
-        let account = Account.getAccount()
+        let account = Account.current
         
         if !force {
             if isFetching {
