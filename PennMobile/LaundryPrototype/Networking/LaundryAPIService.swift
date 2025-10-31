@@ -28,7 +28,7 @@ class LaundryAPIService {
     }
     
     static func getLaundryHallUsage(for hall_id: Int) async throws -> LaundryHallUsageResponse {
-        let url: URL = URL(string: "https://pennmobile.org/api/laundry/rooms/\(hall_id)")!
+        let url: URL = laundryUsageURL.appending(path: String(hall_id), directoryHint: .notDirectory)
         let (data, _) = try await URLSession.shared.data(from: url)
         let decoded = try decoder.decode(LaundryHallUsageResponse.self, from: data)
         return decoded
