@@ -19,7 +19,6 @@ public final class FeatureFlags: @unchecked Sendable {
     @FeatureFlagDefinition("ALWAYS_SHOW_FEATURE_FLAG_SETTINGS", channel: .testFlight) public var alwaysShowFeatureFlagSettings
     @FeatureFlagDefinition("TEST_FEATURE_FLAG", channel: .adHoc) public var testFeatureFlag
     
-    @FeatureFlagDefinition("GSR_AVAILABILITY_LABELS", channel: .testFlight) public var gsrAvailabilityLabels
     @FeatureFlagDefinition("GSR_QUICK_BOOK", channel: .testFlight) public var gsrQuickBook
     
     @MainActor public var showFeatureFlagSettings: Bool {
