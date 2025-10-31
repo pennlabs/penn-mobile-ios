@@ -14,6 +14,7 @@ struct MapViewButtonStyle: ButtonStyle {
             configuration.label
                 .glassEffect(.regular.interactive(), in: .capsule)
                 .contentShape(.capsule)
+                .shadow(color: .black.opacity(0.12), radius: 8)
         } else {
             configuration.label
                 .background {
@@ -120,6 +121,13 @@ enum GSRTab: Int, Equatable, CaseIterable {
     }
 }
 
-#Preview {
+#Preview("GSRCentralView") {
     GSRCentralView()
+}
+
+#Preview("MapViewButtonStyle") {
+    Button("Map View") {
+        
+    }
+    .buttonStyle(MapViewButtonStyle())
 }
