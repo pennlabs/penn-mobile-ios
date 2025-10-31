@@ -42,7 +42,7 @@ class GSRViewModel: ObservableObject {
     @Published var settings: GSRViewModel.Settings = Settings()
     @Published var isMapView: Bool = false
     
-    @Published var gsrToLastPulledAvailability: [Int: (availCount: Int, lastRefreshed: Date)] = [:]
+    @Published var gsrGetLastPulledAvailability: [Int: (availCount: Int, lastRefreshed: Date)] = [:]
     
     
     var hasAvailableBooking: Bool {

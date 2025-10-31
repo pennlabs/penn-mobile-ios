@@ -31,7 +31,7 @@ struct GSRLocationCell: View {
             VStack (alignment: .leading, spacing: 6){
                 Text(location.name)
                     .font(.system(size: 18))
-                if let count = vm.gsrToLastPulledAvailability[location.gid]?.availCount {
+                if let count = vm.gsrGetLastPulledAvailability[location.gid]?.availCount {
                     if (count == 0) {
                         HStack {
                             Image(systemName:"circle.fill")
@@ -84,20 +84,20 @@ struct GSRLocationCell: View {
     // cache availability and only load once per interval
     private func loadAvailabilityIfNeeded() async {
         let now = Date()
-        let availCache = vm.gsrToLastPulledAvailability[location.gid]
+        let availCache = vm.gsrGetLastPulledAvailability[location.gid]
         let lastRefreshed = availCache?.lastRefreshed
         if let last = lastRefreshed {
             if now.timeIntervalSince(last) > refreshInterval {
                 let count = await loadAvailability()
                 if let count { // only update count if its not nil
-                    vm.gsrToLastPulledAvailability[location.gid] = (availCount: count, lastRefreshed: now)
+                    vm.gsrGetLastPulledAvailability[location.gid] = (availCount: count, lastRefreshed: now)
                 }
             } // otherwise just use cached val
         } else {
             // if nil then refresh (first time)
             let count = await loadAvailability()
             if let count {
-                vm.gsrToLastPulledAvailability[location.gid] = (availCount: count, lastRefreshed: now)
+                vm.gsrGetLastPulledAvailability[location.gid] = (availCount: count, lastRefreshed: now)
             }
         }
     }
