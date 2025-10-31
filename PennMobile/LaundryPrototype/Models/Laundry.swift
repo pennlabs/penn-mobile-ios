@@ -58,9 +58,6 @@ struct MachineStatus: Codable, Hashable {
         case timeRemaining = "time_remaining"
     }
     
-    var total: Int {
-        open + running + outOfOrder + offline
-    }
 }
 
 struct MachineDetail: Codable, Hashable {
@@ -122,4 +119,40 @@ struct UsageData: Codable, Hashable {
         case totalNumberOfWashers = "total_number_of_washers"
         case totalNumberOfDryers = "total_number_of_dryers"
     }
+    
+    func normalizedHourlyUsage() -> [HourUsage] {
+        // Get the hours (0-26)
+        let hours = Set(washerData.keys.compactMap { Int($0) })
+            .union(dryerData.keys.compactMap { Int($0) })
+            .sorted()
+        
+        // Combine the usages from each hour
+        let combined: [(hour: Int, load: Double)] = hours.map { hour in
+            let key = String(hour)
+            let washer = washerData[key] ?? 0
+            let dryer = dryerData[key] ?? 0
+            return (hour, washer + dryer)
+        }
+        
+        // Find range for normalization
+        guard let maxVal = combined.map({ $0.load }).max(),
+              let minVal = combined.map({ $0.load }).min() else { return [] }
+        
+        // Base case when flat line
+        if maxVal == minVal {
+            return combined.map { HourUsage(id: $0.hour, hour: $0.hour, normalizedLoad: 0.01) }
+        }
+        
+        // Otherwise return normalized between 0 and 1
+        return combined.map { point in
+            let normalized = (maxVal - point.load) / (maxVal - minVal)
+            return HourUsage(id: point.hour, hour: point.hour, normalizedLoad: normalized)
+        }
+    }
+}
+
+struct HourUsage: Identifiable, Hashable {
+    let id: Int
+    let hour: Int
+    let normalizedLoad: Double
 }
