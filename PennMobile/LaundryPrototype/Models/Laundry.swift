@@ -10,12 +10,6 @@ struct LaundryHallInfo: Codable, Hashable {
     let name: String
     let hallId: Int
     let location: String
-    
-    enum CodingKeys: String, CodingKey {
-        case name
-        case hallId = "hall_id"
-        case location
-    }
 }
 
 struct LaundryHallUsageResponse: Codable, Hashable {
@@ -28,14 +22,6 @@ struct LaundryRoom: Codable, Hashable {
     let location: String
     let id: Int
     let usageData: UsageData
-    
-    enum CodingKeys: String, CodingKey {
-        case machines
-        case hallName = "hall_name"
-        case location
-        case id
-        case usageData = "usage_data"
-    }
 }
 
 struct Machines: Codable, Hashable {
@@ -50,14 +36,6 @@ struct MachineStatus: Codable, Hashable {
     let outOfOrder: Int
     let offline: Int
     let timeRemaining: [Int]
-    
-    enum CodingKeys: String, CodingKey {
-        case open, running
-        case outOfOrder = "out_of_order"
-        case offline
-        case timeRemaining = "time_remaining"
-    }
-    
 }
 
 struct MachineDetail: Codable, Hashable {
@@ -65,11 +43,6 @@ struct MachineDetail: Codable, Hashable {
     let type: MachineType
     let status: Status
     let timeRemaining: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case id, type, status
-        case timeRemaining = "time_remaining"
-    }
     
     enum MachineType: String, Codable {
         case washer, dryer
@@ -107,18 +80,6 @@ struct UsageData: Codable, Hashable {
     let dryerData: [String: Double]
     let totalNumberOfWashers: Int
     let totalNumberOfDryers: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case hallName = "hall_name"
-        case location
-        case dayOfWeek = "day_of_week"
-        case startDate = "start_date"
-        case endDate = "end_date"
-        case washerData = "washer_data"
-        case dryerData = "dryer_data"
-        case totalNumberOfWashers = "total_number_of_washers"
-        case totalNumberOfDryers = "total_number_of_dryers"
-    }
     
     func normalizedHourlyUsage() -> [HourUsage] {
         // Get the hours (0-26)

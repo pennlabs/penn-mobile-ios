@@ -13,19 +13,24 @@ import Playgrounds
 @MainActor
 class LaundryAPIService {
     
-    static let laundryIdURL: URL = URL(string: "https://pennmobile.org/api/laundry/halls/ids")!
-    static let laundryUsageURL: URL = URL(string: "https://pennmobile.org/api/laundry/rooms/")!
+    private static let laundryIdURL: URL = URL(string: "https://pennmobile.org/api/laundry/halls/ids")!
+    private static let laundryUsageURL: URL = URL(string: "https://pennmobile.org/api/laundry/rooms/")!
+    private static let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }()
     
     static func getLaundryHallIdData() async throws -> [LaundryHallInfo] {
         let (data, _) = try await URLSession.shared.data(from: laundryIdURL)
-        let decoded = try JSONDecoder().decode([LaundryHallInfo].self, from: data)
+        let decoded = try decoder.decode([LaundryHallInfo].self, from: data)
         return decoded
     }
     
     static func getLaundryHallUsage(for hall_id: Int) async throws -> LaundryHallUsageResponse {
         let url: URL = URL(string: "https://pennmobile.org/api/laundry/rooms/\(hall_id)")!
         let (data, _) = try await URLSession.shared.data(from: url)
-        let decoded = try JSONDecoder().decode(LaundryHallUsageResponse.self, from: data)
+        let decoded = try decoder.decode(LaundryHallUsageResponse.self, from: data)
         return decoded
     }
 }
