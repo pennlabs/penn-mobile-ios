@@ -9,23 +9,23 @@ import Foundation
 import SwiftyJSON
 import PennMobileShared
 
-class LaundryAPIService: Requestable {
+class OldLaundryAPIService: Requestable {
 
-    static let instance = LaundryAPIService()
+    static let instance = OldLaundryAPIService()
 
     fileprivate let laundryUrl = "https://pennmobile.org/api/laundry/rooms"
     fileprivate let idsUrl = "https://pennmobile.org/api/laundry/halls/ids"
     fileprivate let statusURL = "https://pennmobile.org/api/laundry/status"
 
-    public var idToRooms: [Int: LaundryRoom]?
+    public var idToRooms: [Int: OldLaundryRoom]?
     
-    private func getCachedLaundryRooms() -> [Int: LaundryRoom]? {
+    private func getCachedLaundryRooms() -> [Int: OldLaundryRoom]? {
         let key = "laundryDataUpgraded"
         if !UserDefaults.standard.bool(forKey: key) {
-            Storage.remove(LaundryRoom.directory, from: .caches)
+            Storage.remove(OldLaundryRoom.directory, from: .caches)
             UserDefaults.standard.set(true, forKey: key)
-        } else if Storage.fileExists(LaundryRoom.directory, in: .caches) {
-            return try? Storage.retrieveThrowing(LaundryRoom.directory, from: .caches, as: Dictionary<Int, LaundryRoom>.self)
+        } else if Storage.fileExists(OldLaundryRoom.directory, in: .caches) {
+            return try? Storage.retrieveThrowing(OldLaundryRoom.directory, from: .caches, as: Dictionary<Int, OldLaundryRoom>.self)
         }
         
         return nil
@@ -46,22 +46,22 @@ class LaundryAPIService: Requestable {
     }
 
     func clearDirectory() {
-        Storage.remove(LaundryRoom.directory, from: .caches)
+        Storage.remove(OldLaundryRoom.directory, from: .caches)
     }
 
     func loadIds(_ callback: @escaping (_ success: Bool) -> Void) {
         fetchIds { (dictionary) in
             self.idToRooms = dictionary
             if let dict = dictionary {
-                Storage.store(dict, to: .caches, as: LaundryRoom.directory)
+                Storage.store(dict, to: .caches, as: OldLaundryRoom.directory)
             }
             callback(dictionary != nil)
         }
     }
 
-    private func fetchIds(callback: @escaping ([Int: LaundryRoom]?) -> Void) {
+    private func fetchIds(callback: @escaping ([Int: OldLaundryRoom]?) -> Void) {
         getRequestData(url: idsUrl) { (data, _, _) in
-            if let data = data, let rooms = try? JSONDecoder().decode([LaundryRoom].self, from: data) {
+            if let data = data, let rooms = try? JSONDecoder().decode([OldLaundryRoom].self, from: data) {
                 callback(Dictionary(uniqueKeysWithValues: rooms.map { ($0.id, $0) }))
             } else {
                 callback(nil)
@@ -71,9 +71,9 @@ class LaundryAPIService: Requestable {
 }
 
 // MARK: - Fetch API
-extension LaundryAPIService {
-    func fetchLaundryData(for ids: [Int], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
-        var rooms = [LaundryRoom]()
+extension OldLaundryAPIService {
+    func fetchLaundryData(for ids: [Int], _ callback: @escaping (_ rooms: [OldLaundryRoom]?) -> Void) {
+        var rooms = [OldLaundryRoom]()
         var requestsCompleted = 0
         
         for id in ids {
@@ -83,7 +83,7 @@ extension LaundryAPIService {
                         let json = JSON(dict)
                         let jsonArray = json["rooms"].arrayValue
                         for json in jsonArray {
-                            let room = LaundryRoom(json: json)
+                            let room = OldLaundryRoom(json: json)
                             rooms.append(room)
                         }
                     }
@@ -97,14 +97,14 @@ extension LaundryAPIService {
         }
     }
 
-    func fetchLaundryData(for rooms: [LaundryRoom], _ callback: @escaping (_ rooms: [LaundryRoom]?) -> Void) {
+    func fetchLaundryData(for rooms: [OldLaundryRoom], _ callback: @escaping (_ rooms: [OldLaundryRoom]?) -> Void) {
         let ids: [Int] = rooms.map { $0.id }
         fetchLaundryData(for: ids, callback)
     }
 }
 
 // MARK: - Laundry Status API
-extension LaundryAPIService {
+extension OldLaundryAPIService {
     func checkIfWorking(_ callback: @escaping (_ isWorking: Bool?) -> Void) {
         getRequest(url: statusURL) { (dict, _, _) in
             if let dict = dict {
@@ -119,7 +119,7 @@ extension LaundryAPIService {
 }
 
 // MARK: - Room ID Parsing
-extension Dictionary where Key == Int, Value == LaundryRoom {
+extension Dictionary where Key == Int, Value == OldLaundryRoom {
     init(json: JSON) throws {
         guard let jsonArray = json["halls"].array else {
             throw NetworkingError.jsonError
@@ -127,7 +127,7 @@ extension Dictionary where Key == Int, Value == LaundryRoom {
         self.init()
         for json in jsonArray {
             let id = json["id"].intValue
-            let room = LaundryRoom(json: json)
+            let room = OldLaundryRoom(json: json)
             self[id] = room
         }
     }

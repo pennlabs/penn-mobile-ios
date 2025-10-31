@@ -11,7 +11,7 @@ import UIKit
 import SwiftyJSON
 import PennMobileShared
 
-class LaundryRoom: Codable {
+class OldLaundryRoom: Codable, Hashable {
 
     static let directory = "laundryHallData-v2.json"
 
@@ -67,22 +67,22 @@ class LaundryRoom: Codable {
         }
     }
 
-    static func getLaundryHall(for id: Int) -> LaundryRoom? {
-        return LaundryAPIService.instance.idToRooms?[id]
+    static func getLaundryHall(for id: Int) -> OldLaundryRoom? {
+        return OldLaundryAPIService.instance.idToRooms?[id]
     }
 
     static func setPreferences(for ids: [Int]) {
         UserDefaults.standard.setLaundryPreferences(to: ids)
     }
 
-    static func setPreferences(for halls: [LaundryRoom]) {
+    static func setPreferences(for halls: [OldLaundryRoom]) {
         let ids = halls.map { $0.id }
-        LaundryRoom.setPreferences(for: ids)
+        OldLaundryRoom.setPreferences(for: ids)
     }
 
-    static func getPreferences() -> [LaundryRoom] {
+    static func getPreferences() -> [OldLaundryRoom] {
         if UIApplication.isRunningFastlaneTest {
-            var halls = [LaundryRoom]()
+            var halls = [OldLaundryRoom]()
             for id in [1, 2, 3] {
                 if let hall = getLaundryHall(for: id) {
                     halls.append(hall)
@@ -91,7 +91,7 @@ class LaundryRoom: Codable {
             return halls
         } else {
             if let ids = UserDefaults.standard.getLaundryPreferences() {
-                var halls = [LaundryRoom]()
+                var halls = [OldLaundryRoom]()
                 for id in ids {
                     if let hall = getLaundryHall(for: id) {
                         halls.append(hall)
@@ -99,7 +99,7 @@ class LaundryRoom: Codable {
                 }
                 return halls
             }
-            return [LaundryRoom]()
+            return [OldLaundryRoom]()
         }
     }
 
@@ -112,14 +112,21 @@ class LaundryRoom: Codable {
 }
 
 // MARK: - Equatable
-extension LaundryRoom: Equatable {
-    static func == (lhs: LaundryRoom, rhs: LaundryRoom) -> Bool {
+extension OldLaundryRoom: Equatable {
+    static func == (lhs: OldLaundryRoom, rhs: OldLaundryRoom) -> Bool {
         return lhs.id == rhs.id
     }
 }
 
+// MARK: - Hashable
+extension OldLaundryRoom {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
 // MARK: - Array Extension
-extension Array where Element == LaundryRoom {
+extension Array where Element == OldLaundryRoom {
     func containsRunningMachine() -> Bool {
         return filter({ (hall) -> Bool in
             return hall.washers.containsRunningMachine() || hall.dryers.containsRunningMachine()
@@ -128,8 +135,8 @@ extension Array where Element == LaundryRoom {
 }
 
 // MARK: - Default Selection
-extension LaundryRoom {
-    static func getDefaultRooms() -> [LaundryRoom] {
+extension OldLaundryRoom {
+    static func getDefaultRooms() -> [OldLaundryRoom] {
         var rooms = getPreferences()
         while rooms.count < 3 {
             let lastId = rooms.last?.id ?? -1
@@ -141,8 +148,8 @@ extension LaundryRoom {
 }
 
 // MARK: - Default Room
-extension LaundryRoom {
-    static func getDefaultRoom() -> LaundryRoom {
-        return LaundryRoom(id: 0, name: "Bishop White", building: "Quad")
+extension OldLaundryRoom {
+    static func getDefaultRoom() -> OldLaundryRoom {
+        return OldLaundryRoom(id: 0, name: "Bishop White", building: "Quad")
     }
 }

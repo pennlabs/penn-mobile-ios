@@ -110,7 +110,7 @@ extension UserDBManager {
 
 // MARK: - Laundry
 extension UserDBManager {
-    func saveLaundryPreferences(for rooms: [LaundryRoom]) {
+    func saveLaundryPreferences(for rooms: [OldLaundryRoom]) {
         let ids = rooms.map { $0.id }
         saveLaundryPreferences(for: ids)
     }
