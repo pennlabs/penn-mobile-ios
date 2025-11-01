@@ -8,6 +8,26 @@
 
 import SwiftUI
 
+struct MapViewButtonStyle: ButtonStyle {
+    @ViewBuilder func makeBody(configuration: Configuration) -> some View {
+        if #available(iOS 26.0, *) {
+            configuration.label
+                .glassEffect(.regular.interactive(), in: .capsule)
+                .contentShape(.capsule)
+                .shadow(color: .black.opacity(0.12), radius: 8)
+        } else {
+            configuration.label
+                .background {
+                    Capsule()
+                        .fill(.ultraThinMaterial)
+                }
+                .overlay {
+                    Capsule().stroke(.secondary)
+                }
+        }
+    }
+}
+
 struct GSRCentralView: View {
     @State var selectedTab: GSRTab = GSRTab.book
     @StateObject var vm = GSRViewModel()
@@ -76,18 +96,13 @@ struct GSRCentralView: View {
                                 } icon: {
                                     Image(systemName: vm.isMapView ? "list.bullet": "map.fill")
                                 }
-                                .foregroundColor(Color.primary)
+                                .contentTransition(.symbolEffect(.replace))
+                                .animation(.snappy, value: vm.isMapView)
                                 .frame(minWidth: 125, minHeight: 20, alignment: .center)
                                 .padding(.horizontal, 12.5)
                                 .padding(.vertical, 14)
                             }
-                            .background {
-                                Capsule()
-                                    .fill(.ultraThinMaterial)
-                            }
-                            .overlay {
-                                Capsule().stroke(.secondary)
-                            }
+                            .buttonStyle(MapViewButtonStyle())
                             .padding(.trailing, 20)
                             .padding(.bottom, 20)
                         }
@@ -135,6 +150,13 @@ enum GSRTab: Int, Equatable, CaseIterable {
     }
 }
 
-#Preview {
+#Preview("GSRCentralView") {
     GSRCentralView()
+}
+
+#Preview("MapViewButtonStyle") {
+    Button("Map View") {
+        
+    }
+    .buttonStyle(MapViewButtonStyle())
 }
