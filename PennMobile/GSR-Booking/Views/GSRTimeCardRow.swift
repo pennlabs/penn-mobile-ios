@@ -12,6 +12,8 @@ struct GSRTimeCardFilterToggle: View {
     @EnvironmentObject var vm: GSRViewModel
     var time: Date
     
+    static let width: CGFloat = 80
+    
     var body: some View {
         let isFilterActive = vm.sortedStartTime.contains(where: { $0 == time })
         let hasAvailableTimes = vm.roomsAtSelectedLocation.hasAvailableAt(time)
@@ -36,7 +38,7 @@ struct GSRTimeCardFilterToggle: View {
                     vm.handleSortAction(to: time)
                 }
             }
-            .frame(width: 80)
+            .frame(width: Self.width)
             .accessibilityElement()
             .disabled(!hasAvailableTimes)
             .accessibilityLabel("Filter for \(time.gsrTimeString)")

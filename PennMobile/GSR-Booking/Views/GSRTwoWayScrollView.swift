@@ -7,97 +7,116 @@
 //
 import SwiftUI
 
-struct GSRTwoWayScrollView: View {
+let roomTitleOffset: CGFloat = 80
+
+private struct GSRTwoWayScrollViewHeader: View {    
+    var body: some View {
+        VStack(alignment: .center, spacing: 0) {
+            GSRTimeCardRow()
+                .padding(.top)
+            TimeSlotDottedLinesView()
+                .frame(height: 32)
+        }
+        .padding(.leading, roomTitleOffset - GSRTimeCardFilterToggle.width / 2)
+    }
+}
+
+private struct GSRTwoWayScrollViewRoomRows: View {
+    var relevantRooms: [GSRRoom]
+    
+    var body: some View {
+        LazyVStack(alignment: .center, spacing: 48) {
+            ForEach(relevantRooms, id: \.self) { room in
+                GSRRoomAvailabilityRow(room: room)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityLabel(room.roomNameShort)
+            }
+            Spacer()
+        }
+        .accessibilityRotor("Rooms") {
+            ForEach(relevantRooms, id: \.self) { room in
+                AccessibilityRotorEntry(room.roomNameShort, id: room)
+            }
+        }
+        .overlay {
+            TimeSlotDottedLinesView()
+        }
+        .padding(.trailing, 48)
+    }
+}
+
+private struct GSRTwoWayScrollViewRoomLabels: View {
+    var relevantRooms: [GSRRoom]
+    
+    var body: some View {
+        LazyVStack(alignment: .leading, spacing: 48) {
+            ForEach(relevantRooms, id: \.self) { room in
+                Text(room.roomNameShort)
+                    .lineLimit(3)
+                    .multilineTextAlignment(.center)
+                    .font(.caption)
+                    .padding(4)
+                    .background {
+                        RoundedRectangle(cornerRadius: 4)
+                            .foregroundStyle(.background)
+                    }
+                    .fontWeight(.medium)
+                    .padding(.horizontal)
+                    .frame(width: roomTitleOffset, height: 60)
+                    .tag(room)
+                    .accessibilityHidden(true)
+            }
+        }
+    }
+}
+
+private struct GSRTwoWayScrollViewContent: View {
     @EnvironmentObject var vm: GSRViewModel
-    @Environment(\.presentToast) var presentToast
-    let roomTitleOffset: CGFloat = 80
+    
+    var width: CGFloat
     
     // Pin the time card header to the scrollview
-    @State var scrollViewCenterDisplacementValue: CGFloat = 0.0
-    @State var totalCenterOffset: CGFloat = 0.0
+    @State var scrollViewPosition: CGFloat = 0.0
     
     var body: some View {
         let relevantRooms = vm.roomsAtSelectedLocation.filter {
             vm.settings.shouldShowFullyUnavailableRooms || $0.availability.contains(where: { $0.isAvailable })
         }
         
-        VStack(alignment: .center, spacing: 0) {
-            VStack(alignment: .center, spacing: 0) {
-                GSRTimeCardRow()
-                    .padding(.top)
-                TimeSlotDottedLinesView()
-                    .frame(height: 32)
-            }
-            .padding(.trailing, 48)
-            .background {
-                GeometryReader { proxy in
-                    Rectangle()
-                        .foregroundStyle(Color(UIColor.systemBackground))
-                        .onAppear {
-                            self.totalCenterOffset -= proxy.frame(in: .global).midX
-                        }
-                }
-            }
-            .offset(x: totalCenterOffset + scrollViewCenterDisplacementValue)
+        VStack(spacing: 0) {
+            GSRTwoWayScrollViewHeader()
+                .offset(x: -scrollViewPosition)
+                .frame(width: width, alignment: .leading)
+                .clipped()
 
             ScrollView(.vertical, showsIndicators: false) {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 0) {
-                        Color.clear
-                            .frame(width: roomTitleOffset)
-                        LazyVStack(alignment: .center, spacing: 48) {
-                            ForEach(relevantRooms, id: \.self) { room in
-                                GSRRoomAvailabilityRow(room: room)
-                                    .accessibilityElement(children: .contain)
-                                    .accessibilityLabel(room.roomNameShort)
+                    VStack(alignment: .leading, spacing: 0) {
+                        GSRTwoWayScrollViewRoomRows(relevantRooms: relevantRooms)
+                            .padding(.leading, roomTitleOffset)
+                            .onGeometryChange(for: CGFloat.self) {
+                                $0.frame(in: .scrollView).minX
+                            } action: { x in
+                                scrollViewPosition = -x
                             }
-                            Spacer()
-                        }
-                        .accessibilityRotor("Rooms") {
-                            ForEach(relevantRooms, id: \.self) { room in
-                                AccessibilityRotorEntry(room.roomNameShort, id: room)
-                            }
-                        }
-                        .overlay {
-                            TimeSlotDottedLinesView()
-                        }
-                        .padding(.trailing, 48)
-                        .background {
-                            GeometryReader { proxy in
-                                Color.clear
-                                    .onChange(of: proxy.frame(in: .scrollView).midX) { old, new in
-                                        scrollViewCenterDisplacementValue += new - old
-                                    }
-                                    .onAppear {
-                                        self.totalCenterOffset += proxy.frame(in: .global).midX
-                                    }
-                            }
-                        }
+                            .background(Color(.systemBackground))
                     }
                 }
                 .overlay(alignment: .topLeading) {
-                    LazyVStack(alignment: .leading, spacing: 48) {
-                        ForEach(relevantRooms, id: \.self) { room in
-                            Text(room.roomNameShort)
-                                .lineLimit(3)
-                                .multilineTextAlignment(.center)
-                                .font(.caption)
-                                .padding(4)
-                                .background {
-                                    RoundedRectangle(cornerRadius: 4)
-                                        .foregroundStyle(.background)
-                                }
-                                .fontWeight(.medium)
-                                .padding(.horizontal)
-                                .frame(width: roomTitleOffset, height: 60)
-                                .tag(room)
-                                .accessibilityHidden(true)
-                        }
-                    }
+                    GSRTwoWayScrollViewRoomLabels(relevantRooms: relevantRooms)
                 }
             }
         }
         .accessibilityElement(children: .contain)
         .accessibilityLabel("Timeslot Selector")
+        .frame(width: width)
+    }
+}
+
+struct GSRTwoWayScrollView: View {
+    var body: some View {
+        GeometryReader { proxy in
+            GSRTwoWayScrollViewContent(width: proxy.size.width)
+        }
     }
 }
