@@ -59,7 +59,7 @@ struct GSRLocationCell: View {
                                 .fill(.ultraThinMaterial)
                         )
                     }
-                } else if FeatureFlags.shared.gsrAvailabilityLabels {
+                } else {
                     ProgressView()
                 }
             }
@@ -72,11 +72,9 @@ struct GSRLocationCell: View {
         .cornerRadius(8)
         .contentShape(.rect)
         .task {
-            if FeatureFlags.shared.gsrAvailabilityLabels {
-                while !Task.isCancelled {
-                    await loadAvailabilityIfNeeded()
-                    try? await Task.sleep(for: .seconds(refreshInterval))
-                }
+            while !Task.isCancelled {
+                await loadAvailabilityIfNeeded()
+                try? await Task.sleep(for: .seconds(refreshInterval))
             }
         }
     }
