@@ -12,7 +12,7 @@ struct TimeSlotDottedLinesView: View {
     @EnvironmentObject var vm: GSRViewModel
     var body: some View {
         // Total width should be 80, 79 + 1 (width of line)
-        HStack(spacing: 79) {
+        HStack(spacing: GSRTimeCardFilterToggle.width - 1) {
             ForEach(0..<(vm.getRelevantAvailability().count + 1), id: \.self) { _ in
                 GSRVerticalLine()
                   .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))

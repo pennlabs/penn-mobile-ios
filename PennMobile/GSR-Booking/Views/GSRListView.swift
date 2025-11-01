@@ -36,7 +36,6 @@ struct GSRListView: View {
         }
         .navigationDestination(for: GSRLocation.self) { loc in
             GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
-                .frame(width: UIScreen.main.bounds.width)
                 .environmentObject(vm)
         }
         .transition(.blurReplace)
