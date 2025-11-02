@@ -1014,7 +1014,7 @@
 			repositoryURL = "https://github.com/pennlabs/labs-platform-swift";
 			requirement = {
 				kind = revision;
-				revision = 048c570beecb12e6b88121e28e7b3be9ee5fd6a4;
+				revision = d423a91746ddc5e05c0ebc210767450da576525e;
 			};
 		};
 		734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */ = {
