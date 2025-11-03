@@ -14,12 +14,12 @@ struct HomeViewAnnouncement:  Identifiable {
     let linkedFeature: FeatureIdentifier?
     let priority: AnnouncementPriority
     // For analytics
-    let slug: String
+    let slug: String?
     let disappearOnTap: Bool
     var onTap: [() async -> Void] = []
     @State var show = true
     
-    init(analyticsSlug: String, disappearOnTap: Bool, priority: AnnouncementPriority = .medium, @ViewBuilder _ content: () -> any View, @ViewBuilder linkedView: () -> any View) {
+    init(analyticsSlug: String?, disappearOnTap: Bool, priority: AnnouncementPriority = .medium, @ViewBuilder _ content: () -> any View, @ViewBuilder linkedView: () -> any View) {
         self.content = content()
         self.linkedView = linkedView()
         self.priority = priority
@@ -28,7 +28,7 @@ struct HomeViewAnnouncement:  Identifiable {
         self.linkedFeature = nil
     }
     
-    init(analyticsSlug: String, disappearOnTap: Bool, priority: AnnouncementPriority = .medium, linkedFeature: FeatureIdentifier, @ViewBuilder _ content: () -> any View) {
+    init(analyticsSlug: String?, disappearOnTap: Bool, priority: AnnouncementPriority = .medium, linkedFeature: FeatureIdentifier, @ViewBuilder _ content: () -> any View) {
         self.content = content()
         self.linkedFeature = linkedFeature
         self.priority = priority

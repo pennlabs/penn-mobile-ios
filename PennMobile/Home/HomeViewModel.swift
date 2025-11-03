@@ -24,7 +24,7 @@ extension Optional {
 @MainActor class StandardHomeViewModel: HomeViewModel {
     static let sublettingBannerKey = "sublettingBannerDismissed"
     
-    static let announceable: [HomeViewAnnounceable] = []
+    static let announceable: [HomeViewAnnounceable] = [ReservationAnnounceable()]
     
     @Published private(set) var data = HomeViewData()
     var isFetching = false
