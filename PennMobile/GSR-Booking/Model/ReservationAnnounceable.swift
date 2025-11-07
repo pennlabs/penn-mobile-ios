@@ -12,12 +12,13 @@ import Foundation
         var homeViewAnnouncements: [HomeViewAnnouncement] = []
         let currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
         
-        for res in currentReservations {
-            let reservationAnnouncement = HomeViewAnnouncement(analyticsSlug: nil, disappearOnTap: false, priority: .medium, linkedFeature: .gsr) {
-                ReservationAnnouncementView(reservation: res)
-            }
-            
-            if (Calendar.current.isDateInToday(res.start) || Calendar.current.isDateInTomorrow(res.start)) {
+        let earliestRes = currentReservations.min(by: { $0.start < $1.start })
+        
+        if let earliestRes = earliestRes {
+            if (Calendar.current.isDateInToday(earliestRes.start) || Calendar.current.isDateInTomorrow(earliestRes.start)) {
+                let reservationAnnouncement = HomeViewAnnouncement(analyticsSlug: nil, disappearOnTap: false, priority: .medium, linkedFeature: .gsr) {
+                        ReservationAnnouncementView(reservation: earliestRes)
+                }
                 homeViewAnnouncements.append(reservationAnnouncement)
             }
         }

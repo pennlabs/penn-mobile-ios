@@ -28,6 +28,7 @@ struct ReservationAnnouncementView: View {
                 }
                 .foregroundStyle(.secondary)
                 .font(.caption)
+                .fontWeight(.medium)
                 .padding(.bottom, 2)
                 
                 HStack {
