@@ -129,7 +129,7 @@ extension LaundryCell: ScrollableGraphViewDataSource {
         return LaundryCell.numberOfDataPointsInGraph
     }
 
-    func reloadGraphDataIfNeeded(oldRoom: LaundryRoom?, newRoom: LaundryRoom?) {
+    func reloadGraphDataIfNeeded(oldRoom: OldLaundryRoom?, newRoom: OldLaundryRoom?) {
         reloadDottedLineLayer() // refresh the dotted line that indicates current time
         graphDayLabel.text = Date.currentDayOfWeek
 

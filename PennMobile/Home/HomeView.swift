@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct HomeView<Model: HomeViewModel>: View {
     @State var showTitle = false
@@ -51,6 +52,11 @@ struct HomeView<Model: HomeViewModel>: View {
                         .offset(y: -16)
                         .padding(.bottom)
                         .multilineTextAlignment(.center)
+                        
+                        if FeatureFlags.shared.testFeatureFlag {
+                            Text("The test feature flag is enabled!")
+                                .padding(.bottom)
+                        }
                         
                         if bannerViewModel.showBanners {
                             BannerView()

@@ -167,9 +167,9 @@ extension UserDefaults {
     func saveAccount(_ account: Account) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(account) {
-            set(encoded, forKey: UserDefaultsKeys.account.rawValue)
+            self.set(encoded, forKey: UserDefaultsKeys.account.rawValue)
+            self.synchronize()
         }
-        synchronize()
     }
 
     func getAccount() -> Account? {

@@ -35,9 +35,9 @@ extension DiningAnalyticsBalance: Comparable {
 
 @MainActor
 public class DiningAnalyticsViewModel: ObservableObject {
-    public static let dollarHistoryDirectory = "diningAnalyticsDollarData"
-    public static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
-    public static let planStartDateDirectory = "diningAnalyticsPlanStartDate"
+    nonisolated public static let dollarHistoryDirectory = "diningAnalyticsDollarData"
+    nonisolated public static let swipeHistoryDirectory = "diningAnalyticsSwipeData"
+    nonisolated public static let planStartDateDirectory = "diningAnalyticsPlanStartDate"
     @Published public var dollarHistory: [DiningAnalyticsBalance] = Storage.fileExists(dollarHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(dollarHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
     @Published public var swipeHistory: [DiningAnalyticsBalance] = Storage.fileExists(swipeHistoryDirectory, in: .groupDocuments) ? Storage.retrieve(swipeHistoryDirectory, from: .groupDocuments, as: [DiningAnalyticsBalance].self) : []
     @Published public var planStartDate: Date? = try? Storage.retrieveThrowing(planStartDateDirectory, from: .groupDocuments, as: Date.self)

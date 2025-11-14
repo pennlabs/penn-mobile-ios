@@ -8,6 +8,7 @@
 
 import SwiftUI
 import LabsPlatformSwift
+import PennMobileShared
 
 private struct PennLink: View, Identifiable {
     let title: LocalizedStringKey
@@ -87,6 +88,32 @@ struct MoreView: View {
                 Text("Account")
             }
             
+            if FeatureFlags.shared.showFeatureFlagSettings {
+                Section {
+                    NavigationLink("Feature Flags") {
+                        FeatureFlagSettingsView()
+                    }
+                } header: {
+                    Text("Development")
+                }
+            }
+            
+            if FeatureFlags.shared.showAuthSettings {
+                Section {
+                    Button("Force Refresh and Quit") {
+                        LabsPlatform.shared?.debugForceRefresh()
+                        DispatchQueue.main.schedule(after: .init(.now().advanced(by: /*.seconds(20)*/ .milliseconds(500)))) {
+                            exit(0)
+                        }
+                    }
+                    Button("Force Refresh Now") {
+                        LabsPlatform.shared?.debugForceRefresh()
+                    }
+                } header: {
+                    Text("Auth")
+                }
+            }
+            
             Section {
                 HStack {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 80, maximum: 120), alignment: .top)], spacing: 16) {
@@ -130,7 +157,7 @@ struct MoreView: View {
                 Text("Links")
             }
             
-            if Account.getAccount()?.pennid == 12345678 {
+            if Account.current?.pennid == 12345678 {
                 Section {
                     Toggle(isOn: $bannerViewModel.showBanners) {
                         Text("Force April Fools")

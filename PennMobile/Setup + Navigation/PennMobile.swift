@@ -35,10 +35,9 @@ struct PennMobile: App {
         
         FirebaseApp.configure()
 
-        ControllerModel.shared.prepare()
         LaundryNotificationCenter.shared.prepare()
         GSRLocationModel.shared.prepare()
-        LaundryAPIService.instance.prepare {}
+        OldLaundryAPIService.instance.prepare {}
 
         migrateDataToGroupContainer()
         

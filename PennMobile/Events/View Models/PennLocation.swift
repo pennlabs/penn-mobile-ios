@@ -29,12 +29,14 @@ extension PennLocation {
             "Huntsman": PennLocation(name: "Huntsman", coordinate: CLLocationCoordinate2D(latitude: 39.95307761065585, longitude: -75.19817525836665)),
             "Academic Research": PennLocation(name: "ARB", coordinate: CLLocationCoordinate2D(latitude: 39.95129828577706, longitude: -75.19683445915696)),
             "Biotech Commons": PennLocation(name: "Biotech Commons", coordinate: CLLocationCoordinate2D(latitude: 39.9495964, longitude: -75.1982764)),
-            "Education Commons": PennLocation(name: "Education Commons", coordinate: CLLocationCoordinate2D(latitude: 39.9504639, longitude: -75.1918546)),
-            "Weigle": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
-            "Levin Building": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
-            "Lippincott": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
-            "Van Pelt": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.952635958734824, longitude: -75.19344631852594)),
-            "Perelman Center": PennLocation(name: "PCPSE", coordinate: CLLocationCoordinate2D(latitude: 39.9534167, longitude: -75.1993981))
+            "Education Commons": PennLocation(name: "Education Commons", coordinate: CLLocationCoordinate2D(latitude: 39.950675, longitude: -75.189802)),
+            "Weigle": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.9528, longitude: -75.1945)),
+            "Levin Building": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.949730, longitude: -75.199541)),
+            "Lippincott": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.9527, longitude: -75.1942)),
+            "Van Pelt": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.9526, longitude: -75.19344631852594)),
+            "Perelman Center": PennLocation(name: "PCPSE", coordinate: CLLocationCoordinate2D(latitude: 39.953440, longitude: -75.194495)),
+            "Penn Museum Library": PennLocation(name: "Penn Museum Library", coordinate: CLLocationCoordinate2D(latitude: 39.949344, longitude: -75.191482)),
+            "Albrecht Music Library": PennLocation(name: "Van Pelt Library", coordinate: CLLocationCoordinate2D(latitude: 39.95266, longitude: -75.1937))
         ]
     
     static let pennEventLocations: [PennLocation] = [

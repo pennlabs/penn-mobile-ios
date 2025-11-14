@@ -253,7 +253,8 @@ extension CourseAlertController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - Other Util. Functions
 extension CourseAlertController {
     @objc fileprivate func openSettings(_ sender: UIBarButtonItem) {
-        let notificationController = UINavigationController(rootViewController: ControllerModel.shared.viewController(for: .notifications))
+        // TODO: Update for push notification rollout
+        let notificationController = NotificationsViewControllerSwiftUI()
         notificationController.title = "Notification Preferences"
         notificationController.presentationController?.delegate = self
         self.navigationController?.present(notificationController, animated: true, completion: {})

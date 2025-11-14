@@ -8,6 +8,7 @@
 
 import SwiftUI
 import LabsPlatformSwift
+import PennMobileShared
 
 enum AuthState: Equatable {
     case loggedOut
@@ -28,7 +29,7 @@ class AuthManager: ObservableObject {
     @Published private(set) var state = AuthState.loggedOut
 
     static func shouldRequireLogin() -> Bool {
-        if !Account.isLoggedIn {
+        guard let lastLogin = UserDefaults.standard.getLastLogin(), Account.current != nil else {
             return true
         }
 
@@ -42,11 +43,10 @@ class AuthManager: ObservableObject {
         let june = january.add(months: 5)
         let august = january.add(months: 7)
 
-        if january <= now && now <= june {
-            // Last logged in before current Spring Semester -> Require new log in
+        // We should require a new login if the last login took place prior to this semester
+        if january <= now && now <= june { // If we're in the Spring semester
             return lastLogin < january
-        } else if now >= august {
-            // Last logged in before current Fall Semester -> Require new log in
+        } else if now >= august { // If we're in the Fall semester
             return lastLogin < august
         } else {
             return false
@@ -69,49 +69,51 @@ class AuthManager: ObservableObject {
         UserDefaults.standard.setLastLogin()
         
         // Update account if able, else just default to the one we have
-        
-        if let account = await AuthManager.retrieveAccount() {
+        // (which is just the initial value of Account.current)
+        // Suppose we aren't able to fetch an account and we don't have one stored,
+        // despite being logged in --> this should be considered a failed login.
+        do {
+            let account = try await AuthManager.retrieveAccount()
+            Account.current = account
             await saveAndUpdatePreferences(account)
+            
+            // Support legacy UserDBManager
             await withCheckedContinuation { continuation in
-                UserDBManager.shared.syncUserSettings { (_) in
-                    Account.saveAccount(account)
+                UserDBManager.shared.syncUserSettings { _ in
                     continuation.resume()
                 }
             }
-        } else {
-            guard let _ = Account.getAccount() else {
-                self.state = .loggedOut
+        } catch {
+            if !Account.isLoggedIn {
                 FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Mobile Backend Account Fetch")
-                return
+                self.state = .loggedOut
             }
         }
         
-        FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Successful Login", content: "Successful Login")
         self.determineInitialState()
-        
-        
-        
     }
     
     func handlePlatformDefaultLogin() {
         let account = Account(pennid: 12345678, firstName: "Ben", lastName: "Franklin", username: "bfranklin", email: "benfrank@wharton.upenn.edu", student: Student(major: [], school: []), groups: [], emails: [])
         state = .loggedIn(account)
-        Account.saveAccount(account)
+        Account.current = account
     }
     
 
     @MainActor func determineInitialState() {
-        if AuthManager.shouldRequireLogin() {
-            if case .guest = self.state {
-                self.state = .guest
-            } else {
-                if !Account.isLoggedIn {
-                    AuthManager.clearAccountData()
-                }
-                self.state = .loggedOut
-            }
+        // Pretty sure guest mode doesn't persist, it probably should
+        guard self.state != .guest else {
+            return
+        }
+        
+        if let account = Account.current, !AuthManager.shouldRequireLogin() {
+            self.state = .loggedIn(account)
         } else {
-            self.state = .loggedIn(Account.getAccount()!)
+            self.state = .loggedOut
+            // Clear preferences iff Account.current == nil (to maintain state)
+            if !Account.isLoggedIn {
+                AuthManager.clearAccountData()
+            }
         }
     }
     
@@ -133,49 +135,39 @@ class AuthManager: ObservableObject {
     }
     
     
-    static func retrieveAccount() async -> Account? {
+    static func retrieveAccount() async throws -> Account {
         let url = URL(string: "https://platform.pennlabs.org/accounts/me/")!
-        guard let request = try? await URLRequest(url: url, mode: .accessToken) else {
-            return nil
-        }
-
-        guard let (data, response) = try? await URLSession.shared.data(for: request),
-              let httpResponse = response as? HTTPURLResponse,
+        let request = try await URLRequest(url: url, mode: .accessToken)
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
               (200..<300).contains(httpResponse.statusCode) else {
-            return nil
+            throw NetworkingError.serverError
         }
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
 
-        let user = try? decoder.decode(Account.self, from: data)
+        let user = try decoder.decode(Account.self, from: data)
         return user
     }
     
     
     func saveAndUpdatePreferences(_ account: Account) async {
-        await withCheckedContinuation { continuation in
-            UserDefaults.standard.set(isInWharton: account.isInWharton)
-            UserDBManager.shared.saveAccount(account) { (accountID) in
-                guard let accountID else {
-                    continuation.resume()
-                    return
+        UserDefaults.standard.set(isInWharton: account.isInWharton)
+        UserDBManager.shared.saveAccount(account) { (accountID) in
+            guard let accountID else {
+                return
+            }
+            
+            UserDefaults.standard.set(accountID: accountID)
+            if account.isStudent {
+                if UserDefaults.standard.getPreference(for: .collegeHouse) {
+                    CampusExpressNetworkManager.instance.updateHousingData()
                 }
-                
-                UserDefaults.standard.set(accountID: accountID)
-                if account.isStudent {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                        if UserDefaults.standard.getPreference(for: .collegeHouse) {
-                            CampusExpressNetworkManager.instance.updateHousingData()
-                        }
-                        Account.getDiningTransactions()
-                        Account.getAndSaveLaundryPreferences()
-                        Account.getAndSaveFitnessPreferences()
-                        Account.getPacCode()
-                        continuation.resume()
-                    }
-                } else {
-                    continuation.resume()
-                }
+                Account.getDiningTransactions()
+                Account.getAndSaveLaundryPreferences()
+                Account.getAndSaveFitnessPreferences()
+                Account.getPacCode()
             }
         }
     }

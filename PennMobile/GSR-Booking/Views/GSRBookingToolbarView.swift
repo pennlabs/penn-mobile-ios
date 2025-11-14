@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct GSRBookingToolbarView: View {
     @EnvironmentObject var vm: GSRViewModel
@@ -67,7 +68,7 @@ struct GSRBookingToolbarView: View {
                                 }
                         }
                         .transition(.move(edge: .leading).combined(with: .opacity))
-                    } else {
+                    } else if FeatureFlags.shared.gsrQuickBook {
                         RoomFinderSelectionPanel(isEnabled: $startedQuickBook)
                             .transition(.move(edge: .leading).combined(with: .opacity))
                     }

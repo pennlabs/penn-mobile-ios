@@ -10,7 +10,7 @@ import UIKit
 import PennMobileShared
 
 protocol RoomSelectionVCDelegate: AnyObject {
-    func saveSelection(for rooms: [LaundryRoom])
+    func saveSelection(for rooms: [OldLaundryRoom])
 }
 
 class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
@@ -19,7 +19,7 @@ class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
 
     fileprivate let maxNumHalls = 3
 
-    var chosenRooms = [LaundryRoom]()
+    var chosenRooms = [OldLaundryRoom]()
 
     // Views
     fileprivate lazy var selectionView: RoomSelectionView = {
@@ -53,7 +53,7 @@ class RoomSelectionViewController: UIViewController, ShowsAlert, Trackable {
 }
 
 extension RoomSelectionViewController: RoomSelectionViewDelegate {
-    func updateSelectedRooms(for rooms: [LaundryRoom]) {
+    func updateSelectedRooms(for rooms: [OldLaundryRoom]) {
         navigationItem.title = "\(rooms.count)/\(selectionView.maxNumRooms) Chosen"
     }
 
