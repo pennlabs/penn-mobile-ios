@@ -11,6 +11,7 @@ import SwiftUI
 
 struct RoomFinderSelectionPanel: View {
     @EnvironmentObject var vm: GSRViewModel
+    @StateObject var quickBook = GSRQuickBook()
     @Binding var isEnabled: Bool
     @State var expectedWidth: CGFloat?
     @State var feedbackGenerator: UIImpactFeedbackGenerator? = nil
@@ -83,21 +84,20 @@ struct RoomFinderSelectionPanel: View {
                         return
                     }
                     Task { @MainActor in
-                        let qb = GSRQuickBook()
                         do {
-                            try await qb.populateSoonestTimeslot(location: location, duration: duration, time: time)
+                            try await quickBook.populateSoonestTimeslot(location: location, duration: duration, time: time)
                         } catch {
                             print(error)
                             return
                         }
-                        qb.onQuickBookSuccess = { booking in
+                        quickBook.onQuickBookSuccess = { booking in
                             vm.recentBooking = booking
                             Task {
                                 vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
                             }
                             vm.showSuccessfulBookingAlert = true
                         }
-                        qb.quickBook()
+                        quickBook.quickBook()
                     }
                 }
             } label: {
@@ -141,6 +141,15 @@ struct RoomFinderSelectionPanel: View {
                 self.minTimeRequirement = 30
                 self.maxTimeRequirement = 90
             }
+        }
+        .alert(item: $quickBook.activeAlert) { alert in
+            Alert(title: Text(alert.title), message: Text(alert.message), primaryButton: .default(Text("OK")) {
+                alert.onAccept?()
+            },
+            secondaryButton: .cancel {
+                alert.onCancel?()
+            }
+            )
         }
     }
 }
