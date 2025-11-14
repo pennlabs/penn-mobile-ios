@@ -10,11 +10,21 @@ import Foundation
 import SwiftUI
 import PennMobileShared
 
-class GSRQuickBook {
+struct AlertContent: Identifiable {
+    let id = UUID()
+    let title: String
+    let message: String
+    let onAccept: (() -> Void)?
+    let onCancel: (() -> Void)?
+}
+
+class GSRQuickBook: ObservableObject, GSRBookable {
+    @EnvironmentObject var vm: GSRViewModel
     
     fileprivate var location: GSRLocation?
     fileprivate var soonestDetails: QuickRoomDetails?
     fileprivate var allRooms: [GSRRoom] = []
+    fileprivate var selectedStartTime: Date?
     
     fileprivate struct QuickRoomDetails {
         var slot: GSRTimeSlot
@@ -22,14 +32,22 @@ class GSRQuickBook {
     }
     
     var onQuickBookSuccess: ((GSRBooking) -> Void)?
+    
+    @Published var activeAlert: AlertContent?
+    
+    func showAlert(withMsg: String, title: String, completion: (() -> Void)?) {}
+    
+    func showOption(withMsg: String, title: String, onAccept: (() -> Void)?, onCancel: (() -> Void)?) {}
 
     @MainActor
     internal func populateSoonestTimeslot(location: GSRLocation, duration: Int, time: Date) async throws{
         self.location = location
         let avail = try await GSRNetworkManager.getAvailability(for: location, startDate: Date.now, endDate: Date.now)
         self.allRooms = avail
+        self.selectedStartTime = time
         soonestDetails = getSoonestTimeSlot(duration: duration, time: time)
     }
+    
     
     private func getSoonestTimeSlot(duration: Int, time: Date) -> QuickRoomDetails? {
         var bestDetails: QuickRoomDetails?
@@ -79,35 +97,43 @@ class GSRQuickBook {
         }
         return bestDetails
     }
-}
-
-extension GSRQuickBook: GSRBookable {
-    func showAlert(withMsg: String, title: String, completion: (() -> Void)?) {
-        return
-    }
     
-    func showOption(withMsg: String, title: String, onAccept: (() -> Void)?, onCancel: (() -> Void)?) {
-        return
-    }
-    
-    @MainActor internal func quickBook() {
+    @MainActor
+    internal func quickBook() {
         guard let details = soonestDetails, let location = self.location else {
             return
         }
-
-        let timeSlot: GSRTimeSlot = details.slot
-        let timeRoom: GSRRoom = details.room
-        let booking = GSRBooking(gid: location.gid, startTime: timeSlot.startTime, endTime: timeSlot.endTime, id: timeRoom.id, roomName: timeRoom.roomName)
-
-        if let onQuickBookSuccess = onQuickBookSuccess {
+        let timeSlot = details.slot
+        let room = details.room
+        let booking = GSRBooking(gid: location.gid, startTime: timeSlot.startTime, endTime: timeSlot.endTime, id: room.id, roomName: room.roomName)
+        let comparedTime = selectedStartTime ?? Date.now
+        let formatter = DateFormatter()
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        
+        let startString = formatter.string(from: timeSlot.startTime)
+        let endString = formatter.string(from: timeSlot.endTime)
+        
+        let attemptBooking = { [weak self] in
+            guard let self else { return }
             Task { @MainActor in
                 do {
                     try await GSRNetworkManager.makeBooking(for: booking)
-                    onQuickBookSuccess(booking)
+                    self.onQuickBookSuccess?(booking)
                 } catch {
                     print(error)
                 }
             }
         }
+        
+        if timeSlot.startTime > comparedTime {
+            activeAlert = AlertContent(title: "Later Booking Available", message: "The soonest available room is from \(startString) to \(endString).\nWould you still like to book this time?", onAccept: attemptBooking, onCancel: nil)
+            return
+        }
+        
+        activeAlert = AlertContent(title: "Booking Available", message: "A room is available from \(startString) to \(endString).\nWould you like to book this time?", onAccept: attemptBooking, onCancel: nil)
+        
+        
+        
     }
 }
