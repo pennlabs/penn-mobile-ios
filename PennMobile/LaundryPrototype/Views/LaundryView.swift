@@ -11,6 +11,7 @@ import SwiftUI
 struct LaundryView: View {
     
     @StateObject private var laundryViewModel: LaundryViewModel = LaundryViewModel()
+    @State private var alarmHandler: LaundryAlarmHandler = LaundryAlarmService.makeHandler()
     @State private var isShowingSelect: Bool = false
     
     private var selectionMessage: String {
