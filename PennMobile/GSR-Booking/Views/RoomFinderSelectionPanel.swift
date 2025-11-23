@@ -84,12 +84,6 @@ struct RoomFinderSelectionPanel: View {
                         return
                     }
                     Task { @MainActor in
-                        do {
-                            try await quickBook.populateSoonestTimeslot(location: location, duration: duration, time: time)
-                        } catch {
-                            print(error)
-                            return
-                        }
                         quickBook.onQuickBookSuccess = { booking in
                             vm.recentBooking = booking
                             Task {
@@ -97,11 +91,11 @@ struct RoomFinderSelectionPanel: View {
                             }
                             vm.showSuccessfulBookingAlert = true
                         }
-                        quickBook.quickBook()
+                        try await quickBook.quickBook(location: location, duration: duration, time: time)
                     }
                 }
             } label: {
-                Label("Find me a room", systemImage: "wand.and.sparkles")
+                Label(isEnabled ? "    Book now    " : "Find me a room", systemImage: "wand.and.sparkles")
                     .font(.body)
                     .foregroundStyle(isEnabled ? Color.white : Color.black)
                     .padding(12)

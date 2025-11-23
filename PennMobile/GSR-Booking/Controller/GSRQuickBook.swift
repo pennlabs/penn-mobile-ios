@@ -99,10 +99,17 @@ class GSRQuickBook: ObservableObject, GSRBookable {
     }
     
     @MainActor
-    internal func quickBook() {
+    internal func quickBook(location: GSRLocation, duration: Int, time: Date) async throws {
+        do {
+            try await populateSoonestTimeslot(location: location, duration: duration, time: time)
+        } catch {
+            print(error)
+        }
+        
         guard let details = soonestDetails, let location = self.location else {
             return
         }
+        
         let timeSlot = details.slot
         let room = details.room
         let booking = GSRBooking(gid: location.gid, startTime: timeSlot.startTime, endTime: timeSlot.endTime, id: room.id, roomName: room.roomName)
@@ -127,13 +134,10 @@ class GSRQuickBook: ObservableObject, GSRBookable {
         }
         
         if timeSlot.startTime > comparedTime {
-            activeAlert = AlertContent(title: "Later Booking Available", message: "The soonest available room is from \(startString) to \(endString).\nWould you still like to book this time?", onAccept: attemptBooking, onCancel: nil)
+            activeAlert = AlertContent(title: "Later Booking Available", message: "\(room.roomName) is available from \(startString) to \(endString).\nWould you still like to book this time?", onAccept: attemptBooking, onCancel: nil)
             return
         }
         
-        activeAlert = AlertContent(title: "Booking Available", message: "A room is available from \(startString) to \(endString).\nWould you like to book this time?", onAccept: attemptBooking, onCancel: nil)
-        
-        
-        
+        activeAlert = AlertContent(title: "Booking Available", message: "\(room.roomName) is available from \(startString) to \(endString).\nWould you like to book this time?", onAccept: attemptBooking, onCancel: nil)
     }
 }
