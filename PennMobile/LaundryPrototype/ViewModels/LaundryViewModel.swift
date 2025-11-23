@@ -22,6 +22,8 @@ class LaundryViewModel: ObservableObject {
             }
         }
     }
+    @Published var alarmHandler: LaundryAlarmHandler = LaundryAlarmService.makeHandler()
+
     
     @AppStorage("selectedLaundryHallIds") private var selectedHallsData: Data = Data()
     
@@ -29,6 +31,7 @@ class LaundryViewModel: ObservableObject {
     
     init() {
         loadSelectedHalls()
+        alarmHandler.fetchAlarms()
     }
     
     func loadLaundryHalls() async {

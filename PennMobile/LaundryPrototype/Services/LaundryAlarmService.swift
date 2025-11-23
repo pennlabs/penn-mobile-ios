@@ -8,6 +8,7 @@
 
 import AlarmKit
 import SwiftUI
+import PennMobileShared
 
 protocol LaundryAlarmHandler {
     func subscribe(to machine: MachineDetail, and hallName: String)
@@ -22,18 +23,6 @@ enum LaundryAlarmService {
         }
         
         return FallbackAlarmHandler()
-    }
-}
-
-struct MachineData: AlarmMetadata {
-    let createdAt: Date
-    let hallName: String
-    let machine: MachineDetail
-    
-    init(hallName: String, machine: MachineDetail) {
-        createdAt = Date.now
-        self.hallName = hallName
-        self.machine = machine
     }
 }
 
@@ -118,13 +107,13 @@ extension MachineDetail.MachineType {
         let alertContent = AlarmPresentation.Alert(title: LocalizedStringResource("\(machine.type.label) Ready"),
                                                    stopButton: .stopButton,
                                                    secondaryButton: nil,
-                                                   secondaryButtonBehavior: .countdown)
+                                                   secondaryButtonBehavior: nil)
         
         let countdownContent = AlarmPresentation.Countdown(title: machine.type.label)
         
         let alarmPresentation = AlarmPresentation(alert: alertContent, countdown: countdownContent, paused: nil)
         
-        let attributes = AlarmAttributes(presentation: alarmPresentation, metadata: MachineData(hallName: hallName, machine: machine), tintColor: Color.accentColor)
+        let attributes = AlarmAttributes<MachineData>(presentation: alarmPresentation, metadata: MachineData(hallName: hallName, machine: machine), tintColor: Color.accentColor)
         
         let id = UUID(uuidString: machine.id) ?? UUID()
         

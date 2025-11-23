@@ -16,7 +16,7 @@ struct LabsWidgetBundle: WidgetBundle {
         CoursesDayWidget()
         DiningHoursWidget()
         FitnessHomeWidget()
-        if #available(iOS 16.1, *) {
+        if #available(iOS 26, *) {
             LaundryLiveActivity()
         }
     }
