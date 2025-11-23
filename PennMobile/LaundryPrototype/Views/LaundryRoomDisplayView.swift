@@ -49,7 +49,11 @@ struct LaundryRoomDisplayView: View {
                 HStack(spacing: 16) {
                     ForEach(room.machines.details, id: \.id) { detail in
                         if detail.type == .washer {
-                            MachineView(detail: detail)
+                            Button {
+                                laundryViewModel.alarmHandler.subscribe(to: detail, and: room.hallName)
+                            } label: {
+                                MachineView(detail: detail)
+                            }
                         }
                     }
                 }
@@ -68,7 +72,11 @@ struct LaundryRoomDisplayView: View {
                 HStack(spacing: 16) {
                     ForEach(room.machines.details, id: \.id) { detail in
                         if detail.type == .dryer {
-                            MachineView(detail: detail)
+                            Button {
+                                laundryViewModel.alarmHandler.subscribe(to: detail, and: room.hallName)
+                            } label: {
+                                MachineView(detail: detail)
+                            }
                         }
                     }
                 }
