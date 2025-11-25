@@ -138,14 +138,22 @@ struct RoomFinderSelectionPanel: View {
                 self.maxTimeRequirement = 90
             }
         }
-        .alert(item: $quickBook.activeAlert) { alert in
-            Alert(title: Text(alert.title), message: Text(alert.message), primaryButton: .default(Text("OK")) {
-                alert.onAccept?()
-            },
-            secondaryButton: .cancel {
-                alert.onCancel?()
+        .alert(quickBook.activeAlert?.title ?? "Booking Error", isPresented: Binding<Bool>(
+            get: { quickBook.activeAlert != nil },
+            set: { newValue in
+                if !newValue { quickBook.activeAlert = nil }
             }
-            )
+        ), presenting: quickBook.activeAlert) { alert in
+            Button("OK") {
+                alert.onAccept?()
+                quickBook.activeAlert = nil
+            }
+            Button("Cancel", role: .cancel) {
+                alert.onCancel?()
+                quickBook.activeAlert = nil
+            }
+        } message: { alert in
+            Text(alert.message).font(.subheadline)
         }
     }
 }
