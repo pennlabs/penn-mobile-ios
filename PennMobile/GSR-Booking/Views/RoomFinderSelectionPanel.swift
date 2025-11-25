@@ -10,8 +10,8 @@ import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
 struct RoomFinderSelectionPanel: View {
-    @EnvironmentObject var vm: GSRViewModel
-    @StateObject var quickBook = GSRQuickBook()
+    @ObservedObject var vm: GSRViewModel
+    @StateObject var quickBook: GSRQuickBook
     @Binding var isEnabled: Bool
     @State var expectedWidth: CGFloat?
     @State var feedbackGenerator: UIImpactFeedbackGenerator? = nil
@@ -24,7 +24,9 @@ struct RoomFinderSelectionPanel: View {
             
     let formatter = DateFormatter()
     
-    init(isEnabled: Binding<Bool>) {
+    init(vm: GSRViewModel, isEnabled: Binding<Bool>) {
+        _quickBook = StateObject(wrappedValue: GSRQuickBook(vm: vm))
+        self._vm = ObservedObject(initialValue: vm)
         self._isEnabled = isEnabled
         formatter.dateFormat = "h:mm a"
         formatter.amSymbol = "AM"

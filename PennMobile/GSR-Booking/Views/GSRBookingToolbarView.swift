@@ -69,7 +69,7 @@ struct GSRBookingToolbarView: View {
                         }
                         .transition(.move(edge: .leading).combined(with: .opacity))
                     } else if FeatureFlags.shared.gsrQuickBook {
-                        RoomFinderSelectionPanel(isEnabled: $startedQuickBook)
+                        RoomFinderSelectionPanel(vm: vm, isEnabled: $startedQuickBook)
                             .transition(.move(edge: .leading).combined(with: .opacity))
                     }
                 }

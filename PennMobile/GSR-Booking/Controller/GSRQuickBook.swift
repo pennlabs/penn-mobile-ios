@@ -19,7 +19,7 @@ struct AlertContent: Identifiable {
 }
 
 class GSRQuickBook: ObservableObject, GSRBookable {
-    @EnvironmentObject var vm: GSRViewModel
+    let vm: GSRViewModel
     
     fileprivate var location: GSRLocation?
     fileprivate var soonestDetails: QuickRoomDetails?
@@ -32,6 +32,10 @@ class GSRQuickBook: ObservableObject, GSRBookable {
     }
     
     var onQuickBookSuccess: ((GSRBooking) -> Void)?
+    
+    init(vm: GSRViewModel) {
+        self.vm = vm
+    }
     
     @Published var activeAlert: AlertContent?
     
