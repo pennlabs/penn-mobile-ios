@@ -97,7 +97,7 @@ struct RoomFinderSelectionPanel: View {
                     }
                 }
             } label: {
-                Label(isEnabled ? "    Book now    " : "Find me a room", systemImage: "wand.and.sparkles")
+                Label(isEnabled ? "Book now" : "Find me a room", systemImage: "wand.and.sparkles")
                     .font(.body)
                     .foregroundStyle(isEnabled ? Color.white : Color.black)
                     .padding(12)
@@ -106,17 +106,14 @@ struct RoomFinderSelectionPanel: View {
                             .foregroundStyle(isEnabled ? Color("gsrBlue") : Color.white)
                             .shadow(radius: 2)
                     }
-            }
-            .background {
-                GeometryReader { ctx in
-                    Color.clear
-                        .onAppear {
-                            expectedWidth = ctx.size.width
+                    .background (
+                        GeometryReader { ctx in
+                            Color.clear.onAppear {
+                                expectedWidth = max(expectedWidth ?? 0, ctx.size.width)
+                            }
                         }
-                        .onChange(of: ctx.size.width) {
-                            expectedWidth = ctx.size.width
-                        }
-                }
+                    )
+                    .frame(width: expectedWidth)
             }
         }
         .onAppear {
