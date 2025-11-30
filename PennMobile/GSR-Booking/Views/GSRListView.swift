@@ -17,6 +17,7 @@ struct GSRListView: View {
         ScrollView(showsIndicators: false) {
             if FeatureFlags.shared.showGSRUnavailabilityBanner {
                 GSRUnavailabilityBanner()
+                    .padding(.top)
             }
             
             VStack(spacing: 0) {
