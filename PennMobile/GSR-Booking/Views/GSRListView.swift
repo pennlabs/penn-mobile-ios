@@ -15,8 +15,12 @@ struct GSRListView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            if FeatureFlags.shared.showGSRUnavailabilityBanner {
-                GSRUnavailabilityBanner()
+            if FeatureFlags.shared.useWhartonGSRUnavailabilityBanner,
+               let isWharton = Account.current?.isInWharton,
+               isWharton,
+               !vm.availableLocations.isEmpty,
+               !vm.availableLocations.contains(where: { $0.name == "Huntsman" }) {
+                WhartonGSRUnavailabilityBanner()
                     .padding(.top)
             }
             

@@ -24,7 +24,7 @@ public final class FeatureFlags: @unchecked Sendable {
     
     @FeatureFlagDefinition("LAUNDRY_REVAMP", channel: .experimental) public var laundryRevamp
     
-    @FeatureFlagDefinition("GSR_UNAVAILABILITY_BANNER", channel: .appStore) public var showGSRUnavailabilityBanner
+    @FeatureFlagDefinition("WHARTON_GSR_UNAVAILABILITY_BANNER", channel: .appStore) public var useWhartonGSRUnavailabilityBanner
     
     @MainActor public var showFeatureFlagSettings: Bool {
         if RolloutChannel.current >= .testFlight || alwaysShowFeatureFlagSettings || RolloutChannel.override != nil {

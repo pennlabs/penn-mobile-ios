@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct GSRUnavailabilityBanner: View {
+struct WhartonGSRUnavailabilityBanner: View {
     var body: some View {
         HomeCardView {
             HStack(alignment: .top) {
@@ -17,13 +17,13 @@ struct GSRUnavailabilityBanner: View {
                     .foregroundStyle(.red)
                 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Some GSRs may be temporarily unavailable in Penn Mobile.")
+                    Text("Wharton GSRs may be temporarily unavailable in Penn Mobile.")
                         .fontWeight(.medium)
                     
                     Text("We appreciate your patience as we work to resolve this over the coming days.")
                         .font(.caption)
                     
-                    Text("In the meantime, you can use [LibCal](https://libcal.library.upenn.edu) or [Wharton Spaces](https://apps.wharton.upenn.edu/gsr/) to book a GSR.")
+                    Text("In the meantime, you can use [Wharton Spaces](https://apps.wharton.upenn.edu/gsr/) to book a GSR.")
                         .font(.caption)
                 }
             }
@@ -34,6 +34,6 @@ struct GSRUnavailabilityBanner: View {
 }
 
 #Preview {
-    GSRUnavailabilityBanner()
+    WhartonGSRUnavailabilityBanner()
         .padding()
 }
