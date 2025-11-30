@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct GSRListView: View {
     @EnvironmentObject var vm: GSRViewModel
@@ -14,6 +15,10 @@ struct GSRListView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false) {
+            if FeatureFlags.shared.showGSRUnavailabilityBanner {
+                GSRUnavailabilityBanner()
+            }
+            
             VStack(spacing: 0) {
                 if vm.availableLocations.standardGSRSort.count > 1 {
                     ForEach(vm.availableLocations.standardGSRSort.indices, id: \.self) { index in
