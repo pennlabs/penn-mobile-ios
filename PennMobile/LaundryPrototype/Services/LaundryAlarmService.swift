@@ -52,12 +52,33 @@ extension MachineDetail.MachineType {
     @MainActor var alarmsMap = AlarmsMap()
     @ObservationIgnored private let alarmManager = AlarmManager.shared
     
+    @ObservationIgnored
+    @AppStorage("machineAlarmMapping")
+    private var machineAlarmMappingData: Data = Data()
+    
+    @MainActor private var machineAlarmMapping: [String: UUID] {
+        get {
+            guard let decoded = try? JSONDecoder().decode([String: UUID].self, from: machineAlarmMappingData) else {
+                return [:]
+            }
+            return decoded
+        }
+        set {
+            guard let encoded = try? JSONEncoder().encode(newValue) else { return }
+            machineAlarmMappingData = encoded
+        }
+    }
+    
     @MainActor var hasUpcomingAlerts: Bool {
         !alarmsMap.isEmpty
     }
     
     init() {
         observeAlarms()
+    }
+    
+    @MainActor func containsAlarm(for machineID: String) -> Bool {
+        machineAlarmMapping[machineID] != nil
     }
     
     private func observeAlarms() {
@@ -81,8 +102,11 @@ extension MachineDetail.MachineType {
             
             // Clean-up removed alarms.
             let removedAlarmIDs = Set(knownAlarmIDs.subtracting(incomingAlarmIDs))
-            removedAlarmIDs.forEach {
-                alarmsMap[$0] = nil
+            removedAlarmIDs.forEach { alarmID in
+                alarmsMap[alarmID] = nil
+                if let machineID = machineAlarmMapping.first(where: { $0.value == alarmID })?.key {
+                    machineAlarmMapping[machineID] = nil
+                }
             }
         }
     }
@@ -104,25 +128,27 @@ extension MachineDetail.MachineType {
     }
     
     func subscribe(to machine: MachineDetail, and hallName: String) {
-        let alertContent = AlarmPresentation.Alert(title: LocalizedStringResource("\(machine.type.label) Ready"),
-                                                   stopButton: .stopButton,
-                                                   secondaryButton: nil,
-                                                   secondaryButtonBehavior: nil)
-        
-        let countdownContent = AlarmPresentation.Countdown(title: machine.type.label)
-        
-        let alarmPresentation = AlarmPresentation(alert: alertContent, countdown: countdownContent, paused: nil)
-        
-        let attributes = AlarmAttributes<MachineData>(presentation: alarmPresentation, metadata: MachineData(hallName: hallName, machine: machine), tintColor: Color.accentColor)
-        
-        let id = UUID(uuidString: machine.id) ?? UUID()
-        
-        let time = TimeInterval(machine.timeRemaining * 60)
-        
-        let alarmConfiguration = AlarmConfiguration(countdownDuration: .init(preAlert: time, postAlert: time), attributes: attributes)
-        
+        Task { @MainActor in
+            let alertContent = AlarmPresentation.Alert(title: LocalizedStringResource("\(machine.type.label) Ready"),
+                                                       stopButton: .stopButton,
+                                                       secondaryButton: nil,
+                                                       secondaryButtonBehavior: nil)
             
-        scheduleAlarm(id: id, label: LocalizedStringResource(stringLiteral: hallName), alarmConfiguration: alarmConfiguration)
+            let countdownContent = AlarmPresentation.Countdown(title: machine.type.label)
+            
+            let alarmPresentation = AlarmPresentation(alert: alertContent, countdown: countdownContent, paused: nil)
+            
+            let attributes = AlarmAttributes<MachineData>(presentation: alarmPresentation, metadata: MachineData(hallName: hallName, machine: machine), tintColor: Color.accentColor)
+            
+            let id = machineAlarmMapping[machine.id] ?? UUID()
+            machineAlarmMapping[machine.id] = id
+            
+            let time = TimeInterval(machine.timeRemaining * 60)
+            
+            let alarmConfiguration = AlarmConfiguration(countdownDuration: .init(preAlert: time, postAlert: time), attributes: attributes)
+            
+            scheduleAlarm(id: id, label: LocalizedStringResource(stringLiteral: hallName), alarmConfiguration: alarmConfiguration)
+        }
     }
     
     private func scheduleAlarm(id: UUID, label: LocalizedStringResource, alarmConfiguration: AlarmConfiguration) {
@@ -152,10 +178,12 @@ extension MachineDetail.MachineType {
     }
     
     func unsubscribe(from machine: MachineDetail) {
-        let id = UUID(uuidString: machine.id) ?? UUID()
-        try? alarmManager.cancel(id: id)
         Task { @MainActor in
-            alarmsMap[id] = nil
+            if let id = machineAlarmMapping[machine.id] {
+                try? alarmManager.cancel(id: id)
+                alarmsMap[id] = nil
+                machineAlarmMapping[machine.id] = nil
+            }
         }
     }
 }
