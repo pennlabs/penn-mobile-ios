@@ -23,7 +23,7 @@ class LaundryViewModel: ObservableObject {
         }
     }
     @Published var alarmHandler: LaundryAlarmHandler = LaundryAlarmService.makeHandler()
-
+    
     
     @AppStorage("selectedLaundryHallIds") private var selectedHallsData: Data = Data()
     
@@ -32,6 +32,25 @@ class LaundryViewModel: ObservableObject {
     init() {
         loadSelectedHalls()
         alarmHandler.fetchAlarms()
+    }
+    
+    func toggleMachineAlarm(machine: MachineDetail, hallName: String) {
+        if (machine.status == .inUse) {
+            if isAlarmActive(for: machine) {
+                alarmHandler.unsubscribe(from: machine)
+            } else {
+                alarmHandler.subscribe(to: machine, and: hallName)
+            }
+        }
+    }
+    
+    private func isAlarmActive(for machine: MachineDetail) -> Bool {
+        guard #available(iOS 26.0, *),
+              let handler = alarmHandler as? AlarmKitAlarmHandler else {
+            return false
+        }
+        
+        return handler.containsAlarm(for: machine.id)
     }
     
     func loadLaundryHalls() async {

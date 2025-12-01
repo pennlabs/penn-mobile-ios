@@ -50,7 +50,7 @@ struct LaundryRoomDisplayView: View {
                     ForEach(room.machines.details, id: \.id) { detail in
                         if detail.type == .washer {
                             Button {
-                                laundryViewModel.alarmHandler.subscribe(to: detail, and: room.hallName)
+                                laundryViewModel.toggleMachineAlarm(machine: detail, hallName: room.hallName)
                             } label: {
                                 MachineView(detail: detail)
                             }
@@ -73,7 +73,7 @@ struct LaundryRoomDisplayView: View {
                     ForEach(room.machines.details, id: \.id) { detail in
                         if detail.type == .dryer {
                             Button {
-                                laundryViewModel.alarmHandler.subscribe(to: detail, and: room.hallName)
+                                laundryViewModel.toggleMachineAlarm(machine: detail, hallName: room.hallName)
                             } label: {
                                 MachineView(detail: detail)
                             }
