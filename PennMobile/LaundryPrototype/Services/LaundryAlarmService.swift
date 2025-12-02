@@ -54,18 +54,13 @@ extension MachineDetail.MachineType {
     
     @ObservationIgnored
     @AppStorage("machineAlarmMapping")
-    private var machineAlarmMappingData: Data = Data()
+    private var data: Data = Data()
     
-    @MainActor private var machineAlarmMapping: [String: UUID] {
-        get {
-            guard let decoded = try? JSONDecoder().decode([String: UUID].self, from: machineAlarmMappingData) else {
-                return [:]
+    @MainActor var machineAlarmMapping: [String: UUID] = [:] {
+        didSet {
+            if let encoded = try? JSONEncoder().encode(machineAlarmMapping) {
+                data = encoded
             }
-            return decoded
-        }
-        set {
-            guard let encoded = try? JSONEncoder().encode(newValue) else { return }
-            machineAlarmMappingData = encoded
         }
     }
     
@@ -74,6 +69,11 @@ extension MachineDetail.MachineType {
     }
     
     init() {
+        Task { @MainActor in
+            if let decoded = try? JSONDecoder().decode([String: UUID].self, from: data) {
+                self.machineAlarmMapping = decoded
+            }
+        }
         observeAlarms()
     }
     
@@ -92,7 +92,6 @@ extension MachineDetail.MachineType {
     private func updateAlarmState(with remoteAlarms: [Alarm]) {
         Task { @MainActor in
             
-            // Update existing alarm states.
             remoteAlarms.forEach { updated in
                 alarmsMap[updated.id, default: (updated, "Alarm (Old Session)")].0 = updated
             }
@@ -100,10 +99,10 @@ extension MachineDetail.MachineType {
             let knownAlarmIDs = Set(alarmsMap.keys)
             let incomingAlarmIDs = Set(remoteAlarms.map(\.id))
             
-            // Clean-up removed alarms.
             let removedAlarmIDs = Set(knownAlarmIDs.subtracting(incomingAlarmIDs))
             removedAlarmIDs.forEach { alarmID in
                 alarmsMap[alarmID] = nil
+                
                 if let machineID = machineAlarmMapping.first(where: { $0.value == alarmID })?.key {
                     machineAlarmMapping[machineID] = nil
                 }
@@ -141,6 +140,7 @@ extension MachineDetail.MachineType {
             let attributes = AlarmAttributes<MachineData>(presentation: alarmPresentation, metadata: MachineData(hallName: hallName, machine: machine), tintColor: Color.accentColor)
             
             let id = machineAlarmMapping[machine.id] ?? UUID()
+            
             machineAlarmMapping[machine.id] = id
             
             let time = TimeInterval(machine.timeRemaining * 60)
@@ -182,6 +182,7 @@ extension MachineDetail.MachineType {
             if let id = machineAlarmMapping[machine.id] {
                 try? alarmManager.cancel(id: id)
                 alarmsMap[id] = nil
+                
                 machineAlarmMapping[machine.id] = nil
             }
         }
