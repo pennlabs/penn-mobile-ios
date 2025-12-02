@@ -53,6 +53,14 @@ struct LaundryRoomDisplayView: View {
                                 laundryViewModel.toggleMachineAlarm(machine: detail, hallName: room.hallName)
                             } label: {
                                 MachineView(detail: detail)
+                                    .overlay(alignment: .topTrailing) {
+                                        if laundryViewModel.isAlarmActive(for: detail) {
+                                            Image(systemName: "bell.fill")
+                                                .resizable()
+                                                .frame(width: 16, height: 16)
+                                                .foregroundStyle(.yellow)
+                                        }
+                                    }
                             }
                         }
                     }
@@ -76,6 +84,14 @@ struct LaundryRoomDisplayView: View {
                                 laundryViewModel.toggleMachineAlarm(machine: detail, hallName: room.hallName)
                             } label: {
                                 MachineView(detail: detail)
+                                    .overlay(alignment: .topTrailing) {
+                                        if laundryViewModel.isAlarmActive(for: detail) {
+                                            Image(systemName: "bell.fill")
+                                                .resizable()
+                                                .frame(width: 16, height: 16)
+                                                .foregroundStyle(.yellow)
+                                        }
+                                    }
                             }
                         }
                     }
