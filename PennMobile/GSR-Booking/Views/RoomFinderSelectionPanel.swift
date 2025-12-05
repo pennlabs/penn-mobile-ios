@@ -10,7 +10,8 @@ import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
 struct RoomFinderSelectionPanel: View {
-    @EnvironmentObject var vm: GSRViewModel
+    @ObservedObject var vm: GSRViewModel
+    @StateObject var quickBook: GSRQuickBook
     @Binding var isEnabled: Bool
     @State var expectedWidth: CGFloat?
     @State var feedbackGenerator: UIImpactFeedbackGenerator? = nil
@@ -23,7 +24,9 @@ struct RoomFinderSelectionPanel: View {
             
     let formatter = DateFormatter()
     
-    init(isEnabled: Binding<Bool>) {
+    init(vm: GSRViewModel, isEnabled: Binding<Bool>) {
+        _quickBook = StateObject(wrappedValue: GSRQuickBook(vm: vm))
+        self._vm = ObservedObject(initialValue: vm)
         self._isEnabled = isEnabled
         formatter.dateFormat = "h:mm a"
         formatter.amSymbol = "AM"
@@ -83,25 +86,18 @@ struct RoomFinderSelectionPanel: View {
                         return
                     }
                     Task { @MainActor in
-                        let qb = GSRQuickBook()
-                        do {
-                            try await qb.populateSoonestTimeslot(location: location, duration: duration, time: time)
-                        } catch {
-                            print(error)
-                            return
-                        }
-                        qb.onQuickBookSuccess = { booking in
+                        quickBook.onQuickBookSuccess = { booking in
                             vm.recentBooking = booking
                             Task {
                                 vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
                             }
                             vm.showSuccessfulBookingAlert = true
                         }
-                        qb.quickBook()
+                        try await quickBook.quickBook(location: location, duration: duration, time: time)
                     }
                 }
             } label: {
-                Label("Find me a room", systemImage: "wand.and.sparkles")
+                Label(isEnabled ? "Book now" : "Find me a room", systemImage: "wand.and.sparkles")
                     .font(.body)
                     .foregroundStyle(isEnabled ? Color.white : Color.black)
                     .padding(12)
@@ -110,17 +106,14 @@ struct RoomFinderSelectionPanel: View {
                             .foregroundStyle(isEnabled ? Color("gsrBlue") : Color.white)
                             .shadow(radius: 2)
                     }
-            }
-            .background {
-                GeometryReader { ctx in
-                    Color.clear
-                        .onAppear {
-                            expectedWidth = ctx.size.width
+                    .background (
+                        GeometryReader { ctx in
+                            Color.clear.onAppear {
+                                expectedWidth = max(expectedWidth ?? 0, ctx.size.width)
+                            }
                         }
-                        .onChange(of: ctx.size.width) {
-                            expectedWidth = ctx.size.width
-                        }
-                }
+                    )
+                    .frame(width: expectedWidth)
             }
         }
         .onAppear {
@@ -141,6 +134,23 @@ struct RoomFinderSelectionPanel: View {
                 self.minTimeRequirement = 30
                 self.maxTimeRequirement = 90
             }
+        }
+        .alert(quickBook.activeAlert?.title ?? "Booking Error", isPresented: Binding<Bool>(
+            get: { quickBook.activeAlert != nil },
+            set: { newValue in
+                if !newValue { quickBook.activeAlert = nil }
+            }
+        ), presenting: quickBook.activeAlert) { alert in
+            Button("OK") {
+                alert.onAccept?()
+                quickBook.activeAlert = nil
+            }
+            Button("Cancel", role: .cancel) {
+                alert.onCancel?()
+                quickBook.activeAlert = nil
+            }
+        } message: { alert in
+            Text(alert.message).font(.subheadline)
         }
     }
 }
