@@ -92,11 +92,11 @@ jobs:
   upload:
     needs: build
     if: github.ref == 'refs/heads/main'
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
-      - name: Select Xcode 16
+      - name: Select Xcode 26.1.1
         # https://stackoverflow.com/questions/65821440/how-to-select-xcode-version-in-fastlane-when-using-github-actions
-        run: sudo xcode-select -s '/Applications/Xcode_16.0.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_26.1.1.app/Contents/Developer'
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Setup Ruby
