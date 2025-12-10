@@ -10,11 +10,11 @@ import SwiftUI
 
 /// Observed by SwiftUI to detect new deep links.
 class DeepLinkManager: ObservableObject {
-    @Published var lastResolvedLink: GSRShareModel?
+    @Published var lastShareModel: GSRShareModel?
 
     /// Attempt to parse a domain-based link like:
-    /// https://pennmobile.org/ios/gsr/share?data=<base64>
-    func handleOpenURL(_ url: URL) {
+    /// https://pennmobile.org/ios/gsr/share?shareCode=<8 char share code>
+    func handleOpenURL(_ url: URL) throws {
         // 1) Check that it's https + correct host + correct path
         guard url.scheme == "https",
               url.host == "pennmobile.org",
@@ -22,18 +22,16 @@ class DeepLinkManager: ObservableObject {
         else {
             return
         }
-        guard
-            let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: true)?.queryItems,
-            let base64String = queryItems.first(where: { $0.name == "data" })?.value,
-            let jsonData = Data(base64Encoded: base64String)
-        else {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              let shareCode = components.queryItems?.first(where: { $0.name == "shareCode" })?.value else {
             return
         }
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-
-        if let shareModel = try? decoder.decode(GSRShareModel.self, from: jsonData) {
-            lastResolvedLink = shareModel
+        Task {
+            // let root context handle errors
+            let model = try await GSRNetworkManager.getShareModelFromShareCode(shareCode: shareCode)
+            await MainActor.run {
+                self.lastShareModel = model
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 import Kingfisher
 import MapKit
 
-// view if you own the GSR
+// detail view if you own the GSR
 struct GSRReservationDetailView: View {
     var gsrReservation: GSRReservation
     
@@ -75,7 +75,7 @@ struct GSRReservationDetailView: View {
         } catch {
             print("\(error)")
             isFetchingShareLink = false
-            presentToast(.init(message: "Unable to Fetch Share Link"))
+            presentToast(.init(message: "Unable to fetch share link"))
         }
     }
     

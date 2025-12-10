@@ -22,6 +22,7 @@ class GSRNetworkManager {
     // deep link gsr share url format
     static let publicDeepLinkURL = "https://pennmobile.org/ios/gsr/share"
     
+    // MARK: GSR handlers
     static func getLocations() async throws -> [GSRLocation] {
         let url = URL(string: GSRNetworkManager.locationsUrl)!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
@@ -132,7 +133,7 @@ class GSRNetworkManager {
         return res.isWharton
     }
     
-    // MARK: GSR share network handlers
+    // MARK: GSR Share network handlers
     static func getShareCodeLink(for reservation: GSRReservation) async throws -> String {
         let url = URL(string: GSRNetworkManager.groupShareURL)!
         
@@ -157,7 +158,8 @@ class GSRNetworkManager {
         let res = try decoder.decode(GroupShareAPIResponse.self, from: data)
         return buildShareCodeLink(shareCode: res.shareCode)
     }
-    /*
+    
+    // TODO: GSRShareModel decode requires custom logic
     static func getShareModelFromShareCode(shareCode: String) async throws -> GSRShareModel {
         let url = URL(string: "\(groupShareURL)\(shareCode)")!
         let request = try await URLRequest(url: url, mode: .accessToken)
@@ -178,10 +180,10 @@ class GSRNetworkManager {
         }
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let res = try decoder.decode(GSRReservation.self, from: data)
+        let res = try decoder.decode(GSRShareModel.self, from: data)
         return res
     }
-    */
+    
     static func revokeShareCode(shareCode: String) async throws -> GSRReservation {
         let url = URL(string: "\(groupShareURL)\(shareCode)")!
         var request = try await URLRequest(url: url, mode: .accessToken)
