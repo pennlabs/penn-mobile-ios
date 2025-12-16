@@ -18,4 +18,7 @@ struct GSRReservation: Codable, Equatable, Identifiable {
     let roomName: String
     let start: Date
     let end: Date
+    
+    // Present only for /share responses
+    let ownerName: String?
 }

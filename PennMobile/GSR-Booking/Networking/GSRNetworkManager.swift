@@ -159,8 +159,7 @@ class GSRNetworkManager {
         return buildShareCodeLink(shareCode: res.shareCode)
     }
     
-    // TODO: GSRShareModel decode requires custom logic
-    static func getShareModelFromShareCode(shareCode: String) async throws -> GSRShareModel {
+    static func getShareModelFromShareCode(shareCode: String) async throws -> GSRReservation {
         let url = URL(string: "\(groupShareURL)\(shareCode)")!
         let request = try await URLRequest(url: url, mode: .accessToken)
         let (data, response) = try await URLSession.shared.data(for: request)
@@ -180,7 +179,7 @@ class GSRNetworkManager {
         }
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let res = try decoder.decode(GSRShareModel.self, from: data)
+        let res = try decoder.decode(GSRReservation.self, from: data)
         return res
     }
     

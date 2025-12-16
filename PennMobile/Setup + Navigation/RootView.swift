@@ -15,7 +15,9 @@ struct RootView: View {
     @State var toastOffset: Double = 0.0
     @StateObject var popupManager = PopupManager()
     @Environment(\.scenePhase) var scenePhase
-
+    /// For GSR Share
+    @EnvironmentObject var deepLinkManager: DeepLinkManager
+    
     var isOnLogoutScreen: Bool {
         switch authManager.state {
         case .loggedOut:
@@ -126,6 +128,13 @@ struct RootView: View {
         .onChange(of: scenePhase) { phase in
             if phase == .active && BannerViewModel.isAprilFools {
                 bannerViewModel.showBanners = true
+            }
+        }
+        /// GSR Share Deep Linking sheet view popup
+        .sheet(item: $deepLinkManager.activeSheet) { sheet in
+            switch sheet {
+            case .gsrShare(let shareCode):
+                GSRShareDetailView(shareCode: shareCode)
             }
         }
     }

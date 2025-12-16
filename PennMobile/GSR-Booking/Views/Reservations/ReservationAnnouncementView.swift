@@ -61,14 +61,3 @@ struct ReservationAnnouncementView: View {
     }
 }
 
-
-
-#Preview(traits: .sizeThatFitsLayout) {
-        HomeCardView {
-            ReservationAnnouncementView(reservation: GSRReservation(bookingId: "123", gsr: GSRLocation(lid: "123", gid: 123, name: "Van Pelt", kind: .libcal, imageUrl: "https://www.cnet.com/a/img/resize/2bec42558a71a3922e6e590476b919288a015288/hub/2017/06/01/a176bcb9-1442-4d6d-a7d9-f01efdbcc4bc/broken-screen-ipad-6200-002.jpg?auto=webp&fit=crop&height=675&width=1200"), roomId: 123, roomName: "Room 250: A. Edward Allinson Group Study Room", start: Calendar.current.date(
-                bySettingHour: 14, minute: 0, second: 0, of: Date()
-            )!, end: Calendar.current.date(
-                bySettingHour: 15, minute: 30, second: 0, of: Date()
-            )!))
-        }
-}

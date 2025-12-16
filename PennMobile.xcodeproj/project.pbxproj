@@ -117,6 +117,9 @@
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		89FEACA52E88F350008EC67C /* Exceptions for "PennMobileShared" folder in "PennMobileShared" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Networking + Analytics/DeepLinkManager.swift",
+			);
 			publicHeaders = (
 				PennMobileShared.h,
 			);
@@ -136,12 +139,20 @@
 			);
 			target = 8932693228FC75A5003D4BF9 /* WidgetExtension */;
 		};
+		8D2E01BD2EF1197500CE44B8 /* Exceptions for "PennMobileShared" folder in "PennMobile" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Networking + Analytics/DeepLinkManager.swift",
+			);
+			target = 2166405F1EBADADA00746B8E /* PennMobile */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		89FEAC852E88F350008EC67C /* PennMobileShared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				8D2E01BD2EF1197500CE44B8 /* Exceptions for "PennMobileShared" folder in "PennMobile" target */,
 				89FEACA52E88F350008EC67C /* Exceptions for "PennMobileShared" folder in "PennMobileShared" target */,
 			);
 			path = PennMobileShared;

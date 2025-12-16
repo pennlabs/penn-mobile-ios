@@ -15,6 +15,9 @@ struct PennMobile: App {
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
     @ObservedObject var authManager = AuthManager()
     @ObservedObject var homeViewModel = StandardHomeViewModel()
+    
+    /// Deep link manager for GSR Share
+    @StateObject var deepLinkManager = DeepLinkManager()
 
     #if DEBUG
     @ObservedObject var mockHomeViewModel = MockHomeViewModel()
@@ -53,6 +56,7 @@ struct PennMobile: App {
                 .environmentObject(authManager)
                 .environmentObject(homeViewModel)
                 .environmentObject(BannerViewModel.shared)
+                .environmentObject(deepLinkManager)
             #if DEBUG
                 .environmentObject(mockHomeViewModel)
             #endif
