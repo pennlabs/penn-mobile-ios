@@ -25,7 +25,7 @@ class DeepLinkManager: ObservableObject {
     }
     /// Attempt to parse a domain-based link like:
     /// https://pennmobile.org/ios/gsr/share?shareCode=<8 char share code>
-    func handleOpenURL(_ url: URL) throws {
+    func handleOpenURL(_ url: URL) {
         // 1) Check that it's https + correct host + correct path
         guard url.scheme == "https",
               url.host == "pennmobile.org",

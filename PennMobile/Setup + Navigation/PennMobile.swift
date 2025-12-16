@@ -57,6 +57,9 @@ struct PennMobile: App {
                 .environmentObject(homeViewModel)
                 .environmentObject(BannerViewModel.shared)
                 .environmentObject(deepLinkManager)
+                .onOpenURL { url in
+                    deepLinkManager.handleOpenURL(url)
+                }
             #if DEBUG
                 .environmentObject(mockHomeViewModel)
             #endif

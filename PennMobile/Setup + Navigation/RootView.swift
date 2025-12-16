@@ -129,7 +129,7 @@ struct RootView: View {
                 bannerViewModel.showBanners = true
             }
         }
-        /// GSR Share Deep Linking sheet view popup
+        /// Deep Linking sheet view popup
         .sheet(item: $deepLinkManager.activeSheet) { sheet in
             switch sheet {
             case .gsrShare(let shareCode):
