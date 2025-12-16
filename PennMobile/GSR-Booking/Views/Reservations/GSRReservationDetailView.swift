@@ -27,10 +27,7 @@ struct GSRReservationDetailView: View {
     @State private var shareURL: URL?
     @State private var isFetchingShareLink = false
     
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 39.9526, longitude: -75.1932),
-        span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
-    )
+    @State var position: MapCameraPosition = .automatic
 
     // MARK: Helpers
     private var formatter: DateFormatter {
@@ -257,18 +254,28 @@ struct GSRReservationDetailView: View {
                     VStack(alignment: .leading, spacing: 12) {
                         Text("Location")
                             .font(.headline)
-
-                        let locationName = gsrLocation
-                        let coordinate = PennLocation.pennGSRLocation[locationName]?.coordinate
-                        ?? CLLocationCoordinate2D(latitude: 39.9526, longitude: -75.1932)
-
-                        Map(coordinateRegion: $region, annotationItems: [Place(coordinate: coordinate)]) { place in
-                            MapMarker(coordinate: place.coordinate, tint: .red)
+                        if let coordinate = PennLocation.pennGSRLocation[gsrLocation]?.coordinate {
+                            Map(position: $position) {
+                                UserAnnotation()
+                                Marker("\(model.gsr.name), \(splitRoom.firstMatch(of: roomName)?.1 ?? "[N/A]")", coordinate: coordinate)
+                            }
+                            .frame(height: 240)
+                            .cornerRadius(12)
+                            .onAppear {
+                                position = .region(
+                                    MKCoordinateRegion(
+                                        center: coordinate,
+                                        span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+                                    )
+                                )
+                            }
+                        } else {
+                            ProgressView()
+                                .frame(height: 240)
+                                .cornerRadius(12)
                         }
-                        .frame(height: 240)
-                        .cornerRadius(12)
-                        .onAppear { region.center = coordinate }
                     }
+                    
 
                     Divider()
 
