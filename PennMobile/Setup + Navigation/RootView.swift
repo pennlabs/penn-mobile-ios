@@ -15,7 +15,6 @@ struct RootView: View {
     @State var toastOffset: Double = 0.0
     @StateObject var popupManager = PopupManager()
     @Environment(\.scenePhase) var scenePhase
-    /// For GSR Share
     @EnvironmentObject var deepLinkManager: DeepLinkManager
     
     var isOnLogoutScreen: Bool {
