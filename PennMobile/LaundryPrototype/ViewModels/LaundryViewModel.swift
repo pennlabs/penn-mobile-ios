@@ -35,12 +35,10 @@ class LaundryViewModel: ObservableObject {
     }
     
     func toggleMachineAlarm(machine: MachineDetail, hallName: String) {
-        if (machine.status == .inUse) {
-            if isAlarmActive(for: machine) {
-                alarmHandler.unsubscribe(from: machine)
-            } else {
-                alarmHandler.subscribe(to: machine, and: hallName)
-            }
+        if isAlarmActive(for: machine) {
+            alarmHandler.unsubscribe(from: machine)
+        } else if machine.status == .inUse {
+            alarmHandler.subscribe(to: machine, and: hallName)
         }
     }
     
@@ -122,3 +120,4 @@ class LaundryViewModel: ObservableObject {
         }
     }
 }
+
