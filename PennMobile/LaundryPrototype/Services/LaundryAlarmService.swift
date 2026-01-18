@@ -73,12 +73,15 @@ extension MachineDetail.MachineType {
             if let decoded = try? JSONDecoder().decode([String: UUID].self, from: data) {
                 self.machineAlarmMapping = decoded
             }
+            // Sync local mapping with system alarms on launch
+            self.fetchAlarms()
         }
         observeAlarms()
     }
     
     @MainActor func containsAlarm(for machineID: String) -> Bool {
-        machineAlarmMapping[machineID] != nil
+        guard let id = machineAlarmMapping[machineID] else { return false }
+        return alarmsMap[id] != nil
     }
     
     private func observeAlarms() {
@@ -98,6 +101,11 @@ extension MachineDetail.MachineType {
             
             let knownAlarmIDs = Set(alarmsMap.keys)
             let incomingAlarmIDs = Set(remoteAlarms.map(\.id))
+            
+            // Also prune any persisted machine->alarm mappings that don't correspond to a current system alarm.
+            for (machineID, alarmID) in machineAlarmMapping where !incomingAlarmIDs.contains(alarmID) {
+                machineAlarmMapping[machineID] = nil
+            }
             
             let removedAlarmIDs = Set(knownAlarmIDs.subtracting(incomingAlarmIDs))
             removedAlarmIDs.forEach { alarmID in
@@ -200,3 +208,4 @@ extension MachineDetail.MachineType {
     
     func fetchAlarms() {}
 }
+
