@@ -24,6 +24,16 @@ struct RoomFinderSelectionPanel: View {
             
     let formatter = DateFormatter()
     
+    private func textWidth(_ text: String, font: UIFont = .preferredFont(forTextStyle: .body)) -> CGFloat {
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        let size = (text as NSString).size(withAttributes: attributes)
+        return ceil(size.width)
+    }
+    
+    private var panelWidth: CGFloat? {
+        textWidth("Find me a room") + 24 * 2
+    }
+    
     init(vm: GSRViewModel, isEnabled: Binding<Bool>) {
         _quickBook = StateObject(wrappedValue: GSRQuickBook(vm: vm))
         self._vm = ObservedObject(initialValue: vm)
@@ -36,7 +46,7 @@ struct RoomFinderSelectionPanel: View {
     var body: some View {
         VStack {
             Spacer()
-            if let expectedWidth, isEnabled {
+            if let panelWidth, isEnabled {
                 VStack {
                     Spacer()
                     Text("Duration")
@@ -66,9 +76,9 @@ struct RoomFinderSelectionPanel: View {
                     Spacer()
                 }
                 .mask {
-                    RoundedRectangle(cornerRadius: 12).frame(width: expectedWidth, height: expectedWidth)
+                    RoundedRectangle(cornerRadius: 12).frame(width: panelWidth, height: panelWidth)
                 }
-                .frame(width: expectedWidth, height: expectedWidth)
+                .frame(width: panelWidth, height: panelWidth)
                 .background {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundStyle(Color.white)
@@ -106,14 +116,6 @@ struct RoomFinderSelectionPanel: View {
                             .foregroundStyle(isEnabled ? Color("gsrBlue") : Color.white)
                             .shadow(radius: 2)
                     }
-                    .background (
-                        GeometryReader { ctx in
-                            Color.clear.onAppear {
-                                expectedWidth = max(expectedWidth ?? 0, ctx.size.width)
-                            }
-                        }
-                    )
-                    .frame(width: expectedWidth)
             }
         }
         .onAppear {
