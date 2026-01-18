@@ -10,7 +10,8 @@ import SwiftUI
 @_spi(Advanced) import SwiftUIIntrospect
 
 struct RoomFinderSelectionPanel: View {
-    @EnvironmentObject var vm: GSRViewModel
+    @ObservedObject var vm: GSRViewModel
+    @StateObject var quickBook: GSRQuickBook
     @Binding var isEnabled: Bool
     @State var expectedWidth: CGFloat?
     @State var feedbackGenerator: UIImpactFeedbackGenerator? = nil
@@ -23,7 +24,19 @@ struct RoomFinderSelectionPanel: View {
             
     let formatter = DateFormatter()
     
-    init(isEnabled: Binding<Bool>) {
+    private func textWidth(_ text: String, font: UIFont = .preferredFont(forTextStyle: .body)) -> CGFloat {
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
+        let size = (text as NSString).size(withAttributes: attributes)
+        return ceil(size.width)
+    }
+    
+    private var panelWidth: CGFloat? {
+        textWidth("Find me a room") + 24 * 2
+    }
+    
+    init(vm: GSRViewModel, isEnabled: Binding<Bool>) {
+        _quickBook = StateObject(wrappedValue: GSRQuickBook(vm: vm))
+        self._vm = ObservedObject(initialValue: vm)
         self._isEnabled = isEnabled
         formatter.dateFormat = "h:mm a"
         formatter.amSymbol = "AM"
@@ -33,7 +46,7 @@ struct RoomFinderSelectionPanel: View {
     var body: some View {
         VStack {
             Spacer()
-            if let expectedWidth, isEnabled {
+            if let panelWidth, isEnabled {
                 VStack {
                     Spacer()
                     Text("Duration")
@@ -63,9 +76,9 @@ struct RoomFinderSelectionPanel: View {
                     Spacer()
                 }
                 .mask {
-                    RoundedRectangle(cornerRadius: 12).frame(width: expectedWidth, height: expectedWidth)
+                    RoundedRectangle(cornerRadius: 12).frame(width: panelWidth, height: panelWidth)
                 }
-                .frame(width: expectedWidth, height: expectedWidth)
+                .frame(width: panelWidth, height: panelWidth)
                 .background {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundStyle(Color.white)
@@ -83,25 +96,18 @@ struct RoomFinderSelectionPanel: View {
                         return
                     }
                     Task { @MainActor in
-                        let qb = GSRQuickBook()
-                        do {
-                            try await qb.populateSoonestTimeslot(location: location, duration: duration, time: time)
-                        } catch {
-                            print(error)
-                            return
-                        }
-                        qb.onQuickBookSuccess = { booking in
+                        quickBook.onQuickBookSuccess = { booking in
                             vm.recentBooking = booking
                             Task {
                                 vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
                             }
                             vm.showSuccessfulBookingAlert = true
                         }
-                        qb.quickBook()
+                        try await quickBook.quickBook(location: location, duration: duration, time: time)
                     }
                 }
             } label: {
-                Label("Find me a room", systemImage: "wand.and.sparkles")
+                Label(isEnabled ? "Book now" : "Find me a room", systemImage: "wand.and.sparkles")
                     .font(.body)
                     .foregroundStyle(isEnabled ? Color.white : Color.black)
                     .padding(12)
@@ -110,17 +116,6 @@ struct RoomFinderSelectionPanel: View {
                             .foregroundStyle(isEnabled ? Color("gsrBlue") : Color.white)
                             .shadow(radius: 2)
                     }
-            }
-            .background {
-                GeometryReader { ctx in
-                    Color.clear
-                        .onAppear {
-                            expectedWidth = ctx.size.width
-                        }
-                        .onChange(of: ctx.size.width) {
-                            expectedWidth = ctx.size.width
-                        }
-                }
             }
         }
         .onAppear {
@@ -141,6 +136,23 @@ struct RoomFinderSelectionPanel: View {
                 self.minTimeRequirement = 30
                 self.maxTimeRequirement = 90
             }
+        }
+        .alert(quickBook.activeAlert?.title ?? "Booking Error", isPresented: Binding<Bool>(
+            get: { quickBook.activeAlert != nil },
+            set: { newValue in
+                if !newValue { quickBook.activeAlert = nil }
+            }
+        ), presenting: quickBook.activeAlert) { alert in
+            Button("OK") {
+                alert.onAccept?()
+                quickBook.activeAlert = nil
+            }
+            Button("Cancel", role: .cancel) {
+                alert.onCancel?()
+                quickBook.activeAlert = nil
+            }
+        } message: { alert in
+            Text(alert.message).font(.subheadline)
         }
     }
 }
