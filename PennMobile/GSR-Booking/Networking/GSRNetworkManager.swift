@@ -20,7 +20,7 @@ class GSRNetworkManager {
     
     static func getLocations() async throws -> [GSRLocation] {
         let url = URL(string: GSRNetworkManager.locationsUrl)!
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
+        let request = try await URLRequest(url: url, mode: .accessToken)
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw NetworkingError.serverError
