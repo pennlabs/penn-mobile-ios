@@ -127,7 +127,7 @@ struct RoomFinderSelectionPanel: View {
             
             guard let loc = vm.selectedLocation else { return }
             switch loc.kind {
-            case .libcal:
+            case .libcal, .penngroups:
                 self.durationOptions = [30, 60, 90, 120]
                 self.minTimeRequirement = 30
                 self.maxTimeRequirement = 120

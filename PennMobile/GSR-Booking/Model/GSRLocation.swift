@@ -18,12 +18,13 @@ struct GSRLocation: Codable, Equatable, Hashable {
     enum GSRServiceType: String, Codable, Hashable {
         case wharton = "WHARTON"
         case libcal = "LIBCAL"
+        case penngroups = "PENNGRP"
         
         var maxConsecutiveBookings: Int {
             switch self {
             case .wharton:
                 return 3
-            case .libcal:
+            case .libcal, .penngroups:
                 return 4
             }
         }
