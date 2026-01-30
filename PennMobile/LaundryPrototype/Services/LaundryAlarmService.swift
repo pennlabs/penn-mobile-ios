@@ -8,16 +8,22 @@
 
 import AlarmKit
 import SwiftUI
+import UserNotifications
+#if canImport(ActivityKit)
+import ActivityKit
+#endif
 import PennMobileShared
 
+@MainActor
 protocol LaundryAlarmHandler {
     func subscribe(to machine: MachineDetail, and hallName: String)
     func unsubscribe(from machine: MachineDetail)
     func fetchAlarms()
+    func containsAlarm(for machineID: String) -> Bool
 }
 
 enum LaundryAlarmService {
-    static func makeHandler() -> LaundryAlarmHandler {
+    @MainActor static func makeHandler() -> LaundryAlarmHandler {
         if #available(iOS 26.0, *) {
             return AlarmKitAlarmHandler()
         }
@@ -198,6 +204,23 @@ extension MachineDetail.MachineType {
 }
 
 @Observable final class FallbackAlarmHandler: LaundryAlarmHandler {
+
+    @ObservationIgnored private let center = UNUserNotificationCenter.current()
+    
+    private func requestAuthorization() async -> Bool {
+        do {
+            let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
+            return granted
+        } catch {
+            print("Notification authorization error: \(error)")
+            return false
+        }
+    }
+    
+    func containsAlarm(for machineID: String) -> Bool {
+        
+    }
+    
     func subscribe(to machine: MachineDetail, and hallName: String) {
         
     }
@@ -206,6 +229,8 @@ extension MachineDetail.MachineType {
         
     }
     
-    func fetchAlarms() {}
+    func fetchAlarms() {
+        
+    }
 }
 
