@@ -43,12 +43,7 @@ class LaundryViewModel: ObservableObject {
     }
     
     func isAlarmActive(for machine: MachineDetail) -> Bool {
-        guard #available(iOS 26.0, *),
-              let handler = alarmHandler as? AlarmKitAlarmHandler else {
-            return false
-        }
-        
-        return handler.containsAlarm(for: machine.id)
+        return alarmHandler.containsAlarm(for: machine.id)
     }
     
     func loadLaundryHalls() async {
