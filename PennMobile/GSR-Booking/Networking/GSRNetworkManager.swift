@@ -20,7 +20,7 @@ class GSRNetworkManager {
     static let groupShareURL = "https://pennmobile.org/api/gsr/share/"
     
     // deep link gsr share url format
-    static let publicDeepLinkURL = "https://pennmobile.org/ios/gsr/share"
+    static let publicDeepLinkURL = "https://pennmobile.org/gsr/share"
     
     // MARK: GSR handlers
     static func getLocations() async throws -> [GSRLocation] {
@@ -149,14 +149,14 @@ class GSRNetworkManager {
         print("BODY:", String(data: data, encoding: .utf8) ?? "nil")
         print("RESPONSE:", response)
         guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
+              httpResponse.statusCode == 201 else {
             throw NetworkingError.serverError
         }
         
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let res = try decoder.decode(GroupShareAPIResponse.self, from: data)
-        return buildShareCodeLink(shareCode: res.shareCode)
+        return buildShareCodeLink(shareCode: res.code)
     }
     
     static func getShareModelFromShareCode(shareCode: String) async throws -> GSRReservation {
@@ -166,9 +166,11 @@ class GSRNetworkManager {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.badServerResponse)
         }
+        print(data)
+        print(response)
 
         switch httpResponse.statusCode {
-            case 200:
+            case 201:
                 break
             case 400:
                 throw ShareCodeError.invalidOrExpiredShareCode
@@ -189,7 +191,7 @@ class GSRNetworkManager {
         request.httpMethod = "DELETE"
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 200 else {
+              httpResponse.statusCode == 201 else {
             throw NetworkingError.serverError
         }
         
@@ -201,7 +203,7 @@ class GSRNetworkManager {
     
     
     static func buildShareCodeLink(shareCode: String) -> String {
-        return "\(publicDeepLinkURL)?shareCode=\(shareCode)"
+        return "\(publicDeepLinkURL)?data=\(shareCode)"
     }
     
     // MARK: Decode structs
@@ -210,7 +212,7 @@ class GSRNetworkManager {
     }
     
     struct GroupShareAPIResponse: Codable {
-        let shareCode: String
+        let code: String
     }
 }
 

@@ -55,6 +55,13 @@ struct GSRReservationDetailView: View {
         let coordinate: CLLocationCoordinate2D
     }
     
+    private var shareMessage: String {
+        let startStr = timeFormatter.string(from: gsrReservation.start)
+        let endStr = timeFormatter.string(from: gsrReservation.end)
+        let dateStr = dateFormatter.string(from: gsrReservation.start)
+        return "GSR reservation: \(gsrReservation.gsr.name) • \(dateStr) • \(startStr)-\(endStr)"
+    }
+    
     func displayShareUrl() async {
         isFetchingShareLink = true
         do {
@@ -164,26 +171,40 @@ struct GSRReservationDetailView: View {
                         Text("Share Reservation")
                             .font(.headline)
 
-                        Button {
-                            Task {
-                                await displayShareUrl()
-                            }
-                        } label: {
-                            HStack {
-                                if (isFetchingShareLink) {
-                                    ProgressView()
-                                } else {
-                                    Image(systemName: "square.and.arrow.up")
-                                    Text("Share This Reservation")
+                        if let url = shareURL {
+                                ShareLink(item: url) {
+                                    HStack {
+                                        Image(systemName: "square.and.arrow.up")
+                                        Text("Share This Reservation")
+                                    }
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.blue.opacity(0.1))
+                                    .foregroundColor(.blue)
+                                    .cornerRadius(10)
                                 }
+                            } else {
+                                Button {
+                                    Task { await displayShareUrl() }
+                                } label: {
+                                    HStack {
+                                        if isFetchingShareLink {
+                                            ProgressView()
+                                        } else {
+                                            Image(systemName: "square.and.arrow.up")
+                                            Text("Open Reservation for Sharing")
+                                        }
+                                    }
+                                    .font(.system(size: 16, weight: .semibold))
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.baseRed.opacity(0.1))
+                                    .foregroundColor(.baseRed)
+                                    .cornerRadius(10)
+                                }
+                                .disabled(isFetchingShareLink)
                             }
-                            .font(.system(size: 16, weight: .semibold))
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.blue.opacity(0.1))
-                            .foregroundColor(.blue)
-                            .cornerRadius(10)
-                        }
                     }
                     
                     Divider()
