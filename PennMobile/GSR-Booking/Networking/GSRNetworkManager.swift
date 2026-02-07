@@ -149,7 +149,7 @@ class GSRNetworkManager {
         print("BODY:", String(data: data, encoding: .utf8) ?? "nil")
         print("RESPONSE:", response)
         guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 201 else {
+              (200...299).contains(httpResponse.statusCode) else {
             throw NetworkingError.serverError
         }
         
@@ -166,16 +166,16 @@ class GSRNetworkManager {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.badServerResponse)
         }
-        print(data)
+        print(String(data: data, encoding: .utf8) ?? "<non-utf8 data>")
         print(response)
 
         switch httpResponse.statusCode {
-            case 201:
+            case 200...299:
                 break
             case 400:
-                throw ShareCodeError.invalidOrExpiredShareCode
+                throw ShareCodeError.invalidShareCode
             case 404:
-                throw ShareCodeError.notFound
+                throw ShareCodeError.notFoundOrExpiredShareCode
             default:
                 throw NetworkingError.serverError
         }

@@ -24,18 +24,21 @@ class DeepLinkManager: ObservableObject {
         }
     }
     /// Attempt to parse a domain-based link like:
-    /// https://pennmobile.org/ios/gsr/share?shareCode=<8 char share code>
+    /// https://pennmobile.org/ios/gsr/share?data=<8 char share code>
     func handleOpenURL(_ url: URL) {
+        print(url)
         // 1) Check that it's https + correct host + correct path
         guard url.scheme == "https",
               url.host == "pennmobile.org",
-              url.path == "/ios/gsr/share"
+              url.path == "/gsr/share"
         else {
+            print("failed to parse url")
             return
         }
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-              let shareCode = components.queryItems?.first(where: { $0.name == "shareCode" })?.value
+              let shareCode = components.queryItems?.first(where: { $0.name == "data" })?.value
         else {
+            print("couldn't extract share code from url")
             return
         }
         

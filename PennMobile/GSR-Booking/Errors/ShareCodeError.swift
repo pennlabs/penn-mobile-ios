@@ -8,6 +8,6 @@
 
 
 enum ShareCodeError: Error {
-    case invalidOrExpiredShareCode
-    case notFound
+    case invalidShareCode
+    case notFoundOrExpiredShareCode
 }
