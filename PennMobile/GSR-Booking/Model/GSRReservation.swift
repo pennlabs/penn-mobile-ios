@@ -21,4 +21,5 @@ struct GSRReservation: Codable, Equatable, Identifiable {
     
     // Present only for /share responses
     let ownerName: String?
+    let isValid: Bool?
 }

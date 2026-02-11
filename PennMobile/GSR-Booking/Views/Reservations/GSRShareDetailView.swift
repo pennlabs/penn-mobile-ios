@@ -61,9 +61,6 @@ struct GSRShareDetailView: View {
     var body: some View {
         Group {
             if let model = gsrReservation {
-                let roomName = /\[Me\]\s*(.*)/
-                let splitRoom = model.roomName.split(separator: ":").first ?? ""
-                let room = splitRoom.firstMatch(of: roomName)?.1
                 let gsrLocation = model.gsr.name
                 ScrollView {
                     VStack(spacing: 0) {
@@ -89,13 +86,11 @@ struct GSRShareDetailView: View {
                             )
                             
                             VStack(alignment: .leading, spacing: 4) {
-                                if let match = splitRoom.firstMatch(of: roomName) {
-                                    Text(match.1)
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 38, weight: .bold))
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.5)
-                                }
+                                Text(model.roomName)
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 38, weight: .bold))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
                                 
                                 Text(model.gsr.name)
                                     .foregroundColor(.white)
@@ -110,6 +105,9 @@ struct GSRShareDetailView: View {
                         
                         // MARK: Details Content
                         VStack(alignment: .leading, spacing: 24) {
+                            
+                            Spacer()
+                            
                             Text("Booking Owner: \(model.ownerName ?? "[N/A]")")
                                 .font(.headline)
                             
@@ -158,7 +156,7 @@ struct GSRShareDetailView: View {
                                     
                                     Button {
                                         CalendarHelper.addToCalendar(
-                                            title: "GSR Booking: \(gsrLocation + " " + (room ?? ""))",
+                                            title: "GSR Booking: \(gsrLocation) \(model.roomName)",
                                             location: gsrLocation,
                                             start: model.start,
                                             end: model.end
@@ -180,7 +178,7 @@ struct GSRShareDetailView: View {
                                     
                                     Button {
                                         if let url = GoogleCalendarLink.makeURL(
-                                            title: "GSR Booking: \(gsrLocation) \(room ?? "")",
+                                            title: "GSR Booking: \(gsrLocation) \(model.roomName)",
                                             location: gsrLocation,
                                             start: model.start,
                                             end: model.end
@@ -201,6 +199,7 @@ struct GSRShareDetailView: View {
                                             RoundedRectangle(cornerRadius: 10)
                                                 .stroke(.black, lineWidth: 1)
                                         )
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
                                     }
                                 }
                             }
@@ -214,7 +213,7 @@ struct GSRShareDetailView: View {
                                 if let coordinate = PennLocation.pennGSRLocation[gsrLocation]?.coordinate {
                                     Map(position: $position) {
                                         UserAnnotation()
-                                        Marker("\(model.gsr.name), \(splitRoom.firstMatch(of: roomName)?.1 ?? "[N/A]")", coordinate: coordinate)
+                                        Marker("\(model.gsr.name), \(model.roomName)", coordinate: coordinate)
                                     }
                                     .frame(height: 240)
                                     .cornerRadius(12)
@@ -233,9 +232,12 @@ struct GSRShareDetailView: View {
                                 }
                             }
                         }
+                        .padding(.horizontal)
                     }
+                    .padding(.horizontal)
+                    .padding(.top, 20)
+                    .padding(.bottom, 30)
                 }
-                .ignoresSafeArea(edges: .top)
             } else if error != nil {
                 Text("ERROR: \(error ?? "Unknown Error")")
             } else {
@@ -250,4 +252,5 @@ struct GSRShareDetailView: View {
             }
         }
     }
+    
 }

@@ -181,6 +181,7 @@ class GSRNetworkManager {
         }
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
         let res = try decoder.decode(GSRReservation.self, from: data)
         return res
     }
@@ -197,6 +198,7 @@ class GSRNetworkManager {
         
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
         let res = try decoder.decode(GSRReservation.self, from: data)
         return res
     }

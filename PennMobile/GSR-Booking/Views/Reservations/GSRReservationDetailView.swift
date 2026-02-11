@@ -192,7 +192,7 @@ struct GSRReservationDetailView: View {
                                         if isFetchingShareLink {
                                             ProgressView()
                                         } else {
-                                            Image(systemName: "square.and.arrow.up")
+                                            Image(systemName: "link")
                                             Text("Open Reservation for Sharing")
                                         }
                                     }
@@ -265,6 +265,7 @@ struct GSRReservationDetailView: View {
                                     RoundedRectangle(cornerRadius: 10)
                                         .stroke(.black, lineWidth: 1)
                                 )
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
                     }

@@ -134,6 +134,8 @@ struct RootView: View {
             switch sheet {
             case .gsrShare(let shareCode):
                 GSRShareDetailView(shareCode: shareCode)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
             }
         }
     }
