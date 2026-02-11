@@ -9,5 +9,7 @@
 
 enum ShareCodeError: Error {
     case invalidShareCode
-    case notFoundOrExpiredShareCode
+    case expiredShareCode
+    case shareCodeNotFoundOrExpired
+    case expiredGSR
 }

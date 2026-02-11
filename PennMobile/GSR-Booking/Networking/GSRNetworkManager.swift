@@ -175,7 +175,7 @@ class GSRNetworkManager {
             case 400:
                 throw ShareCodeError.invalidShareCode
             case 404:
-                throw ShareCodeError.notFoundOrExpiredShareCode
+                throw ShareCodeError.shareCodeNotFoundOrExpired
             default:
                 throw NetworkingError.serverError
         }
@@ -183,6 +183,13 @@ class GSRNetworkManager {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         decoder.dateDecodingStrategy = .iso8601
         let res = try decoder.decode(GSRReservation.self, from: data)
+        // check to make sure GSR isn't expired
+        guard let isValid = res.isValid else {
+            throw ShareCodeError.expiredGSR
+        }
+        guard isValid else {
+            throw ShareCodeError.expiredGSR
+        }
         return res
     }
     
