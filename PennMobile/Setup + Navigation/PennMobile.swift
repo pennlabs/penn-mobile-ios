@@ -13,11 +13,14 @@ import LabsPlatformSwift
 @main
 struct PennMobile: App {
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
-    @ObservedObject var authManager = AuthManager()
-    @ObservedObject var homeViewModel = StandardHomeViewModel()
+    @StateObject var authManager = AuthManager()
+    @StateObject var homeViewModel = StandardHomeViewModel()
+    
+    /// Deep link manager for GSR Share
+    @StateObject var deepLinkManager = DeepLinkManager()
 
     #if DEBUG
-    @ObservedObject var mockHomeViewModel = MockHomeViewModel()
+    @StateObject var mockHomeViewModel = MockHomeViewModel()
     #endif
 
     init() {
@@ -53,6 +56,10 @@ struct PennMobile: App {
                 .environmentObject(authManager)
                 .environmentObject(homeViewModel)
                 .environmentObject(BannerViewModel.shared)
+                .environmentObject(deepLinkManager)
+                .onOpenURL { url in
+                    deepLinkManager.handleOpenURL(url)
+                }
             #if DEBUG
                 .environmentObject(mockHomeViewModel)
             #endif

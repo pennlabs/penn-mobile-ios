@@ -17,7 +17,12 @@ class GSRNetworkManager {
     static let reservationURL = "https://pennmobile.org/api/gsr/reservations/"
     static let cancelURL = "https://pennmobile.org/api/gsr/cancel/"
     static let isWhartonURL = "https://pennmobile.org/api/gsr/wharton/"
+    static let groupShareURL = "https://pennmobile.org/api/gsr/share/"
     
+    // deep link gsr share url format
+    static let publicDeepLinkURL = "https://pennmobile.org/gsr/share"
+    
+    // MARK: GSR handlers
     static func getLocations() async throws -> [GSRLocation] {
         let url = URL(string: GSRNetworkManager.locationsUrl)!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
@@ -78,7 +83,7 @@ class GSRNetworkManager {
 
         request.httpBody = try encoder.encode(booking)
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (_, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
             throw NetworkingError.serverError
@@ -107,7 +112,7 @@ class GSRNetworkManager {
         request.httpMethod = "POST"
         request.httpBody = try JSONSerialization.data(withJSONObject: ["booking_id": reservation.bookingId])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (_, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw NetworkingError.serverError
         }
@@ -128,8 +133,95 @@ class GSRNetworkManager {
         return res.isWharton
     }
     
+    // MARK: GSR Share network handlers
+    static func getShareCodeLink(for reservation: GSRReservation) async throws -> String {
+        let url = URL(string: GSRNetworkManager.groupShareURL)!
+        
+        var request = try await URLRequest(url: url, mode: .accessToken)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let body: [String: Any] = [
+            "booking_id": reservation.bookingId
+        ]
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+        print("BODY:", String(data: data, encoding: .utf8) ?? "nil")
+        print("RESPONSE:", response)
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw NetworkingError.serverError
+        }
+        
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let res = try decoder.decode(GroupShareAPIResponse.self, from: data)
+        return buildShareCodeLink(shareCode: res.code)
+    }
+    
+    static func getShareModelFromShareCode(shareCode: String) async throws -> GSRReservation {
+        let url = URL(string: "\(groupShareURL)\(shareCode)")!
+        let request = try await URLRequest(url: url, mode: .accessToken)
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw URLError(.badServerResponse)
+        }
+        print(String(data: data, encoding: .utf8) ?? "<non-utf8 data>")
+        print(response)
+
+        switch httpResponse.statusCode {
+            case 200...299:
+                break
+            case 400:
+                throw ShareCodeError.invalidShareCode
+            case 404:
+                throw ShareCodeError.shareCodeNotFoundOrExpired
+            default:
+                throw NetworkingError.serverError
+        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
+        let res = try decoder.decode(GSRReservation.self, from: data)
+        // check to make sure GSR isn't expired
+        guard let isValid = res.isValid else {
+            throw ShareCodeError.expiredGSR
+        }
+        guard isValid else {
+            throw ShareCodeError.expiredGSR
+        }
+        return res
+    }
+    
+    static func revokeShareCode(shareCode: String) async throws -> GSRReservation {
+        let url = URL(string: "\(groupShareURL)\(shareCode)")!
+        var request = try await URLRequest(url: url, mode: .accessToken)
+        request.httpMethod = "DELETE"
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 201 else {
+            throw NetworkingError.serverError
+        }
+        
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601
+        let res = try decoder.decode(GSRReservation.self, from: data)
+        return res
+    }
+    
+    
+    static func buildShareCodeLink(shareCode: String) -> String {
+        return "\(publicDeepLinkURL)?data=\(shareCode)"
+    }
+    
+    // MARK: Decode structs
     struct IsWhartonAPIResponse: Codable {
         let isWharton: Bool
+    }
+    
+    struct GroupShareAPIResponse: Codable {
+        let code: String
     }
 }
 

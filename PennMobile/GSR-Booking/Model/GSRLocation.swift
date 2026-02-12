@@ -9,6 +9,8 @@
 import Foundation
 
 struct GSRLocation: Codable, Equatable, Hashable {
+    let id: Int? // for gsr share
+    
     let lid: String
     let gid: Int
     let name: String
