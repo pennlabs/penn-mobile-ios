@@ -135,7 +135,6 @@ struct RootView: View {
             case .gsrShare(let shareCode):
                 GSRShareDetailView(shareCode: shareCode)
                     .presentationDetents([.large])
-                    .presentationDragIndicator(.visible)
             }
         }
     }
