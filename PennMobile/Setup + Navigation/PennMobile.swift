@@ -9,6 +9,7 @@
 import Firebase
 import SwiftUI
 import LabsPlatformSwift
+import PennMobileShared
 
 @main
 struct PennMobile: App {
@@ -35,7 +36,10 @@ struct PennMobile: App {
         
         FirebaseApp.configure()
 
-        LaundryNotificationCenter.shared.prepare()
+        if !FeatureFlags.shared.laundryRevamp {
+            LaundryNotificationCenter.shared.prepare()
+        }
+        
         GSRLocationModel.shared.prepare()
         OldLaundryAPIService.instance.prepare {}
 

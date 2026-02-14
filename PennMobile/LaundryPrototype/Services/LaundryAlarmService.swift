@@ -203,138 +203,168 @@ extension MachineDetail.MachineType {
 }
 
 @Observable final class FallbackAlarmHandler: LaundryAlarmHandler {
-    
-    @ObservationIgnored private let center = UNUserNotificationCenter.current()
-    
-    @ObservationIgnored
-    @AppStorage("machineNotificationMapping")
-    private var notificationData: Data = Data()
-    
-    @ObservationIgnored
-    @AppStorage("subscribedMachines")
-    private var subscribedMachinesData: Data = Data()
-    
-    @MainActor var machineNotificationMapping: [String: String] = [:] {
+
+    private static let userDefaultsKey = "fallbackMachineAlarmMapping"
+
+    @MainActor var machineAlarmMapping: [String: UUID] = [:] {
         didSet {
-            if let encoded = try? JSONEncoder().encode(machineNotificationMapping) {
-                notificationData = encoded
-            }
+            Self.saveMappingToDefaults(machineAlarmMapping)
         }
     }
-    
-    @MainActor var subscribedMachineIDs: Set<String> = [] {
-        didSet {
-            if let encoded = try? JSONEncoder().encode(Array(subscribedMachineIDs)) {
-                subscribedMachinesData = encoded
-            }
-        }
-    }
-    
-    @MainActor private var pendingRequestIDs: Set<String> = []
-    
+
+    @MainActor
     init() {
-        Task { @MainActor in
-            if let decoded = try? JSONDecoder().decode([String: String].self, from: notificationData) {
-                self.machineNotificationMapping = decoded
-            }
-            if let decodedSubs = try? JSONDecoder().decode([String].self, from: subscribedMachinesData) {
-                self.subscribedMachineIDs = Set(decodedSubs)
-            }
-            self.fetchAlarms()
+        self.machineAlarmMapping = Self.loadMappingFromDefaults()
+        Task {
+            await pruneExpiredAlarms()
         }
     }
-    
+
+    private static func loadMappingFromDefaults() -> [String: UUID] {
+        guard let data = UserDefaults.standard.data(forKey: userDefaultsKey),
+              let decoded = try? JSONDecoder().decode([String: UUID].self, from: data) else {
+            return [:]
+        }
+        return decoded
+    }
+
+    private static func saveMappingToDefaults(_ mapping: [String: UUID]) {
+        if let encoded = try? JSONEncoder().encode(mapping) {
+            UserDefaults.standard.set(encoded, forKey: userDefaultsKey)
+        }
+    }
+
+
     @MainActor func containsAlarm(for machineID: String) -> Bool {
-        if subscribedMachineIDs.contains(machineID) { return true }
-        
-        if !subscribedMachinesData.isEmpty, let decoded = try? JSONDecoder().decode([String].self, from: subscribedMachinesData) {
-            if Set(decoded).contains(machineID) { return true }
-        }
-        
-        guard let id = machineNotificationMapping[machineID] else { return false }
-        return pendingRequestIDs.contains(id)
+        machineAlarmMapping[machineID] != nil
     }
-    
+
     func subscribe(to machine: MachineDetail, and hallName: String) {
-        let minutes = machine.timeRemaining
-        let timeInterval = TimeInterval(minutes * 60)
-        let content = UNMutableNotificationContent()
-        let title = (machine.type == .washer) ? "Washer Ready" : "Dryer Ready"
-        content.title = title
-        content.body = hallName
-        content.sound = .default
-        
         Task { @MainActor in
-            self.subscribedMachineIDs.insert(machine.id)
-        }
-        
-        let identifier: String
-        if let existing = machineNotificationMapping[machine.id] {
-            identifier = existing
-        } else {
-            identifier = UUID().uuidString
-            Task { @MainActor in
-                self.machineNotificationMapping[machine.id] = identifier
+            guard await requestNotificationAuthorization() else {
+                print("Not authorized to schedule notifications.")
+                return
             }
-        }
-        
-        center.requestAuthorization(options: [.alert, .sound]) { [weak self] granted, _ in
-            guard let self = self else { return }
-            guard granted else { return }
-            
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(1, timeInterval), repeats: false)
-            let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
-            let center = UNUserNotificationCenter.current()
-            center.add(request) { _ in }
-            
-            Task { @MainActor in
-                self.pendingRequestIDs.insert(identifier)
+
+            let id = machineAlarmMapping[machine.id] ?? UUID()
+            machineAlarmMapping[machine.id] = id
+
+            let content = UNMutableNotificationContent()
+            let typeLabel = machine.type == .washer ? "Washer" : "Dryer"
+            content.title = "\(typeLabel) Ready"
+            content.body = "Your \(typeLabel.lowercased()) at \(hallName) has finished its cycle."
+            content.sound = .default
+
+            let timeInterval = TimeInterval(machine.timeRemaining * 60)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(timeInterval, 1), repeats: false)
+            let request = UNNotificationRequest(identifier: id.uuidString, content: content, trigger: trigger)
+
+            do {
+                try await UNUserNotificationCenter.current().add(request)
+            } catch {
+                print("Error scheduling notification: \(error)")
+                machineAlarmMapping[machine.id] = nil
+                return
             }
+
+            startLiveActivity(for: machine, hallName: hallName)
         }
-        
-        for activity in Activity<MachineData>.activities {
-            if activity.attributes.machine.id == machine.id {
-                Task {
-                    await activity.end(nil, dismissalPolicy: .immediate)
-                }
-            }
-        }
-        let attributes = MachineData(hallName: hallName, machine: machine)
-        let activity_content = ActivityContent(state: MachineData.ContentState(), staleDate: nil)
-        _ = try? Activity<MachineData>.request(attributes: attributes, content: activity_content)
-        
     }
-    
+
     func unsubscribe(from machine: MachineDetail) {
         Task { @MainActor in
-            self.subscribedMachineIDs.remove(machine.id)
+            if let id = machineAlarmMapping[machine.id] {
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id.uuidString])
+                machineAlarmMapping[machine.id] = nil
+            }
+
+            await endLiveActivity(for: machine)
         }
-        if let identifier = machineNotificationMapping[machine.id] {
-            center.removePendingNotificationRequests(withIdentifiers: [identifier])
-            Task { @MainActor in
-                self.pendingRequestIDs.remove(identifier)
-                self.machineNotificationMapping[machine.id] = nil
+    }
+
+    func fetchAlarms() {
+        Task { @MainActor in
+            await pruneExpiredAlarms()
+        }
+    }
+
+    private func requestNotificationAuthorization() async -> Bool {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+        switch settings.authorizationStatus {
+        case .notDetermined:
+            do {
+                return try await center.requestAuthorization(options: [.alert, .sound, .badge])
+            } catch {
+                print("Error requesting notification authorization: \(error)")
+                return false
+            }
+        case .authorized, .provisional, .ephemeral:
+            return true
+        case .denied:
+            return false
+        @unknown default:
+            return false
+        }
+    }
+
+    @MainActor
+    private func pruneExpiredAlarms() async {
+        let center = UNUserNotificationCenter.current()
+        let pendingRequests = await center.pendingNotificationRequests()
+        let pendingIdentifiers = Set(pendingRequests.map(\.identifier))
+
+        for (machineID, alarmID) in machineAlarmMapping {
+            if !pendingIdentifiers.contains(alarmID.uuidString) {
+                machineAlarmMapping[machineID] = nil
             }
         }
-        
-        Activity<MachineData>.activities.forEach { activity in
+
+        await pruneStaleActivities()
+    }
+
+
+    private func startLiveActivity(for machine: MachineDetail, hallName: String) {
+        guard ActivityAuthorizationInfo().areActivitiesEnabled else {
+            print("Live Activities are not enabled.")
+            return
+        }
+
+        let attributes = MachineData(hallName: hallName, machine: machine)
+        let initialState = MachineData.ContentState()
+        let content = ActivityContent(state: initialState, staleDate: nil)
+
+        do {
+            _ = try Activity<MachineData>.request(
+                attributes: attributes,
+                content: content,
+                pushType: nil
+            )
+        } catch {
+            print("Error starting Live Activity: \(error)")
+        }
+    }
+
+    private func endLiveActivity(for machine: MachineDetail) async {
+        let finalState = MachineData.ContentState()
+        let finalContent = ActivityContent(state: finalState, staleDate: nil)
+
+        for activity in Activity<MachineData>.activities {
             if activity.attributes.machine.id == machine.id {
-                Task {
-                    await activity.end(nil, dismissalPolicy: .immediate)
-                }
+                await activity.end(finalContent, dismissalPolicy: .immediate)
             }
         }
     }
-    
-    func fetchAlarms() {
-        center.getPendingNotificationRequests { [weak self] requests in
-            guard let self = self else { return }
-            let ids = Set(requests.map { $0.identifier })
-            Task { @MainActor in
-                self.pendingRequestIDs = ids
+
+    private func pruneStaleActivities() async {
+        let trackedMachineIDs = await MainActor.run { Set(machineAlarmMapping.keys) }
+        let finalState = MachineData.ContentState()
+        let finalContent = ActivityContent(state: finalState, staleDate: nil)
+
+        for activity in Activity<MachineData>.activities {
+            if !trackedMachineIDs.contains(activity.attributes.machine.id) {
+                await activity.end(finalContent, dismissalPolicy: .immediate)
             }
         }
     }
 }
-
-
