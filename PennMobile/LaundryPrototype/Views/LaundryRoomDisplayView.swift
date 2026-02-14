@@ -49,7 +49,19 @@ struct LaundryRoomDisplayView: View {
                 HStack(spacing: 16) {
                     ForEach(room.machines.details, id: \.id) { detail in
                         if detail.type == .washer {
-                            MachineView(detail: detail)
+                            Button {
+                                laundryViewModel.toggleMachineAlarm(machine: detail, hallName: room.hallName)
+                            } label: {
+                                MachineView(detail: detail)
+                                    .overlay(alignment: .topTrailing) {
+                                        if laundryViewModel.isAlarmActive(for: detail) {
+                                            Image(systemName: "bell.fill")
+                                                .resizable()
+                                                .frame(width: 16, height: 16)
+                                                .foregroundStyle(.yellow)
+                                        }
+                                    }
+                            }
                         }
                     }
                 }
@@ -68,7 +80,19 @@ struct LaundryRoomDisplayView: View {
                 HStack(spacing: 16) {
                     ForEach(room.machines.details, id: \.id) { detail in
                         if detail.type == .dryer {
-                            MachineView(detail: detail)
+                            Button {
+                                laundryViewModel.toggleMachineAlarm(machine: detail, hallName: room.hallName)
+                            } label: {
+                                MachineView(detail: detail)
+                                    .overlay(alignment: .topTrailing) {
+                                        if laundryViewModel.isAlarmActive(for: detail) {
+                                            Image(systemName: "bell.fill")
+                                                .resizable()
+                                                .frame(width: 16, height: 16)
+                                                .foregroundStyle(.yellow)
+                                        }
+                                    }
+                            }
                         }
                     }
                 }
