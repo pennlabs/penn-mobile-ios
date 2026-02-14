@@ -9,9 +9,8 @@
 import WidgetKit
 import SwiftUI
 import PennMobileShared
-#if canImport(ActivityKit)
 import ActivityKit
-#endif
+
 #if canImport(AlarmKit)
 import AlarmKit
 #endif
