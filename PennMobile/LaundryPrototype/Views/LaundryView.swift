@@ -72,10 +72,17 @@ struct LaundryView: View {
             await laundryViewModel.loadLaundryHalls()
         }
         .refreshable {
-            if case .loading = laundryViewModel.laundryHallIds {
-                return
+            // Refreshing causes a re-render, so we wrap this in another task
+            // so that the re-render doesn't cancel the refresh
+            let refreshTask = Task {
+                if case .loading = laundryViewModel.laundryHallIds {
+                    return
+                }
+                await laundryViewModel.loadLaundryHalls()
+                await laundryViewModel.loadSelectedLaundryHallUsage()
             }
-            await laundryViewModel.loadLaundryHalls()
+            
+            await refreshTask.value
         }
     }
 }

@@ -30,6 +30,7 @@ class LaundryAPIService {
     static func getLaundryHallUsage(for hallId: Int) async throws -> LaundryHallUsageResponse {
         let url: URL = laundryUsageURL.appending(path: String(hallId), directoryHint: .notDirectory)
         let (data, _) = try await URLSession.shared.data(from: url)
+        print(String(data: data, encoding: .utf8)!)
         let decoded = try decoder.decode(LaundryHallUsageResponse.self, from: data)
         return decoded
     }
