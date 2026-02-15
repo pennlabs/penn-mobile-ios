@@ -12,7 +12,7 @@ import PennMobileShared
 
 class GSRNetworkManager {
     static let availUrl = "https://pennmobile.org/api/gsr/availability/"
-    static let locationsUrl = "https://pennmobile.org/api/gsr/locations/"
+    static let locationsUrl = "https://pennmobile.org/api/gsr/user-locations/"
     static let bookingUrl = "https://pennmobile.org/api/gsr/book/"
     static let reservationURL = "https://pennmobile.org/api/gsr/reservations/"
     static let cancelURL = "https://pennmobile.org/api/gsr/cancel/"
