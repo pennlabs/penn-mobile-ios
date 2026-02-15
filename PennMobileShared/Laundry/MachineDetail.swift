@@ -38,4 +38,11 @@ public struct MachineDetail: Codable, Hashable, Sendable {
             }
         }
     }
+    
+    public init(id: String, type: MachineType, status: Status, timeRemaining: Int) {
+        self.id = id
+        self.type = type
+        self.status = status
+        self.timeRemaining = timeRemaining
+    }
 }
