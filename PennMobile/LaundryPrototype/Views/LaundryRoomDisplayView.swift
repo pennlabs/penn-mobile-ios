@@ -7,12 +7,49 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct LaundryRoomDisplayView: View {
     
     @EnvironmentObject var laundryViewModel: LaundryViewModel
     let hallId: Int
     let room: LaundryRoom
+    
+    @Environment(\.presentToast) var presentToast
+    
+    func createMachineView(room: LaundryRoom, type: MachineDetail.MachineType) -> some View {
+        HStack(spacing: 16) {
+            ForEach(room.machines.details, id: \.id) { detail in
+                if detail.type == type {
+                    Button {
+                        handleMachineToggle(detail: detail, room: room)
+                    } label: {
+                        MachineView(detail: detail)
+                            .overlay(alignment: .topTrailing) {
+                                if laundryViewModel.isAlarmActive(for: detail) {
+                                    Image(systemName: "bell.fill")
+                                        .resizable()
+                                        .frame(width: 16, height: 16)
+                                        .foregroundStyle(.yellow)
+                                        .accessibilityLabel("Alarm Active")
+                                }
+                            }
+                    }
+                    .accessibilityHint(Text("Tap to toggle machine alarm"))
+                }
+            }
+        }
+    }
+    
+    func handleMachineToggle(detail: MachineDetail, room: LaundryRoom) {
+        Task {
+            do {
+                try await laundryViewModel.toggleMachineAlarm(machine: detail, hallName: room.hallName)
+            } catch {
+                presentToast(.init(message: "\(error.localizedDescription)"))
+            }
+        }
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
@@ -46,25 +83,7 @@ struct LaundryRoomDisplayView: View {
                     .bold()
             }
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
-                    ForEach(room.machines.details, id: \.id) { detail in
-                        if detail.type == .washer {
-                            Button {
-                                laundryViewModel.toggleMachineAlarm(machine: detail, hallName: room.hallName)
-                            } label: {
-                                MachineView(detail: detail)
-                                    .overlay(alignment: .topTrailing) {
-                                        if laundryViewModel.isAlarmActive(for: detail) {
-                                            Image(systemName: "bell.fill")
-                                                .resizable()
-                                                .frame(width: 16, height: 16)
-                                                .foregroundStyle(.yellow)
-                                        }
-                                    }
-                            }
-                        }
-                    }
-                }
+                createMachineView(room: room, type: .washer)
             }
             HStack {
                 Text("Dryers")
@@ -77,25 +96,7 @@ struct LaundryRoomDisplayView: View {
                     .bold()
             }
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
-                    ForEach(room.machines.details, id: \.id) { detail in
-                        if detail.type == .dryer {
-                            Button {
-                                laundryViewModel.toggleMachineAlarm(machine: detail, hallName: room.hallName)
-                            } label: {
-                                MachineView(detail: detail)
-                                    .overlay(alignment: .topTrailing) {
-                                        if laundryViewModel.isAlarmActive(for: detail) {
-                                            Image(systemName: "bell.fill")
-                                                .resizable()
-                                                .frame(width: 16, height: 16)
-                                                .foregroundStyle(.yellow)
-                                        }
-                                    }
-                            }
-                        }
-                    }
-                }
+                createMachineView(room: room, type: .dryer)
             }
             HStack {
                 Text("Popular Times")

@@ -7,11 +7,10 @@
 //
 
 import Foundation
+import ActivityKit
+
 #if canImport(AlarmKit)
 import AlarmKit
-#endif
-#if canImport(ActivityKit)
-import ActivityKit
 #endif
 
 public struct MachineData: AlarmMetadata, ActivityAttributes {
@@ -19,13 +18,13 @@ public struct MachineData: AlarmMetadata, ActivityAttributes {
         public init() {}
     }
     
-    public let createdAt: Date
     public let hallName: String
     public let machine: MachineDetail
+    public let dateComplete: Date
     
-    public init(hallName: String, machine: MachineDetail) {
-        self.createdAt = Date.now
+    public init(hallName: String, machine: MachineDetail, dateComplete: Date) {
         self.hallName = hallName
         self.machine = machine
+        self.dateComplete = dateComplete
     }
 }
