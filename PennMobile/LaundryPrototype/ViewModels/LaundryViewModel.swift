@@ -34,11 +34,11 @@ class LaundryViewModel: ObservableObject {
         alarmHandler.fetchAlarms()
     }
     
-    func toggleMachineAlarm(machine: MachineDetail, hallName: String) {
+    func toggleMachineAlarm(machine: MachineDetail, hallName: String) async throws {
         if isAlarmActive(for: machine) {
-            alarmHandler.unsubscribe(from: machine)
+            try await alarmHandler.unsubscribe(from: machine)
         } else if machine.status == .inUse {
-            alarmHandler.subscribe(to: machine, and: hallName)
+            try await alarmHandler.subscribe(to: machine, and: hallName)
         }
     }
     

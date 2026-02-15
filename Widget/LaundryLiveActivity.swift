@@ -2,8 +2,8 @@
 //  WidgetLiveActivity.swift
 //  Widget
 //
-//  Created by Nathan Aronson on 12/13/25.
-//  Copyright © 2025 PennLabs. All rights reserved.
+//  Created by Anthony Li on 10/16/22.
+//  Copyright © 2022 PennLabs. All rights reserved.
 //
 
 import WidgetKit
@@ -21,12 +21,6 @@ extension MachineDetail {
     }
     var iconColor: Color {
         isWasher ? Color("baseBlue") : Color("baseRed")
-    }
-}
-
-extension MachineData {
-    var dateComplete: Date {
-        Date().addingTimeInterval(TimeInterval(machine.timeRemaining * 60))
     }
 }
 
