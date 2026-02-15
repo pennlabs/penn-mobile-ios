@@ -28,18 +28,30 @@ class LaundryNotificationCenter {
         let minutes = machine.timeRemaining
         let now = Date()
         
-        if #available(iOS 16.1, *) {
-            // Dismiss any existing laundry live activities that have ended
-            Activity<LaundryAttributes>.activities.forEach { activity in
-                if activity.attributes.dateComplete <= now {
-                    Task {
-                        await activity.end(using: nil, dismissalPolicy: .immediate)
-                    }
+        // Dismiss any existing laundry live activities that have ended
+        Activity<MachineData>.activities.forEach { activity in
+            if activity.attributes.dateComplete <= now {
+                Task {
+                    await activity.end(using: nil, dismissalPolicy: .immediate)
                 }
             }
-            
-            _ = try? Activity.request(attributes: LaundryAttributes(machine: machine, dateComplete: now.add(minutes: minutes)), contentState: LaundryAttributes.ContentState())
         }
+        
+        let status: MachineDetail.Status = switch machine.status {
+        case .offline: .unavailable
+        case .open: .available
+        case .outOfOrder: .unknown
+        case .running: .inUse
+        }
+        
+        let detail = MachineDetail(
+            id: String(machine.id),
+            type: machine.isWasher ? .washer : .dryer,
+            status: status,
+            timeRemaining: machine.timeRemaining
+        )
+        
+        _ = try? Activity.request(attributes: MachineData(hallName: machine.roomName, machine: detail, dateComplete: now.add(minutes: minutes)), contentState: MachineData.ContentState())
         
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             if error != nil {
@@ -96,12 +108,10 @@ class LaundryNotificationCenter {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [identifier])
         identifiers.removeValue(forKey: machine)
         
-        if #available(iOS 16.1, *) {
-            Activity<LaundryAttributes>.activities.forEach { activity in
-                if activity.attributes.machine.id == machine.id {
-                    Task {
-                        await activity.end(using: nil, dismissalPolicy: .immediate)
-                    }
+        Activity<MachineData>.activities.forEach { activity in
+            if activity.attributes.machine.id == String(machine.id) {
+                Task {
+                    await activity.end(using: nil, dismissalPolicy: .immediate)
                 }
             }
         }
