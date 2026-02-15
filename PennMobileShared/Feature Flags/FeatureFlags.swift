@@ -20,6 +20,7 @@ public final class FeatureFlags: @unchecked Sendable {
     @FeatureFlagDefinition("TEST_FEATURE_FLAG", channel: .adHoc) public var testFeatureFlag
     
     @FeatureFlagDefinition("GSR_QUICK_BOOK", channel: .testFlight) public var gsrQuickBook
+    @FeatureFlagDefinition("GSR_NEW_BOOKINGS_ENDPOINT", channel: .testFlight) public var gsrNewBookingsEndpoint
     @FeatureFlagDefinition("SHOW_AUTH_SETTINGS", channel: .experimental) public var showAuthSettings
     
     @FeatureFlagDefinition("LAUNDRY_REVAMP", channel: .experimental) public var laundryRevamp

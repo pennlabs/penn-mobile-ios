@@ -12,14 +12,20 @@ import PennMobileShared
 
 class GSRNetworkManager {
     static let availUrl = "https://pennmobile.org/api/gsr/availability/"
-    static let locationsUrl = "https://pennmobile.org/api/gsr/user-locations/"
+    static let locationsUrl = "https://pennmobile.org/api/gsr/locations/"
+    static let userLocationsUrl = "https://pennmobile.org/api/gsr/user-locations/"
     static let bookingUrl = "https://pennmobile.org/api/gsr/book/"
     static let reservationURL = "https://pennmobile.org/api/gsr/reservations/"
     static let cancelURL = "https://pennmobile.org/api/gsr/cancel/"
     static let isWhartonURL = "https://pennmobile.org/api/gsr/wharton/"
     
     static func getLocations() async throws -> [GSRLocation] {
-        let url = URL(string: GSRNetworkManager.locationsUrl)!
+        let url = if FeatureFlags.shared.gsrNewBookingsEndpoint {
+            URL(string: userLocationsUrl)!
+        } else {
+            URL(string: locationsUrl)!
+        }
+        
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
         let (data, response) = try await URLSession(authenticationMode: .accessToken).data(for: request)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
