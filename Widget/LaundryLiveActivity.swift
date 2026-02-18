@@ -9,88 +9,159 @@
 import WidgetKit
 import SwiftUI
 import PennMobileShared
-#if canImport(ActivityKit)
 import ActivityKit
+
+#if canImport(AlarmKit)
+import AlarmKit
 #endif
 
-extension LaundryMachine {
+extension MachineDetail {
+    var isWasher: Bool {
+        self.type == .washer
+    }
     var iconColor: Color {
         isWasher ? Color("baseBlue") : Color("baseRed")
     }
 }
 
+@available(iOS 16.1, *)
 struct LaundryLiveActivityView: View {
-    var attributes: LaundryAttributes
+    var attributes: MachineData
     
     var body: some View {
         HStack {
-            Image(systemName: attributes.machine.isWasher ? "washer" : "dryer").resizable().scaledToFit().frame(height: 60).fontWeight(.light).foregroundColor(attributes.machine.iconColor)
+            Image(systemName: attributes.machine.isWasher ? "washer" : "dryer")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 60)
+                .fontWeight(.light)
+                .foregroundColor(attributes.machine.iconColor)
                 .accessibilityLabel(attributes.machine.isWasher ? Text("Washing") : Text("Drying"))
             Spacer()
             VStack(alignment: .trailing) {
-                Text(attributes.machine.roomName).fontWeight(.medium).textCase(.uppercase).font(.subheadline)
-                Text(timerInterval: Date.now...attributes.dateComplete, showsHours: false).font(.largeTitle).fontWeight(.bold)
+                Text(attributes.hallName)
+                    .fontWeight(.medium)
+                    .textCase(.uppercase)
+                    .font(.subheadline)
+                Text(timerInterval: Date.now...attributes.dateComplete, showsHours: false)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
             }
             .multilineTextAlignment(.trailing)
         }
     }
 }
 
-struct LaundryLiveActivityView_Previews: PreviewProvider {
-    static var previews: some View {
-        LaundryLiveActivityView(
-            attributes: LaundryAttributes(
-                machine: LaundryMachine(
-                    id: 1,
-                    isWasher: true,
-                    roomName: "Test Laundry Room",
-                    status: .running,
-                    timeRemaining: 45),
-                dateComplete: Date(timeIntervalSinceNow: 45 * 60)
-            )
-        )
-        .padding(24)
-        .previewContext(WidgetPreviewContext(family: .systemMedium))
-        LaundryLiveActivityView(
-            attributes: LaundryAttributes(
-                machine: LaundryMachine(
-                    id: 2,
-                    isWasher: false,
-                    roomName: "Test Laundry Room",
-                    status: .running,
-                    timeRemaining: 0),
-                dateComplete: Date(timeIntervalSinceNow: 0 * 60)
-            )
-        )
-        .padding(24)
-        .previewContext(WidgetPreviewContext(family: .systemMedium))
-    }
-}
-
 @available(iOS 16.1, *)
 struct LaundryLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        return ActivityConfiguration(for: LaundryAttributes.self) { context in
+        ActivityConfiguration(for: MachineData.self) { context in
             LaundryLiveActivityView(attributes: context.attributes)
                 .environment(\.colorScheme, .dark)
                 .padding(24)
                 .activityBackgroundTint(Color("liveActivityBackground"))
                 .activitySystemActionForegroundColor(context.attributes.machine.iconColor)
         } dynamicIsland: { context in
-            let color = context.attributes.machine.isWasher ? Color("baseBlue") : Color("baseRed")
+            let isWasher = context.attributes.machine.isWasher
+            let color = isWasher ? Color("baseBlue") : Color("baseRed")
+            let dateComplete = context.attributes.dateComplete
             
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.bottom) {
                     LaundryLiveActivityView(attributes: context.attributes)
                 }
             } compactLeading: {
-                Image(systemName: context.attributes.machine.isWasher ? "washer" : "dryer").foregroundColor(color)
+                Image(systemName: isWasher ? "washer" : "dryer")
+                    .foregroundColor(color)
             } compactTrailing: {
-                Text(timerInterval: Date.now...context.attributes.dateComplete, showsHours: false).fontWeight(.medium).foregroundColor(color).frame(width: 42).multilineTextAlignment(.center)
+                Text(timerInterval: Date.now...dateComplete, showsHours: false)
+                    .fontWeight(.medium)
+                    .foregroundColor(color)
+                    .frame(width: 42)
+                    .multilineTextAlignment(.center)
             } minimal: {
-                Text(timerInterval: Date.now...context.attributes.dateComplete, showsHours: false).foregroundColor(color).font(.caption2).minimumScaleFactor(0.1).frame(width: 36).multilineTextAlignment(.center)
+                Text(timerInterval: Date.now...dateComplete, showsHours: false)
+                    .foregroundColor(color)
+                    .font(.caption2)
+                    .minimumScaleFactor(0.1)
+                    .frame(width: 36)
+                    .multilineTextAlignment(.center)
             }
             .keylineTint(color)
         }
     }
 }
+
+@available(iOS 26.0, *)
+struct AlarmKitLaundryLiveActivityView: View {
+    var attributes: AlarmAttributes<MachineData>
+    
+    var body: some View {
+        let metadata = attributes.metadata
+        let isWasher = metadata?.machine.isWasher ?? true
+        let color = isWasher ? Color("baseBlue") : Color("baseRed")
+        let hallName = metadata?.hallName ?? "Laundry"
+        let dateComplete = metadata?.dateComplete ?? Date().addingTimeInterval(60)
+        
+        return HStack {
+            Image(systemName: isWasher ? "washer" : "dryer")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 60)
+                .fontWeight(.light)
+                .foregroundColor(color)
+                .accessibilityLabel(isWasher ? Text("Washing") : Text("Drying"))
+            Spacer()
+            VStack(alignment: .trailing) {
+                Text(hallName)
+                    .fontWeight(.medium)
+                    .textCase(.uppercase)
+                    .font(.subheadline)
+                Text(timerInterval: Date.now...dateComplete, showsHours: false)
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+            }
+            .multilineTextAlignment(.trailing)
+        }
+    }
+}
+@available(iOS 26.0, *)
+struct LaundryAlarmKitLiveActivity: Widget {
+    var body: some WidgetConfiguration {
+        ActivityConfiguration(for: AlarmAttributes<MachineData>.self) { context in
+            AlarmKitLaundryLiveActivityView(attributes: context.attributes)
+                .environment(\.colorScheme, .dark)
+                .padding(24)
+                .activityBackgroundTint(Color("liveActivityBackground"))
+                .activitySystemActionForegroundColor(context.attributes.metadata?.machine.iconColor ?? .accentColor)
+        } dynamicIsland: { context in
+            let isWasher = context.attributes.metadata?.machine.isWasher ?? true
+            let color = isWasher ? Color("baseBlue") : Color("baseRed")
+            let dateComplete = context.attributes.metadata?.dateComplete ?? Date().addingTimeInterval(60)
+            
+            return DynamicIsland {
+                DynamicIslandExpandedRegion(.bottom) {
+                    AlarmKitLaundryLiveActivityView(attributes: context.attributes)
+                }
+            } compactLeading: {
+                Image(systemName: isWasher ? "washer" : "dryer")
+                    .foregroundColor(color)
+            } compactTrailing: {
+                Text(timerInterval: Date.now...dateComplete, showsHours: false)
+                    .fontWeight(.medium)
+                    .foregroundColor(color)
+                    .frame(width: 42)
+                    .multilineTextAlignment(.center)
+            } minimal: {
+                Text(timerInterval: Date.now...dateComplete, showsHours: false)
+                    .foregroundColor(color)
+                    .font(.caption2)
+                    .minimumScaleFactor(0.1)
+                    .frame(width: 36)
+                    .multilineTextAlignment(.center)
+            }
+            .keylineTint(color)
+        }
+    }
+}
+
