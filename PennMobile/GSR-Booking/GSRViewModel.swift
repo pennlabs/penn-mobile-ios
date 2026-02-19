@@ -32,7 +32,7 @@ class GSRViewModel: ObservableObject {
     @Published var selectedDate: Date
     @Published var selectedTimeslots: [(GSRRoom, GSRTimeSlot)] = []
     @Published var availableLocations: [GSRLocation] = []
-    @Published var datePickerOptions: [Date]
+    @Published var datePickerOptions: [Date] = []
     @Published var recentBooking: GSRBooking?
     @Published var isWharton: Bool = false
     @Published var isLoadingAvailability = false
@@ -44,15 +44,23 @@ class GSRViewModel: ObservableObject {
     
     @Published var gsrGetLastPulledAvailability: [Int: (availCount: Int, lastRefreshed: Date)] = [:]
     
-    
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })
     }
     
     init() {
-        let options = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now) }
-        datePickerOptions = options
-        selectedDate = options[0] // Today
+        selectedDate = Calendar.nyc.startOfDay(for: Date.now)
+        setupDatePickerOptions()
+    }
+    
+    func setupDatePickerOptions() {
+        let numDays = selectedLocation?.kind == .penngroups ? 4 : 7
+        let start = Calendar.nyc.startOfDay(for: Date.now)
+        datePickerOptions = (0..<numDays).compactMap { Calendar.nyc.date(byAdding: .day, value: $0, to: start) }
+        
+        if !datePickerOptions.contains(selectedDate), let date = datePickerOptions.first {
+            selectedDate = date
+        }
     }
     
     @MainActor func fetchInitialState() async throws {
@@ -184,6 +192,7 @@ class GSRViewModel: ObservableObject {
         }
         self.selectedLocation = location
         self.resetBooking()
+        self.setupDatePickerOptions()
         try await self.updateAvailability()
     }
     
