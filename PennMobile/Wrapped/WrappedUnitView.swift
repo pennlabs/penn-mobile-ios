@@ -16,14 +16,13 @@ struct WrappedUnitView: View {
     
     var body: some View {
         // https://github.com/pennlabs/penn-mobile-ios/pull/602#discussion_r2070443421
-        // Note, if we get to this point, unit.lottie really should not be nil
+        // Note, if we get to this point, unit.lottie really should not be nil, neither should the fontProvider
         let progressFraction = (CGFloat(vm.activeUnitProgress) * unit.time!) / unit.lottie!.duration
         let normalizedProgress = progressFraction - floor(progressFraction)
         GeometryReader { proxy in
             LottieView(animation: unit.lottie!)
                 .textProvider(DictionaryTextProvider(unit.values))
-                // TODO: Define a custom font provider conforming class that fetches fonts dynamically from backend.
-                .fontProvider(DefaultFontProvider())
+                .fontProvider(experienceVM.model.fontProvider!)
                 .playbackMode(vm.activeUnit == unit ? vm.activeUnitPlaybackMode : .paused(at:.currentFrame))
                 .currentProgress(vm.activeUnit == unit ? normalizedProgress : 0)
                 .rotation3DEffect(
