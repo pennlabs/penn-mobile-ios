@@ -794,3 +794,20 @@ public extension String {
 public extension UserDefaults {
     nonisolated(unsafe) static let group = UserDefaults(suiteName: Storage.appGroupID)!
 }
+
+public extension Locale {
+    static let enUS = Locale(identifier: "en_US_POSIX")
+}
+
+public extension TimeZone {
+    static let nyc = TimeZone(identifier: "America/New_York")!
+}
+
+public extension Calendar {
+    static let nyc: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.locale = .enUS
+        calendar.timeZone = .nyc
+        return calendar
+    }()
+}
