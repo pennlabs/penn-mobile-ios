@@ -38,7 +38,7 @@ class GSRNetworkManager {
         url.appendPathComponent("\(location.gid)")
         
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = .enUS
         formatter.timeZone = .nyc
         formatter.dateFormat = "yyyy-MM-dd"
         if let startDate {
