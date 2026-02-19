@@ -39,7 +39,7 @@ class GSRNetworkManager {
         
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(abbreviation: "EST")!
+        formatter.timeZone = .nyc
         formatter.dateFormat = "yyyy-MM-dd"
         if let startDate {
             url.appendQueryItem(name: "start", value: formatter.string(from: startDate))
