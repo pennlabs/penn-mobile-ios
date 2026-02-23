@@ -54,7 +54,7 @@ class GSRViewModel: ObservableObject {
     }
     
     func setupDatePickerOptions() {
-        let numDays = selectedLocation?.kind == .penngroups ? 4 : 7
+        let numDays = selectedLocation?.bookableDays ?? 7 
         let start = Calendar.nyc.startOfDay(for: Date.now)
         datePickerOptions = (0..<numDays).compactMap { Calendar.nyc.date(byAdding: .day, value: $0, to: start) }
         
