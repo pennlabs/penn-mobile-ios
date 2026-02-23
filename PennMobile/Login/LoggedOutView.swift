@@ -12,7 +12,6 @@ import LabsPlatformSwift
 struct LoggedOutView: View {
     @EnvironmentObject var authManager: AuthManager
     @Environment(\.colorScheme) var colorScheme
-    let platform = LabsPlatform.shared
 
     var body: some View {
         VStack(spacing: 90) {

@@ -27,6 +27,16 @@ enum AuthState: Equatable {
 @MainActor
 class AuthManager: ObservableObject {
     @Published private(set) var state = AuthState.loggedOut
+    
+    init() {
+        // Correctly handles startup logic for users who were previously logged in.
+        self.state = self.getInitialState()
+        
+        // Clear preferences iff Account.current == nil (to maintain state)
+        if self.state == .loggedOut && !Account.isLoggedIn {
+            AuthManager.clearAccountData()
+        }
+    }
 
     static func shouldRequireLogin() -> Bool {
         guard let lastLogin = UserDefaults.standard.getLastLogin(), Account.current != nil else {
@@ -59,10 +69,11 @@ class AuthManager: ObservableObject {
         Account.clear()
     }
     
-    @MainActor func handlePlatformLogin(res: Bool) async {
+    @MainActor func handlePlatformLogin(res: Bool) {
         guard res else {
             self.state = .loggedOut
-            FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Platform")
+            Self.clearAccountData()
+            //FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Platform")
             return
         }
         
@@ -72,25 +83,36 @@ class AuthManager: ObservableObject {
         // (which is just the initial value of Account.current)
         // Suppose we aren't able to fetch an account and we don't have one stored,
         // despite being logged in --> this should be considered a failed login.
-        do {
-            let account = try await AuthManager.retrieveAccount()
-            Account.current = account
-            await saveAndUpdatePreferences(account)
-            
-            // Support legacy UserDBManager
-            await withCheckedContinuation { continuation in
-                UserDBManager.shared.syncUserSettings { _ in
-                    continuation.resume()
+        Task { @MainActor in
+            do {
+                let account = try await AuthManager.retrieveAccount()
+                Account.current = account
+                await saveAndUpdatePreferences(account)
+                
+                // Support legacy UserDBManager
+                await withCheckedContinuation { continuation in
+                    UserDBManager.shared.syncUserSettings { _ in
+                        continuation.resume()
+                    }
+                }
+                
+                // This function run twice for users who were previously logged in.
+                // - First one is above, where we want them to start with the correct state (logged in)
+                // - The second one is here, where if we were able to fetch an updated profile,
+                //   we should update that state accordingly.
+                self.state = self.getInitialState()
+            } catch {
+                // Handles the case where we had an account previously, but the attempt to update failed.
+                if !Account.isLoggedIn {
+                    FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Mobile Backend Account Fetch")
+                    self.state = .loggedOut
                 }
             }
-        } catch {
-            if !Account.isLoggedIn {
-                FirebaseAnalyticsManager.shared.trackEvent(action: "Attempt Login", result: "Failed Login", content: "Failed on Mobile Backend Account Fetch")
-                self.state = .loggedOut
-            }
+            
+            await NotificationDeviceTokenManager.shared.authStateDetermined(state)
         }
         
-        self.determineInitialState()
+        
     }
     
     func handlePlatformDefaultLogin() {
@@ -100,20 +122,16 @@ class AuthManager: ObservableObject {
     }
     
 
-    @MainActor func determineInitialState() {
+    func getInitialState() -> AuthState {
         // Pretty sure guest mode doesn't persist, it probably should
         guard self.state != .guest else {
-            return
+            return self.state
         }
         
         if let account = Account.current, !AuthManager.shouldRequireLogin() {
-            self.state = .loggedIn(account)
+            return .loggedIn(account)
         } else {
-            self.state = .loggedOut
-            // Clear preferences iff Account.current == nil (to maintain state)
-            if !Account.isLoggedIn {
-                AuthManager.clearAccountData()
-            }
+            return .loggedOut
         }
     }
     

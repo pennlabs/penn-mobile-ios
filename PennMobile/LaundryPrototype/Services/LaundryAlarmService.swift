@@ -30,10 +30,10 @@ enum LaundryAlarmService {
                 return FallbackAlarmHandler()
             }
             
-            if #available(iOS 26.1, *), ProcessInfo.processInfo.isiOSAppOnVision {
-                // you're welcome anthony
-                return FallbackAlarmHandler()
-            }
+//            if #available(iOS 26.1, *), ProcessInfo.processInfo.isiOSAppOnVision {
+//                // you're welcome anthony
+//                return FallbackAlarmHandler()
+//            }
             
             return AlarmKitAlarmHandler()
         }

@@ -31,8 +31,6 @@ struct PennMobile: App {
 
         // Register to receive delegate actions from rich notifications
         UNUserNotificationCenter.current().delegate = delegate
-
-        authManager.determineInitialState()
         
         FirebaseApp.configure()
 
@@ -44,11 +42,6 @@ struct PennMobile: App {
         OldLaundryAPIService.instance.prepare {}
 
         migrateDataToGroupContainer()
-        
-        let state = authManager.state
-        Task {
-            await NotificationDeviceTokenManager.shared.authStateDetermined(state)
-        }
     }
 
     var body: some Scene {
@@ -67,8 +60,13 @@ struct PennMobile: App {
                                     defaultLoginHandler: authManager.handlePlatformDefaultLogin,
                                     authManager.handlePlatformLogin)
         }
-        .onChange(of: authManager.state.isLoggedIn) {
+        .onChange(of: authManager.state.isLoggedIn) { old, new in
             homeViewModel.clearData()
+            if !old && new {
+                Task {
+                    try? await homeViewModel.fetchData(force: true)
+                }
+            }
         }
         .onChange(of: authManager.state) { state in
             Task {
