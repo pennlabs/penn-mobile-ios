@@ -14,6 +14,7 @@ struct GSRLocation: Codable, Equatable, Hashable {
     let name: String
     let kind: GSRServiceType
     let imageUrl: String
+    let bookableDays: Int
 
     enum GSRServiceType: String, Codable, Hashable {
         case wharton = "WHARTON"
