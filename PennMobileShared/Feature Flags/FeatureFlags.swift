@@ -21,9 +21,7 @@ public final class FeatureFlags: @unchecked Sendable {
     
     @FeatureFlagDefinition("GSR_QUICK_BOOK", channel: .testFlight) public var gsrQuickBook
     @FeatureFlagDefinition("SHOW_AUTH_SETTINGS", channel: .experimental) public var showAuthSettings
-    
-    @FeatureFlagDefinition("LAUNDRY_REVAMP", channel: .testFlight) public var laundryRevamp
-    
+        
     @FeatureFlagDefinition("WHARTON_GSR_UNAVAILABILITY_BANNER", channel: .appStore) public var useWhartonGSRUnavailabilityBanner
     
     @MainActor public var showFeatureFlagSettings: Bool {
