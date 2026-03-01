@@ -165,7 +165,6 @@ class AuthManager: ObservableObject {
                     CampusExpressNetworkManager.instance.updateHousingData()
                 }
                 Account.getDiningTransactions()
-                Account.getAndSaveLaundryPreferences()
                 Account.getAndSaveFitnessPreferences()
                 Account.getPacCode()
             }

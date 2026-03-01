@@ -38,13 +38,8 @@ struct PennMobile: App {
         authManager.determineInitialState()
         
         FirebaseApp.configure()
-
-        if !FeatureFlags.shared.laundryRevamp {
-            LaundryNotificationCenter.shared.prepare()
-        }
         
         GSRLocationModel.shared.prepare()
-        OldLaundryAPIService.instance.prepare {}
 
         migrateDataToGroupContainer()
         
