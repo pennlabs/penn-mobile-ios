@@ -75,6 +75,8 @@ struct HomeView<Model: HomeViewModel>: View {
                                 .frame(width: 0)
                                 .padding(.top)
                         }
+                        
+                        AttributionView()
                     }
                     .padding(.bottom)
                     // Hack for forcing the navbar to always render
