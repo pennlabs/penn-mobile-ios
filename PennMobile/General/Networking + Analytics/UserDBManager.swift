@@ -108,45 +108,6 @@ extension UserDBManager {
     }
 }
 
-// MARK: - Laundry
-extension UserDBManager {
-    func saveLaundryPreferences(for rooms: [OldLaundryRoom]) {
-        let ids = rooms.map { $0.id }
-        saveLaundryPreferences(for: ids)
-    }
-
-    func saveLaundryPreferences(for ids: [Int]) {
-        let url = URL(string: "https://pennmobile.org/api/laundry/preferences/")!
-        let params = ["rooms": ids]
-        Task {
-            var request = (try? await URLRequest(url: url, mode: .accessToken)) ?? URLRequest(url: url)
-            request.httpMethod = "POST"
-
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = try? JSON(params).rawData()
-
-            let task = URLSession.shared.dataTask(with: request)
-            task.resume()
-        }
-    }
-
-    func getLaundryPreferences(_ callback: @escaping (_ rooms: [Int]?) -> Void) {
-        let url = URL(string: "https://pennmobile.org/api/laundry/preferences/")!
-        Task {
-            var request = (try? await URLRequest(url: url, mode: .accessToken)) ?? URLRequest(url: url)
-
-            let task = URLSession.shared.dataTask(with: request) { (data, _, _) in
-                if let data = data, let rooms = JSON(data)["rooms"].arrayObject {
-                    callback(rooms.compactMap { $0 as? Int })
-                    return
-                }
-                callback(nil)
-            }
-            task.resume()
-        }
-    }
-}
-
 // MARK: - Student Account
 extension UserDBManager {
     func saveAccount(_ account: Account, _ completion: @escaping (_ accountID: String?) -> Void) {

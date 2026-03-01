@@ -104,13 +104,7 @@ let features: [AppFeature] = [
             .navigationTitle(Text("GSR Booking"))
     },
     AppFeature(.laundry, name: "Laundry", color: .baseBlue, image: .app("Laundry_Grey")) {
-        if FeatureFlags.shared.laundryRevamp {
-            LaundryView()
-        } else {
-            AppFeature.ViewControllerView<LaundryTableViewController>()
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationTitle(Text("Laundry"))
-        }
+        LaundryView()
     },
     AppFeature(.news, name: "News", color: .baseRed, image: .app("News_Grey"), controller: NewsViewController.self),
     AppFeature(.contacts, shortName: "Contacts", longName: "Penn Contacts", color: .baseYellow, image: .app("Contacts_Grey")) {

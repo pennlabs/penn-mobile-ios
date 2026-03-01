@@ -101,14 +101,6 @@ extension Account {
             }
         }
     }
-
-    static func getAndSaveLaundryPreferences() {
-        UserDBManager.shared.getLaundryPreferences { rooms in
-            if let rooms = rooms {
-                UserDefaults.standard.setLaundryPreferences(to: rooms)
-            }
-        }
-    }
     
     static func getAndSaveFitnessPreferences() {
         UserDBManager.shared.getFitnessPreferences { rooms in
