@@ -23,6 +23,7 @@ struct AttributionView: View {
         }
         .font(.footnote)
         .padding(.top, 32)
+        .padding(.bottom, 12)
     }
 }
 
