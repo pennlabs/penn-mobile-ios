@@ -14,6 +14,7 @@ import PennMobileShared
 @main
 struct PennMobile: App {
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
+    @StateObject private var deepLinkManager = DeepLinkManager()
     @ObservedObject var authManager = AuthManager()
     @ObservedObject var homeViewModel = StandardHomeViewModel()
 
@@ -57,9 +58,13 @@ struct PennMobile: App {
                 .environmentObject(authManager)
                 .environmentObject(homeViewModel)
                 .environmentObject(BannerViewModel.shared)
+                .environmentObject(deepLinkManager)
             #if DEBUG
                 .environmentObject(mockHomeViewModel)
             #endif
+                .onOpenURL { url in
+                    deepLinkManager.handleOpenURL(url)
+                }
                 .accentColor(Color("navigation"))
                 .enableLabsPlatform(analyticsRoot: "pennmobile",
                                     clientId: InfoPlistEnvironment.labsOauthClientId,
