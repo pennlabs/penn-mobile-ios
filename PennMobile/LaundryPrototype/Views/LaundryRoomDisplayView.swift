@@ -84,10 +84,13 @@ struct LaundryRoomDisplayView: View {
                 let message: String
                 if wasAlarmActive {
                     message = "Alarm cancelled"
-                } else {
+                    presentToast(.init(message: String.LocalizationValue(stringLiteral: message)))
+
+                } else if (!wasAlarmActive && detail.timeRemaining > 0){
                     message = "Alarm set! You'll be notified when this \(machineType) is done."
+                    presentToast(.init(message: String.LocalizationValue(stringLiteral: message)))
                 }
-                presentToast(.init(message: String.LocalizationValue(stringLiteral: message)))
+                // otherwise do nothing
             } catch {
                 presentToast(.init(message: String.LocalizationValue(stringLiteral: error.localizedDescription)))
             }

@@ -16,7 +16,7 @@ struct MachineView: View {
     var statusText: String? {
         switch detail.status {
         case .complete:
-            return detail.timeRemaining > 0 ? "\(detail.timeRemaining)" : nil
+            return "0"
         case .available:
             return nil
         case .inUse:
