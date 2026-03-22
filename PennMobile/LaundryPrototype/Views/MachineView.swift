@@ -13,6 +13,19 @@ struct MachineView: View {
     
     let detail: MachineDetail
     
+    var statusText: String? {
+        switch detail.status {
+        case .complete:
+            return detail.timeRemaining > 0 ? "\(detail.timeRemaining)" : nil
+        case .available:
+            return nil
+        case .inUse:
+            return detail.timeRemaining > 0 ? "\(detail.timeRemaining)" : nil
+        default:
+            return nil
+        }
+    }
+    
     var body: some View {
         ZStack {
             Image(detail.status.imageName(for: detail.type))
@@ -20,11 +33,11 @@ struct MachineView: View {
                 .scaledToFit()
                 .frame(width: 50, height: 50)
             
-            if detail.timeRemaining > 0 {
-                Text("\(detail.timeRemaining)")
+            if let text = statusText {
+                Text(text)
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(detail.status == .available ? .green : .secondary)
             }
         }
     }
