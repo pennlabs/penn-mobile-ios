@@ -17,6 +17,19 @@ struct LaundryRoomDisplayView: View {
     
     @Environment(\.presentToast) var presentToast
     
+    private func machineCountText(for type: MachineDetail.MachineType) -> String {
+        let machines = room.machines.details.filter { $0.type == type }
+        let available = machines.filter { $0.status == .available }.count
+        let complete = machines.filter { $0.status == .complete }.count
+        let total = type == .washer ? room.usageData.totalNumberOfWashers : room.usageData.totalNumberOfDryers
+        
+        if complete > 0 {
+            return "\(available) open, \(complete) done of \(total) total"
+        } else {
+            return "\(available) out of \(total) open"
+        }
+    }
+    
     func createMachineView(room: LaundryRoom, type: MachineDetail.MachineType) -> some View {
         let filteredMachines = room.machines.details.filter { $0.type == type }
         return HStack(spacing: 16) {
@@ -107,7 +120,7 @@ struct LaundryRoomDisplayView: View {
                     .font(.subheadline)
                     .foregroundStyle(.primary)
                 Spacer()
-                Text("\(room.machines.washers.open) out of \(room.usageData.totalNumberOfWashers) open")
+                Text(machineCountText(for: .washer))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .bold()
@@ -120,7 +133,7 @@ struct LaundryRoomDisplayView: View {
                     .font(.subheadline)
                     .foregroundStyle(.primary)
                 Spacer()
-                Text("\(room.machines.dryers.open) out of \(room.usageData.totalNumberOfDryers) open")
+                Text(machineCountText(for: .dryer))
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .bold()
