@@ -21,6 +21,7 @@ class NavigationManager: ObservableObject {
 struct MainTabView: View {
     @State var tabBarFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
     @StateObject private var navigationManager = NavigationManager()
+    @ObservedObject var incidentsViewModel = IncidentsViewModel.shared
     
     var body: some View {
         TabView(selection: $navigationManager.currentTab) {
@@ -58,10 +59,17 @@ struct MainTabView: View {
             }
             .environmentObject(navigationManager)
             .tabItem {
-                Label("More", image: "More_Grey")
+                if let style = incidentsViewModel.labelStyle {
+                    Label("More", image: "More_Grey")
+                        .symbolRenderingMode(.palette)
+                        .labelStyle(style)
+                } else {
+                    Label("More", image: "More_Grey")
+                }
             }
             .tag("More")
         }
+        .environment(\.symbolVariants, .none)
         .id(tabBarFeatures)
         .onChange(of: navigationManager.currentTab) {
             navigationManager.resetPath()

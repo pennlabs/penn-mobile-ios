@@ -48,6 +48,7 @@ struct PennMobile: App {
         let state = authManager.state
         Task {
             await NotificationDeviceTokenManager.shared.authStateDetermined(state)
+            try? await IncidentsViewModel.shared.getIncidents()
         }
     }
 
