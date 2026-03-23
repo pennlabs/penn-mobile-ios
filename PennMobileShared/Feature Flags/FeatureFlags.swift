@@ -26,6 +26,8 @@ public final class FeatureFlags: @unchecked Sendable {
     
     @FeatureFlagDefinition("WHARTON_GSR_UNAVAILABILITY_BANNER", channel: .appStore) public var useWhartonGSRUnavailabilityBanner
     
+    @FeatureFlagDefinition("FORCE_APRIL_FOOLS_ROTATION", channel: .adHoc) public var forceAprilFoolsRotation
+    
     @MainActor public var showFeatureFlagSettings: Bool {
         if RolloutChannel.current >= .testFlight || alwaysShowFeatureFlagSettings || RolloutChannel.override != nil {
             return true
