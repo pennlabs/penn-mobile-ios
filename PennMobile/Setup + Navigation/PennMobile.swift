@@ -48,6 +48,7 @@ struct PennMobile: App {
         let state = authManager.state
         Task {
             await NotificationDeviceTokenManager.shared.authStateDetermined(state)
+            IncidentsViewModel.shared.startUpdatePolling()
             try? await IncidentsViewModel.shared.getIncidents()
         }
     }
