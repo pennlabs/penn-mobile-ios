@@ -75,6 +75,21 @@ struct HomeView<Model: HomeViewModel>: View {
                                 .frame(width: 0)
                                 .padding(.top)
                         }
+                                
+                        HomeCardView {
+                            NavigationLink {
+                                WebView(url: URL(string: "https://pennlabs.org/feedback/ios")!)
+                            } label: {
+                                Text("Share Your Feedback")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.top, 12)
+                                    .padding(.bottom, 12)
+                                    .padding(.horizontal)
+                                    .fontWeight(.medium)
+                                    .tint(.blue)
+                            }
+                        }
+                        .padding(.vertical)
                         
                         AttributionView()
                     }
