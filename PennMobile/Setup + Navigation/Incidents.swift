@@ -60,8 +60,6 @@ class IncidentsViewModel: ObservableObject {
     }
 }
 
-
-
 struct Incident: Identifiable, Codable {
     let id: String
     let title: String
@@ -84,7 +82,6 @@ struct IncidentView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            // Header
             HStack(spacing: 12) {
                 Image(systemName: incident.severity.systemImage)
                     .foregroundStyle(.white, incident.severity.color)
@@ -99,7 +96,6 @@ struct IncidentView: View {
                 }
             }
 
-            // Timeline
             if !incident.updates.isEmpty {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(Array(incident.updates.enumerated()), id: \.element.id) { index, update in
@@ -141,7 +137,6 @@ enum IncidentSeverity: Int, Codable {
     case degraded = 1
     case info = 0
     
-    
     var systemImage: String {
         switch self {
         case .severe:
@@ -163,7 +158,5 @@ enum IncidentSeverity: Int, Codable {
                 .gray
         }
     }
-    
-    
 }
 
