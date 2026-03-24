@@ -5,7 +5,9 @@
 //  Copyright © 2026 PennLabs. All rights reserved.
 //
 
-// If your feature announcement doesn't have a relavent image associated with it, leave the imageUrl blank ("imageUrl": "")
+
+// MAKE SURE TO REMOVE ALL COMMENTS IN THE REAL CHANGE LOG
+// If your feature announcement doesn't have a relavent image associated with it, don't include imageURL
 {
     "cutoff": "8.11.0", // updates made in version >= cutoff will be displayed
     

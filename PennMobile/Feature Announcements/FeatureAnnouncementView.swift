@@ -14,7 +14,7 @@ struct FeatureAnnouncementView: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
-            if let url = URL(string: feature.imageUrl), !feature.imageUrl.isEmpty {
+            if let imageUrl = feature.imageUrl, !imageUrl.isEmpty, let url = URL(string: imageUrl) {
                 KFImage(url)
                     .resizable()
                     .aspectRatio(contentMode: .fill)

@@ -18,12 +18,13 @@ class FeatureAnnounceable: HomeViewAnnounceable {
 
     func getHomeViewAnnouncements() async -> [HomeViewAnnouncement] {
         let changeLog: ChangeLog? = {
-            guard let url = Bundle.main.url(forResource: "ChangeLog", withExtension: "json") else { return nil }
+            guard let url = Bundle.main.url(forResource: "ChangeLog", withExtension: "json") else {
+                return nil }
             do {
                 let data = try Data(contentsOf: url)
                 return try JSONDecoder().decode(ChangeLog.self, from: data)
             } catch {
-                print("Failed to load ChangeLog.json: \(error)")
+                assertionFailure("Failed to load ChangeLog.json: \(error)")
                 return nil
             }
         }()
