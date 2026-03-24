@@ -1,21 +1,16 @@
+
 {
-    "cutoff": "8.9.0",
+    "cutoff": "8.11.0",
+    
     "features": [
+      
         {
-            "id": "feature001",
-            "title": "New Fitness Feature Example",
-            "blurb": "test test test test test test test test test test test test test test.",
-            "feature": "Fitness",
+            "id": "featureExample",
+            "title": "New Feature Example",
+            "blurb": "Write a blurb of the new feature here",
+            "feature": "About",
             "imageUrl": "https://t3.ftcdn.net/jpg/03/29/60/84/360_F_329608479_vP9nFK795X8lWmoTa8DPhMgoewQ7U1lG.jpg",
-            "version": "8.9.0"
-        },
-        {
-            "id": "feature002",
-            "title": "Laundry Feature",
-            "blurb": "test test test test test test test test test test test test test test.",
-            "feature": "Laundry",
-            "imageUrl": "",
-            "version": "8.9.1"
+            "version": "8.11.0"
         }
     ]
 }

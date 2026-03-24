@@ -62,7 +62,7 @@ struct HomeViewAnnouncement:  Identifiable {
                     AnyView(content)
                 }
             }
-            .simultaneousGesture(TapGesture().onEnded {
+            .onTapGesture() {
                 Task {
                     await onTap.asyncMap {
                         await $0()
@@ -74,7 +74,7 @@ struct HomeViewAnnouncement:  Identifiable {
                         show = false
                     }
                 }
-            })
+            }
     }
     
 //    func getBody() -> some View {
