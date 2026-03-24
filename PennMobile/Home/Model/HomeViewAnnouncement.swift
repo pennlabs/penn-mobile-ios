@@ -37,20 +37,32 @@ struct HomeViewAnnouncement:  Identifiable {
         self.linkedView = nil
     }
     
+    init(analyticsSlug: String?, disappearOnTap: Bool, priority: AnnouncementPriority = .medium, @ViewBuilder _ content: () -> any View) {
+        self.content = content()
+        self.linkedFeature = nil
+        self.linkedView = nil
+        self.priority = priority
+        self.slug = analyticsSlug
+        self.disappearOnTap = disappearOnTap
+    }
+    
     @ViewBuilder
     func getBody() -> (some View) {
             HomeCardView {
-                if show {
-                    if let view = linkedView {
-                        NavigationLink(destination: AnyView(view)) {
-                            AnyView(content)
-                        }
-                    } else {
+                if let view = linkedView {
+                    NavigationLink(destination: AnyView(view)) {
                         AnyView(content)
                     }
+                } else if let featureId = linkedFeature,
+                          let appFeature = features.first(where: { $0.id == featureId }) {
+                    NavigationLink(destination: appFeature.content) {
+                        AnyView(content)
+                    }
+                } else {
+                    AnyView(content)
                 }
             }
-            .onTapGesture {
+            .simultaneousGesture(TapGesture().onEnded {
                 Task {
                     await onTap.asyncMap {
                         await $0()
@@ -62,7 +74,7 @@ struct HomeViewAnnouncement:  Identifiable {
                         show = false
                     }
                 }
-            }
+            })
     }
     
 //    func getBody() -> some View {
