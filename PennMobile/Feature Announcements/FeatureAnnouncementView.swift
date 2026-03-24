@@ -45,7 +45,7 @@ struct FeatureAnnouncementView: View {
             
         }
         .padding()
-        .background(Color.white)
+        .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }

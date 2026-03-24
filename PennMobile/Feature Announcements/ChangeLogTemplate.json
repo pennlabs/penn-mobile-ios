@@ -1,0 +1,25 @@
+//  Untitled.swift
+//  PennMobile
+//
+//  Created by Grace Li on 3/24/26.
+//  Copyright © 2026 PennLabs. All rights reserved.
+//
+
+// If your feature announcement doesn't have a relavent image associated with it, leave the imageUrl blank ("imageUrl": "")
+{
+    "cutoff": "8.11.0", // updates made in version >= cutoff will be displayed
+    
+    "features": [
+        //EXAMPLE FEATURE
+        {
+            "id": "featureExample",
+            "title": "New Feature Example",
+            "blurb": "Write a blurb of the new feature here",
+            "feature": "About", // link to the view that the new feature is associated with (look at FeatureIdentifier enum)
+            "imageUrl": "https://t3.ftcdn.net/jpg/03/29/60/84/360_F_329608479_vP9nFK795X8lWmoTa8DPhMgoewQ7U1lG.jpg",
+            "version": "8.11.0"
+        }
+    ]
+}
+
+

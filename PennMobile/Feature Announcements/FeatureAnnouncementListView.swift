@@ -20,7 +20,7 @@ struct FeatureAnnouncementListView: View {
 
             ForEach(newFeatures, id: \.id) { newFeature in
                 if let featureId = newFeature.feature,
-                   let appFeature = features.first(where: {$0.id == featureId }) {
+                   let appFeature = features.first(where: { $0.id == featureId }) {
                     NavigationLink(destination: appFeature.content) {
                         FeatureAnnouncementView(feature: newFeature)
                     }

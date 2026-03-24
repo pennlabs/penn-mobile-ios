@@ -125,6 +125,7 @@
 		89FEAF3A2E88F399008EC67C /* Exceptions for "PennMobile" folder in "PennMobile" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				"Feature Announcements/ChangeLogTemplate.json",
 				Supporting_Files/Info.plist,
 			);
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
@@ -137,6 +138,16 @@
 			target = 8932693228FC75A5003D4BF9 /* WidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		65E357252F73285000353A11 /* Exceptions for "PennMobile" folder in "Compile Sources" phase from "PennMobile" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 2166405C1EBADADA00746B8E /* Sources */;
+			membershipExceptions = (
+				"Feature Announcements/ChangeLogTemplate.json",
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		89FEAC852E88F350008EC67C /* PennMobileShared */ = {
@@ -151,6 +162,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				89FEAF3A2E88F399008EC67C /* Exceptions for "PennMobile" folder in "PennMobile" target */,
+				65E357252F73285000353A11 /* Exceptions for "PennMobile" folder in "Compile Sources" phase from "PennMobile" target */,
 			);
 			path = PennMobile;
 			sourceTree = "<group>";
