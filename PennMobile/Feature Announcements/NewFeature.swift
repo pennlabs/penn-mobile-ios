@@ -29,7 +29,7 @@ struct NewFeature: Codable, Equatable, Identifiable {
     let title: String
     let blurb: String
     let feature: FeatureIdentifier?
-    let imageUrl: String
+    let imageUrl: String?
     let version: String
 
     enum CodingKeys: String, CodingKey {
@@ -54,7 +54,7 @@ struct NewFeature: Codable, Equatable, Identifiable {
         } else {
             feature = nil
         }
-        imageUrl = try c.decode(String.self, forKey: .imageUrl)
+        imageUrl = try c.decodeIfPresent(String.self, forKey: .imageUrl)
         version = try c.decode(String.self, forKey: .version)
     }
     
