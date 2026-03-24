@@ -9,11 +9,6 @@
 import Foundation
 import SwiftUI
 
-struct ChangeLog: Codable {
-    let cutoff: String
-    let features: [NewFeature]
-}
-
 class FeatureAnnounceable: HomeViewAnnounceable {
 
     func getHomeViewAnnouncements() async -> [HomeViewAnnouncement] {
