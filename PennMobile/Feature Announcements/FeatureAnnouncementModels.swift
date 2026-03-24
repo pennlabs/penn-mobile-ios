@@ -1,11 +1,10 @@
 //
-//  Reservations.swift
+//  FeatureAnnouncementModels.swift
 //  PennMobile
 //
 //  Created by Grace Li on 2/15/26.
 //  Copyright © 2026 PennLabs. All rights reserved.
 //
-
 
 import Foundation
 
@@ -22,6 +21,11 @@ extension String {
         }
         return true
     }
+}
+
+struct ChangeLog: Codable {
+    let cutoff: String
+    let features: [NewFeature]
 }
 
 struct NewFeature: Codable, Equatable, Identifiable {
