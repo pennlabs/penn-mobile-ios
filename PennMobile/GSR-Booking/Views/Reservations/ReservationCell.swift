@@ -9,8 +9,6 @@ import SwiftUI
 import Kingfisher
 
 struct ReservationCell: View {
-    @EnvironmentObject var vm: GSRViewModel
-    @Environment(\.presentToast) var presentToast
     let reservation: GSRReservation
     
     let height: CGFloat = 100

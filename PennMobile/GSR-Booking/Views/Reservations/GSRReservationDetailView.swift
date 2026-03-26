@@ -28,6 +28,8 @@ struct GSRReservationDetailView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
     @Environment(\.dismiss) var dismiss
+    @Environment(\.openURL) var openURL
+
 
     @State private var gsrReservation: GSRReservation?
     @State private var isLoading = true
@@ -101,6 +103,7 @@ struct GSRReservationDetailView: View {
         }
     }
     
+    @MainActor
     private func loadSharePreviewImage() async {
         guard let imageUrlString = gsrReservation?.gsr.imageUrl,
               let imageUrl = URL(string: imageUrlString) else {
@@ -319,7 +322,7 @@ struct GSRReservationDetailView: View {
                         start: model.start,
                         end: model.end
                     ) {
-                        UIApplication.shared.open(url)
+                        openURL(url)
                     }
                 } label: {
                     Label("Google Calendar", systemImage: "calendar")
