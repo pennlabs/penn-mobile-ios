@@ -9,37 +9,37 @@
 import EventKit
 import SwiftUI
 
+enum CalendarError: Error {
+    case accessDenied
+    case saveFailed(Error)
+}
+
 struct CalendarHelper {
     static func addToCalendar(
         title: String,
         location: String,
         start: Date,
-        end: Date,
-        completion: @escaping (Bool) -> Void
-    ) {
+        end: Date
+    ) async throws {
         let eventStore = EKEventStore()
-        eventStore.requestAccess(to: .event) { granted, error in
-            if granted, error == nil {
-                let event = EKEvent(eventStore: eventStore)
-                event.title = title
-                event.location = location
-                event.startDate = start
-                event.endDate = end
-                event.notes = "Created by Penn Mobile"
-                event.calendar = eventStore.defaultCalendarForNewEvents
 
-                do {
-                    try eventStore.save(event, span: .thisEvent)
-                    print("Event added to calendar")
-                    completion(true)
-                } catch {
-                    print("Failed to save event: \(error)")
-                    completion(false)
-                }
-            } else {
-                print("Calendar access not granted or error: \(String(describing: error))")
-                completion(false)
-            }
+        let granted = try await eventStore.requestWriteOnlyAccessToEvents()
+        guard granted else {
+            throw CalendarError.accessDenied
+        }
+
+        let event = EKEvent(eventStore: eventStore)
+        event.title = title
+        event.location = location
+        event.startDate = start
+        event.endDate = end
+        event.notes = "Created by Penn Mobile"
+        event.calendar = eventStore.defaultCalendarForNewEvents
+
+        do {
+            try eventStore.save(event, span: .thisEvent)
+        } catch {
+            throw CalendarError.saveFailed(error)
         }
     }
 }

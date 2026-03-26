@@ -35,7 +35,7 @@ struct ReservationsView: View {
 
                         ForEach(groupedReservations[date] ?? []) { res in
                             NavigationLink(
-                                destination: GSRReservationDetailView(gsrReservation: res)
+                                destination: GSRReservationDetailView(mode: .owned(res))
                             ) {
                                 ReservationCell(reservation: res)
                             }

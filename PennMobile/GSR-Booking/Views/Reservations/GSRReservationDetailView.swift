@@ -10,330 +10,403 @@ import SwiftUI
 import Kingfisher
 import MapKit
 
-// detail view if you own the GSR
 struct GSRReservationDetailView: View {
-    var gsrReservation: GSRReservation
     
+    // enum storing owned and shared tags
+    enum Mode {
+        case owned(GSRReservation)
+        case shared(shareCode: String)
+
+        var isReadOnly: Bool {
+            if case .shared = self { return true }
+            return false
+        }
+    }
+
+    let mode: Mode
+
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
     @Environment(\.dismiss) var dismiss
 
-    @State private var showCalendarAlert = false
-    @State private var isLoading: Bool = true
+    @State private var gsrReservation: GSRReservation?
+    @State private var isLoading = true
     @State private var error: String?
-    
-    // gsr share
-    @State private var isSharePresented = false
+
+    // share
     @State private var shareURL: URL?
     @State private var isFetchingShareLink = false
-    
+    @State private var sharePreviewImage: Image?
+
     @State var position: MapCameraPosition = .automatic
 
-    // MARK: Helpers
-    private var formatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .short
-        return formatter
-    }
-    
-    private var dateFormatter: DateFormatter {
+    // MARK: Formatters
+
+    private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .short
         df.timeStyle = .none
         return df
-    }
+    }()
 
-    private var timeFormatter: DateFormatter {
+    private let timeFormatter: DateFormatter = {
         let tf = DateFormatter()
         tf.timeStyle = .short
         return tf
+    }()
+
+    // MARK: Init
+
+    init(mode: Mode) {
+        self.mode = mode
+        if case .owned(let reservation) = mode {
+            _gsrReservation = State(initialValue: reservation)
+            _isLoading = State(initialValue: false)
+        }
     }
 
-    struct Place: Identifiable {
-        let id = UUID()
-        let coordinate: CLLocationCoordinate2D
+    // MARK: Helpers
+
+    private var roomName: String? {
+        guard let model = gsrReservation else { return nil }
+        let splitRoom = String(model.roomName.split(separator: ":").first ?? "")
+        guard splitRoom.hasPrefix("[Me]") else { return nil }
+        return splitRoom.dropFirst("[Me]".count).trimmingCharacters(in: .whitespaces)
     }
     
-    private var shareMessage: String {
-        let startStr = timeFormatter.string(from: gsrReservation.start)
-        let endStr = timeFormatter.string(from: gsrReservation.end)
-        let dateStr = dateFormatter.string(from: gsrReservation.start)
-        return "GSR reservation: \(gsrReservation.gsr.name) • \(dateStr) • \(startStr)-\(endStr)"
+    private var shareMessage: String? {
+        guard let model = gsrReservation else { return nil }
+        let dateStr = dateFormatter.string(from: model.start)
+        let startStr = timeFormatter.string(from: model.start)
+        let endStr = timeFormatter.string(from: model.end)
+        return "GSR reservation: \(model.gsr.name) • \(dateStr) • \(startStr)–\(endStr)"
     }
     
     func displayShareUrl() async {
+        guard case .owned(let reservation) = mode else { return }
         isFetchingShareLink = true
+        defer { isFetchingShareLink = false }
         do {
-            let link = try await GSRNetworkManager.getShareCodeLink(for: gsrReservation)
-            isFetchingShareLink = false
-
+            let link = try await GSRNetworkManager.getShareCodeLink(for: reservation)
             guard let url = URL(string: link) else {
-                presentToast(.init(message: "Invalid share link"))
+                presentToast(.init(message: "Server failed to generate a share link"))
                 return
             }
-
             shareURL = url
-            isSharePresented = true
-
+            
+            // Load the image for share preview
+            await loadSharePreviewImage()
         } catch {
-            print("\(error)")
-            isFetchingShareLink = false
             presentToast(.init(message: "Unable to fetch share link"))
         }
     }
     
-    
+    private func loadSharePreviewImage() async {
+        guard let imageUrlString = gsrReservation?.gsr.imageUrl,
+              let imageUrl = URL(string: imageUrlString) else {
+            sharePreviewImage = Image(systemName: "calendar")
+            return
+        }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: imageUrl)
+            if let uiImage = UIImage(data: data) {
+                sharePreviewImage = Image(uiImage: uiImage)
+            } else {
+                sharePreviewImage = Image(systemName: "calendar")
+            }
+        } catch {
+            sharePreviewImage = Image(systemName: "calendar")
+        }
+    }
+
+    // MARK: Body
+
     var body: some View {
-        let model = gsrReservation
-        let roomName = /\[Me\]\s*(.*)/
-        let splitRoom = model.roomName.split(separator: ":").first ?? ""
-        let room = splitRoom.firstMatch(of: roomName)?.1
+        Group {
+            if let model = gsrReservation {
+                content(model: model)
+            } else if let error {
+                Text("Error: \(error)")
+                    .foregroundColor(.red)
+                    .padding()
+            } else {
+                ProgressView()
+            }
+        }
+        .task {
+            guard case .shared(let shareCode) = mode else { return }
+            do {
+                gsrReservation = try await GSRNetworkManager.getShareModelFromShareCode(shareCode: shareCode)
+            } catch {
+                self.error = error.localizedDescription
+            }
+        }
+    }
+
+    // MARK: Main Content
+
+    @ViewBuilder
+    private func content(model: GSRReservation) -> some View {
         let gsrLocation = model.gsr.name
+
         ScrollView {
             VStack(spacing: 0) {
+                headerImage(model: model)
 
-                // MARK: Header Image
-                ZStack(alignment: .bottomLeading) {
-                    KFImage(URL(string: model.gsr.imageUrl))
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: UIScreen.main.bounds.width)
-                        .clipped()
-                    
-                    LinearGradient(
-                        gradient: Gradient(colors: [
-                            .black.opacity(0.6),
-                            .black.opacity(0.2),
-                            .clear,
-                            .black.opacity(0.3),
-                            .black
-                        ]),
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                    
-                    VStack(alignment: .leading, spacing: 4) {
-                        if let match = splitRoom.firstMatch(of: roomName) {
-                            Text(match.1)
-                                .foregroundColor(.white)
-                                .font(.system(size: 38, weight: .bold))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.5)
-                        }
-                        
-                        Text(model.gsr.name)
-                            .foregroundColor(.white)
-                            .font(.system(size: 22, weight: .semibold))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                    }
-                    .padding()
-                }
-                .frame(height: UIScreen.main.bounds.height * 0.38)
-                .clipped()
-
-                // MARK: Details Content
                 VStack(alignment: .leading, spacing: 24) {
 
-                    // booking details
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Booking Details")
+                    if mode.isReadOnly, let ownerName = model.ownerName {
+                        Text("Booking Owner: \(ownerName)")
                             .font(.headline)
-
-                        HStack {
-                            let startStr = timeFormatter.string(from: model.start)
-                            let endStr = timeFormatter.string(from: model.end)
-                            let timeRange = "\(startStr) - \(endStr)"
-
-                            Text(timeRange)
-                                .font(.system(size: 18, weight: .medium))
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 12)
-                                .background(Color.gray.opacity(0.15))
-                                .cornerRadius(8)
-
-                            let dateStr = dateFormatter.string(from: model.start)
-
-                            Text(dateStr)
-                                .font(.system(size: 18, weight: .medium))
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 12)
-                                .background(Color.gray.opacity(0.15))
-                                .cornerRadius(8)
-                        }
+                        Divider()
                     }
 
-                    Divider()
-                    
-                    // gsr share
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Share Reservation")
-                            .font(.headline)
-
-                        if let url = shareURL {
-                                ShareLink(item: url) {
-                                    HStack {
-                                        Image(systemName: "square.and.arrow.up")
-                                        Text("Share This Reservation")
-                                    }
-                                    .font(.system(size: 16, weight: .semibold))
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.blue.opacity(0.1))
-                                    .foregroundColor(.blue)
-                                    .cornerRadius(10)
-                                }
-                            } else {
-                                Button {
-                                    Task { await displayShareUrl() }
-                                } label: {
-                                    HStack {
-                                        if isFetchingShareLink {
-                                            ProgressView()
-                                        } else {
-                                            Image(systemName: "link")
-                                            Text("Open Reservation for Sharing")
-                                        }
-                                    }
-                                    .font(.system(size: 16, weight: .semibold))
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.baseRed.opacity(0.1))
-                                    .foregroundColor(.baseRed)
-                                    .cornerRadius(10)
-                                }
-                                .disabled(isFetchingShareLink)
-                            }
-                    }
-                    
-                    Divider()
-                    
-                    // calendar
-                    if model.end < Date() {
-                        Text("GSR Booking Expired")
-                            .foregroundColor(.red)
-                            .font(.system(size: 20, weight: .semibold))
-                            .padding(.vertical, 8)
-                    } else {
-                        VStack(alignment: .leading, spacing: 12) {
-                            Text("Calendar Options")
-                                .font(.headline)
-
-                            Button {
-                                CalendarHelper.addToCalendar(
-                                    title: "GSR Booking: \(gsrLocation + " " + (room ?? ""))",
-                                    location: gsrLocation,
-                                    start: model.start,
-                                    end: model.end
-                                ) { success in
-                                    if success { showCalendarAlert = true }
-                                }
-                            } label: {
-                                HStack {
-                                    Image(systemName: "calendar")
-                                    Text("Add to Calendar")
-                                }
-                                .font(.system(size: 16, weight: .semibold))
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                            }
-
-                            Button {
-                                if let url = GoogleCalendarLink.makeURL(
-                                    title: "GSR Booking: \(gsrLocation) \(room ?? "")",
-                                    location: gsrLocation,
-                                    start: model.start,
-                                    end: model.end
-                                ) {
-                                    UIApplication.shared.open(url)
-                                }
-                            } label: {
-                                HStack {
-                                    Image(systemName: "calendar")
-                                    Text("Google Calendar")
-                                }
-                                .font(.system(size: 16, weight: .semibold))
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.white)
-                                .foregroundColor(.black)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.black, lineWidth: 1)
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            }
-                        }
-                    }
+                    bookingDetails(model: model)
 
                     Divider()
 
-                    // map location
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Location")
-                            .font(.headline)
-                        if let coordinate = PennLocation.pennGSRLocation[gsrLocation]?.coordinate {
-                            Map(position: $position) {
-                                UserAnnotation()
-                                Marker("\(model.gsr.name), \(splitRoom.firstMatch(of: roomName)?.1 ?? "[N/A]")", coordinate: coordinate)
-                            }
-                            .frame(height: 240)
-                            .cornerRadius(12)
-                            .onAppear {
-                                position = .region(
-                                    MKCoordinateRegion(
-                                        center: coordinate,
-                                        span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
-                                    )
-                                )
-                            }
-                        } else {
-                            ProgressView()
-                                .frame(height: 240)
-                                .cornerRadius(12)
-                        }
+                    if !mode.isReadOnly {
+                        shareSection()
+                        Divider()
                     }
-                    
+
+                    calendarSection(model: model, gsrLocation: gsrLocation)
 
                     Divider()
 
-                    // delete button
-                    Button {
-                        Task {
-                            withAnimation {
-                                vm.currentReservations.removeAll { $0.bookingId == gsrReservation.bookingId }
-                            }
-                            do { try await GSRNetworkManager.deleteReservation(gsrReservation) }
-                            catch { presentToast(.init(message: "Unable to delete this reservation. Is it currently in progress?")) }
+                    mapSection(model: model, gsrLocation: gsrLocation)
 
-                            vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
-
-                            await MainActor.run { dismiss() }
-                        }
-                    } label: {
-                        HStack {
-                            Image(systemName: "trash")
-                            Text("Delete Reservation")
-                        }
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(.red)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.red.opacity(0.1))
-                        .cornerRadius(10)
+                    if !mode.isReadOnly {
+                        Divider()
+                        deleteButton()
                     }
-
                 }
                 .padding(.horizontal)
                 .padding(.top, 20)
+                .padding(.bottom, 30)
             }
         }
         .ignoresSafeArea(edges: .top)
     }
+
+    // MARK: Subviews
+
+    @ViewBuilder
+    private func headerImage(model: GSRReservation) -> some View {
+        ZStack(alignment: .bottomLeading) {
+            KFImage(URL(string: model.gsr.imageUrl))
+                .resizable()
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width)
+                .clipped()
+
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    .black.opacity(0.6), .black.opacity(0.2),
+                    .clear, .black.opacity(0.3), .black
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(roomName ?? model.roomName)
+                    .foregroundColor(.white)
+                    .font(.system(size: 38, weight: .bold))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.5)
+
+                Text(model.gsr.name)
+                    .foregroundColor(.white)
+                    .font(.system(size: 22, weight: .semibold))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.5)
+            }
+            .padding()
+        }
+        .frame(height: UIScreen.main.bounds.height * 0.38)
+        .clipped()
+    }
+
+    @ViewBuilder
+    private func bookingDetails(model: GSRReservation) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Booking Details").font(.headline)
+
+            HStack {
+                Text("\(timeFormatter.string(from: model.start)) - \(timeFormatter.string(from: model.end))")
+                    .detailChip()
+
+                Text(dateFormatter.string(from: model.start))
+                    .detailChip()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func shareSection() -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Share Reservation").font(.headline)
+
+            if let url = shareURL, let message = shareMessage {
+                ShareLink(
+                    item: url,
+                    subject: Text("GSR Reservation"),
+                    message: Text(message),
+                    preview: SharePreview(
+                        message,
+                        image: sharePreviewImage ?? Image(systemName: "calendar")
+                    )
+                ) {
+                    Label("Share This Reservation", systemImage: "square.and.arrow.up")
+                        .calendarButton(style: .blueFilled)
+                }
+            } else {
+                Button {
+                    Task { await displayShareUrl() }
+                } label: {
+                    Group {
+                        if isFetchingShareLink {
+                            ProgressView()
+                        } else {
+                            Label("Open Reservation for Sharing", systemImage: "link")
+                        }
+                    }
+                    .calendarButton(style: .redOutline)
+                }
+                .disabled(isFetchingShareLink)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func calendarSection(model: GSRReservation, gsrLocation: String) -> some View {
+        if model.end < Date() {
+            Text("GSR Booking Expired")
+                .foregroundColor(.red)
+                .font(.system(size: 20, weight: .semibold))
+                .padding(.vertical, 8)
+        } else {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Calendar Options").font(.headline)
+
+                Button {
+                    Task {
+                        do {
+                            try await CalendarHelper.addToCalendar(
+                                title: "GSR Booking: \(gsrLocation) \(roomName ?? model.roomName)",
+                                location: gsrLocation,
+                                start: model.start,
+                                end: model.end
+                            )
+                            presentToast(.init(message: "Added to calendar!"))
+                        } catch CalendarError.accessDenied {
+                            presentToast(.init(message: "Calendar access denied. Please enable it in Settings."))
+                        } catch {
+                            presentToast(.init(message: "Failed to add event to calendar."))
+                        }
+                    }
+                } label: {
+                    Label("Add to Calendar", systemImage: "calendar")
+                        .calendarButton(style: .blueFilled)
+                }
+
+                Button {
+                    if let url = GoogleCalendarLink.makeURL(
+                        title: "GSR Booking: \(gsrLocation) \(roomName ?? model.roomName)",
+                        location: gsrLocation,
+                        start: model.start,
+                        end: model.end
+                    ) {
+                        UIApplication.shared.open(url)
+                    }
+                } label: {
+                    Label("Google Calendar", systemImage: "calendar")
+                        .calendarButton(style: .whiteOutline)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func mapSection(model: GSRReservation, gsrLocation: String) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Location").font(.headline)
+
+            if let coordinate = PennLocation.pennGSRLocation[gsrLocation]?.coordinate {
+                Map(position: $position) {
+                    UserAnnotation()
+                    Marker("\(model.gsr.name), \(roomName ?? model.roomName)", coordinate: coordinate)
+                }
+                .frame(height: 240)
+                .cornerRadius(12)
+                .onAppear {
+                    position = .region(MKCoordinateRegion(
+                        center: coordinate,
+                        span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
+                    ))
+                }
+            } else {
+                HStack {
+                    Image(systemName: "mappin.slash")
+                    Text("Location not available")
+                        .font(.subheadline)
+                }
+                .foregroundColor(.secondary)
+                .frame(maxWidth: .infinity, minHeight: 80)
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(12)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func deleteButton() -> some View {
+        if case .owned(let reservation) = mode {
+            Button {
+            Task {
+                withAnimation {
+                    vm.currentReservations.removeAll { $0.bookingId == reservation.bookingId }
+                }
+                do { try await GSRNetworkManager.deleteReservation(reservation) }
+                catch { presentToast(.init(message: "Unable to delete this reservation. Is it currently in progress?")) }
+                vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
+                await MainActor.run { dismiss() }
+            }
+        } label: {
+            Label("Delete Reservation", systemImage: "trash")
+                .calendarButton(style: .redOutline)
+                .foregroundColor(.red)
+        }
+        }
+    }
 }
 
+// MARK: - Button Style Helper
+
+private enum ButtonStyle { case blueFilled, redOutline, whiteOutline }
+
+private extension View {
+    @ViewBuilder
+    func calendarButton(style: ButtonStyle) -> some View {
+        self
+            .font(.system(size: 16, weight: .semibold))
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(style == .blueFilled ? Color.blue : style == .redOutline ? Color.baseRed.opacity(0.1) : Color.white)
+            .foregroundColor(style == .blueFilled ? .white : style == .redOutline ? .baseRed : .black)
+            .overlay(style == .whiteOutline ? RoundedRectangle(cornerRadius: 10).stroke(.black, lineWidth: 1) : nil)
+            .cornerRadius(10)
+    }
+
+    func detailChip() -> some View {
+        self
+            .font(.system(size: 18, weight: .medium))
+            .padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            .background(Color.gray.opacity(0.15))
+            .cornerRadius(8)
+    }
+}
 

@@ -17,11 +17,13 @@ enum GoogleCalendarLink {
         let startStr = dateFormatter.string(from: start)
         let endStr = dateFormatter.string(from: end)
 
-        let escapedTitle = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "GSR%20Booking"
-        let escapedLocation = location.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-
-        let urlString = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=\(escapedTitle)&location=\(escapedLocation)&dates=\(startStr)/\(endStr)"
-
-        return URL(string: urlString)
+        var components = URLComponents(string: "https://calendar.google.com/calendar/render")
+        components?.queryItems = [
+            URLQueryItem(name: "action", value: "TEMPLATE"),
+            URLQueryItem(name: "text", value: title),
+            URLQueryItem(name: "location", value: location),
+            URLQueryItem(name: "dates", value: "\(startStr)/\(endStr)")
+        ]
+        return components?.url
     }
 }

@@ -146,8 +146,6 @@ class GSRNetworkManager {
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
         let (data, response) = try await URLSession.shared.data(for: request)
-        print("BODY:", String(data: data, encoding: .utf8) ?? "nil")
-        print("RESPONSE:", response)
         guard let httpResponse = response as? HTTPURLResponse,
               (200...299).contains(httpResponse.statusCode) else {
             throw NetworkingError.serverError
@@ -166,8 +164,6 @@ class GSRNetworkManager {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.badServerResponse)
         }
-        print(String(data: data, encoding: .utf8) ?? "<non-utf8 data>")
-        print(response)
 
         switch httpResponse.statusCode {
             case 200...299:
@@ -198,9 +194,15 @@ class GSRNetworkManager {
         var request = try await URLRequest(url: url, mode: .accessToken)
         request.httpMethod = "DELETE"
         let (data, response) = try await URLSession.shared.data(for: request)
-        guard let httpResponse = response as? HTTPURLResponse,
-              httpResponse.statusCode == 201 else {
-            throw NetworkingError.serverError
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw URLError(.badServerResponse)
+        }
+
+        switch httpResponse.statusCode {
+            case 200...299:
+                break
+            default:
+                throw NetworkingError.serverError
         }
         
         let decoder = JSONDecoder()

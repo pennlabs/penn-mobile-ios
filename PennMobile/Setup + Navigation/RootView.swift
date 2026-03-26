@@ -133,8 +133,7 @@ struct RootView: View {
         .sheet(item: $deepLinkManager.activeSheet) { sheet in
             switch sheet {
             case .gsrShare(let shareCode):
-                GSRShareDetailView(shareCode: shareCode)
-                    .presentationDetents([.large])
+                GSRReservationDetailView(mode: .shared(shareCode: shareCode))
             }
         }
     }
