@@ -108,11 +108,6 @@ struct RootView: View {
         .onChange(of: toast?.id) { _ in
             toastOffset = 0.0
         }
-        .onChange(of: scenePhase) { phase in
-            if phase == .active && BannerViewModel.isAprilFools {
-                bannerViewModel.showBanners = true
-            }
-        }
         /// Deep Linking sheet view popup
         .sheet(item: $deepLinkManager.activeSheet) { sheet in
             switch sheet {
