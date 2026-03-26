@@ -24,17 +24,11 @@ func getDefaultPopupURL() -> URL {
         url: getDefaultBannerURL(),
         cacheMaxAge: 60 * 60
     )
-    
-    static var isAprilFools: Bool {
-        let components = Calendar.autoupdatingCurrent.dateComponents(in: .autoupdatingCurrent, from: Date())
-        return components.month == 4 && components.day == 1
-    }
 
     @Published var banners: [BannerDescription] = []
     private var isFetching = false
     private var lastSuccessfulFetch: Date?
     
-    @Published var showBanners = ProcessInfo.processInfo.environment["FORCE_BANNERS"] != nil || BannerViewModel.isAprilFools
     @Published var showPopup = true
 
     let url: URL

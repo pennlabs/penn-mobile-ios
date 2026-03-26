@@ -58,23 +58,9 @@ struct HomeView<Model: HomeViewModel>: View {
                                 .padding(.bottom)
                         }
                         
-                        if bannerViewModel.showBanners {
-                            BannerView()
-                                .frame(maxWidth: .infinity)
-                                .frame(width: 0)
-                                .padding(.bottom)
-                        }
-                        
                         viewModel.data.content(for: context.date)
                             .frame(maxWidth: 480)
                             .frame(maxWidth: .infinity)
-                        
-                        if bannerViewModel.showBanners {
-                            BannerView()
-                                .frame(maxWidth: .infinity)
-                                .frame(width: 0)
-                                .padding(.top)
-                        }
                                 
                         HomeCardView {
                             NavigationLink {
