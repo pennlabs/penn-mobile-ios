@@ -20,7 +20,7 @@ struct AprilFoolsViewModifier: ViewModifier {
     //let timer = Timer.publish(every: 30, on: .main, in: .default).autoconnect()
     
     init?() {
-        let enabled = (Calendar.isAprilFools || FeatureFlags.shared.forceAprilFoolsRotation)
+        let enabled = Calendar.isAprilFools // || add some way to force this feature in the future
         guard enabled else { return nil }
         
         self._coreMotionRotationViewModel = StateObject(wrappedValue: CoreMotionRotationViewModel() ?? .init(enabled: false))
