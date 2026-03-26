@@ -31,7 +31,7 @@ class GSRDateHandler {
         for date in dateRange {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(abbreviation: "America/New_York")!
+            formatter.timeZone = TimeZone.nyc
             formatter.dateFormat = "yyyy-MM-dd"
             let string = formatter.string(from: date)
             let day = (cal as NSCalendar).components(NSCalendar.Unit.day, from: date).day
