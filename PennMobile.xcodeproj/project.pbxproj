@@ -195,10 +195,8 @@
 			files = (
 				732CE8CF2EB56ED7004903F2 /* LabsPlatformSwift in Frameworks */,
 				42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */,
-				42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */,
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				F2568A762413534F00561295 /* SnapKit in Frameworks */,
-				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
 				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
@@ -209,7 +207,6 @@
 				895A1AB52CB98E9000E161AE /* XLPagerTabStrip in Frameworks */,
 				895A1AB82CB98F5000E161AE /* ScrollableGraphView in Frameworks */,
 				73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */,
-				73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,7 +214,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */,
 				42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */,
 				6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */,
 				6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */,
@@ -228,7 +224,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */,
 				42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */,
 				8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */,
 				8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */,
@@ -441,7 +436,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 2630;
 				ORGANIZATIONNAME = PennLabs;
 				TargetAttributes = {
 					2166405F1EBADADA00746B8E = {
@@ -651,6 +646,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -707,6 +703,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
