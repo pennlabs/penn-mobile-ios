@@ -167,16 +167,6 @@ struct MoreView: View {
             } header: {
                 Text("Links")
             }
-            
-            if Account.current?.pennid == 12345678 {
-                Section {
-                    Toggle(isOn: $bannerViewModel.showBanners) {
-                        Text("Force April Fools")
-                    }
-                } header: {
-                    Text("Debugging")
-                }
-            }
         }
         .navigationTitle(Text("More"))
         .navigationBarTitleDisplayMode(.inline)

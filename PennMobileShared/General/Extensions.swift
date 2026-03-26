@@ -810,4 +810,9 @@ public extension Calendar {
         calendar.timeZone = .nyc
         return calendar
     }()
+    
+    static var isAprilFools: Bool {
+        let components = Calendar.autoupdatingCurrent.dateComponents(in: .autoupdatingCurrent, from: Date())
+        return components.month == 4 && components.day == 1
+    }
 }

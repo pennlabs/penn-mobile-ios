@@ -27,29 +27,12 @@ struct RootView: View {
         }
     }
     
-    let timer = Timer.publish(every: 30, on: .main, in: .default).autoconnect()
-    
     var body: some View {
         Group {
             switch authManager.state {
             case .guest, .loggedIn:
-                if bannerViewModel.showBanners {
-                    VStack(spacing: 0) {
-                        BannerView()
-                        MainTabView()
-                        BannerView()
-                    }
+                MainTabView()
                     .transition(.opacity)
-                    .ignoresSafeArea()
-                    .sheet(isPresented: $bannerViewModel.showPopup) {
-                        UserEngagementPopupView()
-                    }
-                    .onReceive(timer) { _ in
-                        bannerViewModel.showPopup = true
-                    }
-                } else {
-                    MainTabView().transition(.opacity)
-                }
             case .loggedOut:
                 LoggedOutView().transition(.opacity)
             default:
@@ -137,5 +120,6 @@ struct RootView: View {
                 GSRReservationDetailView(mode: .shared(shareCode: shareCode))
             }
         }
+        .applyAprilFools()
     }
 }
