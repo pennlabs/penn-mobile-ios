@@ -33,7 +33,8 @@ struct FeatureAnnouncementView: View {
                     Text("v\(feature.version)")
                         .font(.footnote)
                         .fontWeight(.medium)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(.secondary)
+                        .italic()
                 }
                 Text(feature.blurb)
                     .font(.footnote)
