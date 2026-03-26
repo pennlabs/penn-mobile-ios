@@ -6,9 +6,8 @@
         {
           "id": "gsr-sharing-2026",
           "title": "Share GSR Reservations",
-          "blurb": "Share your study room bookings with friends via link or calendar invite",
+          "blurb": "Share your study room bookings with friends via link or calendar invite through the Reservations tab.",
           "feature": "Study Room Booking",
-          "imageUrl": "https://example.com/gsr-sharing-image.jpg",
           "version": "8.11.0"
         },
         {
