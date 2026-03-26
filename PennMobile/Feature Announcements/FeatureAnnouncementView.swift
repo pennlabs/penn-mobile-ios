@@ -33,7 +33,7 @@ struct FeatureAnnouncementView: View {
                     Text("v\(feature.version)")
                         .font(.footnote)
                         .fontWeight(.medium)
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(.secondary)
                 }
                 Text(feature.blurb)
                     .font(.footnote)
@@ -47,6 +47,7 @@ struct FeatureAnnouncementView: View {
         .padding()
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .shadow(radius: 1.5)
     }
 }
 

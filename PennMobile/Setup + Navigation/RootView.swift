@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct RootView: View {
     @EnvironmentObject var authManager: AuthManager
@@ -15,7 +16,8 @@ struct RootView: View {
     @State var toastOffset: Double = 0.0
     @StateObject var popupManager = PopupManager()
     @Environment(\.scenePhase) var scenePhase
-
+    @EnvironmentObject var deepLinkManager: DeepLinkManager
+    
     var isOnLogoutScreen: Bool {
         switch authManager.state {
         case .loggedOut:
@@ -105,6 +107,13 @@ struct RootView: View {
         }
         .onChange(of: toast?.id) { _ in
             toastOffset = 0.0
+        }
+        /// Deep Linking sheet view popup
+        .sheet(item: $deepLinkManager.activeSheet) { sheet in
+            switch sheet {
+            case .gsrShare(let shareCode):
+                GSRReservationDetailView(mode: .shared(shareCode: shareCode))
+            }
         }
         .applyAprilFools()
     }

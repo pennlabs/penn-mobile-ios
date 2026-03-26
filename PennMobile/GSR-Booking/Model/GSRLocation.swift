@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GSRLocation: Codable, Equatable, Hashable {
+struct GSRLocation: Codable, Equatable, Hashable {    
     let lid: String
     let gid: Int
     let name: String
