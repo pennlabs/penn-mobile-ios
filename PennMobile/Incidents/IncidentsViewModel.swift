@@ -22,8 +22,13 @@ class IncidentsViewModel: ObservableObject {
     
     static let shared = IncidentsViewModel()
     
-    let timer = Timer.publish(every: 60 * 2, on: .main, in: .default).autoconnect()
+    // General polling every 15 minutes
+    let timer = Timer.publish(every: 60 * 15, on: .main, in: .default).autoconnect()
     var updateCancellable: (any Cancellable)? = nil
+    
+    // High priority polling when we have an incident. Subscribe to more frequent updates
+    let highPrioTimer = Timer.publish(every: 60 * 2, on: .main, in: .default).autoconnect()
+    var highPrioUpdateCancellable: (any Cancellable)? = nil
     
     init() {
         incidents = []
@@ -32,12 +37,31 @@ class IncidentsViewModel: ObservableObject {
     deinit {
         self.updateCancellable?.cancel()
         self.updateCancellable = nil
+        self.highPrioUpdateCancellable?.cancel()
+        self.highPrioUpdateCancellable = nil
     }
     
     @MainActor func startUpdatePolling() {
         self.updateCancellable = timer.sink { _ in
             Task { @MainActor in
                 try? await self.getIncidents()
+                if self.incidents.isEmpty {
+                    // Unsubscribe from high-priority polling
+                    self.highPrioUpdateCancellable?.cancel()
+                    self.highPrioUpdateCancellable = nil
+                }
+            }
+        }
+    }
+    
+    @MainActor func startHighPriorityUpdatePolling() {
+        self.highPrioUpdateCancellable = highPrioTimer.sink { _ in
+            Task { @MainActor in
+                try? await self.getIncidents()
+                if self.incidents.isEmpty {
+                    self.highPrioUpdateCancellable?.cancel()
+                    self.highPrioUpdateCancellable = nil
+                }
             }
         }
     }
@@ -50,7 +74,8 @@ class IncidentsViewModel: ObservableObject {
         dec.dateDecodingStrategy = .iso8601
         let incidents = try dec.decode([Incident].self, from: data)
         self.incidents = incidents.filter { el in
-            let isBackend = el.affectedServices.contains("mobile-backend")
+            let isBackend = el.affectedServices.contains("mobile-backend") ||
+                el.affectedServices.contains("mobile-ios")
             let isResolved = el.status == "resolved"
             return isBackend && !isResolved
         }.sorted(by: { $0.severity.rawValue > $1.severity.rawValue })
