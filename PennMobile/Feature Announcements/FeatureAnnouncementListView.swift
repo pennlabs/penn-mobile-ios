@@ -16,6 +16,7 @@ struct FeatureAnnouncementListView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("\(Image(systemName: "bell.fill")) NEW FEATURES")
                 .foregroundStyle(.labelPrimary)
+                .opacity(0.7)
                 .font(.caption)
                 .padding(.bottom, 2)
             
