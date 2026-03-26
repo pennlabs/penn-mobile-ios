@@ -10,11 +10,12 @@ import Foundation
 
 enum GoogleCalendarLink {
     static func makeURL(title: String, location: String, start: Date, end: Date) -> URL? {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime]
-        
-        let startStr = formatter.string(from: start)
-        let endStr = formatter.string(from: end)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd'T'HHmmss'Z'"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+
+        let startStr = dateFormatter.string(from: start)
+        let endStr = dateFormatter.string(from: end)
 
         var components = URLComponents(string: "https://calendar.google.com/calendar/render")
         components?.queryItems = [
