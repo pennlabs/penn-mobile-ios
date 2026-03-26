@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct RootView: View {
     @EnvironmentObject var authManager: AuthManager
