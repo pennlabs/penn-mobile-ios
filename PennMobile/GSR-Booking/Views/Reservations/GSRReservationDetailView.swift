@@ -82,7 +82,7 @@ struct GSRReservationDetailView: View {
         return "GSR reservation: \(model.gsr.name) • \(dateStr) • \(startStr)–\(endStr)"
     }
     
-    func displayShareUrl() async {
+    @MainActor func displayShareUrl() async {
         guard case .owned(let reservation) = mode else { return }
         isFetchingShareLink = true
         defer { isFetchingShareLink = false }
