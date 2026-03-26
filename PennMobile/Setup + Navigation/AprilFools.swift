@@ -17,7 +17,7 @@ struct AprilFoolsViewModifier: ViewModifier {
     @StateObject var coreMotionRotationViewModel: CoreMotionRotationViewModel
     @ObservedObject var bannerViewModel: BannerViewModel
     
-    let timer = Timer.publish(every: 30, on: .main, in: .default).autoconnect()
+    //let timer = Timer.publish(every: 30, on: .main, in: .default).autoconnect()
     
     init?() {
         let enabled = (Calendar.isAprilFools || FeatureFlags.shared.forceAprilFoolsRotation)
@@ -38,12 +38,12 @@ struct AprilFoolsViewModifier: ViewModifier {
             }
             .transition(.opacity)
             .ignoresSafeArea()
-            .sheet(isPresented: $bannerViewModel.showPopup) {
-                UserEngagementPopupView()
-            }
-            .onReceive(timer) { _ in
-                bannerViewModel.showPopup = true
-            }
+//            .sheet(isPresented: $bannerViewModel.showPopup) {
+//                UserEngagementPopupView()
+//            }
+//            .onReceive(timer) { _ in
+//                bannerViewModel.showPopup = true
+//            }
         }
         .overlay {
             if coreMotionRotationViewModel.enabled &&
