@@ -18,7 +18,7 @@ class GSRDateHandler {
     static func generateDates() -> [GSRDate] {
         var dates = [GSRDate]()
         var cal = Calendar.current
-        cal.timeZone = TimeZone(abbreviation: "EST")!
+        cal.timeZone = TimeZone(abbreviation: "America/New_York")!
 
         let startDate = cal.startOfDay(for: Date())
         let endDate = startDate.dateIn(days: 6)
@@ -31,7 +31,7 @@ class GSRDateHandler {
         for date in dateRange {
             let formatter = DateFormatter()
             formatter.locale = Locale(identifier: "en_US_POSIX")
-            formatter.timeZone = TimeZone(abbreviation: "EST")!
+            formatter.timeZone = TimeZone(abbreviation: "America/New_York")!
             formatter.dateFormat = "yyyy-MM-dd"
             let string = formatter.string(from: date)
             let day = (cal as NSCalendar).components(NSCalendar.Unit.day, from: date).day
