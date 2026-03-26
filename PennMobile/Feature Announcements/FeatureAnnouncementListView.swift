@@ -15,9 +15,10 @@ struct FeatureAnnouncementListView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("\(Image(systemName: "bell.fill")) NEW FEATURES")
-                .foregroundStyle(.labelSecondary)
+                .foregroundStyle(.labelPrimary)
                 .font(.caption)
-
+                .padding(.bottom, 2)
+            
             ForEach(newFeatures, id: \.id) { newFeature in
                 if let featureId = newFeature.feature,
                    let appFeature = features.first(where: { $0.id == featureId }) {
