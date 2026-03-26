@@ -29,9 +29,9 @@ public struct MachineDetail: Codable, Hashable, Sendable {
         
         public func imageName(for type: MachineType) -> String {
             switch self {
-            case .available, .complete:
-                return type == .washer ? "washer_open" : "dryer_open"
-            case .inUse:
+            case .available:
+                return type == .washer ? "washer_open" : "dryer_open"                
+            case .inUse, .complete:
                 return type == .washer ? "washer_busy" : "dryer_busy"
             case .error, .networkError, .unavailable, .unknown:
                 return type == .washer ? "washer_broken" : "dryer_broken"
