@@ -159,7 +159,7 @@ class GSRNetworkManager {
     
     static func getShareModelFromShareCode(shareCode: String) async throws -> GSRReservation {
         let url = URL(string: "\(groupShareURL)\(shareCode)")!
-        let request = try await URLRequest(url: url, mode: .accessToken)
+        let request = try await URLRequest(url: url)
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.badServerResponse)
