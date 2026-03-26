@@ -20,13 +20,12 @@ struct ReservationAnnouncementView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text("\(Image(systemName: icon)) GSR RESERVATION")
-                        .foregroundStyle(.secondary)
-                        .font(.caption)
+
                     Spacer()
                     
                     Text("\((Calendar.current.startOfDay(for: reservation.start).gsrReservationsViewHeaderString).uppercased())")
                 }
-                .foregroundStyle(.secondary)
+                .foregroundStyle(.primary)
                 .font(.caption)
                 .fontWeight(.medium)
                 .padding(.bottom, 2)

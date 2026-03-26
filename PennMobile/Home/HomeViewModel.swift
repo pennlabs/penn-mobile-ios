@@ -24,7 +24,10 @@ extension Optional {
 @MainActor class StandardHomeViewModel: HomeViewModel {
     static let sublettingBannerKey = "sublettingBannerDismissed"
     
-    static let announceable: [HomeViewAnnounceable] = [ReservationAnnounceable()]
+    static let announceable: [HomeViewAnnounceable] = [
+        ReservationAnnounceable(),
+        FeatureAnnounceable()
+    ]
     
     @Published private(set) var data = HomeViewData()
     var isFetching = false
@@ -243,3 +246,4 @@ class MockHomeViewModel: HomeViewModel {
     @Published private(set) var data = HomeViewData.mock
     func fetchData(force: Bool) async throws {}
 }
+
