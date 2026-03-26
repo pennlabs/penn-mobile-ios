@@ -17,7 +17,7 @@ enum GoogleCalendarLink {
         let startStr = dateFormatter.string(from: start)
         let endStr = dateFormatter.string(from: end)
 
-        let escapedTitle = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "Event"
+        let escapedTitle = title.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "GSR%20Booking"
         let escapedLocation = location.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
 
         let urlString = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=\(escapedTitle)&location=\(escapedLocation)&dates=\(startStr)/\(endStr)"
