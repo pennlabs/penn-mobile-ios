@@ -59,13 +59,9 @@ struct MainTabView: View {
             }
             .environmentObject(navigationManager)
             .tabItem {
-                if let style = incidentsViewModel.labelStyle {
-                    Label("More", image: "More_Grey")
-                        .symbolRenderingMode(.palette)
-                        .labelStyle(style)
-                } else {
-                    Label("More", image: "More_Grey")
-                }
+                Label("More", image: "More_Grey")
+                    .symbolRenderingMode(.palette)
+                    .labelStyle(incidentsViewModel.labelStyle)
             }
             .tag("More")
         }

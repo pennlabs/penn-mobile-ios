@@ -12,7 +12,7 @@ import Combine
 
 class IncidentsViewModel: ObservableObject {
     @Published var incidents: [Incident]
-    var labelStyle: IncidentAwareLabelStyle? {
+    var labelStyle: IncidentAwareLabelStyle {
         return IncidentAwareLabelStyle(with: incidents)
     }
     
@@ -82,28 +82,38 @@ class IncidentsViewModel: ObservableObject {
     }
     
     struct IncidentAwareLabelStyle: LabelStyle {
-        let color: Color
-        let systemName: String
+        let toggle: IncidentLabelStyleToggle
         
-        init?(with incidents: [Incident]) {
-            guard !incidents.isEmpty else { return nil }
+        init(with incidents: [Incident]) {
+            guard !incidents.isEmpty else {
+                self.toggle = .disabled
+                return
+            }
             let highest = incidents.max(by: { $0.severity.rawValue < $1.severity.rawValue })!
-            self.color = highest.severity.color
-            self.systemName = highest.severity.systemImage
+            self.toggle = .enabled(color: highest.severity.color, systemName: highest.severity.systemImage)
         }
         
         func makeBody(configuration: Configuration) -> some View {
-            Label(title: { configuration.title }, icon: {
-                if #available(iOS 18.0, *) {
-                    Image(systemName: systemName)
-                        .foregroundStyle(.white, color)
-                        .symbolEffect(.wiggle.byLayer, options: .repeat(.periodic(delay: 3.0)))
-                } else {
-                    Image(systemName: systemName)
-                        .foregroundStyle(.white, color)
-                }
-            })
+            if case .enabled(let color, let systemName) = toggle {
+                Label(title: { configuration.title }, icon: {
+                    if #available(iOS 18.0, *) {
+                        Image(systemName: systemName)
+                            .foregroundStyle(.white, color)
+                            .symbolEffect(.wiggle.byLayer, options: .repeat(.periodic(delay: 3.0)))
+                    } else {
+                        Image(systemName: systemName)
+                            .foregroundStyle(.white, color)
+                    }
+                })
+            } else {
+                Label(title: { configuration.title }, icon: { configuration.icon })
+            }
         }
+    }
+    
+    enum IncidentLabelStyleToggle {
+        case enabled(color: Color, systemName: String)
+        case disabled
     }
 }
 
