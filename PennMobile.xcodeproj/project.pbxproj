@@ -125,7 +125,6 @@
 		89FEAF3A2E88F399008EC67C /* Exceptions for "PennMobile" folder in "PennMobile" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Feature Announcements/ChangeLogTemplate.json",
 				Supporting_Files/Info.plist,
 			);
 			target = 2166405F1EBADADA00746B8E /* PennMobile */;
@@ -138,16 +137,6 @@
 			target = 8932693228FC75A5003D4BF9 /* WidgetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		65E357252F73285000353A11 /* Exceptions for "PennMobile" folder in "Compile Sources" phase from "PennMobile" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 2166405C1EBADADA00746B8E /* Sources */;
-			membershipExceptions = (
-				"Feature Announcements/ChangeLogTemplate.json",
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		89FEAC852E88F350008EC67C /* PennMobileShared */ = {
@@ -162,7 +151,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				89FEAF3A2E88F399008EC67C /* Exceptions for "PennMobile" folder in "PennMobile" target */,
-				65E357252F73285000353A11 /* Exceptions for "PennMobile" folder in "Compile Sources" phase from "PennMobile" target */,
 			);
 			path = PennMobile;
 			sourceTree = "<group>";
@@ -791,11 +779,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = "$(CF_BUNDLE_LONG_VERSION_STRING)";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -911,7 +900,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_ID).Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "Penn Mobile - Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Penn Mobile Widget - Development";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
