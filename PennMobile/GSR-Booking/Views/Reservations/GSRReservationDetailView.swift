@@ -121,7 +121,7 @@ struct GSRReservationDetailView: View {
             } catch let error as ShareCodeError {
                 self.error = error.localizedDescription
             } catch {
-                self.error = error.localizedDescription
+                self.error = "Unable to get reservation details."
             }
         }
     }
