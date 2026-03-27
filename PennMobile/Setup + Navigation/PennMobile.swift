@@ -14,7 +14,7 @@ import PennMobileShared
 @main
 struct PennMobile: App {
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
-    @StateObject var authManager = AuthManager()
+    @StateObject var authManager: AuthManager
     @StateObject var homeViewModel = StandardHomeViewModel()
     
     /// Deep link manager for GSR Share
@@ -31,11 +31,17 @@ struct PennMobile: App {
             FirebaseConfiguration.shared.setLoggerLevel(.min)
             UserDefaults.standard.set(gsrGroupsEnabled: true)
         #endif
+        
+        let authManager = AuthManager()
+        authManager.determineInitialState()
+        let state = authManager.state
+        
+        self._authManager = StateObject(wrappedValue: authManager)
 
         // Register to receive delegate actions from rich notifications
         UNUserNotificationCenter.current().delegate = delegate
 
-        authManager.determineInitialState()
+        
         
         FirebaseApp.configure()
         
@@ -43,7 +49,6 @@ struct PennMobile: App {
 
         migrateDataToGroupContainer()
         
-        let state = authManager.state
         Task {
             await NotificationDeviceTokenManager.shared.authStateDetermined(state)
             IncidentsViewModel.shared.startUpdatePolling()
