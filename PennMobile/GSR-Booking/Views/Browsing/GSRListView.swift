@@ -12,42 +12,45 @@ import PennMobileShared
 struct GSRListView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Binding var selectedTab: GSRTab
+    @EnvironmentObject var nav: NavigationManager
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            if FeatureFlags.shared.useWhartonGSRUnavailabilityBanner,
-               let isWharton = Account.current?.isInWharton,
-               isWharton,
-               !vm.availableLocations.isEmpty,
-               !vm.availableLocations.contains(where: { $0.name == "Huntsman" }) {
-                WhartonGSRUnavailabilityBanner()
-                    .padding(.top)
-            }
-            
-            VStack(spacing: 0) {
-                if vm.availableLocations.standardGSRSort.count > 1 {
-                    ForEach(vm.availableLocations.standardGSRSort.indices, id: \.self) { index in
-                        let location = vm.availableLocations.standardGSRSort[index]
-                        if (index >= 1) { // no divider on first cell
-                            Divider()
+        NavigationStack(path: $nav.path) {
+            ScrollView(showsIndicators: false) {
+                if FeatureFlags.shared.useWhartonGSRUnavailabilityBanner,
+                   let isWharton = Account.current?.isInWharton,
+                   isWharton,
+                   !vm.availableLocations.isEmpty,
+                   !vm.availableLocations.contains(where: { $0.name == "Huntsman" }) {
+                    WhartonGSRUnavailabilityBanner()
+                        .padding(.top)
+                }
+                
+                VStack(spacing: 0) {
+                    if vm.availableLocations.standardGSRSort.count > 1 {
+                        ForEach(vm.availableLocations.standardGSRSort.indices, id: \.self) { index in
+                            let location = vm.availableLocations.standardGSRSort[index]
+                            if (index >= 1) { // no divider on first cell
+                                Divider()
+                            }
+                            NavigationLink(value: location) {
+                                GSRLocationCell(location: location)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
-                        NavigationLink(value: location) {
-                            GSRLocationCell(location: location)
-                        }
-                        .buttonStyle(PlainButtonStyle())
+                    }
+                    else {
+                        ProgressView()
                     }
                 }
-                else {
-                    ProgressView()
-                }
+                .padding(.horizontal)
+                .padding(.bottom, 60)
             }
-            .padding(.horizontal)
-            .padding(.bottom, 60)
+            .navigationDestination(for: GSRLocation.self) { loc in
+                GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
+                    .environmentObject(vm)
+            }
+            .transition(.blurReplace)
         }
-        .navigationDestination(for: GSRLocation.self) { loc in
-            GSRBookingView(centralTab: $selectedTab, selectedLocInternal: loc)
-                .environmentObject(vm)
-        }
-        .transition(.blurReplace)
     }
 }

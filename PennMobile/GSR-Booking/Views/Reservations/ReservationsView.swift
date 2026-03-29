@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Kingfisher
+import PennMobileShared
 
 struct ReservationsView: View {
     @EnvironmentObject var vm: GSRViewModel
@@ -32,15 +33,22 @@ struct ReservationsView: View {
                         Text(date.gsrReservationsViewHeaderString)
                             .font(.largeTitle)
                             .bold()
-
-                        ForEach(groupedReservations[date] ?? []) { res in
-                            NavigationLink(
-                                destination: GSRReservationDetailView(mode: .owned(res))
-                                    .environmentObject(vm)
-                            ) {
-                                ReservationCell(reservation: res)
+                        if FeatureFlags.shared.gsrShare {
+                            ForEach(groupedReservations[date] ?? []) { res in
+                                NavigationLink(
+                                    destination: GSRReservationDetailView(mode: .owned(res))
+                                        .environmentObject(vm)
+                                ) {
+                                    ReservationCell(reservation: res)
+                                }
+                                Divider()
                             }
-                            Divider()
+                        } else {
+                            ForEach(groupedReservations[date] ?? []) { res in
+                                ReservationCell(reservation: res)
+                                
+                                Divider()
+                            }
                         }
                     }
                 }
