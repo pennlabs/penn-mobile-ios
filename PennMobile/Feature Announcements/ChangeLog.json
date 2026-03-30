@@ -1,21 +1,14 @@
 
 {
-    "cutoff": "8.11.0",
+    "cutoff": "8.10.0",
     
     "features": [
-        {
-          "id": "gsr-sharing-2026",
-          "title": "Share GSR Reservations",
-          "blurb": "Share your study room bookings with friends via link or calendar invite through the Reservations tab.",
-          "feature": "Study Room Booking",
-          "version": "8.11.0"
-        },
         {
             "id": "laundry-timer-2026",
             "title": "Laundry Update",
             "blurb": "Laundry now notifies you when your laundry is done! Simply click on your running laundry machine, and it will set a timer and notify you when it's done.",
             "feature": "Laundry",
-            "version": "8.11.0"
+            "version": "8.10.1"
         }
         
     ]
