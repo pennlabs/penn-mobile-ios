@@ -33,9 +33,7 @@ struct PennMobile: App {
         #endif
         
         let authManager = AuthManager()
-        authManager.determineInitialState()
         let state = authManager.state
-        
         self._authManager = StateObject(wrappedValue: authManager)
 
         // Register to receive delegate actions from rich notifications
