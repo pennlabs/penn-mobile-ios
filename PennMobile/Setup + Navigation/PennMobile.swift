@@ -33,15 +33,11 @@ struct PennMobile: App {
         #endif
         
         let authManager = AuthManager()
-        authManager.determineInitialState()
         let state = authManager.state
-        
         self._authManager = StateObject(wrappedValue: authManager)
 
         // Register to receive delegate actions from rich notifications
         UNUserNotificationCenter.current().delegate = delegate
-
-        
         
         FirebaseApp.configure()
         
@@ -76,8 +72,13 @@ struct PennMobile: App {
                                     defaultLoginHandler: authManager.handlePlatformDefaultLogin,
                                     authManager.handlePlatformLogin)
         }
-        .onChange(of: authManager.state.isLoggedIn) {
+        .onChange(of: authManager.state.isLoggedIn) { old, new in
             homeViewModel.clearData()
+            if !old && new {
+                Task {
+                    try? await homeViewModel.fetchData(force: true)
+                }
+            }
         }
         .onChange(of: authManager.state) { state in
             Task {

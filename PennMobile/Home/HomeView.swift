@@ -111,6 +111,7 @@ struct HomeView<Model: HomeViewModel>: View {
                 try? await viewModel.fetchData(force: false)
             }
         }
+        
     }
     
     func chooseSplashText(data: HomeViewData, for date: Date) {
