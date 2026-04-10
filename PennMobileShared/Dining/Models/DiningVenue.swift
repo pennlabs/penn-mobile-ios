@@ -57,13 +57,20 @@ public struct DiningDay: Codable, Equatable {
     }
 }
 
-public struct Meal: Codable, Equatable {
+public struct Meal: Codable, Equatable, Hashable {
     public let starttime: Date
     public let endtime: Date
     public let label: String
 }
 
-public enum VenueType: CaseIterable {
+public enum VenueType: CaseIterable{
     case dining
     case retail
+    
+    public var fullDisplayName: String {
+        switch self {
+        case .dining: return "Dining Halls"
+        case .retail: return "Retail Dining"
+        }
+    }
 }

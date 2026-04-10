@@ -28,7 +28,8 @@ struct DiningVenueDetailHoursView: View {
                     .font(duration == Date().integerDayOfWeek ? .system(size: 18, weight: .bold): .system(size: 18, weight: .regular))
 
                 HStack {
-                    if venue.formattedHoursArrayFor(date).isEmpty {
+                    let hoursArray = venue.mealsOnDate(date).map({ $0.getHumanReadableHours() })
+                    if hoursArray.isEmpty {
                         Text("Closed")
                             .padding(.vertical, 3)
                             .padding(.horizontal, 4)
@@ -36,7 +37,7 @@ struct DiningVenueDetailHoursView: View {
                             .background(Color.grey5)
                             .clipShape(RoundedRectangle(cornerRadius: 6))
                     }
-                    ForEach(venue.formattedHoursArrayFor(date), id: \.self) { hours in
+                    ForEach(hoursArray, id: \.self) { hours in
                         Text(hours)
                             .padding(.vertical, 3)
                             .padding(.horizontal, 4)

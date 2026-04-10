@@ -41,49 +41,54 @@ public struct DiningVenueRow: View {
                     .clipShape(RoundedRectangle(cornerRadius: 7))
             }
  
-            VStack(alignment: .leading, spacing: 3) {
-                Label(venue.statusString, systemImage: venue.statusImageString)
-                    .labelStyle(VenueStatusLabelStyle())
-                    .modifier(StatusColorModifier(for: venue))
+            TimelineView(.everyMinute) { _ in
+                VStack(alignment: .leading, spacing: 3) {
+                    let status = venue.currentStatus()
+                    Label(venue.statusText(), systemImage: status.iconString)
+                        .labelStyle(VenueStatusLabelStyle())
+                        .foregroundStyle(status.labelColor)
 
-                Text(venue.name)
-                    .font(.system(size: 17, weight: .medium))
-                    .minimumScaleFactor(0.2)
-                    .lineLimit(1)
+                    Text(venue.name)
+                        .font(.system(size: 17, weight: .medium))
+                        .minimumScaleFactor(0.2)
+                        .lineLimit(1)
 
-                GeometryReader { geo in
-                    // Ensure widget view is static
-                    if (!isWidget) {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            ScrollViewReader { proxy in
-                                hoursDisplay(in: geo, fontSize: 14, horizontalPadding: 6)
-                                    .onAppear {
-                                        withAnimation {
-                                            proxy.scrollTo(venue.currentOrNearestMealIndex)
+                    GeometryReader { geo in
+                        // Ensure widget view is static
+                        if (!isWidget) {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                ScrollViewReader { proxy in
+                                    hoursDisplay(in: geo, fontSize: 14, horizontalPadding: 6)
+                                        .onAppear {
+                                            withAnimation {
+                                                proxy.scrollTo(venue.currentStatus().relevantMeal)
+                                            }
                                         }
-                                    }
+                                }
                             }
+                        } else {
+                            hoursDisplay(in: geo, fontSize: 10.5, horizontalPadding: 4)
                         }
-                    } else {
-                        hoursDisplay(in: geo, fontSize: 10.5, horizontalPadding: 4)
                     }
                 }
+                .frame(height: 64)
             }
-            .frame(height: 64)
         }
     }
     
+    @ViewBuilder
     private func hoursDisplay(in geo: GeometryProxy, fontSize: CGFloat, horizontalPadding: CGFloat) -> some View {
         HStack(spacing: 4) {
-            ForEach(Array(venue.humanFormattedHoursArrayForToday.enumerated()), id: \.offset) { (index, time) in
-                Text(time)
+            ForEach(venue.mealsToday(), id: \.self) { meal in
+                let isActive = venue.currentStatus().relevantMeal == meal
+                Text(meal.getHumanReadableHours())
                     .font(.system(size: fontSize, weight: .light, design: .default))
                     .padding(.vertical, 3)
                     .padding(.horizontal, horizontalPadding)
-                    .foregroundColor(index == venue.currentMealIndex ? Color.white : Color.labelPrimary)
-                    .background(index == venue.currentMealIndex ? (venue.isClosingSoon ? Color.redLight : Color.greenLight) : Color.grey6)
+                    .foregroundColor(isActive ? venue.currentStatus().textColor : Color.primary)
+                    .background(isActive ? venue.currentStatus().bgColor : .grey6)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
-                    .id(index)
+                    .id(meal)
                     .frame(height: geo.frame(in: .global).height)
             }
         }
@@ -91,26 +96,6 @@ public struct DiningVenueRow: View {
 }
 
 // MARK: - ViewModifiers
-public struct StatusColorModifier: ViewModifier {
-
-    public init(for venue: DiningVenue) {
-        self.venue = venue
-    }
-
-    let venue: DiningVenue
-
-    public func body(content: Content) -> some View {
-        if venue.hasMealsToday && venue.isOpen {
-            if venue.isClosingSoon {
-                return content.foregroundColor(Color.red)
-            } else {
-                return content.foregroundColor(Color.green)
-            }
-        } else {
-            return content.foregroundColor(Color.gray)
-        }
-    }
-}
 
 public struct VenueStatusLabelStyle: LabelStyle {
     public init() {}

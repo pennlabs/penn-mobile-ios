@@ -243,7 +243,7 @@ struct DiningStationItemRow: View {
 
     var body: some View {
         let name = diningStationItem.name.capitalizeMainWords()
-        if diningStationItem.desc != "" || ingredients.count > 0 {
+        if diningStationItem.description != "" || ingredients.count > 0 {
             HStack {
                 Text(name)
                 Spacer()
@@ -257,10 +257,10 @@ struct DiningStationItemRow: View {
                     isExpanded.toggle()
                 }
             }.onChange(of: isExpanded) { _ in
-                print(diningStationItem.desc)
+                print(diningStationItem.description)
             }
             if isExpanded {
-                ItemView(name: name, description: diningStationItem.desc, ingredients: ingredients)
+                ItemView(name: name, description: diningStationItem.description, ingredients: ingredients)
             }
         } else {
             HStack {

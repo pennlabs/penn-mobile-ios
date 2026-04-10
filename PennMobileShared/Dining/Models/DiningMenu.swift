@@ -21,8 +21,8 @@ public struct MenuList: Codable {
 public struct DiningMenu: Codable, Hashable {
     public let venueInfo: VenueInfo
     public let date: Date
-    public let startTime: String
-    public let endTime: String
+    public let startTime: Date
+    public let endTime: Date
     public let stations: [DiningStation]
     public let service: String
 
@@ -39,8 +39,12 @@ public struct DiningMenu: Codable, Hashable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.venueInfo = try container.decode(VenueInfo.self, forKey: .venueInfo)
         self.date = try container.decode(Date.self, forKey: .date)
-        self.startTime = try container.decode(String.self, forKey: .startTime)
-        self.endTime = try container.decode(String.self, forKey: .endTime)
+        
+        let formatter = ISO8601DateFormatter()
+        let start = try container.decode(String.self, forKey: .startTime)
+        let end = try container.decode(String.self, forKey: .endTime)
+        self.startTime = try formatter.date(from: start).unwrap(orThrow: DecodingError.typeMismatch(Date.self, .init(codingPath: [CodingKeys.startTime], debugDescription: "Unable to decode start time for meal")))
+        self.endTime = try formatter.date(from: end).unwrap(orThrow: DecodingError.typeMismatch(Date.self, .init(codingPath: [CodingKeys.endTime], debugDescription: "Unable to decode start time for meal")))
         self.service = try container.decode(String.self, forKey: .service)
         
         self.stations = try container.decode([DiningStation].self, forKey: .stations).sorted {
@@ -49,6 +53,19 @@ public struct DiningMenu: Codable, Hashable {
             }
             return DiningStation.getWeight(station: $0) < DiningStation.getWeight(station: $1)
         }
+    }
+    
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(venueInfo, forKey: .venueInfo)
+        try container.encode(date, forKey: .date)
+        try container.encode(service, forKey: .service)
+        try container.encode(stations, forKey: .stations)
+        let formatter = ISO8601DateFormatter()
+        let startStr = formatter.string(from: startTime)
+        let endStr = formatter.string(from: endTime)
+        try container.encode(startStr, forKey: .startTime)
+        try container.encode(endStr, forKey: .endTime)
     }
 }
 
@@ -176,16 +193,108 @@ public struct DiningStation: Codable, Hashable {
     
 }
 
-public struct DiningStationItem: Codable, Hashable {
-    public let id: Int
+public struct DiningStationItem: Codable, Identifiable, Hashable {
+    // this field used to conform to Identifiable without the use of CodingKeys
+    public var id: Int {
+        itemId
+    }
+    
+    public let itemId: Int
+    public let nutritionInfo: [String : String]
     public let name: String
-    public let desc: String
+    public let description: String
     public let ingredients: String
+    public let allergens: String
+    
+    enum CodingKeys: String, CodingKey {
+        // Manually converting from snake case because I didn't want to deal with global decoder issues
+        case itemId = "item_id"
+        case nutritionInfo = "nutrition_info"
+        case name, description, ingredients, allergens
+    }
+}
 
-    public enum CodingKeys: String, CodingKey {
-        case id = "item_id"
-        case name
-        case desc = "description"
-        case ingredients
+
+
+
+public extension DiningStationItem {
+    func getAllergens() -> [DiningAllergen] {
+        let allergens: [DiningAllergen] = self.allergens.split(separator: #",\s*"#).map { el in
+            for allergen in DiningAllergen.allCases {
+                if el == allergen.rawValue {
+                    return allergen
+                }
+            }
+            return .other
+        }.filter({$0 != DiningAllergen.other})
+        
+        return allergens
+    }
+    
+    
+    func getAllergenImages() -> [String] {
+        let allergens = getAllergens()
+        return allergens.map { el in
+            el.imagePath
+        }
+    }
+}
+
+
+public enum DiningAllergen: String, CaseIterable {
+        case seafoodWatch = "Seafood Watch"
+        case sesame = "Sesame"
+        case fish = "Fish"
+        case soy = "Soy"
+        case egg = "Egg"
+        case vegetarian = "Vegetarian"
+        case vegan = "Vegan"
+        case farmToFork = "Farm to Fork"
+        case humane = "Humane"
+        case locallyCrafted = "Locally Crafted"
+        case peanut = "Peanut"
+        case treeNut = "Tree Nut"
+        case wheatGluten = "Wheat/Gluten"
+        case milk = "Milk"
+        case askUs = "Ask Us"
+        case other
+    
+    
+    
+    var imagePath: String {
+        switch self {
+        case .seafoodWatch:
+            return "Seafood Watch"
+        case .sesame:
+            return "Sesame"
+        case .fish:
+            return "Fish"
+        case .soy:
+            return "Soy"
+        case .egg:
+            return "Egg"
+        case .vegetarian:
+            return "Vegetarian"
+        case .vegan:
+            return "Vegan"
+        case .farmToFork:
+            return "Farm to Fork"
+        case .humane:
+            return "Humane"
+        case .locallyCrafted:
+            return "Locally Crafted"
+        case .peanut:
+            return "Peanut"
+        case .treeNut:
+            return "Tree Nut"
+        case .wheatGluten:
+            return "Wheat"
+        case .milk:
+            return "Milk"
+        case .askUs:
+            return "Ask Us"
+        case .other:
+            return ""
+        }
     }
 }

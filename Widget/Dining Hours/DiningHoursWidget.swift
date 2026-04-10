@@ -68,9 +68,10 @@ struct DiningHoursWidgetEntryView : View {
             HStack {
                 VStack (alignment: .leading) {
                     Spacer()
-                    Label(venue.statusString, systemImage: venue.statusImageString)
+                    let status = venue.currentStatus()
+                    Label(venue.statusText(), systemImage: status.iconString)
                         .labelStyle(VenueStatusLabelStyle())
-                        .modifier(StatusColorModifier(for: venue))
+                        .foregroundStyle(status.labelColor)
                         .minimumScaleFactor(0.2)
                         .lineLimit(1)
                         .padding(.leading, 20)

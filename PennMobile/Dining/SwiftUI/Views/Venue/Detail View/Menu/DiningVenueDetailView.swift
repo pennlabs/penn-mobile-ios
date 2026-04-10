@@ -75,13 +75,6 @@ struct DiningVenueDetailView: View {
                                 }
                             }
                             .pickerStyle(SegmentedPickerStyle())
-                            
-                            Button {
-                                showMenu.toggle()
-                            } label: {
-                                Image(systemName:"safari")
-                                    .font(.largeTitle)
-                            }
                             .sheet(isPresented: $showMenu) {
                                 WebView(url: URL(string: DiningVenue.menuUrlDict[venue.id] ?? "https://university-of-pennsylvania.cafebonappetit.com/")!)
                             }
@@ -117,6 +110,14 @@ struct DiningVenueDetailView: View {
                 .navigationTitle(Text(showTitle ? venue.name : ""))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
+                    ToolbarItem {
+                        Button {
+                            showMenu.toggle()
+                        } label: {
+                            Image(systemName:"safari")
+                                .font(.system(size: 20, weight: .light))
+                        }
+                    }
                     ToolbarItem {
                         Button(action: isFavorite ? { diningVM.removeVenueFromFavorites(venue: venue) } : { diningVM.addVenueToFavorites(venue: venue) }) {
                             Image(systemName: isFavorite ? "star.fill" : "star")

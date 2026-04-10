@@ -35,7 +35,7 @@ struct DiningVenueDetailMenuView: View {
         _parentScrollOffset = parentScrollOffset
         _menus = State(initialValue: menus)
         _menuDate = State(initialValue: menuDate)
-        _currentMenu = State(initialValue: getMenu())
+        _currentMenu = State(initialValue: getMenu(for: menuDate))
         _selectedStation = State(initialValue: currentMenu?.stations.first ?? nil)
         
     }
@@ -45,42 +45,27 @@ struct DiningVenueDetailMenuView: View {
     /// If there is a meal today that is closest (utilities), return it.
     /// If the selected date is not the current day, return the first menu.
     /// If at any point, the list of menus is empty, return nil.
-    func getMenu() -> DiningMenu? {
-        if menus.isEmpty {
-            return nil
+    func getMenu(for date: Date) -> DiningMenu? {
+        if let relevantMeal = venue.currentStatus().relevantMeal,
+           let meal = menus.matchMenu(with: relevantMeal),
+           Calendar.current.isDate(relevantMeal.starttime, inSameDayAs: date) {
+            return meal
+        } else {
+            return venue.mealsOnDate(menuDate).compactMap({ menus.matchMenu(with: $0) }).first
         }
-        
-        if !Calendar.current.isDate(menuDate, inSameDayAs: Date()) {
-            return menus[0]
-        }
-        
-        if let label = venue.currentMealType {
-            // Attempt to find a menu with an exact match for the current meal
-            if let menu = menus.first(where: { $0.service == label }) {
-                return menu
-            }
-            
-            // Attempt to find a menu for a "light" version of a meal
-            // swiftlint:disable <no_space_in_method_call>
-            let regex = /Light (.*)/
-            if let match = try? regex.wholeMatch(in: label), let menu = menus.first(where: { $0.service == match.1 }) {
-                return menu
-            }
-        }
-        
-        guard let nearestIndex = venue.currentOrNearestMealIndex, nearestIndex < menus.endIndex else {
-            return nil
-        }
-        
-        return menus[nearestIndex]
     }
     
     var body: some View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             HStack {
-                if currentMenu != nil {
-                    Picker("Menu", selection: $currentMenu) {
-                        ForEach(menus, id: \.self) { menu in
+                if let currentMenu {
+                    let boundMenu = Binding { currentMenu } set: { new in
+                        withAnimation {
+                            self.currentMenu = new
+                        }
+                    }
+                    Picker("Menu", selection: boundMenu) {
+                        ForEach(menus.sorted(by: { $0.startTime < $1.endTime }), id: \.self) { menu in
                             Text(menu.service)
                                 .tag(menu)
                         }
@@ -103,10 +88,10 @@ struct DiningVenueDetailMenuView: View {
             }
         }
         .onChange(of: menuDate) {
-            Task.init() {
+            Task {
                 await diningVM.refreshMenus(cache: true, at: menuDate)
                 menus = diningVM.diningMenus[venue.id]?.menus ?? []
-                currentMenu = getMenu()
+                currentMenu = getMenu(for: menuDate)
             }
         }
         
