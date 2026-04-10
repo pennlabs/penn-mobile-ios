@@ -79,13 +79,14 @@ struct DiningVenueDetailMenuView: View {
         LazyVStack(pinnedViews: [.sectionHeaders]) {
             HStack {
                 if currentMenu != nil {
-                    Picker("Menu", selection: Binding($currentMenu)!) {
+                    Picker("Menu", selection: $currentMenu) {
                         ForEach(menus, id: \.self) { menu in
                             Text(menu.service)
+                                .tag(menu)
                         }
                     }.pickerStyle(MenuPickerStyle())
                 } else {
-                    Text("Closed For Today")
+                    Text("No Menu Data")
                 }
                 DatePicker("", selection: $menuDate, in: Date.currentLocalDate...Date.currentLocalDate.add(minutes: 8640), displayedComponents: .date)
                 

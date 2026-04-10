@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct RootView: View {
     @EnvironmentObject var authManager: AuthManager
@@ -15,7 +16,8 @@ struct RootView: View {
     @State var toastOffset: Double = 0.0
     @StateObject var popupManager = PopupManager()
     @Environment(\.scenePhase) var scenePhase
-
+    @EnvironmentObject var deepLinkManager: DeepLinkManager
+    
     var isOnLogoutScreen: Bool {
         switch authManager.state {
         case .loggedOut:
@@ -25,29 +27,12 @@ struct RootView: View {
         }
     }
     
-    let timer = Timer.publish(every: 30, on: .main, in: .default).autoconnect()
-    
     var body: some View {
         Group {
             switch authManager.state {
             case .guest, .loggedIn:
-                if bannerViewModel.showBanners {
-                    VStack(spacing: 0) {
-                        BannerView()
-                        MainTabView()
-                        BannerView()
-                    }
+                MainTabView()
                     .transition(.opacity)
-                    .ignoresSafeArea()
-                    .sheet(isPresented: $bannerViewModel.showPopup) {
-                        UserEngagementPopupView()
-                    }
-                    .onReceive(timer) { _ in
-                        bannerViewModel.showPopup = true
-                    }
-                } else {
-                    MainTabView().transition(.opacity)
-                }
             case .loggedOut:
                 LoggedOutView().transition(.opacity)
             default:
@@ -123,18 +108,13 @@ struct RootView: View {
         .onChange(of: toast?.id) { _ in
             toastOffset = 0.0
         }
-        .onChange(of: scenePhase) { phase in
-            if phase == .active && BannerViewModel.isAprilFools {
-                bannerViewModel.showBanners = true
+        /// Deep Linking sheet view popup
+        .sheet(item: $deepLinkManager.activeSheet) { sheet in
+            switch sheet {
+            case .gsrShare(let shareCode):
+                GSRReservationDetailView(mode: .shared(shareCode: shareCode))
             }
         }
+        .applyAprilFools()
     }
-}
-
-struct TabBarControllerView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> TabBarController {
-        return TabBarController()
-    }
-
-    func updateUIViewController(_ uiViewController: TabBarController, context: Context) {}
 }

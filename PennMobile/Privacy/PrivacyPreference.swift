@@ -63,8 +63,8 @@ enum PrivacyOption: String, CaseIterable {
     var defaultValue: Bool {
         switch self {
         case .diningBalanceAndHistory: return UserDefaults.standard.hasDiningPlan()
-        case .academicIdentity: return Account.getAccount()?.isStudent ?? false
-        case .collegeHouse: return Account.getAccount()?.isStudent ?? false
+        case .academicIdentity: return Account.current?.isStudent ?? false
+        case .collegeHouse: return Account.current?.isStudent ?? false
         default: return false
         }
     }

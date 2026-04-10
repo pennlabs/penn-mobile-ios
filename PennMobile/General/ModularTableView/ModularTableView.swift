@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PennMobileShared
 
 final class ModularTableView: UITableView {
     var model: ModularTableViewModel! {
@@ -20,4 +21,6 @@ final class ModularTableView: UITableView {
     func registerTableView(for types: ModularTableViewItemTypes) {
         types.registerCells(for: self)
     }
+    
+    static let cellSpacing: CGFloat = Padding.pad * 2
 }

@@ -31,7 +31,7 @@ extension CHHapticEngine {
 }
 
 actor ScannerSession: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
-    let session = AVCaptureSession()
+    nonisolated let session = AVCaptureSession()
     nonisolated let results = PassthroughSubject<[VNBarcodeObservation], Never>()
     
     var output: AVCaptureVideoDataOutput?

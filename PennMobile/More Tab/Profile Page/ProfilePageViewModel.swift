@@ -17,7 +17,9 @@ protocol ProfilePageViewModelDelegate {
 
 class ProfilePageViewModel: NSObject {
     // isLoggedIn() that is run is ProfilePageViewController checks that Account.getAccount != nil
-    var account = Account.getAccount()!
+    var account: Account! {
+        Account.current
+    }
     var profileInfo: [(text: String, info: String)] = []
     var educationInfo: [(text: String, info: String)] = []
     var delegate: ProfilePageViewModelDelegate!
@@ -28,17 +30,20 @@ class ProfilePageViewModel: NSObject {
         setupEducationInfo()
         fetchAccount()
     }
-
+    
+    
     func fetchAccount() {
         Task {
-            if let account = await AuthManager.retrieveAccount() {
-                Account.saveAccount(account)
-                self.account = account
-                self.setupProfileInfo()
-                self.setupEducationInfo()
-                DispatchQueue.main.async {
-                    (self.delegate as? ProfilePageViewController)?.tableView.reloadData()
-                }
+            do {
+                let account = try await AuthManager.retrieveAccount()
+                Account.current = account
+            } catch {}
+            
+            // Use whatever details we have, whether they are up-to-date or not
+            self.setupProfileInfo()
+            self.setupEducationInfo()
+            DispatchQueue.main.async {
+                (self.delegate as? ProfilePageViewController)?.tableView.reloadData()
             }
         }
     }

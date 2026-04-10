@@ -8,6 +8,7 @@
 
 import SwiftUI
 import LabsPlatformSwift
+import PennMobileShared
 
 private struct PennLink: View, Identifiable {
     let title: LocalizedStringKey
@@ -44,11 +45,22 @@ struct MoreView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var bannerViewModel: BannerViewModel
+    @ObservedObject var incidentViewModel = IncidentsViewModel.shared
     
     @State var isLoggingOut = false
     
     var body: some View {
         List {
+            if !incidentViewModel.incidents.isEmpty {
+                Section {
+                    ForEach(incidentViewModel.incidents) { incident in
+                        IncidentView(incident: incident)
+                    }
+                } header: {
+                    Text("Service Incidents")
+                }
+            }
+
             Section {
                 if case .loggedIn(let account) = authManager.state {
                     NavigationLink {
@@ -85,6 +97,32 @@ struct MoreView: View {
                 }
             } header: {
                 Text("Account")
+            }
+            
+            if FeatureFlags.shared.showFeatureFlagSettings {
+                Section {
+                    NavigationLink("Feature Flags") {
+                        FeatureFlagSettingsView()
+                    }
+                } header: {
+                    Text("Development")
+                }
+            }
+            
+            if FeatureFlags.shared.showAuthSettings {
+                Section {
+                    Button("Force Refresh and Quit") {
+                        LabsPlatform.shared?.debugForceRefresh()
+                        DispatchQueue.main.schedule(after: .init(.now().advanced(by: /*.seconds(20)*/ .milliseconds(500)))) {
+                            exit(0)
+                        }
+                    }
+                    Button("Force Refresh Now") {
+                        LabsPlatform.shared?.debugForceRefresh()
+                    }
+                } header: {
+                    Text("Auth")
+                }
             }
             
             Section {
@@ -128,16 +166,6 @@ struct MoreView: View {
                 }
             } header: {
                 Text("Links")
-            }
-            
-            if Account.getAccount()?.pennid == 12345678 {
-                Section {
-                    Toggle(isOn: $bannerViewModel.showBanners) {
-                        Text("Force April Fools")
-                    }
-                } header: {
-                    Text("Debugging")
-                }
             }
         }
         .navigationTitle(Text("More"))

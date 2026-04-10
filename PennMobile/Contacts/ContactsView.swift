@@ -42,7 +42,7 @@ struct ContactsView: View {
                     showSettings = !success
                     showAlert = true
                 }) {
-                    Text(contactsExist ? "Remove contacts" : "Add contacts")
+                    Text(contactsExist ? "Remove contacts" : "Save all")
                 }
             }
         }
