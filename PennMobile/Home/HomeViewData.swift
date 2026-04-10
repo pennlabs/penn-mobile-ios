@@ -24,6 +24,8 @@ struct HomeViewData {
     var onStartSubletting: (() -> Void)?
     var onDismissSubletting: (() -> Void)?
     
+    var showWellness: Bool = true
+    
     func splashText(for date: Date) -> String {
         let intro = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"].randomElement()!
         if let firstName {
@@ -116,6 +118,9 @@ struct HomeViewData {
             
             if !events.isEmpty {
                 CalendarCardView(events: events)
+            }
+            if (showWellness) {
+                WellnessCardView()
             }
         }
     }
