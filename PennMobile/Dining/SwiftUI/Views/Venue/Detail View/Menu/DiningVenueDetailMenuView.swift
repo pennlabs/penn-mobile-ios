@@ -35,7 +35,7 @@ struct DiningVenueDetailMenuView: View {
         _parentScrollOffset = parentScrollOffset
         _menus = State(initialValue: menus)
         _menuDate = State(initialValue: menuDate)
-        _currentMenu = State(initialValue: getMenu(for: menuDate))
+        _currentMenu = State(initialValue: getMenu())
         _selectedStation = State(initialValue: currentMenu?.stations.first ?? nil)
         
     }
@@ -45,10 +45,10 @@ struct DiningVenueDetailMenuView: View {
     /// If there is a meal today that is closest (utilities), return it.
     /// If the selected date is not the current day, return the first menu.
     /// If at any point, the list of menus is empty, return nil.
-    func getMenu(for date: Date) -> DiningMenu? {
+    func getMenu() -> DiningMenu? {
         if let relevantMeal = venue.currentStatus().relevantMeal,
            let meal = menus.matchMenu(with: relevantMeal),
-           Calendar.current.isDate(relevantMeal.starttime, inSameDayAs: date) {
+           Calendar.current.isDate(relevantMeal.starttime, inSameDayAs: menuDate) {
             return meal
         } else {
             return venue.mealsOnDate(menuDate).compactMap({ menus.matchMenu(with: $0) }).first
@@ -91,7 +91,7 @@ struct DiningVenueDetailMenuView: View {
             Task {
                 await diningVM.refreshMenus(cache: true, at: menuDate)
                 menus = diningVM.diningMenus[venue.id]?.menus ?? []
-                currentMenu = getMenu(for: menuDate)
+                currentMenu = getMenu()
             }
         }
         

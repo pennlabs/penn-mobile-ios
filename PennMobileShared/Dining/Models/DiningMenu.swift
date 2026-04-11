@@ -83,11 +83,15 @@ public struct VenueInfo: Codable, Hashable {
 
 
 
-public struct DiningStation: Codable, Hashable {
+public struct DiningStation: Codable, Hashable, Equatable {
     public let name: String
     public let items: [DiningStationItem]
     public let vertUID: UUID
     public let horizUID: UUID
+    
+    public static func ==(lhs: DiningStation, rhs: DiningStation) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
     
     // Dictionary is (Int, Int), (Weight, Number of Columns)
     public static let dictionary: [String:(Int,Int)] = [
@@ -261,7 +265,7 @@ public enum DiningAllergen: String, CaseIterable {
     
     
     
-    var imagePath: String {
+    public var imagePath: String {
         switch self {
         case .seafoodWatch:
             return "Seafood Watch"
