@@ -45,11 +45,22 @@ struct MoreView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var navigationManager: NavigationManager
     @EnvironmentObject var bannerViewModel: BannerViewModel
+    @ObservedObject var incidentViewModel = IncidentsViewModel.shared
     
     @State var isLoggingOut = false
     
     var body: some View {
         List {
+            if !incidentViewModel.incidents.isEmpty {
+                Section {
+                    ForEach(incidentViewModel.incidents) { incident in
+                        IncidentView(incident: incident)
+                    }
+                } header: {
+                    Text("Service Incidents")
+                }
+            }
+
             Section {
                 if case .loggedIn(let account) = authManager.state {
                     NavigationLink {
@@ -155,16 +166,6 @@ struct MoreView: View {
                 }
             } header: {
                 Text("Links")
-            }
-            
-            if Account.current?.pennid == 12345678 {
-                Section {
-                    Toggle(isOn: $bannerViewModel.showBanners) {
-                        Text("Force April Fools")
-                    }
-                } header: {
-                    Text("Debugging")
-                }
             }
         }
         .navigationTitle(Text("More"))
