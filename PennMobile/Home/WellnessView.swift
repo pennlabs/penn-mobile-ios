@@ -63,7 +63,7 @@ private let wellnessCategories: [WellnessCategory] = [
         resources: [
             WellnessResource(
                 name: "Penn Violence Prevention (PVP)",
-                callActions: [("Call 215-746-2642 (24/7 confidential)", "2157462642")],
+                callActions: [("Call 215-746-2642 (confidential)", "2157462642")],
                 websiteURL: "https://pvp.universitylife.upenn.edu",
                 locationLabel: nil,
                 emailAddress: nil,
@@ -152,7 +152,7 @@ private let wellnessCategories: [WellnessCategory] = [
             WellnessResource(
                 name: "Weingarten Center",
                 callActions: [],
-                websiteURL: "https://markscenter.sas.upenn.edu/writing-center/schedule-appointment",
+                websiteURL: "https://weingartencenter.universitylife.upenn.edu",
                 locationLabel: nil,
                 emailAddress: nil,
                 description: "Academic support including private, group, and drop-in tutoring. Accessibility accommodations (extended time, note-taking, flexible attendance). Learning strategies, study skills coaching, and executive functioning support. You do not need to be failing a class to register."
