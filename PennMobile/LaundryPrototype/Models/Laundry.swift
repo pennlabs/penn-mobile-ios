@@ -6,6 +6,8 @@
 //  Copyright © 2025 PennLabs. All rights reserved.
 //
 
+import PennMobileShared
+
 struct LaundryHallInfo: Codable, Hashable {
     let name: String
     let hallId: Int
@@ -36,38 +38,6 @@ struct MachineStatusSummary: Codable, Hashable {
     let outOfOrder: Int
     let offline: Int
     let timeRemaining: [Int]
-}
-
-struct MachineDetail: Codable, Hashable {
-    let id: String
-    let type: MachineType
-    let status: Status
-    let timeRemaining: Int
-    
-    enum MachineType: String, Codable {
-        case washer, dryer
-    }
-    
-    enum Status: String, Codable {
-        case available = "AVAILABLE"
-        case complete = "COMPLETE"
-        case inUse = "IN_USE"
-        case error = "ERROR"
-        case networkError = "NETWORK_ERROR"
-        case unavailable = "UNAVAILABLE"
-        case unknown
-        
-        func imageName(for type: MachineType) -> String {
-            switch self {
-            case .available, .complete:
-                return type == .washer ? "washer_open" : "dryer_open"
-            case .inUse:
-                return type == .washer ? "washer_busy" : "dryer_busy"
-            case .error, .networkError, .unavailable, .unknown:
-                return type == .washer ? "washer_broken" : "dryer_broken"
-            }
-        }
-    }
 }
 
 struct UsageData: Codable, Hashable {

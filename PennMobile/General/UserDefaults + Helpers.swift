@@ -289,7 +289,6 @@ extension UserDefaults {
 extension UserDefaults {
     func setLastLogin() {
         set(Date(), forKey: UserDefaultsKeys.lastLogin.rawValue)
-        synchronize()
     }
 
     func getLastLogin() -> Date? {

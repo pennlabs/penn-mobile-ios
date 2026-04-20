@@ -1,0 +1,119 @@
+//
+//  Incidents.swift
+//  PennMobile
+//
+//  Created by Jonathan Melitski on 3/23/26.
+//  Copyright © 2026 PennLabs. All rights reserved.
+//
+
+import SwiftUI
+import PennMobileShared
+import Combine
+
+class IncidentsViewModel: ObservableObject {
+    @Published var incidents: [Incident]
+    var labelStyle: IncidentAwareLabelStyle {
+        return IncidentAwareLabelStyle(with: incidents)
+    }
+    
+    var mostSignificantIncident: Incident? {
+        return incidents.sorted(by: { $0.severity.rawValue > $1.severity.rawValue}).first
+    }
+    
+    static let shared = IncidentsViewModel()
+    
+    // General polling every 15 minutes
+    let timer = Timer.publish(every: 60 * 15, on: .main, in: .default).autoconnect()
+    var updateCancellable: (any Cancellable)? = nil
+    
+    // High priority polling when we have an incident. Subscribe to more frequent updates
+    let highPrioTimer = Timer.publish(every: 60 * 2, on: .main, in: .default).autoconnect()
+    var highPrioUpdateCancellable: (any Cancellable)? = nil
+    
+    init() {
+        incidents = []
+    }
+    
+    deinit {
+        self.updateCancellable?.cancel()
+        self.updateCancellable = nil
+        self.highPrioUpdateCancellable?.cancel()
+        self.highPrioUpdateCancellable = nil
+    }
+    
+    @MainActor func startUpdatePolling() {
+        self.updateCancellable = timer.sink { _ in
+            Task { @MainActor in
+                try? await self.getIncidents()
+                if self.incidents.isEmpty {
+                    // Unsubscribe from high-priority polling
+                    self.highPrioUpdateCancellable?.cancel()
+                    self.highPrioUpdateCancellable = nil
+                }
+            }
+        }
+    }
+    
+    @MainActor func startHighPriorityUpdatePolling() {
+        self.highPrioUpdateCancellable = highPrioTimer.sink { _ in
+            Task { @MainActor in
+                try? await self.getIncidents()
+                if self.incidents.isEmpty {
+                    self.highPrioUpdateCancellable?.cancel()
+                    self.highPrioUpdateCancellable = nil
+                }
+            }
+        }
+    }
+    
+    @MainActor func getIncidents() async throws {
+        let url = URL(string: "https://status.pennlabs.org/incidents.json")!
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let dec = JSONDecoder()
+        dec.keyDecodingStrategy = .convertFromSnakeCase
+        dec.dateDecodingStrategy = .iso8601
+        let incidents = try dec.decode([Incident].self, from: data)
+        self.incidents = incidents.filter { el in
+            let isBackend = el.affectedServices.contains("mobile-backend") ||
+                el.affectedServices.contains("mobile-ios")
+            let isResolved = el.status == "resolved"
+            return isBackend && !isResolved
+        }.sorted(by: { $0.severity.rawValue > $1.severity.rawValue })
+    }
+    
+    struct IncidentAwareLabelStyle: LabelStyle {
+        let toggle: IncidentLabelStyleToggle
+        
+        init(with incidents: [Incident]) {
+            guard !incidents.isEmpty else {
+                self.toggle = .disabled
+                return
+            }
+            let highest = incidents.max(by: { $0.severity.rawValue < $1.severity.rawValue })!
+            self.toggle = .enabled(color: highest.severity.color, systemName: highest.severity.systemImage)
+        }
+        
+        func makeBody(configuration: Configuration) -> some View {
+            if case .enabled(let color, let systemName) = toggle {
+                Label(title: { configuration.title }, icon: {
+                    if #available(iOS 18.0, *) {
+                        Image(systemName: systemName)
+                            .foregroundStyle(.white, color)
+                            .symbolEffect(.wiggle.byLayer, options: .repeat(.periodic(delay: 3.0)))
+                    } else {
+                        Image(systemName: systemName)
+                            .foregroundStyle(.white, color)
+                    }
+                })
+            } else {
+                Label(title: { configuration.title }, icon: { configuration.icon })
+            }
+        }
+    }
+    
+    enum IncidentLabelStyleToggle {
+        case enabled(color: Color, systemName: String)
+        case disabled
+    }
+}
+
