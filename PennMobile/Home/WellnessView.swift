@@ -46,14 +46,14 @@ private let wellnessCategories: [WellnessCategory] = [
                 name: "Crisis Support",
                 callActions: [
                     ("Call 988 (24/7 national crisis lifeline)", "988"),
-                    ("Call 215-573-3333 (24/7 on-campus emergency)", "2155733333"),
+                    ("Call 215-573-3333 (on-campus emergency)", "2155733333"),
                     ("Call 911 (off-campus emergency)", "911"),
                     ("Call 215-898-4357 (worried about a friend)", "2158984357")
                 ],
                 websiteURL: nil,
                 locationLabel: nil,
                 emailAddress: nil,
-                description: "Immediate and urgent support. Call 215-898-HELP if you are worried about a friend — trained staff will help you navigate next steps."
+                description: "Immediate and urgent support."
             )
         ]
     ),
