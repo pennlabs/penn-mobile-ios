@@ -306,7 +306,7 @@ struct CategoryRowView: View {
                     Text(category.name)
                         .font(.body)
                         .foregroundStyle(.primary)
-                        .multilineTextAlignment(.leading)
+                        .lineLimit(1)
 
                     Spacer()
 
