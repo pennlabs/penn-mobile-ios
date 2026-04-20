@@ -330,7 +330,7 @@ struct CategoryRowView: View {
                 }
                 .padding(.vertical, 8)
                 .background(Color(.systemGroupedBackground))
-                .transition(.opacity.combined(with: .move(edge: .top)))
+                .transition(.opacity)
             }
         }
     }
