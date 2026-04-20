@@ -168,7 +168,7 @@ private let wellnessCategories: [WellnessCategory] = [
             WellnessResource(
                 name: "Writing Center",
                 callActions: [],
-                websiteURL: "https://writing.upenn.edu/critical/wc",
+                websiteURL: "https://markscenter.sas.upenn.edu/writing-center/schedule-appointment",
                 locationLabel: nil,
                 emailAddress: nil,
                 description: "Writing help at any stage, from brainstorming to polishing a final draft. Feedback on essays, lab reports, theses, and personal statements covering structure, clarity, argument, and flow. Early ideas are welcome — no finished draft needed."
