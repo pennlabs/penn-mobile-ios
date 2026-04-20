@@ -227,15 +227,11 @@ struct WellnessView: View {
 
     private var uaHeaderRow: some View {
         HStack(spacing: 12) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color("baseDarkBlue"))
-                    .frame(width: 44, height: 44)
-                Text("UA")
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-            }
+            Image("UAIcon")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 44, height: 44)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("Undergraduate Assembly")
