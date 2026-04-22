@@ -19,17 +19,29 @@ struct GSRReservationContentView: View {
     
     var body: some View {
         let gsrLocation = model.gsr.name
-
-        ScrollView {
+        
+        ScrollView() {
             VStack(spacing: 0) {
                 GSRReservationHeaderView(model: model, roomName: roomName)
 
                 VStack(alignment: .leading, spacing: 24) {
 
                     if mode.isReadOnly, let ownerName = model.ownerName {
-                        Text("Booking Owner: \(ownerName)")
-                            .font(.headline)
-                        Divider()
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Booking Owner")
+                                .font(.system(size: 16, weight: .bold))
+                                .foregroundColor(.secondary)
+
+                            HStack(spacing: 8) {
+                                Image(systemName: "person.fill") 
+                                    .font(.system(size: 18))
+                                    .foregroundColor(.indigo)
+                                
+                                Text(ownerName)
+                                    .font(.system(size: 18, weight: .medium))
+                                    .foregroundColor(.primary)
+                            }
+                        }
                     }
 
                     GSRBookingDetailsView(model: model)
@@ -55,12 +67,6 @@ struct GSRReservationContentView: View {
 
                     Divider()
 
-                    GSRMapSectionView(
-                        model: model,
-                        gsrLocation: gsrLocation,
-                        roomName: roomName
-                    )
-
                     if !mode.isReadOnly {
                         Divider()
                         
@@ -75,5 +81,6 @@ struct GSRReservationContentView: View {
             }
         }
         .ignoresSafeArea(edges: .top)
+        
     }
 }

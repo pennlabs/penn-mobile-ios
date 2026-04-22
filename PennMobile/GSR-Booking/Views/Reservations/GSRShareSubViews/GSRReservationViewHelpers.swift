@@ -19,9 +19,9 @@ enum GSRButtonStyle {
 extension View {
     func calendarButton(style: GSRButtonStyle) -> some View {
         self
-            .font(.system(size: 13, weight: .semibold))
-            .padding(.vertical, 5)
-            .padding(.horizontal, 10)
+            .font(.system(size: 16, weight: .semibold))
+            .padding()
+            .frame(maxWidth: .infinity)
             .background(style == .blueFilled ? Color.blue : style == .redOutline ? Color.baseRed.opacity(0.1) : Color.white)
             .foregroundColor(style == .blueFilled ? .white : style == .redOutline ? .baseRed : .black)
             .overlay(style == .whiteOutline ? RoundedRectangle(cornerRadius: 10).stroke(.black, lineWidth: 1) : nil)

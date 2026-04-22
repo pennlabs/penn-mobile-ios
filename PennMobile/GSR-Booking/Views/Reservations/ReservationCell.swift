@@ -25,25 +25,40 @@ struct ReservationCell: View {
     @State private var sharePreviewImage: Image?
     
     private var shareMessage: String {
-            let dateFormatter: DateFormatter = {
-                let df = DateFormatter()
-                df.dateStyle = .short
-                df.timeStyle = .none
-                return df
-            }()
-            let timeFormatter: DateFormatter = {
-                let tf = DateFormatter()
-                tf.timeStyle = .short
-                return tf
-            }()
-            let dateStr = dateFormatter.string(from: reservation.start)
-            let startStr = timeFormatter.string(from: reservation.start)
-            let endStr = timeFormatter.string(from: reservation.end)
-            return "GSR reservation: \(reservation.gsr.name) • \(dateStr) • \(startStr)–\(endStr)"
+        let dateFormatter: DateFormatter = {
+            let df = DateFormatter()
+            df.dateStyle = .short
+            df.timeStyle = .none
+            return df
+        }()
+        
+        let timeFormatter: DateFormatter = {
+            let tf = DateFormatter()
+            tf.timeStyle = .short
+            return tf
+        }()
+        
+        let dateStr = dateFormatter.string(from: reservation.start)
+        let startStr = timeFormatter.string(from: reservation.start)
+        let endStr = timeFormatter.string(from: reservation.end)
+        
+        return "GSR reservation: \(reservation.gsr.name) • \(dateStr) • \(startStr)–\(endStr)"
+    }
+    
+    private var roomName: String {
+        let splitRoom = String(reservation.roomName.split(separator: ":").first ?? "")
+        
+        if splitRoom.hasPrefix("[Me]") {
+            return splitRoom
+                .dropFirst("[Me]".count)
+                .trimmingCharacters(in: .whitespaces)
+        } else {
+            return splitRoom
+        }
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0.5) {
             
             // MARK: Main Row
             HStack {
@@ -53,26 +68,31 @@ struct ReservationCell: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 120, height: 80)
                     .scaledToFill()
+                    .clipped()
                     .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
+                    )
                 
                 VStack(alignment: .leading) {
                     
-                    Text(reservation.roomName)
-                        .font(.subheadline)
+                    Text(roomName)
+                        .font(.headline)
+                        .fontWeight(.semibold)
                         .foregroundStyle(.labelPrimary)
                     
                     Text("\(reservation.start.gsrTimeString) - \(reservation.end.gsrTimeString)")
                         .font(.subheadline)
                         .padding(.vertical, 3)
                         .padding(.horizontal, 6)
+                        .background(Color.grey5)
                         .foregroundColor(.labelPrimary)
-                        .background(Color.secondary)
                         .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
                 .padding(.leading, 16)
                 
                 Spacer()
-                
             }
             .frame(height: height)
             .cornerRadius(8)
@@ -82,37 +102,42 @@ struct ReservationCell: View {
             HStack {
                 
                 if FeatureFlags.shared.gsrShare {
-                    shareButton
                     calendarButton
                     googleCalendarButton
                 }
                 
                 Spacer()
                 
+                if FeatureFlags.shared.gsrShare {
+                    shareButton
+                }
+                
                 deleteButton
             }
         }
-        .padding()
+        .padding(.top, 5)
+        .padding(.horizontal, 16)
+        .padding(.bottom, 4)
         .task {
-                    guard FeatureFlags.shared.gsrShare, prefetchedShareURL == nil else { return }
-                    
-                    // Prefetch share link
-                    isLoadingShare = true
-                    defer { isLoadingShare = false }
-                    
-                    if let link = try? await GSRNetworkManager.getShareCodeLink(for: reservation),
-                       let url = URL(string: link) {
-                        prefetchedShareURL = url
+            guard FeatureFlags.shared.gsrShare, prefetchedShareURL == nil else { return }
+            
+            // Prefetch share link
+            isLoadingShare = true
+            defer { isLoadingShare = false }
+            
+            if let link = try? await GSRNetworkManager.getShareCodeLink(for: reservation),
+               let url = URL(string: link) {
+                prefetchedShareURL = url
+            }
+            
+            // Prefetch preview image
+            if let imageUrl = URL(string: reservation.gsr.imageUrl) {
+                KingfisherManager.shared.retrieveImage(with: imageUrl) { result in
+                    if case .success(let imageResult) = result {
+                        sharePreviewImage = Image(uiImage: imageResult.image)
                     }
-                    
-                    // Prefetch preview image
-                    if let imageUrl = URL(string: reservation.gsr.imageUrl) {
-                        KingfisherManager.shared.retrieveImage(with: imageUrl) { result in
-                            if case .success(let imageResult) = result {
-                                sharePreviewImage = Image(uiImage: imageResult.image)
-                            }
-                        }
-                    }
+                }
+            }
         }
     }
 }
@@ -121,7 +146,7 @@ struct ReservationCell: View {
 private extension ReservationCell {
     
     var shareButton: some View {
-        Group {
+        ZStack {
             if let url = prefetchedShareURL {
                 ShareLink(
                     item: url,
@@ -133,7 +158,8 @@ private extension ReservationCell {
                     )
                 ) {
                     Image(systemName: "square.and.arrow.up")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(.system(size: 18, weight: .semibold))
+                        .padding(.bottom, 2)
                         .foregroundColor(.secondary)
                 }
             } else {
@@ -141,6 +167,11 @@ private extension ReservationCell {
                     .frame(width: 20, height: 20)
             }
         }
+        .frame(width: 40, height: 40)
+        .background(.ultraThinMaterial)
+        .clipShape(Circle())
+        .padding(.trailing, 9)
+        .shadow(color: .black.opacity(0.2), radius: 4)
     }
     
     var calendarButton: some View {
@@ -163,9 +194,17 @@ private extension ReservationCell {
                 }
             }
         } label: {
-            Text("iCal")
-                .calendarButton(style: .blueFilled)
+            Image("iCalendar")
+                .resizable()
+                .renderingMode(.original)
+                .frame(width: 32, height: 32)
+                .padding(8)
         }
+        .frame(width: 40, height: 40)
+        .background(.ultraThinMaterial)
+        .clipShape(Circle())
+        .padding(.trailing, 9)
+        .shadow(color: .black.opacity(0.2), radius: 4)
     }
     
     var googleCalendarButton: some View {
@@ -179,9 +218,17 @@ private extension ReservationCell {
                 UIApplication.shared.open(url)
             }
         } label: {
-            Text("GCal")
-                .calendarButton(style: .redOutline)
+            Image("GoogleCalendar")
+                .resizable()
+                .renderingMode(.original)
+                .frame(width: 32, height: 32)
+                .padding(7)
         }
+        .frame(width: 40, height: 40)
+        .background(.ultraThinMaterial)
+        .clipShape(Circle())
+        .padding(.leading, 9)
+        .shadow(color: .black.opacity(0.2), radius: 4)
     }
     
     var deleteButton: some View {
@@ -196,9 +243,11 @@ private extension ReservationCell {
                 do {
                     try await GSRNetworkManager.deleteReservation(reservation)
                 } catch {
-                    presentToast(.init(
-                        message: "Unable to delete this reservation. Is it currently in progress?"
-                    ))
+                    presentToast(
+                        .init(
+                            message: "Unable to delete this reservation. Is it currently in progress?"
+                        )
+                    )
                 }
                 
                 vm.currentReservations =
@@ -210,7 +259,13 @@ private extension ReservationCell {
             }
         } label: {
             Image(systemName: "trash")
-                .foregroundColor(.red)
+                .foregroundColor(.baseRed)
+                .fontWeight(.semibold)
         }
+        .frame(width: 40, height: 40)
+        .background(.ultraThinMaterial)
+        .clipShape(Circle())
+        .padding(.leading, 9)
+        .shadow(color: .black.opacity(0.2), radius: 4)
     }
 }
