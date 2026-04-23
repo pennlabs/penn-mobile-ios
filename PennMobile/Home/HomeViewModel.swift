@@ -96,15 +96,9 @@ extension Optional {
         }
         
         async let announcementsTask = Task {
-            
-            await MainActor.run {
-                self.data.announcements = []
-            }
-            
-            _ = await StandardHomeViewModel.announceable.asyncMap { feature in
-                    await feature.getHomeViewAnnouncements()
-            }.flatMap({ $0 }).asyncMap { el in
-                let newAnnouncement: HomeViewAnnouncement
+            let announcements = await StandardHomeViewModel.announceable.asyncMap { feature in
+                await feature.getHomeViewAnnouncements()
+            }.flatMap({ $0 }).asyncMap { el -> HomeViewAnnouncement in
                 if let featureId = el.linkedFeature {
                     var newEl = el
                     newEl.addTapListener {
@@ -121,16 +115,13 @@ extension Optional {
                             }
                         }
                     }
-                    newAnnouncement = newEl
-                } else {
-                    newAnnouncement = el
+                    return newEl
                 }
-                
-                await MainActor.run {
-                    self.data.announcements.append(newAnnouncement)
-                }
-                
-                return newAnnouncement
+                return el
+            }
+
+            await MainActor.run {
+                self.data.announcements = announcements
             }
         }
         
