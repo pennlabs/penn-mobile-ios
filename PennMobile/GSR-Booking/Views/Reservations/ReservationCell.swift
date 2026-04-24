@@ -41,7 +41,7 @@ struct ReservationCell: View {
         let startStr = timeFormatter.string(from: reservation.start)
         let endStr = timeFormatter.string(from: reservation.end)
 
-        let title = "\(reservation.gsr.name) [Room \(roomName)]"
+        let title = "\(reservation.gsr.name) [\(roomName)]"
         let dateLine = "\(dateStr) • \(startStr)–\(endStr)"
         return (title, dateLine)
     }
