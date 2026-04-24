@@ -112,7 +112,7 @@ struct RootView: View {
         .sheet(item: $deepLinkManager.activeSheet) { sheet in
             switch sheet {
             case .gsrShare(let shareCode):
-                GSRReservationDetailView(mode: .shared(shareCode: shareCode))
+                GSRReservationDetailView(shareCode: shareCode)
             }
         }
         .applyAprilFools()

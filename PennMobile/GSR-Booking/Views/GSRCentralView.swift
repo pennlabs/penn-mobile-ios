@@ -114,7 +114,6 @@ struct GSRCentralView: View {
                 }
                 .environmentObject(vm)
                 .navigationBarTitleDisplayMode(.inline)
-                .task(handleInitialState)
                 .toolbar {
                     if showErrorRefresh {
                         ToolbarItem(placement: .primaryAction) {
@@ -129,6 +128,7 @@ struct GSRCentralView: View {
                 }
             }
             .ignoresSafeArea(edges: .horizontal)
+            .task(handleInitialState)
         } else {
             GSRGuestLandingPage()
             .navigationBarHidden(true)

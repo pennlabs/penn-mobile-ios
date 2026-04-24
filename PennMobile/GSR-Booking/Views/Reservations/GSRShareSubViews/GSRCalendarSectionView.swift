@@ -24,7 +24,9 @@ struct GSRCalendarSectionView: View {
                 .padding(.vertical, 8)
         } else {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Calendar Options").font(.headline)
+                Text("Calendar Options")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundColor(.secondary)
 
                 Button {
                     Task {
@@ -43,9 +45,17 @@ struct GSRCalendarSectionView: View {
                         }
                     }
                 } label: {
-                    Label("Add to Calendar", systemImage: "calendar")
-                        .calendarButton(style: .blueFilled)
+                    HStack {
+                        Image("iCalendar")
+                            .resizable()
+                            .frame(width: 32, height: 32)
+                        Spacer()
+                        Text("Add to Apple Calendar")
+                        Spacer()
+                        Color.clear.frame(width: 24)
+                    }
                 }
+                .modifier(CapsuleButtonStyle())
 
                 Button {
                     if let url = GoogleCalendarLink.makeURL(
@@ -57,10 +67,32 @@ struct GSRCalendarSectionView: View {
                         openURL(url)
                     }
                 } label: {
-                    Label("Google Calendar", systemImage: "calendar")
-                        .calendarButton(style: .whiteOutline)
+                    HStack {
+                        Image("GoogleCalendar")
+                            .resizable()
+                            .frame(width: 34, height: 34)
+                        Spacer()
+                        Text("Add to Google Calendar")
+                        Spacer()
+                        Color.clear.frame(width: 24)
+                    }
                 }
+                .modifier(CapsuleButtonStyle())
             }
         }
+    }
+}
+
+struct CapsuleButtonStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.system(size: 17, weight: .semibold))
+            .foregroundColor(.primary.opacity(0.7))
+            .padding(.vertical, 14)
+            .padding(.horizontal, 20)
+            .frame(maxWidth: .infinity)
+            .background(.ultraThinMaterial)
+            .clipShape(Capsule())
+            .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 3)
     }
 }

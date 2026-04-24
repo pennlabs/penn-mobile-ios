@@ -11,30 +11,32 @@ import SwiftUI
 struct GSRBookingDetailsView: View {
     let model: GSRReservation
     
-    private let dateFormatter: DateFormatter = {
+    private let fullDateFormatter: DateFormatter = {
         let df = DateFormatter()
-        df.dateStyle = .short
-        df.timeStyle = .none
+        df.dateFormat = "EEEE, MMMM d, yyyy"
         return df
     }()
 
     private let timeFormatter: DateFormatter = {
         let tf = DateFormatter()
-        tf.timeStyle = .short
+        tf.dateFormat = "h:mm a"
+        tf.locale = Locale(identifier: "en_US_POSIX")
         return tf
     }()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Booking Details").font(.headline)
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Booking Details")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(.secondary)
 
-            HStack {
-                Text("\(timeFormatter.string(from: model.start)) - \(timeFormatter.string(from: model.end))")
-                    .detailChip()
+            Text(fullDateFormatter.string(from: model.start))
+                .font(.system(size: 18, weight: .medium))
+                .foregroundColor(.primary)
 
-                Text(dateFormatter.string(from: model.start))
-                    .detailChip()
-            }
+            Text("\(timeFormatter.string(from: model.start)) to \(timeFormatter.string(from: model.end))")
+                .font(.system(size: 18, weight: .medium))
+                .foregroundColor(.primary)
         }
     }
 }

@@ -31,28 +31,15 @@ struct ReservationsView: View {
                 VStack(alignment: .leading) {
                     ForEach(groupedReservations.keys.sorted(), id: \.self) { date in
                         Text(date.gsrReservationsViewHeaderString)
-                            .font(.largeTitle)
-                            .bold()
-                        if FeatureFlags.shared.gsrShare {
+                                .font(.largeTitle)
+                                .bold()
                             ForEach(groupedReservations[date] ?? []) { res in
-                                NavigationLink(
-                                    destination: GSRReservationDetailView(mode: .owned(res))
-                                        .environmentObject(vm)
-                                ) {
-                                    ReservationCell(reservation: res)
+                                        ReservationCell(reservation: res)
+                                        Divider()
+                                    }
                                 }
-                                Divider()
                             }
-                        } else {
-                            ForEach(groupedReservations[date] ?? []) { res in
-                                ReservationCell(reservation: res)
-                                
-                                Divider()
-                            }
-                        }
-                    }
-                }
-                .padding()
+                            .padding()
             }
             .refreshable {
                 vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
