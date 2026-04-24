@@ -23,25 +23,37 @@ struct ReservationCell: View {
     @State private var prefetchedShareURL: URL?
     @State private var sharePreviewImage: Image?
     
-    private var shareMessage: String {
+    private var shareComponents: (title: String, dateLine: String) {
         let dateFormatter: DateFormatter = {
             let df = DateFormatter()
             df.dateStyle = .short
             df.timeStyle = .none
             return df
         }()
-        
+
         let timeFormatter: DateFormatter = {
             let tf = DateFormatter()
             tf.timeStyle = .short
             return tf
         }()
-        
+
         let dateStr = dateFormatter.string(from: reservation.start)
         let startStr = timeFormatter.string(from: reservation.start)
         let endStr = timeFormatter.string(from: reservation.end)
-        
-        return "GSR reservation: \(reservation.gsr.name) • \(dateStr) • \(startStr)–\(endStr)"
+
+        let title = "\(reservation.gsr.name) [Room \(roomName)]"
+        let dateLine = "\(dateStr) • \(startStr)–\(endStr)"
+        return (title, dateLine)
+    }
+
+    private var shareMessage: String {
+        let parts = shareComponents
+        return "\(parts.title)\n\(parts.dateLine)"
+    }
+
+    private var sharePreviewTitle: String {
+        let parts = shareComponents
+        return "\(parts.title) • \(parts.dateLine)"
     }
     
     private var roomName: String {
@@ -99,18 +111,14 @@ struct ReservationCell: View {
             
             // MARK: Inline Actions
             HStack {
-                
-                if FeatureFlags.shared.gsrShare {
-                    calendarButton
-                    googleCalendarButton
-                }
-                
+
+                calendarButton
+                googleCalendarButton
+
                 Spacer()
-                
-                if FeatureFlags.shared.gsrShare {
-                    shareButton
-                }
-                
+
+                shareButton
+
                 deleteButton
             }
         }
@@ -118,8 +126,8 @@ struct ReservationCell: View {
         .padding(.horizontal, 16)
         .padding(.bottom, 4)
         .task {
-            guard FeatureFlags.shared.gsrShare, prefetchedShareURL == nil else { return }
-            
+            guard prefetchedShareURL == nil else { return }
+
             // Prefetch share link
             isLoadingShare = true
             defer { isLoadingShare = false }
@@ -152,7 +160,7 @@ private extension ReservationCell {
                     subject: Text("GSR Reservation"),
                     message: Text(shareMessage),
                     preview: SharePreview(
-                        shareMessage,
+                        sharePreviewTitle,
                         image: sharePreviewImage ?? Image(systemName: "calendar")
                     )
                 ) {

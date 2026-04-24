@@ -20,9 +20,7 @@ public final class FeatureFlags: @unchecked Sendable {
     @FeatureFlagDefinition("TEST_FEATURE_FLAG", channel: .adHoc) public var testFeatureFlag
     
     @FeatureFlagDefinition("GSR_QUICK_BOOK", channel: .testFlight) public var gsrQuickBook
-    
-    @FeatureFlagDefinition("GSR_SHARE", channel: .testFlight) public var gsrShare
-    
+
     @FeatureFlagDefinition("SHOW_AUTH_SETTINGS", channel: .experimental) public var showAuthSettings
         
     @FeatureFlagDefinition("WHARTON_GSR_UNAVAILABILITY_BANNER", channel: .appStore) public var useWhartonGSRUnavailabilityBanner
