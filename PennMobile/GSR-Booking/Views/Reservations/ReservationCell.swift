@@ -20,7 +20,6 @@ struct ReservationCell: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var isLoadingShare = false
-    @State private var shareURL: URL?
     @State private var prefetchedShareURL: URL?
     @State private var sharePreviewImage: Image?
     
