@@ -12,147 +12,212 @@ import SwiftUI
 struct RoomFinderSelectionPanel: View {
     @ObservedObject var vm: GSRViewModel
     @StateObject var quickBook: GSRQuickBook
-    @Binding var isEnabled: Bool
+    @Binding var status: QuickBookStatus
     @State var expectedWidth: CGFloat?
     @State var feedbackGenerator: UIImpactFeedbackGenerator? = nil
-    @State var durationOptions: [Int] = []
     
-    @State var minTimeRequirement: Int?
-    @State var maxTimeRequirement: Int?
-    @State var earliestTimeRequirement: Date?
-    @State var latestTimeRequirement: Date?
+    @Namespace var namespace
+    
+    @Environment(\.colorScheme) var colorScheme
             
-    let formatter = DateFormatter()
-    
-    private func textWidth(_ text: String, font: UIFont = .preferredFont(forTextStyle: .body)) -> CGFloat {
-        let attributes: [NSAttributedString.Key: Any] = [.font: font]
-        let size = (text as NSString).size(withAttributes: attributes)
-        return ceil(size.width)
-    }
-    
-    private var panelWidth: CGFloat? {
-        textWidth("Find me a room") + 24 * 2
-    }
-    
-    init(vm: GSRViewModel, isEnabled: Binding<Bool>) {
-        _quickBook = StateObject(wrappedValue: GSRQuickBook(vm: vm))
-        self._vm = ObservedObject(initialValue: vm)
-        self._isEnabled = isEnabled
+    let formatter: DateFormatter = {
+        let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
         formatter.amSymbol = "AM"
         formatter.pmSymbol = "PM"
+        return formatter
+    }()
+    
+    
+    init(vm: GSRViewModel, status: Binding<QuickBookStatus>) {
+        _quickBook = StateObject(wrappedValue: GSRQuickBook(vm: vm, configuration: .init(defaultValueFor: vm.selectedLocation, with: vm.roomsAtSelectedLocation)))
+        self._vm = ObservedObject(initialValue: vm)
+        self._status = status
     }
     
     var body: some View {
+        let startBinding = Binding {
+            quickBook.configuration.startTime.timeIntervalSince1970
+        } set: { new in
+            quickBook.configuration.startTime = Date(timeIntervalSince1970: new)
+        }
+        let endBinding = Binding {
+            quickBook.configuration.endTime.timeIntervalSince1970
+        } set: { new in
+            quickBook.configuration.endTime = Date(timeIntervalSince1970: new)
+        }
+        
         VStack {
             Spacer()
-            if let panelWidth, isEnabled {
-                VStack {
-                    Spacer()
-                    Text("Duration")
-                        .foregroundColor(Color("gsrBlue"))
-                    Picker("", selection: $minTimeRequirement) {
-                        ForEach(durationOptions, id: \.self) { option in
-                            Text("\(String(option))m")
-                                .tag(option)
-                            }
-                        .font(.caption)
-                        .foregroundStyle(Color("gsrBlue"))
-                    }
-                    .pickerStyle(.menu)
-                    Spacer()
-                    Divider()
-                    Spacer()
-                    Text("Time")
-                        .foregroundColor(Color("gsrBlue"))
-                    Picker("", selection: $earliestTimeRequirement) {
-                        ForEach(vm.getRelevantAvailability()) { slot in
-                            Text(formatter.string(from: slot.startTime))
-                                .tag(slot.startTime)
+            Group {
+                switch status {
+                case .search:
+                    VStack {
+                        RangeSlider(lowerValue: startBinding, upperValue: endBinding,
+                                    bounds: quickBook.configuration.timeLower.timeIntervalSince1970...quickBook.configuration.timeUpper.timeIntervalSince1970, step: (30 * 60), minimumSpan: (30 * 60)) { time in
+                            let str = formatter.string(from: Date(timeIntervalSince1970: time))
+                            Text(str)
+                                .font(.callout)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.primary)
+                                .padding(4)
+                                .background {
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 4)
+                                            .foregroundStyle(.background)
+                                            .shadow(radius: 2)
+                                        RoundedRectangle(cornerRadius: 4)
+                                            .foregroundStyle(Color("gsrAvailable"))
+                                    }
+                                }
+                                .padding(.bottom, 8)
                         }
-                        .font(.caption)
-                        .foregroundStyle(Color("gsrBlue"))
+                            .tint(Color("gsrBlue"))
+                            .padding(.horizontal)
+                        Divider()
+                            .padding()
+                        VStack {
+                            let rectangles: Int = vm.selectedLocation?.kind.maxConsecutiveBookings ?? 3
+                            HStack {
+                                ForEach(0..<rectangles, id: \.self) { rect in
+                                    let minutes = (rect + 1) * 30
+                                    let enabled = quickBook.configuration.durationsAllowed.contains(minutes)
+                                    let durationStr = {
+                                        let hours = minutes / 60
+                                        let remainder = minutes % 60
+                                        switch (hours, remainder) {
+                                            case (0, let m): return "\(m) min"
+                                            case (let h, 0): return "\(h) hr"
+                                            case (_, _): return "\(String(format: "%.1f", (Double(minutes) / 60.0))) hr"
+                                        }
+                                    }()
+                                    Text(durationStr)
+                                        .foregroundStyle(enabled ? .white : .primary)
+                                        .padding(16)
+                                        .background {
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .foregroundStyle(enabled ? Color("gsrBlue") : Color("gsrAvailable"))
+                                        }
+                                        .onTapGesture {
+                                            withAnimation(.snappy(duration: 0.2)) {
+                                                if enabled {
+                                                    quickBook.configuration.durationsAllowed.removeAll(where: { $0 == minutes })
+                                                } else {
+                                                    quickBook.configuration.durationsAllowed.append(minutes)
+                                                }
+                                            }
+                                        }
+                                }
+                            }
+                            .sensoryFeedback(.impact(flexibility: .solid, intensity: 0.8), trigger: quickBook.configuration.durationsAllowed)
+                        }
                     }
-                    Spacer()
+                    .padding()
+                    .background {
+                        Group {
+                            if colorScheme == .dark {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(.thickMaterial)
+                            } else {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(.white)
+                                    .shadow(radius: 2)
+                            }
+                        }
+                        .matchedGeometryEffect(id: "background-rect", in: namespace)
+                    }
+                case .explore:
+                    VStack {
+                        Group {
+                            Text("asdf")
+                                .background {
+                                    Group {
+                                        if colorScheme == .dark {
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .fill(.thickMaterial)
+                                        } else {
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .fill(.white)
+                                                .shadow(radius: 2)
+                                        }
+                                    }
+                                    .matchedGeometryEffect(id: "background-rect", in: namespace)
+                                }
+                        }
+                        .onTapGesture {
+                            withAnimation(.snappy(duration: 0.2)) {
+                                status = .search
+                            }
+                        }
+                            
+                    }
+                default:
+                    EmptyView()
                 }
-                .mask {
-                    RoundedRectangle(cornerRadius: 12).frame(width: panelWidth, height: panelWidth)
-                }
-                .frame(width: panelWidth, height: panelWidth)
-                .background {
-                    RoundedRectangle(cornerRadius: 12)
-                        .foregroundStyle(Color.white)
-                        .shadow(radius: 2)
-                }
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-                
             }
+            .transition(.move(edge: .bottom).combined(with: .opacity))
+            
             Button {
-                withAnimation(.snappy(duration: 0.2)) {
-                    isEnabled.toggle()
+                var new: QuickBookStatus {
+                    switch status {
+                    case .closed:
+                        return .search
+                    case .search:
+                        return .explore
+                    case .explore:
+                        return .explore
+                    }
                 }
-                if (!isEnabled) {
-                    guard let location = vm.selectedLocation, let duration = minTimeRequirement, let time = earliestTimeRequirement else {
-                        return
-                    }
-                    Task { @MainActor in
-                        quickBook.onQuickBookSuccess = { booking in
-                            vm.recentBooking = booking
-                            Task {
-                                vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
-                            }
-                            vm.showSuccessfulBookingAlert = true
-                        }
-                        try await quickBook.quickBook(location: location, duration: duration, time: time)
-                    }
+                withAnimation(.snappy(duration: 0.2)) {
+                    status = new
                 }
             } label: {
-                Label(isEnabled ? "Book now" : "Find me a room", systemImage: "wand.and.sparkles")
-                    .font(.body)
-                    .foregroundStyle(isEnabled ? Color.white : Color.black)
-                    .padding(12)
-                    .background {
-                        RoundedRectangle(cornerRadius: 12)
-                            .foregroundStyle(isEnabled ? Color("gsrBlue") : Color.white)
-                            .shadow(radius: 2)
+                Group {
+                    switch status {
+                    case .closed:
+                        Label("Find me a room", systemImage: "wand.and.sparkles")
+                            .foregroundStyle(Color.black)
+                            .padding(12)
+                            .background {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .foregroundStyle(Color.white)
+                                    .shadow(radius: 2)
+                            }
+                    case .search:
+                        if quickBook.numberOfOptions == 0 {
+                            Label("No results", systemImage: "xmark")
+                                .foregroundStyle(.primary)
+                                .padding(12)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .foregroundStyle(Color("gsrBlue"))
+                                        .shadow(radius: 2)
+                                }
+                        } else {
+                            Label("Show \(quickBook.numberOfOptions.formatted()) result\(quickBook.numberOfOptions > 1 ? "s" : "")", systemImage: "magnifyingglass")
+                                .contentTransition(.numericText())
+                                .foregroundStyle(Color.white)
+                                .padding(12)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .foregroundStyle(Color("gsrBlue"))
+                                        .shadow(radius: 2)
+                                }
+                        }
+                    case .explore:
+                        Label("Book now", systemImage: "wand.and.sparkles")
+                            .foregroundStyle(Color.white)
+                            .padding(12)
+                            .background {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .foregroundStyle(Color("gsrBlue"))
+                                    .shadow(radius: 2)
+                            }
+                            
                     }
+                }
             }
-        }
-        .onAppear {
-            self.feedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-            
-            let slots = vm.getRelevantAvailability()
-            self.earliestTimeRequirement = slots.sorted(by: { $0.startTime < $1.startTime }).first?.startTime
-            self.latestTimeRequirement = slots.sorted(by: { $0.endTime > $1.endTime }).first?.endTime
-            
-            guard let loc = vm.selectedLocation else { return }
-            switch loc.kind {
-            case .libcal, .penngroups:
-                self.durationOptions = [30, 60, 90, 120]
-                self.minTimeRequirement = 30
-                self.maxTimeRequirement = 120
-            case .wharton:
-                self.durationOptions = [30, 60, 90]
-                self.minTimeRequirement = 30
-                self.maxTimeRequirement = 90
-            }
-        }
-        .alert(quickBook.activeAlert?.title ?? "Booking Error", isPresented: Binding<Bool>(
-            get: { quickBook.activeAlert != nil },
-            set: { newValue in
-                if !newValue { quickBook.activeAlert = nil }
-            }
-        ), presenting: quickBook.activeAlert) { alert in
-            Button("OK") {
-                alert.onAccept?()
-                quickBook.activeAlert = nil
-            }
-            Button("Cancel", role: .cancel) {
-                alert.onCancel?()
-                quickBook.activeAlert = nil
-            }
-        } message: { alert in
-            Text(alert.message).font(.subheadline)
+            .disabled(status == .search && quickBook.numberOfOptions == 0)
         }
     }
 }

@@ -9,26 +9,32 @@
 import SwiftUI
 import PennMobileShared
 
+enum QuickBookStatus {
+    case closed, search, explore
+}
+
 struct GSRBookingToolbarView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
-    @State var startedQuickBook = false
+    @State var quickBookStatus = QuickBookStatus.closed
     
     var body: some View {
         ZStack {
-            if startedQuickBook {
+            if quickBookStatus == .search {
                 Rectangle()
-                    .foregroundStyle(Color.black.opacity(0.001))
+                    .foregroundStyle(.clear)
+                    .contentShape(Rectangle())
                     .onTapGesture {
                         withAnimation(.snappy(duration: 0.2)) {
-                            startedQuickBook = false
+                            quickBookStatus = .closed
                         }
                     }
+                    
             }
             VStack {
                 Spacer()
                 HStack(spacing: 12) {
-                    if !vm.selectedTimeslots.isEmpty {
+                    if !vm.selectedTimeslots.isEmpty && quickBookStatus == .closed {
                         Button {
                             Task {
                                 do {
@@ -69,7 +75,7 @@ struct GSRBookingToolbarView: View {
                         }
                         .transition(.move(edge: .leading).combined(with: .opacity))
                     } else {
-                        RoomFinderSelectionPanel(vm: vm, isEnabled: $startedQuickBook)
+                        RoomFinderSelectionPanel(vm: vm, status: $quickBookStatus)
                             .transition(.move(edge: .leading).combined(with: .opacity))
                     }
                 }
