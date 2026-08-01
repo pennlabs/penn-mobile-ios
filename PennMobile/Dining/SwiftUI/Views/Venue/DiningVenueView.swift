@@ -214,16 +214,17 @@ struct CustomHeader: View {
             Color(UIColor.uiBackground)
         }
     }
+    
+    var isRefreshing: Bool {
+        if case .refreshing = refreshConfiguration {
+            return true
+        } else {
+            return false
+        }
+    }
 
     var body: some View {
-        let isRefreshing: Bool
-        if case .refreshing = refreshConfiguration {
-            isRefreshing = true
-        } else {
-            isRefreshing = false
-        }
-
-        return HStack {
+        HStack {
             Text(name)
                 .font(.system(size: 21, weight: .semibold))
                 .foregroundColor(.primary)
@@ -250,7 +251,7 @@ struct CustomHeader: View {
                         .accessibilityLabel(Text(isRefreshing ? "Refreshing" : "Refresh"))
                 })
             default:
-                Group {}
+                EmptyView()
             }
         }
         .padding()
