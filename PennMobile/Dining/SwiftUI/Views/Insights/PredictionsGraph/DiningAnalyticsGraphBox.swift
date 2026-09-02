@@ -14,15 +14,15 @@ struct GraphView: View {
         case swipes
         case dollars
     }
-    var type: BalanceType
-    @Binding var data: [DiningAnalyticsBalance]
-    var start: Date = Date.startOfSemester
-    var end: Date = Date.endOfSemester
-    @Binding var predictedZeroDate: Date
-    @Binding var predictedSemesterEndValue: Double
-    var displayZeroDate: Bool {
-        end >= predictedZeroDate
+    let type: BalanceType
+    let data: [DiningAnalyticsBalance]
+    var start: Date {
+        data.min(by: { $0.date < $1.date })?.date ?? Date.startOfSemester
     }
+    let end: Date = Date.endOfSemester
+    
+    let prediction: DiningAnalyticsPredictionResult
+    
     var color: Color {
         type == .swipes ? .blue : .green
     }
@@ -30,16 +30,19 @@ struct GraphView: View {
         type == .swipes ? "%.0f Swipes" : "$%.2f"
     }
     var helpText: String {
-        if displayZeroDate {
-            return "Based on your current balance and past behavior, we project you'll run out on this date."
-        } else {
+        switch prediction {
+        case .willHaveExtra(let amount, let slope):
             return "Based on your past behavior, we project you'll end the semester with \(type == .swipes ? "swipes" : "dollars") to spare."
+        case .willRunOut(let date, let slope):
+            return "Based on your current balance and past behavior, we project you'll run out on this date."
         }
     }
-    var formattedZeroDate: String {
+    var formattedZeroDate: String? {
+        guard case let .willRunOut(date, _) = prediction else { return nil }
+
         let formatter = DateFormatter()
         formatter.dateFormat = "MMM. d"
-        return formatter.string(from: predictedZeroDate)
+        return formatter.string(from: date)
     }
     var body: some View {
         VStack(alignment: .leading) {
@@ -48,15 +51,25 @@ struct GraphView: View {
             }
             Divider()
                 .padding([.top, .bottom])
-            AnalyticsGraph(data: $data, color: color, start: start, end: end, predictedZeroDate: $predictedZeroDate, predictedSemesterEndValue: $predictedSemesterEndValue, balanceFormat: balanceFormat)
+            AnalyticsGraph(data: data, color: color, start: start, end: end, prediction: prediction, balanceFormat: balanceFormat)
             Divider()
                 .padding([.top, .bottom])
             HStack {
                 VStack(alignment: .leading) {
-                    Text(displayZeroDate ? ("Out of \(type == .swipes ? "Swipes" : "Dollars")") : "Extra Balance")
-                        .font(.caption)
-                    Text(displayZeroDate ? "\(formattedZeroDate)" : String(format: balanceFormat, predictedSemesterEndValue))
-                        .font(Font.system(size: 21, weight: .bold, design: .rounded))
+                    switch prediction {
+                    case .willHaveExtra(let amount, _):
+                        Text("Extra Balance")
+                            .font(.caption)
+                        Text(String(format: balanceFormat, amount))
+                            .font(Font.system(size: 21, weight: .bold, design: .rounded))
+                    case .willRunOut(let date, _):
+                        if let formattedZeroDate { // this should never be false but unwrapping here for stability
+                            Text("Out of \(type == .swipes ? "Swipes" : "Dollars")")
+                                .font(.caption)
+                            Text(formattedZeroDate)
+                                .font(Font.system(size: 21, weight: .bold, design: .rounded))
+                        }
+                    }
                     Spacer()
                 }
                 .padding(.trailing)

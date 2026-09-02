@@ -21,6 +21,11 @@ public struct DiningAnalyticsBalance: Codable, Equatable, Identifiable {
     }
 }
 
+public enum DiningAnalyticsPredictionResult {
+    case willHaveExtra(amount: Double, slope: Double)
+    case willRunOut(date: Date, slope: Double)
+}
+
 extension DiningAnalyticsBalance: Comparable {
     public static func <(lhs: DiningAnalyticsBalance, rhs: DiningAnalyticsBalance) -> Bool {
         if lhs.balance < rhs.balance {
@@ -134,19 +139,14 @@ public class DiningAnalyticsViewModel: ObservableObject {
         let deltaX = last.date.timeIntervalSince1970 - first.date.timeIntervalSince1970
         let slope = deltaY / deltaX
         
-        let runOutDateTS: TimeInterval = (-1 * first.balance) / slope
+        let runOutDateTS: TimeInterval = (-1 * first.balance) / slope + first.date.timeIntervalSince1970
         let runOutDate = Date(timeIntervalSince1970: runOutDateTS)
         // check if runOutDate < Date.endOfSemester
         if case .orderedAscending = Calendar.current.compare(runOutDate, to: Date.endOfSemester, toGranularity: .day) {
             return .willRunOut(date: runOutDate, slope: slope)
         }
         
-        let extra = slope * Date.endOfSemester.timeIntervalSince1970 + first.balance
+        let extra = slope * (Date.endOfSemester.timeIntervalSince1970 - first.date.timeIntervalSince1970) + first.balance
         return .willHaveExtra(amount: extra, slope: slope)
-    }
-    
-    public enum DiningAnalyticsPredictionResult {
-        case willHaveExtra(amount: Double, slope: Double)
-        case willRunOut(date: Date, slope: Double)
     }
 }

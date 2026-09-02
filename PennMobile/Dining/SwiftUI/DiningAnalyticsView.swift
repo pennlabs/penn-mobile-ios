@@ -27,11 +27,11 @@ struct DiningAnalyticsView: View {
         }
     }
     var body: some View {
-        let dollarHistory = $diningAnalyticsViewModel.dollarHistory
-        let swipeHistory = $diningAnalyticsViewModel.swipeHistory
+        let dollarHistory = diningAnalyticsViewModel.dollarHistory
+        let swipeHistory = diningAnalyticsViewModel.swipeHistory
         VStack {
             if Account.isLoggedIn, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration {
-                if dollarHistory.wrappedValue.isEmpty && swipeHistory.wrappedValue.isEmpty {
+                if dollarHistory.isEmpty && swipeHistory.isEmpty {
                     ZStack {
                         let image = Image("DiningAnalyticsBackground")
                             .resizable()
@@ -62,15 +62,15 @@ struct DiningAnalyticsView: View {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 20) {
                             // Only show dollar history view if there is data for the graph
-                            if !dollarHistory.wrappedValue.isEmpty {
+                            if let prediction = diningAnalyticsViewModel.dollarPrediction, !dollarHistory.isEmpty {
                                 CardView {
-                                    GraphView(type: .dollars, data: dollarHistory, predictedZeroDate: $diningAnalyticsViewModel.dollarPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedDollarSemesterEndBalance)
+                                    GraphView(type: .dollars, data: dollarHistory, prediction: prediction)
                                 }
                             }
                             // Only show swipe history view if there is data for the graph
-                            if !swipeHistory.wrappedValue.isEmpty {
+                            if let prediction = diningAnalyticsViewModel.swipesPrediction, !swipeHistory.isEmpty {
                                 CardView {
-                                    GraphView(type: .swipes, data: swipeHistory, predictedZeroDate: $diningAnalyticsViewModel.swipesPredictedZeroDate, predictedSemesterEndValue: $diningAnalyticsViewModel.predictedSwipesSemesterEndBalance)
+                                    GraphView(type: .swipes, data: swipeHistory, prediction: prediction)
                                 }
                             }
                             Spacer()
