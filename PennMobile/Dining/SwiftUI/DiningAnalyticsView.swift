@@ -14,7 +14,6 @@ struct DiningAnalyticsView: View {
     @State var showMissingDiningTokenAlert = false
     @State var showDiningLoginView = false
     @State var notLoggedInAlertShowing = false
-    @State var showSettingsSheet = false
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     func showCorrectAlert() -> Alert {
@@ -78,16 +77,6 @@ struct DiningAnalyticsView: View {
                         }
                         .padding()
                     }
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: {
-                                showSettingsSheet.toggle()
-                            }) {
-                                Image(systemName: "gear")
-                                    .imageScale(.large)
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -105,9 +94,6 @@ struct DiningAnalyticsView: View {
                 .environmentObject(diningAnalyticsViewModel)
         }
         .navigationTitle("Dining Analytics")
-        .sheet(isPresented: $showSettingsSheet) {
-            DiningSettingsView(viewModel: diningAnalyticsViewModel)
-        }
     }
 }
 
