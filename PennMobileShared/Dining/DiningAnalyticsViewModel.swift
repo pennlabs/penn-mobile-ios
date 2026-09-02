@@ -48,11 +48,24 @@ public class DiningAnalyticsViewModel: ObservableObject {
     @Published public var planStartDate: Date? = try? Storage.retrieveThrowing(planStartDateDirectory, from: .groupDocuments, as: Date.self)
     
     public var dollarPrediction: DiningAnalyticsPredictionResult? {
-        return predict(on: dollarHistory)
+        // We should take a subset starting at the latest increase in value. (in the event that the user adds more swipes or something)
+        let sorted = dollarHistory.sorted { $0.date < $1.date }
+
+        let lastIncreaseIndex = sorted.indices.dropFirst().last {
+            sorted[$0].balance > sorted[$0 - 1].balance
+        } ?? sorted.startIndex
+
+        return predict(on: Array(sorted[lastIncreaseIndex...]))
     }
     
     public var swipesPrediction: DiningAnalyticsPredictionResult? {
-        return predict(on: swipeHistory)
+        let sorted = swipeHistory.sorted { $0.date < $1.date }
+
+        let lastIncreaseIndex = sorted.indices.dropFirst().last {
+            sorted[$0].balance > sorted[$0 - 1].balance
+        } ?? sorted.startIndex
+
+        return predict(on: Array(sorted[lastIncreaseIndex...]))
     }
     
     let formatter: DateFormatter = {

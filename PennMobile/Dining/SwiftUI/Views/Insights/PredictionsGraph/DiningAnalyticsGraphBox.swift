@@ -16,9 +16,7 @@ struct GraphView: View {
     }
     let type: BalanceType
     let data: [DiningAnalyticsBalance]
-    var start: Date {
-        data.min(by: { $0.date < $1.date })?.date ?? Date.startOfSemester
-    }
+    let start: Date
     let end: Date = Date.endOfSemester
     
     let prediction: DiningAnalyticsPredictionResult

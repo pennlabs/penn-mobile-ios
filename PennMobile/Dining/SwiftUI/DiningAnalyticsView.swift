@@ -64,13 +64,14 @@ struct DiningAnalyticsView: View {
                             // Only show dollar history view if there is data for the graph
                             if let prediction = diningAnalyticsViewModel.dollarPrediction, !dollarHistory.isEmpty {
                                 CardView {
-                                    GraphView(type: .dollars, data: dollarHistory, prediction: prediction)
+                                    GraphView(type: .dollars, data: dollarHistory, start: diningAnalyticsViewModel.planStartDate ?? Date.startOfSemester, prediction: prediction)
+                                    
                                 }
                             }
                             // Only show swipe history view if there is data for the graph
                             if let prediction = diningAnalyticsViewModel.swipesPrediction, !swipeHistory.isEmpty {
                                 CardView {
-                                    GraphView(type: .swipes, data: swipeHistory, prediction: prediction)
+                                    GraphView(type: .swipes, data: swipeHistory, start: diningAnalyticsViewModel.planStartDate ?? Date.startOfSemester, prediction: prediction)
                                 }
                             }
                             Spacer()
