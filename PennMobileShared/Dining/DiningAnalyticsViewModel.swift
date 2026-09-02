@@ -74,7 +74,19 @@ public class DiningAnalyticsViewModel: ObservableObject {
         return form
     }()
     
-    public init() {}
+    public init() {
+        // Stale data removal
+        let cutoffDate = planStartDate != nil ? min(planStartDate!, Date.startOfSemester) : Date.startOfSemester
+        if dollarHistory.contains(where: { $0.date <= cutoffDate }) {
+            Storage.remove(Self.dollarHistoryDirectory, from: .groupDocuments)
+            self.dollarHistory = []
+        }
+        
+        if swipeHistory.contains(where: { $0.date <= cutoffDate }) {
+            Storage.remove(Self.swipeHistoryDirectory, from: .groupDocuments)
+            self.swipeHistory = []
+        }
+    }
     
     public func refresh(refreshWidgets: Bool = false) async {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
