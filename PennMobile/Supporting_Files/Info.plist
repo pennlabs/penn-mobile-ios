@@ -41,7 +41,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAlarmKitUsageDescription</key>
-	<string>We'll schedule alerts for laundry machines you subscribe to in the app.</string>
+	<string>We&apos;ll schedule alerts for laundry machines you subscribe to in the app.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
