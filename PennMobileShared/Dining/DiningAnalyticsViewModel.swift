@@ -107,6 +107,10 @@ public class DiningAnalyticsViewModel: ObservableObject {
                 // we catch no plan here. we should delete storage because it implies
                 // that the user previously had a plan but doesn't anymore
                 self.planStartDate = nil
+                self.dollarHistory = []
+                self.swipeHistory = []
+                Storage.remove(Self.swipeHistoryDirectory, from: .groupDocuments)
+                Storage.remove(Self.dollarHistoryDirectory, from: .groupDocuments)
                 Storage.remove(Self.planStartDateDirectory, from: .groupDocuments)
             }
         }
