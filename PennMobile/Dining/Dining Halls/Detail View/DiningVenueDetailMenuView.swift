@@ -12,7 +12,7 @@ import PennMobileShared
 
 struct DiningVenueDetailMenuView: View {
     
-    @EnvironmentObject var diningVM: DiningViewModelSwiftUI
+    @EnvironmentObject var diningVM: DiningViewModel
     
     var id: Int
     var venue: DiningVenue

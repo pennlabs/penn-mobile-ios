@@ -1,5 +1,5 @@
 //
-//  DiningLoginViewSwiftUI.swift
+//  DiningLoginView.swift
 //  PennMobile
 //
 //  Created by Andrew Antenberg on 1/28/22.
@@ -11,7 +11,7 @@ import SwiftUI
 import WebKit
 import PennMobileShared
 
-struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
+struct DiningLoginView: UIViewControllerRepresentable {
     var onDismiss: () -> Void
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
 
@@ -25,16 +25,16 @@ struct DiningLoginViewSwiftUI: UIViewControllerRepresentable {
     }
 
     class Coordinator: NSObject, DiningLoginControllerDelegate {
-        var parent: DiningLoginViewSwiftUI
+        var parent: DiningLoginView
 
-        init(_ parent: DiningLoginViewSwiftUI) {
+        init(_ parent: DiningLoginView) {
             self.parent = parent
         }
 
         func dismissDiningLoginController() {
             self.parent.onDismiss()
             Task.init {
-                await DiningViewModelSwiftUI.instance.refreshBalance()
+                await DiningViewModel.instance.refreshBalance()
                 await parent.diningAnalyticsViewModel.refresh()
             }
         }

@@ -1,5 +1,5 @@
 //
-//  DiningViewModelSwiftUI.swift
+//  DiningViewModel.swift
 //  PennMobile
 //
 //  Created by CHOI Jongmin on 4/6/2020.
@@ -11,8 +11,8 @@ import SwiftUI
 import PennMobileShared
 
 @MainActor
-class DiningViewModelSwiftUI: ObservableObject {
-    static let instance = DiningViewModelSwiftUI()
+class DiningViewModel: ObservableObject {
+    static let instance = DiningViewModel()
 
     @Published var diningVenues: [VenueType: [DiningVenue]]
     @Published var favoriteVenues: [DiningVenue] = []
