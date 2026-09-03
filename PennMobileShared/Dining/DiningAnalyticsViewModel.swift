@@ -136,7 +136,8 @@ public class DiningAnalyticsViewModel: ObservableObject {
             
             if let current = try? await DiningAPI.instance.getDiningBalance(diningToken: diningToken).get(),
                let currDate = self.formatter.date(from: current.date),
-               let dollars = Double(current.diningDollars) {
+               let dollars = Double(current.diningDollars),
+               self.planStartDate != nil { // has a dining plan
                 // Append current value in place of the past values that are "today"
                 // This makes the graph be real-time accurate
                 dollarBalances?.removeAll(where: { Calendar.current.isDate($0.date, inSameDayAs: currDate) })
