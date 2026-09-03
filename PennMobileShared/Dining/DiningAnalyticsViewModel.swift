@@ -95,10 +95,22 @@ public class DiningAnalyticsViewModel: ObservableObject {
         
         // We shouldn't just use the dining plan start date as the primary (with no fallback)
         // because RAs don't have dining plans, they just have swipes/dollars added to their account
-        let planStartDate: Date? = try? await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken).get()
-        if let planStartDate {
+        let planStartDateResult = await DiningAPI.instance.getDiningPlanStartDate(diningToken: diningToken)
+        var planStartDate: Date? = nil
+        switch planStartDateResult {
+        case .success(let date):
+            planStartDate = date
+            self.planStartDate = date
             try? Storage.storeThrowing(planStartDate, to: .groupDocuments, as: Self.planStartDateDirectory)
+        case .failure(let error):
+            if case .other = error {
+                // we catch no plan here. we should delete storage because it implies
+                // that the user previously had a plan but doesn't anymore
+                self.planStartDate = nil
+                Storage.remove(Self.planStartDateDirectory, from: .groupDocuments)
+            }
         }
+        
         let startDate = planStartDate ?? Date.startOfSemester
         let startDateStr = self.formatter.string(from: startDate)
         
