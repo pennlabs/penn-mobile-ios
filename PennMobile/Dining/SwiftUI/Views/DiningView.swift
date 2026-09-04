@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct DiningView: View {
-    @StateObject var diningVM = DiningViewModel.instance
+    @StateObject var diningVM = DiningViewModelSwiftUI.instance
     @Environment(\.presentToast) var presentToast
 
     var body: some View {

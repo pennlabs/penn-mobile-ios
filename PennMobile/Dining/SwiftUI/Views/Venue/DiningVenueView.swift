@@ -15,7 +15,7 @@ struct DiningVenueView: View {
         case refreshed
     }
 
-    @EnvironmentObject var diningVM: DiningViewModel
+    @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @StateObject var diningAnalyticsViewModel = DiningAnalyticsViewModel()
     @State var refreshState = RefreshState.refreshing(nil)
     @State var widgetsNeedRefresh = true

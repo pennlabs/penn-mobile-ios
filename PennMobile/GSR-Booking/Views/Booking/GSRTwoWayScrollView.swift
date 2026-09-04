@@ -23,6 +23,7 @@ private struct GSRTwoWayScrollViewHeader: View {
 
 private struct GSRTwoWayScrollViewRoomRows: View {
     var relevantRooms: [GSRRoom]
+    @Environment(\.gsrScrollMode) var scrollMode
     
     var body: some View {
         LazyVStack(alignment: .center, spacing: 48) {
@@ -73,6 +74,9 @@ private struct GSRTwoWayScrollViewRoomLabels: View {
 private struct GSRTwoWayScrollViewContent: View {
     @EnvironmentObject var vm: GSRViewModel
     
+    @Binding var vProxy: ScrollProxyWrapper?
+    @Binding var hProxy: ScrollProxyWrapper?
+    
     var width: CGFloat
     
     // Pin the time card header to the scrollview
@@ -88,23 +92,26 @@ private struct GSRTwoWayScrollViewContent: View {
                 .offset(x: -scrollViewPosition)
                 .frame(width: width, alignment: .leading)
                 .clipped()
-
-            ScrollView(.vertical, showsIndicators: false) {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        GSRTwoWayScrollViewRoomRows(relevantRooms: relevantRooms)
-                            .padding(.leading, roomTitleOffset)
-                            .onGeometryChange(for: CGFloat.self) {
-                                $0.frame(in: .scrollView).minX
-                            } action: { x in
-                                scrollViewPosition = -x
-                            }
-                            .background(Color(.systemBackground))
+            
+            ScrollViewReader { vertProxy in
+                ScrollView(.vertical, showsIndicators: false) {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        VStack(alignment: .leading, spacing: 0) {
+                            GSRTwoWayScrollViewRoomRows(relevantRooms: relevantRooms)
+                                .padding(.leading, roomTitleOffset)
+                                .onGeometryChange(for: CGFloat.self) {
+                                    $0.frame(in: .scrollView).minX
+                                } action: { x in
+                                    scrollViewPosition = -x
+                                }
+                                .background(Color(.systemBackground))
+                        }
+                    }
+                    .overlay(alignment: .topLeading) {
+                        GSRTwoWayScrollViewRoomLabels(relevantRooms: relevantRooms)
                     }
                 }
-                .overlay(alignment: .topLeading) {
-                    GSRTwoWayScrollViewRoomLabels(relevantRooms: relevantRooms)
-                }
+                .onAppear { vProxy = ScrollProxyWrapper(proxy: vertProxy) }
             }
         }
         .accessibilityElement(children: .contain)
@@ -114,9 +121,12 @@ private struct GSRTwoWayScrollViewContent: View {
 }
 
 struct GSRTwoWayScrollView: View {
+    @Binding var vProxy: ScrollProxyWrapper?
+    @Binding var hProxy: ScrollProxyWrapper?
+    
     var body: some View {
         GeometryReader { proxy in
-            GSRTwoWayScrollViewContent(width: proxy.size.width)
+            GSRTwoWayScrollViewContent(vProxy: _vProxy, hProxy: _hProxy, width: proxy.size.width)
         }
     }
 }

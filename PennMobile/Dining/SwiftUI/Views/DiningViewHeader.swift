@@ -13,7 +13,7 @@ import PennMobileShared
 
 struct DiningViewHeader: View {
 
-    @EnvironmentObject var diningVM: DiningViewModel
+    @EnvironmentObject var diningVM: DiningViewModelSwiftUI
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
     @State var alertIsPresented = false
 
@@ -56,7 +56,7 @@ struct DiningViewHeaderDate: View {
 }
 
 struct DiningViewHeaderBalance: View {
-    @EnvironmentObject var diningVM: DiningViewModel
+    @EnvironmentObject var diningVM: DiningViewModelSwiftUI
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 5) {

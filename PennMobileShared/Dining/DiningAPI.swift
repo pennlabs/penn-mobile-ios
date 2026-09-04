@@ -194,13 +194,10 @@ extension DiningAPI {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
-        guard let plan = try? decoder.decode(DiningPlan.self, from: data) else {
+        if let plan = try? decoder.decode(DiningPlan.self, from: data) {
+            return .success(plan.start_date)
+        } else {
             return .failure(.parsingError)
         }
-        guard plan.name != "No Plan" else {
-            return .failure(.other)
-        }
-        
-        return .success(plan.start_date)
     }
 }

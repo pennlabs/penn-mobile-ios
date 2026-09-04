@@ -9,6 +9,17 @@
 import SwiftUI
 import Lottie
 
+extension EnvironmentValues {
+    @Entry var gsrUnderlyingHorizontalProxy: ScrollProxyWrapper?
+    @Entry var gsrUnderlyingVerticalProxy: ScrollProxyWrapper?
+    @Entry var gsrScrollMode: GSRScrollMode = .vertical
+}
+
+enum GSRScrollMode: Int {
+    case horizontal = 0
+    case vertical = 1
+}
+
 struct GSRBookingView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
@@ -18,6 +29,9 @@ struct GSRBookingView: View {
     @State var showSettings: Bool = false
     @State var settingsPopoverAttachmentPoint: CGPoint? = nil
     
+    @State var horizScrollProxy: ScrollProxyWrapper?
+    @State var vertScrollProxy: ScrollProxyWrapper?
+    @State var scrollMode: GSRScrollMode = .vertical
     
     
     var body: some View {
@@ -39,11 +53,14 @@ struct GSRBookingView: View {
             
             if !vm.isLoadingAvailability {
                 if vm.hasAvailableBooking {
-                    GSRTwoWayScrollView()
+                    GSRTwoWayScrollView(vProxy: $vertScrollProxy, hProxy: $horizScrollProxy)
+                        .environment(\.gsrScrollMode, self.scrollMode)
                         .overlay {
                             VStack {
                                 Spacer()
-                                GSRBookingToolbarView()
+                                GSRBookingToolbarView(scrollMode: $scrollMode)
+                                    .environment(\.gsrUnderlyingHorizontalProxy, self.horizScrollProxy)
+                                    .environment(\.gsrUnderlyingVerticalProxy, self.vertScrollProxy)
                                     .padding(24)
                             }
                         }
@@ -140,5 +157,20 @@ struct GSRBookingView: View {
             } message: { booking in
                 Text("You've successfully made a reservation for \(booking.roomName)")
             }
+    }
+}
+
+struct ScrollProxyWrapper: Equatable, Hashable {
+    let id = UUID()
+    let proxy: ScrollViewProxy
+    
+    static func == (lhs: Self, rhs: Self) -> Bool { lhs.hashValue == rhs.hashValue }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    init(proxy: ScrollViewProxy) {
+        self.proxy = proxy
     }
 }

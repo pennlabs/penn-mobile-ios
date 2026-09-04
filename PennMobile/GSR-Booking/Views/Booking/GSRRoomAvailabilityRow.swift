@@ -12,6 +12,7 @@ struct GSRRoomAvailabilityRow: View {
     let room: GSRRoom
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
+    @Environment(\.gsrScrollMode) var scrollMode
     
     func handleGesture(slot: GSRTimeSlot, room: GSRRoom) {
         do {
@@ -50,6 +51,7 @@ struct GSRRoomAvailabilityRow: View {
                            }
                         }
                 }
+                .id(RoomTimeslot(room: room, timeslot: slot))
                 .accessibilityElement()
                 .accessibilityLabel(Text("\(timeStr) in \(room.roomNameShort)"))
                 .accessibilityValue(valueDescription)
@@ -61,5 +63,11 @@ struct GSRRoomAvailabilityRow: View {
                 .frame(width: 80, height: 60)
             }
         }
+        .scrollTargetLayout(isEnabled: scrollMode == .horizontal)
     }
+}
+
+struct RoomTimeslot: Hashable {
+    let room: GSRRoom
+    let timeslot: GSRTimeSlot
 }

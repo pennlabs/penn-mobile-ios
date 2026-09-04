@@ -15,7 +15,7 @@ struct DiningLoginNavigationView: View {
 
     var body: some View {
         NavigationStack {
-            DiningLoginView(onDismiss: { dismiss() })
+            DiningLoginViewSwiftUI(onDismiss: { dismiss() })
                 .navigationBarTitle(Text("Login"), displayMode: .inline)
                 .navigationBarItems(trailing: Button(action: {
                     dismiss()

@@ -67,28 +67,20 @@ private enum DiningAnalyticsProviderError: Error {
 
     let remainingSwipes = balances.regularVisits
     let totalSwipes = max(remainingSwipes, model.swipeHistory.max().map { Int($0.balance) } ?? 0)
-    
-    switch model.swipesPrediction {
-    case .willHaveExtra(let amount, _):
-        cachedSwipes = BalanceDetails(remaining: remainingSwipes, total: totalSwipes, projectedEnd: Int(amount))
-    case .willRunOut(let date, _):
-        cachedSwipes = BalanceDetails(remaining: remainingSwipes, total: totalSwipes, projectedEnd: -1, projectedEndDate: date)
-    case .none: // if prediction fails the widget should assume it doesn't have a projected end or an end date.
-        cachedSwipes = BalanceDetails(remaining: remainingSwipes, total: totalSwipes, projectedEnd: -1)
+    let projectedSwipes = Int(model.predictedSwipesSemesterEndBalance)
+    cachedSwipes = BalanceDetails(remaining: remainingSwipes, total: totalSwipes, projectedEnd: projectedSwipes)
+    if projectedSwipes <= 0 {
+        cachedSwipes?.projectedEndDate = model.swipesPredictedZeroDate
     }
 
     guard let remainingDollars = Double(balances.diningDollars) else {
         return
     }
     let totalDollars = max(remainingDollars, model.dollarHistory.max()?.balance ?? 0)
-    
-    switch model.dollarPrediction {
-    case .willHaveExtra(let amount, _):
-        cachedDollars = BalanceDetails(remaining: remainingDollars, total: totalDollars, projectedEnd: Double(amount))
-    case .willRunOut(let date, _):
-        cachedDollars = BalanceDetails(remaining: remainingDollars, total: totalDollars, projectedEnd: -1, projectedEndDate: date)
-    case .none:
-        cachedDollars = BalanceDetails(remaining: remainingDollars, total: totalDollars, projectedEnd: -1)
+    let projectedDollars = model.predictedDollarSemesterEndBalance
+    cachedDollars = BalanceDetails(remaining: remainingDollars, total: totalDollars, projectedEnd: projectedDollars)
+    if projectedDollars <= 0 {
+        cachedDollars?.projectedEndDate = model.dollarPredictedZeroDate
     }
 }
 

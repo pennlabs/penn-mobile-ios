@@ -12,26 +12,30 @@ import PennMobileShared
 
 struct AnalyticsGraph: View {
     private let graphHeight: CGFloat = 180.0
-    let data: [DiningAnalyticsBalance]
+    @Binding var data: [DiningAnalyticsBalance]
     var color: Color = Color.blue
     var start: Date = Date.startOfSemester
     var end: Date = Date.endOfSemester
     var xAxisLabelCount: Int = 5
     var yAxisLabelCount: Int = 4
-    let prediction: DiningAnalyticsPredictionResult
+    @Binding var predictedZeroDate: Date
+    @Binding var predictedSemesterEndValue: Double
     @State var feedbackGenerator: UIImpactFeedbackGenerator?
     var balanceFormat: String
+    var displayZeroDate: Bool {
+        end >= predictedZeroDate
+    }
     var predictionLineData: [DiningAnalyticsBalance] {
-        guard let last = data.last, last.date > start else { return [] }
-        
-        switch prediction {
-        case .willHaveExtra(let amount, _):
-            return [last, DiningAnalyticsBalance(date: end, balance: amount)]
-        case .willRunOut(let date, _):
-            return [last, DiningAnalyticsBalance(date: date, balance: 0)]
+        if data.last == nil || data.last!.date < start {
+            return []
+        } else {
+            if displayZeroDate {
+                return [data.last!, DiningAnalyticsBalance(date: predictedZeroDate, balance: 0)]
+            } else {
+                return [data.last!, DiningAnalyticsBalance(date: end, balance: predictedSemesterEndValue)]
+            }
         }
     }
-    
     var maxY: Double {
         data.max(by: { $0.balance < $1.balance })?.balance ?? 300.0
     }
@@ -50,16 +54,17 @@ struct AnalyticsGraph: View {
                     x: .value("Day", $0.date, unit: .day),
                     y: .value("Balance", $0.balance)
                 )
+                .foregroundStyle(color)
                 .foregroundStyle(by: .value("Type", "Data"))
-                .lineStyle(by: .value("Type", "Data"))
             }
             ForEach(predictionLineData) {
                 LineMark(
                     x: .value("Day", $0.date, unit: .day),
                     y: .value("Balance", $0.balance)
                 )
+                .foregroundStyle(Color.gray)
                 .foregroundStyle(by: .value("Type", "Prediction"))
-                .lineStyle(by: .value("Type", "Prediction"))
+                .lineStyle(StrokeStyle(lineWidth: 2, dash: [5]))
             }
             RuleMark(x: .value("End of Term", end))
                 .foregroundStyle(Color.red)
@@ -76,14 +81,6 @@ struct AnalyticsGraph: View {
             }
         }
         .chartLegend(.hidden)
-        .chartForegroundStyleScale([
-            "Data": color,
-            "Prediction": Color.gray
-        ])
-        .chartLineStyleScale([
-            "Data": StrokeStyle(lineWidth: 2),
-            "Prediction": StrokeStyle(lineWidth: 2, dash: [5])
-        ])
         .chartYAxis {
             AxisMarks(position: .leading, values: labels.1) {
                 AxisGridLine()
@@ -159,7 +156,7 @@ struct AnalyticsGraph: View {
             let elapsedTime = date.timeIntervalSince(beforeData.date)
             let weight = totalTime == 0 ? 1 : elapsedTime / totalTime
             balance = beforeData.balance + weight * (afterData.balance - beforeData.balance)
-        } else if predictionLineData.count >= 2 {
+        } else {
             // Use prediction data at tap
             if let predStart = chartProxy.position(for: (x: predictionLineData[0].date, y: predictionLineData[0].balance)),
                let predEnd = chartProxy.position(for: (x: predictionLineData[1].date, y: predictionLineData[1].balance)) {

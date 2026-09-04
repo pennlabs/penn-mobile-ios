@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-class DiningViewController: GenericViewController {
+class DiningViewControllerSwiftUI: GenericViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
