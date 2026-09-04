@@ -1043,8 +1043,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pennlabs/labs-platform-swift";
 			requirement = {
-				branch = jon0/ASWeb;
-				kind = branch;
+				kind = exactVersion;
+				version = 1.2.0;
 			};
 		};
 		73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
