@@ -25,8 +25,9 @@
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
 		7348F0502F807CEB002901E4 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7348F04F2F807CEB002901E4 /* LabsPlatformSwift */; };
 		734BED9B2D9DE4B700964811 /* PennForms in Frameworks */ = {isa = PBXBuildFile; productRef = 734BED9A2D9DE4B700964811 /* PennForms */; };
-		7353066A2F82AE1700299200 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 735306692F82AE1700299200 /* LabsPlatformSwift */; };
 		735727032F4CE1B200213ACA /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 735727022F4CE1B200213ACA /* LabsPlatformSwift */; };
+		737F2B27304A244C0093F7A0 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 737F2B26304A244C0093F7A0 /* LabsPlatformSwift */; };
+		737F2B2A304A38800093F7A0 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 737F2B29304A38800093F7A0 /* LabsPlatformSwift */; };
 		73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 73E7A02B2CF158F3007BC1E3 /* Lottie */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
@@ -192,11 +193,12 @@
 				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
-				7353066A2F82AE1700299200 /* LabsPlatformSwift in Frameworks */,
+				737F2B27304A244C0093F7A0 /* LabsPlatformSwift in Frameworks */,
 				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
 				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
 				895A1ABB2CB98F7100E161AE /* SCLAlertView in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
+				737F2B2A304A38800093F7A0 /* LabsPlatformSwift in Frameworks */,
 				6E4D821C2AC8C91C009AB78E /* PennMobileShared.framework in Frameworks */,
 				7348F0502F807CEB002901E4 /* LabsPlatformSwift in Frameworks */,
 				895A1AB52CB98E9000E161AE /* XLPagerTabStrip in Frameworks */,
@@ -372,7 +374,8 @@
 				734BED9A2D9DE4B700964811 /* PennForms */,
 				735727022F4CE1B200213ACA /* LabsPlatformSwift */,
 				7348F04F2F807CEB002901E4 /* LabsPlatformSwift */,
-				735306692F82AE1700299200 /* LabsPlatformSwift */,
+				737F2B26304A244C0093F7A0 /* LabsPlatformSwift */,
+				737F2B29304A38800093F7A0 /* LabsPlatformSwift */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -481,7 +484,7 @@
 				734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */,
 				73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */,
-				735306682F82AE1700299200 /* XCRemoteSwiftPackageReference "labs-platform-swift" */,
+				737F2B28304A387F0093F7A0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 216640611EBADADA00746B8E /* Products */;
@@ -727,7 +730,7 @@
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -767,7 +770,7 @@
 				EXCLUDED_ARCHS = "";
 				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = PennMobile/Supporting_Files/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1036,12 +1039,12 @@
 				kind = branch;
 			};
 		};
-		735306682F82AE1700299200 /* XCRemoteSwiftPackageReference "labs-platform-swift" */ = {
+		737F2B28304A387F0093F7A0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pennlabs/labs-platform-swift";
 			requirement = {
-				kind = revision;
-				revision = 4b3d9c78566534834dc9f8b59b658d37777067f4;
+				kind = exactVersion;
+				version = 1.2.0;
 			};
 		};
 		73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
@@ -1147,13 +1150,17 @@
 			package = 734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */;
 			productName = PennForms;
 		};
-		735306692F82AE1700299200 /* LabsPlatformSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 735306682F82AE1700299200 /* XCRemoteSwiftPackageReference "labs-platform-swift" */;
-			productName = LabsPlatformSwift;
-		};
 		735727022F4CE1B200213ACA /* LabsPlatformSwift */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = LabsPlatformSwift;
+		};
+		737F2B26304A244C0093F7A0 /* LabsPlatformSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LabsPlatformSwift;
+		};
+		737F2B29304A38800093F7A0 /* LabsPlatformSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 737F2B28304A387F0093F7A0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */;
 			productName = LabsPlatformSwift;
 		};
 		73E7A02B2CF158F3007BC1E3 /* Lottie */ = {

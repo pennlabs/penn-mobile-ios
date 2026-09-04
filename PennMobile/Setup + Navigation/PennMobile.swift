@@ -68,7 +68,7 @@ struct PennMobile: App {
                 .accentColor(Color("navigation"))
                 .enableLabsPlatform(analyticsRoot: "pennmobile",
                                     clientId: InfoPlistEnvironment.labsOauthClientId,
-                                    redirectUrl: "https://pennlabs.org/pennmobile/ios/callback/",
+                                    redirectUrl: "pennmobile://auth",
                                     defaultLoginHandler: authManager.handlePlatformDefaultLogin,
                                     authManager.handlePlatformLogin)
         }
