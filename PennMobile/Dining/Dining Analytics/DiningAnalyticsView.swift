@@ -11,21 +11,10 @@ import PennMobileShared
 
 struct DiningAnalyticsView: View {
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
-    @State var showMissingDiningTokenAlert = false
     @State var showDiningLoginView = false
-    @State var notLoggedInAlertShowing = false
+    @State var showNotLoggedInAlert = false
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
-    func showCorrectAlert() -> Alert {
-        if !Account.isLoggedIn {
-            return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok"), action: { dismiss() }))
-        } else {
-            return Alert(title: Text("\"Penn Mobile\" requires you to login to Campus Express to use this feature."),
-                         message: Text("Would you like to continue to campus express?"),
-                         primaryButton: .default(Text("Continue"), action: {showDiningLoginView = true}),
-                         secondaryButton: .cancel({ dismiss() }))
-        }
-    }
     var body: some View {
         let dollarHistory = diningAnalyticsViewModel.dollarHistory
         let swipeHistory = diningAnalyticsViewModel.swipeHistory
@@ -82,18 +71,22 @@ struct DiningAnalyticsView: View {
             }
         }
         .task {
-            guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
-                showMissingDiningTokenAlert = true
+            guard Account.isLoggedIn else {
+                showNotLoggedInAlert = true
+                return
+            }
+
+            guard KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
+                showDiningLoginView = true
                 return
             }
         }
-        .alert(isPresented: $showMissingDiningTokenAlert) {
-            showCorrectAlert()
+        .alert("You must log in to access this feature.", isPresented: $showNotLoggedInAlert) {
+            Button("Ok") { dismiss() }
+        } message: {
+            Text("Please login on the \"More\" tab.")
         }
-        .sheet(isPresented: $showDiningLoginView) {
-            DiningLoginNavigationView()
-                .environmentObject(diningAnalyticsViewModel)
-        }
+        .diningLogin(isPresented: $showDiningLoginView, onCancel: { dismiss() })
         .navigationTitle("Dining Analytics")
     }
 }

@@ -178,22 +178,11 @@ struct CustomHeader: View {
     let name: String
     var refreshConfiguration = RefreshConfiguration.noRefresh
     @State var didError = false
-    @State var showMissingDiningTokenAlert = false
+    @State var showNotLoggedInAlert = false
     @State var showDiningLoginView = false
     @State var buttonAngle: Angle = .zero
-    @Environment(\.dismiss) var dismiss
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @EnvironmentObject var diningAnalyticsViewModel: DiningAnalyticsViewModel
-    func showCorrectAlert () -> Alert {
-        if !Account.isLoggedIn {
-            return Alert(title: Text("You must log in to access this feature."), message: Text("Please login on the \"More\" tab."), dismissButton: .default(Text("Ok")))
-        } else {
-            return Alert(title: Text("\"Penn Mobile\" requires you to login to Campus Express to use this feature."),
-                         message: Text("Would you like to continue to campus express?"),
-                         primaryButton: .default(Text("Continue"), action: {showDiningLoginView = true}),
-                         secondaryButton: .cancel({ dismiss() }))
-        }
-    }
 
     func animateButton(refreshing: Bool) {
         if refreshing {
@@ -236,9 +225,13 @@ struct CustomHeader: View {
                         return
                     }
 
-                    guard Account.isLoggedIn, KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
-                        print("Should show alert")
-                        showMissingDiningTokenAlert = true
+                    guard Account.isLoggedIn else {
+                        showNotLoggedInAlert = true
+                        return
+                    }
+
+                    guard KeychainAccessible.instance.getDiningToken() != nil, let diningExpiration = UserDefaults.standard.getDiningTokenExpiration(), Date() <= diningExpiration else {
+                        showDiningLoginView = true
                         return
                     }
 
@@ -259,18 +252,17 @@ struct CustomHeader: View {
         .background(background)
         // Default Text Case for Header is Caps Lock
         .textCase(nil)
-        .sheet(isPresented: $showDiningLoginView) {
-            DiningLoginNavigationView()
-                .environmentObject(diningAnalyticsViewModel)
-        }
+        .diningLogin(isPresented: $showDiningLoginView)
         .onAppear {
             animateButton(refreshing: isRefreshing)
         }
         .onChange(of: isRefreshing) { refreshing in
             animateButton(refreshing: refreshing)
         }
-        .alert(isPresented: $showMissingDiningTokenAlert) {
-            showCorrectAlert()
+        .alert("You must log in to access this feature.", isPresented: $showNotLoggedInAlert) {
+            Button("Ok") {}
+        } message: {
+            Text("Please login on the \"More\" tab.")
         }
     }
 }
