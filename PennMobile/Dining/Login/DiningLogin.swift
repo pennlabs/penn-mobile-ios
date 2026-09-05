@@ -11,15 +11,11 @@ import AuthenticationServices
 import CryptoKit
 import PennMobileShared
 
-/// Campus Express OAuth (PKCE) login through the system web authentication session.
-/// On success, the resulting dining token and its expiration are stored for the rest of the app.
-enum DiningLogin {
+class DiningLogin {
     static let clientId = "5c09c08b240a56d22f06b46789d0528a"
     static let authorizeUrl = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/oauth/authorize")!
     static let tokenUrl = URL(string: "https://prod.campusexpress.upenn.edu/api/v1/oauth/token")!
 
-    // Must match the redirect registered with Campus Express. Intercepted by the
-    // web authentication session via the `webcredentials:pennlabs.org` associated domain.
     static let redirectHost = "pennlabs.org"
     static let redirectPath = "/pennmobile/ios/campus_express_callback/"
     static var redirectUri: String { "https://\(redirectHost)\(redirectPath)" }
@@ -87,7 +83,6 @@ private struct DiningLoginModifier: ViewModifier {
         content.onChange(of: isPresented) { _, isPresented in
             guard isPresented else { return }
             Task {
-                // A thrown error means the user cancelled or the flow failed; nothing to refresh.
                 if (try? await DiningLogin.login(using: webAuthenticationSession)) != nil {
                     await DiningViewModel.instance.refreshBalance()
                     await diningAnalyticsViewModel.refresh()
@@ -101,9 +96,6 @@ private struct DiningLoginModifier: ViewModifier {
 }
 
 extension View {
-    /// Starts the Campus Express login flow whenever `isPresented` becomes `true`,
-    /// refreshing dining balances and analytics on success. Resets the binding when finished.
-    /// The system prompts for permission before opening the session, so no confirmation alert is needed.
     func diningLogin(isPresented: Binding<Bool>, onCancel: (() -> Void)? = nil) -> some View {
         modifier(DiningLoginModifier(isPresented: isPresented, onCancel: onCancel))
     }
