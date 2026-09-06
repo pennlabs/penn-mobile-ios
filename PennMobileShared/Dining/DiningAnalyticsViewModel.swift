@@ -175,7 +175,7 @@ public class DiningAnalyticsViewModel: ObservableObject {
             $0.date < $1.date
         })
         
-        guard let first = sorted.first, let last = sorted.last, last.balance < first.balance else { return nil }
+        guard let first = sorted.first, let last = sorted.last, last.balance <= first.balance else { return nil }
         
         let deltaY = last.balance - first.balance
         let deltaX = last.date.timeIntervalSince1970 - first.date.timeIntervalSince1970
