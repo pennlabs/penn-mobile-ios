@@ -42,45 +42,43 @@ class DiningViewModel: ObservableObject {
     func refreshVenues() async {
         let lastRequest = UserDefaults.standard.getLastDiningHoursRequest()
         // Sometimes when building the app, dining venue list is empty, but because it has refreshed within the day, it does not refresh again. Now, refreshes if the list of venues is completely empty
-        if lastRequest == nil || !lastRequest!.isToday || areAllVenuesEmpty {
-            self.diningVenuesIsLoading = true
-            let diningResult = await DiningAPI.instance.fetchDiningHours()
-            let favoritesResult = await UserDBManager.shared.fetchDiningPreferences()
-            
-            switch (diningResult, favoritesResult) {
-            case (.success(let diningVenues), .success(let favorites)):
-                UserDefaults.standard.setLastDiningHoursRequest()
-                let favoritesIDs = favorites.map(\.id)
-                Storage.store(favoritesIDs, to: .caches, as: DiningVenue.favoritesDirectory)
-                var venuesDict = [VenueType: [DiningVenue]]()
-                for type in VenueType.allCases {
-                    venuesDict[type] = diningVenues.filter({ $0.venueType == type })// && !favoritesResult.contains($0) })
-                }
-                
-                var favorites: [DiningVenue?] = []
-                for id in favoritesIDs {
-                    favorites.append(venuesDict[.dining]?.first(where: { $0.id == id }) ?? venuesDict[.retail]?.first(where: { $0.id == id }) ?? nil)
-                }
-                let favoritesResult = favorites.compactMap { $0 }
-                self.favoriteVenues = favoritesResult
-                
-                for type in VenueType.allCases {
-                    venuesDict[type] = venuesDict[type]!.filter { !favoritesIDs.contains($0.id) }
-                }
-                self.diningVenues = venuesDict
-                
-            case (.failure(let error), .success):
-                self.alertType = error
-                
-            case (.success, .failure(let error)):
-                self.alertType = error
-            
-            case (.failure(let error), .failure):
+        guard lastRequest == nil || !lastRequest!.isToday || areAllVenuesEmpty else { return }
+
+        self.diningVenuesIsLoading = true
+        defer { self.diningVenuesIsLoading = false }
+
+        let venues: [DiningVenue]
+        switch await DiningAPI.instance.fetchDiningHours() {
+        case .success(let fetchedVenues):
+            UserDefaults.standard.setLastDiningHoursRequest()
+            venues = fetchedVenues
+        case .failure(let error):
+            // Network failed, so fall back on the cache. Only complain if that's empty too.
+            venues = DiningAPI.instance.getVenues()
+            if venues.isEmpty {
                 self.alertType = error
             }
-            
-            self.diningVenuesIsLoading = false
         }
+
+        // Favorites must be fetched after the venues, since they're resolved against the venue cache.
+        // They're also secondary: if they fail (e.g. the user is logged out), still show the venues.
+        let favoriteIds: [Int]
+        switch await UserDBManager.shared.fetchDiningPreferences() {
+        case .success(let favorites):
+            favoriteIds = favorites.map(\.id)
+            Storage.store(favoriteIds, to: .caches, as: DiningVenue.favoritesDirectory)
+        case .failure:
+            favoriteIds = DiningAPI.instance.getFavoriteVenueIds()
+        }
+
+        var venuesDict = [VenueType: [DiningVenue]]()
+        for type in VenueType.allCases {
+            venuesDict[type] = venues.filter({ $0.venueType == type })
+        }
+
+        let (sectionedVenues, favoriteVenues) = DiningAPI.instance.splitFavorites(out: venuesDict, favoriteIds: favoriteIds)
+        self.favoriteVenues = favoriteVenues
+        self.diningVenues = sectionedVenues
     }
 
     func refreshMenus(cache: Bool?, at date: Date = Date()) async {
