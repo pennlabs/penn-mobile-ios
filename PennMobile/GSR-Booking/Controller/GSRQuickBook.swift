@@ -9,139 +9,122 @@
 import Foundation
 import SwiftUI
 import PennMobileShared
+import Combine
 
-struct AlertContent: Identifiable {
-    let id = UUID()
-    let title: String
-    let message: String
-    let onAccept: (() -> Void)?
-    let onCancel: (() -> Void)?
-}
 
-class GSRQuickBook: ObservableObject, GSRBookable {
-    let vm: GSRViewModel
+class GSRQuickBook: ObservableObject {
+    @ObservedObject var vm: GSRViewModel
+    @Published var configuration: QuickBookRequestConfiguration
     
-    fileprivate var location: GSRLocation?
-    fileprivate var soonestDetails: QuickRoomDetails?
-    fileprivate var allRooms: [GSRRoom] = []
-    fileprivate var selectedStartTime: Date?
-    
-    fileprivate struct QuickRoomDetails {
-        var slot: GSRTimeSlot
-        var room: GSRRoom
+    var numberOfOptions: Int {
+        var result = 0
+        for duration in self.configuration.durationsAllowed {
+            // if i'm looking for a 90-min booking with an end-time of 5pm: that booking would have to start at 3:30
+            // note that configuration.endTime is the ending of the window of allowed booking start times.
+            let adjustedEnd = self.configuration.endTime.add(minutes: -1 * duration)
+            guard let times = durationTimeLookupTable[duration] else { continue }
+            result += times.reduce(into: 0) { sum, slot in
+                guard slot.key.startTime >= self.configuration.startTime && slot.key.startTime <= adjustedEnd else { return }
+                sum += slot.value
+            }
+        }
+        return result
     }
     
-    var onQuickBookSuccess: ((GSRBooking) -> Void)?
+    private(set) var durationTimeLookupTable = [Int:[GSRTimeSlot:Int]]()
     
-    init(vm: GSRViewModel) {
-        self.vm = vm
+    private(set) var availabilityMemoization: [GSRRoom:[GSRTimeSlot:[Int: Bool]]] { // 3D array: 2D array of roomtimeslots for DP, third dimension is whether a timeslot is available
+        didSet {
+            // Make sure we minimize in-place modifications to availabilityMemoization to prevent this from re-firing all the time.
+            durationTimeLookupTable = Self.getNumericalTimeslotAvailability(from: availabilityMemoization)
+        }
     }
     
-    @Published var activeAlert: AlertContent?
-    
-    func showAlert(withMsg: String, title: String, completion: (() -> Void)?) {}
-    
-    func showOption(withMsg: String, title: String, onAccept: (() -> Void)?, onCancel: (() -> Void)?) {}
-
-    @MainActor
-    internal func populateSoonestTimeslot(location: GSRLocation, duration: Int, time: Date) async throws{
-        self.location = location
-        let avail = try await GSRNetworkManager.getAvailability(for: location, startDate: Date.now, endDate: Date.now)
-        self.allRooms = avail
-        self.selectedStartTime = time
-        soonestDetails = getSoonestTimeSlot(duration: duration, time: time)
-    }
-    
-    
-    private func getSoonestTimeSlot(duration: Int, time: Date) -> QuickRoomDetails? {
-        var bestDetails: QuickRoomDetails?
-        var bestStart: Date = .distantFuture
+    static func getNumericalTimeslotAvailability(from avail: [GSRRoom:[GSRTimeSlot:[Int: Bool]]]) -> [Int:[GSRTimeSlot:Int]] {
+        var result = [Int:[GSRTimeSlot:Int]]()
+        for (_, timeslotDict) in avail {
+            for (timeslot, durationDict) in timeslotDict {
+                for (duration, isAvailable) in durationDict where isAvailable {
+                    result[duration, default: [:]][timeslot, default: 0] += 1
+                }
+            }
+        }
         
-        for room in allRooms {
-            let slots = room.availability
-                .sorted(by: { $0.startTime < $1.startTime })
-                .filter { $0.isAvailable && $0.startTime >= time }
-            
-            for slot in slots {
-                let slotMinutes = Int(slot.endTime.timeIntervalSince(slot.startTime) / 60)
-                if slotMinutes == duration {
-                    if slot.startTime < bestStart {
-                        bestDetails = QuickRoomDetails(slot: slot, room: room)
-                        bestStart = slot.startTime
+        return result
+    }
+    
+    struct RoomTimeslot: Hashable {
+        let room: GSRRoom
+        let timeslot: GSRTimeSlot
+    }
+    
+    var locationObserver: (AnyCancellable)?
+    var dayObserver: (AnyCancellable)?
+    
+    init(vm: GSRViewModel, configuration: QuickBookRequestConfiguration) {
+        self._vm = ObservedObject(wrappedValue: vm)
+        self.configuration = configuration
+        self.availabilityMemoization = Self.getMemoizedTimeslotAvailability(rooms: vm.roomsAtSelectedLocation, gsrType: vm.selectedLocation?.kind ?? .libcal)
+        self.locationObserver = self.vm.$selectedLocation.sink { new in
+            let newRooms = self.vm.roomsAtSelectedLocation // THIS COULD BE A RACE CONDITION
+            self.configuration = .init(defaultValueFor: new, with: newRooms)
+            self.availabilityMemoization = Self.getMemoizedTimeslotAvailability(rooms: newRooms, gsrType: new?.kind ?? .libcal)
+        }
+        self.dayObserver = self.vm.$selectedDate.sink { new in
+            self.configuration = .init(defaultValueFor: vm.selectedLocation, with: vm.roomsAtSelectedLocation, on: new)
+        }
+    }
+    
+    private static func getMemoizedTimeslotAvailability(rooms: [GSRRoom], gsrType: GSRLocation.GSRServiceType) -> [GSRRoom:[GSRTimeSlot:[Int: Bool]]]  {
+        // Base case
+        var newMemo = [GSRRoom:[GSRTimeSlot:[Int: Bool]]]()
+        for room in rooms {
+            newMemo[room] = [GSRTimeSlot:[Int: Bool]]()
+            for timeslot in room.availability {
+                newMemo[room]![timeslot] = [30: timeslot.isAvailable]
+            }
+        }
+        
+        for duration in Array(stride(from: 30, through: gsrType.maxConsecutiveBookings * 30, by: 30)) {
+            for room in rooms {
+                var nextTimeslot: GSRTimeSlot? = nil
+                for timeslot in room.availability.sorted(by: { $0.startTime > $1.startTime }) {
+                    let oldNextTimeslot = nextTimeslot
+                    nextTimeslot = timeslot
+                    
+                    guard let oldNextTimeslot else { continue }
+                    if newMemo[room]![timeslot]![duration] != nil { continue }
+                    //handle wrapping days
+                    //timeslots more than 30 minutes apart should be excluded
+                    guard abs(oldNextTimeslot.startTime.minutesFrom(date: timeslot.startTime)) <= 30 else {
+                        newMemo[room]![timeslot]![duration] = false
+                        nextTimeslot = nil
+                        continue
                     }
+                    
+                    // i.e. we can book a 90-minute reservation if we're available right now and there's a 60-minute reservation 30 minutes from now
+                    newMemo[room]![timeslot]![duration] = timeslot.isAvailable && (newMemo[room]![oldNextTimeslot]![duration - 30] ?? false)
                 }
-            }
-            
-            let count = slots.count
-            var i = 0
-            while i < count {
-                let startSlot = slots[i]
-                var sumMinutes = 0
-                var lastEnd = startSlot.startTime
-                var j = i
-                
-                while j < count && sumMinutes < duration {
-                    let s = slots[j]
-                    if s.startTime != lastEnd { break }
-                    let minutes = Int(s.endTime.timeIntervalSince(s.startTime) / 60)
-                    sumMinutes += minutes
-                    lastEnd = s.endTime
-                    j += 1
-                }
-                
-                if sumMinutes == duration {
-                    let composed = GSRTimeSlot(startTime: startSlot.startTime, endTime: lastEnd, isAvailable: true)
-                    if composed.startTime < bestStart {
-                        bestDetails = QuickRoomDetails(slot: composed, room: room)
-                        bestStart = composed.startTime
-                    }
-                }
-                i += 1
             }
         }
-        return bestDetails
+        return newMemo
     }
     
-    @MainActor
-    internal func quickBook(location: GSRLocation, duration: Int, time: Date) async throws {
-        do {
-            try await populateSoonestTimeslot(location: location, duration: duration, time: time)
-        } catch {
-            print(error)
+    struct QuickBookRequestConfiguration {
+        var durationsAllowed: [Int]
+        var startTime: Date
+        var endTime: Date
+        let timeLower: Date
+        let timeUpper: Date
+        let rooms: [GSRRoom]
+        
+        init(defaultValueFor location: GSRLocation?, with rooms: [GSRRoom], on day: Date = Date.now) {
+            self.durationsAllowed = Array(stride(from: 60, through: (location?.kind.maxConsecutiveBookings ?? 3) * 30, by: 30))
+            self.timeLower = (Calendar.current.isDateInToday(day) ? Date.now : day).floorHalfHour
+            self.timeUpper = Calendar.current.startOfDay(for: day.addingTimeInterval(60 * 60 * 24)).addingTimeInterval(-1 * 60) // Day at 11:59pm
+            self.startTime = self.timeLower
+            self.endTime = self.timeUpper
+            self.rooms = rooms
         }
-        
-        guard let details = soonestDetails, let location = self.location else {
-            return
-        }
-        
-        let timeSlot = details.slot
-        let room = details.room
-        let booking = GSRBooking(gid: location.gid, startTime: timeSlot.startTime, endTime: timeSlot.endTime, id: room.id, roomName: room.roomName)
-        let comparedTime = selectedStartTime ?? Date.now
-        let formatter = DateFormatter()
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        
-        let startString = formatter.string(from: timeSlot.startTime)
-        let endString = formatter.string(from: timeSlot.endTime)
-        
-        let attemptBooking = { [weak self] in
-            guard let self else { return }
-            Task { @MainActor in
-                do {
-                    try await GSRNetworkManager.makeBooking(for: booking)
-                    self.onQuickBookSuccess?(booking)
-                } catch {
-                    print(error)
-                }
-            }
-        }
-        
-        if timeSlot.startTime > comparedTime {
-            activeAlert = AlertContent(title: "Later Booking Available", message: "\(room.roomName) is available from \(startString) to \(endString).\nWould you still like to book this time?", onAccept: attemptBooking, onCancel: nil)
-            return
-        }
-        
-        activeAlert = AlertContent(title: "Booking Available", message: "\(room.roomName) is available from \(startString) to \(endString).\nWould you like to book this time?", onAccept: attemptBooking, onCancel: nil)
     }
 }
