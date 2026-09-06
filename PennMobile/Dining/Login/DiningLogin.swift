@@ -20,10 +20,6 @@ class DiningLogin {
     static let redirectPath = "/pennmobile/ios/campus_express_callback/"
     static var redirectUri: String { "https://\(redirectHost)\(redirectPath)" }
 
-    enum Error: Swift.Error {
-        case invalidCallback
-    }
-
     @MainActor
     static func login(using session: WebAuthenticationSession) async throws {
         let verifier = String.randomString(length: 64)
@@ -53,7 +49,7 @@ class DiningLogin {
 
         let params = callback.queryParameters
         guard params["state"] == state, let code = params["code"] else {
-            throw Error.invalidCallback
+            throw NetworkingError.parsingError
         }
 
         var tokenRequest = tokenUrl
