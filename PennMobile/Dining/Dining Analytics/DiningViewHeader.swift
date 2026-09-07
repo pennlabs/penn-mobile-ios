@@ -6,10 +6,8 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-#if canImport(SwiftUI)
 import SwiftUI
 import PennMobileShared
-#endif
 
 struct DiningViewHeader: View {
 
