@@ -7,7 +7,9 @@
 //
 
 import Foundation
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 
 struct CardView<Content>: View where Content: View {
     let content: () -> Content

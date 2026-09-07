@@ -64,12 +64,11 @@ public final class DiningAPI: Sendable {
 public extension DiningAPI {
     // MARK: - Get Methods
     func getVenues() -> [DiningVenue] {
-        return Storage.retrieveDiscardingInvalid(DiningVenue.directory, from: .groupCaches, as: [DiningVenue].self) ?? []
-    }
-
-    /// The venue IDs the user has favorited, as last cached. Empty if nothing is cached yet.
-    func getFavoriteVenueIds() -> [Int] {
-        return Storage.retrieveDiscardingInvalid(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self) ?? []
+        if Storage.fileExists(DiningVenue.directory, in: .groupCaches) {
+            return Storage.retrieve(DiningVenue.directory, from: .groupCaches, as: [DiningVenue].self)
+        } else {
+            return []
+        }
     }
 
     func getSectionedVenues() -> [VenueType: [DiningVenue]] {
@@ -81,21 +80,24 @@ public extension DiningAPI {
     }
     
     func getSectionedVenuesAndFavorites() -> ([VenueType: [DiningVenue]], [DiningVenue]) {
-        return splitFavorites(out: getSectionedVenues(), favoriteIds: getFavoriteVenueIds())
-    }
-
-    /// Pulls the favorited venues out of the sectioned venues, in the order the IDs were given.
-    func splitFavorites(out sectionedVenues: [VenueType: [DiningVenue]], favoriteIds: [Int]) -> ([VenueType: [DiningVenue]], [DiningVenue]) {
-        var sectionedVenues = sectionedVenues
-        let favorites = favoriteIds.compactMap { id in
-            sectionedVenues[.dining]?.first(where: { $0.id == id }) ?? sectionedVenues[.retail]?.first(where: { $0.id == id })
+        var sectionedVenues = getSectionedVenues()
+        if Storage.fileExists(DiningVenue.favoritesDirectory, in: .caches) {
+            let favoritesIDs = Storage.retrieve(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self)
+            var favorites: [DiningVenue?] = []
+            for id in favoritesIDs {
+                favorites.append(sectionedVenues[.dining]?.first(where: { $0.id == id }) ?? sectionedVenues[.retail]?.first(where: { $0.id == id }) ?? nil)
+            }
+            let favoritesResult = favorites.compactMap { $0 }
+            
+            for type in VenueType.allCases {
+                sectionedVenues[type] = sectionedVenues[type]!.filter { !favoritesIDs.contains($0.id) }
+            }
+            
+            return (sectionedVenues, favoritesResult)
+        } else {
+            Storage.store(Array<Int>(), to: .caches, as: DiningVenue.favoritesDirectory)
+            return (sectionedVenues, [])
         }
-
-        for type in VenueType.allCases {
-            sectionedVenues[type] = sectionedVenues[type]?.filter { !favoriteIds.contains($0.id) }
-        }
-
-        return (sectionedVenues, favorites)
     }
 
     func getVenues<T: Collection>(with ids: T) -> [DiningVenue] where T.Element == Int {
@@ -103,7 +105,11 @@ public extension DiningAPI {
     }
     
     func getMenus() -> [Int: MenuList] {
-        return Storage.retrieveDiscardingInvalid(MenuList.directory, from: .caches, as: [Int: MenuList].self) ?? [:]
+        if Storage.fileExists(MenuList.directory, in: .caches) {
+            return Storage.retrieve(MenuList.directory, from: .caches, as: [Int: MenuList].self)
+        } else {
+            return [:]
+        }
     }
 
     // MARK: - Cache Methods
@@ -112,9 +118,15 @@ public extension DiningAPI {
     }
 
     func saveMenuToCache(id: Int, _ menu: MenuList) {
-        var menus = getMenus()
-        menus[id] = menu
-        Storage.store(menus, to: .caches, as: MenuList.directory)
+        if Storage.fileExists(MenuList.directory, in: .caches) {
+            var menus = Storage.retrieve(MenuList.directory, from: .caches, as: [Int: MenuList].self)
+
+            menus[id] = menu
+
+            Storage.store(menus, to: .caches, as: MenuList.directory)
+        } else {
+            Storage.store([id: menu], to: .caches, as: MenuList.directory)
+        }
     }
     
     func saveAllMenusToCache(menus: [Int: MenuList]) {

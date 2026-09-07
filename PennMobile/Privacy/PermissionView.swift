@@ -5,7 +5,9 @@
 //  Created by Dominic Holmes on 12/31/19.
 //  Copyright © 2019 PennLabs. All rights reserved.
 //
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 #if canImport(Combine)
 import Combine
 #endif
