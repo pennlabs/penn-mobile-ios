@@ -145,6 +145,27 @@ public class Storage {
         return try JSONDecoder().decode(type, from: data)
     }
 
+    /// Retrieve and convert a struct from a file on disk, returning nil if the file is missing
+    /// or cannot be decoded as the given type. An undecodable file is deleted, so that a cache
+    /// written by an older schema doesn't keep failing forever.
+    ///
+    /// - Parameters:
+    ///   - fileName: name of the file where struct data is stored
+    ///   - directory: directory where struct data is stored
+    ///   - type: struct type (i.e. Message.self)
+    /// - Returns: decoded struct model(s) of data, or nil
+    public static func retrieveDiscardingInvalid<T: Decodable>(_ fileName: String, from directory: Directory, as type: T.Type) -> T? {
+        guard fileExists(fileName, in: directory) else { return nil }
+
+        do {
+            return try retrieveThrowing(fileName, from: directory, as: type)
+        } catch {
+            print("Discarding unreadable cache file \(fileName): \(error)")
+            remove(fileName, from: directory)
+            return nil
+        }
+    }
+
     /// Remove all files at specified directory
     static func clear(_ directory: Directory) {
         let url = getURL(for: directory)
