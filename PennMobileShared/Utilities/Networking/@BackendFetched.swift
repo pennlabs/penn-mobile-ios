@@ -14,9 +14,16 @@ import SwiftUI
 ///         @BackendFetched(PennMobileApplication.Dining.GetVenues()) var venues: BackendFetchedResult<[DiningVenue], Error>
 ///
 ///         var body: some View {
-///             if case .success(let venuesArr) = venues {
-///                 List(venuesArr) { venue in
-///                     Text(venue.name)
+///             Group {
+///                 switch venues {
+///                 case .success(let venuesArr):
+///                     List(venuesArr) { venue in
+///                         Text(venue.name)
+///                     }
+///                 case .failure(let error):
+///                     Text(error.localizedDescription)
+///                 case .pending:
+///                     EmptyView()
 ///                 }
 ///             }
 ///             .overlay { if $venues.isLoading { ProgressView() } }
