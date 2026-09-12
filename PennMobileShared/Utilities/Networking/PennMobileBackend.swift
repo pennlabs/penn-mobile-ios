@@ -10,42 +10,32 @@ import Foundation
 import LabsPlatformSwift
 
 public struct PennMobileBackend {
-    static let baseApiUrl: String = "https://pennmobile.org/api"
-        
-    static func appendedUrlString(_ append: String) -> String {
-        var front: String
-        if let first = append.first, first == "/" {
-            front = "\(Self.baseApiUrl)\(append)"
-        } else {
-            front = "\(Self.baseApiUrl)/\(append)"
-        }
-        
-        // We may add query params, so there can't be a trailing slash
-        if let last = front.last, last == "/" {
-            front.removeLast()
-        }
-
-        return front
+    static func url(for endpoint: some PennMobileEndpoint) -> URL {
+        let base = endpoint.backend.baseURL
+        let path = endpoint.path.hasPrefix("/") ? endpoint.path : "/\(endpoint.path)"
+        return URL(string: "\(base)\(path)")!
     }
     
     public static func executeEndpoint<T: PennMobileEndpoint>(_ endpoint: T) async throws -> T.Response {
-        let url = URL(string: Self.appendedUrlString(endpoint.path))!
+        var url = Self.url(for: endpoint)
+        if let queryParams = endpoint.queryParams {
+            url.append(queryItems: queryParams.map { URLQueryItem(name: $0.key, value: $0.value) })
+        }
         
         var request = endpoint.authenticated ? try await URLRequest(url: url, mode: .accessToken) : URLRequest(url: url)
+        request.httpMethod = endpoint.method
 
         if let json = endpoint.bodyJSON {
             let enc: JSONEncoder = endpoint.requestBodyEncoder ?? JSONEncoder()
             request.httpBody = try enc.encode(json)
-        }
-
-        if let queryParams = endpoint.queryParams {
-            let queryArray = queryParams.map { URLQueryItem(name: $0.key, value: $0.value) }
-            request.url?.append(queryItems: queryArray)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        } else if let data = endpoint.bodyData {
+            request.httpBody = data
         }
         
-        request.httpMethod = endpoint.method
+        endpoint.headers?.forEach { request.setValue($0.value, forHTTPHeaderField: $0.key) }
         
-        var (data, res) = try await URLSession.shared.data(for: request)
+        let (data, res) = try await URLSession.shared.data(for: request)
         guard let http = res as? HTTPURLResponse else {
             throw BackendError.unknownError(rawResponse: res)
         }
@@ -58,6 +48,10 @@ public struct PennMobileBackend {
             default:
                 throw BackendError.unknownError(rawResponse: res)
             }
+        }
+        
+        if let empty = EmptyResponse() as? T.Response {
+            return empty
         }
 
         let dec = endpoint.responseDecoder ?? JSONDecoder()

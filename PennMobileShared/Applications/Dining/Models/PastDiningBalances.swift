@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct PastDiningBalances: Codable {
-    let balanceList: [DiningBalance]
+public struct PastDiningBalances: Codable, Sendable {
+    public let balanceList: [DiningBalance]
 }

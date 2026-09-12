@@ -46,24 +46,3 @@ public struct DiningVenue: Codable, Equatable, Identifiable {
     
     public var localImageURL: URL?
 }
-
-public struct DiningDay: Codable, Equatable {
-    let date: String
-    let meals: [Meal]
-
-    enum CodingKeys: String, CodingKey {
-        case date
-        case meals = "dayparts"
-    }
-}
-
-public struct Meal: Codable, Equatable {
-    public let starttime: Date
-    public let endtime: Date
-    public let label: String
-}
-
-public enum VenueType: CaseIterable {
-    case dining
-    case retail
-}

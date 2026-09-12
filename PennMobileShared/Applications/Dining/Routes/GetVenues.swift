@@ -11,23 +11,9 @@ import Foundation
 public extension PennMobileApplication.Dining {
     struct GetVenues: PennMobileEndpoint {
         public typealias Response = [DiningVenue]
-        public let path: String = "/dining/venues"
-        public let method: String = "GET"
-        public let authenticated: Bool = false
-        public let queryParams: [String : String]? = nil
-        public let bodyJSON: (any Encodable & Sendable)? = nil
-        public let cacheResult: Bool = false
-        
-        public let responseDecoder: JSONDecoder? = {
-            let decoder = JSONDecoder()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-            decoder.dateDecodingStrategy = .formatted(dateFormatter)
-            return decoder
-        }()
-        
-        public let requestBodyEncoder: JSONEncoder? = nil
-        
+        public let path = "/dining/venues/"
+        public let responseDecoder: JSONDecoder? = .formatted("yyyy-MM-dd'T'HH:mm:ss")
+
         public init() {}
     }
 }

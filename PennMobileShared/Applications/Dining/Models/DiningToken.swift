@@ -7,7 +7,8 @@
 //
 
 import Foundation
-public struct DiningToken: Codable {
+
+public struct DiningToken: Codable, Sendable {
     public let value: String
     public let expiration: Int
 
@@ -19,5 +20,4 @@ public struct DiningToken: Codable {
         case value = "access_token"
         case expiration = "expires_in"
     }
-
 }

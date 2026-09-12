@@ -28,3 +28,29 @@ public extension JSONDecoder {
         self.dateDecodingStrategy = dateDecodingStrategy
     }
 }
+
+public extension JSONDecoder {
+    static var snakeCase: JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return decoder
+    }
+    
+    static func formatted(_ dateFormat: String, keyDecodingStrategy: KeyDecodingStrategy = .useDefaultKeys) -> JSONDecoder {
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        return JSONDecoder(keyDecodingStrategy: keyDecodingStrategy, dateDecodingStrategy: .formatted(formatter))
+    }
+    
+    static var snakeCaseFlexibleDates: JSONDecoder {
+        JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .custom({ decoder -> Date in
+            let container = try decoder.singleValueContainer()
+            let dateString = try container.decode(String.self)
+            
+            if let date = DateFormatter.iso8601.date(from: dateString) ?? DateFormatter.iso8601Full.date(from: dateString) ?? DateFormatter.yyyyMMdd.date(from: dateString) {
+                return date
+            }
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode date string \(dateString)")
+        }))
+    }
+}

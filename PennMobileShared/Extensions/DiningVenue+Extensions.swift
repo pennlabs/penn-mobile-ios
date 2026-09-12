@@ -1,5 +1,5 @@
 //
-//  DiningVenue+UIExtensions.swift
+//  DiningVenue+Extensions.swift
 //  PennMobile
 //
 //  Created by Dominic Holmes on 10/21/19.
@@ -8,17 +8,6 @@
 
 import Foundation
 
-// MARK: - VenueType
-public extension VenueType {
-    var fullDisplayName: String {
-        switch self {
-        case .dining: return "Dining Halls"
-        case .retail: return "Retail Dining"
-        }
-    }
-}
-
-// MARK: - DiningVenue
 public extension DiningVenue {
 
     // MARK: - Venue Status
@@ -268,17 +257,5 @@ public extension DiningVenue {
         } else {
             return "xmark.circle.fill"
         }
-    }
-}
-
-// MARK: - Meal
-public extension Meal {
-    var isCurrentlyServing: Bool {
-        let now = Date()
-        return (self.starttime <= now && self.endtime > now)
-    }
-
-    var isLight: Bool {
-        return self.label.contains("Light")
     }
 }

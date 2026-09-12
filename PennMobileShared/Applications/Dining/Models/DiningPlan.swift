@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct DiningPlan: Codable {
-    let name: String
-    let description: String
-    let start_date: Date
-    let end_date: Date
-    let signup_date: Date
-    let cost: String
-    let dining_dollars: String
-    let total_visits: Int
+public struct DiningPlan: Codable, Sendable {
+    public let name: String
+    public let description: String
+    public let start_date: Date
+    public let end_date: Date
+    public let signup_date: Date
+    public let cost: String
+    public let dining_dollars: String
+    public let total_visits: Int
 }
