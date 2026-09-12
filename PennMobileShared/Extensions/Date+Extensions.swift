@@ -246,3 +246,34 @@ public extension Date {
         return formatter.date(from: "2026-12-17")!
     }
 }
+
+public extension Date {
+    var gsrTimeString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        formatter.amSymbol = "AM"
+        formatter.pmSymbol = "PM"
+        return formatter.string(from: self)
+    }
+    
+    var localizedGSRText: String {
+        if Calendar.current.isDateInToday(self) {
+            return "Today"
+        }
+        let abbreviations = [1: "S", 2: "M", 3: "T", 4: "W", 5: "R", 6: "F", 7: "S"]
+        return abbreviations[Calendar.current.component(.weekday, from: self)] ?? ""
+    }
+    
+    var gsrReservationsViewHeaderString: String {
+        if Calendar.current.isDateInToday(self) {
+            return "Today"
+        }
+        if Calendar.current.isDateInTomorrow(self) {
+            return "Tomorrow"
+        }
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter.string(from: self)
+    }
+}

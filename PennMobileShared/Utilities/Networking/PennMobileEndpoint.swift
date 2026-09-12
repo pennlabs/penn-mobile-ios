@@ -36,4 +36,9 @@ public extension PennMobileEndpoint {
     var requestBodyEncoder: JSONEncoder? { nil }
     var responseDecoder: JSONDecoder? { nil }
     var cacheResult: Bool { false }
+
+    @discardableResult
+    func execute() async throws -> Response {
+        try await PennMobileBackend.executeEndpoint(self)
+    }
 }

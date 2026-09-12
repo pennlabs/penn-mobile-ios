@@ -27,3 +27,13 @@ public extension Array where Element == GSRRoom {
         return !self.filter({ $0.availability.contains(where: { $0.startTime == startTime && $0.isAvailable }) }).isEmpty
     }
 }
+
+public extension Array where Element == GSRLocation {
+    var standardGSRSort: [GSRLocation] {
+        sorted { el1, el2 in
+            if el1.name == "Huntsman" { return true }
+            if el1.kind == .wharton && el2.kind == .libcal { return true }
+            return el1.name < el2.name
+        }
+    }
+}
