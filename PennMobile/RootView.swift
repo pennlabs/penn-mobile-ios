@@ -13,7 +13,7 @@ import PennMobileShared
 
 struct RootView: View {
     @EnvironmentObject var platform: LabsPlatform
-    @State var venues: [DiningVenue] = []
+    @BackendFetched(PennMobileApplication.Dining.GetVenues()) var venues: BackendFetchedResult<[DiningVenue], Error>
     
     var body: some View {
         if platform.isLoggedIn {
@@ -22,14 +22,15 @@ struct RootView: View {
                 Button("Log Out") {
                     platform.logoutPlatform()
                 }
-                Button("Fetch") {
+                Button("Refresh Venues") {
                     Task {
-                        let venues = try? await PennMobileBackend.executeEndpoint(PennMobileApplication.Dining.GetVenues())
-                        self.venues = venues ?? []
+                        await $venues.refresh()
                     }
                 }
-                ForEach(venues) { el in
-                    Text(el.name)
+                if case .success(let values) = venues {
+                    ForEach(values) { el in
+                        Text(el.name)
+                    }
                 }
             }
         } else {

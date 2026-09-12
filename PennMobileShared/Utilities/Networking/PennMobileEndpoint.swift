@@ -8,13 +8,13 @@
 
 import Foundation
 
-public protocol PennMobileEndpoint {
+public protocol PennMobileEndpoint: Sendable {
     var path: String { get }
     var method: String { get }
     var authenticated: Bool { get }
     var queryParams: [String: String]? { get }
-    var bodyJSON: (any Encodable)? { get }
-    associatedtype returns: Codable
+    var bodyJSON: (any Encodable & Sendable)? { get }
+    associatedtype Response: Decodable
     
     var requestBodyEncoder: JSONEncoder? { get }
     var responseDecoder: JSONDecoder? { get }

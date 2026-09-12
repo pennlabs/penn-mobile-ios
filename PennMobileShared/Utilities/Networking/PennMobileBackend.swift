@@ -28,7 +28,7 @@ public struct PennMobileBackend {
         return front
     }
     
-    public static func executeEndpoint<T: PennMobileEndpoint>(_ endpoint: T) async throws -> T.returns {
+    public static func executeEndpoint<T: PennMobileEndpoint>(_ endpoint: T) async throws -> T.Response {
         let url = URL(string: Self.appendedUrlString(endpoint.path))!
         
         var request = endpoint.authenticated ? try await URLRequest(url: url, mode: .accessToken) : URLRequest(url: url)
@@ -61,6 +61,6 @@ public struct PennMobileBackend {
         }
 
         let dec = endpoint.responseDecoder ?? JSONDecoder()
-        return try dec.decode(T.returns.self, from: data)
+        return try dec.decode(T.Response.self, from: data)
     }
 }
