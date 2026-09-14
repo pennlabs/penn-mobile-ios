@@ -104,7 +104,7 @@ struct DiningVenueDetailMenuView: View {
         }
         .onChange(of: menuDate) {
             Task.init() {
-                await diningVM.refreshMenus(cache: true, at: menuDate)
+                await diningVM.refreshMenus(at: menuDate)
                 menus = diningVM.diningMenus[venue.id]?.menus ?? []
                 currentMenu = getMenu()
             }

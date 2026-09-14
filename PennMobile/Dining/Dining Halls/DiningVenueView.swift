@@ -37,7 +37,7 @@ struct DiningVenueView: View {
             }
 
             let menuTask = Task {
-                await diningVM.refreshMenus(cache: true)
+                await diningVM.refreshMenus()
             }
 
             let analyticsTask = Task {
@@ -118,6 +118,25 @@ struct DiningVenueView: View {
             }
             .environment(\.editMode, $favoritesEditMode)
             
+            if diningVM.areAllVenuesEmpty {
+                if diningVM.diningVenuesIsLoading {
+                    Section(header: CustomHeader(name: VenueType.dining.fullDisplayName).environmentObject(diningAnalyticsViewModel)) {
+                        ForEach(0..<4, id: \.self) { _ in
+                            DiningVenuePlaceholderRow()
+                                .padding(.vertical, 4)
+                        }
+                        .listRowSeparator(.hidden)
+                    }
+                } else if diningVM.venuesError != nil {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Couldn't load dining halls.")
+                        Button("Retry", action: triggerRefresh)
+                            .foregroundStyle(.blue)
+                    }
+                    .listRowSeparator(.hidden)
+                }
+            }
+
             ForEach(diningVM.ordering, id: \.self) { venueType in
                 Section(header: CustomHeader(name: venueType.fullDisplayName).environmentObject(diningAnalyticsViewModel)) {
                     ForEach(diningVM.diningVenues[venueType] ?? []) { venue in

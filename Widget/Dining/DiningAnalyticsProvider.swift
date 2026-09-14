@@ -51,12 +51,10 @@ private enum DiningAnalyticsProviderError: Error {
                 throw DiningAnalyticsProviderError.noDiningToken
             }
             
-            let balances = try await Optional(DiningAPI.instance.getDiningBalance(diningToken: diningToken).get())
-            try? Storage.storeThrowing(balances, to: .groupCaches, as: DiningBalance.directory)
-            return balances
+            return try await Optional(DiningAPI.instance.getDiningBalance(diningToken: diningToken).get())
         } catch let error {
             print("Couldn't fetch dining balances: \(error)")
-            return try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)
+            return nil
         }
     }
 

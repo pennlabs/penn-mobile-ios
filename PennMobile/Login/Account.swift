@@ -80,13 +80,9 @@ extension Account {
         KeychainAccessible.instance.removePassword()
         KeychainAccessible.instance.removePacCode()
         KeychainAccessible.instance.removeDiningToken()
-        Storage.remove(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .documents)
-        Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .documents)
-        Storage.remove(DiningAnalyticsViewModel.dollarHistoryDirectory, from: .groupDocuments)
-        Storage.remove(DiningAnalyticsViewModel.swipeHistoryDirectory, from: .groupDocuments)
-        Storage.remove(DiningAnalyticsViewModel.planStartDateDirectory, from: .groupDocuments)
-        Storage.remove(DiningBalance.directory, from: .groupCaches)
-        Storage.remove(DiningVenue.favoritesDirectory, from: .caches)
+        // Dining balances, menus and analytics are only held in memory now, so the
+        // favorites the widget reads are the one thing left to clear.
+        DiningAPI.instance.favoriteVenueIDs = []
         Self.current = nil
     }
 }

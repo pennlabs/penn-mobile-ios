@@ -41,7 +41,9 @@ public struct Course: Codable, Sendable {
         return calendar
     }()
 
-    public static let cacheFileName = "coursesCache"
+    /// Key under which the app stores fetched courses in the shared app group,
+    /// so the courses widget (which can't reach Path@Penn) has something to show.
+    public static let cacheKey = "coursesCache"
 
     /// Identifier of this course on Path@Penn.
     public var crn: String

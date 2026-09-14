@@ -75,44 +75,70 @@ extension AppDelegate {
     }
 }
 
-// Migration of data to group container
-func migrateDataToGroupContainer() {
-    if Storage.migrate(fileName: Course.cacheFileName, of: [Course].self, from: .caches, to: .groupCaches) {
-        print("Migrated course data.")
-        WidgetKind.courseWidgets.forEach {
-            WidgetCenter.shared.reloadTimelines(ofKind: $0)
+/// One-time removal of the JSON files the old `Storage` cache left behind.
+///
+/// Dining data and courses are fetched on demand now. Two things are worth carrying
+/// over first, because their widgets can't fetch for themselves: the user's favorite
+/// venues and the last set of courses.
+func cleanUpLegacyCacheFiles() {
+    let didCleanUpKey = "didCleanUpLegacyCacheFiles"
+    guard !UserDefaults.standard.bool(forKey: didCleanUpKey) else { return }
+
+    let fileManager = FileManager.default
+    let groupContainer = fileManager.containerURL(forSecurityApplicationGroupIdentifier: UserDefaults.appGroupID)
+    let containers = [
+        fileManager.urls(for: .documentDirectory, in: .userDomainMask).first,
+        fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first,
+        groupContainer?.appendingPathComponent("Documents"),
+        groupContainer?.appendingPathComponent("Library/Caches")
+    ].compactMap { $0 }
+
+    let legacyFavoriteIDsFile = "diningVenue-v2-favorites.json"
+    let legacyFavoriteVenuesFile = "diningFavoritesCache"
+    let legacyCoursesFile = "coursesCache"
+    let legacyFiles = [
+        legacyFavoriteIDsFile,
+        legacyFavoriteVenuesFile,
+        legacyCoursesFile,
+        "diningVenue-v2.json",
+        "diningMenus.json",
+        "diningBalance.json",
+        "diningAnalyticsDollarData",
+        "diningAnalyticsSwipeData",
+        "diningAnalyticsPlanStartDate"
+    ]
+
+    func legacyData(_ fileName: String) -> Data? {
+        for container in containers {
+            if let data = try? Data(contentsOf: container.appendingPathComponent(fileName)) {
+                return data
+            }
+        }
+        return nil
+    }
+
+    if DiningAPI.instance.favoriteVenueIDs.isEmpty {
+        if let data = legacyData(legacyFavoriteIDsFile), let ids = try? JSONDecoder().decode([Int].self, from: data), !ids.isEmpty {
+            DiningAPI.instance.favoriteVenueIDs = ids
+        } else if let data = legacyData(legacyFavoriteVenuesFile), let venues = try? JSONDecoder().decode([DiningVenue].self, from: data), !venues.isEmpty {
+            DiningAPI.instance.favoriteVenueIDs = venues.map(\.id)
         }
     }
 
-    if Storage.migrate(fileName: DiningVenue.directory, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
-        print("Migrated course data.")
+    if UserDefaults.group.data(forKey: Course.cacheKey) == nil, let data = legacyData(legacyCoursesFile) {
+        UserDefaults.group.set(data, forKey: Course.cacheKey)
     }
 
-    if Storage.migrate(fileName: DiningAnalyticsViewModel.dollarHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) || Storage.migrate(fileName: DiningAnalyticsViewModel.swipeHistoryDirectory, of: [DiningAnalyticsBalance].self, from: .documents, to: .groupDocuments) {
-        print("Migrated dining analytics data.")
-        WidgetKind.diningAnalyticsWidgets.forEach {
-            WidgetCenter.shared.reloadTimelines(ofKind: $0)
+    for container in containers {
+        for file in legacyFiles {
+            try? fileManager.removeItem(at: container.appendingPathComponent(file))
         }
     }
 
-    if Storage.migrate(fileName: DiningAPI.favoritesCacheFileName, of: [DiningVenue].self, from: .caches, to: .groupCaches) {
-       print("Migrated dining favorites data.")
-        WidgetKind.diningHoursWidgets.forEach {
-            WidgetCenter.shared.reloadTimelines(ofKind: $0)
-        }
-   }
+    UserDefaults.standard.clearDiningBalance()
+    UserDefaults.standard.set(true, forKey: didCleanUpKey)
 
-    // Migrate dining balances if a dining balance file doesn't already exist.
-    if let diningBalance = (UserDefaults.standard as SwiftCompilerSilencing).getDiningBalance() {
-        if !Storage.fileExists(DiningBalance.directory, in: .groupCaches) {
-            Storage.store(diningBalance, to: .groupCaches, as: DiningBalance.directory)
-        }
-        UserDefaults.standard.clearDiningBalance()
+    (WidgetKind.diningHoursWidgets + WidgetKind.courseWidgets).forEach {
+        WidgetCenter.shared.reloadTimelines(ofKind: $0)
     }
 }
-
-private protocol SwiftCompilerSilencing {
-    func getDiningBalance() -> DiningBalance?
-}
-
-extension UserDefaults: SwiftCompilerSilencing {}

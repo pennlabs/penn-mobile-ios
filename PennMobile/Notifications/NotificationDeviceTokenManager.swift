@@ -24,10 +24,10 @@ import OSLog
     
     private var currentTask: Task<Void, Error>?
     
-    private let storageName = "notificationDeviceToken"
-    
+    private let storageKey = "notificationDeviceToken"
+
     private init() {
-        if let token = try? Storage.retrieveThrowing(storageName, from: .caches, as: Data.self) {
+        if let token = UserDefaults.group.data(forKey: storageKey) {
             cachedToken = (data: token, fromMemory: false, actionTaken: nil)
             Self.logger.info("Notification token restored from cache (\(token.count) bytes)")
         }
@@ -59,7 +59,7 @@ import OSLog
             }
         }
         
-        try? Storage.storeThrowing(token, to: .caches, as: storageName)
+        UserDefaults.group.set(token, forKey: storageKey)
     }
     
     func authStateDetermined(_ state: AuthState) {

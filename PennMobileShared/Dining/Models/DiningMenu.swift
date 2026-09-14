@@ -9,8 +9,6 @@
 import Foundation
 
 public struct MenuList: Codable {
-    public static let directory = "diningMenus.json"
-
     public let menus: [DiningMenu]
     
     public init(menus: [DiningMenu]) {

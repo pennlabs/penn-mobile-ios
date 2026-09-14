@@ -43,7 +43,7 @@ struct PennMobile: App {
         
         GSRLocationModel.shared.prepare()
 
-        migrateDataToGroupContainer()
+        cleanUpLegacyCacheFiles()
         
         Task {
             await NotificationDeviceTokenManager.shared.authStateDetermined(state)

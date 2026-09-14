@@ -38,8 +38,6 @@ extension UserDefaults {
         case PCAPreferences
         case gsrGroupsEnabled
         case totpEnabledDate
-        case lastDiningHoursRequest
-        case lastMenuRequest
         case diningTokenExpiration
         case diningBalance
         case nextAnalyticsStartDate
@@ -518,28 +516,6 @@ extension UserDefaults {
 
     func setTwoFactorEnabledDate(_ date: Date?) {
         UserDefaults.standard.set(date, forKey: UserDefaultsKeys.totpEnabledDate.rawValue)
-    }
-}
-
-// MARK: - DiningHours
-extension UserDefaults {
-    func setLastDiningHoursRequest() {
-        UserDefaults.standard.set(Date(), forKey: UserDefaultsKeys.lastDiningHoursRequest.rawValue)
-    }
-
-    func getLastDiningHoursRequest() -> Date? {
-        return UserDefaults.standard.value(forKey: UserDefaultsKeys.lastDiningHoursRequest.rawValue) as? Date
-    }
-}
-
-// MARK: - MenuRequest
-extension UserDefaults {
-    func setLastCachedMenuRequest(_ date: Date) {
-        UserDefaults.standard.set(date, forKey: UserDefaultsKeys.lastMenuRequest.rawValue)
-    }
-
-    func getLastCachedMenuRequest() -> Date? {
-        return UserDefaults.standard.value(forKey: UserDefaultsKeys.lastMenuRequest.rawValue) as? Date
     }
 }
 

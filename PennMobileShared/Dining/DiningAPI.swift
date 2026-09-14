@@ -16,25 +16,22 @@ public final class DiningAPI: Sendable {
 
     let diningUrl = "https://pennmobile.org/api/dining/venues/"
     let diningMenuUrl = "https://pennmobile.org/api/dining/menus/"
-    
-    public static let favoritesCacheFileName = "diningFavoritesCache"
 
     let diningInsightsUrl = "https://pennmobile.org/api/dining/"
 
     public func fetchDiningHours() async -> Result<[DiningVenue], NetworkingError> {
-        guard let (data, _) = try? await URLSession.shared.data(from: URL(string: diningUrl)!) else {
+        guard let (data, response) = try? await URLSession.shared.data(from: URL(string: diningUrl)!),
+              let httpResponse = response as? HTTPURLResponse,
+              (200..<300).contains(httpResponse.statusCode) else {
             return .failure(.serverError)
         }
-        
-        
-        
+
         let decoder = JSONDecoder()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
 
         if let diningVenues = try? decoder.decode([DiningVenue].self, from: data) {
-            self.saveToCache(diningVenues)
             return .success(diningVenues)
         } else {
             return .failure(.parsingError)
@@ -60,79 +57,22 @@ public final class DiningAPI: Sendable {
     }
 }
 
-// Dining Data Storage
+// MARK: - Favorites
 public extension DiningAPI {
-    // MARK: - Get Methods
-    func getVenues() -> [DiningVenue] {
-        if Storage.fileExists(DiningVenue.directory, in: .groupCaches) {
-            return Storage.retrieve(DiningVenue.directory, from: .groupCaches, as: [DiningVenue].self)
-        } else {
-            return []
-        }
+    private static var favoritesKey: String { "diningFavoriteVenueIDs" }
+
+    /// IDs of the user's favorite venues, in the order they chose.
+    ///
+    /// The server is the source of truth, but these live in the app group too: the dining
+    /// hours widget can't reach the preferences endpoint, which needs an access token.
+    var favoriteVenueIDs: [Int] {
+        get { UserDefaults.group.array(forKey: Self.favoritesKey) as? [Int] ?? [] }
+        set { UserDefaults.group.set(newValue, forKey: Self.favoritesKey) }
     }
 
-    func getSectionedVenues() -> [VenueType: [DiningVenue]] {
-        var venuesDict = [VenueType: [DiningVenue]]()
-        for type in VenueType.allCases {
-            venuesDict[type] = getVenues().filter({ $0.venueType == type })
-        }
-        return venuesDict
-    }
-    
-    func getSectionedVenuesAndFavorites() -> ([VenueType: [DiningVenue]], [DiningVenue]) {
-        var sectionedVenues = getSectionedVenues()
-        if Storage.fileExists(DiningVenue.favoritesDirectory, in: .caches) {
-            let favoritesIDs = Storage.retrieve(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self)
-            var favorites: [DiningVenue?] = []
-            for id in favoritesIDs {
-                favorites.append(sectionedVenues[.dining]?.first(where: { $0.id == id }) ?? sectionedVenues[.retail]?.first(where: { $0.id == id }) ?? nil)
-            }
-            let favoritesResult = favorites.compactMap { $0 }
-            
-            for type in VenueType.allCases {
-                sectionedVenues[type] = sectionedVenues[type]!.filter { !favoritesIDs.contains($0.id) }
-            }
-            
-            return (sectionedVenues, favoritesResult)
-        } else {
-            Storage.store(Array<Int>(), to: .caches, as: DiningVenue.favoritesDirectory)
-            return (sectionedVenues, [])
-        }
-    }
-
-    func getVenues<T: Collection>(with ids: T) -> [DiningVenue] where T.Element == Int {
-        return getVenues().filter({ ids.contains($0.id) })
-    }
-    
-    func getMenus() -> [Int: MenuList] {
-        if Storage.fileExists(MenuList.directory, in: .caches) {
-            return Storage.retrieve(MenuList.directory, from: .caches, as: [Int: MenuList].self)
-        } else {
-            return [:]
-        }
-    }
-
-    // MARK: - Cache Methods
-    func saveToCache(_ venues: [DiningVenue]) {
-        Storage.store(venues, to: .groupCaches, as: DiningVenue.directory)
-    }
-
-    func saveMenuToCache(id: Int, _ menu: MenuList) {
-        if Storage.fileExists(MenuList.directory, in: .caches) {
-            var menus = Storage.retrieve(MenuList.directory, from: .caches, as: [Int: MenuList].self)
-
-            menus[id] = menu
-
-            Storage.store(menus, to: .caches, as: MenuList.directory)
-        } else {
-            Storage.store([id: menu], to: .caches, as: MenuList.directory)
-        }
-    }
-    
-    func saveAllMenusToCache(menus: [Int: MenuList]) {
-        for (id, menu) in menus {
-            self.saveMenuToCache(id: id, menu)
-        }
+    /// The venues matching `ids`, in the order of `ids`.
+    static func venues<T: Collection>(_ venues: [DiningVenue], with ids: T) -> [DiningVenue] where T.Element == Int {
+        ids.compactMap { id in venues.first { $0.id == id } }
     }
 }
 

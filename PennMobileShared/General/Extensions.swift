@@ -792,7 +792,9 @@ public extension String {
 }
 
 public extension UserDefaults {
-    nonisolated(unsafe) static let group = UserDefaults(suiteName: Storage.appGroupID)!
+    static let appGroupID = "group.org.pennlabs.PennMobile"
+
+    nonisolated(unsafe) static let group = UserDefaults(suiteName: appGroupID)!
 }
 
 public extension Locale {

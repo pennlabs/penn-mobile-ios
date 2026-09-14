@@ -112,9 +112,9 @@ class CoursesViewModel: ObservableObject {
             return courses
         }
 
-        if !forceNetwork && Storage.fileExists(Course.cacheFileName, in: .groupCaches) {
+        if !forceNetwork, let data = UserDefaults.group.data(forKey: Course.cacheKey) {
             do {
-                let courses = try Storage.retrieveThrowing(Course.cacheFileName, from: .groupCaches, as: [Course].self)
+                let courses = try JSONDecoder().decode([Course].self, from: data)
                 coursesResult = .success(courses)
                 return courses
             } catch let error {
@@ -125,7 +125,7 @@ class CoursesViewModel: ObservableObject {
         do {
             let courses = try await fetchCoursesFromNetwork()
             coursesResult = .success(courses)
-            Storage.store(courses, to: .groupCaches, as: Course.cacheFileName)
+            UserDefaults.group.set(try? JSONEncoder().encode(courses), forKey: Course.cacheKey)
             WidgetKind.courseWidgets.forEach {
                 WidgetCenter.shared.reloadTimelines(ofKind: $0)
             }

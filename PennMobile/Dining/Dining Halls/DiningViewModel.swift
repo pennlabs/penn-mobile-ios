@@ -14,151 +14,134 @@ import PennMobileShared
 class DiningViewModel: ObservableObject {
     static let instance = DiningViewModel()
 
-    @Published var diningVenues: [VenueType: [DiningVenue]]
+    @Published var diningVenues: [VenueType: [DiningVenue]] = [:]
     @Published var favoriteVenues: [DiningVenue] = []
-    
-    @Published var diningMenus = DiningAPI.instance.getMenus()
+
+    @Published var diningMenus: [Int: MenuList] = [:]
 
     @Published var diningVenuesIsLoading = false
+    /// Set when the venue fetch fails, so the view can offer a retry instead of showing nothing.
+    @Published var venuesError: (any Error)?
     @Published var alertType: (any Error)?
 
-    @Published var diningBalance = (try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)) ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
+    @Published var diningBalance = DiningBalance.empty
+
+    /// Every venue from the last fetch, before being split into favorites and sections.
+    private var allVenues: [DiningVenue] = []
 
     var areAllVenuesEmpty: Bool {
-        return diningVenues.allSatisfy { _, venues in
+        favoriteVenues.isEmpty && diningVenues.allSatisfy { _, venues in
             venues.isEmpty
         }
     }
 
-    init() {
-        let (diningVenues, favoriteVenues) = DiningAPI.instance.getSectionedVenuesAndFavorites()
-        self.favoriteVenues = favoriteVenues
-        self.diningVenues = diningVenues
-    }
-    
   // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
+    /// Splits the fetched venues into the user's favorites and the remaining sections.
+    private func applyFavorites(_ favoriteIDs: [Int]) {
+        favoriteVenues = DiningAPI.venues(allVenues, with: favoriteIDs)
+
+        var venuesDict = [VenueType: [DiningVenue]]()
+        for type in VenueType.allCases {
+            venuesDict[type] = allVenues.filter { $0.venueType == type && !favoriteIDs.contains($0.id) }
+        }
+        diningVenues = venuesDict
+    }
+
     func refreshVenues() async {
-        let lastRequest = UserDefaults.standard.getLastDiningHoursRequest()
-        // Sometimes when building the app, dining venue list is empty, but because it has refreshed within the day, it does not refresh again. Now, refreshes if the list of venues is completely empty
-        if lastRequest == nil || !lastRequest!.isToday || areAllVenuesEmpty {
-            self.diningVenuesIsLoading = true
-            let diningResult = await DiningAPI.instance.fetchDiningHours()
-            let favoritesResult = await UserDBManager.shared.fetchDiningPreferences()
-            
-            switch (diningResult, favoritesResult) {
-            case (.success(let diningVenues), .success(let favorites)):
-                UserDefaults.standard.setLastDiningHoursRequest()
-                let favoritesIDs = favorites.map(\.id)
-                Storage.store(favoritesIDs, to: .caches, as: DiningVenue.favoritesDirectory)
-                var venuesDict = [VenueType: [DiningVenue]]()
-                for type in VenueType.allCases {
-                    venuesDict[type] = diningVenues.filter({ $0.venueType == type })// && !favoritesResult.contains($0) })
-                }
-                
-                var favorites: [DiningVenue?] = []
-                for id in favoritesIDs {
-                    favorites.append(venuesDict[.dining]?.first(where: { $0.id == id }) ?? venuesDict[.retail]?.first(where: { $0.id == id }) ?? nil)
-                }
-                let favoritesResult = favorites.compactMap { $0 }
-                self.favoriteVenues = favoritesResult
-                
-                for type in VenueType.allCases {
-                    venuesDict[type] = venuesDict[type]!.filter { !favoritesIDs.contains($0.id) }
-                }
-                self.diningVenues = venuesDict
-                
-            case (.failure(let error), .success):
-                self.alertType = error
-                
-            case (.success, .failure(let error)):
-                self.alertType = error
-            
-            case (.failure(let error), .failure):
-                self.alertType = error
-            }
-            
-            self.diningVenuesIsLoading = false
+        diningVenuesIsLoading = true
+        defer { diningVenuesIsLoading = false }
+
+        switch await DiningAPI.instance.fetchDiningHours() {
+        case .success(let venues):
+            allVenues = venues
+            venuesError = nil
+            // Show the venues now, using the favorite IDs we already have. The favorites
+            // request needs a login and fails often enough that waiting on it used to
+            // leave the list empty.
+            applyFavorites(DiningAPI.instance.favoriteVenueIDs)
+        case .failure(let error):
+            // Keep whatever is on screen; the view offers a retry.
+            venuesError = error
+            return
+        }
+
+        guard Account.isLoggedIn else { return }
+
+        if case .success(let favoriteIDs) = await UserDBManager.shared.fetchDiningPreferences() {
+            DiningAPI.instance.favoriteVenueIDs = favoriteIDs
+            applyFavorites(favoriteIDs)
         }
     }
 
-    func refreshMenus(cache: Bool?, at date: Date = Date()) async {
-        let lastRequest = UserDefaults.standard.getLastCachedMenuRequest()
-        if diningMenus.isEmpty || !Calendar.current.isDate(date, inSameDayAs: Date()) || (lastRequest == nil || !lastRequest!.isToday) {
-            let result = await DiningAPI.instance.fetchDiningMenus(at: date)
-            switch result {
-            case .success(let response):
-                withAnimation {
-                    for id in DiningVenue.menuUrlDict.keys {
-                        self.diningMenus[id] = MenuList(menus: [])
-                    }
-                    for venueMenus in response {
-                        self.diningMenus[venueMenus.menus[0].venueInfo.id] = venueMenus
-                    }
+    func refreshMenus(at date: Date = Date()) async {
+        switch await DiningAPI.instance.fetchDiningMenus(at: date) {
+        case .success(let response):
+            withAnimation {
+                var menus = [Int: MenuList]()
+                for id in DiningVenue.menuUrlDict.keys {
+                    menus[id] = MenuList(menus: [])
                 }
-                if cache != nil && cache! {
-                    DiningAPI.instance.saveAllMenusToCache(menus: self.diningMenus)
-                    UserDefaults.standard.setLastCachedMenuRequest(date)
+                for venueMenus in response {
+                    guard let id = venueMenus.menus.first?.venueInfo.id else { continue }
+                    menus[id] = venueMenus
                 }
-            case .failure(let error):
-                self.alertType = error
+                self.diningMenus = menus
             }
-        } else {
-            // getting menus from cache
-            Task { @MainActor in self.diningMenus = DiningAPI.instance.getMenus() }
+        case .failure(let error):
+            self.alertType = error
         }
     }
 
     func refreshBalance() async {
         guard let diningToken = KeychainAccessible.instance.getDiningToken() else {
-            UserDefaults.standard.clearDiningBalance()
-            Task { @MainActor in self.diningBalance = DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0) }
+            self.diningBalance = .empty
             return
         }
-        let result = await DiningAPI.instance.getDiningBalance(diningToken: diningToken)
-        switch result {
-        case .success(let balance):
-            try? Storage.storeThrowing(balance, to: .groupCaches, as: DiningBalance.directory)
+
+        if case .success(let balance) = await DiningAPI.instance.getDiningBalance(diningToken: diningToken) {
             self.diningBalance = balance
-        case .failure:
-            return
         }
     }
-    
+
+    // MARK: - Favorites
+    /// Saves the favorites locally (for the widget) and on the server.
+    private func saveFavorites() {
+        let ids = favoriteVenues.map(\.id)
+        DiningAPI.instance.favoriteVenueIDs = ids
+        UserDBManager.shared.saveDiningPreference(for: ids)
+    }
+
     func addVenueToFavorites(venue: DiningVenue) {
         withAnimation {
             self.favoriteVenues.append(venue)
             self.diningVenues[venue.venueType]?.removeAll { $0.id == venue.id }
         }
-        Storage.store(favoriteVenues.map(\.id), to: .caches, as: DiningVenue.favoritesDirectory)
-        UserDBManager.shared.saveDiningPreference(for: self.favoriteVenues.map(\.id) + [venue.id])
+        saveFavorites()
     }
-    
+
     func removeVenueFromFavorites(venue: DiningVenue) {
         if let index = self.favoriteVenues.firstIndex(where: { $0.id == venue.id }) {
             self.favoriteVenues.remove(at: index)
-            self.diningVenues[venue.venueType] = [venue] + self.diningVenues[venue.venueType]!
-            Storage.store(favoriteVenues.map(\.id), to: .caches, as: DiningVenue.favoritesDirectory)
-            UserDBManager.shared.saveDiningPreference(for: self.favoriteVenues.map(\.id))
+            self.diningVenues[venue.venueType] = [venue] + (self.diningVenues[venue.venueType] ?? [])
+            saveFavorites()
         }
     }
-    
+
     func removeVenuesFromFavorites(indexSet: IndexSet) {
         if let index = indexSet.first {
             let venue = self.favoriteVenues[index]
             withAnimation {
                 self.favoriteVenues.remove(atOffsets: indexSet)
-                self.diningVenues[venue.venueType] = [venue] + self.diningVenues[venue.venueType]!
+                self.diningVenues[venue.venueType] = [venue] + (self.diningVenues[venue.venueType] ?? [])
             }
-            Storage.store(favoriteVenues.map(\.id), to: .caches, as: DiningVenue.favoritesDirectory)
-            UserDBManager.shared.saveDiningPreference(for: self.favoriteVenues.map(\.id))
+            saveFavorites()
         }
     }
-    
+
     func moveFavorite(fromOffsets source: IndexSet, toOffset destination: Int) {
         self.favoriteVenues.move(fromOffsets: source, toOffset: destination)
-        Storage.store(favoriteVenues.map(\.id), to: .caches, as: DiningVenue.favoritesDirectory)
-        UserDBManager.shared.saveDiningPreference(for: self.favoriteVenues.map(\.id))
+        saveFavorites()
     }
 }

@@ -69,7 +69,9 @@ class UserDBManager: NSObject, Requestable, SHA256Hashable {
 
 // MARK: - Dining
 extension UserDBManager {
-    func fetchDiningPreferences() async -> Result<[DiningVenue], any Error> {
+    /// Fetches the IDs of the user's favorite venues. Needs an access token, so this
+    /// fails whenever the user is logged out or their token has expired.
+    func fetchDiningPreferences() async -> Result<[Int], any Error> {
         do {
             let url = URL(string: "https://pennmobile.org/api/dining/preferences/")!
             let request = try await URLRequest(url: url, mode: .accessToken)
@@ -78,9 +80,8 @@ extension UserDBManager {
                   (200..<300).contains(httpResponse.statusCode) else {
                 return .failure(NetworkingError.serverError)
             }
-            let diningVenueIds = JSON(data)["preferences"].arrayValue.map({ $0["venue_id"].int! })
-            let diningVenues = DiningAPI.instance.getVenues(with: diningVenueIds)
-            return .success(diningVenues)
+            let diningVenueIds = JSON(data)["preferences"].arrayValue.compactMap({ $0["venue_id"].int })
+            return .success(diningVenueIds)
         } catch {
             return .failure(error)
         }
@@ -95,9 +96,8 @@ extension UserDBManager {
             request.httpMethod = "POST"
             request.httpBody = try? JSON(["venues": venueIds]).rawData()
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            // Cache a user's favorite dining halls for use by dining hours widget.
-            let diningVenues = DiningAPI.instance.getVenues(with: venueIds)
-            Storage.store(diningVenues, to: .groupCaches, as: DiningAPI.favoritesCacheFileName)
+            // Keep the copy the dining hours widget reads in sync.
+            DiningAPI.instance.favoriteVenueIDs = venueIds
             WidgetKind.diningHoursWidgets.forEach {
                 WidgetCenter.shared.reloadTimelines(ofKind: $0)
             }

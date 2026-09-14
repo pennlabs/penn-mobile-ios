@@ -31,8 +31,13 @@ extension CoursesEntry where Configuration == Void {
 }
 
 private func getCourses() -> [Course]? {
+    // The widget can't reach Path@Penn, so it shows whatever the app last fetched.
+    guard let data = UserDefaults.group.data(forKey: Course.cacheKey) else {
+        return nil
+    }
+
     do {
-        return try Storage.retrieveThrowing(Course.cacheFileName, from: .groupCaches, as: [Course].self)
+        return try JSONDecoder().decode([Course].self, from: data)
     } catch let error {
         print("Couldn't load courses: \(error)")
         return nil
