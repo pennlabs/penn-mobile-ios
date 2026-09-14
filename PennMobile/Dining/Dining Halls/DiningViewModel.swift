@@ -39,7 +39,6 @@ class DiningViewModel: ObservableObject {
   // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
-    /// Splits the fetched venues into the user's favorites (in their order) and the rest.
     private func showVenues(_ venues: [DiningVenue], favoritesIDs: [Int]) {
         self.favoriteVenues = favoritesIDs.compactMap { id in venues.first { $0.id == id } }
 
@@ -54,20 +53,14 @@ class DiningViewModel: ObservableObject {
         self.diningVenuesIsLoading = true
         defer { self.diningVenuesIsLoading = false }
 
-        // Always fetch. The old "already refreshed today" flag meant that if a refresh
-        // ever failed to populate the list, it stayed empty for the rest of the day.
         let diningResult = await DiningAPI.instance.fetchDiningHours()
         guard case .success(let diningVenues) = diningResult else {
             if case .failure(let error) = diningResult {
                 self.alertType = error
             }
-            // Keep whatever is already on screen rather than blanking the list.
             return
         }
 
-        // Show the venues right away, using the favorites already on disk. The favorites
-        // request needs a login and fails on its own often enough (logged out, expired
-        // token) that waiting on it used to throw away venues we'd just downloaded.
         let cachedIDs = (try? Storage.retrieveThrowing(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self)) ?? []
         showVenues(diningVenues, favoritesIDs: cachedIDs)
 
