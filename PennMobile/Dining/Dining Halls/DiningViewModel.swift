@@ -39,47 +39,42 @@ class DiningViewModel: ObservableObject {
   // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
+    /// Splits the fetched venues into the user's favorites (in their order) and the rest.
+    private func showVenues(_ venues: [DiningVenue], favoritesIDs: [Int]) {
+        self.favoriteVenues = favoritesIDs.compactMap { id in venues.first { $0.id == id } }
+
+        var venuesDict = [VenueType: [DiningVenue]]()
+        for type in VenueType.allCases {
+            venuesDict[type] = venues.filter { $0.venueType == type && !favoritesIDs.contains($0.id) }
+        }
+        self.diningVenues = venuesDict
+    }
+
     func refreshVenues() async {
-        let lastRequest = UserDefaults.standard.getLastDiningHoursRequest()
-        // Sometimes when building the app, dining venue list is empty, but because it has refreshed within the day, it does not refresh again. Now, refreshes if the list of venues is completely empty
-        if lastRequest == nil || !lastRequest!.isToday || areAllVenuesEmpty {
-            self.diningVenuesIsLoading = true
-            let diningResult = await DiningAPI.instance.fetchDiningHours()
-            let favoritesResult = await UserDBManager.shared.fetchDiningPreferences()
-            
-            switch (diningResult, favoritesResult) {
-            case (.success(let diningVenues), .success(let favorites)):
-                UserDefaults.standard.setLastDiningHoursRequest()
-                let favoritesIDs = favorites.map(\.id)
-                Storage.store(favoritesIDs, to: .caches, as: DiningVenue.favoritesDirectory)
-                var venuesDict = [VenueType: [DiningVenue]]()
-                for type in VenueType.allCases {
-                    venuesDict[type] = diningVenues.filter({ $0.venueType == type })// && !favoritesResult.contains($0) })
-                }
-                
-                var favorites: [DiningVenue?] = []
-                for id in favoritesIDs {
-                    favorites.append(venuesDict[.dining]?.first(where: { $0.id == id }) ?? venuesDict[.retail]?.first(where: { $0.id == id }) ?? nil)
-                }
-                let favoritesResult = favorites.compactMap { $0 }
-                self.favoriteVenues = favoritesResult
-                
-                for type in VenueType.allCases {
-                    venuesDict[type] = venuesDict[type]!.filter { !favoritesIDs.contains($0.id) }
-                }
-                self.diningVenues = venuesDict
-                
-            case (.failure(let error), .success):
-                self.alertType = error
-                
-            case (.success, .failure(let error)):
-                self.alertType = error
-            
-            case (.failure(let error), .failure):
+        self.diningVenuesIsLoading = true
+        defer { self.diningVenuesIsLoading = false }
+
+        // Always fetch. The old "already refreshed today" flag meant that if a refresh
+        // ever failed to populate the list, it stayed empty for the rest of the day.
+        let diningResult = await DiningAPI.instance.fetchDiningHours()
+        guard case .success(let diningVenues) = diningResult else {
+            if case .failure(let error) = diningResult {
                 self.alertType = error
             }
-            
-            self.diningVenuesIsLoading = false
+            // Keep whatever is already on screen rather than blanking the list.
+            return
+        }
+
+        // Show the venues right away, using the favorites already on disk. The favorites
+        // request needs a login and fails on its own often enough (logged out, expired
+        // token) that waiting on it used to throw away venues we'd just downloaded.
+        let cachedIDs = (try? Storage.retrieveThrowing(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self)) ?? []
+        showVenues(diningVenues, favoritesIDs: cachedIDs)
+
+        if case .success(let favorites) = await UserDBManager.shared.fetchDiningPreferences() {
+            let favoritesIDs = favorites.map(\.id)
+            Storage.store(favoritesIDs, to: .caches, as: DiningVenue.favoritesDirectory)
+            showVenues(diningVenues, favoritesIDs: favoritesIDs)
         }
     }
 
