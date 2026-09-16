@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Subletting {
     struct DeleteSublet: PennMobileEndpoint {
@@ -17,6 +18,17 @@ public extension PennMobileApplication.Subletting {
 
         public init(id: Int) {
             self.path = "/sublet/properties/\(id)/"
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "This sublet listing could not be deleted because it may no longer exist.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble deleting sublet listings right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

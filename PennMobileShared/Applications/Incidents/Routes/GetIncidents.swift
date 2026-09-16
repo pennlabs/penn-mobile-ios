@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Incidents {
     struct GetIncidents: PennMobileEndpoint {
@@ -16,5 +17,16 @@ public extension PennMobileApplication.Incidents {
         public let responseDecoder: JSONDecoder? = JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601)
 
         public init() {}
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to load Penn Labs service status.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "The Penn Labs status page is having trouble loading right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
+        }
     }
 }

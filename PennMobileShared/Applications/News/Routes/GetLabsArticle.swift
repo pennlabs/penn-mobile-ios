@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.News {
     struct GetLabsArticle: PennMobileEndpoint {
@@ -18,5 +19,16 @@ public extension PennMobileApplication.News {
         ]
 
         public init() {}
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to load the latest news article.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "The news service is having trouble loading articles right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
+        }
     }
 }

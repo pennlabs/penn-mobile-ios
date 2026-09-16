@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Polls {
     struct GetPollHistory: PennMobileEndpoint {
@@ -19,6 +20,17 @@ public extension PennMobileApplication.Polls {
 
         public init(idHash: String) {
             self.bodyJSON = ["id_hash": idHash]
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to load your poll history.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading your poll history right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

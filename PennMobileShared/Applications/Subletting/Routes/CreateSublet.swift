@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Subletting {
     struct CreateSublet: PennMobileEndpoint {
@@ -20,6 +21,17 @@ public extension PennMobileApplication.Subletting {
 
         public init(data: SubletData) {
             self.bodyJSON = data
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Your sublet listing could not be created because some details may be missing or invalid.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble creating sublet listings right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

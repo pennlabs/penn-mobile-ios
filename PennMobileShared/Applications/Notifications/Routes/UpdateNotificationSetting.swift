@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Notifications {
     struct UpdateNotificationSetting: PennMobileEndpoint {
@@ -24,6 +25,17 @@ public extension PennMobileApplication.Notifications {
         public init(id: Int, service: String, enabled: Bool) {
             self.path = "/user/notifications/settings/\(id)/"
             self.bodyJSON = Body(service: service, enabled: enabled)
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to update this notification setting.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble saving your notification settings right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

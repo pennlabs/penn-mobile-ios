@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Clubs {
     struct GetTicket: PennMobileEndpoint {
@@ -18,6 +19,17 @@ public extension PennMobileApplication.Clubs {
 
         public init(id: String) {
             self.path = "/tickets/\(id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? id)/"
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "This ticket doesn't exist or you don't have access to it.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Clubs is having trouble loading this ticket right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

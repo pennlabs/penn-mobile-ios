@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.GSR {
     struct GetAvailability: PennMobileEndpoint {
@@ -28,6 +29,17 @@ public extension PennMobileApplication.GSR {
             
             self.path = "/gsr/availability/\(location.lid)/\(location.gid)"
             self.queryParams = params
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to load room availability for this location.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading room availability right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

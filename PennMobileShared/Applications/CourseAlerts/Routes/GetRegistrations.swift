@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.CourseAlerts {
     struct GetRegistrations: PennMobileEndpoint {
@@ -16,5 +17,16 @@ public extension PennMobileApplication.CourseAlerts {
         public let authenticated = true
 
         public init() {}
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to load your course alerts.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Course Alert is having trouble loading your alerts right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
+        }
     }
 }

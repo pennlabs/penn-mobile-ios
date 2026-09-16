@@ -35,16 +35,17 @@ import SwiftUI
 public struct BackendFetched<Endpoint: PennMobileEndpoint>: DynamicProperty {
     private let endpoint: Endpoint
 
-    @State private var response: BackendFetchedResult<Endpoint.Response, Error>
+    @State private var response: BackendFetchedResult<Endpoint.Response>
     @State public private(set) var isLoading = false
     @State private var hasFetched = false
+    @Environment(\.presentToast) var presentToast: ToastPresentationManager?
 
     public init(_ endpoint: Endpoint) {
         self.endpoint = endpoint
         self.response = .pending
     }
 
-    public var wrappedValue: BackendFetchedResult<Endpoint.Response, Error> {
+    public var wrappedValue: BackendFetchedResult<Endpoint.Response> {
         response
     }
 
@@ -55,11 +56,7 @@ public struct BackendFetched<Endpoint: PennMobileEndpoint>: DynamicProperty {
     @MainActor
     public func refresh() async {
         isLoading = true
-        do {
-            response = .success(try await PennMobileBackend.executeEndpoint(endpoint))
-        } catch {
-            response = .failure(error)
-        }
+        response = await PennMobileBackend.executeEndpoint(endpoint, toast: presentToast ?? { _ in })
         isLoading = false
     }
 

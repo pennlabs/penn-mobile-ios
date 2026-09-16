@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Fitness {
     struct GetRoomUsage: PennMobileEndpoint {
@@ -23,6 +24,17 @@ public extension PennMobileApplication.Fitness {
                 "group_by": groupBy,
                 "field": field
             ]
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Usage data isn't available for this fitness center.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading fitness center usage right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Clubs {
     struct UpdateTicketAttendance: PennMobileEndpoint {
@@ -21,6 +22,17 @@ public extension PennMobileApplication.Clubs {
         public init(id: String, attended: Bool) {
             self.path = "/tickets/\(id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? id)/"
             self.bodyJSON = ["attended": attended]
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "You don't have permission to update attendance for this ticket.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Clubs is having trouble updating ticket attendance right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

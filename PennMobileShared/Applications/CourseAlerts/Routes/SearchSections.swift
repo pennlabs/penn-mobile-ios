@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.CourseAlerts {
     struct SearchSections: PennMobileEndpoint {
@@ -22,6 +23,17 @@ public extension PennMobileApplication.CourseAlerts {
             
             self.path = "/api/base/\(year)\(semester)/search/sections/"
             self.queryParams = ["search": searchText]
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to search for sections matching that query.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Course Alert is having trouble searching for sections right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

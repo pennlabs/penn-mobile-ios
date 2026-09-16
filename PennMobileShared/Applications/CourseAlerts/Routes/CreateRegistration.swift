@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.CourseAlerts {
     struct CreateRegistration: PennMobileEndpoint {
@@ -26,6 +27,17 @@ public extension PennMobileApplication.CourseAlerts {
         public init(section: String, autoResubscribe: Bool, csrfToken: String) {
             self.headers = PennMobileApplication.CourseAlerts.csrfHeaders(csrfToken)
             self.bodyJSON = Body(section: section, auto_resubscribe: autoResubscribe)
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to create an alert for this section, which may be invalid or already subscribed to.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Course Alert is having trouble creating alerts right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

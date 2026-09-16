@@ -6,8 +6,8 @@
 //  Copyright © 2026 PennLabs. All rights reserved.
 //
 
-public enum BackendFetchedResult<T, Error> {
+public enum BackendFetchedResult<T> {
     case success(_ value: T)
-    case failure(_ error: Error)
+    case failure(_ error: BackendError)
     case pending
 }

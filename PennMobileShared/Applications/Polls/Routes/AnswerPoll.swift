@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Polls {
     struct AnswerPoll: PennMobileEndpoint {
@@ -23,6 +24,17 @@ public extension PennMobileApplication.Polls {
 
         public init(idHash: String, optionId: Int) {
             self.bodyJSON = Body(id_hash: idHash, poll_options: [optionId])
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Your vote could not be submitted because this poll may have closed or you may have already voted.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble submitting votes right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

@@ -195,7 +195,7 @@ final class GSRViewModel {
             let first = sorted.first!
             let booking = GSRBooking(gid: location.gid, startTime: first.slot.startTime, endTime: sorted.last!.slot.endTime, id: first.room.id, roomName: first.room.roomName)
             
-            try await PennMobileApplication.GSR.MakeBooking(booking: booking).execute()
+            try await PennMobileApplication.GSR.MakeBooking(booking: booking).execute(
             recentBooking = booking
         } catch {
             message = error.localizedDescription

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.GSR {
     struct CancelReservation: PennMobileEndpoint {
@@ -18,6 +19,17 @@ public extension PennMobileApplication.GSR {
 
         public init(bookingId: String) {
             self.bodyJSON = ["booking_id": bookingId]
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "This reservation could not be cancelled because it may have already started or been cancelled.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble cancelling reservations right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

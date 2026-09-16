@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Dining {
     struct GetDiningToken: PennMobileEndpoint {
@@ -23,6 +24,17 @@ public extension PennMobileApplication.Dining {
                 "code": code,
                 "redirect_uri": redirectUri
             ]
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Your Campus Express sign-in could not be verified.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Campus Express is having trouble signing you in right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

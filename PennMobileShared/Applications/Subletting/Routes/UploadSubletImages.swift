@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 public extension PennMobileApplication.Subletting {
     struct UploadSubletImages: PennMobileEndpoint {
@@ -32,6 +33,17 @@ public extension PennMobileApplication.Subletting {
             self.path = "/sublet/properties/\(subletId)/images/"
             self.headers = ["Content-Type": body.contentType]
             self.bodyData = try body.assembleData()
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Your images could not be uploaded because one or more may be invalid or too large.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble uploading sublet images right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

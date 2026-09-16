@@ -9,6 +9,7 @@
 import Firebase
 import SwiftUI
 import LabsPlatformSwift
+import PennMobileShared
 
 @main
 struct PennMobile: App {
@@ -36,6 +37,9 @@ struct PennMobile: App {
             RootView()
                 .accentColor(Color("navigation"))
                 .attachLabsPlatform(analyticsRoot: "pennmobile")
+                .environment(\.presentToast) {
+                    print($0.message)
+                }
         }
     }
 }

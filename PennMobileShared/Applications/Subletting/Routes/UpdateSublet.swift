@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Subletting {
     struct UpdateSublet: PennMobileEndpoint {
@@ -21,6 +22,17 @@ public extension PennMobileApplication.Subletting {
         public init(id: Int, data: SubletData) {
             self.path = "/sublet/properties/\(id)/"
             self.bodyJSON = data
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Your sublet listing could not be updated because some details may be missing or invalid.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble updating sublet listings right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

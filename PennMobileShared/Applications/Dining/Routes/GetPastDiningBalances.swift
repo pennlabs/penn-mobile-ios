@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Dining {
     struct GetPastDiningBalances: PennMobileEndpoint {
@@ -20,6 +21,17 @@ public extension PennMobileApplication.Dining {
         public init(diningToken: String, startDate: String, endDate: String) {
             self.headers = ["x-authorization": diningToken]
             self.queryParams = ["start_date": startDate, "end_date": endDate]
+        }
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to load your dining balance history because your Campus Express session may have expired.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Campus Express is having trouble loading your balance history right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
         }
     }
 }

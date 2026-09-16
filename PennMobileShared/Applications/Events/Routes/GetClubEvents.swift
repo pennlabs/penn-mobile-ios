@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public extension PennMobileApplication.Events {
     struct GetClubEvents: PennMobileEndpoint {
@@ -15,5 +16,16 @@ public extension PennMobileApplication.Events {
         public let path = "/events/"
 
         public init() {}
+
+        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+            switch error {
+            case .clientError:
+                PennMobileBackendErrorHandler(color: .red, message: "Unable to load club events.")
+            case .serverError:
+                PennMobileBackendErrorHandler(color: .red, message: "Penn Clubs is having trouble loading events right now.")
+            case .platformError, .decodingError, .unknownResponseError, .otherError:
+                .standard(for: error)
+            }
+        }
     }
 }

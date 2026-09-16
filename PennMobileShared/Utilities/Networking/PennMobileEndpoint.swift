@@ -23,6 +23,8 @@ public protocol PennMobileEndpoint: Sendable {
     var responseDecoder: JSONDecoder? { get }
     
     var cacheResult: Bool { get }
+    
+    func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler
 }
 
 public extension PennMobileEndpoint {
@@ -38,7 +40,7 @@ public extension PennMobileEndpoint {
     var cacheResult: Bool { false }
 
     @discardableResult
-    func execute() async throws -> Response {
-        try await PennMobileBackend.executeEndpoint(self)
+    func execute(_ presentToast: ToastPresentationManager?) async -> BackendFetchedResult<Response> {
+        await PennMobileBackend.executeEndpoint(self, toast: presentToast ?? { _ in })
     }
 }

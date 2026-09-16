@@ -11,9 +11,11 @@ import LabsPlatformSwift
 import PennMobileShared
 
 
+
+
 struct RootView: View {
     @EnvironmentObject var platform: LabsPlatform
-    @BackendFetched(PennMobileApplication.Dining.GetVenues()) var venues: BackendFetchedResult<[DiningVenue], Error>
+    @BackendFetched(PennMobileApplication.Dining.GetVenues()) var venues: BackendFetchedResult<[DiningVenue]>
     
     var body: some View {
         if platform.isLoggedIn {
