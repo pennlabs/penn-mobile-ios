@@ -39,16 +39,6 @@ class DiningViewModel: ObservableObject {
   // MARK: - Venue Methods
     let ordering: [VenueType] = [.dining, .retail]
 
-    private func showVenues(_ venues: [DiningVenue], favoritesIDs: [Int]) {
-        self.favoriteVenues = favoritesIDs.compactMap { id in venues.first { $0.id == id } }
-
-        var venuesDict = [VenueType: [DiningVenue]]()
-        for type in VenueType.allCases {
-            venuesDict[type] = venues.filter { $0.venueType == type && !favoritesIDs.contains($0.id) }
-        }
-        self.diningVenues = venuesDict
-    }
-
     func refreshVenues() async {
         self.diningVenuesIsLoading = true
         defer { self.diningVenuesIsLoading = false }
@@ -60,15 +50,23 @@ class DiningViewModel: ObservableObject {
             }
             return
         }
-
-        let cachedIDs = (try? Storage.retrieveThrowing(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self)) ?? []
-        showVenues(diningVenues, favoritesIDs: cachedIDs)
-
-        if case .success(let favorites) = await UserDBManager.shared.fetchDiningPreferences() {
-            let favoritesIDs = favorites.map(\.id)
-            Storage.store(favoritesIDs, to: .caches, as: DiningVenue.favoritesDirectory)
-            showVenues(diningVenues, favoritesIDs: favoritesIDs)
+        
+        
+        var favorites: [Int] = []
+        if case .success(let networkFavorites) = await UserDBManager.shared.fetchDiningPreferences() {
+            favorites = networkFavorites.map(\.id)
+            Storage.store(favorites, to: .caches, as: DiningVenue.favoritesDirectory)
+        } else if let cached = try? Storage.retrieveThrowing(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self) {
+            favorites = cached
         }
+        
+        var venuesDict = [VenueType: [DiningVenue]]()
+        for type in VenueType.allCases {
+            venuesDict[type] = diningVenues.filter { $0.venueType == type && !favorites.contains($0.id) }
+        }
+        
+        self.favoriteVenues = favorites.compactMap { id in diningVenues.first { $0.id == id } }
+        self.diningVenues = venuesDict
     }
 
     func refreshMenus(cache: Bool?, at date: Date = Date()) async {
