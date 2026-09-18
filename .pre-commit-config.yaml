@@ -1,0 +1,5 @@
+repos:
+  - repo: https://github.com/realm/SwiftLint
+    rev: 0.65.1 # Use the SwiftLint version of your choice
+    hooks:
+      - id: swiftlint
