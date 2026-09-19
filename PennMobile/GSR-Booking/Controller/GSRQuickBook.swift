@@ -32,6 +32,7 @@ class GSRQuickBook: ObservableObject, GSRBookable {
     }
     
     var onQuickBookSuccess: ((GSRBooking) -> Void)?
+    var onQuickBookFailure: ((Error) -> Void)?
     
     init(vm: GSRViewModel) {
         self.vm = vm
@@ -132,7 +133,7 @@ class GSRQuickBook: ObservableObject, GSRBookable {
                     try await GSRNetworkManager.makeBooking(for: booking)
                     self.onQuickBookSuccess?(booking)
                 } catch {
-                    print(error)
+                    self.onQuickBookFailure?(error)
                 }
             }
         }

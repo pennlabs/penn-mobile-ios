@@ -12,6 +12,7 @@ import SwiftUI
 struct RoomFinderSelectionPanel: View {
     @ObservedObject var vm: GSRViewModel
     @StateObject var quickBook: GSRQuickBook
+    @Environment(\.presentToast) var presentToast
     @Binding var isEnabled: Bool
     @State var expectedWidth: CGFloat?
     @State var feedbackGenerator: UIImpactFeedbackGenerator? = nil
@@ -102,6 +103,9 @@ struct RoomFinderSelectionPanel: View {
                                 vm.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
                             }
                             vm.showSuccessfulBookingAlert = true
+                        }
+                        quickBook.onQuickBookFailure = { error in
+                            presentToast(ToastConfiguration(message: "\(error.localizedDescription)"))
                         }
                         try await quickBook.quickBook(location: location, duration: duration, time: time)
                     }
