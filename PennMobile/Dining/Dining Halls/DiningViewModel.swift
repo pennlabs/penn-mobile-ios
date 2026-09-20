@@ -21,6 +21,7 @@ class DiningViewModel: ObservableObject {
 
     @Published var diningVenuesIsLoading = false
     @Published var alertType: (any Error)?
+    var presentToast: ToastPresentationCallback?
 
     @Published var diningBalance = (try? Storage.retrieveThrowing(DiningBalance.directory, from: .groupCaches, as: DiningBalance.self)) ?? DiningBalance(date: Date.dayOfMonthFormatter.string(from: Date()), diningDollars: "0.0", regularVisits: 0, guestVisits: 0, addOnVisits: 0)
 
@@ -58,6 +59,8 @@ class DiningViewModel: ObservableObject {
             Storage.store(favorites, to: .caches, as: DiningVenue.favoritesDirectory)
         } else if let cached = try? Storage.retrieveThrowing(DiningVenue.favoritesDirectory, from: .caches, as: [Int].self) {
             favorites = cached
+        } else {
+            presentToast?(.init(message: "Failed to load dining halls due to network issues."))
         }
         
         var venuesDict = [VenueType: [DiningVenue]]()
