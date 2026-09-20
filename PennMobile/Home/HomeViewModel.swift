@@ -24,7 +24,10 @@ extension Optional {
 @MainActor class StandardHomeViewModel: HomeViewModel {
     static let sublettingBannerKey = "sublettingBannerDismissed"
     
-    static let announceable: [HomeViewAnnounceable] = []
+    static let announceable: [HomeViewAnnounceable] = [
+        ReservationAnnounceable(),
+        FeatureAnnounceable()
+    ]
     
     @Published private(set) var data = HomeViewData()
     var isFetching = false
@@ -66,7 +69,7 @@ extension Optional {
     }
     
     func fetchData(force: Bool) async throws {
-        let account = Account.getAccount()
+        let account = Account.current
         
         if !force {
             if isFetching {
@@ -93,15 +96,9 @@ extension Optional {
         }
         
         async let announcementsTask = Task {
-            
-            await MainActor.run {
-                self.data.announcements = []
-            }
-            
-            _ = await StandardHomeViewModel.announceable.asyncMap { feature in
-                    await feature.getHomeViewAnnouncements()
-            }.flatMap({ $0 }).asyncMap { el in
-                let newAnnouncement: HomeViewAnnouncement
+            let announcements = await StandardHomeViewModel.announceable.asyncMap { feature in
+                await feature.getHomeViewAnnouncements()
+            }.flatMap({ $0 }).asyncMap { el -> HomeViewAnnouncement in
                 if let featureId = el.linkedFeature {
                     var newEl = el
                     newEl.addTapListener {
@@ -118,16 +115,13 @@ extension Optional {
                             }
                         }
                     }
-                    newAnnouncement = newEl
-                } else {
-                    newAnnouncement = el
+                    return newEl
                 }
-                
-                await MainActor.run {
-                    self.data.announcements.append(newAnnouncement)
-                }
-                
-                return newAnnouncement
+                return el
+            }
+
+            await MainActor.run {
+                self.data.announcements = announcements
             }
         }
         
@@ -243,3 +237,4 @@ class MockHomeViewModel: HomeViewModel {
     @Published private(set) var data = HomeViewData.mock
     func fetchData(force: Bool) async throws {}
 }
+

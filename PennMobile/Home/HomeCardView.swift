@@ -129,6 +129,24 @@ struct PostCardView: View {
     }
 }
 
+struct WellnessCardView: View {
+    var content: some View {
+        GenericPostCardView(
+            icon: Image(systemName: "brain.head.profile"),
+            source:  "Undergraduate Assembly",
+            title: "Wellness Resources",
+            description: "View an outline of various resources and support available to Penn students.",
+        )
+    }
+    
+    var body: some View {
+        NavigationLink(destination: WellnessView()) {
+            content
+        }
+        .buttonStyle(PlainButtonStyle())
+    }
+}
+
 struct NewsCardView: View {
     var article: NewsArticle
     
@@ -171,6 +189,7 @@ struct NewsDetailView: UIViewControllerRepresentable {
 @available(iOS 17.0, *)
 #Preview(traits: .sizeThatFitsLayout) {
     VStack(spacing: 16) {
+        WellnessCardView()
         PostCardView(post: Post(id: 1, title: "Congratulations!", subtitle: "You are our lucky winner", postUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", imageUrl: "https://www.cnet.com/a/img/resize/2bec42558a71a3922e6e590476b919288a015288/hub/2017/06/01/a176bcb9-1442-4d6d-a7d9-f01efdbcc4bc/broken-screen-ipad-6200-002.jpg?auto=webp&fit=crop&height=675&width=1200", createdDate: Date(), startDate: Date.midnightYesterday, expireDate: Date.midnightToday, source: "Totally Legit Source"))
     }
     .frame(width: 400)

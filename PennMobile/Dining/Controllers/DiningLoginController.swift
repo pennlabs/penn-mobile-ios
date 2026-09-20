@@ -106,6 +106,8 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
             self.activityIndicator.stopAnimating()
         }
         
+        decisionHandler(.allow)
+
         if let url = navigationResponse.response.url, url.absoluteString.contains("https://pennlabs.org/pennmobile/ios/campus_express_callback/") {
             let queryParams = url.queryParameters
 
@@ -119,27 +121,26 @@ class DiningLoginController: UIViewController, WKUIDelegate, WKNavigationDelegat
                 url.appendQueryItem(name: "code", value: code)
                 url.appendQueryItem(name: "redirect_uri", value: "https://pennlabs.org/pennmobile/ios/campus_express_callback/")
 
-                let task = URLSession.shared.dataTask(with: url) { [self] (data, _, _) in
+                let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
                     let decoder = JSONDecoder()
 
-                    guard let data = data else { decisionHandler(.allow); return }
+                    guard let data = data,
+                          let token = try? decoder.decode(DiningToken.self, from: data) else { return }
 
-                    if let token = try? decoder.decode(DiningToken.self, from: data) {
-                        KeychainAccessible.instance.saveDiningToken(token.value)
-                        UserDefaults.standard.setDiningTokenExpiration(token.expirationDate)
-                        delegate.dismissDiningLoginController()
+                    KeychainAccessible.instance.saveDiningToken(token.value)
+                    UserDefaults.standard.setDiningTokenExpiration(token.expirationDate)
+
+                    DispatchQueue.main.async {
+                        self?.delegate?.dismissDiningLoginController()
                     }
-
                 }
 
                 task.resume()
             }
         } else if let url = navigationResponse.response.url,
         url.absoluteString.contains("https://prod.campusexpress.upenn.edu/help-support-alt.jsp") {
-            delegate.dismissDiningLoginController()
+            delegate?.dismissDiningLoginController()
         }
-
-        decisionHandler(.allow)
     }
 
     func webView(

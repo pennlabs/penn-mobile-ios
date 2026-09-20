@@ -25,13 +25,14 @@ extension GSRViewModel {
     }
 }
 
+@MainActor
 class GSRViewModel: ObservableObject {
     @Published var selectedLocation: GSRLocation?
     @Published var roomsAtSelectedLocation: [GSRRoom] = []
     @Published var selectedDate: Date
     @Published var selectedTimeslots: [(GSRRoom, GSRTimeSlot)] = []
     @Published var availableLocations: [GSRLocation] = []
-    @Published var datePickerOptions: [Date]
+    @Published var datePickerOptions: [Date] = []
     @Published var recentBooking: GSRBooking?
     @Published var isWharton: Bool = false
     @Published var isLoadingAvailability = false
@@ -39,22 +40,42 @@ class GSRViewModel: ObservableObject {
     @Published var sortedStartTime: [Date] = []
     @Published var currentReservations: [GSRReservation] = []
     @Published var settings: GSRViewModel.Settings = Settings()
+    @Published var isMapView: Bool = false
+    
+    @Published var gsrGetLastPulledAvailability: [Int: (availCount: Int, lastRefreshed: Date)] = [:]
     
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })
     }
     
     init() {
-        let options = (0..<7).compactMap { Calendar.current.date(byAdding: .day, value: $0, to: Date.now) }
-        datePickerOptions = options
-        selectedDate = options.first!
-        DispatchQueue.main.async {
-            Task {
-                self.availableLocations = (try? await GSRNetworkManager.getLocations()) ?? []
-                self.isWharton = (try? await GSRNetworkManager.whartonAllowed()) ?? false
-                self.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
-                return
+        selectedDate = Calendar.nyc.startOfDay(for: Date.now)
+        setupDatePickerOptions()
+    }
+    
+    func setupDatePickerOptions() {
+        let numDays = selectedLocation?.bookableDays ?? 7 
+        let start = Calendar.nyc.startOfDay(for: Date.now)
+        datePickerOptions = (0..<numDays).compactMap { Calendar.nyc.date(byAdding: .day, value: $0, to: start) }
+        
+        if !datePickerOptions.contains(selectedDate), let date = datePickerOptions.first {
+            selectedDate = date
+        }
+    }
+    
+    @MainActor func fetchInitialState() async throws {
+        try await withThrowingTaskGroup(of: Void.self, returning: Void.self) { group in
+            group.addTask { @MainActor in
+                self.availableLocations = try await GSRNetworkManager.getLocations()
             }
+            group.addTask { @MainActor in
+                self.isWharton = try await GSRNetworkManager.whartonAllowed()
+            }
+            group.addTask { @MainActor in
+                self.currentReservations = try await GSRNetworkManager.getReservations()
+            }
+            
+            for try await _ in group {}
         }
     }
     
@@ -171,6 +192,7 @@ class GSRViewModel: ObservableObject {
         }
         self.selectedLocation = location
         self.resetBooking()
+        self.setupDatePickerOptions()
         try await self.updateAvailability()
     }
     

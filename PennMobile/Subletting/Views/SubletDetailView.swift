@@ -21,7 +21,7 @@ struct SubletDetailView: View {
         sublettingViewModel.isFavorited(sublet: sublet)
     }
     var isSubletter: Bool {
-        Account.getAccount()?.pennid == sublet.subletter
+        Account.current?.pennid == sublet.subletter
     }
     var isClaimed: Bool = false // TODO: add claimed later
     
@@ -105,7 +105,7 @@ struct SubletDetailOnly: View {
         sublettingViewModel.isFavorited(sublet: sublet)
     }
     var isSubletter: Bool {
-        Account.getAccount()?.pennid == sublet.subletter
+        Account.current?.pennid == sublet.subletter
     }
     var isClaimed: Bool = false // TODO: add claimed later
     
@@ -356,7 +356,7 @@ struct SubletDetailToolbar: View {
         sublettingViewModel.isFavorited(sublet: sublet)
     }
     var isSubletter: Bool {
-        Account.getAccount()?.pennid == sublet.subletter
+        Account.current?.pennid == sublet.subletter
     }
     
     var body: some View {

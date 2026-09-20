@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import PennMobileShared
 
 struct HomeView<Model: HomeViewModel>: View {
     @State var showTitle = false
@@ -52,23 +53,31 @@ struct HomeView<Model: HomeViewModel>: View {
                         .padding(.bottom)
                         .multilineTextAlignment(.center)
                         
-                        if bannerViewModel.showBanners {
-                            BannerView()
-                                .frame(maxWidth: .infinity)
-                                .frame(width: 0)
+                        if FeatureFlags.shared.testFeatureFlag {
+                            Text("The test feature flag is enabled!")
                                 .padding(.bottom)
                         }
                         
                         viewModel.data.content(for: context.date)
                             .frame(maxWidth: 480)
                             .frame(maxWidth: .infinity)
-                        
-                        if bannerViewModel.showBanners {
-                            BannerView()
-                                .frame(maxWidth: .infinity)
-                                .frame(width: 0)
-                                .padding(.top)
+                                
+                        HomeCardView {
+                            NavigationLink {
+                                WebView(url: URL(string: "https://pennlabs.org/feedback/ios")!)
+                            } label: {
+                                Text("Share Your Feedback")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.top, 12)
+                                    .padding(.bottom, 12)
+                                    .padding(.horizontal)
+                                    .fontWeight(.medium)
+                                    .tint(.blue)
+                            }
                         }
+                        .padding(.vertical)
+                        
+                        AttributionView()
                     }
                     .padding(.bottom)
                     // Hack for forcing the navbar to always render
@@ -102,6 +111,7 @@ struct HomeView<Model: HomeViewModel>: View {
                 try? await viewModel.fetchData(force: false)
             }
         }
+        
     }
     
     func chooseSplashText(data: HomeViewData, for date: Date) {

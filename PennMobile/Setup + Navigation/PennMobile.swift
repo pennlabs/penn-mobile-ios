@@ -9,15 +9,19 @@
 import Firebase
 import SwiftUI
 import LabsPlatformSwift
+import PennMobileShared
 
 @main
 struct PennMobile: App {
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
-    @ObservedObject var authManager = AuthManager()
-    @ObservedObject var homeViewModel = StandardHomeViewModel()
+    @StateObject var authManager: AuthManager
+    @StateObject var homeViewModel = StandardHomeViewModel()
+    
+    /// Deep link manager for GSR Share
+    @StateObject var deepLinkManager = DeepLinkManager()
 
     #if DEBUG
-    @ObservedObject var mockHomeViewModel = MockHomeViewModel()
+    @StateObject var mockHomeViewModel = MockHomeViewModel()
     #endif
 
     init() {
@@ -27,24 +31,24 @@ struct PennMobile: App {
             FirebaseConfiguration.shared.setLoggerLevel(.min)
             UserDefaults.standard.set(gsrGroupsEnabled: true)
         #endif
+        
+        let authManager = AuthManager()
+        let state = authManager.state
+        self._authManager = StateObject(wrappedValue: authManager)
 
         // Register to receive delegate actions from rich notifications
         UNUserNotificationCenter.current().delegate = delegate
-
-        authManager.determineInitialState()
         
         FirebaseApp.configure()
-
-        ControllerModel.shared.prepare()
-        LaundryNotificationCenter.shared.prepare()
+        
         GSRLocationModel.shared.prepare()
-        LaundryAPIService.instance.prepare {}
 
         migrateDataToGroupContainer()
         
-        let state = authManager.state
         Task {
             await NotificationDeviceTokenManager.shared.authStateDetermined(state)
+            IncidentsViewModel.shared.startUpdatePolling()
+            try? await IncidentsViewModel.shared.getIncidents()
         }
     }
 
@@ -54,6 +58,10 @@ struct PennMobile: App {
                 .environmentObject(authManager)
                 .environmentObject(homeViewModel)
                 .environmentObject(BannerViewModel.shared)
+                .environmentObject(deepLinkManager)
+                .onOpenURL { url in
+                    deepLinkManager.handleOpenURL(url)
+                }
             #if DEBUG
                 .environmentObject(mockHomeViewModel)
             #endif
@@ -64,8 +72,13 @@ struct PennMobile: App {
                                     defaultLoginHandler: authManager.handlePlatformDefaultLogin,
                                     authManager.handlePlatformLogin)
         }
-        .onChange(of: authManager.state.isLoggedIn) {
+        .onChange(of: authManager.state.isLoggedIn) { old, new in
             homeViewModel.clearData()
+            if !old && new {
+                Task {
+                    try? await homeViewModel.fetchData(force: true)
+                }
+            }
         }
         .onChange(of: authManager.state) { state in
             Task {
