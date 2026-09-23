@@ -164,6 +164,12 @@ struct DiningVenueView: View {
         .onAppear {
             triggerRefresh()
         }
+        .refreshable {
+            triggerRefresh()
+            if case .refreshing(let task) = refreshState {
+                await task?.value
+            }
+        }
         .listStyle(.plain)
     }
 }
