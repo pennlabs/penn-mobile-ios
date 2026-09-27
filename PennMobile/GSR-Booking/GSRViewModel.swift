@@ -271,6 +271,7 @@ class GSRViewModel: ObservableObject {
         case splitTimeSlots
         case bookingInPast
         case notInWharton
+        case creditsExhausted
         
         var errorDescription: String? {
             switch self {
@@ -284,7 +285,26 @@ class GSRViewModel: ObservableObject {
                 return "This timeslot is already elapsed."
             case .notInWharton:
                 return "You must be a Wharton student to view this location."
+            case .creditsExhausted:
+                return "Your have run out of available booking time for this location."
             }
+        }
+        
+        static func isCreditsExhaustedMessage(_ message: String) -> Bool {
+            let pattern = #"was only able to book\s+(.+?)\s+-\s+(.+)"#
+            guard let regex = try? NSRegularExpression(pattern: pattern, options: [.caseInsensitive]) else {
+                return false
+            }
+            let range = NSRange(message.startIndex..., in: message)
+            guard let match = regex.firstMatch(in: message, options: [], range: range),
+                  match.numberOfRanges >= 3,
+                  let startRange = Range(match.range(at: 1), in: message),
+                  let endRange = Range(match.range(at: 2), in: message) else {
+                return false
+            }
+            let start = message[startRange].trimmingCharacters(in: .whitespacesAndNewlines)
+            let end = message[endRange].trimmingCharacters(in: .whitespacesAndNewlines)
+            return !start.isEmpty && start == end
         }
     }
 }

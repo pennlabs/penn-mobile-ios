@@ -83,11 +83,37 @@ class GSRNetworkManager {
 
         request.httpBody = try encoder.encode(booking)
         
-        let (_, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await URLSession.shared.data(for: request)
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
-            throw NetworkingError.serverError
+            throw bookingError(from: data)
         }
+    }
+    
+    private struct BookingErrorBody: Decodable {
+        let detail: String?
+        let error: String?
+        let message: String?
+    }
+    
+    private static func bookingFailureMessage(from data: Data) -> String {
+        if let decoded = try? JSONDecoder().decode(BookingErrorBody.self, from: data) {
+            if let text = decoded.detail ?? decoded.error ?? decoded.message, !text.isEmpty {
+                return text
+            }
+        }
+        if let text = try? JSONDecoder().decode(String.self, from: data), !text.isEmpty {
+            return text
+        }
+        return String(data: data, encoding: .utf8) ?? ""
+    }
+    
+    private static func bookingError(from data: Data) -> Error {
+        let message = bookingFailureMessage(from: data)
+        if GSRViewModel.GSRValidationError.isCreditsExhaustedMessage(message) {
+            return GSRViewModel.GSRValidationError.creditsExhausted
+        }
+        return NetworkingError.serverError
     }
 
     static func getReservations() async throws -> [GSRReservation] {

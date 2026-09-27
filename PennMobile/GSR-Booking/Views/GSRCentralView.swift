@@ -44,9 +44,11 @@ struct GSRCentralView: View {
                 self.showErrorRefresh = false
             }
         } catch {
-            presentToast(.init(message: String.LocalizationValue(error.localizedDescription)))
-            withAnimation {
-                self.showErrorRefresh = true
+            if !(error is CancellationError || (error as? URLError)?.code == .cancelled) {
+                presentToast(.init(message: String.LocalizationValue(error.localizedDescription)))
+                withAnimation {
+                    self.showErrorRefresh = true
+                }
             }
         }
         self.refreshButtonDisabled = false
@@ -131,7 +133,7 @@ struct GSRCentralView: View {
             .task(handleInitialState)
         } else {
             GSRGuestLandingPage()
-            .navigationBarHidden(true)
+                .navigationBarHidden(true)
         }
     }
 }
