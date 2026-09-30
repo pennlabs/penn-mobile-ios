@@ -9,21 +9,55 @@
 import Foundation
 import SwiftyJSON
 
+private let fitnessTimestampFormats = [
+    "yyyy-MM-dd'T'HH:mm:ss.SSSSSSZZZZZ",
+    "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ",
+    "yyyy-MM-dd'T'HH:mm:ssZZZZZ",
+]
+
+private func parseFitnessTimestamp(_ value: String) -> Date? {
+    for format in fitnessTimestampFormats {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = format
+
+        if let date = formatter.date(from: value) {
+            return date
+        }
+    }
+    return nil
+}
+
 public final class FitnessAPI: Sendable {
 
     public static let instance = FitnessAPI()
 
     public let fitnessRoomsUrl = "https://pennmobile.org/api/penndata/fitness/rooms/"
     public let fitnessDetailUrl = "https://pennmobile.org/api/penndata/fitness/usage/" // + room ID
+
+    private func makeFitnessRoomsDecoder() -> JSONDecoder {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let value = try container.decode(String.self)
+
+            guard let date = parseFitnessTimestamp(value) else {
+                throw DecodingError.dataCorruptedError(
+                    in: container,
+                    debugDescription: "Invalid fitness timestamp: \(value)"
+                )
+            }
+            return date
+        }
+        return decoder
+    }
     
     public func fetchFitnessRooms() async -> Result<[FitnessRoom], NetworkingError> {
         guard let (data, _) = try? await URLSession.shared.data(from: URL(string: fitnessRoomsUrl)!) else {
             return .failure(.serverError)
         }
-        let decoder = JSONDecoder()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        decoder.dateDecodingStrategy = .formatted(dateFormatter)
+        let decoder = makeFitnessRoomsDecoder()
         do {
             let rooms = try decoder.decode([FitnessRoom].self, from: data)
             return .success(rooms.sorted(by: { $0.name < $1.name }))
