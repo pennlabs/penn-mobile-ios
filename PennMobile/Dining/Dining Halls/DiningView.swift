@@ -16,6 +16,7 @@ struct DiningView: View {
         return
                 DiningVenueView()
                     .environmentObject(diningVM)
+                    .onAppear { diningVM.presentToast = presentToast }
     }
 }
 
