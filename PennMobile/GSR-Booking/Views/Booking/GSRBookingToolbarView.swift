@@ -9,34 +9,31 @@
 import SwiftUI
 import PennMobileShared
 
-enum QuickBookStatus {
-    case closed, search, explore
-}
-
 struct GSRBookingToolbarView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
-    @State var quickBookStatus = QuickBookStatus.closed
-    
-    @Binding var scrollMode: GSRScrollMode
-    
+
     var body: some View {
         ZStack {
-            if quickBookStatus == .search {
+            if vm.quickBookPhase == .picking {
+                // Tapping outside the picker closes it
                 Rectangle()
                     .foregroundStyle(.clear)
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        withAnimation(.snappy(duration: 0.2)) {
-                            quickBookStatus = .closed
-                        }
+                        vm.endQuickBook(clearSelection: true)
                     }
-                    
             }
             VStack {
                 Spacer()
                 HStack(spacing: 12) {
-                    if !vm.selectedTimeslots.isEmpty && quickBookStatus == .closed {
+                    if vm.quickBookPhase == .picking {
+                        QuickBookTimelinePicker()
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                    } else if vm.quickBookPhase == .browsing {
+                        QuickBookResultsBar()
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                    } else if !vm.selectedTimeslots.isEmpty {
                         Button {
                             Task {
                                 do {
@@ -77,8 +74,19 @@ struct GSRBookingToolbarView: View {
                         }
                         .transition(.move(edge: .leading).combined(with: .opacity))
                     } else {
-                        RoomFinderSelectionPanel(vm: vm, status: $quickBookStatus, scrollMode: _scrollMode)
-                            .transition(.move(edge: .leading).combined(with: .opacity))
+                        Button {
+                            vm.startQuickBook()
+                        } label: {
+                            Label("Find me a room", systemImage: "wand.and.sparkles")
+                                .foregroundStyle(Color.black)
+                                .padding(12)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .foregroundStyle(Color.white)
+                                        .shadow(radius: 2)
+                                }
+                        }
+                        .transition(.move(edge: .leading).combined(with: .opacity))
                     }
                 }
             }

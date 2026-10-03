@@ -58,7 +58,7 @@ struct GSRBookingView: View {
                         .overlay {
                             VStack {
                                 Spacer()
-                                GSRBookingToolbarView(scrollMode: $scrollMode)
+                                GSRBookingToolbarView()
                                     .environment(\.gsrUnderlyingHorizontalProxy, self.horizScrollProxy)
                                     .environment(\.gsrUnderlyingVerticalProxy, self.vertScrollProxy)
                                     .padding(24)

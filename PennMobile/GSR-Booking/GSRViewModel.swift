@@ -43,7 +43,13 @@ class GSRViewModel: ObservableObject {
     @Published var isMapView: Bool = false
     
     @Published var gsrGetLastPulledAvailability: [Int: (availCount: Int, lastRefreshed: Date)] = [:]
-    
+
+    // Quick Book: the user picks a time in the picker, then browses rooms that fit it
+    @Published var quickBookPhase: QuickBookPhase = .closed
+    @Published var quickBookRequest: [Date] = []    // sorted start times of the slots picked
+    @Published var quickBookResults: [QuickBookMatch] = []
+    @Published var quickBookIndex: Int = 0
+
     var hasAvailableBooking: Bool {
         return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })
     }
@@ -87,6 +93,10 @@ class GSRViewModel: ObservableObject {
     
     func handleTimeslotGesture(slot: GSRTimeSlot, room: GSRRoom) throws {
         guard slot.isAvailable else { return }
+        // Tapping the grid by hand takes over from Quick Book, but keeps what's selected
+        if quickBookPhase != .closed {
+            endQuickBook(clearSelection: false)
+        }
         // Consider a timeslot gesture as a transaction, of sorts
         // Regardless of if they're adding or removing we have to validate the transaction before
         // committing it to the actual state `self.selectedTimeslots`
@@ -198,6 +208,7 @@ class GSRViewModel: ObservableObject {
     
     @MainActor func updateAvailability() async throws {
         self.isLoadingAvailability = true
+        self.endQuickBook(clearSelection: true)
         self.roomsAtSelectedLocation = []
         self.selectedTimeslots = []
         self.sortedStartTime = []
@@ -245,7 +256,7 @@ class GSRViewModel: ObservableObject {
         self.recentBooking = booking
         self.currentReservations = (try? await GSRNetworkManager.getReservations()) ?? []
         self.showSuccessfulBookingAlert = true
-        self.selectedTimeslots.removeAll()
+        self.endQuickBook(clearSelection: true)
         self.clearSortedFilters()
     }
     
@@ -285,6 +296,140 @@ class GSRViewModel: ObservableObject {
             case .notInWharton:
                 return "You must be a Wharton student to view this location."
             }
+        }
+    }
+}
+
+enum QuickBookPhase: Equatable {
+    case closed     // nothing open, the toolbar shows "Find me a room"
+    case picking    // the timeline picker is open
+    case browsing   // a match is selected on the grid, with arrows to move between matches
+}
+
+// MARK: Quick Book
+extension GSRViewModel {
+    var maxQuickBookSlots: Int {
+        selectedLocation?.kind.maxConsecutiveBookings ?? 3
+    }
+
+    /// The slots shown in the picker: the selected day's slots that haven't ended yet.
+    var quickBookPickerSlots: [GSRTimeSlot] {
+        getRelevantAvailability().filter { $0.endTime > Date.now }
+    }
+
+    var quickBookExactMatches: [QuickBookMatch] {
+        guard let start = quickBookRequest.first else { return [] }
+        return GSRQuickBookSearch.matches(in: roomsAtSelectedLocation, start: start, slotCount: quickBookRequest.count)
+    }
+
+    var quickBookNearbyMatches: [QuickBookMatch] {
+        guard let start = quickBookRequest.first else { return [] }
+        return GSRQuickBookSearch.nearbyMatches(in: roomsAtSelectedLocation, start: start, slotCount: quickBookRequest.count)
+    }
+
+    var currentQuickBookMatch: QuickBookMatch? {
+        quickBookResults.indices.contains(quickBookIndex) ? quickBookResults[quickBookIndex] : nil
+    }
+
+    /// The time range to draw bold lines around on the grid: the match being shown while browsing,
+    /// or the times picked so far while picking.
+    var quickBookHighlight: Range<Date>? {
+        switch quickBookPhase {
+        case .closed:
+            return nil
+        case .picking:
+            guard let first = quickBookRequest.first, let last = quickBookRequest.last else { return nil }
+            return first..<last.add(minutes: GSRQuickBookSearch.slotMinutes)
+        case .browsing:
+            guard let match = currentQuickBookMatch else { return nil }
+            return match.start..<match.end
+        }
+    }
+
+    func startQuickBook() {
+        withAnimation(.snappy(duration: 0.2)) {
+            selectedTimeslots = []
+            quickBookResults = []
+            quickBookIndex = 0
+            quickBookPhase = .picking
+        }
+    }
+
+    /// Picker tap rules, matching the grid: picked slots must be back-to-back and at most
+    /// `maxQuickBookSlots` long. Tapping an end removes it, tapping elsewhere starts over.
+    func toggleQuickBookSlot(_ start: Date) throws {
+        var request = quickBookRequest
+        let slotLength = TimeInterval(GSRQuickBookSearch.slotMinutes * 60)
+
+        if let first = request.first, let last = request.last, request.contains(start) {
+            if start == first || start == last {
+                request.removeAll { $0 == start }
+            } else {
+                request = [start]
+            }
+        } else if let first = request.first, let last = request.last,
+                  start == last.addingTimeInterval(slotLength) || start == first.addingTimeInterval(-slotLength) {
+            if request.count >= maxQuickBookSlots {
+                throw GSRValidationError.overLimit(limit: maxQuickBookSlots * GSRQuickBookSearch.slotMinutes)
+            }
+            request.append(start)
+            request.sort()
+        } else {
+            request = [start]
+        }
+
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        withAnimation(.snappy(duration: 0.2)) {
+            quickBookRequest = request
+        }
+    }
+
+    /// Searches for the picked time. Uses nearby times when nothing fits exactly.
+    /// Returns false (and stays in the picker) when there's nothing to show.
+    @discardableResult
+    func findQuickBookMatches() -> Bool {
+        let exact = quickBookExactMatches
+        let results = exact.isEmpty ? quickBookNearbyMatches : exact
+        guard !results.isEmpty else { return false }
+
+        quickBookResults = results
+        withAnimation(.snappy(duration: 0.2)) {
+            quickBookPhase = .browsing
+        }
+        showQuickBookMatch(at: 0)
+        return true
+    }
+
+    /// Selects the match at `index` on the grid. Wraps around at either end.
+    func showQuickBookMatch(at index: Int) {
+        guard !quickBookResults.isEmpty else { return }
+        let count = quickBookResults.count
+        quickBookIndex = ((index % count) + count) % count
+        let match = quickBookResults[quickBookIndex]
+        withAnimation(.spring(duration: 0.2)) {
+            selectedTimeslots = match.slots.map { (match.room, $0) }
+        }
+    }
+
+    /// Goes from browsing back to the picker, keeping the picked times.
+    func editQuickBookSearch() {
+        withAnimation(.snappy(duration: 0.2)) {
+            selectedTimeslots = []
+            quickBookResults = []
+            quickBookIndex = 0
+            quickBookPhase = .picking
+        }
+    }
+
+    func endQuickBook(clearSelection: Bool) {
+        withAnimation(.snappy(duration: 0.2)) {
+            if clearSelection {
+                selectedTimeslots = []
+            }
+            quickBookRequest = []
+            quickBookResults = []
+            quickBookIndex = 0
+            quickBookPhase = .closed
         }
     }
 }

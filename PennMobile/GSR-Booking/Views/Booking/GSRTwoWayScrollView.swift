@@ -26,7 +26,9 @@ private struct GSRTwoWayScrollViewRoomRows: View {
     @Environment(\.gsrScrollMode) var scrollMode
     
     var body: some View {
-        LazyVStack(alignment: .center, spacing: 48) {
+        // Not lazy: Quick Book scrolls to a specific time slot in any room, and a lazy stack
+        // hasn't created the slots in rooms that are off screen, so they can't be scrolled to.
+        VStack(alignment: .center, spacing: 48) {
             ForEach(relevantRooms, id: \.self) { room in
                 GSRRoomAvailabilityRow(room: room)
                     .accessibilityElement(children: .contain)
@@ -50,7 +52,8 @@ private struct GSRTwoWayScrollViewRoomLabels: View {
     var relevantRooms: [GSRRoom]
     
     var body: some View {
-        LazyVStack(alignment: .leading, spacing: 48) {
+        // Matches the rows' stack so the labels stay lined up with them
+        VStack(alignment: .leading, spacing: 48) {
             ForEach(relevantRooms, id: \.self) { room in
                 Text(room.roomNameShort)
                     .lineLimit(3)
