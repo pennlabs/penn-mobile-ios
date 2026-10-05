@@ -68,6 +68,8 @@ private struct GSRTwoWayScrollViewRoomLabels: View {
                     .padding(.horizontal)
                     .frame(width: roomTitleOffset, height: 60)
                     .tag(room)
+                    // Labels sit only in the vertical scroll view, so scrolling to this id moves the grid up/down
+                    .id(RoomRowAnchor(room: room))
                     .accessibilityHidden(true)
             }
         }

@@ -139,13 +139,15 @@ struct QuickBookResultsBar: View {
         return "\(range) · \(shift) \(match.offsetMinutes < 0 ? "earlier" : "later")"
     }
 
-    /// Scrolls the grid to the match's first slot. Horizontally, x: 0.25 lines the slot up just right of
-    /// the room name column (80pt), so a booking of up to 2 hours fits on screen. Vertically, y: 0.35
-    /// keeps the row above this bar.
+    /// Scrolls the grid to the match. `scrollTo` only moves the first scroll view that contains the target,
+    /// so this takes two calls: the room's label lives only in the vertical scroll view (moves up/down),
+    /// and its time slot lives in the horizontal one (moves sideways).
+    /// y: 0.35 keeps the row above this bar; x: 0.25 puts the first slot just right of the room names.
     func scroll(to match: QuickBookMatch) {
         guard let proxy = vertProxy?.proxy, let firstSlot = match.slots.first else { return }
         withAnimation(.snappy) {
-            proxy.scrollTo(RoomTimeslot(room: match.room, timeslot: firstSlot), anchor: UnitPoint(x: 0.25, y: 0.35))
+            proxy.scrollTo(RoomRowAnchor(room: match.room), anchor: UnitPoint(x: 0, y: 0.35))
+            proxy.scrollTo(RoomTimeslot(room: match.room, timeslot: firstSlot), anchor: UnitPoint(x: 0.25, y: 0.5))
         }
     }
 

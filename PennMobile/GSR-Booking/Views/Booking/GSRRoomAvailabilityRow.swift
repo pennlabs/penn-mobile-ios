@@ -71,3 +71,8 @@ struct RoomTimeslot: Hashable {
     let room: GSRRoom
     let timeslot: GSRTimeSlot
 }
+
+/// Scroll target for a room's row label, used to scroll the grid vertically.
+struct RoomRowAnchor: Hashable {
+    let room: GSRRoom
+}
