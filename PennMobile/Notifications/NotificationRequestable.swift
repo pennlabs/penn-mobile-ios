@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import UserNotifications
-import SCLAlertView
 
 protocol NotificationRequestable {}
 
@@ -61,9 +60,9 @@ extension NotificationRequestable {
     }
 
     func alertForDecline(_ completion: AuthorizedCompletion?) {
-        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
-        let alertView = SCLAlertView(appearance: appearance)
-        alertView.addButton("Allow") {
+        let alertController = UIAlertController(title: "Turn On Notifications", message: "Go to Settings -> PennMobile -> Notification -> Turn On Notifications", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Decline", style: .cancel, handler: nil))
+        let allowAction = UIAlertAction(title: "Allow", style: .default, handler: { (_) in
             guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                 return
             }
@@ -76,21 +75,34 @@ extension NotificationRequestable {
                     }
                 })
             }
-        }
-        let declineStyle = SCLAlertViewStyle.notice
-        alertView.addButton("Decline", backgroundColor: declineStyle.defaultColor, action: {  })
-        alertView.showSuccess("Turn On Notifications", subTitle: "Go to Settings -> PennMobile -> Notification -> Turn On Notifications")
+        })
+        alertController.addAction(allowAction)
+        alertController.preferredAction = allowAction
+        presentAlert(alertController)
     }
 
     func alertForDetermination(_ completion: AuthorizedCompletion?) {
-        let appearance = SCLAlertView.SCLAppearance(showCloseButton: false)
-        let alertView = SCLAlertView(appearance: appearance)
-        alertView.addButton("Turn On") {
+        let alertController = UIAlertController(title: "Enable Notifications", message: "Receive monthly dining plan progress updates, laundry alerts, and information about new features.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Decline", style: .cancel, handler: nil))
+        let turnOnAction = UIAlertAction(title: "Turn On", style: .default, handler: { (_) in
             self.registerPushNotification(completion)
+        })
+        alertController.addAction(turnOnAction)
+        alertController.preferredAction = turnOnAction
+        presentAlert(alertController)
+    }
+
+    // Presents from the topmost view controller, since conformers aren't necessarily view controllers
+    private func presentAlert(_ alertController: UIAlertController) {
+        let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+        let scene = scenes.first { $0.activationState == .foregroundActive } ?? scenes.first
+        let window = scene?.windows.first { $0.isKeyWindow } ?? scene?.windows.first
+
+        var presenter = window?.rootViewController
+        while let presented = presenter?.presentedViewController, !presented.isBeingDismissed {
+            presenter = presented
         }
-        let declineStyle = SCLAlertViewStyle.notice
-        alertView.addButton("Decline", backgroundColor: declineStyle.defaultColor, action: {  })
-        alertView.showSuccess("Enable Notifications", subTitle: "Receive monthly dining plan progress updates, laundry alerts, and information about new features.")
+        presenter?.present(alertController, animated: true, completion: nil)
     }
 
 }

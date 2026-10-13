@@ -13,7 +13,6 @@
 		42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */; };
 		6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6CA1ACDA271D2D5000EDB967 /* Kingfisher */; };
 		6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */; };
 		6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */; };
@@ -28,18 +27,15 @@
 		735727032F4CE1B200213ACA /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 735727022F4CE1B200213ACA /* LabsPlatformSwift */; };
 		737F2B27304A244C0093F7A0 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 737F2B26304A244C0093F7A0 /* LabsPlatformSwift */; };
 		737F2B2A304A38800093F7A0 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 737F2B29304A38800093F7A0 /* LabsPlatformSwift */; };
+		73816803307E83CE003FC9E4 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 73816802307E83CE003FC9E4 /* SwiftyJSON */; };
 		73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 73E7A02B2CF158F3007BC1E3 /* Lottie */; };
 		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
 		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
-		895A1AB52CB98E9000E161AE /* XLPagerTabStrip in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1AB42CB98E9000E161AE /* XLPagerTabStrip */; };
-		895A1AB82CB98F5000E161AE /* ScrollableGraphView in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1AB72CB98F5000E161AE /* ScrollableGraphView */; };
-		895A1ABB2CB98F7100E161AE /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = 895A1ABA2CB98F7100E161AE /* SCLAlertView */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
 		89EA262F290F958B008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
 		F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = F213CCE123C3EE3E000AD90F /* SwiftSoup */; };
-		F2568A762413534F00561295 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F2568A752413534F00561295 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +107,7 @@
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		73816801307E839A003FC9E4 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -189,20 +186,16 @@
 				42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */,
 				42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */,
 				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
-				F2568A762413534F00561295 /* SnapKit in Frameworks */,
 				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
+				73816803307E83CE003FC9E4 /* SwiftyJSON in Frameworks */,
 				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
 				737F2B27304A244C0093F7A0 /* LabsPlatformSwift in Frameworks */,
-				6C4CC1FA26E6B1720000B4A8 /* SwiftyJSON in Frameworks */,
 				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
-				895A1ABB2CB98F7100E161AE /* SCLAlertView in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
 				737F2B2A304A38800093F7A0 /* LabsPlatformSwift in Frameworks */,
 				6E4D821C2AC8C91C009AB78E /* PennMobileShared.framework in Frameworks */,
 				7348F0502F807CEB002901E4 /* LabsPlatformSwift in Frameworks */,
-				895A1AB52CB98E9000E161AE /* XLPagerTabStrip in Frameworks */,
-				895A1AB82CB98F5000E161AE /* ScrollableGraphView in Frameworks */,
 				73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */,
 				73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */,
 			);
@@ -305,6 +298,7 @@
 		6C392E3727B5BDF20097640B /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				73816801307E839A003FC9E4 /* Development.xcconfig */,
 				6CDC501127B5BCC700698235 /* Development.xcconfig */,
 				6C392E3827B5BE1C0097640B /* Release.xcconfig */,
 				6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */,
@@ -360,14 +354,9 @@
 			name = PennMobile;
 			packageProductDependencies = (
 				F213CCE123C3EE3E000AD90F /* SwiftSoup */,
-				F2568A752413534F00561295 /* SnapKit */,
-				6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */,
 				6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */,
 				6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */,
 				6CA1ACDA271D2D5000EDB967 /* Kingfisher */,
-				895A1AB42CB98E9000E161AE /* XLPagerTabStrip */,
-				895A1AB72CB98F5000E161AE /* ScrollableGraphView */,
-				895A1ABA2CB98F7100E161AE /* SCLAlertView */,
 				73E7A02B2CF158F3007BC1E3 /* Lottie */,
 				734BED9A2D9DE4B700964811 /* PennForms */,
 				73E7A02B2CF158F3007BC1E3 /* Lottie */,
@@ -376,6 +365,7 @@
 				7348F04F2F807CEB002901E4 /* LabsPlatformSwift */,
 				737F2B26304A244C0093F7A0 /* LabsPlatformSwift */,
 				737F2B29304A38800093F7A0 /* LabsPlatformSwift */,
+				73816802307E83CE003FC9E4 /* SwiftyJSON */,
 			);
 			productName = PennMobile;
 			productReference = 216640601EBADADA00746B8E /* PennMobile.app */;
@@ -474,12 +464,8 @@
 			packageReferences = (
 				F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */,
-				895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */,
-				895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
 				73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */,
 				73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
@@ -1055,30 +1041,6 @@
 				minimumVersion = 4.5.0;
 			};
 		};
-		895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/xmartlabs/XLPagerTabStrip";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.1.0;
-			};
-		};
-		895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/GZaccaroni/ScrollableGraphView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.1.3;
-			};
-		};
-		895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vikmeup/SCLAlertView-Swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.8.2;
-			};
-		};
 		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
@@ -1095,22 +1057,9 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6C4CC1F926E6B1720000B4A8 /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
 		6CA1ACDA271D2D5000EDB967 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
@@ -1163,6 +1112,11 @@
 			package = 737F2B28304A387F0093F7A0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */;
 			productName = LabsPlatformSwift;
 		};
+		73816802307E83CE003FC9E4 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
 		73E7A02B2CF158F3007BC1E3 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */;
@@ -1173,30 +1127,10 @@
 			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
 		};
-		895A1AB42CB98E9000E161AE /* XLPagerTabStrip */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 895A1AB32CB98E9000E161AE /* XCRemoteSwiftPackageReference "XLPagerTabStrip" */;
-			productName = XLPagerTabStrip;
-		};
-		895A1AB72CB98F5000E161AE /* ScrollableGraphView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 895A1AB62CB98F5000E161AE /* XCRemoteSwiftPackageReference "ScrollableGraphView" */;
-			productName = ScrollableGraphView;
-		};
-		895A1ABA2CB98F7100E161AE /* SCLAlertView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 895A1AB92CB98F7100E161AE /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */;
-			productName = SCLAlertView;
-		};
 		F213CCE123C3EE3E000AD90F /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
-		};
-		F2568A752413534F00561295 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F2568A742413534F00561295 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
