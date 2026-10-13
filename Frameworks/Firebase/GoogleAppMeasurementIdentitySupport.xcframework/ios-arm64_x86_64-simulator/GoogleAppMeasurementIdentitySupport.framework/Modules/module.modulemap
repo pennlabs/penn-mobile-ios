@@ -1,5 +1,0 @@
-framework module GoogleAppMeasurementIdentitySupport {
-umbrella header "GoogleAppMeasurementIdentitySupport.h"
-export *
-module * { export * }
-}
