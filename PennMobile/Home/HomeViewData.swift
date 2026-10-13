@@ -11,8 +11,6 @@ import SwiftUI
 struct HomeViewData {
     var firstName: String?
     
-    var showSublettingBanner: Bool = false
-    
     var polls: Result<[PollQuestion], Error>?
     var posts: Result<[Post], Error>?
     var announcements: [HomeViewAnnouncement] = []
@@ -21,8 +19,6 @@ struct HomeViewData {
     var events: [CalendarEvent] = []
     
     var onPollResponse: ((Int, Int) -> Void)?
-    var onStartSubletting: (() -> Void)?
-    var onDismissSubletting: (() -> Void)?
     
     var showWellness: Bool = true
     
@@ -80,15 +76,6 @@ struct HomeViewData {
                 }
             }
             
-             if showSublettingBanner {
-                HomeSublettingBanner {
-                    onStartSubletting?()
-                } onDismiss: {
-                    onDismissSubletting?()
-                }
-             }
-            
-            
             ForEach(announcements.sorted(by: {$0.priority > $1.priority})) { announcement in
 //                if let view = announcement.linkedView {
 //                    NavigationLink(destination: AnyView(view)) { announcement }
@@ -127,7 +114,6 @@ struct HomeViewData {
     
     static let mock = HomeViewData(
         firstName: "TEST",
-        showSublettingBanner: true,
         polls: .success([.mock]),
         posts: .success([
             Post(id: 1, title: "Congratulations!", subtitle: "You are our lucky winner", postUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", imageUrl: "https://www.nps.gov/common/uploads/cropped_image/primary/D1721D51-A497-281A-72B8C06573F9327A.jpg?width=1600&quality=90&mode=crop", createdDate: Date(), startDate: Date.midnightYesterday, expireDate: Date.midnightToday, source: "Totally Legit Source")

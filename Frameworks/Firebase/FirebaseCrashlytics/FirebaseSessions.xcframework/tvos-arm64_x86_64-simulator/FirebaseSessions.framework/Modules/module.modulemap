@@ -1,0 +1,14 @@
+framework module FirebaseSessions {
+umbrella "."
+export *
+module * { export * }
+  link framework "Foundation"
+  link framework "Security"
+  link framework "SystemConfiguration"
+  link framework "UIKit"
+  link "z"
+}
+module FirebaseSessions.Swift {
+  header "FirebaseSessions-Swift.h"
+  requires objc
+}

@@ -1,0 +1,1249 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "FirebaseRemoteConfigInterop",
+    "printedName": "FirebaseRemoteConfigInterop",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseRemoteConfigInterop",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "RemoteConfigConstants",
+        "printedName": "RemoteConfigConstants",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "NamespaceGoogleMobilePlatform",
+            "printedName": "NamespaceGoogleMobilePlatform",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRemoteConfigConstants(cpy)FIRNamespaceGoogleMobilePlatform",
+            "mangledName": "$s27FirebaseRemoteConfigInterop0bC9ConstantsC29NamespaceGoogleMobilePlatformSSvpZ",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "static": true,
+            "objc_name": "FIRNamespaceGoogleMobilePlatform",
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRemoteConfigConstants(cm)FIRNamespaceGoogleMobilePlatform",
+                "mangledName": "$s27FirebaseRemoteConfigInterop0bC9ConstantsC29NamespaceGoogleMobilePlatformSSvgZ",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final",
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "RemoteConfigConstants",
+                "printedName": "FirebaseRemoteConfigInterop.RemoteConfigConstants",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRemoteConfigConstants"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRemoteConfigConstants(im)init",
+            "mangledName": "$s27FirebaseRemoteConfigInterop0bC9ConstantsCACycfc",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRemoteConfigConstants",
+        "mangledName": "$s27FirebaseRemoteConfigInterop0bC9ConstantsC",
+        "moduleName": "FirebaseRemoteConfigInterop",
+        "objc_name": "FIRRemoteConfigConstants",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseRemoteConfigInterop",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "RemoteConfigInterop",
+        "printedName": "RemoteConfigInterop",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "registerRolloutsStateSubscriber",
+            "printedName": "registerRolloutsStateSubscriber(_:for:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "RolloutsStateSubscriber",
+                "printedName": "any FirebaseRemoteConfigInterop.RolloutsStateSubscriber",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(pl)FIRRolloutsStateSubscriber"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(pl)FIRRemoteConfigInterop(im)registerRolloutsStateSubscriber:for:",
+            "mangledName": "$s27FirebaseRemoteConfigInterop0bcD0P31registerRolloutsStateSubscriber_3foryAA0fgH0_p_SStF",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "genericSig": "<τ_0_0 where τ_0_0 : FirebaseRemoteConfigInterop.RemoteConfigInterop>",
+            "sugared_genericSig": "<Self where Self : FirebaseRemoteConfigInterop.RemoteConfigInterop>",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "c:@M@FirebaseRemoteConfigInterop@objc(pl)FIRRemoteConfigInterop",
+        "mangledName": "$s27FirebaseRemoteConfigInterop0bcD0P",
+        "moduleName": "FirebaseRemoteConfigInterop",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "objc_name": "FIRRemoteConfigInterop",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseRemoteConfigInterop",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "RolloutAssignment",
+        "printedName": "RolloutAssignment",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "rolloutId",
+            "printedName": "rolloutId",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(py)rolloutId",
+            "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC9rolloutIdSSvp",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)rolloutId",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC9rolloutIdSSvg",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)setRolloutId:",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC9rolloutIdSSvs",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:27FirebaseRemoteConfigInterop17RolloutAssignmentC9rolloutIdSSvM",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC9rolloutIdSSvM",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "variantId",
+            "printedName": "variantId",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(py)variantId",
+            "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC9variantIdSSvp",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)variantId",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC9variantIdSSvg",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)setVariantId:",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC9variantIdSSvs",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:27FirebaseRemoteConfigInterop17RolloutAssignmentC9variantIdSSvM",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC9variantIdSSvM",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "templateVersion",
+            "printedName": "templateVersion",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int64",
+                "printedName": "Swift.Int64",
+                "usr": "s:s5Int64V"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(py)templateVersion",
+            "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC15templateVersions5Int64Vvp",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int64",
+                    "printedName": "Swift.Int64",
+                    "usr": "s:s5Int64V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)templateVersion",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC15templateVersions5Int64Vvg",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int64",
+                    "printedName": "Swift.Int64",
+                    "usr": "s:s5Int64V"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)setTemplateVersion:",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC15templateVersions5Int64Vvs",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:27FirebaseRemoteConfigInterop17RolloutAssignmentC15templateVersions5Int64VvM",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC15templateVersions5Int64VvM",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "parameterKey",
+            "printedName": "parameterKey",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(py)parameterKey",
+            "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC12parameterKeySSvp",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)parameterKey",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC12parameterKeySSvg",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)setParameterKey:",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC12parameterKeySSvs",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:27FirebaseRemoteConfigInterop17RolloutAssignmentC12parameterKeySSvM",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC12parameterKeySSvM",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "parameterValue",
+            "printedName": "parameterValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(py)parameterValue",
+            "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC14parameterValueSSvp",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "declAttributes": [
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)parameterValue",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC14parameterValueSSvg",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)setParameterValue:",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC14parameterValueSSvs",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:27FirebaseRemoteConfigInterop17RolloutAssignmentC14parameterValueSSvM",
+                "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC14parameterValueSSvM",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(rolloutId:variantId:templateVersion:parameterKey:parameterValue:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "RolloutAssignment",
+                "printedName": "FirebaseRemoteConfigInterop.RolloutAssignment",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int64",
+                "printedName": "Swift.Int64",
+                "usr": "s:s5Int64V"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)initWithRolloutId:variantId:templateVersion:parameterKey:parameterValue:",
+            "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC9rolloutId07variantH015templateVersion12parameterKey0L5ValueACSS_SSs5Int64VS2Stcfc",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "objc_name": "initWithRolloutId:variantId:templateVersion:parameterKey:parameterValue:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "RolloutAssignment",
+                "printedName": "FirebaseRemoteConfigInterop.RolloutAssignment",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment(im)init",
+            "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentCACycfc",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment",
+        "mangledName": "$s27FirebaseRemoteConfigInterop17RolloutAssignmentC",
+        "moduleName": "FirebaseRemoteConfigInterop",
+        "objc_name": "FIRRolloutAssignment",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "RolloutsState",
+        "printedName": "RolloutsState",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "assignments",
+            "printedName": "assignments",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Set",
+                "printedName": "Swift.Set<FirebaseRemoteConfigInterop.RolloutAssignment>",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "RolloutAssignment",
+                    "printedName": "FirebaseRemoteConfigInterop.RolloutAssignment",
+                    "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment"
+                  }
+                ],
+                "usr": "s:Sh"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState(py)assignments",
+            "mangledName": "$s27FirebaseRemoteConfigInterop13RolloutsStateC11assignmentsShyAA17RolloutAssignmentCGvp",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "declAttributes": [
+              "HasInitialValue",
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Set",
+                    "printedName": "Swift.Set<FirebaseRemoteConfigInterop.RolloutAssignment>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RolloutAssignment",
+                        "printedName": "FirebaseRemoteConfigInterop.RolloutAssignment",
+                        "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment"
+                      }
+                    ],
+                    "usr": "s:Sh"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState(im)assignments",
+                "mangledName": "$s27FirebaseRemoteConfigInterop13RolloutsStateC11assignmentsShyAA17RolloutAssignmentCGvg",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Set",
+                "printedName": "Set()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Set",
+                    "printedName": "Swift.Set<FirebaseRemoteConfigInterop.RolloutAssignment>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RolloutAssignment",
+                        "printedName": "FirebaseRemoteConfigInterop.RolloutAssignment",
+                        "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment"
+                      }
+                    ],
+                    "usr": "s:Sh"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState(im)setAssignments:",
+                "mangledName": "$s27FirebaseRemoteConfigInterop13RolloutsStateC11assignmentsShyAA17RolloutAssignmentCGvs",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "set"
+              },
+              {
+                "kind": "Accessor",
+                "name": "Modify",
+                "printedName": "Modify()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Void",
+                    "printedName": "()"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:27FirebaseRemoteConfigInterop13RolloutsStateC11assignmentsShyAA17RolloutAssignmentCGvM",
+                "mangledName": "$s27FirebaseRemoteConfigInterop13RolloutsStateC11assignmentsShyAA17RolloutAssignmentCGvM",
+                "moduleName": "FirebaseRemoteConfigInterop",
+                "implicit": true,
+                "accessorKind": "_modify"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(assignmentList:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "RolloutsState",
+                "printedName": "FirebaseRemoteConfigInterop.RolloutsState",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[FirebaseRemoteConfigInterop.RolloutAssignment]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "RolloutAssignment",
+                    "printedName": "FirebaseRemoteConfigInterop.RolloutAssignment",
+                    "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState(im)initWithAssignmentList:",
+            "mangledName": "$s27FirebaseRemoteConfigInterop13RolloutsStateC14assignmentListACSayAA17RolloutAssignmentCG_tcfc",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "objc_name": "initWithAssignmentList:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "RolloutsState",
+                "printedName": "FirebaseRemoteConfigInterop.RolloutsState",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState(im)init",
+            "mangledName": "$s27FirebaseRemoteConfigInterop13RolloutsStateCACycfc",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState",
+        "mangledName": "$s27FirebaseRemoteConfigInterop13RolloutsStateC",
+        "moduleName": "FirebaseRemoteConfigInterop",
+        "objc_name": "FIRRolloutsState",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseRemoteConfigInterop",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "RolloutsStateSubscriber",
+        "printedName": "RolloutsStateSubscriber",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "rolloutsStateDidChange",
+            "printedName": "rolloutsStateDidChange(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "RolloutsState",
+                "printedName": "FirebaseRemoteConfigInterop.RolloutsState",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseRemoteConfigInterop@objc(pl)FIRRolloutsStateSubscriber(im)rolloutsStateDidChange:",
+            "mangledName": "$s27FirebaseRemoteConfigInterop23RolloutsStateSubscriberP08rolloutsF9DidChangeyyAA0eF0CF",
+            "moduleName": "FirebaseRemoteConfigInterop",
+            "genericSig": "<τ_0_0 where τ_0_0 : FirebaseRemoteConfigInterop.RolloutsStateSubscriber>",
+            "sugared_genericSig": "<Self where Self : FirebaseRemoteConfigInterop.RolloutsStateSubscriber>",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "c:@M@FirebaseRemoteConfigInterop@objc(pl)FIRRolloutsStateSubscriber",
+        "mangledName": "$s27FirebaseRemoteConfigInterop23RolloutsStateSubscriberP",
+        "moduleName": "FirebaseRemoteConfigInterop",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "objc_name": "FIRRolloutsStateSubscriber",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-ios\/Pods\/FirebaseRemoteConfigInterop\/FirebaseRemoteConfig\/Interop\/RemoteConfigConstants.swift",
+      "kind": "StringLiteral",
+      "offset": 789,
+      "length": 10,
+      "value": "\"firebase\""
+    }
+  ]
+}

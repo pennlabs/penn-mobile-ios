@@ -1,0 +1,15 @@
+framework module FirebaseCrashlytics {
+umbrella header "FirebaseCrashlytics.h"
+export *
+module * { export * }
+  link framework "Foundation"
+  link framework "Security"
+  link framework "SystemConfiguration"
+  link framework "UIKit"
+  link "c++"
+  link "z"
+}
+module FirebaseCrashlytics.Swift {
+  header "FirebaseCrashlytics-Swift.h"
+  requires objc
+}

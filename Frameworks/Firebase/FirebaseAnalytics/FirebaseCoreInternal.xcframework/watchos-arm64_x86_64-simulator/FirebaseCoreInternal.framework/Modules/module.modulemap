@@ -1,0 +1,7 @@
+framework module FirebaseCoreInternal {
+umbrella "."
+export *
+module * { export * }
+  link framework "Security"
+  link "z"
+}

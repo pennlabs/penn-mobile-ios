@@ -1,0 +1,2715 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "FirebaseSessions",
+    "printedName": "FirebaseSessions",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseCore",
+        "printedName": "FirebaseCore",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleUtilities",
+        "printedName": "GoogleUtilities",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleDataTransport",
+        "printedName": "GoogleDataTransport",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseCore",
+        "printedName": "FirebaseCore",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseCoreExtension",
+        "printedName": "FirebaseCoreExtension",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseInstallations",
+        "printedName": "FirebaseInstallations",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleDataTransport",
+        "printedName": "GoogleDataTransport",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleDataTransport",
+        "printedName": "GoogleDataTransport",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl",
+          "Preconcurrency"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseInstallations",
+        "printedName": "FirebaseInstallations",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseCoreInternal",
+        "printedName": "FirebaseCoreInternal",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseCore",
+        "printedName": "FirebaseCore",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseCoreExtension",
+        "printedName": "FirebaseCoreExtension",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleUtilities",
+        "printedName": "GoogleUtilities",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseCoreInternal",
+        "printedName": "FirebaseCoreInternal",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseInstallations",
+        "printedName": "FirebaseInstallations",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "AppKit",
+        "printedName": "AppKit",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions"
+      },
+      {
+        "kind": "Import",
+        "name": "Cocoa",
+        "printedName": "Cocoa",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions"
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleUtilities",
+        "printedName": "GoogleUtilities",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseCoreInternal",
+        "printedName": "FirebaseCoreInternal",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SessionsDependencies",
+        "printedName": "SessionsDependencies",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "addDependency",
+            "printedName": "addDependency(name:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SessionsSubscriberName",
+                "printedName": "FirebaseSessions.SessionsSubscriberName",
+                "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionsDependencies(cm)addDependencyWithName:",
+            "mangledName": "$s16FirebaseSessions0B12DependenciesC13addDependency4nameyAA0B14SubscriberNameO_tFZ",
+            "moduleName": "FirebaseSessions",
+            "static": true,
+            "objc_name": "addDependencyWithName:",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SessionsDependencies",
+                "printedName": "FirebaseSessions.SessionsDependencies",
+                "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionsDependencies"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionsDependencies(im)init",
+            "mangledName": "$s16FirebaseSessions0B12DependenciesCACycfc",
+            "moduleName": "FirebaseSessions",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionsDependencies",
+        "mangledName": "$s16FirebaseSessions0B12DependenciesC",
+        "moduleName": "FirebaseSessions",
+        "objc_name": "FIRSessionsDependencies",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SessionsProvider",
+        "printedName": "SessionsProvider",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "register",
+            "printedName": "register(subscriber:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SessionsSubscriber",
+                "printedName": "any FirebaseSessions.SessionsSubscriber",
+                "usr": "c:@M@FirebaseSessions@objc(pl)FIRSessionsSubscriber"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseSessions@objc(pl)FIRSessionsProvider(im)registerWithSubscriber:",
+            "mangledName": "$s16FirebaseSessions0B8ProviderP8register10subscriberyAA0B10Subscriber_p_tF",
+            "moduleName": "FirebaseSessions",
+            "genericSig": "<τ_0_0 where τ_0_0 : FirebaseSessions.SessionsProvider>",
+            "sugared_genericSig": "<Self where Self : FirebaseSessions.SessionsProvider>",
+            "protocolReq": true,
+            "objc_name": "registerWithSubscriber:",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "c:@M@FirebaseSessions@objc(pl)FIRSessionsProvider",
+        "mangledName": "$s16FirebaseSessions0B8ProviderP",
+        "moduleName": "FirebaseSessions",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "objc_name": "FIRSessionsProvider",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SessionsSubscriber",
+        "printedName": "SessionsSubscriber",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "onSessionChanged",
+            "printedName": "onSessionChanged(_:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "SessionDetails",
+                "printedName": "FirebaseSessions.SessionDetails",
+                "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionDetails"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseSessions@objc(pl)FIRSessionsSubscriber(im)onSessionChanged:",
+            "mangledName": "$s16FirebaseSessions0B10SubscriberP16onSessionChangedyyAA0E7DetailsCF",
+            "moduleName": "FirebaseSessions",
+            "genericSig": "<τ_0_0 where τ_0_0 : FirebaseSessions.SessionsSubscriber>",
+            "sugared_genericSig": "<Self where Self : FirebaseSessions.SessionsSubscriber>",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Var",
+            "name": "isDataCollectionEnabled",
+            "printedName": "isDataCollectionEnabled",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Bool",
+                "printedName": "Swift.Bool",
+                "usr": "s:Sb"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseSessions@objc(pl)FIRSessionsSubscriber(py)isDataCollectionEnabled",
+            "mangledName": "$s16FirebaseSessions0B10SubscriberP23isDataCollectionEnabledSbvp",
+            "moduleName": "FirebaseSessions",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Bool",
+                    "printedName": "Swift.Bool",
+                    "usr": "s:Sb"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseSessions@objc(pl)FIRSessionsSubscriber(im)isDataCollectionEnabled",
+                "mangledName": "$s16FirebaseSessions0B10SubscriberP23isDataCollectionEnabledSbvg",
+                "moduleName": "FirebaseSessions",
+                "genericSig": "<τ_0_0 where τ_0_0 : FirebaseSessions.SessionsSubscriber>",
+                "sugared_genericSig": "<Self where Self : FirebaseSessions.SessionsSubscriber>",
+                "protocolReq": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "sessionsSubscriberName",
+            "printedName": "sessionsSubscriberName",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SessionsSubscriberName",
+                "printedName": "FirebaseSessions.SessionsSubscriberName",
+                "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseSessions@objc(pl)FIRSessionsSubscriber(py)sessionsSubscriberName",
+            "mangledName": "$s16FirebaseSessions0B10SubscriberP08sessionsC4NameAA0bcE0Ovp",
+            "moduleName": "FirebaseSessions",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SessionsSubscriberName",
+                    "printedName": "FirebaseSessions.SessionsSubscriberName",
+                    "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseSessions@objc(pl)FIRSessionsSubscriber(im)sessionsSubscriberName",
+                "mangledName": "$s16FirebaseSessions0B10SubscriberP08sessionsC4NameAA0bcE0Ovg",
+                "moduleName": "FirebaseSessions",
+                "genericSig": "<τ_0_0 where τ_0_0 : FirebaseSessions.SessionsSubscriber>",
+                "sugared_genericSig": "<Self where Self : FirebaseSessions.SessionsSubscriber>",
+                "protocolReq": true,
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "reqNewWitnessTableEntry": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "c:@M@FirebaseSessions@objc(pl)FIRSessionsSubscriber",
+        "mangledName": "$s16FirebaseSessions0B10SubscriberP",
+        "moduleName": "FirebaseSessions",
+        "genericSig": "<τ_0_0 : AnyObject, τ_0_0 : Swift.Sendable>",
+        "sugared_genericSig": "<Self : AnyObject, Self : Swift.Sendable>",
+        "objc_name": "FIRSessionsSubscriber",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SessionDetails",
+        "printedName": "SessionDetails",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "sessionId",
+            "printedName": "sessionId",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionDetails(py)sessionId",
+            "mangledName": "$s16FirebaseSessions14SessionDetailsC9sessionIdSSSgvp",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "Final",
+              "HasStorage",
+              "AccessControl",
+              "ObjC"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Optional",
+                    "printedName": "Swift.String?",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "String",
+                        "printedName": "Swift.String",
+                        "usr": "s:SS"
+                      }
+                    ],
+                    "usr": "s:Sq"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionDetails(im)sessionId",
+                "mangledName": "$s16FirebaseSessions14SessionDetailsC9sessionIdSSSgvg",
+                "moduleName": "FirebaseSessions",
+                "implicit": true,
+                "declAttributes": [
+                  "Final",
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(sessionId:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SessionDetails",
+                "printedName": "FirebaseSessions.SessionDetails",
+                "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionDetails"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:16FirebaseSessions14SessionDetailsC9sessionIdACSSSg_tcfc",
+            "mangledName": "$s16FirebaseSessions14SessionDetailsC9sessionIdACSSSg_tcfc",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "SessionDetails",
+                "printedName": "FirebaseSessions.SessionDetails",
+                "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionDetails"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionDetails(im)init",
+            "mangledName": "$s16FirebaseSessions14SessionDetailsCACycfc",
+            "moduleName": "FirebaseSessions",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@FirebaseSessions@objc(cs)FIRSessionDetails",
+        "mangledName": "$s16FirebaseSessions14SessionDetailsC",
+        "moduleName": "FirebaseSessions",
+        "objc_name": "FIRSessionDetails",
+        "declAttributes": [
+          "Final",
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "SessionsSubscriberName",
+        "printedName": "SessionsSubscriberName",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "Unknown",
+            "printedName": "Unknown",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(FirebaseSessions.SessionsSubscriberName.Type) -> FirebaseSessions.SessionsSubscriberName",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SessionsSubscriberName",
+                    "printedName": "FirebaseSessions.SessionsSubscriberName",
+                    "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "FirebaseSessions.SessionsSubscriberName.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SessionsSubscriberName",
+                        "printedName": "FirebaseSessions.SessionsSubscriberName",
+                        "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName@FIRSessionsSubscriberNameUnknown",
+            "mangledName": "$s16FirebaseSessions0B14SubscriberNameO7UnknownyA2CmF",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 0
+          },
+          {
+            "kind": "Var",
+            "name": "Crashlytics",
+            "printedName": "Crashlytics",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(FirebaseSessions.SessionsSubscriberName.Type) -> FirebaseSessions.SessionsSubscriberName",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SessionsSubscriberName",
+                    "printedName": "FirebaseSessions.SessionsSubscriberName",
+                    "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "FirebaseSessions.SessionsSubscriberName.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SessionsSubscriberName",
+                        "printedName": "FirebaseSessions.SessionsSubscriberName",
+                        "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName@FIRSessionsSubscriberNameCrashlytics",
+            "mangledName": "$s16FirebaseSessions0B14SubscriberNameO11CrashlyticsyA2CmF",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 1
+          },
+          {
+            "kind": "Var",
+            "name": "Performance",
+            "printedName": "Performance",
+            "children": [
+              {
+                "kind": "TypeFunc",
+                "name": "Function",
+                "printedName": "(FirebaseSessions.SessionsSubscriberName.Type) -> FirebaseSessions.SessionsSubscriberName",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SessionsSubscriberName",
+                    "printedName": "FirebaseSessions.SessionsSubscriberName",
+                    "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+                  },
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Metatype",
+                    "printedName": "FirebaseSessions.SessionsSubscriberName.Type",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "SessionsSubscriberName",
+                        "printedName": "FirebaseSessions.SessionsSubscriberName",
+                        "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "declKind": "EnumElement",
+            "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName@FIRSessionsSubscriberNamePerformance",
+            "mangledName": "$s16FirebaseSessions0B14SubscriberNameO11PerformanceyA2CmF",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "ObjC"
+            ],
+            "fixedbinaryorder": 2
+          },
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16FirebaseSessions0B14SubscriberNameO11descriptionSSvp",
+            "mangledName": "$s16FirebaseSessions0B14SubscriberNameO11descriptionSSvp",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16FirebaseSessions0B14SubscriberNameO11descriptionSSvg",
+                "mangledName": "$s16FirebaseSessions0B14SubscriberNameO11descriptionSSvg",
+                "moduleName": "FirebaseSessions",
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(rawValue:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "FirebaseSessions.SessionsSubscriberName?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "SessionsSubscriberName",
+                    "printedName": "FirebaseSessions.SessionsSubscriberName",
+                    "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName"
+                  }
+                ],
+                "usr": "s:Sq"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "s:16FirebaseSessions0B14SubscriberNameO8rawValueACSgSi_tcfc",
+            "mangledName": "$s16FirebaseSessions0B14SubscriberNameO8rawValueACSgSi_tcfc",
+            "moduleName": "FirebaseSessions",
+            "implicit": true,
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Var",
+            "name": "rawValue",
+            "printedName": "rawValue",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:16FirebaseSessions0B14SubscriberNameO8rawValueSivp",
+            "mangledName": "$s16FirebaseSessions0B14SubscriberNameO8rawValueSivp",
+            "moduleName": "FirebaseSessions",
+            "implicit": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:16FirebaseSessions0B14SubscriberNameO8rawValueSivg",
+                "mangledName": "$s16FirebaseSessions0B14SubscriberNameO8rawValueSivg",
+                "moduleName": "FirebaseSessions",
+                "implicit": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "c:@M@FirebaseSessions@E@FIRSessionsSubscriberName",
+        "mangledName": "$s16FirebaseSessions0B14SubscriberNameO",
+        "moduleName": "FirebaseSessions",
+        "objc_name": "FIRSessionsSubscriberName",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "enumRawTypeName": "Int",
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RawRepresentable",
+            "printedName": "RawRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawValue",
+                "printedName": "RawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SY",
+            "mangledName": "$sSY"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleDataTransport",
+        "printedName": "GoogleDataTransport",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleUtilities",
+        "printedName": "GoogleUtilities",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleUtilities",
+        "printedName": "GoogleUtilities",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl",
+          "Preconcurrency"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseCoreInternal",
+        "printedName": "FirebaseCoreInternal",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl",
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "GoogleUtilities",
+        "printedName": "GoogleUtilities",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "AccessControl"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Installations",
+        "printedName": "Installations",
+        "declKind": "Class",
+        "usr": "c:objc(cs)FIRInstallations",
+        "moduleName": "FirebaseInstallations",
+        "isOpen": true,
+        "objc_name": "FIRInstallations",
+        "declAttributes": [
+          "ObjC",
+          "SynthesizedProtocol",
+          "Sendable",
+          "Dynamic"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "isExternal": true,
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "_firebase_appquality_sessions_EventType",
+        "printedName": "_firebase_appquality_sessions_EventType",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:So39_firebase_appquality_sessions_EventTypeV16FirebaseSessionsE11descriptionSSvp",
+            "mangledName": "$sSo39_firebase_appquality_sessions_EventTypeV16FirebaseSessionsE11descriptionSSvp",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:So39_firebase_appquality_sessions_EventTypeV16FirebaseSessionsE11descriptionSSvg",
+                "mangledName": "$sSo39_firebase_appquality_sessions_EventTypeV16FirebaseSessionsE11descriptionSSvg",
+                "moduleName": "FirebaseSessions",
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "c:@E@_firebase_appquality_sessions_EventType",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "SynthesizedProtocol",
+          "SynthesizedProtocol",
+          "SynthesizedProtocol"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RawRepresentable",
+            "printedName": "RawRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawValue",
+                "printedName": "RawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SY",
+            "mangledName": "$sSY"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "_firebase_appquality_sessions_DataCollectionState",
+        "printedName": "_firebase_appquality_sessions_DataCollectionState",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:So49_firebase_appquality_sessions_DataCollectionStateV16FirebaseSessionsE11descriptionSSvp",
+            "mangledName": "$sSo49_firebase_appquality_sessions_DataCollectionStateV16FirebaseSessionsE11descriptionSSvp",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:So49_firebase_appquality_sessions_DataCollectionStateV16FirebaseSessionsE11descriptionSSvg",
+                "mangledName": "$sSo49_firebase_appquality_sessions_DataCollectionStateV16FirebaseSessionsE11descriptionSSvg",
+                "moduleName": "FirebaseSessions",
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "c:@E@_firebase_appquality_sessions_DataCollectionState",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "SynthesizedProtocol",
+          "SynthesizedProtocol",
+          "SynthesizedProtocol"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RawRepresentable",
+            "printedName": "RawRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawValue",
+                "printedName": "RawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SY",
+            "mangledName": "$sSY"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "_firebase_appquality_sessions_OsName",
+        "printedName": "_firebase_appquality_sessions_OsName",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:So36_firebase_appquality_sessions_OsNameV16FirebaseSessionsE11descriptionSSvp",
+            "mangledName": "$sSo36_firebase_appquality_sessions_OsNameV16FirebaseSessionsE11descriptionSSvp",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:So36_firebase_appquality_sessions_OsNameV16FirebaseSessionsE11descriptionSSvg",
+                "mangledName": "$sSo36_firebase_appquality_sessions_OsNameV16FirebaseSessionsE11descriptionSSvg",
+                "moduleName": "FirebaseSessions",
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "c:@E@_firebase_appquality_sessions_OsName",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "SynthesizedProtocol",
+          "SynthesizedProtocol",
+          "SynthesizedProtocol"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RawRepresentable",
+            "printedName": "RawRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawValue",
+                "printedName": "RawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SY",
+            "mangledName": "$sSY"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "_firebase_appquality_sessions_LogEnvironment",
+        "printedName": "_firebase_appquality_sessions_LogEnvironment",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:So44_firebase_appquality_sessions_LogEnvironmentV16FirebaseSessionsE11descriptionSSvp",
+            "mangledName": "$sSo44_firebase_appquality_sessions_LogEnvironmentV16FirebaseSessionsE11descriptionSSvp",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:So44_firebase_appquality_sessions_LogEnvironmentV16FirebaseSessionsE11descriptionSSvg",
+                "mangledName": "$sSo44_firebase_appquality_sessions_LogEnvironmentV16FirebaseSessionsE11descriptionSSvg",
+                "moduleName": "FirebaseSessions",
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "c:@E@_firebase_appquality_sessions_LogEnvironment",
+        "moduleName": "FirebaseSessions",
+        "declAttributes": [
+          "SynthesizedProtocol",
+          "SynthesizedProtocol",
+          "SynthesizedProtocol"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "RawRepresentable",
+            "printedName": "RawRepresentable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "RawValue",
+                "printedName": "RawValue",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "UInt32",
+                    "printedName": "Swift.UInt32",
+                    "usr": "s:s6UInt32V"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:SY",
+            "mangledName": "$sSY"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "UnsafeMutablePointer",
+        "printedName": "UnsafeMutablePointer",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:Sp16FirebaseSessionsSo16pb_bytes_array_sVRszlE11descriptionSSvp",
+            "mangledName": "$sSp16FirebaseSessionsSo16pb_bytes_array_sVRszlE11descriptionSSvp",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:Sp16FirebaseSessionsSo16pb_bytes_array_sVRszlE11descriptionSSvg",
+                "mangledName": "$sSp16FirebaseSessionsSo16pb_bytes_array_sVRszlE11descriptionSSvg",
+                "moduleName": "FirebaseSessions",
+                "genericSig": "<τ_0_0 where τ_0_0 == nanopb.pb_bytes_array_s>",
+                "sugared_genericSig": "<Pointee where Pointee == nanopb.pb_bytes_array_s>",
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Struct",
+        "usr": "s:Sp",
+        "mangledName": "$sSp",
+        "moduleName": "Swift",
+        "genericSig": "<τ_0_0 where τ_0_0 : ~Copyable>",
+        "sugared_genericSig": "<Pointee where Pointee : ~Copyable>",
+        "declAttributes": [
+          "Unsafe",
+          "Frozen"
+        ],
+        "isExternal": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_Pointer",
+            "printedName": "_Pointer",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Pointee",
+                "printedName": "Pointee",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "GenericTypeParam",
+                    "printedName": "τ_0_0"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s8_PointerP",
+            "mangledName": "$ss8_PointerP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Comparable",
+            "printedName": "Comparable",
+            "usr": "s:SL",
+            "mangledName": "$sSL"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Strideable",
+            "printedName": "Strideable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Stride",
+                "printedName": "Stride",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:Sx",
+            "mangledName": "$sSx"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomReflectable",
+            "printedName": "CustomReflectable",
+            "usr": "s:s17CustomReflectableP",
+            "mangledName": "$ss17CustomReflectableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_CustomPlaygroundQuickLookable",
+            "printedName": "_CustomPlaygroundQuickLookable",
+            "usr": "s:s30_CustomPlaygroundQuickLookableP",
+            "mangledName": "$ss30_CustomPlaygroundQuickLookableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "Optional",
+        "printedName": "Optional",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "description",
+            "printedName": "description",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:Sq16FirebaseSessionsSpySo16pb_bytes_array_sVGRszlE11descriptionSSvp",
+            "mangledName": "$sSq16FirebaseSessionsSpySo16pb_bytes_array_sVGRszlE11descriptionSSvp",
+            "moduleName": "FirebaseSessions",
+            "declAttributes": [
+              "AccessControl"
+            ],
+            "isFromExtension": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:Sq16FirebaseSessionsSpySo16pb_bytes_array_sVGRszlE11descriptionSSvg",
+                "mangledName": "$sSq16FirebaseSessionsSpySo16pb_bytes_array_sVGRszlE11descriptionSSvg",
+                "moduleName": "FirebaseSessions",
+                "genericSig": "<τ_0_0 where τ_0_0 == Swift.UnsafeMutablePointer<nanopb.pb_bytes_array_s>>",
+                "sugared_genericSig": "<Wrapped where Wrapped == Swift.UnsafeMutablePointer<nanopb.pb_bytes_array_s>>",
+                "isFromExtension": true,
+                "accessorKind": "get"
+              }
+            ]
+          }
+        ],
+        "declKind": "Enum",
+        "usr": "s:Sq",
+        "mangledName": "$sSq",
+        "moduleName": "Swift",
+        "genericSig": "<τ_0_0 where τ_0_0 : ~Copyable, τ_0_0 : ~Escapable>",
+        "sugared_genericSig": "<Wrapped where Wrapped : ~Copyable, Wrapped : ~Escapable>",
+        "declAttributes": [
+          "Frozen"
+        ],
+        "isExternal": true,
+        "isEnumExhaustive": true,
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Encodable",
+            "printedName": "Encodable",
+            "usr": "s:SE",
+            "mangledName": "$sSE"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Decodable",
+            "printedName": "Decodable",
+            "usr": "s:Se",
+            "mangledName": "$sSe"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "BitwiseCopyable",
+            "printedName": "BitwiseCopyable",
+            "usr": "s:s15BitwiseCopyableP",
+            "mangledName": "$ss15BitwiseCopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Sendable",
+            "printedName": "Sendable",
+            "usr": "s:s8SendableP",
+            "mangledName": "$ss8SendableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "SendableMetatype",
+            "printedName": "SendableMetatype",
+            "usr": "s:s16SendableMetatypeP",
+            "mangledName": "$ss16SendableMetatypeP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "ExpressibleByNilLiteral",
+            "printedName": "ExpressibleByNilLiteral",
+            "usr": "s:s23ExpressibleByNilLiteralP",
+            "mangledName": "$ss23ExpressibleByNilLiteralP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomReflectable",
+            "printedName": "CustomReflectable",
+            "usr": "s:s17CustomReflectableP",
+            "mangledName": "$ss17CustomReflectableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_ObjectiveCBridgeable",
+            "printedName": "_ObjectiveCBridgeable",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "_ObjectiveCType",
+                "printedName": "_ObjectiveCType",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "ProtocolComposition",
+                    "printedName": "AnyObject"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:s21_ObjectiveCBridgeableP",
+            "mangledName": "$ss21_ObjectiveCBridgeableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "EncodableWithConfiguration",
+            "printedName": "EncodableWithConfiguration",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "EncodingConfiguration",
+                "printedName": "EncodingConfiguration",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DependentMember",
+                    "printedName": "τ_0_0.EncodingConfiguration"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:10Foundation26EncodableWithConfigurationP",
+            "mangledName": "$s10Foundation26EncodableWithConfigurationP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "DecodableWithConfiguration",
+            "printedName": "DecodableWithConfiguration",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "DecodingConfiguration",
+                "printedName": "DecodingConfiguration",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DependentMember",
+                    "printedName": "τ_0_0.DecodingConfiguration"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:10Foundation26DecodableWithConfigurationP",
+            "mangledName": "$s10Foundation26DecodableWithConfigurationP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "AttributedTextFormattingDefinition",
+            "printedName": "AttributedTextFormattingDefinition",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Body",
+                "printedName": "Body",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "OpaqueTypeArchetype",
+                    "printedName": "some SwiftUICore.AttributedTextFormattingDefinition<Wrapped.Scope>",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "AttributedTextFormattingDefinition",
+                        "printedName": "SwiftUICore.AttributedTextFormattingDefinition",
+                        "usr": "s:7SwiftUI34AttributedTextFormattingDefinitionP"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Scope",
+                "printedName": "Scope",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DependentMember",
+                    "printedName": "τ_0_0.Scope"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:7SwiftUI34AttributedTextFormattingDefinitionP",
+            "mangledName": "$s7SwiftUI34AttributedTextFormattingDefinitionP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Gesture",
+            "printedName": "Gesture",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Value",
+                "printedName": "Value",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "DependentMember",
+                    "printedName": "τ_0_0.Value"
+                  }
+                ]
+              },
+              {
+                "kind": "TypeWitness",
+                "name": "Body",
+                "printedName": "Body",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Never",
+                    "printedName": "Swift.Never",
+                    "usr": "s:s5NeverO"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:7SwiftUI7GestureP",
+            "mangledName": "$s7SwiftUI7GestureP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "View",
+            "printedName": "View",
+            "children": [
+              {
+                "kind": "TypeWitness",
+                "name": "Body",
+                "printedName": "Body",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Never",
+                    "printedName": "Swift.Never",
+                    "usr": "s:s5NeverO"
+                  }
+                ]
+              }
+            ],
+            "usr": "s:7SwiftUI4ViewP",
+            "mangledName": "$s7SwiftUI4ViewP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Development\/DevEventConsoleLogger.swift",
+      "kind": "StringLiteral",
+      "offset": 780,
+      "length": 25,
+      "value": "\"-FIRSessionsDebugEvents\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/FirebaseSessions.swift",
+      "kind": "StringLiteral",
+      "offset": 886,
+      "length": 6,
+      "value": "\"1974\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/FirebaseSessions.swift",
+      "kind": "StringLiteral",
+      "offset": 3144,
+      "length": 34,
+      "value": "\"SessionIDChangedNotificationName\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/LocalOverrideSettings.swift",
+      "kind": "StringLiteral",
+      "offset": 1285,
+      "length": 25,
+      "value": "\"FirebaseSessionsEnabled\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/LocalOverrideSettings.swift",
+      "kind": "StringLiteral",
+      "offset": 1338,
+      "length": 25,
+      "value": "\"FirebaseSessionsTimeout\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/LocalOverrideSettings.swift",
+      "kind": "StringLiteral",
+      "offset": 1396,
+      "length": 29,
+      "value": "\"FirebaseSessionsSampingRate\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Logger.swift",
+      "kind": "StringLiteral",
+      "offset": 790,
+      "length": 20,
+      "value": "\"[FirebaseSessions]\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Logger.swift",
+      "kind": "StringLiteral",
+      "offset": 842,
+      "length": 13,
+      "value": "\"I-SES000000\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/RemoteSettings.swift",
+      "kind": "StringLiteral",
+      "offset": 944,
+      "length": 18,
+      "value": "\"sessions_enabled\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/RemoteSettings.swift",
+      "kind": "StringLiteral",
+      "offset": 1003,
+      "length": 15,
+      "value": "\"sampling_rate\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/RemoteSettings.swift",
+      "kind": "StringLiteral",
+      "offset": 1061,
+      "length": 25,
+      "value": "\"session_timeout_seconds\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/RemoteSettings.swift",
+      "kind": "StringLiteral",
+      "offset": 1128,
+      "length": 13,
+      "value": "\"app_quality\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/SessionGenerator.swift",
+      "kind": "StringLiteral",
+      "offset": 1809,
+      "length": 2,
+      "value": "\"\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/SessionGenerator.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1905,
+      "length": 2,
+      "value": "-1"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/SessionsState.swift",
+      "kind": "Array",
+      "offset": 1322,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/SessionsState.swift",
+      "kind": "Array",
+      "offset": 1392,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/SessionsState.swift",
+      "kind": "Array",
+      "offset": 1528,
+      "length": 2,
+      "value": "[]"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Public\/SessionsSubscriber.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1442,
+      "length": 11,
+      "value": "1"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Public\/SessionsSubscriber.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1461,
+      "length": 11,
+      "value": "2"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/SettingsCacheClient.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2691,
+      "length": 2,
+      "value": "60"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/SettingsCacheClient.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2696,
+      "length": 2,
+      "value": "60"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/SettingsCacheClient.swift",
+      "kind": "StringLiteral",
+      "offset": 2740,
+      "length": 16,
+      "value": "\"cache_duration\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/SettingsCacheClient.swift",
+      "kind": "IntegerLiteral",
+      "offset": 2801,
+      "length": 1,
+      "value": "1"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/SettingsCacheClient.swift",
+      "kind": "StringLiteral",
+      "offset": 2866,
+      "length": 28,
+      "value": "\"firebase-sessions-settings\""
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseSessions\/FirebaseSessions\/Sources\/Settings\/SettingsCacheClient.swift",
+      "kind": "StringLiteral",
+      "offset": 2924,
+      "length": 29,
+      "value": "\"firebase-sessions-cache-key\""
+    }
+  ]
+}

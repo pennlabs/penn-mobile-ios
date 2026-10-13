@@ -9,7 +9,6 @@
 import Foundation
 import WebKit
 import PennMobileShared
-import OrderedCollections
 
 // MARK: UserDefaultsKeys
 extension UserDefaults {
@@ -46,9 +45,6 @@ extension UserDefaults {
         case firstDollarsBalance
         case firstSwipesBalance
         case tabPreferences
-        case subletDrafts
-        case subletFilterData
-        case subletAmenities
     }
 
     func clearAll() {
@@ -619,60 +615,16 @@ extension UserDefaults {
 
     func getTabPreferences() -> [Feature] {
         if let tabPreferenceTitles = UserDefaults.standard.value(forKey: UserDefaultsKeys.tabPreferences.rawValue) as? [String] {
-            return tabPreferenceTitles.map { Feature(rawValue: $0)! }
+            let tabs = tabPreferenceTitles.compactMap { Feature(rawValue: $0) }
+            // Fall back to the defaults if a saved tab refers to a feature that no longer exists
+            if tabs.count == tabPreferenceTitles.count {
+                return tabs
+            }
         }
         return [.home, .dining, .studyRoomBooking, .laundry, .more]
     }
     
     func getTabBarFeatureIdentifiers() -> [FeatureIdentifier] {
-        if let tabPreferenceTitles = UserDefaults.standard.value(forKey: UserDefaultsKeys.tabPreferences.rawValue) as? [String] {
-            return tabPreferenceTitles.compactMap { FeatureIdentifier(rawValue: $0) }
-        }
-        
-        return [.dining, .gsr, .laundry]
-    }
-}
-
-// MARK: - Subletting
-extension UserDefaults {
-    func setSubletDrafts(_ drafts: [SubletDraft]) {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(drafts) {
-            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.subletDrafts.rawValue)
-        }
-    }
-    
-    func getSubletDrafts() -> [SubletDraft]? {
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.subletDrafts.rawValue) {
-            let decoder = JSONDecoder()
-            return try? decoder.decode([SubletDraft].self, from: decodedData)
-        }
-        return nil
-    }
-    
-    func setSubletFilterData(_ data: MarketplaceFilterData) {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(data) {
-            UserDefaults.standard.set(encoded, forKey: UserDefaultsKeys.subletFilterData.rawValue)
-        }
-    }
-    
-    func getSubletFilterData() -> MarketplaceFilterData? {
-        if let decodedData = UserDefaults.standard.data(forKey: UserDefaultsKeys.subletFilterData.rawValue) {
-            let decoder = JSONDecoder()
-            return try? decoder.decode(MarketplaceFilterData.self, from: decodedData)
-        }
-        return nil
-    }
-    
-    func setSubletAmenities(_ data: OrderedSet<String>) {
-        UserDefaults.standard.set(Array(data), forKey: UserDefaultsKeys.subletAmenities.rawValue)
-    }
-    
-    func getSubletAmenities() -> OrderedSet<String>? {
-        if let data = UserDefaults.standard.value(forKey: UserDefaultsKeys.subletAmenities.rawValue) as? [String] {
-            return OrderedSet(data)
-        }
-        return nil
+        return getTabPreferences().compactMap { FeatureIdentifier(rawValue: $0.rawValue) }
     }
 }
