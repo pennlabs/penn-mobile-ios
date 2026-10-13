@@ -22,7 +22,6 @@ enum FeatureIdentifier: String, Hashable, Identifiable {
     case pac = "PAC Code"
     case about = "About"
     case polls = "Poll History"
-    case subletting = "Subletting"
     case ticketScanner = "Ticket Scanner"
     
     var id: String { rawValue }
@@ -126,10 +125,6 @@ let features: [AppFeature] = [
     AppFeature(.polls, shortName: "Polls", longName: "Poll History", color: .blueDark, image: .app("Polls_Grey")) {
         PollsView()
             .navigationTitle(Text("Poll History"))
-    },
-    AppFeature(.subletting, shortName: "Subletting", longName: "Subletting (Beta)", color: .baseOrange, image: .system("building")) {
-        MarketplaceView()
-            .navigationTitle(Text("Marketplace"))
     },
     AppFeature(.ticketScanner, shortName: "Scanner", longName: "Ticket Scanner", color: .basePurple, image: .system("qrcode.viewfinder")) {
         ScannerView()

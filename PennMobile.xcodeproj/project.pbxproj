@@ -18,12 +18,10 @@
 		6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5159F82AC8D88A004B3F41 /* SwiftyJSON */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
 		7348F0502F807CEB002901E4 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7348F04F2F807CEB002901E4 /* LabsPlatformSwift */; };
-		734BED9B2D9DE4B700964811 /* PennForms in Frameworks */ = {isa = PBXBuildFile; productRef = 734BED9A2D9DE4B700964811 /* PennForms */; };
 		735727032F4CE1B200213ACA /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 735727022F4CE1B200213ACA /* LabsPlatformSwift */; };
 		737F2B27304A244C0093F7A0 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 737F2B26304A244C0093F7A0 /* LabsPlatformSwift */; };
 		737F2B2A304A38800093F7A0 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 737F2B29304A38800093F7A0 /* LabsPlatformSwift */; };
 		73816803307E83CE003FC9E4 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 73816802307E83CE003FC9E4 /* SwiftyJSON */; };
-		73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 73E7A02B2CF158F3007BC1E3 /* Lottie */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
@@ -124,6 +122,7 @@
 				Firebase/nanopb.xcframework,
 				Firebase/run,
 				"Firebase/upload-symbols",
+				Lottie/Lottie.xcframework,
 			);
 			target = 8932693228FC75A5003D4BF9 /* WidgetExtension */;
 		};
@@ -147,6 +146,7 @@
 				Firebase/nanopb.xcframework,
 				Firebase/run,
 				"Firebase/upload-symbols",
+				Lottie/Lottie.xcframework,
 			);
 			target = 6E4D82152AC8C91C009AB78E /* PennMobileShared */;
 		};
@@ -205,6 +205,8 @@
 				Firebase/GoogleAppMeasurement.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
 				Firebase/GoogleDataTransport.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
 				Firebase/GoogleUtilities.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/nanopb.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Lottie/Lottie.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
 			};
 			buildPhase = 6E4D821E2AC8C91C009AB78E /* Embed Frameworks */;
 			membershipExceptions = (
@@ -221,6 +223,8 @@
 				Firebase/GoogleAppMeasurement.xcframework,
 				Firebase/GoogleDataTransport.xcframework,
 				Firebase/GoogleUtilities.xcframework,
+				Firebase/nanopb.xcframework,
+				Lottie/Lottie.xcframework,
 			);
 		};
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
@@ -270,17 +274,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				735727032F4CE1B200213ACA /* LabsPlatformSwift in Frameworks */,
-				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				73816803307E83CE003FC9E4 /* SwiftyJSON in Frameworks */,
-				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
 				737F2B27304A244C0093F7A0 /* LabsPlatformSwift in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
 				737F2B2A304A38800093F7A0 /* LabsPlatformSwift in Frameworks */,
 				6E4D821C2AC8C91C009AB78E /* PennMobileShared.framework in Frameworks */,
 				7348F0502F807CEB002901E4 /* LabsPlatformSwift in Frameworks */,
-				73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */,
-				73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,10 +422,6 @@
 			packageProductDependencies = (
 				F213CCE123C3EE3E000AD90F /* SwiftSoup */,
 				6CA1ACDA271D2D5000EDB967 /* Kingfisher */,
-				73E7A02B2CF158F3007BC1E3 /* Lottie */,
-				734BED9A2D9DE4B700964811 /* PennForms */,
-				73E7A02B2CF158F3007BC1E3 /* Lottie */,
-				734BED9A2D9DE4B700964811 /* PennForms */,
 				735727022F4CE1B200213ACA /* LabsPlatformSwift */,
 				7348F04F2F807CEB002901E4 /* LabsPlatformSwift */,
 				737F2B26304A244C0093F7A0 /* LabsPlatformSwift */,
@@ -532,10 +528,6 @@
 				F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */,
-				73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */,
 				737F2B28304A387F0093F7A0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -1079,28 +1071,12 @@
 				minimumVersion = 5.0.1;
 			};
 		};
-		734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pennlabs/PennForms";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		737F2B28304A387F0093F7A0 /* XCRemoteSwiftPackageReference "labs-platform-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pennlabs/labs-platform-swift";
 			requirement = {
 				kind = exactVersion;
 				version = 1.2.0;
-			};
-		};
-		73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.5.0;
 			};
 		};
 		F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
@@ -1146,11 +1122,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = LabsPlatformSwift;
 		};
-		734BED9A2D9DE4B700964811 /* PennForms */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */;
-			productName = PennForms;
-		};
 		735727022F4CE1B200213ACA /* LabsPlatformSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LabsPlatformSwift;
@@ -1168,11 +1139,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
-		};
-		73E7A02B2CF158F3007BC1E3 /* Lottie */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */;
-			productName = Lottie;
 		};
 		8932694C28FC79FB003D4BF9 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;

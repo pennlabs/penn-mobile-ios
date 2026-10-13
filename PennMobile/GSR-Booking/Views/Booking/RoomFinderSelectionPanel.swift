@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-@_spi(Advanced) import SwiftUIIntrospect
 
 struct RoomFinderSelectionPanel: View {
     @ObservedObject var vm: GSRViewModel

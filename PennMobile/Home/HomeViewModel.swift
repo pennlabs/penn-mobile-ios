@@ -22,8 +22,6 @@ extension Optional {
 }
 
 @MainActor class StandardHomeViewModel: HomeViewModel {
-    static let sublettingBannerKey = "sublettingBannerDismissed"
-    
     static let announceable: [HomeViewAnnounceable] = [
         ReservationAnnounceable(),
         FeatureAnnounceable()
@@ -35,37 +33,8 @@ extension Optional {
     var account: Account?
     var navigationManager: NavigationManager?
     
-    init() {
-        populateSublettingBannerData()
-    }
-    
     func clearData() {
         data = HomeViewData()
-        populateSublettingBannerData()
-    }
-    
-    func populateSublettingBannerData() {
-        // data.showSublettingBanner = !UserDefaults.standard.bool(forKey: Self.sublettingBannerKey)
-        data.onStartSubletting = { [weak self] in
-            if let self, let navigationManager {
-                let tabFeatures = UserDefaults.standard.getTabBarFeatureIdentifiers()
-                if tabFeatures.contains(.subletting) {
-                    navigationManager.currentTab = FeatureIdentifier.subletting.rawValue
-                } else {
-                    navigationManager.currentTab = "More"
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(50)) {
-                        navigationManager.path = .init([FeatureIdentifier.subletting])
-                    }
-                }
-                
-                data.showSublettingBanner = false
-                UserDefaults.standard.set(true, forKey: Self.sublettingBannerKey)
-            }
-        }
-        data.onDismissSubletting = { [weak self] in
-            self?.data.showSublettingBanner = false
-            UserDefaults.standard.set(true, forKey: Self.sublettingBannerKey)
-        }
     }
     
     func fetchData(force: Bool) async throws {
