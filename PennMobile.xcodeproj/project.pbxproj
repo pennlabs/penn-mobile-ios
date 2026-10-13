@@ -10,12 +10,7 @@
 		4273BCFF2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		4273BD012BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
 		4273BD022BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */; };
-		42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6CA1ACDA271D2D5000EDB967 /* Kingfisher */; };
-		6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */; };
-		6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */; };
 		6E167A1C2ACC90A700F3709C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6E167A1B2ACC90A700F3709C /* Kingfisher */; };
 		6E4D821C2AC8C91C009AB78E /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6E4D821D2AC8C91C009AB78E /* PennMobileShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -29,8 +24,6 @@
 		737F2B2A304A38800093F7A0 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 737F2B29304A38800093F7A0 /* LabsPlatformSwift */; };
 		73816803307E83CE003FC9E4 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 73816802307E83CE003FC9E4 /* SwiftyJSON */; };
 		73E7A02C2CF158F3007BC1E3 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 73E7A02B2CF158F3007BC1E3 /* Lottie */; };
-		8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693428FC75A5003D4BF9 /* WidgetKit.framework */; };
-		8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8932693628FC75A5003D4BF9 /* SwiftUI.framework */; };
 		8932694428FC75A6003D4BF9 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8932693328FC75A5003D4BF9 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 8932694C28FC79FB003D4BF9 /* SwiftyJSON */; };
 		89EA262E290F9411008F26CF /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 89EA262D290F9411008F26CF /* Intents.intentdefinition */; };
@@ -100,8 +93,6 @@
 		42632DFA2CB9C77B0028CC31 /* Fastfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Fastfile; sourceTree = "<group>"; };
 		42632DFB2CB9C77B0028CC31 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = SOURCE_ROOT; };
-		42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
-		42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/iOSSupport/System/Library/Frameworks/ActivityKit.framework; sourceTree = DEVELOPER_DIR; };
 		6C1991BC27B5CA4D00BBB402 /* NotificationDevelopment.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationDevelopment.xcconfig; sourceTree = "<group>"; };
 		6C1991BD27B5CA8500BBB402 /* NotificationRelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = NotificationRelease.xcconfig; sourceTree = "<group>"; };
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
@@ -109,12 +100,63 @@
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73816801307E839A003FC9E4 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		8932693428FC75A5003D4BF9 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		8932693628FC75A5003D4BF9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		89EA262D290F9411008F26CF /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		73817FF1307E9234003FC9E4 /* Exceptions for "Frameworks" folder in "WidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Firebase/FBLPromises.xcframework,
+				Firebase/FirebaseAnalytics.xcframework,
+				Firebase/FirebaseCore.xcframework,
+				Firebase/FirebaseCoreExtension.xcframework,
+				Firebase/FirebaseCoreInternal.xcframework,
+				Firebase/FirebaseCrashlytics.xcframework,
+				Firebase/FirebaseInstallations.xcframework,
+				Firebase/FirebaseRemoteConfigInterop.xcframework,
+				Firebase/FirebaseSessions.xcframework,
+				Firebase/GoogleAdsOnDeviceConversion.xcframework,
+				Firebase/GoogleAppMeasurement.xcframework,
+				Firebase/GoogleAppMeasurementIdentitySupport.xcframework,
+				Firebase/GoogleDataTransport.xcframework,
+				Firebase/GoogleUtilities.xcframework,
+				Firebase/nanopb.xcframework,
+				Firebase/run,
+				"Firebase/upload-symbols",
+			);
+			target = 8932693228FC75A5003D4BF9 /* WidgetExtension */;
+		};
+		73817FF2307E9234003FC9E4 /* Exceptions for "Frameworks" folder in "PennMobileShared" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Firebase/FBLPromises.xcframework,
+				Firebase/FirebaseAnalytics.xcframework,
+				Firebase/FirebaseCore.xcframework,
+				Firebase/FirebaseCoreExtension.xcframework,
+				Firebase/FirebaseCoreInternal.xcframework,
+				Firebase/FirebaseCrashlytics.xcframework,
+				Firebase/FirebaseInstallations.xcframework,
+				Firebase/FirebaseRemoteConfigInterop.xcframework,
+				Firebase/FirebaseSessions.xcframework,
+				Firebase/GoogleAdsOnDeviceConversion.xcframework,
+				Firebase/GoogleAppMeasurement.xcframework,
+				Firebase/GoogleAppMeasurementIdentitySupport.xcframework,
+				Firebase/GoogleDataTransport.xcframework,
+				Firebase/GoogleUtilities.xcframework,
+				Firebase/nanopb.xcframework,
+				Firebase/run,
+				"Firebase/upload-symbols",
+			);
+			target = 6E4D82152AC8C91C009AB78E /* PennMobileShared */;
+		};
+		73818001307E9267003FC9E4 /* Exceptions for "Frameworks" folder in "PennMobile" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Firebase/GoogleAppMeasurementIdentitySupport.xcframework,
+			);
+			target = 2166405F1EBADADA00746B8E /* PennMobile */;
+		};
 		89FEACA52E88F350008EC67C /* Exceptions for "PennMobileShared" folder in "PennMobileShared" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
@@ -147,9 +189,54 @@
 				"Feature Announcements/ChangeLogTemplate.json",
 			);
 		};
+		7381801C307E926B003FC9E4 /* Exceptions for "Frameworks" folder in "Embed Frameworks" phase from "PennMobile" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			attributesByRelativePath = {
+				Firebase/FBLPromises.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/FirebaseAnalytics.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/FirebaseCore.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/FirebaseCoreExtension.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/FirebaseCoreInternal.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/FirebaseCrashlytics.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/FirebaseInstallations.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/FirebaseRemoteConfigInterop.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/FirebaseSessions.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/GoogleAdsOnDeviceConversion.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/GoogleAppMeasurement.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/GoogleDataTransport.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+				Firebase/GoogleUtilities.xcframework = (CodeSignOnCopy, RemoveHeadersOnCopy, );
+			};
+			buildPhase = 6E4D821E2AC8C91C009AB78E /* Embed Frameworks */;
+			membershipExceptions = (
+				Firebase/FBLPromises.xcframework,
+				Firebase/FirebaseAnalytics.xcframework,
+				Firebase/FirebaseCore.xcframework,
+				Firebase/FirebaseCoreExtension.xcframework,
+				Firebase/FirebaseCoreInternal.xcframework,
+				Firebase/FirebaseCrashlytics.xcframework,
+				Firebase/FirebaseInstallations.xcframework,
+				Firebase/FirebaseRemoteConfigInterop.xcframework,
+				Firebase/FirebaseSessions.xcframework,
+				Firebase/GoogleAdsOnDeviceConversion.xcframework,
+				Firebase/GoogleAppMeasurement.xcframework,
+				Firebase/GoogleDataTransport.xcframework,
+				Firebase/GoogleUtilities.xcframework,
+			);
+		};
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		73817C7B307E8F84003FC9E4 /* Frameworks */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				73818001307E9267003FC9E4 /* Exceptions for "Frameworks" folder in "PennMobile" target */,
+				7381801C307E926B003FC9E4 /* Exceptions for "Frameworks" folder in "Embed Frameworks" phase from "PennMobile" target */,
+				73817FF1307E9234003FC9E4 /* Exceptions for "Frameworks" folder in "WidgetExtension" target */,
+				73817FF2307E9234003FC9E4 /* Exceptions for "Frameworks" folder in "PennMobileShared" target */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
 		89FEAC852E88F350008EC67C /* PennMobileShared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -183,15 +270,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				735727032F4CE1B200213ACA /* LabsPlatformSwift in Frameworks */,
-				42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */,
-				42AC0CC52DC7D8A20060DD5E /* ActivityKit.framework in Frameworks */,
-				6CE12F9026E82DC600284D9F /* FirebaseAnalytics in Frameworks */,
 				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				73816803307E83CE003FC9E4 /* SwiftyJSON in Frameworks */,
 				734BED9B2D9DE4B700964811 /* PennForms in Frameworks */,
 				6CA1ACDB271D2D5000EDB967 /* Kingfisher in Frameworks */,
 				737F2B27304A244C0093F7A0 /* LabsPlatformSwift in Frameworks */,
-				6CE12F9226E82DC600284D9F /* FirebaseCrashlytics in Frameworks */,
 				F213CCE223C3EE3E000AD90F /* SwiftSoup in Frameworks */,
 				737F2B2A304A38800093F7A0 /* LabsPlatformSwift in Frameworks */,
 				6E4D821C2AC8C91C009AB78E /* PennMobileShared.framework in Frameworks */,
@@ -205,8 +288,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */,
-				42AC0CC82DC7D9BF0060DD5E /* ActivityKit.framework in Frameworks */,
 				6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */,
 				6E5159F92AC8D88A004B3F41 /* SwiftyJSON in Frameworks */,
 			);
@@ -216,11 +297,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */,
-				42AC0CC62DC7D94D0060DD5E /* ActivityKit.framework in Frameworks */,
 				8932694D28FC79FB003D4BF9 /* SwiftyJSON in Frameworks */,
-				8932693728FC75A5003D4BF9 /* SwiftUI.framework in Frameworks */,
-				8932693528FC75A5003D4BF9 /* WidgetKit.framework in Frameworks */,
 				6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */,
 				6E167A1C2ACC90A700F3709C /* Kingfisher in Frameworks */,
 			);
@@ -240,7 +317,7 @@
 				4273BCFE2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy */,
 				42632DFC2CB9C77B0028CC31 /* fastlane */,
 				216640611EBADADA00746B8E /* Products */,
-				6D2C4E8629C0A2D81734AD99 /* Frameworks */,
+				73817C7B307E8F84003FC9E4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -307,17 +384,6 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
-		6D2C4E8629C0A2D81734AD99 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				42AC0CC42DC7D8A20060DD5E /* ActivityKit.framework */,
-				42AC0CC72DC7D9BF0060DD5E /* ActivityKit.framework */,
-				8932693428FC75A5003D4BF9 /* WidgetKit.framework */,
-				8932693628FC75A5003D4BF9 /* SwiftUI.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -349,13 +415,12 @@
 				6E4D821B2AC8C91C009AB78E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				73817C7B307E8F84003FC9E4 /* Frameworks */,
 				89FEAE182E88F399008EC67C /* PennMobile */,
 			);
 			name = PennMobile;
 			packageProductDependencies = (
 				F213CCE123C3EE3E000AD90F /* SwiftSoup */,
-				6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */,
-				6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */,
 				6CA1ACDA271D2D5000EDB967 /* Kingfisher */,
 				73E7A02B2CF158F3007BC1E3 /* Lottie */,
 				734BED9A2D9DE4B700964811 /* PennForms */,
@@ -385,6 +450,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				73817C7B307E8F84003FC9E4 /* Frameworks */,
 				89FEAC852E88F350008EC67C /* PennMobileShared */,
 			);
 			name = PennMobileShared;
@@ -410,6 +476,7 @@
 				6E5159F62AC8CA1B004B3F41 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				73817C7B307E8F84003FC9E4 /* Frameworks */,
 				89FEAF532E88F3A5008EC67C /* Widget */,
 			);
 			name = WidgetExtension;
@@ -465,7 +532,6 @@
 				F213CCE023C3EE3E000AD90F /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				6C4CC1F826E6B1720000B4A8 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */,
 				73E7A02A2CF158F3007BC1E3 /* XCRemoteSwiftPackageReference "lottie-ios" */,
@@ -723,6 +789,7 @@
 				);
 				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				OTHER_LDFLAGS = (
+					"-lc++",
 					"-ObjC",
 					"$(inherited)",
 				);
@@ -736,6 +803,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks\"/**";
 			};
 			name = Debug;
 		};
@@ -764,6 +832,7 @@
 				MARKETING_VERSION = "$(CF_BUNDLE_SHORT_VERSION_STRING)";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
+					"-lc++",
 					"-ObjC",
 					"$(inherited)",
 				);
@@ -776,6 +845,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/Frameworks\"/**";
 			};
 			name = Release;
 		};
@@ -1009,14 +1079,6 @@
 				minimumVersion = 5.0.1;
 			};
 		};
-		6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
-			};
-		};
 		734BED992D9DE4B700964811 /* XCRemoteSwiftPackageReference "PennForms" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pennlabs/PennForms";
@@ -1064,16 +1126,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F213CCE323C3F240000AD90F /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		6CE12F8F26E82DC600284D9F /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		6CE12F9126E82DC600284D9F /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6CE12F8E26E82DC600284D9F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
 		};
 		6E167A1B2ACC90A700F3709C /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

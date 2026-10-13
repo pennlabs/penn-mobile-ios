@@ -1,0 +1,5 @@
+framework module FBLPromises {
+umbrella header "FBLPromises.h"
+export *
+module * { export * }
+}

@@ -1,0 +1,694 @@
+{
+  "ABIRoot": {
+    "kind": "Root",
+    "name": "FirebaseCrashlytics",
+    "printedName": "FirebaseCrashlytics",
+    "children": [
+      {
+        "kind": "Import",
+        "name": "FirebaseRemoteConfigInterop",
+        "printedName": "FirebaseRemoteConfigInterop",
+        "declKind": "Import",
+        "moduleName": "FirebaseCrashlytics",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseCrashlytics"
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "CrashlyticsPersistenceLog",
+        "printedName": "CrashlyticsPersistenceLog",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "updateRolloutsStateToPersistence",
+            "printedName": "updateRolloutsStateToPersistence(rollouts:reportID:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "Data",
+                "printedName": "Foundation.Data",
+                "usr": "s:10Foundation4DataV"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseCrashlytics@objc(pl)FIRCLSPersistenceLog(im)updateRolloutsStateToPersistenceWithRollouts:reportID:",
+            "mangledName": "$s19FirebaseCrashlytics0B14PersistenceLogP021updateRolloutsStateToC08rollouts8reportIDy10Foundation4DataV_SStF",
+            "moduleName": "FirebaseCrashlytics",
+            "genericSig": "<τ_0_0 where τ_0_0 : FirebaseCrashlytics.CrashlyticsPersistenceLog>",
+            "sugared_genericSig": "<Self where Self : FirebaseCrashlytics.CrashlyticsPersistenceLog>",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "debugLog",
+            "printedName": "debugLog(message:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseCrashlytics@objc(pl)FIRCLSPersistenceLog(im)debugLogWithMessage:",
+            "mangledName": "$s19FirebaseCrashlytics0B14PersistenceLogP05debugD07messageySS_tF",
+            "moduleName": "FirebaseCrashlytics",
+            "genericSig": "<τ_0_0 where τ_0_0 : FirebaseCrashlytics.CrashlyticsPersistenceLog>",
+            "sugared_genericSig": "<Self where Self : FirebaseCrashlytics.CrashlyticsPersistenceLog>",
+            "protocolReq": true,
+            "declAttributes": [
+              "ObjC"
+            ],
+            "reqNewWitnessTableEntry": true,
+            "funcSelfKind": "NonMutating"
+          }
+        ],
+        "declKind": "Protocol",
+        "usr": "c:@M@FirebaseCrashlytics@objc(pl)FIRCLSPersistenceLog",
+        "mangledName": "$s19FirebaseCrashlytics0B14PersistenceLogP",
+        "moduleName": "FirebaseCrashlytics",
+        "genericSig": "<τ_0_0 : AnyObject>",
+        "sugared_genericSig": "<Self : AnyObject>",
+        "objc_name": "FIRCLSPersistenceLog",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          }
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "CrashlyticsRemoteConfigManager",
+        "printedName": "CrashlyticsRemoteConfigManager",
+        "children": [
+          {
+            "kind": "Var",
+            "name": "maxRolloutAssignments",
+            "printedName": "maxRolloutAssignments",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:19FirebaseCrashlytics0B19RemoteConfigManagerC21maxRolloutAssignmentsSivpZ",
+            "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC21maxRolloutAssignmentsSivpZ",
+            "moduleName": "FirebaseCrashlytics",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:19FirebaseCrashlytics0B19RemoteConfigManagerC21maxRolloutAssignmentsSivgZ",
+                "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC21maxRolloutAssignmentsSivgZ",
+                "moduleName": "FirebaseCrashlytics",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "maxParameterValueLength",
+            "printedName": "maxParameterValueLength",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Int",
+                "printedName": "Swift.Int",
+                "usr": "s:Si"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "s:19FirebaseCrashlytics0B19RemoteConfigManagerC23maxParameterValueLengthSivpZ",
+            "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC23maxParameterValueLengthSivpZ",
+            "moduleName": "FirebaseCrashlytics",
+            "static": true,
+            "declAttributes": [
+              "HasInitialValue",
+              "Final",
+              "HasStorage",
+              "AccessControl"
+            ],
+            "isLet": true,
+            "hasStorage": true,
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Int",
+                    "printedName": "Swift.Int",
+                    "usr": "s:Si"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "s:19FirebaseCrashlytics0B19RemoteConfigManagerC23maxParameterValueLengthSivgZ",
+                "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC23maxParameterValueLengthSivgZ",
+                "moduleName": "FirebaseCrashlytics",
+                "static": true,
+                "implicit": true,
+                "declAttributes": [
+                  "Final"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Var",
+            "name": "rolloutAssignment",
+            "printedName": "rolloutAssignment",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Array",
+                "printedName": "[FirebaseRemoteConfigInterop.RolloutAssignment]",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "RolloutAssignment",
+                    "printedName": "FirebaseRemoteConfigInterop.RolloutAssignment",
+                    "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment"
+                  }
+                ],
+                "usr": "s:Sa"
+              }
+            ],
+            "declKind": "Var",
+            "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSRemoteConfigManager(py)rolloutAssignment",
+            "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC17rolloutAssignmentSay0acD7Interop07RolloutG0CGvp",
+            "moduleName": "FirebaseCrashlytics",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC"
+            ],
+            "accessors": [
+              {
+                "kind": "Accessor",
+                "name": "Get",
+                "printedName": "Get()",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "Array",
+                    "printedName": "[FirebaseRemoteConfigInterop.RolloutAssignment]",
+                    "children": [
+                      {
+                        "kind": "TypeNominal",
+                        "name": "RolloutAssignment",
+                        "printedName": "FirebaseRemoteConfigInterop.RolloutAssignment",
+                        "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutAssignment"
+                      }
+                    ],
+                    "usr": "s:Sa"
+                  }
+                ],
+                "declKind": "Accessor",
+                "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSRemoteConfigManager(im)rolloutAssignment",
+                "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC17rolloutAssignmentSay0acD7Interop07RolloutG0CGvg",
+                "moduleName": "FirebaseCrashlytics",
+                "declAttributes": [
+                  "ObjC"
+                ],
+                "accessorKind": "get"
+              }
+            ]
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init(remoteConfig:persistenceDelegate:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CrashlyticsRemoteConfigManager",
+                "printedName": "FirebaseCrashlytics.CrashlyticsRemoteConfigManager",
+                "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSRemoteConfigManager"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "RemoteConfigInterop",
+                "printedName": "any FirebaseRemoteConfigInterop.RemoteConfigInterop",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(pl)FIRRemoteConfigInterop"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "CrashlyticsPersistenceLog",
+                "printedName": "any FirebaseCrashlytics.CrashlyticsPersistenceLog",
+                "usr": "c:@M@FirebaseCrashlytics@objc(pl)FIRCLSPersistenceLog"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSRemoteConfigManager(im)initWithRemoteConfig:persistenceDelegate:",
+            "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC06remoteD019persistenceDelegateAC0acD7Interop0cdI0_p_AA0B14PersistenceLog_ptcfc",
+            "moduleName": "FirebaseCrashlytics",
+            "objc_name": "initWithRemoteConfig:persistenceDelegate:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC"
+            ],
+            "init_kind": "Designated"
+          },
+          {
+            "kind": "Function",
+            "name": "updateRolloutsState",
+            "printedName": "updateRolloutsState(rolloutsState:reportID:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Void",
+                "printedName": "()"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "RolloutsState",
+                "printedName": "FirebaseRemoteConfigInterop.RolloutsState",
+                "usr": "c:@M@FirebaseRemoteConfigInterop@objc(cs)FIRRolloutsState"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSRemoteConfigManager(im)updateRolloutsStateWithRolloutsState:reportID:",
+            "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC19updateRolloutsState08rolloutsH08reportIDy0acD7Interop0gH0C_SStF",
+            "moduleName": "FirebaseCrashlytics",
+            "objc_name": "updateRolloutsStateWithRolloutsState:reportID:",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Function",
+            "name": "getRolloutAssignmentsEncodedJsonString",
+            "printedName": "getRolloutAssignmentsEncodedJsonString()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "Optional",
+                "printedName": "Swift.String?",
+                "children": [
+                  {
+                    "kind": "TypeNominal",
+                    "name": "String",
+                    "printedName": "Swift.String",
+                    "usr": "s:SS"
+                  }
+                ],
+                "usr": "s:Sq"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSRemoteConfigManager(im)getRolloutAssignmentsEncodedJsonString",
+            "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC38getRolloutAssignmentsEncodedJsonStringSSSgyF",
+            "moduleName": "FirebaseCrashlytics",
+            "declAttributes": [
+              "AccessControl",
+              "ObjC",
+              "RawDocComment"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "CrashlyticsRemoteConfigManager",
+                "printedName": "FirebaseCrashlytics.CrashlyticsRemoteConfigManager",
+                "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSRemoteConfigManager"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSRemoteConfigManager(im)init",
+            "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerCACycfc",
+            "moduleName": "FirebaseCrashlytics",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSRemoteConfigManager",
+        "mangledName": "$s19FirebaseCrashlytics0B19RemoteConfigManagerC",
+        "moduleName": "FirebaseCrashlytics",
+        "objc_name": "FIRCLSRemoteConfigManager",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "FirebaseRemoteConfigInterop",
+        "printedName": "FirebaseRemoteConfigInterop",
+        "declKind": "Import",
+        "moduleName": "FirebaseCrashlytics",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseCrashlytics"
+      },
+      {
+        "kind": "Import",
+        "name": "Foundation",
+        "printedName": "Foundation",
+        "declKind": "Import",
+        "moduleName": "FirebaseCrashlytics",
+        "declAttributes": [
+          "RawDocComment"
+        ]
+      },
+      {
+        "kind": "TypeDecl",
+        "name": "FileUtility",
+        "printedName": "FileUtility",
+        "children": [
+          {
+            "kind": "Function",
+            "name": "stringToHexConverter",
+            "printedName": "stringToHexConverter(for:)",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              }
+            ],
+            "declKind": "Func",
+            "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSwiftFileUtility(cm)stringToHexConverterFor:",
+            "mangledName": "$s19FirebaseCrashlytics11FileUtilityC20stringToHexConverter3forS2S_tFZ",
+            "moduleName": "FirebaseCrashlytics",
+            "static": true,
+            "objc_name": "stringToHexConverterFor:",
+            "declAttributes": [
+              "Final",
+              "AccessControl",
+              "ObjC"
+            ],
+            "funcSelfKind": "NonMutating"
+          },
+          {
+            "kind": "Constructor",
+            "name": "init",
+            "printedName": "init()",
+            "children": [
+              {
+                "kind": "TypeNominal",
+                "name": "FileUtility",
+                "printedName": "FirebaseCrashlytics.FileUtility",
+                "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSwiftFileUtility"
+              }
+            ],
+            "declKind": "Constructor",
+            "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSwiftFileUtility(im)init",
+            "mangledName": "$s19FirebaseCrashlytics11FileUtilityCACycfc",
+            "moduleName": "FirebaseCrashlytics",
+            "overriding": true,
+            "implicit": true,
+            "objc_name": "init",
+            "declAttributes": [
+              "Dynamic",
+              "ObjC",
+              "Override"
+            ],
+            "init_kind": "Designated"
+          }
+        ],
+        "declKind": "Class",
+        "usr": "c:@M@FirebaseCrashlytics@objc(cs)FIRCLSwiftFileUtility",
+        "mangledName": "$s19FirebaseCrashlytics11FileUtilityC",
+        "moduleName": "FirebaseCrashlytics",
+        "objc_name": "FIRCLSwiftFileUtility",
+        "declAttributes": [
+          "AccessControl",
+          "ObjC",
+          "RawDocComment"
+        ],
+        "superclassUsr": "c:objc(cs)NSObject",
+        "inheritsConvenienceInitializers": true,
+        "superclassNames": [
+          "ObjectiveC.NSObject"
+        ],
+        "conformances": [
+          {
+            "kind": "Conformance",
+            "name": "Copyable",
+            "printedName": "Copyable",
+            "usr": "s:s8CopyableP",
+            "mangledName": "$ss8CopyableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Escapable",
+            "printedName": "Escapable",
+            "usr": "s:s9EscapableP",
+            "mangledName": "$ss9EscapableP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Equatable",
+            "printedName": "Equatable",
+            "usr": "s:SQ",
+            "mangledName": "$sSQ"
+          },
+          {
+            "kind": "Conformance",
+            "name": "Hashable",
+            "printedName": "Hashable",
+            "usr": "s:SH",
+            "mangledName": "$sSH"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CVarArg",
+            "printedName": "CVarArg",
+            "usr": "s:s7CVarArgP",
+            "mangledName": "$ss7CVarArgP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObservingPublishing",
+            "printedName": "_KeyValueCodingAndObservingPublishing",
+            "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+            "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "_KeyValueCodingAndObserving",
+            "printedName": "_KeyValueCodingAndObserving",
+            "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+            "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomStringConvertible",
+            "printedName": "CustomStringConvertible",
+            "usr": "s:s23CustomStringConvertibleP",
+            "mangledName": "$ss23CustomStringConvertibleP"
+          },
+          {
+            "kind": "Conformance",
+            "name": "CustomDebugStringConvertible",
+            "printedName": "CustomDebugStringConvertible",
+            "usr": "s:s28CustomDebugStringConvertibleP",
+            "mangledName": "$ss28CustomDebugStringConvertibleP"
+          }
+        ]
+      }
+    ],
+    "json_format_version": 8
+  },
+  "ConstValues": [
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseCrashlytics\/Crashlytics\/Crashlytics\/Rollouts\/CrashlyticsRemoteConfigManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 958,
+      "length": 3,
+      "value": "128"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseCrashlytics\/Crashlytics\/Crashlytics\/Rollouts\/CrashlyticsRemoteConfigManager.swift",
+      "kind": "IntegerLiteral",
+      "offset": 1008,
+      "length": 3,
+      "value": "256"
+    },
+    {
+      "filePath": "\/var\/folders\/36\/tjdph2t965j8snz9_vkdnw0r0000gn\/T\/ZipRelease\/2026-10-02T19-23-19\/project-macos\/Pods\/FirebaseCrashlytics\/Crashlytics\/Crashlytics\/Rollouts\/CrashlyticsRemoteConfigManager.swift",
+      "kind": "Array",
+      "offset": 1099,
+      "length": 2,
+      "value": "[]"
+    }
+  ]
+}

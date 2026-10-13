@@ -1,0 +1,33 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.2.3 effective-5.10 (swiftlang-6.2.3.3.21 clang-1700.6.3.2)
+// swift-module-flags: -target x86_64-apple-tvos15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -module-name FirebaseCrashlytics
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.2.3
+@_exported import FirebaseCrashlytics
+import FirebaseRemoteConfigInterop
+import Foundation
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@objc(FIRCLSPersistenceLog) public protocol CrashlyticsPersistenceLog {
+  @objc func updateRolloutsStateToPersistence(rollouts: Foundation.Data, reportID: Swift.String)
+  @objc func debugLog(message: Swift.String)
+}
+@objc(FIRCLSRemoteConfigManager) public class CrashlyticsRemoteConfigManager : ObjectiveC.NSObject {
+  public static let maxRolloutAssignments: Swift.Int
+  public static let maxParameterValueLength: Swift.Int
+  @objc public var rolloutAssignment: [FirebaseRemoteConfigInterop.RolloutAssignment] {
+    @objc get
+  }
+  @objc public init(remoteConfig: any FirebaseRemoteConfigInterop.RemoteConfigInterop, persistenceDelegate: any FirebaseCrashlytics.CrashlyticsPersistenceLog)
+  @objc public func updateRolloutsState(rolloutsState: FirebaseRemoteConfigInterop.RolloutsState, reportID: Swift.String)
+  #if compiler(>=5.3) && $NonescapableTypes
+  @objc public func getRolloutAssignmentsEncodedJsonString() -> Swift.String?
+  #endif
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc(FIRCLSwiftFileUtility) public class FileUtility : ObjectiveC.NSObject {
+  @objc public static func stringToHexConverter(for string: Swift.String) -> Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
