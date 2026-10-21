@@ -21,12 +21,12 @@ public extension PennMobileApplication.Clubs {
             self.path = "/tickets/\(id.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? id)/"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "This ticket doesn't exist or you don't have access to it.")
+                ToastConfiguration(message: "This ticket doesn't exist or you don't have access to it.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Clubs is having trouble loading this ticket right now.")
+                ToastConfiguration(message: "Penn Clubs is having trouble loading this ticket right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

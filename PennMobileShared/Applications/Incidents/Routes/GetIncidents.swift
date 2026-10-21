@@ -18,12 +18,12 @@ public extension PennMobileApplication.Incidents {
 
         public init() {}
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to load Penn Labs service status.")
+                ToastConfiguration(message: "Unable to load Penn Labs service status.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "The Penn Labs status page is having trouble loading right now.")
+                ToastConfiguration(message: "The Penn Labs status page is having trouble loading right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

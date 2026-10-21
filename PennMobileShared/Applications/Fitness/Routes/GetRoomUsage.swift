@@ -26,12 +26,12 @@ public extension PennMobileApplication.Fitness {
             ]
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Usage data isn't available for this fitness center.")
+                ToastConfiguration(message: "Usage data isn't available for this fitness center.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading fitness center usage right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading fitness center usage right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

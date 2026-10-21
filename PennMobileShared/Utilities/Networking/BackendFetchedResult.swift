@@ -10,4 +10,13 @@ public enum BackendFetchedResult<T> {
     case success(_ value: T)
     case failure(_ error: BackendError)
     case pending
+    
+    public func unwrap() -> T? {
+        switch self {
+        case .success(let value):
+            return value
+        case .failure(_), .pending:
+            return nil
+        }
+    }
 }

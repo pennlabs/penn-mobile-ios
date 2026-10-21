@@ -18,16 +18,17 @@ public extension PennMobileApplication.Polls {
         public let bodyJSON: (any Encodable & Sendable)?
         public let responseDecoder: JSONDecoder? = JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601)
 
-        public init(idHash: String) {
+        public init() async {
+            let idHash = await PennMobileApplication.Polls.getPollsNetworkManagerId()
             self.bodyJSON = ["id_hash": idHash]
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to load active polls.")
+                ToastConfiguration(message: "Unable to load active polls.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading polls right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading polls right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

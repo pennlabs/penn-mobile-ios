@@ -10,12 +10,12 @@ import SwiftUI
 import PennMobileShared
 
 struct GSRView: View {
-    @State private var vm = GSRViewModel()
+    @StateObject private var vm = GSRViewModel()
     @State private var selectedTab: GSRTab = .book
-    @State private var isMapView = false
+    @State private var message: String?
     
     private var isShowingMessage: Binding<Bool> {
-        Binding(get: { vm.message != nil }, set: { if !$0 { vm.message = nil } })
+        Binding(get: { message != nil }, set: { if !$0 { message = nil } })
     }
     
     var body: some View {
@@ -26,21 +26,21 @@ struct GSRView: View {
                 switch selectedTab {
                 case .book:
                     ZStack(alignment: .bottomTrailing) {
-                        if isMapView {
-                            GSRMapView(locations: vm.locations.standardGSRSort)
+                        if vm.isMapView {
+                            GSRMapView(locations: vm.availableLocations.standardGSRSort)
                         } else {
-                            GSRLocationListView(locations: vm.locations.standardGSRSort, openRoomCounts: vm.openRoomCounts)
+                            GSRLocationListView(locations: vm.availableLocations.standardGSRSort, openRoomCounts: vm.gsrGetLastPulledAvailability.mapValues(\.availCount))
                         }
-                        GSRMapToggleButton(isMapView: $isMapView)
+                        GSRMapToggleButton(isMapView: $vm.isMapView)
                             .padding(20)
                     }
                 case .reservations:
                     GSRReservationsView(
-                        reservations: vm.reservations,
+                        reservations: vm.currentReservations,
                         shareLinks: vm.shareLinks,
                         onRefresh: { await vm.refreshReservations() },
-                        onAddToCalendar: { reservation in Task { await vm.addToCalendar(reservation) } },
-                        onCancel: { reservation in Task { await vm.cancel(reservation) } }
+                        onAddToCalendar: { reservation in Task { await addToCalendar(reservation) } },
+                        onCancel: { reservation in Task { await vm.cancelReservation(reservation) } }
                     )
                     .transition(.blurReplace)
                     .task { await vm.refreshReservations() }
@@ -54,15 +54,31 @@ struct GSRView: View {
                 }
             }
             .task { await vm.fetchInitialState() }
-            .task(id: vm.locations) {
+            .task(id: vm.availableLocations) {
                 while !Task.isCancelled {
                     await vm.refreshOpenRoomCounts()
                     try? await Task.sleep(for: .seconds(90))
                 }
             }
         }
-        .alert(vm.message ?? "", isPresented: isShowingMessage) {
+        .alert(message ?? "", isPresented: isShowingMessage) {
             Button("OK") {}
+        }
+    }
+    
+    private func addToCalendar(_ reservation: GSRReservation) async {
+        do {
+            try await CalendarHelper.addToCalendar(
+                title: "GSR Booking: \(reservation.gsr.name) \(reservation.roomName)",
+                location: reservation.gsr.name,
+                start: reservation.start,
+                end: reservation.end
+            )
+            message = "Added to calendar!"
+        } catch CalendarError.accessDenied {
+            message = "Calendar access denied. Please enable it in Settings."
+        } catch {
+            message = "Failed to add event to calendar."
         }
     }
 }

@@ -26,12 +26,12 @@ public extension PennMobileApplication.Dining {
             ]
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Your Campus Express sign-in could not be verified.")
+                ToastConfiguration(message: "Your Campus Express sign-in could not be verified.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Campus Express is having trouble signing you in right now.")
+                ToastConfiguration(message: "Campus Express is having trouble signing you in right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

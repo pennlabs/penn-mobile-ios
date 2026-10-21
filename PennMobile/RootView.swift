@@ -19,28 +19,29 @@ struct RootView: View {
     
     var body: some View {
         if platform.isLoggedIn {
-            TabView {
-                VStack {
-                    Text("Logged In!")
-                    Button("Log Out") {
-                        platform.logoutPlatform()
-                    }
-                    Button("Refresh Venues") {
-                        Task {
-                            await $venues.refresh()
-                        }
-                    }
-                    if case .success(let values) = venues {
-                        ForEach(values) { el in
-                            Text(el.name)
-                        }
-                    }
-                }
-                .tabItem { Label("Home", systemImage: "house") }
-
-                GSRView()
-                    .tabItem { Label("GSR", systemImage: "studentdesk") }
-            }
+            CentralTabs()
+//            TabView {
+//                VStack {
+//                    Text("Logged In!")
+//                    Button("Log Out") {
+//                        platform.logoutPlatform()
+//                    }
+//                    Button("Refresh Venues") {
+//                        Task {
+//                            await $venues.refresh()
+//                        }
+//                    }
+//                    if case .success(let values) = venues {
+//                        ForEach(values) { el in
+//                            Text(el.name)
+//                        }
+//                    }
+//                }
+//                .tabItem { Label("Home", systemImage: "house") }
+//
+//                GSRView()
+//                    .tabItem { Label("GSR", systemImage: "studentdesk") }
+//            }
         } else {
             LoggedOutView()
         }

@@ -22,12 +22,12 @@ public extension PennMobileApplication.Notifications {
             self.bodyJSON = ["is_dev": isDev]
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to register this device for notifications.")
+                ToastConfiguration(message: "Unable to register this device for notifications.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble registering this device for notifications right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble registering this device for notifications right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

@@ -24,7 +24,7 @@ public protocol PennMobileEndpoint: Sendable {
     
     var cacheResult: Bool { get }
     
-    func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler
+    func errorResponse(error: BackendError) -> ToastConfiguration
 }
 
 public extension PennMobileEndpoint {
@@ -40,7 +40,12 @@ public extension PennMobileEndpoint {
     var cacheResult: Bool { false }
 
     @discardableResult
-    func execute(_ presentToast: ToastPresentationManager?) async -> BackendFetchedResult<Response> {
-        await PennMobileBackend.executeEndpoint(self, toast: presentToast ?? { _ in })
+    func execute(shouldSilentlyFail: Bool = false) async -> BackendFetchedResult<Response> {
+        // The toast manager function is optional because the widget runtime never gives it a value, but the app does
+        let managerDisplayToast = !shouldSilentlyFail ? await ToastPresentationManager.shared.displayToast : nil
+        
+        return await PennMobileBackend.executeEndpoint(self, toast: managerDisplayToast ?? { _ in })
     }
 }
+
+

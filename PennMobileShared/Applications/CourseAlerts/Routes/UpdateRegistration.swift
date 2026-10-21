@@ -32,12 +32,12 @@ public extension PennMobileApplication.CourseAlerts {
             self.bodyJSON = Body(deleted: deleted, auto_resubscribe: autoResubscribe, cancelled: cancelled, resubscribe: resubscribe)
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "This course alert could not be updated because it may no longer exist.")
+                ToastConfiguration(message: "This course alert could not be updated because it may no longer exist.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Course Alert is having trouble updating this alert right now.")
+                ToastConfiguration(message: "Penn Course Alert is having trouble updating this alert right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

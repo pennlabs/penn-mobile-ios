@@ -24,12 +24,12 @@ public extension PennMobileApplication.Clubs {
             self.bodyJSON = ["attended": attended]
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "You don't have permission to update attendance for this ticket.")
+                ToastConfiguration(message: "You don't have permission to update attendance for this ticket.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Clubs is having trouble updating ticket attendance right now.")
+                ToastConfiguration(message: "Penn Clubs is having trouble updating ticket attendance right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

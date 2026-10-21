@@ -10,30 +10,48 @@ import SwiftUI
 import PennMobileShared
 
 struct GSRBookingView: View {
-    @Bindable var vm: GSRViewModel
+    @ObservedObject var vm: GSRViewModel
     let initialLocation: GSRLocation
     let onViewReservations: () -> Void
-    
+
     @Environment(\.dismiss) private var dismiss
-    
+    @State private var message: String?
+
     private var location: Binding<GSRLocation?> {
-        Binding(get: { vm.selectedLocation }, set: { if let location = $0 { vm.selectLocation(location) } })
+        Binding(get: { vm.selectedLocation }, set: { if let location = $0 { setLocation(location) } })
     }
-    
-    private var isShowingBookingSuccess: Binding<Bool> {
-        Binding(get: { vm.recentBooking != nil }, set: { if !$0 { vm.recentBooking = nil } })
+
+    private var isShowingMessage: Binding<Bool> {
+        Binding(get: { message != nil }, set: { if !$0 { message = nil } })
     }
-    
+
+    private var displayedRooms: [GSRRoom] {
+        vm.roomsAtSelectedLocation.compactMap { room in
+            guard vm.settings.shouldShowFullyUnavailableRooms || room.availability.contains(where: \.isAvailable) else {
+                return nil
+            }
+            var displayed = room
+            displayed.availability = vm.getRelevantAvailability(room: room)
+            return displayed
+        }
+    }
+
+    private var headerTimes: [Date] {
+        let slots = vm.getRelevantAvailability()
+        guard let start = slots.first?.startTime else { return [] }
+        return [start] + slots.map(\.endTime)
+    }
+
     var body: some View {
         VStack {
             Picker("Location", selection: location) {
-                ForEach(vm.locations.standardGSRSort, id: \.self) { location in
+                ForEach(vm.availableLocations.standardGSRSort, id: \.self) { location in
                     Text(location.name)
                         .tag(Optional(location))
                 }
             }
             .padding(.horizontal)
-            
+
             Picker("Date", selection: $vm.selectedDate) {
                 ForEach(vm.datePickerOptions, id: \.self) { option in
                     Text(option.localizedGSRText)
@@ -41,35 +59,45 @@ struct GSRBookingView: View {
             }
             .pickerStyle(.segmented)
             .padding(.horizontal)
-            
+
             if vm.isLoadingAvailability {
                 GSRLoadingView()
             } else if vm.hasAvailableBooking {
                 GSRTwoWayScrollView(
-                    rooms: vm.displayedRooms,
-                    headerTimes: vm.headerTimes,
-                    availableStartTimes: vm.availableStartTimes,
-                    sortedStartTimes: vm.sortedStartTimes,
-                    selectedSlotIDs: vm.selectedSlotIDs,
+                    rooms: displayedRooms,
+                    headerTimes: headerTimes,
+                    availableStartTimes: Set(vm.roomsAtSelectedLocation.flatMap { $0.availability.filter(\.isAvailable).map(\.startTime) }),
+                    sortedStartTimes: vm.sortedStartTime,
+                    selectedSlotIDs: Set(vm.selectedTimeslots.map { $0.1.id }),
                     onToggleSlot: { slot, room in
-                        withAnimation(.spring(duration: 0.2)) {
-                            vm.toggleTimeslot(slot, in: room)
+                        do {
+                            try vm.handleTimeslotGesture(slot: slot, room: room)
+                        } catch {
+                            message = error.localizedDescription
                         }
                     },
                     onToggleSort: { time in
                         withAnimation(.snappy(duration: 0.3)) {
-                            vm.toggleSort(at: time)
+                            vm.handleSortAction(to: time)
                         }
                     }
                 )
                 .overlay(alignment: .bottom) {
                     GSRBookingToolbarView(
                         hasSelection: !vm.selectedTimeslots.isEmpty,
-                        hasSortFilters: !vm.sortedStartTimes.isEmpty,
-                        onBook: { Task { await vm.book() } },
+                        hasSortFilters: !vm.sortedStartTime.isEmpty,
+                        onBook: {
+                            Task {
+                                do {
+                                    try await vm.book()
+                                } catch {
+                                    message = error.localizedDescription
+                                }
+                            }
+                        },
                         onResetFilters: {
                             withAnimation(.snappy(duration: 0.3)) {
-                                vm.clearSortFilters()
+                                vm.clearSortedFilters()
                             }
                         }
                     )
@@ -82,20 +110,19 @@ struct GSRBookingView: View {
         .navigationTitle("Choose a Time Slot")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                GSRSettingsButton(showFullyUnavailableRooms: $vm.showFullyUnavailableRooms)
+                GSRSettingsButton(showFullyUnavailableRooms: $vm.settings.shouldShowFullyUnavailableRooms)
             }
         }
-        .task {
-            vm.selectLocation(initialLocation)
-            await vm.updateAvailability()
-        }
-        .onChange(of: vm.selectedLocation) {
-            Task { await vm.updateAvailability() }
+        .onAppear {
+            setLocation(initialLocation)
         }
         .onChange(of: vm.selectedDate) {
             Task { await vm.updateAvailability() }
         }
-        .alert("Booking Successful", isPresented: isShowingBookingSuccess, presenting: vm.recentBooking) { _ in
+        .alert(message ?? "", isPresented: isShowingMessage) {
+            Button("OK") {}
+        }
+        .alert("Booking Successful", isPresented: $vm.showSuccessfulBookingAlert, presenting: vm.recentBooking) { _ in
             Button("Okay") {
                 dismiss()
             }
@@ -105,6 +132,16 @@ struct GSRBookingView: View {
             }
         } message: { booking in
             Text("You've successfully made a reservation for \(booking.roomName)")
+        }
+    }
+
+    private func setLocation(_ location: GSRLocation) {
+        Task {
+            do {
+                try await vm.setLocation(to: location)
+            } catch {
+                message = error.localizedDescription
+            }
         }
     }
 }

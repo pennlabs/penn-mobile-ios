@@ -31,12 +31,12 @@ public extension PennMobileApplication.CourseAlerts {
             self.bodyJSON = Body(profile: .init(push_notifications: pushNotifications))
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to update your course alert notification settings.")
+                ToastConfiguration(message: "Unable to update your course alert notification settings.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Course Alert is having trouble saving your notification settings right now.")
+                ToastConfiguration(message: "Penn Course Alert is having trouble saving your notification settings right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

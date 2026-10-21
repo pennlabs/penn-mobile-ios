@@ -38,7 +38,6 @@ public struct BackendFetched<Endpoint: PennMobileEndpoint>: DynamicProperty {
     @State private var response: BackendFetchedResult<Endpoint.Response>
     @State public private(set) var isLoading = false
     @State private var hasFetched = false
-    @Environment(\.presentToast) var presentToast: ToastPresentationManager?
 
     public init(_ endpoint: Endpoint) {
         self.endpoint = endpoint
@@ -56,7 +55,7 @@ public struct BackendFetched<Endpoint: PennMobileEndpoint>: DynamicProperty {
     @MainActor
     public func refresh() async {
         isLoading = true
-        response = await PennMobileBackend.executeEndpoint(endpoint, toast: presentToast ?? { _ in })
+        response = await PennMobileBackend.executeEndpoint(endpoint, toast: ToastPresentationManager.shared.displayToast ?? { _ in })
         isLoading = false
     }
 

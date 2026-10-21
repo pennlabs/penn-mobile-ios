@@ -19,12 +19,12 @@ public extension PennMobileApplication.Notifications {
             self.path = "/user/notifications/tokens/ios/\(token.hexString)/"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to unregister this device from notifications.")
+                ToastConfiguration(message: "Unable to unregister this device from notifications.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble unregistering this device from notifications right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble unregistering this device from notifications right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

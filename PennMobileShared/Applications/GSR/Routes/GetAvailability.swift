@@ -31,12 +31,12 @@ public extension PennMobileApplication.GSR {
             self.queryParams = params
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to load room availability for this location.")
+                ToastConfiguration(message: "Unable to load room availability for this location.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading room availability right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading room availability right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

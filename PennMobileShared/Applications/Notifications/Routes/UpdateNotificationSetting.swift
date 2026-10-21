@@ -27,12 +27,12 @@ public extension PennMobileApplication.Notifications {
             self.bodyJSON = Body(service: service, enabled: enabled)
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to update this notification setting.")
+                ToastConfiguration(message: "Unable to update this notification setting.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble saving your notification settings right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble saving your notification settings right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

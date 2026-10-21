@@ -21,12 +21,12 @@ public extension PennMobileApplication.Dining {
             self.headers = ["x-authorization": diningToken]
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to load your dining balance because your Campus Express session may have expired.")
+                ToastConfiguration(message: "Unable to load your dining balance because your Campus Express session may have expired.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Campus Express is having trouble loading your dining balance right now.")
+                ToastConfiguration(message: "Campus Express is having trouble loading your dining balance right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

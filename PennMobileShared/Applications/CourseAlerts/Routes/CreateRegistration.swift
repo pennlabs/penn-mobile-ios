@@ -29,12 +29,12 @@ public extension PennMobileApplication.CourseAlerts {
             self.bodyJSON = Body(section: section, auto_resubscribe: autoResubscribe)
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to create an alert for this section, which may be invalid or already subscribed to.")
+                ToastConfiguration(message: "Unable to create an alert for this section, which may be invalid or already subscribed to.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Course Alert is having trouble creating alerts right now.")
+                ToastConfiguration(message: "Penn Course Alert is having trouble creating alerts right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

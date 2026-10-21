@@ -20,12 +20,12 @@ public extension PennMobileApplication.Subletting {
             self.path = "/sublet/properties/\(id)/favorites/"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to add this sublet to your favorites.")
+                ToastConfiguration(message: "Unable to add this sublet to your favorites.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble updating your favorite sublets right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble updating your favorite sublets right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

@@ -20,12 +20,12 @@ public extension PennMobileApplication.Subletting {
             self.path = "/sublet/properties/\(id)/"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "This sublet doesn't exist or is no longer listed.")
+                ToastConfiguration(message: "This sublet doesn't exist or is no longer listed.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading this sublet right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading this sublet right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

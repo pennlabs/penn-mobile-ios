@@ -21,12 +21,12 @@ public extension PennMobileApplication.GSR {
             self.bodyJSON = ["booking_id": bookingId]
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "This reservation could not be cancelled because it may have already started or been cancelled.")
+                ToastConfiguration(message: "This reservation could not be cancelled because it may have already started or been cancelled.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble cancelling reservations right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble cancelling reservations right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

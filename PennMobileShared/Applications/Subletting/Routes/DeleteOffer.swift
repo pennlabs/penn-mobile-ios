@@ -23,12 +23,12 @@ public extension PennMobileApplication.Subletting {
             self.bodyJSON = data
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "This offer could not be withdrawn because it may no longer exist.")
+                ToastConfiguration(message: "This offer could not be withdrawn because it may no longer exist.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble withdrawing offers right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble withdrawing offers right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

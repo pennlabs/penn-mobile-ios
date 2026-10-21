@@ -1,22 +1,42 @@
 //
-//  PennMobileErrorHandler.swift
+//  ToastConfiguration.swift
 //  PennMobile
 //
-//  Created by Jonathan Melitski on 9/13/26.
+//  Created by Jonathan Melitski on 9/25/26.
 //  Copyright © 2026 PennLabs. All rights reserved.
 //
 
 import SwiftUI
 import LabsPlatformSwift
 
-public struct PennMobileBackendErrorHandler {
-    public let color: Color // this should be an enumerable for error type, or not even a parameter at all.
-    public let message: String
+public struct ToastConfiguration {
+    public let id: UUID
+    public let content: any View
+    public let accessibilityAnnouncement: String.LocalizationValue
+    
+    public init(id: UUID = UUID(), @ViewBuilder _ content: () -> any View, accessibilityAnnouncement: String.LocalizationValue) {
+        self.id = id
+        self.content = content()
+        self.accessibilityAnnouncement = accessibilityAnnouncement
+    }
+
+    public init(id: UUID = UUID(), message: String) {
+        self.id = id
+        let localized = String.LocalizationValue(message)
+        self.content = Text(LocalizedStringResource(localized))
+        self.accessibilityAnnouncement = localized
+    }
+    
+    public func postAccessibilityAnnouncement() {
+        var string = AttributedString(localized: accessibilityAnnouncement)
+        AccessibilityNotification.Announcement(string)
+            .post()
+    }
 }
 
-public extension PennMobileBackendErrorHandler {
+public extension ToastConfiguration {
     /// Messages shared across every endpoint. Endpoints provide their own messages for client and server errors and defer to this for the rest.
-    static func standard(for error: BackendError) -> PennMobileBackendErrorHandler {
+    static func standard(for error: BackendError) -> ToastConfiguration {
         let message = switch error {
         case .clientError:
             "Unable to complete this request."
@@ -43,13 +63,6 @@ public extension PennMobileBackendErrorHandler {
             "An unexpected error occurred."
         }
 
-        return PennMobileBackendErrorHandler(color: .red, message: message)
+        return self.init(message: message)
     }
-}
-
-
-public typealias ToastPresentationManager = @MainActor (PennMobileBackendErrorHandler) -> Void
-
-public extension EnvironmentValues {
-    @Entry var presentToast: ToastPresentationManager? = nil
 }

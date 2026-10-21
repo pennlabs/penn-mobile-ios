@@ -18,12 +18,12 @@ public extension PennMobileApplication.Wrapped {
             self.path = "/wrapped/semester/\(semester)/"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile Wrapped isn't available for this semester.")
+                ToastConfiguration(message: "Penn Mobile Wrapped isn't available for this semester.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading your Wrapped right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading your Wrapped right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

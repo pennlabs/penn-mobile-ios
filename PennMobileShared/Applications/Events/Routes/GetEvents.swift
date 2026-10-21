@@ -16,12 +16,12 @@ public extension PennMobileApplication.Events {
 
         public init() {}
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to load campus events.")
+                ToastConfiguration(message: "Unable to load campus events.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading campus events right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading campus events right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

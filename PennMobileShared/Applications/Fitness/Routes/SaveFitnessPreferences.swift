@@ -21,12 +21,12 @@ public extension PennMobileApplication.Fitness {
             self.bodyJSON = FitnessPreferences(rooms: roomIds)
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to save your favorite fitness centers.")
+                ToastConfiguration(message: "Unable to save your favorite fitness centers.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble saving your favorite fitness centers right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble saving your favorite fitness centers right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

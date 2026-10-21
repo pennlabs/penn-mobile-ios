@@ -19,12 +19,12 @@ public extension PennMobileApplication.GSR {
             self.path = "/gsr/share/\(shareCode)"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "This shared reservation doesn't exist or its link has been revoked.")
+                ToastConfiguration(message: "This shared reservation doesn't exist or its link has been revoked.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading this shared reservation right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading this shared reservation right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

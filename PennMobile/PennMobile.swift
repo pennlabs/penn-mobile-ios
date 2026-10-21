@@ -6,7 +6,7 @@
 //  Copyright © 2023 PennLabs. All rights reserved.
 //
 
-import Firebase
+//import Firebase
 import SwiftUI
 import LabsPlatformSwift
 import PennMobileShared
@@ -15,16 +15,22 @@ import PennMobileShared
 struct PennMobile: App {
     @UIApplicationDelegateAdaptor var delegate: AppDelegate
     init() {
-        #if DEBUG
-            FirebaseConfiguration.shared.setLoggerLevel(.min)
-        #endif
+        let lightweightLaunchForPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+        
+//        if !lightweightLaunchForPreview {
+//            #if DEBUG
+//            FirebaseConfiguration.shared.setLoggerLevel(.min)
+//            #endif
+//            
+//            FirebaseApp.configure()
+//        }
 
         // Register to receive delegate actions from rich notifications
 //        UNUserNotificationCenter.current().delegate = delegate
         
         LabsPlatform.initialize(clientId: InfoPlistEnvironment.labsOauthClientId, redirectUrl: "pennmobile://auth")
         LabsPlatform.shared?.delegate = PennMobilePlatformDelegate()
-        FirebaseApp.configure()
+        
         
         Task {
 //            IncidentsViewModel.shared.startUpdatePolling()
@@ -37,9 +43,15 @@ struct PennMobile: App {
             RootView()
                 .accentColor(Color("navigation"))
                 .attachLabsPlatform(analyticsRoot: "pennmobile")
-                .environment(\.presentToast) {
-                    print($0.message)
-                }
+                .attachToastPresentationManager()
         }
     }
 }
+
+#Preview {
+    RootView()
+        .accentColor(Color("navigation"))
+        .attachLabsPlatform(analyticsRoot: "pennmobile")
+        .attachToastPresentationManager()
+}
+

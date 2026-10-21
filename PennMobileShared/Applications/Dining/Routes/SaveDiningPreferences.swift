@@ -21,12 +21,12 @@ public extension PennMobileApplication.Dining {
             self.bodyJSON = ["venues": venueIds]
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to save your favorite dining halls.")
+                ToastConfiguration(message: "Unable to save your favorite dining halls.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble saving your favorite dining halls right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble saving your favorite dining halls right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

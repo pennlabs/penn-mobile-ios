@@ -8,7 +8,6 @@
 
 import UIKit
 import UserNotifications
-import Firebase
 import StoreKit
 import SwiftUI
 import WidgetKit

@@ -20,12 +20,12 @@ public extension PennMobileApplication.News {
 
         public init() {}
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to load the latest news article.")
+                ToastConfiguration(message: "Unable to load the latest news article.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "The news service is having trouble loading articles right now.")
+                ToastConfiguration(message: "The news service is having trouble loading articles right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

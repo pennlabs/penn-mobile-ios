@@ -19,12 +19,12 @@ public extension PennMobileApplication.Laundry {
             self.path = "/laundry/rooms/\(hallId)"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Machine availability isn't available for this laundry room.")
+                ToastConfiguration(message: "Machine availability isn't available for this laundry room.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading laundry machine availability right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading laundry machine availability right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

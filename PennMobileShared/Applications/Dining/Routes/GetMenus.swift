@@ -19,12 +19,12 @@ public extension PennMobileApplication.Dining {
             self.path = "/dining/menus/\(DateFormatter.yyyyMMdd.string(from: date))/"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Dining menus aren't available for this date.")
+                ToastConfiguration(message: "Dining menus aren't available for this date.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading dining menus right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading dining menus right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

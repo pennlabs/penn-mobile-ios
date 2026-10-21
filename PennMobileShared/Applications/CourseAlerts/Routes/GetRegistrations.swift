@@ -18,12 +18,12 @@ public extension PennMobileApplication.CourseAlerts {
 
         public init() {}
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to load your course alerts.")
+                ToastConfiguration(message: "Unable to load your course alerts.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Course Alert is having trouble loading your alerts right now.")
+                ToastConfiguration(message: "Penn Course Alert is having trouble loading your alerts right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

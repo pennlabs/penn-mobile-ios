@@ -32,12 +32,12 @@ public extension PennMobileApplication.CourseAlerts {
             self.bodyJSON = Body(semester: srcdb, sections: crns.map { Body.Section(id: $0) })
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to update your Penn Course Plan schedule with these sections.")
+                ToastConfiguration(message: "Unable to update your Penn Course Plan schedule with these sections.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Course Plan is having trouble updating your schedule right now.")
+                ToastConfiguration(message: "Penn Course Plan is having trouble updating your schedule right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

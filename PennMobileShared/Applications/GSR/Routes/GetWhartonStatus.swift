@@ -18,12 +18,12 @@ public extension PennMobileApplication.GSR {
 
         public init() {}
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to check your Wharton eligibility.")
+                ToastConfiguration(message: "Unable to check your Wharton eligibility.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble checking your Wharton eligibility right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble checking your Wharton eligibility right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

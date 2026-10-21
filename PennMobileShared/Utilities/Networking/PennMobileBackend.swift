@@ -16,7 +16,7 @@ public struct PennMobileBackend {
         return URL(string: "\(base)\(path)")!
     }
     
-    public static func executeEndpoint<T: PennMobileEndpoint>(_ endpoint: T, toast presentToast: @escaping ToastPresentationManager) async -> BackendFetchedResult<T.Response> {
+    internal static func executeEndpoint<T: PennMobileEndpoint>(_ endpoint: T, toast presentToast: @escaping ToastPresentationExecutor) async -> BackendFetchedResult<T.Response> {
         var url = Self.url(for: endpoint)
         if let queryParams = endpoint.queryParams {
             url.append(queryItems: queryParams.map { URLQueryItem(name: $0.key, value: $0.value) })

@@ -21,12 +21,12 @@ public extension PennMobileApplication.GSR {
             self.path = "/gsr/share/\(shareCode)"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "This share link could not be revoked because it may no longer exist.")
+                ToastConfiguration(message: "This share link could not be revoked because it may no longer exist.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble revoking share links right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble revoking share links right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

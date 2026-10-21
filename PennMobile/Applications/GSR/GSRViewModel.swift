@@ -7,270 +7,302 @@
 //
 
 import Foundation
-import Observation
+import UIKit
+import SwiftUI
 import PennMobileShared
 
+
+extension GSRViewModel {
+    struct Settings: Equatable {
+        static func == (lhs: GSRViewModel.Settings, rhs: GSRViewModel.Settings) -> Bool {
+            lhs.shouldShowFullyUnavailableRooms == rhs.shouldShowFullyUnavailableRooms
+            && lhs.shouldShowLegacyUI == rhs.shouldShowLegacyUI
+        }
+
+        // Should the user be shown rooms that have no availability
+        @AppStorage("gsr.settings.showFullyUnavailableRooms") var shouldShowFullyUnavailableRooms: Bool = false
+        @AppStorage("gsr.settings.showLegacyUI") var shouldShowLegacyUI: Bool = false
+    }
+}
+
 @MainActor
-@Observable
-final class GSRViewModel {
-    typealias Selection = (room: GSRRoom, slot: GSRTimeSlot)
-    
-    private static let showFullyUnavailableRoomsKey = "gsr.settings.showFullyUnavailableRooms"
-    
-    private(set) var locations: [GSRLocation] = []
-    private(set) var isWharton = false
-    private(set) var reservations: [GSRReservation] = []
-    private(set) var shareLinks: [String: URL] = [:]
-    private(set) var openRoomCounts: [Int: Int] = [:]
-    
-    private(set) var selectedLocation: GSRLocation?
-    private(set) var datePickerOptions: [Date] = []
-    private(set) var rooms: [GSRRoom] = []
-    private(set) var selectedTimeslots: [Selection] = []
-    private(set) var sortedStartTimes: [Date] = []
-    private(set) var isLoadingAvailability = false
-    
-    var selectedDate: Date
-    var recentBooking: GSRBooking?
-    var message: String?
-    var showFullyUnavailableRooms = UserDefaults.standard.bool(forKey: GSRViewModel.showFullyUnavailableRoomsKey) {
-        didSet {
-            UserDefaults.standard.set(showFullyUnavailableRooms, forKey: Self.showFullyUnavailableRoomsKey)
-        }
-    }
-    
-    init() {
-        selectedDate = Calendar.nyc.startOfDay(for: .now)
-        setupDatePickerOptions()
-    }
-    
-    var displayedRooms: [GSRRoom] {
-        rooms.compactMap { room in
-            guard showFullyUnavailableRooms || room.availability.contains(where: \.isAvailable) else {
-                return nil
-            }
-            var displayed = room
-            displayed.availability = relevantAvailability(for: room)
-            return displayed
-        }
-    }
-    
-    var headerTimes: [Date] {
-        guard let room = rooms.first else { return [] }
-        let slots = relevantAvailability(for: room)
-        guard let start = slots.first?.startTime else { return [] }
-        return [start] + slots.map(\.endTime)
-    }
-    
-    var availableStartTimes: Set<Date> {
-        Set(rooms.flatMap { $0.availability.filter(\.isAvailable).map(\.startTime) })
-    }
-    
-    var selectedSlotIDs: Set<UUID> {
-        Set(selectedTimeslots.map(\.slot.id))
-    }
-    
+class GSRViewModel: ObservableObject {
+    @Published var selectedLocation: GSRLocation?
+    @Published var roomsAtSelectedLocation: [GSRRoom] = []
+    @Published var selectedDate: Date
+    @Published var selectedTimeslots: [(GSRRoom, GSRTimeSlot)] = []
+    @Published var availableLocations: [GSRLocation] = []
+    @Published var datePickerOptions: [Date] = []
+    @Published var recentBooking: GSRBooking?
+    @Published var isWharton: Bool = false
+    @Published var isLoadingAvailability = false
+    @Published var showSuccessfulBookingAlert = false
+    @Published var sortedStartTime: [Date] = []
+    @Published var currentReservations: [GSRReservation] = []
+    @Published var shareLinks: [String: URL] = [:]
+    @Published var settings: GSRViewModel.Settings = Settings()
+    @Published var isMapView: Bool = false
+
+    @Published var gsrGetLastPulledAvailability: [Int: (availCount: Int, lastRefreshed: Date)] = [:]
+
     var hasAvailableBooking: Bool {
-        rooms.contains { !relevantAvailability(for: $0).isEmpty }
+        return roomsAtSelectedLocation.contains(where: { !getRelevantAvailability(room: $0).isEmpty })
     }
-    
-    func fetchInitialState() async {
-        do {
-            self.locations = try await PennMobileApplication.GSR.GetLocations().execute()
-            self.isWharton = try await PennMobileApplication.GSR.GetWhartonStatus().execute().isWharton
-        } catch {
-            message = error.localizedDescription
-        }
-        await refreshReservations()
-    }
-    
-    func refreshReservations() async {
-        do {
-            let reservations = try await PennMobileApplication.GSR.GetReservations().execute()
-            self.reservations = reservations
-            shareLinks = await Self.fetchShareLinks(for: reservations)
-        } catch {
-            message = error.localizedDescription
-        }
-    }
-    
-    func refreshOpenRoomCounts() async {
-        let counts = await Self.fetchOpenRoomCounts(for: locations)
-        openRoomCounts.merge(counts) { $1 }
-    }
-    
-    func selectLocation(_ location: GSRLocation) {
-        guard location.kind != .wharton || isWharton else {
-            message = GSRValidationError.notInWharton.localizedDescription
-            return
-        }
-        selectedLocation = location
-        selectedTimeslots = []
+
+    init() {
+        selectedDate = Calendar.nyc.startOfDay(for: Date.now)
         setupDatePickerOptions()
     }
-    
-    func updateAvailability() async {
-        guard let location = selectedLocation else { return }
-        let date = selectedDate
-        isLoadingAvailability = true
-        rooms = []
-        selectedTimeslots = []
-        sortedStartTimes = []
-        
-        do {
-            let endDate = Calendar.current.date(byAdding: .day, value: 1, to: date)
-            let availability = try await PennMobileApplication.GSR.GetAvailability(location: location, startDate: date, endDate: endDate).execute().rooms
-            guard location == selectedLocation, date == selectedDate else { return }
-            
-            let (min, max) = availability.getMinMaxDates()
-            if let min, let max {
-                rooms = availability.map { $0.withMissingTimeslots(minDate: min, maxDate: max) }.sorted()
-            }
-        } catch {
-            guard location == selectedLocation, date == selectedDate else { return }
-            message = error.localizedDescription
-        }
-        isLoadingAvailability = false
-    }
-    
-    func toggleTimeslot(_ slot: GSRTimeSlot, in room: GSRRoom) {
-        guard slot.isAvailable else { return }
-        
-        var newSelected = selectedTimeslots
-        let isRemoving = newSelected.contains { $0.room.id == room.id && $0.slot.id == slot.id }
-        newSelected.removeAll { $0.room.id == room.id && $0.slot.id == slot.id }
-        
-        let proposed = isRemoving ? newSelected : newSelected + [(room: room, slot: slot)]
-        if (try? Self.validate(proposed)) == nil {
-            newSelected = []
-        }
-        
-        let limit = selectedLocation?.kind.maxConsecutiveBookings ?? 3
-        if newSelected.count == limit {
-            message = GSRValidationError.overLimit(limit: limit * 30).localizedDescription
-            return
-        }
-        
-        if !isRemoving {
-            newSelected.append((room: room, slot: slot))
-        }
-        selectedTimeslots = newSelected
-    }
-    
-    func toggleSort(at startTime: Date) {
-        guard rooms.hasAvailableAt(startTime) else { return }
-        
-        if sortedStartTimes.contains(startTime) {
-            sortedStartTimes.removeAll { $0 == startTime }
-        } else {
-            sortedStartTimes.append(startTime)
-        }
-        
-        let sortTimes = sortedStartTimes
-        rooms.sort { rm1, rm2 in
-            let rm1Avail = sortTimes.allSatisfy { time in rm1.availability.contains { $0.startTime == time && $0.isAvailable } }
-            let rm2Avail = sortTimes.allSatisfy { time in rm2.availability.contains { $0.startTime == time && $0.isAvailable } }
-            if rm1Avail != rm2Avail {
-                return rm1Avail
-            }
-            return rm1 < rm2
-        }
-    }
-    
-    func clearSortFilters() {
-        sortedStartTimes = []
-        rooms.sort()
-    }
-    
-    func book() async {
-        guard let location = selectedLocation, !selectedTimeslots.isEmpty else { return }
-        
-        do {
-            guard location.kind != .wharton || isWharton else {
-                throw GSRValidationError.notInWharton
-            }
-            try Self.validate(selectedTimeslots)
-            
-            let sorted = selectedTimeslots.sorted { $0.slot.startTime < $1.slot.startTime }
-            let first = sorted.first!
-            let booking = GSRBooking(gid: location.gid, startTime: first.slot.startTime, endTime: sorted.last!.slot.endTime, id: first.room.id, roomName: first.room.roomName)
-            
-            try await PennMobileApplication.GSR.MakeBooking(booking: booking).execute(
-            recentBooking = booking
-        } catch {
-            message = error.localizedDescription
-        }
-        
-        await refreshReservations()
-        await updateAvailability()
-    }
-    
-    func cancel(_ reservation: GSRReservation) async {
-        do {
-            try await PennMobileApplication.GSR.CancelReservation(bookingId: reservation.bookingId).execute()
-        } catch {
-            message = "Unable to delete this reservation. Is it currently in progress?"
-        }
-        await refreshReservations()
-    }
-    
-    func addToCalendar(_ reservation: GSRReservation) async {
-        do {
-            try await CalendarHelper.addToCalendar(
-                title: "GSR Booking: \(reservation.gsr.name) \(reservation.roomName)",
-                location: reservation.gsr.name,
-                start: reservation.start,
-                end: reservation.end
-            )
-            message = "Added to calendar!"
-        } catch CalendarError.accessDenied {
-            message = "Calendar access denied. Please enable it in Settings."
-        } catch {
-            message = "Failed to add event to calendar."
-        }
-    }
-    
-    private func setupDatePickerOptions() {
-        let start = Calendar.nyc.startOfDay(for: .now)
-        datePickerOptions = (0..<(selectedLocation?.bookableDays ?? 7)).compactMap {
-            Calendar.nyc.date(byAdding: .day, value: $0, to: start)
-        }
-        
+
+    func setupDatePickerOptions() {
+        let numDays = selectedLocation?.bookableDays ?? 7
+        let start = Calendar.nyc.startOfDay(for: Date.now)
+        datePickerOptions = (0..<numDays).compactMap { Calendar.nyc.date(byAdding: .day, value: $0, to: start) }
+
         if !datePickerOptions.contains(selectedDate), let date = datePickerOptions.first {
             selectedDate = date
         }
     }
-    
-    private func relevantAvailability(for room: GSRRoom) -> [GSRTimeSlot] {
-        room.availability.filter { Calendar.current.isDate($0.startTime, inSameDayAs: selectedDate) }
+
+    func fetchInitialState() async {
+        await withTaskGroup(of: Void.self) { group in
+            group.addTask { @MainActor in
+                self.availableLocations = await PennMobileApplication.GSR.GetLocations().execute().unwrap() ?? []
+            }
+            group.addTask { @MainActor in
+                self.isWharton = await PennMobileApplication.GSR.GetWhartonStatus().execute().unwrap()?.isWharton ?? false
+            }
+            group.addTask { @MainActor in
+                await self.refreshReservations()
+            }
+        }
     }
-    
-    private nonisolated static func validate(_ slots: [Selection]) throws {
-        guard let first = slots.first else { return }
-        
-        guard slots.allSatisfy({ $0.room.id == first.room.id }) else {
-            throw GSRValidationError.differentRooms
+
+    func refreshReservations() async {
+        guard let reservations = await PennMobileApplication.GSR.GetReservations().execute().unwrap() else { return }
+        self.currentReservations = reservations
+        self.shareLinks = await Self.fetchShareLinks(for: reservations)
+    }
+
+    func cancelReservation(_ reservation: GSRReservation) async {
+        withAnimation {
+            self.currentReservations.removeAll { $0.bookingId == reservation.bookingId }
         }
-        
-        let sorted = slots.sorted { $0.slot.startTime < $1.slot.startTime }
-        for (current, next) in zip(sorted, sorted.dropFirst()) where current.slot.endTime != next.slot.startTime {
-            throw GSRValidationError.splitTimeSlots
+        await PennMobileApplication.GSR.CancelReservation(bookingId: reservation.bookingId).execute()
+        await refreshReservations()
+    }
+
+    // Only reloads a location's open room count once per refresh interval
+    func refreshOpenRoomCounts(refreshInterval: TimeInterval = 90) async {
+        let now = Date()
+        let stale = availableLocations.filter { location in
+            guard let last = gsrGetLastPulledAvailability[location.gid]?.lastRefreshed else { return true }
+            return now.timeIntervalSince(last) > refreshInterval
         }
-        
-        if slots.contains(where: { Date.now.localTime > $0.slot.endTime }) {
+
+        for (gid, count) in await Self.fetchOpenRoomCounts(for: stale) {
+            gsrGetLastPulledAvailability[gid] = (availCount: count, lastRefreshed: now)
+        }
+    }
+
+    func resetBooking() {
+        withAnimation(.spring(duration: 0.2)) {
+            self.selectedTimeslots = []
+        }
+    }
+
+    func handleTimeslotGesture(slot: GSRTimeSlot, room: GSRRoom) throws {
+        guard slot.isAvailable else { return }
+        // Consider a timeslot gesture as a transaction, of sorts
+        // Regardless of if they're adding or removing we have to validate the transaction before
+        // committing it to the actual state `self.selectedTimeslots`
+        var newSelected = selectedTimeslots
+        var adding: Bool = true
+        if newSelected.contains(where: {$0.0 == room && $0.1 == slot}) {
+            newSelected.removeAll(where: {$0.0 == room && $0.1 == slot})
+            adding = false
+        }
+
+        let proposedTimeslots = newSelected + (adding ? [(room, slot)] : [])
+        do {
+            try validateSelectedTimeslots(proposedTimeslots)
+        } catch {
+            newSelected = []
+        }
+
+        // This case is handled separately of the validate function, because it shouldn't reset the booking,
+        // it should instead have a toast appear.
+        if newSelected.count == self.selectedLocation?.kind.maxConsecutiveBookings ?? 3 {
+            throw GSRValidationError.overLimit(limit: (self.selectedLocation?.kind.maxConsecutiveBookings ?? 3) * 30)
+        }
+        if adding {
+            newSelected.append((room, slot))
+        }
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+
+        withAnimation(.spring(duration: 0.2)) {
+            self.selectedTimeslots = newSelected
+        }
+    }
+
+    func clearSortedFilters() {
+        self.sortedStartTime.removeAll()
+        self.roomsAtSelectedLocation.sort()
+    }
+
+    func handleSortAction(to startTime: Date) {
+        guard self.roomsAtSelectedLocation.hasAvailableAt(startTime) else {
+            return
+        }
+
+        if self.sortedStartTime.contains(where: { $0 == startTime }) {
+            self.sortedStartTime.removeAll(where: { $0 == startTime })
+        } else {
+            self.sortedStartTime.append(startTime)
+        }
+
+        self.roomsAtSelectedLocation.sort(by: { rm1, rm2 in
+            var rm1Avail = true
+            var rm2Avail = true
+            for sortDate in self.sortedStartTime {
+                rm1Avail = rm1Avail && rm1.availability.contains(where: { $0.startTime == sortDate && $0.isAvailable })
+                rm2Avail = rm2Avail && rm2.availability.contains(where: { $0.startTime == sortDate && $0.isAvailable })
+            }
+            if rm1Avail && !rm2Avail { return true }
+            if !rm1Avail && rm2Avail { return false }
+
+            return rm1 < rm2
+        })
+    }
+
+    private func validateSelectedTimeslots(_ slots: [(GSRRoom, GSRTimeSlot)]) throws {
+        // Same room check
+        guard let (room, _) = slots.first else { return }
+        let sameRoom: Result<GSRRoom, GSRValidationError> = slots.reduce(.success(room)) { (result, slot) in
+            guard case .success(let room) = result else {
+                return result
+            }
+
+            if room == slot.0 {
+                return .success(room)
+            } else {
+                return .failure(GSRValidationError.differentRooms)
+            }
+        }
+
+        if case .failure(let failure) = sameRoom {
+            throw failure
+        }
+
+        // Concurrency check
+        let sorted = slots.sorted(by: { $0.1.startTime < $1.1.startTime })
+
+        for (i, slot) in sorted.enumerated() {
+            if i + 1 == sorted.count { break }
+            let next = sorted[i + 1]
+            if slot.1.endTime != next.1.startTime {
+                throw GSRValidationError.splitTimeSlots
+            }
+        }
+
+        // Past check
+        if !slots.filter({ Date.now.localTime > $0.1.endTime }).isEmpty {
             throw GSRValidationError.bookingInPast
         }
+
     }
-    
+
+    func setLocation(to location: GSRLocation) async throws {
+        if location.kind == .wharton && !self.isWharton {
+            throw GSRValidationError.notInWharton
+        }
+        self.selectedLocation = location
+        self.resetBooking()
+        self.setupDatePickerOptions()
+        await self.updateAvailability()
+    }
+
+    func updateAvailability() async {
+        self.isLoadingAvailability = true
+        self.roomsAtSelectedLocation = []
+        self.selectedTimeslots = []
+        self.sortedStartTime = []
+
+        guard let loc = self.selectedLocation else {
+            self.isLoadingAvailability = false
+            return
+        }
+
+        let date = self.selectedDate
+        let avail = await PennMobileApplication.GSR.GetAvailability(location: loc, startDate: date, endDate: Calendar.current.date(byAdding: .day, value: 1, to: date)!).execute().unwrap()?.rooms ?? []
+
+        // A newer request has started since this one was made
+        guard loc == self.selectedLocation, date == self.selectedDate else { return }
+
+        let (min, max) = avail.getMinMaxDates()
+
+        guard let min, let max else {
+            self.isLoadingAvailability = false
+            return
+        }
+
+        self.roomsAtSelectedLocation = avail.map {
+            return $0.withMissingTimeslots(minDate: min, maxDate: max)
+        }.sorted()
+
+        self.isLoadingAvailability = false
+    }
+
+    func book() async throws {
+        guard let loc = self.selectedLocation, !self.selectedTimeslots.isEmpty else { return }
+        if loc.kind == .wharton && !self.isWharton {
+            throw GSRValidationError.notInWharton
+        }
+        try self.validateSelectedTimeslots(self.selectedTimeslots)
+
+        let sorted = self.selectedTimeslots.sorted { el1, el2 in
+            return el1.1.startTime < el2.1.startTime
+        }
+        let room = sorted.first!.0
+        let start = sorted.first!.1.startTime
+        let end = sorted.last!.1.endTime
+        let booking = GSRBooking(gid: loc.gid, startTime: start, endTime: end, id: room.id, roomName: room.roomName)
+
+        // Failures are surfaced by the endpoint's toast
+        guard case .success = await PennMobileApplication.GSR.MakeBooking(booking: booking).execute() else { return }
+        // This recentBooking field is for a future implementation of a GSR Booking Detail View
+        self.recentBooking = booking
+        await self.refreshReservations()
+        self.showSuccessfulBookingAlert = true
+        self.selectedTimeslots.removeAll()
+        self.clearSortedFilters()
+    }
+
+    func getRelevantAvailability(room: GSRRoom? = nil) -> [GSRTimeSlot] {
+        guard let currRoom = room ?? self.roomsAtSelectedLocation.first else { return [] }
+        return currRoom.availability.filter {
+            let cal = Calendar.current
+            return cal.isDate($0.startTime, inSameDayAs: self.selectedDate)
+        }
+    }
+
+    func checkWhartonStatus() {
+        Task {
+            self.isWharton = await PennMobileApplication.GSR.GetWhartonStatus().execute(shouldSilentlyFail: true).unwrap()?.isWharton ?? false
+        }
+    }
+
     private nonisolated static func fetchShareLinks(for reservations: [GSRReservation]) async -> [String: URL] {
         await withTaskGroup(of: (String, URL?).self) { group in
             for reservation in reservations {
                 group.addTask {
-                    let code = try? await PennMobileApplication.GSR.CreateShareCode(bookingId: reservation.bookingId).execute()
+                    let code = await PennMobileApplication.GSR.CreateShareCode(bookingId: reservation.bookingId)
+                        .execute(shouldSilentlyFail: true)
+                        .unwrap()
                     return (reservation.bookingId, code.flatMap { URL(string: $0.link) })
                 }
             }
-            
+
             var links = [String: URL]()
             for await (bookingId, url) in group {
                 links[bookingId] = url
@@ -278,16 +310,19 @@ final class GSRViewModel {
             return links
         }
     }
-    
+
     private nonisolated static func fetchOpenRoomCounts(for locations: [GSRLocation]) async -> [Int: Int] {
         await withTaskGroup(of: (Int, Int?).self) { group in
             for location in locations {
                 group.addTask {
-                    let rooms = try? await PennMobileApplication.GSR.GetAvailability(location: location, startDate: .now, endDate: .now).execute().rooms
+                    let rooms = await PennMobileApplication.GSR.GetAvailability(location: location, startDate: .now, endDate: .now)
+                        .execute(shouldSilentlyFail: true)
+                        .unwrap()?
+                        .rooms
                     return (location.gid, rooms.map(openRoomCount))
                 }
             }
-            
+
             var counts = [Int: Int]()
             for await (gid, count) in group {
                 counts[gid] = count
@@ -295,7 +330,7 @@ final class GSRViewModel {
             return counts
         }
     }
-    
+
     private nonisolated static func openRoomCount(in rooms: [GSRRoom]) -> Int {
         let cutoff = Date.now.addingTimeInterval(60)
         return rooms.filter { room in

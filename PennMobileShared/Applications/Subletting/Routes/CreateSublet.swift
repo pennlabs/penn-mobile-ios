@@ -23,12 +23,12 @@ public extension PennMobileApplication.Subletting {
             self.bodyJSON = data
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Your sublet listing could not be created because some details may be missing or invalid.")
+                ToastConfiguration(message: "Your sublet listing could not be created because some details may be missing or invalid.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble creating sublet listings right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble creating sublet listings right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

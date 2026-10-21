@@ -23,12 +23,12 @@ public extension PennMobileApplication.Dining {
             self.queryParams = ["start_date": startDate, "end_date": endDate]
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to load your dining balance history because your Campus Express session may have expired.")
+                ToastConfiguration(message: "Unable to load your dining balance history because your Campus Express session may have expired.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Campus Express is having trouble loading your balance history right now.")
+                ToastConfiguration(message: "Campus Express is having trouble loading your balance history right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

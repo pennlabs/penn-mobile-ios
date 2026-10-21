@@ -24,12 +24,12 @@ public extension PennMobileApplication.Subletting {
             self.bodyJSON = data
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Your offer could not be submitted because some details may be invalid.")
+                ToastConfiguration(message: "Your offer could not be submitted because some details may be invalid.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble submitting offers right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble submitting offers right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

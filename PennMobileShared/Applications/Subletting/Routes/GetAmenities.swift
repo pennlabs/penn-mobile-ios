@@ -18,12 +18,12 @@ public extension PennMobileApplication.Subletting {
 
         public init() {}
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "Unable to load sublet amenities.")
+                ToastConfiguration(message: "Unable to load sublet amenities.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble loading sublet amenities right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble loading sublet amenities right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }

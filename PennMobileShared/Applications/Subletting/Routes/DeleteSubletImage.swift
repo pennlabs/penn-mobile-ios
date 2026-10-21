@@ -20,12 +20,12 @@ public extension PennMobileApplication.Subletting {
             self.path = "/sublet/properties/images/\(imageId)/"
         }
 
-        public func errorResponse(error: BackendError) -> PennMobileBackendErrorHandler {
+        public func errorResponse(error: BackendError) -> ToastConfiguration {
             switch error {
             case .clientError:
-                PennMobileBackendErrorHandler(color: .red, message: "This image could not be deleted because it may no longer exist.")
+                ToastConfiguration(message: "This image could not be deleted because it may no longer exist.")
             case .serverError:
-                PennMobileBackendErrorHandler(color: .red, message: "Penn Mobile is having trouble deleting sublet images right now.")
+                ToastConfiguration(message: "Penn Mobile is having trouble deleting sublet images right now.")
             case .platformError, .decodingError, .unknownResponseError, .otherError:
                 .standard(for: error)
             }
