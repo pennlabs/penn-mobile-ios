@@ -29,7 +29,7 @@ struct PennMobile: App {
 //        UNUserNotificationCenter.current().delegate = delegate
         
         LabsPlatform.initialize(clientId: InfoPlistEnvironment.labsOauthClientId, redirectUrl: "pennmobile://auth")
-        LabsPlatform.shared?.delegate = PennMobilePlatformDelegate()
+        LabsPlatform.shared?.delegate = PennMobileAuthManager.shared
         
         
         Task {

@@ -8,6 +8,7 @@
 
 public enum EndpointBackend: Sendable {
     case pennMobile
+    case platform
     case pennClubs
     case pennCourseAlert
     case pennCoursePlan
@@ -18,6 +19,7 @@ public enum EndpointBackend: Sendable {
     public var baseURL: String {
         switch self {
         case .pennMobile: "https://pennmobile.org/api"
+        case .platform: "https://platform.pennlabs.org"
         case .pennClubs: "https://pennclubs.com/api"
         case .pennCourseAlert: "https://penncoursealert.com"
         case .pennCoursePlan: "https://penncourseplan.com/api"

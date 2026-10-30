@@ -23,7 +23,9 @@ class HomeViewModel {
     var wrapped: BackendFetchedResult<WrappedModel> = .pending
     var events: BackendFetchedResult<[CalendarEvent]> = .pending
 
-    var firstName: String?
+    var firstName: String? {
+        PennMobileAuthManager.shared.account?.firstName
+    }
     private let splashIntro = ["Welcome", "Howdy", "Hi there", "Hello", "Greetings", "Sup"].randomElement()!
 
     var isLoading = false

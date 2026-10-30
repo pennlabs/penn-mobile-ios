@@ -19,7 +19,7 @@ struct ReservationAnnounceable: HomeViewAnnounceable {
         }
         
         return [
-            HomeViewAnnouncement(analyticsSlug: nil, disappearOnTap: false, priority: .medium) {
+            HomeViewAnnouncement(analyticsSlug: nil, disappearOnTap: false, priority: .medium, linkedFeature: .gsr) {
                 GSRReservationAnnouncementView(reservation: earliest)
             }
         ]

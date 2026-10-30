@@ -7,14 +7,25 @@
 //
 
 import LabsPlatformSwift
+import PennMobileShared
+import SwiftUI
 
-class PennMobilePlatformDelegate: LabsPlatformDelegate {
+@Observable
+class PennMobileAuthManager: LabsPlatformDelegate {
+    static let shared = PennMobileAuthManager()
+    
+    var account: Account? = nil
+    
     func labsPlatformAuth(didUpdateLoggedInState state: (loggedIn: Bool, isDefaultLogin: Bool), platform: LabsPlatform) {
         let (loggedIn, isDefaultLogin) = state
         if loggedIn && !isDefaultLogin {
+            Task { @MainActor in
+                self.account = await PennMobileApplication.Accounts.GetAccount().execute().unwrap()
+            }
             // probably do some stuff with notification tokens
         }
         
         // if logged out remove stale caches and reset state
     }
+    
 }

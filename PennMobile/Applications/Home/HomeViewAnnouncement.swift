@@ -11,6 +11,7 @@ struct HomeViewAnnouncement: Identifiable {
     let id = UUID()
     let content: any View
     let linkedView: (any View)?
+    let linkedFeature: FeatureIdentifier?
     let priority: AnnouncementPriority
     // For analytics
     let slug: String?
@@ -24,10 +25,21 @@ struct HomeViewAnnouncement: Identifiable {
         self.priority = priority
         self.slug = analyticsSlug
         self.disappearOnTap = disappearOnTap
+        self.linkedFeature = nil
+    }
+    
+    init(analyticsSlug: String?, disappearOnTap: Bool, priority: AnnouncementPriority = .medium, linkedFeature: FeatureIdentifier, @ViewBuilder _ content: () -> any View) {
+        self.content = content()
+        self.linkedFeature = linkedFeature
+        self.priority = priority
+        self.slug = analyticsSlug
+        self.disappearOnTap = disappearOnTap
+        self.linkedView = nil
     }
     
     init(analyticsSlug: String?, disappearOnTap: Bool, priority: AnnouncementPriority = .medium, @ViewBuilder _ content: () -> any View) {
         self.content = content()
+        self.linkedFeature = nil
         self.linkedView = nil
         self.priority = priority
         self.slug = analyticsSlug
@@ -39,6 +51,12 @@ struct HomeViewAnnouncement: Identifiable {
         HomeCardView {
             if let view = linkedView {
                 NavigationLink(destination: AnyView(view)) {
+                    AnyView(content)
+                }
+                .buttonStyle(.plain)
+            } else if let featureId = linkedFeature,
+                      let appFeature = features.first(where: { $0.id == featureId }) {
+                NavigationLink(destination: appFeature.content) {
                     AnyView(content)
                 }
                 .buttonStyle(.plain)
