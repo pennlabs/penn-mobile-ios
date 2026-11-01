@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum EventType: Decodable, Hashable, Sendable {
+public enum EventType: Codable, Hashable, Sendable {
     case houses
     case engineering
     case wharton
@@ -36,6 +36,12 @@ public enum EventType: Decodable, Hashable, Sendable {
         } else {
             self = .other(eventTypeString.capitalized)
         }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        // displayName of .houses wouldn't decode back to .houses
+        try container.encode(self == .houses ? "College House" : displayName)
     }
 
     public var displayName: String {

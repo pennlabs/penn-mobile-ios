@@ -14,13 +14,13 @@ import SwiftUI
 class PennMobileAuthManager: LabsPlatformDelegate {
     static let shared = PennMobileAuthManager()
     
-    var account: Account? = nil
+    var account: BackendFetchedResult<Account> = PennMobileApplication.Accounts.GetAccount().loadFromCache()
     
     func labsPlatformAuth(didUpdateLoggedInState state: (loggedIn: Bool, isDefaultLogin: Bool), platform: LabsPlatform) {
         let (loggedIn, isDefaultLogin) = state
         if loggedIn && !isDefaultLogin {
             Task { @MainActor in
-                self.account = await PennMobileApplication.Accounts.GetAccount().execute().unwrap()
+                account = await PennMobileApplication.Accounts.GetAccount().execute()
             }
             // probably do some stuff with notification tokens
         }

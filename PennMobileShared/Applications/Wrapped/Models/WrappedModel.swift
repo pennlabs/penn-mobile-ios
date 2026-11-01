@@ -6,7 +6,7 @@
 //  Copyright © 2024 PennLabs. All rights reserved.
 //
 
-public struct WrappedModel: Decodable, Sendable {
+public struct WrappedModel: Codable, Sendable {
     public let semester: String
     public var pages: [WrappedUnit]
     

@@ -13,7 +13,7 @@ public extension PennMobileApplication.Dining {
     struct SaveDiningPreferences: PennMobileEndpoint {
         public typealias Response = EmptyResponse
         public let path = "/dining/preferences/"
-        public let method = "POST"
+        public let method: EndpointRequestMethod = .post
         public let authenticated = true
         public let bodyJSON: (any Encodable & Sendable)?
 

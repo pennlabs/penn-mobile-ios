@@ -24,7 +24,7 @@ public struct PennMobileBackend {
         
         do {
             var request = endpoint.authenticated ? try await URLRequest(url: url, mode: .accessToken) : URLRequest(url: url)
-            request.httpMethod = endpoint.method
+            request.httpMethod = endpoint.method.rawValue
             
             if let json = endpoint.bodyJSON {
                 let enc: JSONEncoder = endpoint.requestBodyEncoder ?? JSONEncoder()

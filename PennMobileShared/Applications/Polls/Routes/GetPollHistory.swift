@@ -13,7 +13,7 @@ public extension PennMobileApplication.Polls {
     struct GetPollHistory: PennMobileEndpoint {
         public typealias Response = [PollPost]
         public let path = "/portal/votes/all/"
-        public let method = "POST"
+        public let method: EndpointRequestMethod = .post
         public let authenticated = true
         public let bodyJSON: (any Encodable & Sendable)?
         public let responseDecoder: JSONDecoder? = JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601)

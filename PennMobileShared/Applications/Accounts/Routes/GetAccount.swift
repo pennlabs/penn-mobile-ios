@@ -16,6 +16,7 @@ public extension PennMobileApplication.Accounts {
         public let path = "/accounts/me/"
         public let authenticated = true
         public let responseDecoder: JSONDecoder? = .snakeCase
+        public let method: EndpointRequestMethod = .get(cacheAge: EndpointRequestMethod.defaultCacheAge)
 
         public init() {}
 

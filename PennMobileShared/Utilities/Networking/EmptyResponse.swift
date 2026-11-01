@@ -6,6 +6,6 @@
 //  Copyright © 2026 PennLabs. All rights reserved.
 //
 
-public struct EmptyResponse: Decodable, Sendable {
+public struct EmptyResponse: Codable, Sendable {
     public init() {}
 }

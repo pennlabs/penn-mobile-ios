@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct WrappedUnit: Identifiable, Hashable, Decodable, Sendable {
+public struct WrappedUnit: Identifiable, Hashable, Codable, Sendable {
     public static func == (lhs: WrappedUnit, rhs: WrappedUnit) -> Bool {
         lhs.id == rhs.id
     }
@@ -26,7 +26,15 @@ public struct WrappedUnit: Identifiable, Hashable, Decodable, Sendable {
         self.lottieUrl = try container.decode(URL.self, forKey: .lottieUrl)
         self.values = try container.decode([String: String].self, forKey: .values)
     }
-    
+
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encodeIfPresent(time.map { WrappedUnit.timeString(from: $0) }, forKey: .time)
+        try container.encode(lottieUrl, forKey: .lottieUrl)
+        try container.encode(values, forKey: .values)
+    }
+
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case name = "name"
@@ -46,5 +54,12 @@ public struct WrappedUnit: Identifiable, Hashable, Decodable, Sendable {
         let minutes = components[1]
         let seconds = components[2]
         return (hours * 3600) + (minutes * 60) + seconds
+    }
+
+    static func timeString(from timeInterval: TimeInterval) -> String {
+        let hours = Int(timeInterval) / 3600
+        let minutes = Int(timeInterval) % 3600 / 60
+        let seconds = timeInterval - Double(hours * 3600 + minutes * 60)
+        return "\(hours):\(minutes):\(seconds)"
     }
 }

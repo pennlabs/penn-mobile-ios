@@ -13,7 +13,7 @@ public extension PennMobileApplication.GSR {
     struct RevokeShareCode: PennMobileEndpoint {
         public typealias Response = GSRReservation
         public let path: String
-        public let method = "DELETE"
+        public let method: EndpointRequestMethod = .delete
         public let authenticated = true
         public let responseDecoder: JSONDecoder? = JSONDecoder(keyDecodingStrategy: .convertFromSnakeCase, dateDecodingStrategy: .iso8601)
 

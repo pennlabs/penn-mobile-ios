@@ -6,7 +6,7 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-public struct CourseSection: Decodable, Sendable {
+public struct CourseSection: Codable, Sendable {
     public let section: String
     public let status: String
     public let activity: String

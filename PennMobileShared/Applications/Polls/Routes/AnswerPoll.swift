@@ -18,7 +18,7 @@ public extension PennMobileApplication.Polls {
         
         public typealias Response = EmptyResponse
         public let path = "/portal/votes/"
-        public let method = "POST"
+        public let method: EndpointRequestMethod = .post
         public let authenticated = true
         public let bodyJSON: (any Encodable & Sendable)?
 

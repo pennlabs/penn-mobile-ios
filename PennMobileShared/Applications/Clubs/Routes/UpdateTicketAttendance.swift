@@ -14,7 +14,7 @@ public extension PennMobileApplication.Clubs {
         public typealias Response = Ticket
         public let backend: EndpointBackend = .pennClubs
         public let path: String
-        public let method = "PATCH"
+        public let method: EndpointRequestMethod = .patch
         public let authenticated = true
         public let bodyJSON: (any Encodable & Sendable)?
         public let responseDecoder: JSONDecoder? = JSONDecoder(keyDecodingStrategy: .useDefaultKeys, dateDecodingStrategy: .iso8601)

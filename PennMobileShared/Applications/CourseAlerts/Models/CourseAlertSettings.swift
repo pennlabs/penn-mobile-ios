@@ -6,7 +6,7 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-public struct CourseAlertSettings: Decodable, Sendable {
+public struct CourseAlertSettings: Codable, Sendable {
     public let username, firstName, lastName: String
     public let profile: CourseAlertProfile
 

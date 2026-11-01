@@ -13,7 +13,7 @@ public extension PennMobileApplication.Subletting {
     struct MakeOffer: PennMobileEndpoint {
         public typealias Response = SubletOffer
         public let path: String
-        public let method = "POST"
+        public let method: EndpointRequestMethod = .post
         public let authenticated = true
         public let bodyJSON: (any Encodable & Sendable)?
         public let requestBodyEncoder: JSONEncoder? = .snakeCaseISO8601

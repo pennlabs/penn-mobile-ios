@@ -19,7 +19,7 @@ public extension PennMobileApplication.CourseAlerts {
         public typealias Response = CourseAlertMessage
         public let backend: EndpointBackend = .pennCourseAlert
         public let path = "/api/alert/registrations/"
-        public let method = "POST"
+        public let method: EndpointRequestMethod = .post
         public let authenticated = true
         public let headers: [String: String]?
         public let bodyJSON: (any Encodable & Sendable)?

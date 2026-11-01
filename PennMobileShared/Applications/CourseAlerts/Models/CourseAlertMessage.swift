@@ -6,6 +6,6 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-public struct CourseAlertMessage: Decodable, Sendable {
+public struct CourseAlertMessage: Codable, Sendable {
     public let message: String
 }

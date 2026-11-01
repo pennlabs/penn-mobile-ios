@@ -13,7 +13,7 @@ public extension PennMobileApplication.Subletting {
     struct FavoriteSublet: PennMobileEndpoint {
         public typealias Response = EmptyResponse
         public let path: String
-        public let method = "POST"
+        public let method: EndpointRequestMethod = .post
         public let authenticated = true
 
         public init(id: Int) {

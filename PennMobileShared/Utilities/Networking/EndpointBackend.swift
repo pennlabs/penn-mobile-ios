@@ -15,6 +15,29 @@ public enum EndpointBackend: Sendable {
     case pennLabsStatus
     case campusExpress
     case custom(baseURL: String)
+    
+    public var rawValue: Int {
+        switch self {
+        case .pennMobile:
+            return 0
+        case .platform:
+            return 1
+        case .pennClubs:
+            return 2
+        case .pennCourseAlert:
+            return 3
+        case .pennCoursePlan:
+            return 4
+        case .pennLabsStatus:
+            return 5
+        case .campusExpress:
+            return 6
+        case .custom(let baseURL):
+            var hasher = Hasher()
+            hasher.combine(baseURL)
+            return hasher.finalize()
+        }
+    }
 
     public var baseURL: String {
         switch self {

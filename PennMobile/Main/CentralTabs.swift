@@ -10,7 +10,29 @@ import SwiftUI
 import PennMobileShared
 
 struct CentralTabs: View {
+    let tabs: [FeatureIdentifier] = [.gsr]
+    
+    
     var body: some View {
-        HomeView()
+        TabView {
+            HomeView()
+                .tabItem {
+                    Label("Home", systemImage: "house")
+                }
+            ForEach(tabs) { tab in
+                if let feature = features.first(where: { $0.id == tab }) {
+                    feature.content
+                        .tabItem {
+                            switch feature.image {
+                            case .app(let string):
+                                Label(feature.shortName, image: string)
+                            case .system(let string):
+                                Label(feature.shortName, systemImage: string)
+                            }
+                        }
+                }
+            }
+        }
+        
     }
 }

@@ -22,7 +22,7 @@ public extension PennMobileApplication.CourseAlerts {
         public typealias Response = EmptyResponse
         public let backend: EndpointBackend = .pennCoursePlan
         public let path = "/plan/schedules/path/"
-        public let method = "PUT"
+        public let method: EndpointRequestMethod = .put
         public let authenticated = true
         public let headers: [String: String]?
         public let bodyJSON: (any Encodable & Sendable)?

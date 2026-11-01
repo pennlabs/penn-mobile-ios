@@ -13,7 +13,7 @@ public extension PennMobileApplication.GSR {
     struct MakeBooking: PennMobileEndpoint {
         public typealias Response = EmptyResponse
         public let path = "/gsr/book/"
-        public let method = "POST"
+        public let method: EndpointRequestMethod = .post
         public let authenticated = true
         public let bodyJSON: (any Encodable & Sendable)?
         public let requestBodyEncoder: JSONEncoder? = {

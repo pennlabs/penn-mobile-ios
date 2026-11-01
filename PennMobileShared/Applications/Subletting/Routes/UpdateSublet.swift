@@ -13,7 +13,7 @@ public extension PennMobileApplication.Subletting {
     struct UpdateSublet: PennMobileEndpoint {
         public typealias Response = Sublet
         public let path: String
-        public let method = "PATCH"
+        public let method: EndpointRequestMethod = .patch
         public let authenticated = true
         public let bodyJSON: (any Encodable & Sendable)?
         public let requestBodyEncoder: JSONEncoder? = .snakeCaseISO8601

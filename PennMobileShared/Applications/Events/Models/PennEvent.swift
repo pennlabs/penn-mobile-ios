@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct PennEvent: Decodable, Identifiable, Sendable {
+public struct PennEvent: Codable, Identifiable, Sendable {
     public var id = UUID()
     
     public var eventType: EventType
@@ -80,10 +80,8 @@ public struct PennEvent: Decodable, Identifiable, Sendable {
         email = try container.decodeIfPresent(String.self, forKey: .email)
         website = try container.decodeIfPresent(String.self, forKey: .website)
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-        
+        let dateFormatter = Self.dateFormatter()
+
         if let startString = try container.decodeIfPresent(String.self, forKey: .start) {
             start = dateFormatter.date(from: startString)
         }
@@ -100,7 +98,31 @@ public struct PennEvent: Decodable, Identifiable, Sendable {
             endTime = dateFormatter.date(from: endTimeString)
         }
     }
-    
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(eventType, forKey: .eventType)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(description, forKey: .description)
+        try container.encodeIfPresent(location, forKey: .location)
+        try container.encodeIfPresent(imageUrl?.absoluteString, forKey: .imageUrl)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(website, forKey: .website)
+
+        let dateFormatter = Self.dateFormatter()
+        try container.encodeIfPresent(start.map(dateFormatter.string), forKey: .start)
+        try container.encodeIfPresent(end.map(dateFormatter.string), forKey: .end)
+        try container.encodeIfPresent(startTime.map(dateFormatter.string), forKey: .startTime)
+        try container.encodeIfPresent(endTime.map(dateFormatter.string), forKey: .endTime)
+    }
+
+    private static func dateFormatter() -> DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+        return dateFormatter
+    }
+
     public var formattedStartDate: String {
         guard let date = start ?? startTime else { return "No Start Date" }
         let formatter = DateFormatter()

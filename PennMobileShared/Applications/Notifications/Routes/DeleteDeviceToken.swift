@@ -13,7 +13,7 @@ public extension PennMobileApplication.Notifications {
     struct DeleteDeviceToken: PennMobileEndpoint {
         public typealias Response = EmptyResponse
         public let path: String
-        public let method = "DELETE"
+        public let method: EndpointRequestMethod = .delete
 
         public init(token: Data) {
             self.path = "/user/notifications/tokens/ios/\(token.hexString)/"

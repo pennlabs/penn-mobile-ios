@@ -6,7 +6,7 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-public struct CourseAlert: Decodable, Sendable {
+public struct CourseAlert: Codable, Sendable {
     public let id: Int
     public let createdAt: String
     public let originalCreatedAt: String

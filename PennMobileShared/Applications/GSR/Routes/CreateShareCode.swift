@@ -13,7 +13,7 @@ public extension PennMobileApplication.GSR {
     struct CreateShareCode: PennMobileEndpoint {
         public typealias Response = GSRShareCode
         public let path = "/gsr/share/"
-        public let method = "POST"
+        public let method: EndpointRequestMethod = .post
         public let authenticated = true
         public let bodyJSON: (any Encodable & Sendable)?
 

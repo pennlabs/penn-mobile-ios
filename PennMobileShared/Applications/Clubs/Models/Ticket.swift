@@ -6,7 +6,7 @@
 //  Copyright © 2024 PennLabs. All rights reserved.
 //
 
-public struct Ticket: Decodable, Sendable {
+public struct Ticket: Codable, Sendable {
     public var id: String
     public var event: TicketEvent
     public var type: String

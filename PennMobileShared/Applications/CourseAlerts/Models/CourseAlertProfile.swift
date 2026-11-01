@@ -6,7 +6,7 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-public struct CourseAlertProfile: Decodable, Sendable {
+public struct CourseAlertProfile: Codable, Sendable {
     public let email, phone: String
     public let pushNotifications: Bool
 

@@ -18,7 +18,7 @@ public extension PennMobileApplication.Notifications {
         
         public typealias Response = EmptyResponse
         public let path: String
-        public let method = "PATCH"
+        public let method: EndpointRequestMethod = .patch
         public let authenticated = true
         public let bodyJSON: (any Encodable & Sendable)?
 

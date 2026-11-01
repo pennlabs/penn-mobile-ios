@@ -6,7 +6,7 @@
 //  Copyright © 2020 PennLabs. All rights reserved.
 //
 
-public struct Instructor: Decodable, Sendable {
+public struct Instructor: Codable, Sendable {
     public let id: Int
     public let name: String
 }

@@ -13,7 +13,7 @@ public extension PennMobileApplication.Subletting {
     struct UploadSubletImages: PennMobileEndpoint {
         public typealias Response = [SubletImage]
         public let path: String
-        public let method = "POST"
+        public let method: EndpointRequestMethod = .post
         public let authenticated = true
         public let headers: [String: String]?
         public let bodyData: Data?

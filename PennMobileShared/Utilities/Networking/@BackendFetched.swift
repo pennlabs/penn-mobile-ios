@@ -39,9 +39,10 @@ public struct BackendFetched<Endpoint: PennMobileEndpoint>: DynamicProperty {
     @State public private(set) var isLoading = false
     @State private var hasFetched = false
 
-    public init(_ endpoint: Endpoint) {
+    /// - Parameter useCacheIfAvailable: Starts with the endpoint's cached result, if any, while the first fetch loads. The endpoint must use `.get(cacheAge:)` with a non-nil age.
+    public init(_ endpoint: Endpoint, useCacheIfAvailable: Bool = false) {
         self.endpoint = endpoint
-        self.response = .pending
+        self.response = useCacheIfAvailable ? endpoint.loadFromCache() : .pending
     }
 
     public var wrappedValue: BackendFetchedResult<Endpoint.Response> {
@@ -55,7 +56,7 @@ public struct BackendFetched<Endpoint: PennMobileEndpoint>: DynamicProperty {
     @MainActor
     public func refresh() async {
         isLoading = true
-        response = await PennMobileBackend.executeEndpoint(endpoint, toast: ToastPresentationManager.shared.displayToast ?? { _ in })
+        response = await endpoint.execute()
         isLoading = false
     }
 

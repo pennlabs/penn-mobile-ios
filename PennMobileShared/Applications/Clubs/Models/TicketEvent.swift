@@ -6,6 +6,6 @@
 //  Copyright © 2024 PennLabs. All rights reserved.
 //
 
-public struct TicketEvent: Decodable, Sendable {
+public struct TicketEvent: Codable, Sendable {
     public var name: String
 }

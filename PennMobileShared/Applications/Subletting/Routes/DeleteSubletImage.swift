@@ -13,7 +13,7 @@ public extension PennMobileApplication.Subletting {
     struct DeleteSubletImage: PennMobileEndpoint {
         public typealias Response = EmptyResponse
         public let path: String
-        public let method = "DELETE"
+        public let method: EndpointRequestMethod = .delete
         public let authenticated = true
 
         public init(imageId: Int) {
