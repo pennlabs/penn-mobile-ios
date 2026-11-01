@@ -34,4 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
     }
+    
+    func application(_ application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Task {
+            await NotificationDeviceTokenManager.newNotificationTokenReceived(deviceToken)
+        }
+    }
 }
