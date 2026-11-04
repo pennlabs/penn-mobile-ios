@@ -16,6 +16,9 @@
 		6E4D821D2AC8C91C009AB78E /* PennMobileShared.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E5159F32AC8CA1B004B3F41 /* PennMobileShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */; };
 		6ECB4C2D2ACA6F7600F7379A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6ECB4C2C2ACA6F7600F7379A /* Kingfisher */; };
+		7329D29A309B960F00A2ECE8 /* Development Guidelines.md in Resources */ = {isa = PBXBuildFile; fileRef = 7329D299309B960600A2ECE8 /* Development Guidelines.md */; };
+		7329D29B309B960F00A2ECE8 /* Development Guidelines.md in Resources */ = {isa = PBXBuildFile; fileRef = 7329D299309B960600A2ECE8 /* Development Guidelines.md */; };
+		7329D29C309B960F00A2ECE8 /* Development Guidelines.md in Resources */ = {isa = PBXBuildFile; fileRef = 7329D299309B960600A2ECE8 /* Development Guidelines.md */; };
 		7348F0502F807CEB002901E4 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7348F04F2F807CEB002901E4 /* LabsPlatformSwift */; };
 		735727032F4CE1B200213ACA /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 735727022F4CE1B200213ACA /* LabsPlatformSwift */; };
 		737F2B27304A244C0093F7A0 /* LabsPlatformSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 737F2B26304A244C0093F7A0 /* LabsPlatformSwift */; };
@@ -94,6 +97,7 @@
 		6C392E3827B5BE1C0097640B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		6CDC501127B5BCC700698235 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		6E4D82162AC8C91C009AB78E /* PennMobileShared.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PennMobileShared.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7329D299309B960600A2ECE8 /* Development Guidelines.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Development Guidelines.md"; sourceTree = "<group>"; };
 		8932693328FC75A5003D4BF9 /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		89EA262D290F9411008F26CF /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -179,6 +183,7 @@
 		216640571EBADADA00746B8E = {
 			isa = PBXGroup;
 			children = (
+				7329D299309B960600A2ECE8 /* Development Guidelines.md */,
 				6C392E3727B5BDF20097640B /* Config */,
 				89FEAC852E88F350008EC67C /* PennMobileShared */,
 				89FEAE182E88F399008EC67C /* PennMobile */,
@@ -410,6 +415,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7329D29A309B960F00A2ECE8 /* Development Guidelines.md in Resources */,
 				4273BCFF2BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +424,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7329D29B309B960F00A2ECE8 /* Development Guidelines.md in Resources */,
 				4273BD022BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -427,6 +434,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4273BD012BD2D8D80070C1B8 /* PrivacyInfo.xcprivacy in Resources */,
+				7329D29C309B960F00A2ECE8 /* Development Guidelines.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
