@@ -26,8 +26,7 @@ import PennMobileShared
 actor NotificationDeviceTokenManager {
     static let shared = NotificationDeviceTokenManager()
 
-//    private let store = UserDefaults(suiteName: "group.org.pennlabs.PennMobile")
-    private let store: UserDefaults? = UserDefaults.standard
+    private let store = UserDefaults(suiteName: "group.org.pennlabs.PennMobile")
     private let cachedNotificationTokenKey = "PennMobileNotificationKey"
     private var isLoggedIn = false
 
