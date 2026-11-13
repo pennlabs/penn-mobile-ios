@@ -30,12 +30,6 @@ struct PennMobile: App {
         
         LabsPlatform.initialize(clientId: InfoPlistEnvironment.labsOauthClientId, redirectUrl: "pennmobile://auth")
         LabsPlatform.shared?.delegate = PennMobileAuthManager.shared
-        
-        
-        Task {
-//            IncidentsViewModel.shared.startUpdatePolling()
-//            try? await IncidentsViewModel.shared.getIncidents()
-        }
     }
 
     var body: some Scene {
@@ -44,6 +38,9 @@ struct PennMobile: App {
                 .accentColor(Color("navigation"))
                 .attachLabsPlatform(analyticsRoot: "pennmobile")
                 .attachToastPresentationManager()
+                .task {
+                    await IncidentsViewModel.shared.startUpdatePolling()
+                }
         }
     }
 }

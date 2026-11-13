@@ -32,7 +32,12 @@ struct CentralTabs: View {
                         }
                 }
             }
+            MoreView(features: features.filter { !tabs.contains($0.id) })
+                .tabItem {
+                    Label("More", image: "More_Grey")
+                        .symbolRenderingMode(.palette)
+                        .labelStyle(IncidentsViewModel.shared.labelStyle)
+                }
         }
-        
     }
 }

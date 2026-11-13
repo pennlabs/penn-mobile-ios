@@ -26,7 +26,7 @@ struct GSRBookingView: View {
     }
 
     private var displayedRooms: [GSRRoom] {
-        vm.roomsAtSelectedLocation.compactMap { room in
+        vm.filteredRooms.compactMap { room in
             guard vm.settings.shouldShowFullyUnavailableRooms || room.availability.contains(where: \.isAvailable) else {
                 return nil
             }
@@ -66,7 +66,7 @@ struct GSRBookingView: View {
                 GSRTwoWayScrollView(
                     rooms: displayedRooms,
                     headerTimes: headerTimes,
-                    availableStartTimes: Set(vm.roomsAtSelectedLocation.flatMap { $0.availability.filter(\.isAvailable).map(\.startTime) }),
+                    availableStartTimes: Set(vm.filteredRooms.flatMap { $0.availability.filter(\.isAvailable).map(\.startTime) }),
                     sortedStartTimes: vm.sortedStartTime,
                     selectedSlotIDs: Set(vm.selectedTimeslots.map { $0.1.id }),
                     onToggleSlot: { slot, room in

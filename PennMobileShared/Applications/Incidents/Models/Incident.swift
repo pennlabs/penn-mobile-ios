@@ -17,3 +17,16 @@ public struct Incident: Identifiable, Codable, Sendable {
     public let severity: IncidentSeverity
     public let updates: [IncidentUpdate]
 }
+
+public extension Array where Element == Incident {
+    /// Unresolved incidents affecting Penn Mobile, most severe first.
+    var relevant: [Incident] {
+        self
+            .filter { incident in
+                let isMobile = incident.affectedServices.contains("mobile-backend") ||
+                    incident.affectedServices.contains("mobile-ios")
+                return isMobile && incident.status != "resolved"
+            }
+            .sorted { $0.severity.rawValue > $1.severity.rawValue }
+    }
+}

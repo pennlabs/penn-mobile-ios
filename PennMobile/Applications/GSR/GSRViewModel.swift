@@ -145,34 +145,34 @@ class GSRViewModel: ObservableObject {
         }
     }
 
+    /// Rooms available at every selected filter time (all rooms when no filters are set)
+    var filteredRooms: [GSRRoom] {
+        roomsAtSelectedLocation.filter { room in
+            sortedStartTime.allSatisfy { time in
+                room.availability.contains(where: { $0.startTime == time && $0.isAvailable })
+            }
+        }
+    }
+
     func clearSortedFilters() {
         self.sortedStartTime.removeAll()
-        self.roomsAtSelectedLocation.sort()
     }
 
     func handleSortAction(to startTime: Date) {
-        guard self.roomsAtSelectedLocation.hasAvailableAt(startTime) else {
+        if self.sortedStartTime.contains(where: { $0 == startTime }) {
+            self.sortedStartTime.removeAll(where: { $0 == startTime })
             return
         }
 
-        if self.sortedStartTime.contains(where: { $0 == startTime }) {
-            self.sortedStartTime.removeAll(where: { $0 == startTime })
-        } else {
-            self.sortedStartTime.append(startTime)
+        // Don't add a filter that would leave no rooms
+        guard self.filteredRooms.hasAvailableAt(startTime) else {
+            return
         }
+        self.sortedStartTime.append(startTime)
 
-        self.roomsAtSelectedLocation.sort(by: { rm1, rm2 in
-            var rm1Avail = true
-            var rm2Avail = true
-            for sortDate in self.sortedStartTime {
-                rm1Avail = rm1Avail && rm1.availability.contains(where: { $0.startTime == sortDate && $0.isAvailable })
-                rm2Avail = rm2Avail && rm2.availability.contains(where: { $0.startTime == sortDate && $0.isAvailable })
-            }
-            if rm1Avail && !rm2Avail { return true }
-            if !rm1Avail && rm2Avail { return false }
-
-            return rm1 < rm2
-        })
+        // Drop selections in rooms that just got filtered out, so nothing hidden gets booked
+        let visibleRoomIds = Set(self.filteredRooms.map(\.id))
+        self.selectedTimeslots.removeAll { !visibleRoomIds.contains($0.0.id) }
     }
 
     private func validateSelectedTimeslots(_ slots: [(GSRRoom, GSRTimeSlot)]) throws {

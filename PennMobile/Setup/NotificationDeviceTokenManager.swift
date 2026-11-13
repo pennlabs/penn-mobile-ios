@@ -29,6 +29,9 @@ actor NotificationDeviceTokenManager {
     private let store = UserDefaults(suiteName: "group.org.pennlabs.PennMobile")
     private let cachedNotificationTokenKey = "PennMobileNotificationKey"
     private var isLoggedIn = false
+    // Login updates arrive on separate tasks, which can run out of order. Each update carries
+    // the generation it was sent with, and anything older than the latest seen is dropped.
+    private var loginGeneration = 0
 
     private var cachedToken: Data? { store?.data(forKey: cachedNotificationTokenKey) }
 
@@ -43,7 +46,9 @@ actor NotificationDeviceTokenManager {
         await uploadIfReady()
     }
 
-    func setLoggedIn(_ loggedIn: Bool) async {
+    func setLoggedIn(_ loggedIn: Bool, generation: Int) async {
+        guard generation > loginGeneration else { return }
+        loginGeneration = generation
         isLoggedIn = loggedIn
 
         if loggedIn {
@@ -62,7 +67,7 @@ actor NotificationDeviceTokenManager {
         case .success(_):
             print("Successfully uploaded notification token.")
         case .failure(let error):
-            print("Failed to upload notification token: \(error.localizedDescription)")
+            print("Failed to upload notification token: \(error)")
         case .pending:
             break
         }

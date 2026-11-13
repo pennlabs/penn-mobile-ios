@@ -26,6 +26,8 @@ struct GSRTimeFilterToggle: View {
                     .foregroundStyle(isActive ? Color("gsrBlue") : hasAvailability ? Color("gsrAvailable") : Color("gsrUnavailable"))
             }
             .onTapGesture {
+                // .disabled doesn't block tap gestures, only controls
+                guard hasAvailability else { return }
                 UIImpactFeedbackGenerator(style: .medium).impactOccurred()
                 onTap()
             }
