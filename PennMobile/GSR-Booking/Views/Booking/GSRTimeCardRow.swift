@@ -17,16 +17,21 @@ struct GSRTimeCardFilterToggle: View {
     var body: some View {
         let isFilterActive = vm.sortedStartTime.contains(where: { $0 == time })
         let hasAvailableTimes = vm.roomsAtSelectedLocation.hasAvailableAt(time)
+        let isQuickBookEdge = vm.quickBookHighlight?.lowerBound == time || vm.quickBookHighlight?.upperBound == time
         let accessibilityValue = if hasAvailableTimes {
             isFilterActive ? "On" : "Off"
         } else {
             "No rooms available"
         }
-        
+
         Text(time.gsrTimeString)
             .font(.callout)
+            .fontWeight(isQuickBookEdge ? .bold : .regular)
+            // Bold text is wider; shrink it slightly instead of wrapping and pushing the grid down
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
             .multilineTextAlignment(.center)
-            .foregroundStyle(vm.sortedStartTime.contains(where: { $0 == time }) ? .white : .primary)
+            .foregroundStyle(isFilterActive ? .white : isQuickBookEdge ? Color("gsrBlue") : .primary)
             .padding(4)
             .background {
                 RoundedRectangle(cornerRadius: 4)
