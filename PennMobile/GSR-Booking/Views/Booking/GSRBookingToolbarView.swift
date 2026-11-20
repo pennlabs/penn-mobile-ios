@@ -12,23 +12,29 @@ import PennMobileShared
 struct GSRBookingToolbarView: View {
     @EnvironmentObject var vm: GSRViewModel
     @Environment(\.presentToast) var presentToast
-    @State var startedQuickBook = false
-    
+    @Environment(\.colorScheme) var colorScheme
+
     var body: some View {
         ZStack {
-            if startedQuickBook {
+            if vm.quickBookPhase == .picking {
+                // Tapping outside the picker closes it
                 Rectangle()
-                    .foregroundStyle(Color.black.opacity(0.001))
+                    .foregroundStyle(.clear)
+                    .contentShape(Rectangle())
                     .onTapGesture {
-                        withAnimation(.snappy(duration: 0.2)) {
-                            startedQuickBook = false
-                        }
+                        vm.endQuickBook(clearSelection: true)
                     }
             }
             VStack {
                 Spacer()
                 HStack(spacing: 12) {
-                    if !vm.selectedTimeslots.isEmpty {
+                    if vm.quickBookPhase == .picking {
+                        QuickBookTimelinePicker()
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                    } else if vm.quickBookPhase == .browsing {
+                        QuickBookResultsBar()
+                            .transition(.move(edge: .bottom).combined(with: .opacity))
+                    } else if !vm.selectedTimeslots.isEmpty {
                         Button {
                             Task {
                                 do {
@@ -68,9 +74,25 @@ struct GSRBookingToolbarView: View {
                                 }
                         }
                         .transition(.move(edge: .leading).combined(with: .opacity))
-                    } else if FeatureFlags.shared.gsrQuickBook {
-                        RoomFinderSelectionPanel(vm: vm, isEnabled: $startedQuickBook)
-                            .transition(.move(edge: .leading).combined(with: .opacity))
+                    } else {
+                        Button {
+                            vm.startQuickBook()
+                        } label: {
+                            Label("Find me a room", systemImage: "wand.and.sparkles")
+                                .foregroundStyle(colorScheme == .dark ? Color.primary : Color.black)
+                                .padding(12)
+                                .background {
+                                    if colorScheme == .dark {
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .fill(.thickMaterial)
+                                    } else {
+                                        RoundedRectangle(cornerRadius: 12)
+                                            .foregroundStyle(Color.white)
+                                            .shadow(radius: 2)
+                                    }
+                                }
+                        }
+                        .transition(.move(edge: .leading).combined(with: .opacity))
                     }
                 }
             }
