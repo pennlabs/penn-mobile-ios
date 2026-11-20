@@ -65,7 +65,7 @@ class GSRViewModel: ObservableObject {
     }
 
     func fetchInitialState() async {
-        await withTaskGroup(of: Void.self) { group in
+        await withTaskGroup { group in
             group.addTask { @MainActor in
                 self.availableLocations = await PennMobileApplication.GSR.GetLocations().execute().unwrap() ?? []
             }

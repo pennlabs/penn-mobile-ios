@@ -8,6 +8,7 @@
 
 import SwiftUI
 import LabsPlatformSwift
+import PennMobileShared
 
 struct LoggedOutView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -30,7 +31,13 @@ struct LoggedOutView: View {
 //                    authManager.enterGuestMode()
                 }
                 .buttonStyle(LoginButtonStyle(isProminent: false))
+
+                if let incident = IncidentsViewModel.shared.mostSignificantIncident {
+                    IncidentCapsuleView(incident: incident)
+                        .transition(.opacity)
+                }
             }
+            .animation(.default, value: IncidentsViewModel.shared.mostSignificantIncident?.id)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
@@ -90,6 +97,29 @@ struct LoginButtonStyle: ButtonStyle {
                     }
             }
         }
+    }
+}
+
+struct IncidentCapsuleView: View {
+    let incident: Incident
+
+    var body: some View {
+        Label {
+            Text(incident.title)
+                .lineLimit(1)
+        } icon: {
+            Image(systemName: incident.severity.systemImage)
+                .foregroundStyle(.white, incident.severity.color)
+        }
+        .font(.footnote.weight(.medium))
+        .padding(.horizontal, 12)
+        .padding(.vertical, 6)
+        .frame(maxWidth: 250)
+        .background(Color.uiCardBackground, in: .capsule)
+        .overlay {
+            Capsule().strokeBorder(incident.severity.color, lineWidth: 1)
+        }
+        .shadow(radius: 1)
     }
 }
 
