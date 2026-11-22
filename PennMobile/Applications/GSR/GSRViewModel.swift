@@ -26,7 +26,22 @@ extension GSRViewModel {
 }
 
 @MainActor
-class GSRViewModel: ObservableObject {
+class GSRViewModel: ObservableObject, DeepLinkHandler {
+    static let deepLinkStub: String = "gsr"
+    
+    static func handleDeepLink(for url: URL) -> [DeepLinkHandlerIntent] {
+        guard url.path == "/gsr/share",
+              let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
+              let shareCode = components.queryItems?.first(where: { $0.name == "data" })?.value else { return [] }
+        
+        return [
+            .switchToAppFeature(feature: .gsr),
+            .openSheet {
+                GSRReservationDetailView(shareCode: shareCode)
+            }
+        ]
+    }
+    
     @Published var selectedLocation: GSRLocation?
     @Published var roomsAtSelectedLocation: [GSRRoom] = []
     @Published var selectedDate: Date
